@@ -2,7 +2,16 @@
 package salomon.plugin;
 
 import java.io.Serializable;
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import salomon.core.data.DBManager;
+import salomon.core.data.common.DBColumnName;
+import salomon.core.data.common.DBCondition;
+import salomon.core.data.common.DBTableName;
+import salomon.core.data.common.DBValue;
 
 /**
  * Class represents plugin description.
@@ -11,6 +20,8 @@ import java.net.URL;
  */
 public class Description implements Serializable
 {
+	public static final String TABLE_NAME = "plugins";
+
 	private String _info;
 
 	private String _input;
@@ -153,6 +164,63 @@ public class Description implements Serializable
 
 	public String toString()
 	{
-		return "" + _name + "," + _location + "," + _pluginID;
+		return "" + _pluginID + "," + _name + "," + _location + "," + _info;
 	}
+
+	/**
+	 * Initializes itself basing on given row from resultSet.
+	 * 
+	 * @param resultSet
+	 * @throws SQLException
+	 * @throws MalformedURLException
+	 */
+	public void init(ResultSet resultSet) throws MalformedURLException,
+			SQLException
+	{
+		_pluginID = resultSet.getInt("plugin_id");
+		_name = resultSet.getString("name");
+		_location = new URL(resultSet.getString("location"));
+		_info = resultSet.getString("info");
+	}
+
+	/**
+	 * Saves itself in data base. If already exists in database performs update
+	 * otherwise inserts new record. Returns current id if update was executed
+	 * or new id in case of insert.
+	 * 
+	 * @return unique id
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	public int save() throws SQLException, ClassNotFoundException
+	{
+		DBTableName[] tableNames = {new DBTableName(TABLE_NAME)};
+		DBValue[] values = {
+				new DBValue(new DBColumnName(tableNames[0], "name"), _name,
+						DBValue.TEXT),
+				new DBValue(new DBColumnName(tableNames[0], "info"), _info,
+						DBValue.TEXT),
+				new DBValue(new DBColumnName(tableNames[0], "location"),
+						_location, DBValue.TEXT)};
+		_pluginID = DBManager.getInstance().insertOrUpdate(values, "plugin_id",
+				_pluginID);
+		return _pluginID;
+	}
+	/**
+     * Removes itself from database.
+     * After successsful finish object should be destroyed.
+	 * 
+	 * @return
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	public boolean delete() throws SQLException, ClassNotFoundException
+	{
+		DBTableName[] tableNames = {new DBTableName(TABLE_NAME)};
+		DBCondition[] conditions = {new DBCondition(new DBColumnName(
+				tableNames[0], "plugin_id"), DBCondition.REL_EQ, new Integer(
+				_pluginID), DBCondition.NUMBERIC)};
+		return (DBManager.getInstance().delete(conditions) > 0);
+	}
+
 } // end Description
