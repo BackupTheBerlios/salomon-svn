@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import salomon.core.data.DBManager;
+import salomon.core.data.IDBSupporting;
 import salomon.core.data.common.SQLDelete;
 import salomon.core.data.common.SQLUpdate;
 
@@ -13,7 +14,7 @@ import salomon.core.data.common.SQLUpdate;
  * Represents a project, it is an implementation of IProject interface.
  *  
  */
-public final class Project implements IProject
+public final class Project implements IProject, IDBSupporting
 {
 	public static final String TABLE_NAME = "projects";
     

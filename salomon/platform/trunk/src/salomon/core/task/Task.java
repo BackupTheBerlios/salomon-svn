@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import salomon.core.data.DBManager;
+import salomon.core.data.IDBSupporting;
 import salomon.core.data.common.SQLDelete;
 import salomon.core.data.common.SQLUpdate;
 import salomon.plugin.IPlugin;
@@ -16,7 +17,7 @@ import salomon.plugin.ISettings;
  * Represents task which may be executed. It is an implementation of ITask
  * interface.
  */
-public final class Task implements ITask
+public final class Task implements ITask, IDBSupporting
 {
 	private String _name;
 
