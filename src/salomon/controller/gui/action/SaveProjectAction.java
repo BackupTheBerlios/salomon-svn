@@ -6,29 +6,23 @@ import java.awt.event.ActionEvent;
 import salomon.controller.gui.ProjectEditionManager;
 
 /**
- * 
- * TODO: add comment.
- * 
- * @author krzychu
+ * Class represents action fired while saving project.
  *  
  */
 public final class SaveProjectAction extends AbstractProjectAction
 {
 
 	/**
-	 * @param projectEditionManager
-	 * @param taskEditionManager
+	 * Sets an object which method is called in implementation of actionPerformed()
+	 * of method
+	 * 
+	 * @param projectEditionManager an instance of ProjectEditionManager
 	 */
 	protected SaveProjectAction(ProjectEditionManager projectEditionManager)
 	{
 		super(projectEditionManager);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-	 */
 	public void actionPerformed(ActionEvent e)
 	{
 		_projectEditionManager.saveProject();

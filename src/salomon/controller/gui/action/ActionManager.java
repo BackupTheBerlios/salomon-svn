@@ -5,11 +5,8 @@ import salomon.controller.gui.ProjectEditionManager;
 import salomon.controller.gui.TaskEditionManager;
 
 /**
- * 
- * TODO: add comment.
- * 
- * @author krzychu
- *  
+ * Class manages with actions. It creates and holds actions used to create most
+ * of buttons in program.
  */
 public final class ActionManager
 {
@@ -33,6 +30,8 @@ public final class ActionManager
 	private TaskEditionManager _taskEditionManager;
 
 	/**
+	 * Sets object used to create actions.
+	 * 
 	 * @param taskEditionManager
 	 * @param projectEditionManager
 	 */
@@ -43,6 +42,11 @@ public final class ActionManager
 		_projectEditionManager = projectEditionManager;
 	}
 
+	/**
+	 * Returns an instance of AddPluginAction.
+	 * 
+	 * @return an instance of AddPluginAction.
+	 */
 	public AddPluginAction getAddPluginAction()
 	{
 		if (_addPluginAction == null) {
@@ -52,7 +56,9 @@ public final class ActionManager
 	}
 
 	/**
-	 * @return Returns the newProjectAction.
+	 * Returns an instance of NewProjectAction.
+	 * 
+	 * @return an instance of NewProjectAction.
 	 */
 	public NewProjectAction getNewProjectAction()
 	{
@@ -63,7 +69,9 @@ public final class ActionManager
 	}
 
 	/**
-	 * @return Returns the openProjectAction.
+	 * Returns an instance of OpenProjectAction.
+	 * 
+	 * @return an instance of OpenProjectAction.
 	 */
 	public OpenProjectAction getOpenProjectAction()
 	{
@@ -73,6 +81,11 @@ public final class ActionManager
 		return _openProjectAction;
 	}
 
+	/**
+	 * Returns an instance of RemovePluginAction.
+	 * 
+	 * @return an instance of RemovePluginAction.
+	 */
 	public RemovePluginAction getRemovePluginAction()
 	{
 		if (_removePluginAction == null) {
@@ -82,7 +95,9 @@ public final class ActionManager
 	}
 
 	/**
-	 * @return Returns the runTaskAction.
+	 * Returns an instance of RunTaskAction.
+	 * 
+	 * @return an instance of RunTaskAction.
 	 */
 	public RunTaskAction getRunTaskAction()
 	{
@@ -92,6 +107,11 @@ public final class ActionManager
 		return _runTaskAction;
 	}
 
+	/**
+	 * Returns an instance of SavePluginAction.
+	 * 
+	 * @return an instance of SavePluginAction.
+	 */
 	public SavePluginAction getSavePluginAction()
 	{
 		if (_savePluginAction == null) {
@@ -101,7 +121,9 @@ public final class ActionManager
 	}
 
 	/**
-	 * @return Returns the saveProjectAction.
+	 * Returns an instance of SaveProjectAction.
+	 * 
+	 * @return an instance of SaveProjectAction.
 	 */
 	public SaveProjectAction getSaveProjectAction()
 	{

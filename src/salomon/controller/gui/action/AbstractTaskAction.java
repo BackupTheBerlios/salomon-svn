@@ -7,18 +7,17 @@ import salomon.controller.gui.TaskEditionManager;
 
 /**
  * 
- * TODO: add comment.
- * 
- * @author krzychu
+ * Represents abstract action caused while editing tasks.
  *  
  */
 abstract class AbstractTaskAction extends AbstractAction
 {
+	/**
+	 * an object which method are called in implementation of actionPerformed()
+	 * method
+	 */
 	protected TaskEditionManager _taskEditionManager = null;
 
-	/**
-	 * @param editionManager
-	 */
 	protected AbstractTaskAction(TaskEditionManager editionManager)
 	{
 		_taskEditionManager = editionManager;

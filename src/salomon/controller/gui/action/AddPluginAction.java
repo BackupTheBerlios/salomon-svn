@@ -6,29 +6,25 @@ import java.awt.event.ActionEvent;
 import salomon.controller.gui.TaskEditionManager;
 
 /**
- * 
- * TODO: add comment.
- * @author nico
- * 
+ * Class represents action fired while adding new plugin.
+ *  
  */
 public final class AddPluginAction extends AbstractPluginAction
 {
-
 	/**
-	 * @param editionManager
+	 * Sets an object which method is called in implementation of
+	 * actionPerformed() method
+	 * 
+	 * @param editionManager an instance of TaskEditionManager
 	 */
 	public AddPluginAction(TaskEditionManager editionManager)
 	{
 		super(editionManager);
-		// TODO Auto-generated constructor stub
 	}
 
-	/* (non-Javadoc)
-	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-	 */
-	public void actionPerformed(ActionEvent arg0)
+	public void actionPerformed(ActionEvent e)
 	{
-		_taskEditionManager.addPlugin();		
+		_taskEditionManager.addPlugin();
 	}
 
 }

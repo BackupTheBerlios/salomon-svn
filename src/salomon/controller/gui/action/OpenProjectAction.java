@@ -6,29 +6,23 @@ import java.awt.event.ActionEvent;
 import salomon.controller.gui.ProjectEditionManager;
 
 /**
- * 
- * TODO: add comment.
- * 
- * @author krzychu
+ * Class represents action fired while opening a project.
  *  
  */
 public final class OpenProjectAction extends AbstractProjectAction
 {
 
 	/**
-	 * @param projectEditionManager
-	 * @param taskEditionManager
+	 * Sets an object which method is called in implementation of
+	 * actionPerformed() method
+	 * 
+	 * @param projectEditionManager an instance of ProjectEditionManager
 	 */
 	OpenProjectAction(ProjectEditionManager projectEditionManager)
 	{
 		super(projectEditionManager);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-	 */
 	public void actionPerformed(ActionEvent event)
 	{
 		_projectEditionManager.openProject();

@@ -14,10 +14,12 @@ import salomon.controller.gui.TaskEditionManager;
  */
 public final class RunTaskAction extends AbstractTaskAction
 {
-
 	/**
-	 * @param taskEditionManager
-	 */
+     * Sets an object which method is called in implementation of
+     * actionPerformed() method
+     * 
+     * @param editionManager an instance of TaskEditionManager
+     */
 	public RunTaskAction(TaskEditionManager taskEditionManager)
 	{
 		super(taskEditionManager);

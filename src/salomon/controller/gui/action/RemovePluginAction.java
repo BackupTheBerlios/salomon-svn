@@ -6,26 +6,22 @@ import java.awt.event.ActionEvent;
 import salomon.controller.gui.TaskEditionManager;
 
 /**
- * 
- * TODO: add comment.
- * @author nico
- * 
+ * Class represents action fired while removing plugin.
+ *  
  */
 public final class RemovePluginAction extends AbstractPluginAction
 {
-
 	/**
-	 * @param editionManager
+	 * Sets an object which method is called in implementation of
+	 * actionPerformed() method
+	 * 
+	 * @param editionManager an instance of TaskEditionManager
 	 */
 	public RemovePluginAction(TaskEditionManager editionManager)
 	{
 		super(editionManager);
-		// TODO Auto-generated constructor stub
 	}
 
-	/* (non-Javadoc)
-	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-	 */
 	public void actionPerformed(ActionEvent arg0)
 	{
 		_taskEditionManager.removePlugin();
