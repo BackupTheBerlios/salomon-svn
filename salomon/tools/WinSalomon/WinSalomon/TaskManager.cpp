@@ -22,10 +22,12 @@
 
 #include "taskmanager.h"
 
-TaskManager::TaskManager(void)
-{
-}
+const char* TaskManager::CLASS_NAME = "salomon/engine/task/ITaskManager";
 
-TaskManager::~TaskManager(void)
-{
-}
+//TaskManager::TaskManager(void)
+//{
+//}
+//
+//TaskManager::~TaskManager(void)
+//{
+//}

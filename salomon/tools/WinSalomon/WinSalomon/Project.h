@@ -26,17 +26,25 @@
 
 #include "winsalomon.h"
 
-#include "taskmanager.h"
+#include "TaskManager.h"
+#include "JavaObject.h"
 
 
-DLL_SHARE class Project
+DLL_SHARE class Project : public JavaObject
 {
 private:
 	JNIEnv *env;
+	static const char* CLASS_NAME;
+
 
 public:
-	Project(void);
-	~Project(void);
+	Project(JNIEnv *env, jobject object) : JavaObject(env, CLASS_NAME, object)
+	{
+		// empty body
+	}
+	~Project(void)
+	{
+	}
 
 	std::string getInfo();
 

@@ -21,10 +21,12 @@
 
 #include "solutionmanager.h"
 
-SolutionManager::SolutionManager(void)
-{
-}
+const char* SolutionManager::CLASS_NAME = "salomon/engine/solution/ISolutionManager";
 
-SolutionManager::~SolutionManager(void)
-{
-}
+//SolutionManager::SolutionManager(void)
+//{
+//}
+//
+//SolutionManager::~SolutionManager(void)
+//{
+//}

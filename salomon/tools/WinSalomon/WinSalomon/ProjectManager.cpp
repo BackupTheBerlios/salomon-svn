@@ -22,10 +22,12 @@
 
 #include "projectmanager.h"
 
-ProjectManager::ProjectManager(void)
-{
-}
+const char* ProjectManager::CLASS_NAME = "salomon/engine/project/IProjectManager";
 
-ProjectManager::~ProjectManager(void)
-{
-}
+//ProjectManager::ProjectManager(void)
+//{
+//}
+//
+//ProjectManager::~ProjectManager(void)
+//{
+//}

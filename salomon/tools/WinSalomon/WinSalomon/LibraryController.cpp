@@ -22,10 +22,35 @@
 #include "librarycontroller.h"
 #include "winsalomon.h"
 
-LibraryController::LibraryController(void)
+
+const char* LibraryController::CLASS_NAME = "salomon/engine/controller/LibraryController";
+
+DLL_SHARE ManagerEngine* LibraryController::getManagerEngine()
 {
+	std::cout << "Getting ManagerEngine...";
+
+	jmethodID getManagerEngineMethod = this->findMethod("getManagerEngine", "()Lsalomon/engine/platform/IManagerEngine;");
+
+	jobject managerEngine = this->getEnv()->CallObjectMethod(this->getObject(), getManagerEngineMethod);
+
+	ManagerEngine* result = new ManagerEngine(getEnv(), managerEngine);
+
+	if (result != 0)
+	{
+		std::cout << "success" << std::endl;
+	}
+	else
+	{
+		std::cout << "failure" << std::endl;
+	}
+
+	return result;
 }
 
-LibraryController::~LibraryController(void)
-{
-}
+//LibraryController::LibraryController(void)
+//{
+//}
+//
+//LibraryController::~LibraryController(void)
+//{
+//}

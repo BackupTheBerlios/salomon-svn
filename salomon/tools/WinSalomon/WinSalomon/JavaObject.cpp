@@ -19,31 +19,5 @@
  * 
  */
 
+#include "javaobject.h"
 
-#pragma once
-
-#include "winsalomon.h"
-
-#include "JavaObject.h"
-#include "SolutionManager.h"
-#include "PluginManager.h"
-
-
-DLL_SHARE class ManagerEngine : public JavaObject
-{
-private:
-	JNIEnv *env;
-	static const char* CLASS_NAME;
-
-public:
-	ManagerEngine(JNIEnv *env, jobject object) : JavaObject(env, CLASS_NAME, object)
-	{
-		// empty body
-	}
-	~ManagerEngine()
-	{
-	}
-
-	DLL_SHARE SolutionManager* getSolutionManager();
-	DLL_SHARE PluginManager* getPluginManager();
-};

@@ -24,17 +24,25 @@
 
 #include "winsalomon.h"
 
-#include "project.h"
+#include "Project.h"
+#include "JavaObject.h"
 
 
-DLL_SHARE class ProjectManager
+DLL_SHARE class ProjectManager : public JavaObject
 {
 private:
 	JNIEnv *env;
+	static const char* CLASS_NAME;
+
 
 public:
-	ProjectManager(void);
-	~ProjectManager(void);
+	ProjectManager(JNIEnv *env, jobject object) : JavaObject(env, CLASS_NAME, object)
+	{
+		// empty body
+	}
+	~ProjectManager(void)
+	{
+	}
 
 	DLL_SHARE void addProject(Project*);
 

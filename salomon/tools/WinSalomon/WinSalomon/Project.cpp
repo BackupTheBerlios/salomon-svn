@@ -22,10 +22,12 @@
 
 #include "project.h"
 
-Project::Project(void)
-{
-}
+const char* Project::CLASS_NAME = "salomon/engine/project/IProject";
 
-Project::~Project(void)
-{
-}
+//Project::Project(void)
+//{
+//}
+//
+//Project::~Project(void)
+//{
+//}

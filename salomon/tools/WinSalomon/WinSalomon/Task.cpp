@@ -22,10 +22,12 @@
 
 #include "task.h"
 
-Task::Task(void)
-{
-}
+const char* Task::CLASS_NAME = "salomon/engine/task/ITask";
 
-Task::~Task(void)
-{
-}
+//Task::Task(void)
+//{
+//}
+//
+//Task::~Task(void)
+//{
+//}

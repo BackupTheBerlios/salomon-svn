@@ -21,10 +21,13 @@
 
 #include "managerengine.h"
 
-ManagerEngine::ManagerEngine(void)
-{
-}
+const char* ManagerEngine::CLASS_NAME = "salomon/engine/platform/IManagerEngine";
 
-ManagerEngine::~ManagerEngine(void)
-{
-}
+
+//ManagerEngine::ManagerEngine(void)
+//{
+//}
+//
+//ManagerEngine::~ManagerEngine(void)
+//{
+//}

@@ -22,17 +22,25 @@
 #pragma once
 
 #include <jni.h>
+
 #include "winsalomon.h"
+
+#include "LibraryController.h"
 
 DLL_SHARE class Salomon
 {
 private:
-	JNIEnv *env;
+	JNIEnv *_env;
+	JavaVM *_jvm;
+
+	static const char* CLASS_NAME;
+
+
 
 public:
 	DLL_SHARE explicit Salomon();
 	DLL_SHARE virtual ~Salomon(void);
-	DLL_SHARE void __stdcall void runTask();
+	DLL_SHARE LibraryController* getLibraryController();
 
 private:
 	jobjectArray

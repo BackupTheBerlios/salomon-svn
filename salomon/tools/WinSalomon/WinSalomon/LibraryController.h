@@ -23,12 +23,24 @@
 
 #include "winsalomon.h"
 
+#include "JavaObject.h"
+#include "ManagerEngine.h"
 
-DLL_SHARE class LibraryController
+
+DLL_SHARE class LibraryController : public JavaObject
 {
 private:
-	JNIEnv *env;
+	static const char* CLASS_NAME;
 public:
-	DLL_SHARE LibraryController(void);
-	DLL_SHARE ~LibraryController(void);
+	LibraryController(JNIEnv *env, jobject object) : JavaObject(env, CLASS_NAME, object)
+	{
+		// empty body
+	}
+
+	DLL_SHARE ~LibraryController(void)
+	{
+	}
+
+	DLL_SHARE ManagerEngine* getManagerEngine();
+
 };

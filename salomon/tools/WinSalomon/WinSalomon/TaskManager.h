@@ -23,13 +23,24 @@
 #pragma once
 #include "winsalomon.h"
 
+#include "JavaObject.h"
 
-DLL_SHARE class TaskManager
+
+DLL_SHARE class TaskManager : public JavaObject
 {
 private:
 	JNIEnv *env;
 
+	static const char* CLASS_NAME;
+
+
 public:
-	DLL_SHARE TaskManager(void);
-	DLL_SHARE ~TaskManager(void);
+	TaskManager(JNIEnv *env, jobject object) : JavaObject(env, CLASS_NAME, object)
+	{
+		// empty body
+	}
+
+	~TaskManager(void)
+	{
+	}
 };

@@ -23,21 +23,54 @@
 
 #include "salomon.h"
 
+DLL_SHARE LibraryController* Salomon::getLibraryController()
+{
+	std::cout << "Getting LibraryController...";
+
+	jclass starterClass = _env->FindClass("salomon/engine/Starter");
+	if (starterClass == 0)
+	{
+		std::cout << "Cannot find Starter!" << std::endl;
+	}
+
+	jmethodID createLibraryControllerMethod = _env->GetStaticMethodID(starterClass, "createLibraryController",
+		"()Lsalomon/engine/controller/LibraryController;");
+
+	if (createLibraryControllerMethod == 0)
+	{
+		std::cout << "Cannot find method createLibraryController!" << std::endl;
+	}
+
+	jobject libraryControllerJava = _env->CallStaticObjectMethod(starterClass, createLibraryControllerMethod);
+
+	LibraryController* libraryController = new LibraryController(_env, libraryControllerJava);
+
+	if (libraryController != 0)
+	{
+		std::cout << "success" << std::endl;
+	}
+	else
+	{
+		std::cout << "failure" << std::endl;
+	}
+
+	return libraryController;
+}
 
 
 #define NULL_CHECK0(e) if ((e) == 0) return 0 
 
-void Salomon::runTask()
-{
-	std::cout << "Run task method" << std::endl; 
-}
+//void Salomon::runTask()
+//{
+//	std::cout << "Run task method" << std::endl; 
+//}
 
 
 Salomon::Salomon()
 {
 	JavaVMOption options[1];
-	JNIEnv *env;
-	JavaVM *jvm;
+	//JNIEnv *env;
+	//JavaVM *jvm;
 	JavaVMInitArgs vm_args;
 	long status;
 	jclass starterClass;
@@ -52,53 +85,43 @@ Salomon::Salomon()
 	vm_args.version = JNI_VERSION_1_2;
 	vm_args.nOptions = 1;
 	vm_args.options = options;
-	status = JNI_CreateJavaVM(&jvm, (void**)&env, &vm_args);
+	status = JNI_CreateJavaVM(&_jvm, (void**)&_env, &vm_args);
 
 	jclass libraryControllerClass;
 	if (status != JNI_ERR)
 	{
 		//cls = env->FindClass("sample/Sample2");
 		//libraryControllerClass = env->FindClass("salomon/engine/database/DBManager");
-		libraryControllerClass = env->FindClass("salomon/engine/controller/LibraryController");
+//		libraryControllerClass = env->FindClass("salomon/engine/controller/LibraryController");
 //		cls = env->FindClass("Notepad");
-		starterClass = env->FindClass("salomon/engine/Starter");
-		if (libraryControllerClass != 0)
-		{
-			std::cout << "Supcio :-)" << std::endl;
-		}
-		if(starterClass !=0)
-		{   
-			std::cout << "Class \"Starter\" was found!" << std::endl;
-			mid = env->GetStaticMethodID(starterClass, "createLibraryController",
-				       "()Lsalomon/engine/controller/LibraryController;"); 
+		//starterClass = env->FindClass("salomon/engine/Starter");
+		//if(starterClass !=0)
+		//{   
+		//	std::cout << "Class \"Starter\" was found!" << std::endl;
+		//	mid = env->GetStaticMethodID(starterClass, "createLibraryController",
+		//		       "()Lsalomon/engine/controller/LibraryController;"); 
 
-			//mid = env->GetStaticMethodID(starterClass, "main",
-			//	       "([Ljava/lang/String;)V");
+		//	if(mid !=0)
+		//	{	
+		//		jobject libraryController = env->CallStaticObjectMethod(starterClass, mid);
+		//		if (libraryController != 0)
+		//		{
+		//			std::cout << "Super!!!" << std::endl;
+		//		}
+		//		else
+		//		{
+		//			std::cout << "I'am sad :-(" << std::endl;
+		//		}
+		//	}
+		//	else
+		//	{
+		//		std::cout << "Cannot find \"createLibraryController\" method!" << std::endl;
+		//	}
+		//	
+		//} else {
+		//	std::cout << "Class not found " << std::endl;
+		//}
 
-			if(mid !=0)
-			{	
-				std::cout << "Method \"createLibraryController\" was found!" << std::endl;
-
-				jobject libraryController = env->CallStaticObjectMethod(starterClass, mid);
-				if (libraryController != 0)
-				{
-					std::cout << "Super!!!" << std::endl;
-				}
-				else
-				{
-					std::cout << "I'am sad :-(" << std::endl;
-				}
-			}
-			else
-			{
-				std::cout << "Cannot find \"createLibraryController\" method!" << std::endl;
-			}
-			
-		} else {
-			std::cout << "Class not found " << std::endl;
-		}
-
-		jvm->DestroyJavaVM();	
 	}
 	else {
 		std::cout << "JVM error" << std::endl;			
@@ -108,6 +131,7 @@ Salomon::Salomon()
 Salomon::~Salomon(void)
 {
 	std::cout << "Destruktor" << std::endl;
+	_jvm->DestroyJavaVM();
 }
 
 jstring

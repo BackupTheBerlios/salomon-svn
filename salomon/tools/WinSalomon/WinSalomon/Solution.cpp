@@ -22,10 +22,13 @@
 
 #include "solution.h"
 
-Solution::Solution(void)
-{
-}
+const char* Solution::CLASS_NAME = "salomon/engine/solution/ISolution";
 
-Solution::~Solution(void)
-{
-}
+
+//Solution::Solution(void)
+//{
+//}
+//
+//Solution::~Solution(void)
+//{
+//}

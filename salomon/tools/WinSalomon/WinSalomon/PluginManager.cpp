@@ -22,10 +22,13 @@
 
 #include "pluginmanager.h"
 
-PluginManager::PluginManager(void)
-{
-}
+const char* PluginManager::CLASS_NAME = "salomon/engine/plugin/IPluginManager";
 
-PluginManager::~PluginManager(void)
-{
-}
+
+//PluginManager::PluginManager(void)
+//{
+//}
+//
+//PluginManager::~PluginManager(void)
+//{
+//}

@@ -22,13 +22,22 @@
 #pragma once
 #include "winsalomon.h"
 
+#include "JavaObject.h"
 
-DLL_SHARE class PluginManager
+
+DLL_SHARE class PluginManager : public JavaObject
 {
 private:
 	JNIEnv *env;
+	static const char* CLASS_NAME;
+
 
 public:
-	PluginManager(void);
-	~PluginManager(void);
+	PluginManager(JNIEnv *env, jobject object) : JavaObject(env, CLASS_NAME, object)
+	{
+		// empty body
+	}
+	~PluginManager(void)
+	{
+	}
 };

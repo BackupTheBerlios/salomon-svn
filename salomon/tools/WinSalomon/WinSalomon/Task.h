@@ -23,12 +23,23 @@
 #pragma once
 #include "winsalomon.h"
 
-DLL_SHARE class Task
+#include "JavaObject.h"
+
+
+DLL_SHARE class Task : public JavaObject
 {
 private:
 	JNIEnv *env;
+	static const char* CLASS_NAME;
+
 
 public:
-	Task(void);
-	~Task(void);
+	Task(JNIEnv *env, jobject object) : JavaObject(env, CLASS_NAME, object)
+	{
+		// empty body
+	}
+
+	~Task(void)
+	{
+	}
 };
