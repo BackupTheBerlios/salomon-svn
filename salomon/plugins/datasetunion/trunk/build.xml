@@ -5,6 +5,7 @@
 	<property name="bin_dir" value="bin"/>
 	<property name="lib_dir" value="lib"/>	
 	<property name="doc_dir" value="docs"/>	
+	<property name="dist_dir" value="dist"/>	
 
 	
 	<path id="project.class.path">
@@ -19,7 +20,7 @@
 
 
 	
-	<target name="compile" >
+	<target name="compile" depends="init">
 		<echo message="Building project"/>
 		<javac srcdir="${src_dir}/" 
 		       includes="**.java">
@@ -29,9 +30,13 @@
 	
 	<target name="init">
 		<mkdir dir="${bin_dir}"/>
+		<mkdir dir="${dist_dir}"/>
 	</target>
 
-
+	<target name="dist" description="builds distribution jars" depends="compile">
+		<jar destfile="${dist_dir}/unionset.jar" basedir="${bin_dir}" includes="pl/edu/agh/iisg/salomon/plugin/datasetunion/**"/>
+	</target>
+	
 	<target name="clean">
 		<delete dir="${bin_dir}" />		
 	</target>	
