@@ -107,7 +107,7 @@ public final class SQLSelect
 	 */
 	public String getQuery()
 	{
-		StringBuffer query = new StringBuffer("SELECT "); //$NON-NLS-1$
+		StringBuilder query = new StringBuilder("SELECT "); //$NON-NLS-1$
 
 		// adding column to select
 		if (_columns.isEmpty()) {
