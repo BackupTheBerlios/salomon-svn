@@ -512,8 +512,7 @@ public class ControllerGUI extends JFrame
 			_pnlPluginButtons = new JPanel();
 			_pnlPluginButtons.setLayout(new BoxLayout(_pnlPluginButtons,
 					BoxLayout.Y_AXIS));
-			_pnlPluginButtons.add(Box.createVerticalGlue());
-			_pnlPluginButtons.add(_guiButtons.getBtnAddAll());
+			_pnlPluginButtons.add(Box.createVerticalGlue());			
 			_pnlPluginButtons.add(Box.createVerticalStrut(_strutHeight));
 			_pnlPluginButtons.add(_guiButtons.getBtnAdd());
 			_pnlPluginButtons.add(Box.createVerticalStrut(_strutHeight));
