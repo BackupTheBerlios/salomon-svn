@@ -1,9 +1,10 @@
 \section{Wprowadzenie}
 
 Salomon to system do wydobywania wiedzy z danych zgodnie z metodologi¹ \emph{Knowlege Mining}.
-Odkrywanie wiedzy to proces iteracyjny, podzielony na etapy. W ka¿dym tym etapie wiedza jest poddawana
-obróbce. Etapy te mog¹ tworzyæ cykle. Na ka¿dym takim etapie proces odkrywania mo¿e byæ ukierunkowany zgodnie
-z wymaganiami u¿ytkownika. Ka¿dy etap tworzy odrêbn¹ ca³oœæ. 
+Odkrywanie wiedzy to proces iteracyjny, podzielony na etapy. Etapy te mog¹ tworzyæ cykle. \\
+W ka¿dym tym etapie wiedza jest poddawana
+obróbce. Na ka¿dym takim etapie proces odkrywania mo¿e byæ ukierunkowany zgodnie
+z wymaganiami u¿ytkownika. Ka¿dy etap tworzy odrêbn¹ ca³oœæ. Czêœæ etapów jest roz³¹czna, zatem mog¹ byæ wykonywane wspó³bie¿nie. Architektura Salomona pozwala na rozproszone a co za tym idzie zrównoleglenie wykonywania takich roz³¹cznych etapów oraz na synchronizacjê ich wyników.
 
 W Salomonie reprezentacj¹ etapu jest \emph{zadanie} (Task). Ka¿de zadanie mo¿e posiadaæ kilka nastêpników i kilka
 poprzedników. Ujmuj¹c rzecz proœciej, zadania mog¹ byæ zorganizowane w postaci grafu. 
