@@ -5,26 +5,28 @@
 
 package ks.plugins;
 
+import javax.swing.JPanel;
+
 /**
  *  
  */
-public class IGraphicalPlugin
+public interface IGraphicalPlugin
 {
-	///////////////////////////////////////
-	// associations
-	/**
-	 *  
-	 */
-	public ISettings iSettings;
-
 	///////////////////////////////////////
 	// operations
 	/**
-	 * Does ...
+	 * Returns panel, which enables modification of settings
 	 *  
 	 */
-	public void getSettingsPanel()
-	{
-		// your code here
-	} // end getSettingsPanel
+	public JPanel getSettingsPanel();
+	
+	/**
+	 * Returns panel which shows result of plugins execution
+	 * 
+	 * @return
+	 */
+	public JPanel getResultPanel();
+	
+	public Settings getSettings();
+	
 } // end IGraphicalPlugin
