@@ -36,6 +36,7 @@ import salomon.platform.exception.PlatformException;
 
 import salomon.plugin.ISettingComponent;
 import salomon.plugin.ISettings;
+import salomon.util.serialization.SimpleString;
 
 /**
  * 
@@ -93,9 +94,9 @@ public final class USettingComponent implements ISettingComponent
 		}
 
 		USettings uSettings = (USettings) settings;
-		_cmbFirstDataSet.setSelectedItem(uSettings.getFirstDataSet());
-		_cmbSecondDataSet.setSelectedItem(uSettings.getSecondDataSet());
-		_txtResultDataSet.setText(uSettings.getResultDataSet());
+		_cmbFirstDataSet.setSelectedItem(((SimpleString)uSettings.getField(USettings.FIRST_DATA_SET)).getValue());
+		_cmbSecondDataSet.setSelectedItem(((SimpleString)uSettings.getField(USettings.SECOND_DATA_SET)).getValue());
+		_txtResultDataSet.setText(((SimpleString)uSettings.getField(USettings.RESULT_DATA_SET)).getValue());
 
 		return _settingPanel;
 	}
@@ -113,11 +114,12 @@ public final class USettingComponent implements ISettingComponent
 	 */
 	public ISettings getSettings()
 	{
-		USettings uSettings = new USettings();
-		uSettings.setFirstDataSet((String) _cmbFirstDataSet.getSelectedItem());
-		uSettings.setSecondDataSet((String) _cmbSecondDataSet.getSelectedItem());
-		uSettings.setResultDataSet(_txtResultDataSet.getText());
         
+		USettings uSettings = new USettings();
+		uSettings.setField(USettings.FIRST_DATA_SET, new SimpleString((String) _cmbFirstDataSet.getSelectedItem()));
+        //uSettings.setF
+        uSettings.setField(USettings.SECOND_DATA_SET, new SimpleString((String) _cmbSecondDataSet.getSelectedItem()));
+        uSettings.setField(USettings.RESULT_DATA_SET, new SimpleString(_txtResultDataSet.getText()));
 		return uSettings;
 	}
 }

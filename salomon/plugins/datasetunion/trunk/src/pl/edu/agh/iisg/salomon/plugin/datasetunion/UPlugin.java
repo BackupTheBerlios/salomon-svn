@@ -45,7 +45,7 @@ public final class UPlugin implements IPlugin
 	 */
 	public UPlugin()
 	{
-		_description = new Description("UPlugin", DESCRPTION);
+		_description = new Description("UPlugin", DESCRIPTION);
 	}
 
 	/**
@@ -67,12 +67,14 @@ public final class UPlugin implements IPlugin
 		UResult uResult = new UResult();
 		IDataSet firstDataSet;
 		try {
-			firstDataSet = dataSetManager.getDataSet(uSettings.getFirstDataSet());
-			IDataSet secondDataSet = dataSetManager.getDataSet(uSettings.getSecondDataSet());
-			IDataSet result = dataSetManager.union(firstDataSet, secondDataSet);
-			result.setName(uSettings.getResultDataSet());
-			dataSetManager.add(result);
-			uResult.setSuccessfull(true);
+//			firstDataSet = dataSetManager.getDataSet(uSettings.getFirstDataSet());
+//			IDataSet secondDataSet = dataSetManager.getDataSet(uSettings.getSecondDataSet());
+//			IDataSet result = dataSetManager.union(firstDataSet, secondDataSet);
+//			result.setName(uSettings.getResultDataSet());
+//			dataSetManager.add(result);
+			//TODO: implement
+            
+            uResult.setSuccessfull(true);
 		} catch (Exception e) {
 			uResult.setSuccessfull(false);
 		}
@@ -111,6 +113,15 @@ public final class UPlugin implements IPlugin
 	{
 	}
 
-	private static final String DESCRPTION = "Creates dataset which is a union of two other datasets";
+	private static final String DESCRIPTION = "Creates dataset which is a union of two other datasets";
+
+	/**
+	 * @see salomon.plugin.IPlugin#setDescription(salomon.plugin.Description)
+	 */
+	public void setDescription(Description description)
+	{
+		_description = description;
+		
+	}
 
 }
