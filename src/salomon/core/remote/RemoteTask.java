@@ -25,8 +25,9 @@ public final class RemoteTask extends UnicastRemoteObject
 	private ITask _task;
 
 	/**
-	 *  
-	 */
+     * @pre task != null
+     * @post $none
+     */
 	public RemoteTask(ITask task) throws RemoteException
 	{
 		_task = task;
