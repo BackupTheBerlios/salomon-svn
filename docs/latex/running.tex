@@ -1,0 +1,57 @@
+\section{Uruchomienie}
+	Do uruchomienia programu konieczne jest zainstalowanie w systemie Java Runtime Environment (http://www.sun.com), najlepiej w wersji 1.5beta2 lub nowszej. Jeœli program ma dzia³aæ z wykorzystaniem serwera bazy danych Firebird, to nale¿y zainstalowaæ dodatkowo Firebirda (http://firebird.sourceforge.net).
+Program mo¿e dzia³aæ w 3 trybach (jako serwer, klient lub lokalnie) i na dwa sposoby ³¹czyæ siê z baz¹ danych (poprzez serwer lub bez niego), zale¿nie od wpisów w pliku konfiguracyjnym. 
+By uruchomiæ go w odpowiedniej konfiguracji nale¿y rozpakowaæ go i zmodyfikowaæ domyœlne ustawienia pliku konfiguracyjnego. Program dostarczany jest z przyk³adow¹ baz¹ danych w której zdefiniowane s¹ odpowiednie tabele i lokalizacje pluginów oraz z przyk³adowymi pluginami. 
+Dla u¿ytkowników, którzy chc¹ stworzyæ w³asn¹ bazê danych w katalogu db umieszczony zosta³ skrypt tworz¹cy tabele niezbêdne do pracy programu i uruchomienia dostarczonych pluginów (crebas.sql).
+
+\subsection{Plik konfiguracyjny}
+G³ównym plikiem konfiguracyjnym programu jest config.properties.
+Zawiera on nastêpuj¹ce klucze:
+
+\begin{itemize}
+\item \emph{HOSTNAME} - identyfikator sieciowy komputera, na którym zainstalowana jest baza danych. Uwzglêdniany jest tylko w przypadku, gdy program ³¹czy siê z baz¹ danych przy u¿yciu serwera Firebird.
+
+\item \emph{DB\_PATH} - lokalizacja bazy danych. Gdy program dzia³a z serwerem Firebird jest to lokalizacja bezwzglêdna, w przeciwnym przypadku - wzglêdem katalogu instalacyjnego.
+
+\item \emph{USER} - nazwa u¿ytkownika, który loguje siê do bazy
+
+\item \emph{PASSWD} - has³o u¿ytkownika
+
+\item \emph{EMBEDDED} - okreœla, sposób po³¹czenia z baz¹ danych
+\subitem \emph{N} - z wykorzystaniem serwera
+\subitem \emph{Y} - przy u¿yciu dll-a
+
+\item \emph{SERVER\_HOST} - nazwa komputera, na którym zainstalowany jest Salomon w wersji server
+
+\item \emph{SERVER\_PORT} - port na którym nas³uchuje server
+
+\item \emph{MODE - tryb} uruchomienia
+\subitem \emph{local} - lokalnie
+\subitem \emph{client} - klient
+\subitem \emph{server} - serwer
+
+\end{itemize}
+
+Pozosta³e wartoœci nie powinny byæ modyfikowane przez u¿ytkownika.
+
+\subsection{Ustawienia pliku konfiguracyjnego}
+\paragraph{Tryb serwera}
+\begin{itemize}
+    \item \emph{MODE=server}
+    \item \emph{SERVER\_HOST=IP hosta}
+    \item \emph{SERVER\_PORT=nr portu}
+\end{itemize}
+
+\paragraph{Tryb klienta}
+\begin{itemize}
+    \item \emph{MODE=server}
+    \item \emph{SERVER\_HOST=IP sewera}
+    \item \emph{SERVER\_PORT=nr portu na którym nas³uchuje serwer}
+\end{itemize}
+
+\paragraph{Tryb lokalny}
+\begin{itemize}
+    \item \emph{MODE=local}
+\end{itemize}
+
+We wszystkich trybach mo¿liwe jest ustawienie po³¹czenie z baz¹ danych za pomoc¹ serwera Firebird lub przy u¿yciu dll-a (klucz \emph{EMBEDDED}).
