@@ -2,13 +2,18 @@
 package salomon.core.remote;
 
 import java.rmi.RemoteException;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 
+import salomon.core.task.ITask;
 import salomon.core.task.ITaskManager;
-import salomon.core.task.Task;
 
 /**
  * 
@@ -19,8 +24,7 @@ import salomon.core.task.Task;
  */
 public final class TaskManagerProxy implements ITaskManager
 {
-	private static Logger _logger = Logger.getLogger(TaskManagerProxy.class);
-
+    private Map _proxies = new HashMap();
 	private IRemoteTaskManager _remoteTaskManager;
 
 	/**
@@ -31,34 +35,6 @@ public final class TaskManagerProxy implements ITaskManager
 		_remoteTaskManager = remoteTaskManager;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see salomon.core.task.ITaskManager#addAllTasks(java.util.List)
-	 */
-	public void addAllTasks(List tasks)
-	{
-		try {
-			_remoteTaskManager.addAllTasks(tasks);
-		} catch (RemoteException e) {
-			_logger.error(e);
-		}
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see salomon.core.task.ITaskManager#addTask(salomon.core.task.Task)
-	 */
-	public void addTask(Task task)
-	{
-		try {
-			_remoteTaskManager.addTask(task);
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			_logger.error(e);
-		}
-	}
 
 	/*
 	 * (non-Javadoc)
@@ -70,23 +46,36 @@ public final class TaskManagerProxy implements ITaskManager
 		try {
 			_remoteTaskManager.clearTaskList();
 		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
 			_logger.error(e);
 		}
 	}
 
+
+	/* (non-Javadoc)
+	 * @see salomon.core.task.ITaskManager#createTask()
+	 */
+	public ITask createTask()
+	{
+        ITask task = null;
+        try {
+            task = getTaskProxy(_remoteTaskManager.createTask());
+        } catch (RemoteException e) {
+            _logger.error(e);
+        }
+		return task;
+	}
+    
 	/*
 	 * (non-Javadoc)
 	 * 
 	 * @see salomon.core.task.ITaskManager#getCurrentTask()
 	 */
-	public Task getCurrentTask()
+	public ITask getCurrentTask()
 	{
-		Task task = null;
+		ITask task = null;
 		try {
-			task = _remoteTaskManager.getCurrentTask();
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
+			task = getTaskProxy(_remoteTaskManager.getCurrentTask());
+		} catch (RemoteException e) {			
 			_logger.error(e);
 		}
 		return task;
@@ -97,16 +86,20 @@ public final class TaskManagerProxy implements ITaskManager
 	 * 
 	 * @see salomon.core.task.ITaskManager#getTasks()
 	 */
-	public List getTasks()
+	public Collection getTasks()
 	{
-		List tasks = Collections.emptyList();
+		List tasks = new ArrayList();
 		try {
-			_remoteTaskManager.getTasks();
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
+			Collection remoteTasks = _remoteTaskManager.getTasks();
+            for (Iterator iter = remoteTasks.iterator(); iter.hasNext();) {
+				IRemoteTask remoteTask = (IRemoteTask) iter.next();
+                tasks.add(getTaskProxy(remoteTask));
+			}
+		} catch (RemoteException e) {			
 			_logger.error(e);
 		}
-		return tasks;
+        
+		return Collections.unmodifiableCollection(tasks);
 	}
 
 	/*
@@ -119,8 +112,19 @@ public final class TaskManagerProxy implements ITaskManager
 		try {
 			_remoteTaskManager.start();
 		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
 			_logger.error(e);
 		}
 	}
+
+    private ITask getTaskProxy(IRemoteTask remoteTask) {
+        ITask task = null;
+    	if (_proxies.containsKey(remoteTask)) {
+    		task = (ITask) _proxies.get(remoteTask); 
+        } else {
+            task = new TaskProxy(remoteTask);
+            _proxies.put(remoteTask, task);            
+        }
+        return task;
+    }
+	private static Logger _logger = Logger.getLogger(TaskManagerProxy.class);
 }

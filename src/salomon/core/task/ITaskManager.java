@@ -16,7 +16,7 @@
 
 package salomon.core.task;
 
-import java.util.List;
+import java.util.Collection;
 
 /**
  * 
@@ -27,15 +27,13 @@ import java.util.List;
  */
 public interface ITaskManager
 {
-	public void addAllTasks(List tasks);
-
-	public void addTask(Task task);
-
 	public void clearTaskList();
+    
+    public ITask createTask(); 
 
-	public Task getCurrentTask();
+	public ITask getCurrentTask();
 
-	public List getTasks();
+	public Collection getTasks();
 
 	public void start();
 }

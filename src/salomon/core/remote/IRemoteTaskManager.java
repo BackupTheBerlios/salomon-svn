@@ -3,9 +3,7 @@ package salomon.core.remote;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
-import java.util.List;
-
-import salomon.core.task.Task;
+import java.util.Collection;
 
 /**
  * 
@@ -16,15 +14,13 @@ import salomon.core.task.Task;
  */
 public interface IRemoteTaskManager extends Remote
 {
-	public void addAllTasks(List tasks) throws RemoteException;
-
-	public void addTask(Task task) throws RemoteException;
-
 	public void clearTaskList() throws RemoteException;
 
-	public Task getCurrentTask() throws RemoteException;
+	public IRemoteTask getCurrentTask() throws RemoteException;
 
-	public List getTasks() throws RemoteException;
+	public Collection getTasks() throws RemoteException;
 
 	public void start() throws RemoteException;
+    
+    public IRemoteTask createTask() throws RemoteException;
 }

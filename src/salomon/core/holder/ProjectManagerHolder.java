@@ -1,8 +1,8 @@
 
 package salomon.core.holder;
 
+import salomon.core.project.IProject;
 import salomon.core.project.IProjectManager;
-import salomon.core.project.Project;
 
 /**
  * 
@@ -28,9 +28,9 @@ final class ProjectManagerHolder implements IProjectManager
 	 * 
 	 * @see salomon.core.IProjectManager#newProject()
 	 */
-	public Project newProject()
+	public void newProject()
 	{
-		return _currentProjectManager.newProject();
+		_currentProjectManager.newProject();
 	}
 
 	/*
@@ -38,9 +38,9 @@ final class ProjectManagerHolder implements IProjectManager
 	 * 
 	 * @see salomon.core.IProjectManager#loadProject(int)
 	 */
-	public Project loadProject(int projectID) throws Exception
+	public void loadProject(int projectID) throws Exception
 	{
-		return _currentProjectManager.loadProject(projectID);
+		_currentProjectManager.loadProject(projectID);
 	}
 
 	/*
@@ -48,10 +48,10 @@ final class ProjectManagerHolder implements IProjectManager
 	 * 
 	 * @see salomon.core.IProjectManager#saveProject(salomon.core.Project)
 	 */
-	public void saveProject(Project project) throws Exception,
+	public void saveProject() throws Exception,
 			ClassNotFoundException
 	{
-		_currentProjectManager.saveProject(project);
+		_currentProjectManager.saveProject();
 	}
 
 	/*
@@ -59,7 +59,7 @@ final class ProjectManagerHolder implements IProjectManager
 	 * 
 	 * @see salomon.core.IProjectManager#getCurrentProject()
 	 */
-	public Project getCurrentProject()
+	public IProject getCurrentProject()
 	{
 		return _currentProjectManager.getCurrentProject();
 	}

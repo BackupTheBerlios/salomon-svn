@@ -2,8 +2,10 @@
 package salomon.core.remote;
 
 import java.io.File;
+import java.net.URL;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.Collection;
 
 import salomon.core.plugin.IPluginManager;
 
@@ -25,7 +27,6 @@ public final class RemotePluginManager extends UnicastRemoteObject
 	public RemotePluginManager(IPluginManager pluginManager)
 			throws RemoteException
 	{
-		super();
 		_pluginManager = pluginManager;
 		// TODO Auto-generated constructor stub
 	}
@@ -35,9 +36,17 @@ public final class RemotePluginManager extends UnicastRemoteObject
 	 * 
 	 * @see salomon.core.IRemotePluginManager#getAvailablePlugins()
 	 */
-	public File[] getAvailablePlugins() throws RemoteException
+	public Collection getAvailablePlugins() throws RemoteException
 	{
 		return _pluginManager.getAvailablePlugins();
 	}
+
+//	/* (non-Javadoc)
+//	 * @see salomon.core.remote.IRemotePluginManager#getPlugin(java.net.URL)
+//	 */
+//	public IRemotePlugin getPlugin(URL url) throws RemoteException
+//	{
+//		return _pluginManager.get;
+//	}
 
 }

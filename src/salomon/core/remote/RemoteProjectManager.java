@@ -4,8 +4,8 @@ package salomon.core.remote;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
+import salomon.core.project.IProject;
 import salomon.core.project.IProjectManager;
-import salomon.core.project.Project;
 
 /**
  * 
@@ -19,14 +19,15 @@ public final class RemoteProjectManager extends UnicastRemoteObject
 {
 
 	private IProjectManager _projectManager;
+    private IRemoteProject _currentRemoteProject;
+    private IProject _currentProject;
 
 	/**
 	 * @throws RemoteException
 	 */
 	protected RemoteProjectManager(IProjectManager projectManager)
 			throws RemoteException
-	{
-		super();
+	{		
 		_projectManager = projectManager;
 	}
 
@@ -35,9 +36,9 @@ public final class RemoteProjectManager extends UnicastRemoteObject
 	 * 
 	 * @see salomon.core.IRemoteProjectManager#newProject()
 	 */
-	public Project newProject() throws RemoteException
+	public void newProject() throws RemoteException
 	{
-		return _projectManager.newProject();
+        _projectManager.newProject();
 	}
 
 	/*
@@ -45,9 +46,9 @@ public final class RemoteProjectManager extends UnicastRemoteObject
 	 * 
 	 * @see salomon.core.IRemoteProjectManager#loadProject(int)
 	 */
-	public Project loadProject(int projectID) throws Exception, RemoteException
+	public void loadProject(int projectID) throws Exception, RemoteException
 	{
-		return _projectManager.loadProject(projectID);
+		_projectManager.loadProject(projectID);
 	}
 
 	/*
@@ -55,10 +56,10 @@ public final class RemoteProjectManager extends UnicastRemoteObject
 	 * 
 	 * @see salomon.core.IRemoteProjectManager#saveProject(salomon.core.Project)
 	 */
-	public void saveProject(Project project) throws Exception, RemoteException,
+	public void saveProject() throws Exception, RemoteException,
 			ClassNotFoundException
 	{
-		_projectManager.saveProject(project);
+		_projectManager.saveProject();
 	}
 
 	/*
@@ -66,8 +67,14 @@ public final class RemoteProjectManager extends UnicastRemoteObject
 	 * 
 	 * @see salomon.core.IRemoteProjectManager#getCurrentProject()
 	 */
-	public Project getCurrentProject() throws RemoteException
+	public IRemoteProject getCurrentProject() throws RemoteException
 	{
-		return _projectManager.getCurrentProject();
+        IProject project = _projectManager.getCurrentProject();
+        if (project != _currentProject) {
+        	_currentProject = project;
+            _currentRemoteProject = new RemoteProject(_currentProject);
+        }
+        
+		return _currentRemoteProject;
 	}
 }

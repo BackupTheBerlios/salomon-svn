@@ -30,7 +30,7 @@ public final class ManagerEngineProxy implements IManagerEngine
 		try {
 			_taskManager = new TaskManagerProxy(
 					remoteManagerEngine.getTasksManager());
-			_projectManager = new ProjectMangerProxy(
+			_projectManager = new ProjectManagerProxy(
 					remoteManagerEngine.getProjectManager());
 			_pluginManager = new PluginManagerProxy(
 					remoteManagerEngine.getPluginManager());

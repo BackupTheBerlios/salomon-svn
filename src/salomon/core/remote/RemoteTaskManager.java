@@ -3,10 +3,18 @@ package salomon.core.remote;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
+import org.apache.log4j.Logger;
+
+import salomon.core.task.ITask;
 import salomon.core.task.ITaskManager;
-import salomon.core.task.Task;
 
 /**
  * 
@@ -18,6 +26,7 @@ import salomon.core.task.Task;
 public final class RemoteTaskManager extends UnicastRemoteObject
 		implements IRemoteTaskManager
 {
+	private Map _proxies = new HashMap();
 
 	private ITaskManager _taskManager;
 
@@ -27,28 +36,7 @@ public final class RemoteTaskManager extends UnicastRemoteObject
 	protected RemoteTaskManager(ITaskManager taskManager)
 			throws RemoteException
 	{
-		super();
 		_taskManager = taskManager;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see salomon.core.IRemoteTaskManager#addAllTasks(java.util.List)
-	 */
-	public void addAllTasks(List tasks) throws RemoteException
-	{
-		_taskManager.addAllTasks(tasks);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see salomon.core.IRemoteTaskManager#addTask(salomon.core.task.Task)
-	 */
-	public void addTask(Task task) throws RemoteException
-	{
-		_taskManager.addTask(task);
 	}
 
 	/*
@@ -64,11 +52,21 @@ public final class RemoteTaskManager extends UnicastRemoteObject
 	/*
 	 * (non-Javadoc)
 	 * 
+	 * @see salomon.core.remote.IRemoteTaskManager#createTask()
+	 */
+	public IRemoteTask createTask() throws RemoteException
+	{
+		return getRemoteTask(_taskManager.createTask());
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see salomon.core.IRemoteTaskManager#getCurrentTask()
 	 */
-	public Task getCurrentTask() throws RemoteException
+	public IRemoteTask getCurrentTask() throws RemoteException
 	{
-		return _taskManager.getCurrentTask();
+		return getRemoteTask(_taskManager.getCurrentTask());
 	}
 
 	/*
@@ -76,9 +74,16 @@ public final class RemoteTaskManager extends UnicastRemoteObject
 	 * 
 	 * @see salomon.core.IRemoteTaskManager#getTasks()
 	 */
-	public List getTasks() throws RemoteException
+	public Collection getTasks() throws RemoteException
 	{
-		return _taskManager.getTasks();
+		List remoteTasks = new ArrayList();
+
+		Collection tasks = _taskManager.getTasks();
+		for (Iterator iter = tasks.iterator(); iter.hasNext();) {
+			ITask task = (ITask) iter.next();
+			remoteTasks.add(getRemoteTask(task));
+		}
+		return Collections.unmodifiableCollection(remoteTasks);
 	}
 
 	/*
@@ -90,5 +95,19 @@ public final class RemoteTaskManager extends UnicastRemoteObject
 	{
 		_taskManager.start();
 	}
+
+	private IRemoteTask getRemoteTask(ITask task) throws RemoteException
+	{
+		IRemoteTask remoteTask = null;
+		if (_proxies.containsKey(task)) {
+			remoteTask = (IRemoteTask) _proxies.get(task);
+		} else {
+			remoteTask = new RemoteTask(task);
+			_proxies.put(task, remoteTask);
+		}
+		return remoteTask;
+	}
+
+	private static Logger _logger = Logger.getLogger(RemoteTaskManager.class);
 
 }

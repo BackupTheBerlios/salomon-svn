@@ -1,9 +1,9 @@
 
 package salomon.core.remote;
 
-import java.io.File;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.util.Collection;
 
 /**
  * 
@@ -14,5 +14,7 @@ import java.rmi.RemoteException;
  */
 public interface IRemotePluginManager extends Remote
 {
-	public File[] getAvailablePlugins() throws RemoteException;
+	public Collection getAvailablePlugins() throws RemoteException;
+    
+//    public IRemotePlugin getPlugin(URL url) throws RemoteException;
 }

@@ -1,10 +1,10 @@
 
 package salomon.core.holder;
 
-import java.util.List;
+import java.util.Collection;
 
+import salomon.core.task.ITask;
 import salomon.core.task.ITaskManager;
-import salomon.core.task.Task;
 
 /**
  * 
@@ -25,25 +25,6 @@ final class TaskManagerHolder implements ITaskManager
 		_currentTaskManager = taskManager;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see salomon.core.task.ITaskManager#addAllTasks(java.util.List)
-	 */
-	public void addAllTasks(List tasks)
-	{
-		_currentTaskManager.addAllTasks(tasks);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see salomon.core.task.ITaskManager#addTask(salomon.core.task.Task)
-	 */
-	public void addTask(Task task)
-	{
-		_currentTaskManager.addTask(task);
-	}
 
 	/*
 	 * (non-Javadoc)
@@ -60,7 +41,7 @@ final class TaskManagerHolder implements ITaskManager
 	 * 
 	 * @see salomon.core.task.ITaskManager#getCurrentTask()
 	 */
-	public Task getCurrentTask()
+	public ITask getCurrentTask()
 	{
 		return _currentTaskManager.getCurrentTask();
 	}
@@ -70,7 +51,7 @@ final class TaskManagerHolder implements ITaskManager
 	 * 
 	 * @see salomon.core.task.ITaskManager#getTasks()
 	 */
-	public List getTasks()
+	public Collection getTasks()
 	{
 		return _currentTaskManager.getTasks();
 	}
@@ -88,5 +69,14 @@ final class TaskManagerHolder implements ITaskManager
 	void setCurrent(ITaskManager taskManager)
 	{
 		_currentTaskManager = taskManager;
+	}
+
+
+	/* (non-Javadoc)
+	 * @see salomon.core.task.ITaskManager#createTask()
+	 */
+	public ITask createTask()
+	{
+        return _currentTaskManager.createTask();
 	}
 }

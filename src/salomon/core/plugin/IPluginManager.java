@@ -1,7 +1,8 @@
 
 package salomon.core.plugin;
 
-import java.io.File;
+import java.util.Collection;
+
 
 /**
  * 
@@ -12,5 +13,6 @@ import java.io.File;
  */
 public interface IPluginManager
 {
-	public File[] getAvailablePlugins();
+	public Collection getAvailablePlugins();
+//    public IPlugin getPlugin(URL url); 
 }

@@ -27,10 +27,11 @@ public final class RemoteController extends UnicastRemoteObject
 	 * @throws RemoteException
 	 *  
 	 */
-	public RemoteController(IManagerEngine managerEngine)
+	public RemoteController(IManagerEngine managerEngine, String name)
 			throws RemoteException
 	{
 		_remoteManagerEngine = new RemoteManagerEngine(managerEngine);
+        _name = name;
 	}
 
 	/*

@@ -1,8 +1,10 @@
 package salomon.core.project;
 
 import java.io.File;
+import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -18,16 +20,19 @@ import salomon.core.data.common.DBCondition;
 import salomon.core.data.common.DBTableName;
 import salomon.core.data.common.DBValue;
 import salomon.core.plugin.PluginLoader;
-import salomon.core.task.ITaskManager;
+import salomon.core.task.ITask;
 import salomon.core.task.Task;
+import salomon.core.task.TaskManager;
 import salomon.plugin.Description;
 import salomon.plugin.IPlugin;
 import salomon.plugin.ISettings;
 
+
+
 /**
  *  
  */
-public class ProjectManager implements IProjectManager
+public final class ProjectManager implements IProjectManager
 {
 	private static Logger _logger = Logger.getLogger(ProjectManager.class);
 
@@ -35,7 +40,7 @@ public class ProjectManager implements IProjectManager
 
 	private IManagerEngine _managerEngine = null;
 
-	private Project _currentProject = null;
+	private IProject _currentProject = null;
 
 	public ProjectManager(IManagerEngine managerEngine)
 	{
@@ -49,12 +54,11 @@ public class ProjectManager implements IProjectManager
 		}
 	}
 
-	public Project newProject()
+	public void newProject()
 	{
-		_currentProject = new Project(_managerEngine);
+		_currentProject = new Project();
 		// clearing old tasks
-		_currentProject.getManagerEngine().getTasksManager().clearTaskList();
-		return _currentProject;
+		_managerEngine.getTasksManager().clearTaskList();
 	}
 
 	/**
@@ -64,9 +68,9 @@ public class ProjectManager implements IProjectManager
 	 * @return loaded project
 	 * @throws Exception
 	 */
-	public Project loadProject(int projectID) throws Exception
+	public void loadProject(int projectID) throws Exception
 	{
-		Project project = new Project(_managerEngine);
+		IProject project = new Project();
 		//
 		// loading plugin information
 		//
@@ -97,10 +101,10 @@ public class ProjectManager implements IProjectManager
 		//
 		// adding tasks
 		//		
-		List tasks = getTasksForProject(projectID);
+		Collection tasks = getTasksForProject(projectID);
 		_logger.info("Project successfully loaded.");
 		// clearing old tasks
-		ITaskManager taskManeger = project.getManagerEngine().getTasksManager();
+		TaskManager taskManeger = (TaskManager)_managerEngine.getTasksManager();
 		taskManeger.clearTaskList();
 		taskManeger.addAllTasks(tasks);
 		_logger.debug("project: " + project);
@@ -109,7 +113,6 @@ public class ProjectManager implements IProjectManager
 		// setting current project
 		//
 		_currentProject = project;
-		return project;
 	}
 
 	/**
@@ -120,16 +123,16 @@ public class ProjectManager implements IProjectManager
 	 * @throws ClassNotFoundException
 	 * @throws Exception
 	 */
-	public void saveProject(Project project) throws Exception,
+	public void saveProject() throws Exception,
 			ClassNotFoundException
 	{
 		// saving project header
-		int projectID = saveProjectHeader(project);
-		project.setProjectID(projectID);
+		int projectID = saveProjectHeader();
+		_currentProject.setProjectID(projectID);
 		// saving plugins
-		savePlugins(project);
+		savePlugins();
 		// saving tasks
-		saveTasks(project);
+		saveTasks();
 		_logger.info("Project successfully saved.");
 	}
 
@@ -166,7 +169,7 @@ public class ProjectManager implements IProjectManager
 		// executing query
 		ResultSet resultSet = null;
 		resultSet = _dbManager.select(columnNames, tableNames, conditions);
-		boolean success = true;
+		//TODO what is it?? boolean success = true;
 		try {
 			while (resultSet.next()) {
 				int taskId = resultSet.getInt("task_id");
@@ -181,10 +184,11 @@ public class ProjectManager implements IProjectManager
 				_logger.info("" + taskId + "|" + taskName + "|" + taskInfo
 						+ "|" + pluginName + "|" + pluginInfo + "|" + location
 						+ "|" + settings + "|" + result);
-				Task task = new Task();
+                //TODO: move task loading to task manager ?
+				ITask task = _managerEngine.getTasksManager().createTask();
 				task.setName(taskName);
-				task.setTaksId(taskId);
-				IPlugin plugin = PluginLoader.loadPlugin(location);
+				task.setTaskId(taskId);
+				IPlugin plugin = PluginLoader.loadPlugin(new URL(location));
 				plugin.getDescription().setLocation(new File(location));
 				plugin.getDescription().setName(pluginName);
 				plugin.getDescription().setInfo(pluginInfo);
@@ -207,16 +211,15 @@ public class ProjectManager implements IProjectManager
 	/**
 	 * Saves plugins for project. If there are plugins which doesn't exists in
 	 * data base, they are inserted.
-	 * 
-	 * @param project
+	 *
 	 * @throws SQLException
 	 */
-	private void savePlugins(Project project) throws SQLException
+	private void savePlugins() throws SQLException
 	{
-		List tasks = project.getManagerEngine().getTasksManager().getTasks();
+		Collection tasks = _managerEngine.getTasksManager().getTasks();
 		Set plugins = new HashSet();
 		for (Iterator iter = tasks.iterator(); iter.hasNext();) {
-			Task task = (Task) iter.next();
+			ITask task = (ITask) iter.next();
 			plugins.add(task.getPlugin());
 		}
 		//
@@ -272,7 +275,7 @@ public class ProjectManager implements IProjectManager
 	 * @param project
 	 * @throws SQLException
 	 */
-	private void saveTasks(Project project) throws SQLException
+	private void saveTasks() throws SQLException
 	{
 		//
 		// deleting all tasks connected to given project
@@ -282,7 +285,7 @@ public class ProjectManager implements IProjectManager
 		DBCondition[] conditions = {
 				new DBCondition(new DBColumnName(tableName, "project_id"),
 						DBCondition.REL_EQ,
-						new Integer(project.getProjectID()),
+						new Integer(_currentProject.getProjectID()),
 						DBCondition.NUMBERIC),
 				new DBCondition(new DBColumnName(tableName, "status"),
 						DBCondition.REL_EQ, Task.ACTIVE, DBCondition.TEXT)};
@@ -290,12 +293,12 @@ public class ProjectManager implements IProjectManager
 		//
 		// saving tasks
 		//
-		List tasks = project.getManagerEngine().getTasksManager().getTasks();
+		Collection tasks = _managerEngine.getTasksManager().getTasks();
 		for (Iterator iter = tasks.iterator(); iter.hasNext();) {
-			Task task = (Task) iter.next();
+			ITask task = (ITask) iter.next();
 			DBValue[] values = {
 					new DBValue(new DBColumnName(tableName, "project_id"),
-							new Integer(project.getProjectID()),
+							new Integer(_currentProject.getProjectID()),
 							DBValue.NUMBERIC),
 					new DBValue(
 							new DBColumnName(tableName, "plugin_id"),
@@ -311,7 +314,7 @@ public class ProjectManager implements IProjectManager
 					new DBValue(new DBColumnName(tableName, "status"),
 							task.getStatus(), DBValue.TEXT)};
 			int taskId = _dbManager.insert(values, "task_id");
-			task.setTaksId(taskId);
+			task.setTaskId(taskId);
 		}
 	}
 
@@ -350,7 +353,7 @@ public class ProjectManager implements IProjectManager
 					commonCondition,
 					new DBCondition(new DBColumnName(tableName, "task_id"),
 							DBCondition.REL_EQ, new Integer(
-									tasks[i].getTaksId()), DBCondition.NUMBERIC)};
+									tasks[i].getTaskId()), DBCondition.NUMBERIC)};
 			_dbManager.update(values, conditions);
 		}
 	}
@@ -358,13 +361,12 @@ public class ProjectManager implements IProjectManager
 	/**
 	 * Saves project header. If project does not exist in data base it is
 	 * inserted.
-	 * 
-	 * @param project
+	 *
 	 * @return project id
 	 * @throws SQLException
 	 * @throws ClassNotFoundException
 	 */
-	private int saveProjectHeader(Project project) throws SQLException,
+	private int saveProjectHeader() throws SQLException,
 			ClassNotFoundException
 	{
 		int projectID = 0;
@@ -375,7 +377,7 @@ public class ProjectManager implements IProjectManager
 		DBTableName[] tableNames = {new DBTableName("projects")};
 		DBCondition[] conditions = {new DBCondition(new DBColumnName(
 				tableNames[0], "project_id"), DBCondition.REL_EQ, new Integer(
-				project.getProjectID()), DBCondition.NUMBERIC)};
+				_currentProject.getProjectID()), DBCondition.NUMBERIC)};
 		// executing query
 		ResultSet resultSet = null;
 		resultSet = _dbManager.select(null, tableNames, conditions);
@@ -390,9 +392,9 @@ public class ProjectManager implements IProjectManager
 			DBTableName tableName = new DBTableName("projects");
 			DBValue[] values = {
 					new DBValue(new DBColumnName(tableName, "name"),
-							project.getName(), DBValue.TEXT),
+							_currentProject.getName(), DBValue.TEXT),
 					new DBValue(new DBColumnName(tableName, "info"),
-							project.getInfo(), DBValue.TEXT)};
+							_currentProject.getInfo(), DBValue.TEXT)};
 			projectID = _dbManager.insert(values, "project_id");
 		}
 		return projectID;
@@ -401,8 +403,9 @@ public class ProjectManager implements IProjectManager
 	/**
 	 * @return Returns the currentProject.
 	 */
-	public Project getCurrentProject()
+	public IProject getCurrentProject()
 	{
 		return _currentProject;
 	}
+
 } // end KnowledgeSystemManager

@@ -7,11 +7,16 @@ package salomon.core.plugin;
 
 import java.io.File;
 import java.io.FileFilter;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 
 import org.apache.log4j.Logger;
 
 import salomon.core.Config;
+import salomon.plugin.IPlugin;
 
 /**
  * @author nico Class manager available plugins.
@@ -22,14 +27,30 @@ public final class PluginManager implements IPluginManager
 
 	private static String _pluginsDir = Config.getString("PLUGINS_DIR");
 
-	public File[] getAvailablePlugins()
+	public Collection getAvailablePlugins()
 	{
+        Collection result = new ArrayList();
 		File dir = new File(_pluginsDir);
 		_logger.info("looking for plugins in: " + dir.getAbsolutePath());
 		File[] plugins = dir.listFiles(new PluginFileFilter("jar"));
+        for (int i = 0; i < plugins.length; i++) {
+			try {
+				result.add(plugins[i].toURL());
+			} catch (MalformedURLException e) {
+				_logger.fatal("", e);
+			}
+		}
 		_logger.info(Arrays.asList(plugins));
-		return plugins;
+		return result;
 	}
+    
+//    /* (non-Javadoc)
+//	 * @see salomon.core.plugin.IPluginManager#getPlugin(java.net.URL)
+//	 */
+//	public IPlugin getPlugin(URL url)
+//	{
+//		PluginLoader.loadPlugin(url);		
+//	} 
 
 	class PluginFileFilter implements FileFilter
 	{

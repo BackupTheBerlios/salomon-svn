@@ -26,7 +26,7 @@ package salomon.core.project;
  */
 public interface IProjectManager
 {
-	public Project newProject();
+	public void newProject();
 
 	/**
 	 * Method loads project from data base.
@@ -35,21 +35,20 @@ public interface IProjectManager
 	 * @return loaded project
 	 * @throws Exception
 	 */
-	public Project loadProject(int projectID) throws Exception;
+	public void loadProject(int projectID) throws Exception;
 
 	/**
 	 * Method saves project in data base - project header, plugins and tasks are
 	 * saved.
-	 * 
-	 * @param project
+	 *
 	 * @throws ClassNotFoundException
 	 * @throws Exception
 	 */
-	public void saveProject(Project project) throws Exception,
+	public void saveProject() throws Exception,
 			ClassNotFoundException;
 
 	/**
 	 * @return Returns the currentProject.
 	 */
-	public Project getCurrentProject();
+	public IProject getCurrentProject();
 }

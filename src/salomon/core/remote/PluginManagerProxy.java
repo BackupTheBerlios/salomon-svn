@@ -1,8 +1,8 @@
 
 package salomon.core.remote;
 
-import java.io.File;
 import java.rmi.RemoteException;
+import java.util.Collection;
 
 import org.apache.log4j.Logger;
 
@@ -34,9 +34,9 @@ public final class PluginManagerProxy implements IPluginManager
 	 * 
 	 * @see salomon.core.plugin.IPluginManager#getAvailablePlugins()
 	 */
-	public File[] getAvailablePlugins()
+	public Collection getAvailablePlugins()
 	{
-		File[] result = null;
+		Collection result = null;
 		try {
 			result = _remotePluginManager.getAvailablePlugins();
 		} catch (RemoteException e) {
@@ -45,5 +45,14 @@ public final class PluginManagerProxy implements IPluginManager
 		}
 		return result;
 	}
+
+//	/* (non-Javadoc)
+//	 * @see salomon.core.plugin.IPluginManager#getPlugin(java.net.URL)
+//	 */
+//	public IPlugin getPlugin(URL url)
+//	{		
+//		return PluginLoader.loadPlugin(_remotePluginManager.getPlugin();
+//	}
+    
 
 }

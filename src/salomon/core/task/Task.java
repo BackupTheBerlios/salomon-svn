@@ -8,7 +8,7 @@ import salomon.plugin.ISettings;
 /**
  *  
  */
-public class Task
+public final class Task implements ITask
 {
 	public static final String ACTIVE = "AC";
 
@@ -30,11 +30,11 @@ public class Task
 
 	private String _status;
 
-	private int _taksId;
+	private int _taskId;
 
 	public Task()
 	{
-		_taksId = 0;
+		_taskId = 0;
 		_status = ACTIVE;
 	}
 
@@ -145,17 +145,17 @@ public class Task
 	/**
 	 * @return Returns the taksId.
 	 */
-	public int getTaksId()
+	public int getTaskId()
 	{
-		return _taksId;
+		return _taskId;
 	}
 
 	/**
 	 * @param taksId
 	 *            The taksId to set.
 	 */
-	public void setTaksId(int taksId)
+	public void setTaskId(int taskId)
 	{
-		_taksId = taksId;
+		_taskId = taskId;
 	}
 } // end Task

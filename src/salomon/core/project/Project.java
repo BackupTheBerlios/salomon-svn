@@ -1,23 +1,19 @@
 package salomon.core.project;
 
-import salomon.core.IManagerEngine;
 
 /**
  *  
  */
-public class Project
+final class Project implements IProject
 {
-	private String _info = null;
-
-	private IManagerEngine _managerEngine = null;
+	private String _info = null;	
 
 	private String _name = null;
 
 	private int _projectID = 0;
 
-	public Project(IManagerEngine managerEngine)
+	public Project()
 	{
-		_managerEngine = managerEngine;
 	}
 
 	/**
@@ -26,14 +22,6 @@ public class Project
 	public String getInfo()
 	{
 		return _info;
-	}
-
-	/**
-	 * @return Returns the managerEngine.
-	 */
-	public IManagerEngine getManagerEngine()
-	{
-		return _managerEngine;
 	}
 
 	/**
@@ -61,14 +49,6 @@ public class Project
 		_info = info;
 	}
 
-	/**
-	 * @param managerEngine
-	 *            The managerEngine to set.
-	 */
-	public void setManagerEngine(IManagerEngine managerEngine)
-	{
-		_managerEngine = managerEngine;
-	}
 
 	/**
 	 * @param name

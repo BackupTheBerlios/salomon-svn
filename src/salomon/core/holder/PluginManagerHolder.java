@@ -1,9 +1,11 @@
 
 package salomon.core.holder;
 
-import java.io.File;
+import java.net.URL;
+import java.util.Collection;
 
 import salomon.core.plugin.IPluginManager;
+import salomon.plugin.IPlugin;
 
 /**
  * 
@@ -26,7 +28,7 @@ final class PluginManagerHolder implements IPluginManager
 	 * 
 	 * @see salomon.core.plugin.IPluginManager#getAvailablePlugins()
 	 */
-	public File[] getAvailablePlugins()
+	public Collection getAvailablePlugins()
 	{
 		return _currentPluginManager.getAvailablePlugins();
 	}
@@ -35,4 +37,12 @@ final class PluginManagerHolder implements IPluginManager
 	{
 		_currentPluginManager = pluginManager;
 	}
+
+//	/* (non-Javadoc)
+//	 * @see salomon.core.plugin.IPluginManager#getPlugin(java.net.URL)
+//	 */
+//	public IPlugin getPlugin(URL url)
+//	{		
+//		return _currentPluginManager.getPlugin(url);
+//	}
 }
