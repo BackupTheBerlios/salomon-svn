@@ -9,30 +9,26 @@ import salomon.core.data.attribute.*;
 import salomon.core.data.dataset.*;
 import salomon.core.data.ruleset.*;
 
-
 /**
  *  
  */
 public class DataEngine
 {
-	
 	private AttributeManager _attributeManager;
 
-	
-	private  DataSetManager _dataSetManager;
+	private DataSetManager _dataSetManager;
 
-	
-	private  RuleSetManager _ruleSetManager;
+	private RuleSetManager _ruleSetManager;
 
-	public DataEngine() {
+	public DataEngine()
+	{
 		_dataSetManager = new DataSetManager();
 	}
-	
+
 	public DataSetManager getTrainingDataSetManager()
 	{
-		
 		return _dataSetManager;
-	} 
+	}
 
 	/**
 	 * Does ...

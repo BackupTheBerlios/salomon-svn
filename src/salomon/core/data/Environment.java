@@ -5,49 +5,31 @@
 
 package salomon.core.data;
 
-import salomon.core.data.dataset.*;
-import salomon.core.data.ruleset.*;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *  
  */
 public class Environment
 {
-	///////////////////////////////////////
-	// associations
-	/**
-	 *  
-	 */
-	public RuleSet ruleSet;
+	Map _environment = new HashMap();
 
-	/**
-	 *  
-	 */
-	public DataSet dataSet;
-
-	///////////////////////////////////////
-	// operations
-	/**
-	 * Does ...
-	 * 
-	 * @param key
-	 * @param value
-	 */
-	public void put(String key, Object value)
+	public Environment()
 	{
-		// your code here
+	}
+
+	public void put(String key, String value)
+	{
+		_environment.put(key, value);
 	} // end put
 
-	/**
-	 * Does ...
-	 * 
-	 * @return @param
-	 *         key
-	 */
-	public Object get(String key)
+	public String get(String key)
 	{
-		// your code here
+		Object value = _environment.get(key);
+		if (value != null) {
+			return value.toString();
+		}
 		return null;
-	} // Object get(String)
-	
+	}
 } // class Environment
