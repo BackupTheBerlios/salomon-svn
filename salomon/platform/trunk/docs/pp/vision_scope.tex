@@ -68,32 +68,91 @@ System przetwarzania wiedzy\\}
 \newpage
 
 \section{Wstêp}
+Salomon to system do wydobywania wiedzy z danych zgodnie z metodologi± \emph{Knowlege Mining}.
+Odkrywanie wiedzy to proces iteracyjny, podzielony na etapy. Etapy te mog± tworzyæ cykle. \\
+W ka¿dym tym etapie wiedza jest poddawana
+obróbce. Na ka¿dym takim etapie proces odkrywania mo¿e byæ ukierunkowany zgodnie
+z wymaganiami u¿ytkownika. Ka¿dy etap tworzy odrêbn± ca³o¶æ. Czê¶æ etapów jest roz³±czna, zatem mog± byæ wykonywane wspó³bie¿nie. 
+
+Celem tego projektu jest stworzenie przyjaznego ¶rodowiska do tworzenia, kontrolowania i efektywnego wykonywania zadañ oraz przechowywania zgromadzonej wiedzy.
+
 \subsection{S³ownik}
+
+%\paragraph{Kontroler}
+%Kontroler to jedna instancja Salomona pracuj±ca w okre¶lonym trybie: lokalnym, jako serwer lub klient. 
+
+%\paragraph{Menad¿er} 
+%Klasy maj±ce w nazwie s³owo \emph{Manager} pe³ni± szczególn± funkcjê - najczê¶ciej odpowiadaj± za zarz±dzanie innymi klasami, z regu³y tymi, które stanowi± resztê nazwy (np. \emph{PluginManger} zarz±dza pluginami, \emph{ProjectManger} - projektami). G³ównym zadaniem menad¿erów jest odseparowanie wtyczek od operacji bezpo¶rednio na danych.
+
+%\paragraph{Solution} 
+%Terminem tym okre¶lamy strukturê grupuj±c± projekty. Dotycz± one tej samej bazy z rzeczywistymi danymi.
+
+%\paragraph{Projekt}
+%W ramach projektów zapisywana jest konfiguracja systemu przed wykonaniem kolejki zadañ. Zapisywana jest lista zadañ do wykonania, ich ustawienia oraz pluginy, które maj± byæ u¿yte do ich wykonania.
+
+\paragraph{Plugin (wtyczka)}
+Jest to zewnêtrzny program odpowiedzialny za wykonanie konkretnego zadania. Nie jest integraln± czê¶ci± systemu, w razie konieczno¶ci jest pobierany z okre¶lonej lokalizacji i przekazywane jest mu konkretne zadanie do wykonania.
+
+%\paragraph{¦rodowisko}
+%Miejsce w którym przechowywane s± zmienne ¶rodowiskowe.
+
+%\paragraph{Zmienna ¶rodowiskowa}
+%S³u¿y do przekazywania informacji miêdzy kolejnymi zadaniami.
+
 \subsection{Odno¶niki}
+Dokumentacja istniej±cej wersji platfomy Salomon.
 
 \section{Zakres problemu}
-\subsection{Nie objête zakresem problemu}
+Ostateczna wersj± produktu bêdzie system wyposa¿ony w pe³n± obs³ugê zbiorów danych, regu³ i atrybutów oraz mo¿liwo¶æ pracy z danymi zawartymi w ró¿nych bazach danych wraz z kompletn± dokumentacj± techniczn± i u¿ytkow±.
 
-\section{Opis u¿ytkownika i podsystemów}
-\subsection{Za³o¿enia i zale¿nosci}
+System ten bêdzie siê sk³ada³ z platformy, oraz uruchamianych na niej odpowiednich pluginów. Produkt powinien zawieraæ w pe³ni funkcjonaln± platformê, oraz przyk³adowe aplikacje demonstruj±ce mo¿liwo¶æ realizacji systemu w architekturze platforma-pluginy. 
+
+\subsection{Nie objête zakresem problemu}
+W zakres produktu nie bêd± wchodziæ w pe³ni funkcjonalne pluginy.
+
 
 \section{Funkcjonalno¶ci produktu}
-\subsection{Cecha 1}
-\subsection{Cecha 2}
-\subsection{Cecha 3}
-\subsection{Priorytety funkcjonalno¶ci }
+
+\subsection{Rozwój Salomona}
+Stabilna wersja Salomona wyposa¿ona ma byæ w pe³n± obs³ugê zbiorów danych oraz mo¿liwo¶æ pracy z danymi zawartymi w ró¿nych bazach danych. W szczególno¶ci
+\begin{itemize}
+\item ma poprawnie obs³ugiwaæ algorytmy oparte na zbiorach danych oraz zaprezentowaæ wyniki ich dzia³ania
+\item ma umo¿liwiaæ obs³ugê algorytmów opartych na regu³ach i  atrybutach i prezentowaæ dzia³anie obliczeñ na nich opartych
+\item nale¿y przygotowaæ kompletn± dokumentacjê techniczn±
+\end{itemize}
+
+%\subsection{Priorytety funkcjonalno¶ci }
 
 \section{Wymagania}
 \subsection{Stosowane standardy}
+\begin{itemize}
+\item projekt bêdzie realizowany w Javie, uwzglêdniaj±c odpowiednie standardy kodowania (zastosowanie odpowiedniego pluginu do platformy Eclipse)
+\item jêzyk angielski stosowany do dokumentacji publikowanej w wiki
+\item subversion jako mechanizm wersjonowania plików
+\item ant i maven
+\end{itemize}
+
+Przewidywane technologie i narzêdzia
+\begin{itemize}
+\item Eclipse
+\item Subversion (np Tortoise, plugin do Eclipse'a)
+\item Firebird
+\item Ant
+\item Junit
+\item Abbot
+\end{itemize}
+
 \subsection{Wymagania dla systemu}
-\subsection{Wymagania wydajno¶ciowe}
+Zgodno¶æ z wymaganiami systemowymi dla istniej±cej wersji platformy Salomon.
 
 \section{Wymagania stawiane dokumentacji}
-\subsection{Podrêcznik u¿ytkownika}
-\subsection{Opis instalacji i konfiguracji}
+Dokumentacja powinna obejmowaæ odpowiednie komentarze w kodzie, oraz dokumenty tworzone podczas realizacji projektu, wzorowane na metodologii MSF.
+%\subsection{Opis instalacji i konfiguracji}
 \subsection{Wersjonowanie i pakiety}
+Dokumentacja i sam projekt bêd± wersjonowane w systemie Subversion (SVN) i dostêpne on-line na stronie internetowej projektu.
 
 \section{Ryzyko}
+Najbardziej niepewn± czê¶ci± bêdzie realizacja przyk³adowego pluginu, oraz refactoring kodu.
 
 \end{document}
 
