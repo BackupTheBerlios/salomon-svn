@@ -49,7 +49,7 @@
 	<target name="build_salomon_jar" depends="build_rmi_stubs">
 		<jar destfile="salomon.jar" basedir="${bin_dir}" includes="salomon/**">
 			<manifest>
-				<attribute name="Main-Class" value="salomon.Starter" />
+				<attribute name="Main-Class" value="salomon.engine.Starter" />
 				<attribute name="Class-Path" value="${lib_dir}/firebirdsql.jar ${lib_dir}/log4j-1.2.8.jar ${lib_dir}/mini-j2ee.jar ." />
 			</manifest>
 		</jar>
@@ -130,7 +130,7 @@
 
 	<target name="all" depends="copy_salomon, copy_plugins, 
 								copy_libs, copy_drivers, copy_data_base, copy_init_db, 
-								copy_res, copy_config, copy_run_files" />
+								copy_res, copy_config, copy_run_files, get_version" />
 
 	<target name="compress" depends="all">
 		<zip destfile="salomon.zip" basedir="${release_dir}" />
