@@ -5,8 +5,8 @@
 
 package salomon.plugin;
 
-import salomon.engine.platform.DataEngine;
-import salomon.engine.platform.Environment;
+import salomon.platform.IDataEngine;
+import salomon.platform.IEnvironment;
 
 /** 
  * Main interface implemented by all plugins.   
@@ -16,5 +16,5 @@ public interface IDataPlugin
     /**
      * Does plugin job. 
      */
-	IResult doJob(DataEngine engine, Environment environment, ISettings settings);
+	IResult doJob(IDataEngine engine, IEnvironment environment, ISettings settings);
 }
