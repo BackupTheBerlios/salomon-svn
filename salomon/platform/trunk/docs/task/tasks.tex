@@ -1,0 +1,102 @@
+%& --translate-file=cp1250pl
+%bez powyzszej linijki nie dzialaja polskie znaki (musi ona byc w pierwszej linii dokumentu
+%%&platex --translate-file=il2-pl % przeyestowac z tym
+\documentclass[a4paper,12pt]{article}
+\usepackage[polish]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[dvips]{graphicx}
+\usepackage{fancyvrb}
+
+\usepackage[urlcolor=blue, colorlinks=true, bookmarks=true, bookmarksnumbered=true]{hyperref}
+%\usepackage{intendfirst}
+\usepackage{times}
+\usepackage{epsfig}
+\usepackage{color}
+
+\usepackage{fancyhdr} 
+
+\pagestyle{fancy} 
+
+\rfoot{SALOMON}
+
+
+%ustawienie wielkosci akapitu
+%\setlength{\parindent}{0mm}
+%%odstàp miàdzy akapitami
+%\setlength{\parskip}{2mm}
+
+%ustawienia rozmiaru tekstu
+    \textwidth 16cm
+    \textheight 24cm 
+    \topmargin -15mm
+    \evensidemargin-3mm
+    \oddsidemargin -3mm
+    
+
+
+\title{Salomon - zadania}
+
+\author{Nikodem Jura \emph{(nico@icslab.agh.edu.pl)}
+        \\
+        Krzysztof Rajda \emph{(krzycho@student.uci.agh.edu.pl)}
+        \\
+        Jakub Ga³kowski \emph{(avi@student.uci.agh.edu.pl)}}
+        
+
+\begin{document}
+
+\maketitle
+%wylaczenie numerowania na I stronie
+\thispagestyle{empty}
+
+\begin{center}
+\textcolor{blue}{\href{http://salomon.iisg.agh.edu.pl}{http://salomon.iisg.agh.edu.pl}}
+\end{center}
+
+\begin{center}
+Prowadz¹cy: dr in¿. Marek Kisiel-Dorohinicki
+\end{center}
+
+\newpage
+
+%spis tresciz
+%\tableofcontents
+%\newpage
+
+%reszta
+\section{Zarz¹dzanie zadaniami}
+Pierwszym zadaniem bêdzie usprawnienie zarz¹dzania zadaniami.
+W obecnej wersji \emph{Salomon} pozwala na liniowe uruchamianie zadañ.
+W kolejnej wersji chcielibyœmy umo¿liwiæ tworzenie grafu przep³ywu wiedzy i danych.
+Ka¿dy wêze³ reprezentowa³by pojedyncze zadanie. Takie zadanie mog³oby zale¿eæ od innych zadañ.
+Na krawêdziach grafu powinna byæ mo¿liwoœæ definiowania warunków, które s¹ potrzebne, aby wiedza/dane
+zosta³y przekazane wzd³u¿ tej krawêdzi. Wzorem dla takiego grafu mo¿e byæ sieæ \emph{Petriego}.
+
+Etapy realizacji tego zadania mo¿na podzieliæ na:
+\begin{itemize}
+	\item Komponent graficzny umo¿liwiaj¹cy tworzenie grafu
+	\item Mechanizmy do automatycznego rozpraszania zadañ pomiêdzy ró¿ne instancje \emph{Salomona}
+	\item Mechanizmy do monitorowania aktualnego stanu systemu
+\end{itemize}
+
+\section{Wiedza}
+Zadanie to polegaæ bêdzie na realizacji dla poszczególnych rodzajów wiedzy:
+\begin{itemize}
+	\item Regu³y
+	\item Drzewa decyzyjne
+	\item Klastry
+	\item Dane statystyczne
+\end{itemize}
+
+Poni¿szych zadañ:
+\begin{itemize}
+	\item Implementacja mechanizmów sk³adowania wiedzy w bazie danych
+	\item Implementacja interfejsów do zarz¹dzania wiedz¹
+	\item Stworzenie komponentów graficznych do zarz¹dzania wiedz¹ (przegl¹danie, usuwanie)
+	\item Implementacja komponentu do rêcznego definiowania wiedzy
+	\item Implementacja przyk³adowego pluginu, który wyszukuje wiedzê z danych
+	\item Implementacja pluginu do wizualizacji wiedzy
+\end{itemize}
+
+Przy realizacji tego zadania mo¿na wykorzystaæ program \emph{Wekka} 
+\end{document}
