@@ -17,9 +17,11 @@
 
 %ustawienia rozmiaru tekstu
     \textwidth 16cm
+    \textheight 24cm 
     \topmargin -15mm
     \evensidemargin-3mm
     \oddsidemargin -3mm
+    
 
 
 \title{Salomon}
@@ -28,19 +30,30 @@
         \\
         Krzysztof Rajda \emph{(krzycho@student.uci.agh.edu.pl)}
         \\
-        Jakub Ga³kowski \emph{(avi@student.uci.agh.edu.pl)}
-        \\
-        \\
-        Prowadz¹cy: dr in¿. Marek Kisiel-Dorohinicki}
+        Jakub Ga³kowski \emph{(avi@student.uci.agh.edu.pl)}}               
+        
 
 \begin{document}
+%wylaczenie numerowania na I stronie
+\thispagestyle{empty}
 
 \maketitle
+
+\begin{center}
+\textcolor{blue}{\underline{www.icslab.agh.edu.pl/$^{\sim}$nico/salomon}}
+\end{center}
+
+\begin{center}
+Prowadz¹cy: dr in¿. Marek Kisiel-Dorohinicki
+\end{center}
+
 \newpage
 
+%spis tresci
 \tableofcontents
 \newpage
 
+%reszta
 \include{wstep}
 \include{architektura}
 \include{interfejsy_pluginow}
