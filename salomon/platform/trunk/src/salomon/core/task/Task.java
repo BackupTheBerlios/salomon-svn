@@ -1,42 +1,60 @@
 
 package salomon.core.task;
 
+import java.sql.Date;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import salomon.core.data.DBManager;
+import salomon.core.data.common.SQLDelete;
+import salomon.core.data.common.SQLUpdate;
 import salomon.plugin.IPlugin;
 import salomon.plugin.IResult;
 import salomon.plugin.ISettings;
 
 /**
- * Represents task which may be executed by plugins, it is an implementation of
- * ITask interface.
+ * Represents task which may be executed. It is an implementation of ITask
+ * interface.
  */
 public final class Task implements ITask
 {
-	public static final String ACTIVE = "AC";
-
-	public static final String ERROR = "ER";
-
-	public static final String EXCEPTION = "EX";
-
-	public static final String FINISHED = "FI";
-
-	public static final String REALIZATION = "RE";
-
 	private String _name;
 
 	private IPlugin _plugin;
 
+	private int _projectID;
+
 	private IResult _result;
 
 	private ISettings _settings;
+    
+    private String _info;
 
 	private String _status;
 
-	private int _taskId;
+	private int _taskID;
 
 	public Task()
 	{
-		_taskId = 0;
+		_taskID = 0;
+		_projectID = 0;		
 		_status = ACTIVE;
+	}
+
+	/**
+	 * Removes itself from database. After successsful finish object should be
+	 * destroyed. This method deletes records only from 'tasks' table. It has some
+	 * constraints (some foreign keys), which should by taken into account by
+	 * TaskManager.
+	 * 
+	 * @return @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	public boolean delete() throws SQLException, ClassNotFoundException
+	{
+		SQLDelete delete = new SQLDelete(TABLE_NAME);
+		delete.addCondition("task_id =", _taskID);
+		return (DBManager.getInstance().delete(delete) > 0);
 	}
 
 	/**
@@ -53,6 +71,14 @@ public final class Task implements ITask
 	public IPlugin getPlugin()
 	{
 		return _plugin;
+	}
+    
+	/**
+	 * @return Returns the projectID.
+	 */
+	public int getProjectID()
+	{
+		return _projectID;
 	}
 
 	/**
@@ -84,6 +110,67 @@ public final class Task implements ITask
 	}
 
 	/**
+	 * @return Returns the taksId.
+	 */
+	public int getTaskId()
+	{
+		return _taskID;
+	}
+
+	/**
+	 * Initializes itself basing on given row from resultSet.
+	 * Before calling this method ISettings object must be set. 
+     * 
+	 * @param resultSet
+	 * @throws SQLException
+	 */
+	public void load(ResultSet resultSet) throws SQLException
+	{
+		_taskID = resultSet.getInt("task_id");
+		_projectID = resultSet.getInt("project_id");
+        // it is not neccessery to set plugin id        
+		_name = resultSet.getString("task_name");
+		_info = resultSet.getString("task_info");
+        // setting has to be set
+        _settings.parseSettings(resultSet.getString("plugin_settings"));
+        //TODO: support result loading?
+        _status = resultSet.getString("status");
+        //TODO: add time support
+	}
+
+	/**
+	 * Saves itself in data base. If already exists in database performs update
+	 * otherwise inserts new record. Returns current id if update was executed
+	 * or new id in case of insert.
+	 * 
+	 * @return unique id
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	public int save() throws SQLException, ClassNotFoundException
+	{
+		SQLUpdate update = new SQLUpdate(TABLE_NAME);
+        update.addValue("project_id", _projectID);
+        update.addValue("plugin_id", _plugin.getDescription().getPluginID());
+        update.addValue("task_name", _name);        
+		if (_info != null) {
+			update.addValue("task_info", _info);
+		}
+        // let it happen?
+        if (_settings != null) {
+        	update.addValue("plugin_settings", _settings.settingsToString());
+        }
+        if (_result != null) {
+        	update.addValue("plugin_result", _result.resultToString());
+        }
+        update.addValue("status", _status);
+		update.addValue("lm_date", new Date(System.currentTimeMillis()));
+		_taskID = DBManager.getInstance().insertOrUpdate(update,
+				"task_id", _taskID, GEN_NAME);
+		return _taskID;
+	}
+
+	/**
 	 * @param name The name to set.
 	 */
 	public void setName(String name)
@@ -97,6 +184,14 @@ public final class Task implements ITask
 	public void setPlugin(IPlugin plugin)
 	{
 		_plugin = plugin;
+	}
+
+	/**
+	 * @param projectID The projectID to set.
+	 */
+	public void setProjectID(int projectID)
+	{
+		_projectID = projectID;
 	}
 
 	/**
@@ -128,6 +223,14 @@ public final class Task implements ITask
 		this._status = status;
 	}
 
+	/**
+	 * @param taksId The taksId to set.
+	 */
+	public void setTaskId(int taskId)
+	{
+		_taskID = taskId;
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -135,22 +238,20 @@ public final class Task implements ITask
 	 */
 	public String toString()
 	{
-		return _name + " [" + _plugin + "]";
+		return _name + " [" + _plugin + "," + _settings + "," + _result + "]";
 	}
 
-	/**
-	 * @return Returns the taksId.
-	 */
-	public int getTaskId()
-	{
-		return _taskId;
-	}
+	public static final String ACTIVE = "AC";
 
-	/**
-	 * @param taksId The taksId to set.
-	 */
-	public void setTaskId(int taskId)
-	{
-		_taskId = taskId;
-	}
+	public static final String ERROR = "ER";
+
+	public static final String EXCEPTION = "EX";
+
+	public static final String FINISHED = "FI";
+
+	public static final String REALIZATION = "RE";
+
+	public static final String TABLE_NAME = "tasks";
+
+	private static final String GEN_NAME = "gen_task_id";
 } // end Task

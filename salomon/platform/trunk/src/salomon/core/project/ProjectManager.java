@@ -1,25 +1,20 @@
 
 package salomon.core.project;
 
-import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Time;
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 
 import org.apache.log4j.Logger;
 
 import salomon.controller.gui.Utils;
 import salomon.core.IManagerEngine;
 import salomon.core.data.DBManager;
-import salomon.core.data.common.DBColumnName;
-import salomon.core.data.common.DBCondition;
-import salomon.core.data.common.DBTableName;
-import salomon.core.data.common.DBValue;
+import salomon.core.data.common.SQLSelect;
+import salomon.core.data.common.SQLUpdate;
 import salomon.core.plugin.PluginLoader;
 import salomon.core.task.ITask;
 import salomon.core.task.Task;
@@ -70,48 +65,37 @@ public final class ProjectManager implements IProjectManager
 	 */
 	public void loadProject(int projectID) throws Exception
 	{
-		IProject project = new Project();
-		//
+		Project project = new Project();
 		// loading plugin information
-		//
-		// building query
-		DBTableName[] tableNames = {new DBTableName("projects")};
-		DBColumnName[] columnNames = {new DBColumnName(tableNames[0], "name"),
-				new DBColumnName(tableNames[0], "info")};
-		DBCondition[] conditions = {new DBCondition(new DBColumnName(
-				tableNames[0], "project_id"), DBCondition.REL_EQ, new Integer(
-				projectID), DBCondition.NUMBERIC)};
-		// executing query
+        // building query
+		SQLSelect select = new SQLSelect();
+        select.addTable(Project.TABLE_NAME);
+        select.addCondition("project_id =", projectID);
+        
 		ResultSet resultSet = null;
-		resultSet = _dbManager.select(columnNames, tableNames, conditions);
+		resultSet = _dbManager.select(select);
 		resultSet.next();
-		String projectName = resultSet.getString("name");
-		String projectInfo = resultSet.getString("info");
-		_logger.info("plugin: " + projectName + " | " + projectInfo);
-		//
-		// one row should be found, if found more, the first is got
-		//
+		// loading project
+        project.load(resultSet);
+		
+		// one row should be found, if found more, the first is got		
 		if (resultSet.next()) {
 			_logger.warn("TOO MANY ROWS");
 		}
-		resultSet.close();
-		project.setName(projectName);
-		project.setInfo(projectInfo);
-		project.setProjectID(projectID);
-		//
-		// adding tasks
-		//		
-		Collection tasks = getTasksForProject(projectID);
-		_logger.info("Project successfully loaded.");
+		resultSet.close();        
+		
+		// adding tasks				
+		Collection<ITask> tasks = getTasksForProject(projectID);
+		
 		// clearing old tasks
 		TaskManager taskManeger = (TaskManager) _managerEngine.getTasksManager();
 		taskManeger.clearTaskList();
 		taskManeger.addAllTasks(tasks);
 		_logger.debug("project: " + project);
 		_logger.debug("tasks: " + taskManeger.getTasks());
-		//
+        _logger.info("Project successfully loaded.");
+
 		// setting current project
-		//
 		_currentProject = project;
 	}
 
@@ -128,8 +112,6 @@ public final class ProjectManager implements IProjectManager
 		// saving project header
 		int projectID = saveProjectHeader();
 		_currentProject.setProjectID(projectID);
-		// saving plugins
-		savePlugins();
 		// saving tasks
 		saveTasks();
 		_logger.info("Project successfully saved.");
@@ -144,60 +126,43 @@ public final class ProjectManager implements IProjectManager
 	 * @return @throws ClassNotFoundException
 	 * @throws Exception
 	 */
-	private List getTasksForProject(int projectID) throws Exception
+	private List<ITask> getTasksForProject(int projectID) throws Exception
 	{
-		List tasks = new LinkedList();
-		DBTableName[] tableNames = {new DBTableName("tasks"),
-				new DBTableName("plugins")};
-		DBColumnName[] columnNames = {
-				new DBColumnName(tableNames[0], "task_id"),
-				new DBColumnName(tableNames[0], "name", "task_name"),
-				new DBColumnName(tableNames[0], "info", "task_info"),
-				new DBColumnName(tableNames[1], "plugin_id"),
-				new DBColumnName(tableNames[1], "name", "plugin_name"),
-				new DBColumnName(tableNames[1], "info", "plugin_info"),
-				new DBColumnName(tableNames[1], "location"),
-				new DBColumnName(tableNames[0], "plugin_settings", "settings"),
-				new DBColumnName(tableNames[0], "plugin_result", "result")};
-		DBCondition[] conditions = {
-				new DBCondition(new DBColumnName(tableNames[0], "project_id"),
-						DBCondition.REL_EQ, new Integer(projectID),
-						DBCondition.NUMBERIC),
-				new DBCondition(new DBColumnName(tableNames[0], "plugin_id"),
-						DBCondition.REL_EQ, new DBColumnName(tableNames[1],
-								"plugin_id"), DBCondition.JOIN)};
+		List<ITask> tasks = new LinkedList<ITask>();	
+        SQLSelect select = new SQLSelect();
+        select.addTable(Task.TABLE_NAME + " t");
+        select.addTable(Description.TABLE_NAME + " p");
+        select.addColumn("t.task_id");
+        select.addColumn("t.project_id");
+        select.addColumn("t.task_name");
+        select.addColumn("t.task_info");
+        select.addColumn("t.status");
+        select.addColumn("t.plugin_settings");
+        select.addColumn("t.plugin_result");        
+        select.addColumn("p.plugin_id");
+        select.addColumn("p.plugin_name");
+        select.addColumn("p.plugin_info");
+        select.addColumn("p.location");
+        select.addCondition("t.project_id =", projectID);
+        select.addCondition("t.plugin_id = p.plugin_id");
+        
 		// executing query
 		ResultSet resultSet = null;
-		resultSet = _dbManager.select(columnNames, tableNames, conditions);
-		//TODO what is it?? boolean success = true;
+		resultSet = _dbManager.select(select);
 		try {
 			while (resultSet.next()) {
-				int taskId = resultSet.getInt("task_id");
-				String taskName = resultSet.getString("task_name");
-				String taskInfo = resultSet.getString("task_info");
-				int pluginId = resultSet.getInt("plugin_id");
-				String pluginName = resultSet.getString("plugin_name");
-				String pluginInfo = resultSet.getString("plugin_info");
-				String location = resultSet.getString("location");
-				String settings = resultSet.getString("settings");
-				String result = resultSet.getString("result");
-				_logger.info("" + taskId + "|" + taskName + "|" + taskInfo
-						+ "|" + pluginName + "|" + pluginInfo + "|" + location
-						+ "|" + settings + "|" + result);
-				//TODO: move task loading to task manager ?
-				ITask task = _managerEngine.getTasksManager().createTask();
-				task.setName(taskName);
-				task.setTaskId(taskId);
-				URL url = new URL(location);
-				IPlugin plugin = PluginLoader.loadPlugin(url);
-				plugin.getDescription().setLocation(url);
-				plugin.getDescription().setName(pluginName);
-				plugin.getDescription().setInfo(pluginInfo);
-				plugin.getDescription().setPluginID(pluginId);
+				//TODO: move task loading to task manager ?                
+                Description description = new Description();
+                // loading plugin description
+                description.load(resultSet);
+				IPlugin plugin = PluginLoader.loadPlugin(description.getLocation());                
 				ISettings pluginSettings = plugin.getSettingComponent().getSettings();
-				pluginSettings.parseSettings(settings);
+                
+                Task task = (Task) _managerEngine.getTasksManager().createTask();
 				task.setSettings(pluginSettings);
 				task.setPlugin(plugin);
+                // loading task
+                task.load(resultSet);                
 				tasks.add(task);
 			}
 		} catch (Exception e) {
@@ -210,153 +175,41 @@ public final class ProjectManager implements IProjectManager
 	}
 
 	/**
-	 * Saves plugins for project. If there are plugins which doesn't exists in
-	 * data base, they are inserted.
-	 * 
-	 * @throws SQLException
-	 */
-	private void savePlugins() throws SQLException
-	{
-		Collection tasks = _managerEngine.getTasksManager().getTasks();
-		Set plugins = new HashSet();
-		for (Iterator iter = tasks.iterator(); iter.hasNext();) {
-			ITask task = (ITask) iter.next();
-			plugins.add(task.getPlugin());
-		}
-		//
-		// for each plugin checking, if exists in base (if there is plugin with
-		// the same name and location). If does not exist it is inserted
-		//
-		for (Iterator iter = plugins.iterator(); iter.hasNext();) {
-			IPlugin plugin = (IPlugin) iter.next();
-			Description desc = plugin.getDescription();
-			DBTableName[] tableNames = {new DBTableName("plugins")};
-			DBColumnName[] columnNames = {new DBColumnName(tableNames[0],
-					"plugin_id")};
-			DBCondition[] conditions = {
-					new DBCondition(new DBColumnName(tableNames[0], "name"),
-							DBCondition.REL_EQ, desc.getName(),
-							DBCondition.TEXT),
-					new DBCondition(
-							new DBColumnName(tableNames[0], "location"),
-							DBCondition.REL_EQ, desc.getLocation(),
-							DBCondition.TEXT)};
-			// executing query
-			ResultSet resultSet = null;
-			resultSet = _dbManager.select(columnNames, tableNames, conditions);
-			// 
-			// if plugin does not exist in base it is inserted
-			// otherwise plugin_id is set
-			//
-			if (resultSet.next()) {
-				int pluginID = resultSet.getInt("plugin_id");
-				desc.setPluginID(pluginID);
-				resultSet.close();
-			} else {
-				DBValue[] values = {
-						new DBValue(new DBColumnName(tableNames[0], "name"),
-								desc.getName(), DBValue.TEXT),
-						new DBValue(new DBColumnName(tableNames[0], "info"),
-								desc.getInfo(), DBValue.TEXT),
-						new DBValue(
-								new DBColumnName(tableNames[0], "location"),
-								desc.getLocation(), DBValue.TEXT)};
-				int pluginID = _dbManager.insert(values, "plugin_id");
-				// saving plugin ID
-				desc.setPluginID(pluginID);
-			}
-		}
-	}
-
-	/**
-	 * Method saves tasks for given project. Simple imlementation: method
-	 * deletes all tasks connected to given project existing in base and then
-	 * inserts them again.
+	 * Method saves tasks for given project. 
 	 * 
 	 * @param project
 	 * @throws SQLException
 	 */
-	private void saveTasks() throws SQLException
-	{
-		//
-		// deleting all tasks connected to given project
-		// with status == Task.ACTIVE
-		//
-		DBTableName tableName = new DBTableName("tasks");
-		DBCondition[] conditions = {
-				new DBCondition(new DBColumnName(tableName, "project_id"),
-						DBCondition.REL_EQ, new Integer(
-								_currentProject.getProjectID()),
-						DBCondition.NUMBERIC),
-				new DBCondition(new DBColumnName(tableName, "status"),
-						DBCondition.REL_EQ, Task.ACTIVE, DBCondition.TEXT)};
-		_dbManager.delete(conditions);
-		//
-		// saving tasks
-		//
-		Collection tasks = _managerEngine.getTasksManager().getTasks();
-		for (Iterator iter = tasks.iterator(); iter.hasNext();) {
-			ITask task = (ITask) iter.next();
-			DBValue[] values = {
-					new DBValue(new DBColumnName(tableName, "project_id"),
-							new Integer(_currentProject.getProjectID()),
-							DBValue.NUMBERIC),
-					new DBValue(
-							new DBColumnName(tableName, "plugin_id"),
-							new Integer(
-									task.getPlugin().getDescription().getPluginID()),
-							DBValue.NUMBERIC),
-					new DBValue(new DBColumnName(tableName, "name"),
-							task.getName(), DBValue.TEXT),
-					new DBValue(new DBColumnName(tableName, "plugin_settings"),
-							task.getSettings().settingsToString(), DBValue.TEXT),
-					new DBValue(new DBColumnName(tableName, "plugin_result"),
-							task.getResult().resultToString(), DBValue.TEXT),
-					new DBValue(new DBColumnName(tableName, "status"),
-							task.getStatus(), DBValue.TEXT)};
-			int taskId = _dbManager.insert(values, "task_id");
-			task.setTaskId(taskId);
-		}
+	private void saveTasks() throws Exception
+	{		
+		// saving tasks		
+		Collection<Task> tasks = _managerEngine.getTasksManager().getTasks();
+        for (Task task : tasks) {
+            task.setProjectID(_currentProject.getProjectID());
+        	task.save();
+        }
 	}
 
 	/**
-	 * Updates tasks connected to project. Method can change only status and
+	 * Updates task connected to project. Method can change only status and
 	 * result of task. Other columns will be unaffected. If one want change
 	 * other settings, saveProject() method should be used. The Project object
 	 * is not passed to this method, so method allows to save only one task and
-	 * may be called after every task processing. TODO: update date_finished
+	 * may be called after every task processing. 
+     * TODO: update date_finished
 	 * 
 	 * @param
 	 * @throws SQLException
 	 */
-	public void updateTasks(Task[] tasks, int projectId) throws SQLException
+	public void updateTask(Task task, int projectId) throws SQLException
 	{
-		DBTableName tableName = new DBTableName("tasks");
-		//
-		// common condition for all tasks
-		//
-		DBCondition commonCondition = new DBCondition(new DBColumnName(
-				tableName, "project_id"), DBCondition.REL_EQ, new Integer(
-				projectId), DBCondition.NUMBERIC);
-		//Task[] tasks =
-		// project.getManagerEngine().getTasksManager().getTasks();
-		//
-		// updating tasks
-		// while update only status, settings
-		//
-		for (int i = 0; i < tasks.length; i++) {
-			DBValue[] values = {
-					new DBValue(new DBColumnName(tableName, "plugin_result"),
-							tasks[i].getResult().resultToString(), DBValue.TEXT),
-					new DBValue(new DBColumnName(tableName, "status"),
-							tasks[i].getStatus(), DBValue.TEXT)};
-			DBCondition[] conditions = {
-					commonCondition,
-					new DBCondition(new DBColumnName(tableName, "task_id"),
-							DBCondition.REL_EQ, new Integer(
-									tasks[i].getTaskId()), DBCondition.NUMBERIC)};
-			_dbManager.update(values, conditions);
-		}
+		SQLUpdate update = new SQLUpdate(Task.TABLE_NAME);
+        update.addValue("plugin_result", task.getResult().resultToString());
+        update.addValue("status", task.getStatus());
+        update.addValue("stop_time", new Time(System.currentTimeMillis()));
+        update.addCondition("project_id =", projectId);
+
+        _dbManager.update(update);
 	}
 
 	/**
@@ -369,35 +222,7 @@ public final class ProjectManager implements IProjectManager
 	 */
 	private int saveProjectHeader() throws SQLException, ClassNotFoundException
 	{
-		int projectID = 0;
-		//
-		// Checking if project exists in data base
-		//
-		// building query
-		DBTableName[] tableNames = {new DBTableName("projects")};
-		DBCondition[] conditions = {new DBCondition(new DBColumnName(
-				tableNames[0], "project_id"), DBCondition.REL_EQ, new Integer(
-				_currentProject.getProjectID()), DBCondition.NUMBERIC)};
-		// executing query
-		ResultSet resultSet = null;
-		resultSet = _dbManager.select(null, tableNames, conditions);
-		// 
-		// if project exists in base its id is selected
-		// otherwise new id is generated
-		//
-		if (resultSet.next()) {
-			projectID = resultSet.getInt("project_id");
-			resultSet.close();
-		} else {
-			DBTableName tableName = new DBTableName("projects");
-			DBValue[] values = {
-					new DBValue(new DBColumnName(tableName, "name"),
-							_currentProject.getName(), DBValue.TEXT),
-					new DBValue(new DBColumnName(tableName, "info"),
-							_currentProject.getInfo(), DBValue.TEXT)};
-			projectID = _dbManager.insert(values, "project_id");
-		}
-		return projectID;
+		return ((Project)_currentProject).save();
 	}
 
 	/**
@@ -417,16 +242,12 @@ public final class ProjectManager implements IProjectManager
 			ClassNotFoundException
 	{
 		Collection projects = null;
-		DBTableName[] tableNames = {new DBTableName("projects")};
-		DBColumnName[] columnNames = {
-				new DBColumnName(tableNames[0], "project_id", "Id"),
-				new DBColumnName(tableNames[0], "name", "Name"),
-				new DBColumnName(tableNames[0], "info", "Info")};
+        SQLSelect select = new SQLSelect();
+        select.addTable(Project.TABLE_NAME);
 		// executing query
 		ResultSet resultSet = null;
 
-		resultSet = DBManager.getInstance().select(columnNames, tableNames,
-				null);
+		resultSet = DBManager.getInstance().select(select);
 		projects = Utils.getDataFromResultSet(resultSet);
 		return projects;
 	}

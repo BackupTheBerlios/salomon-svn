@@ -31,13 +31,13 @@ public final class TaskManager implements ITaskManager
 
 	private TaskEngine _taskEngine;
 
-	private LinkedList _tasks;
+	private LinkedList<ITask> _tasks;
 
 	private ProjectManager _projectManger;
 
 	public TaskManager()
 	{
-		_tasks = new LinkedList();
+		_tasks = new LinkedList<ITask>();
 		_dataEngine = new DataEngine();
 		_taskEngine = new TaskEngine();
 		//TODO: where it should be created?
@@ -59,7 +59,7 @@ public final class TaskManager implements ITaskManager
 		_tasks.clear();
 	}
 
-	public void addAllTasks(Collection tasks)
+	public void addAllTasks(Collection<ITask> tasks)
 	{
 		_tasks.addAll(tasks);
 	}
@@ -71,7 +71,7 @@ public final class TaskManager implements ITaskManager
 		//if (_tasks.)
 	} // end getCurrentTask
 
-	public Collection getTasks()
+	public Collection<ITask> getTasks()
 	{
 		return _tasks;
 	}
@@ -98,7 +98,7 @@ public final class TaskManager implements ITaskManager
 				task.setStatus(Task.REALIZATION);
 				try {
 					// changing status
-					_projectManger.updateTasks(new Task[]{task}, projectId);
+					_projectManger.updateTask(task, projectId);
 					try {
 						DBManager.getInstance().commit();
 					} catch (ClassNotFoundException e1) {
@@ -118,7 +118,7 @@ public final class TaskManager implements ITaskManager
 					// saving result of its execution
 					//
 					task.setResult(result);
-					_projectManger.updateTasks(new Task[]{task}, projectId);
+					_projectManger.updateTask(task, projectId);
 					try {
 						DBManager.getInstance().commit();
 					} catch (ClassNotFoundException e1) {
@@ -134,7 +134,7 @@ public final class TaskManager implements ITaskManager
 					_logger.fatal("TASK PROCESSING ERROR", e);
 					task.setStatus(Task.EXCEPTION);
 					try {
-						_projectManger.updateTasks(new Task[]{task}, projectId);
+						_projectManger.updateTask(task, projectId);
 					} catch (SQLException e1) {
 						_logger.fatal("", e1);
 					}
@@ -152,11 +152,11 @@ public final class TaskManager implements ITaskManager
 
 		private ITask getTask()
 		{
-			Task currentTask = null;
+			ITask currentTask = null;
 			while (true) {
 				synchronized (_tasks) {
 					if (_tasks.size() > 0) {
-						currentTask = (Task) _tasks.getFirst();
+						currentTask = _tasks.getFirst();
 					}
 				}
 				_tasks.notifyAll();

@@ -8,15 +8,14 @@ package salomon.core.plugin;
 import java.net.MalformedURLException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Collection;
+import java.util.LinkedList;
 
 import org.apache.log4j.Logger;
 
 import salomon.core.data.DBManager;
-import salomon.core.data.common.DBColumnName;
-import salomon.core.data.common.DBCondition;
-import salomon.core.data.common.DBTableName;
+import salomon.core.data.common.SQLDelete;
+import salomon.core.data.common.SQLSelect;
 import salomon.plugin.Description;
 
 /**
@@ -31,16 +30,16 @@ public final class PluginManager implements IPluginManager
 	 */
 	public Collection getAvailablePlugins()
 	{
-		Collection result = new ArrayList();
-		DBTableName[] tableNames = {new DBTableName(Description.TABLE_NAME)};
-
+		Collection<Description> result = new LinkedList<Description>();
+        SQLSelect select = new SQLSelect();
+        select.addTable(Description.TABLE_NAME);
 		// executing query
 		ResultSet resultSet = null;
 		try {
-			resultSet = DBManager.getInstance().select(null, tableNames, null);
+			resultSet = DBManager.getInstance().select(select);
 			while (resultSet.next()) {
 				Description desc = new Description();
-				desc.init(resultSet);
+				desc.load(resultSet);
 				result.add(desc);
 			}
 		} catch (SQLException e) {
@@ -63,14 +62,13 @@ public final class PluginManager implements IPluginManager
 		boolean result = false;
 		DBManager dbManager = null;
 		try {
-			// remving all related tasks
-			DBTableName[] tableNames = {new DBTableName("tasks")};
-			DBCondition[] conditions = {new DBCondition(new DBColumnName(
-					tableNames[0], "plugin_id"), DBCondition.REL_EQ,
-					new Integer(description.getPluginID()),
-					DBCondition.NUMBERIC)};
+			// removing all related tasks
+            //TODO: change to Task.TABLE_NAME
+            SQLDelete delete = new SQLDelete("tasks");
+            delete.addCondition("plugin_id =", description.getPluginID());
+            
 			dbManager = DBManager.getInstance();
-			dbManager.delete(conditions);
+			dbManager.delete(delete);
 			// removing plugin
 			description.delete();
 			result = true;

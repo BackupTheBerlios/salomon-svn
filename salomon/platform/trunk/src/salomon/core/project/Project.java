@@ -1,21 +1,29 @@
 
 package salomon.core.project;
 
+import java.sql.Date;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import salomon.core.data.DBManager;
+import salomon.core.data.common.SQLDelete;
+import salomon.core.data.common.SQLUpdate;
+
 /**
  * Represents a project, it is an implementation of IProject interface.
  *  
  */
-final class Project implements IProject
+public final class Project implements IProject
 {
-	private String _info = null;
+	public static final String TABLE_NAME = "projects";
+    
+    private static final String GEN_NAME = "gen_project_id";
 
-	private String _name = null;
+	private String _info;
+
+	private String _name;
 
 	private int _projectID = 0;
-
-	public Project()
-	{
-	}
 
 	/**
 	 * @return Returns the info.
@@ -69,4 +77,56 @@ final class Project implements IProject
 	{
 		return "[" + _projectID + ", " + _name + ", " + _info + "]";
 	}
+
+	/**
+	 * Initializes itself basing on given row from resultSet.
+	 * 
+	 * @param resultSet
+	 * @throws SQLException
+	 */
+	public void load(ResultSet resultSet) throws SQLException
+	{
+		_projectID = resultSet.getInt("project_id");
+		_name = resultSet.getString("project_name");
+		_info = resultSet.getString("project_info");
+	}
+
+	/**
+	 * Saves itself in data base. If already exists in database performs update
+	 * otherwise inserts new record. Returns current id if update was executed
+	 * or new id in case of insert.
+	 * 
+	 * @return unique id
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	public int save() throws SQLException, ClassNotFoundException
+	{
+		SQLUpdate update = new SQLUpdate(TABLE_NAME);
+        if (_name != null) {
+        	update.addValue("project_name", _name);
+        }
+        if (_info != null) {
+        	update.addValue("project_info", _info);
+        }		
+		update.addValue("lm_date", new Date(System.currentTimeMillis()));
+		_projectID = DBManager.getInstance().insertOrUpdate(update, "project_id",
+				_projectID, GEN_NAME);
+		return _projectID;
+	}
+
+	/**
+	 * Removes itself from database. After successsful finish object should be
+	 * destroyed.
+	 * 
+	 * @return @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	public boolean delete() throws SQLException, ClassNotFoundException
+	{
+		SQLDelete delete = new SQLDelete(TABLE_NAME);
+		delete.addCondition("project_id =", _projectID);
+		return (DBManager.getInstance().delete(delete) > 0);
+	}
+
 }

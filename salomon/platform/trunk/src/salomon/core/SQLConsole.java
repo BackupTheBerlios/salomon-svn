@@ -28,15 +28,9 @@ import javax.swing.JToolBar;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
-import pl.edu.agh.icsr.salomon.plugin.averageprice.AveragePrice;
 import salomon.controller.gui.Utils;
 import salomon.core.data.DBManager;
 import salomon.core.data.DataEngine;
-import salomon.core.data.common.DBColumnName;
-import salomon.core.data.common.DBCondition;
-import salomon.core.data.common.DBTableName;
-import salomon.core.data.dataset.DataSet;
-import salomon.core.data.dataset.DataSetManager;
 
 /**
  * Class represents simple SQL console. It is used to debug application. Allows
@@ -400,11 +394,6 @@ public class SQLConsole extends JFrame
 		}
 	}
 
-	private void pluginTest()
-	{
-		new AveragePrice().doJob(new DataEngine(), null, null);
-	}
-
 	/**
 	 *  
 	 */
@@ -414,35 +403,6 @@ public class SQLConsole extends JFrame
 		String command = _history.getPreviousCommand();
 		if (command != null) {
 			_edtSQLQuery.setText(command);
-		}
-	}
-
-	private void queryTest()
-	{
-		DataSet dataSet = null;
-		try {
-			dataSet = new DataSetManager().getDataSetForName("test1"); //$NON-NLS-1$
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			_logger.fatal("", e); //$NON-NLS-1$
-		} catch (SQLException e) {
-			_logger.fatal("", e); //$NON-NLS-1$
-		}
-		_logger.debug("dataSet: " + dataSet); //$NON-NLS-1$
-		DBTableName[] tableNames = {new DBTableName("cars", "c")}; //$NON-NLS-1$ //$NON-NLS-2$
-		DBColumnName[] columnNames = {
-				new DBColumnName(tableNames[0], "car_id", "id"), //$NON-NLS-1$ //$NON-NLS-2$
-				new DBColumnName(tableNames[0], "brand", "marka"), //$NON-NLS-1$ //$NON-NLS-2$
-				new DBColumnName(tableNames[0], "name", "model"),}; //$NON-NLS-1$ //$NON-NLS-2$
-		DBCondition[] conditions = {new DBCondition(new DBColumnName(
-				tableNames[0], "car_id"), DBCondition.REL_M, new Integer(1), //$NON-NLS-1$
-				DBCondition.NUMBERIC)};
-		try {
-			dataSet.selectData(columnNames, tableNames, conditions);
-		} catch (SQLException e) {
-			_logger.fatal("", e); //$NON-NLS-1$
-		} catch (ClassNotFoundException e) {
-			_logger.fatal("", e); //$NON-NLS-1$
 		}
 	}
 
@@ -506,8 +466,9 @@ public class SQLConsole extends JFrame
 			buffer.append("\n"); //$NON-NLS-1$
 		}
 		_logger.fatal(buffer);
-	}
-
+	}   
+    
+    
 	/**
 	 * Class manages command history list.
 	 * 
