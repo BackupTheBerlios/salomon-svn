@@ -25,7 +25,8 @@ Installation file for salomon project
             <author name="Jakub Galkowski" email="avi@student.uci.agh.edu.pl"/>
             <author name="Jakub Pawlowski" email="qoooba@student.uci.agh.edu.pl"/>
         </authors>
-	<url>http://salomon.iisg.agh.edu.pl</url>
+        <javaversion>1.5</javaversion>
+	    <url>http://salomon.iisg.agh.edu.pl</url>
     </info>
     
     <!-- 
