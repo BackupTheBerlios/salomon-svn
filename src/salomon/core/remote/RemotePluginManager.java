@@ -44,9 +44,17 @@ public final class RemotePluginManager extends UnicastRemoteObject
 	/* (non-Javadoc)
 	 * @see salomon.core.remote.IRemotePluginManager#addPlugin(salomon.plugin.Description)
 	 */
-	public boolean addPlugin(Description description) throws RemoteException
+	public boolean savePlugin(Description description) throws RemoteException
 	{
-		return _pluginManager.addPlugin(description);		
+		return _pluginManager.savePlugin(description);		
+	}
+
+	/* (non-Javadoc)
+	 * @see salomon.core.remote.IRemotePluginManager#removePlugin(salomon.plugin.Description)
+	 */
+	public boolean removePlugin(Description description) throws RemoteException
+	{		
+		return _pluginManager.removePlugin(description);
 	}
 
 	//	/* (non-Javadoc)

@@ -17,7 +17,9 @@ import salomon.plugin.Description;
 public interface IRemotePluginManager extends Remote
 {
 	Collection getAvailablePlugins() throws RemoteException;
-	
-    public boolean addPlugin(Description description) throws RemoteException;
+
+	public boolean savePlugin(Description description) throws RemoteException;
+
+	public boolean removePlugin(Description description) throws RemoteException;
 	//    public IRemotePlugin getPlugin(URL url) throws RemoteException;
 }

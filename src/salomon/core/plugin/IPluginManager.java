@@ -16,6 +16,8 @@ public interface IPluginManager
 {
 	public Collection getAvailablePlugins();
     
-    public boolean addPlugin(Description description);
+    public boolean savePlugin(Description description);
+    
+    public boolean removePlugin(Description description);
 	//    public IPlugin getPlugin(URL url);
 }

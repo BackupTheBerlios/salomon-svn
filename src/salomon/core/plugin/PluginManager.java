@@ -6,7 +6,6 @@
 package salomon.core.plugin;
 
 import java.net.MalformedURLException;
-import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -16,8 +15,8 @@ import org.apache.log4j.Logger;
 
 import salomon.core.data.DBManager;
 import salomon.core.data.common.DBColumnName;
+import salomon.core.data.common.DBCondition;
 import salomon.core.data.common.DBTableName;
-import salomon.core.data.common.DBValue;
 import salomon.plugin.Description;
 
 /**
@@ -25,28 +24,22 @@ import salomon.plugin.Description;
  */
 public final class PluginManager implements IPluginManager
 {
-
+	/**
+	 * Returns collection of plugin descriptions
+	 */
 	public Collection getAvailablePlugins()
 	{
 		Collection result = new ArrayList();
-		DBTableName[] tableNames = {new DBTableName("plugins")};
-		DBColumnName[] columnNames = {new DBColumnName(tableNames[0],
-				"location")};
+		DBTableName[] tableNames = {new DBTableName(Description.TABLE_NAME)};
+
 		// executing query
 		ResultSet resultSet = null;
-		//TODO: change it
-		Collection stringCollection = new ArrayList();
 		try {
-			resultSet = DBManager.getInstance().select(columnNames, tableNames,
-					null);
+			resultSet = DBManager.getInstance().select(null, tableNames, null);		
 			while (resultSet.next()) {
-				String location = resultSet.getString("location");
-				_logger.info("plugin: " + location);
-				if (!stringCollection.contains(location)) {
-					stringCollection.add(location);
-					result.add(new URL(location));
-				}
-
+                Description desc = new Description();
+                desc.init(resultSet);
+				result.add(desc);
 			}
 		} catch (SQLException e) {
 			_logger.fatal("", e);
@@ -61,29 +54,51 @@ public final class PluginManager implements IPluginManager
 	private static Logger _logger = Logger.getLogger(PluginLoader.class);
 
 	/**
-     * Adds plugin to database. 
-     * @return true if successfully added, false otherwise
+	 * Adds plugin to database.
+	 * 
+	 * @return true if successfully added, false otherwise
 	 */
-	public boolean addPlugin(Description description)
-	{       
-        DBTableName tableName = new DBTableName("plugins");       
-        
-		DBValue[] values = {new DBValue(new DBColumnName(tableName, "name"), description.getName(), DBValue.TEXT),
-                new DBValue(new DBColumnName(tableName, "location"), description.getLocation().toString(), DBValue.TEXT),
-                new DBValue(new DBColumnName(tableName, "info"), description.getInfo(), DBValue.TEXT)
-                };
-        int pluginId = 0;
-		try {
-			pluginId = DBManager.getInstance().insert(values, "plugin_id");
-            description.setPluginID(pluginId);
-            _logger.info("plugin added, plugin_id = " + pluginId);
+	public boolean savePlugin(Description description)
+	{
+		boolean result = false;
+        try {
+			description.save();
             DBManager.getInstance().commit();
+            result = true;
+            _logger.info("Plugin successfully saved.");
 		} catch (SQLException e) {
 			_logger.fatal("", e);
 		} catch (ClassNotFoundException e) {
 			_logger.fatal("", e);
-		}	
-        
-        return pluginId != 0;
-	}    
+		}
+        return result;
+	}
+    
+    public boolean removePlugin(Description description)
+    {        
+        boolean result = false;
+        DBManager dbManager = null;
+        try {
+            // remving all related tasks
+            DBTableName[] tableNames = {new DBTableName("tasks")};
+            DBCondition[] conditions = {new DBCondition(new DBColumnName(
+                    tableNames[0], "plugin_id"), DBCondition.REL_EQ, new Integer(
+                    description.getPluginID()), DBCondition.NUMBERIC)};
+            dbManager = DBManager.getInstance();
+            dbManager.delete(conditions);
+            // removing plugin
+            description.delete();
+            result = true;
+            dbManager.commit();
+            _logger.info("Plugin successfully deleted.");
+        } catch (SQLException e) {
+            dbManager.rollback();
+            _logger.fatal("", e);
+        } catch (ClassNotFoundException e) {
+            dbManager.rollback();
+            _logger.fatal("", e);
+        }
+        return result;
+    }
+
 }

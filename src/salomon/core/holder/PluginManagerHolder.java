@@ -40,9 +40,17 @@ final class PluginManagerHolder implements IPluginManager
 	/* (non-Javadoc)
 	 * @see salomon.core.plugin.IPluginManager#addPlugin(salomon.plugin.Description)
 	 */
-	public boolean addPlugin(Description description)
+	public boolean savePlugin(Description description)
 	{
-        return _currentPluginManager.addPlugin(description);
+        return _currentPluginManager.savePlugin(description);
+	}
+
+	/* (non-Javadoc)
+	 * @see salomon.core.plugin.IPluginManager#removePlugin(salomon.plugin.Description)
+	 */
+	public boolean removePlugin(Description description)
+	{
+		return _currentPluginManager.removePlugin(description);
 	}
 
 	//	/* (non-Javadoc)
