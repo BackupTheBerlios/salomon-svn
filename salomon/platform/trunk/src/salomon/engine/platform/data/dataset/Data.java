@@ -1,9 +1,11 @@
 package salomon.engine.platform.data.dataset;
 
+import salomon.platform.data.data.IData;
+
 /**
  *  Not used.
  */
-public class Data
+public class Data implements IData
 {
 	///////////////////////////////////////
 	// associations

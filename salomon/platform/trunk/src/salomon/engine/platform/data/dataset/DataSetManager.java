@@ -8,11 +8,12 @@ import java.util.HashSet;
 
 import salomon.engine.platform.data.DBManager;
 import salomon.engine.platform.data.common.SQLSelect;
+import salomon.platform.data.data.IDataSetManager;
 
 /**
  * Class manages with datasets.
  */
-public class DataSetManager
+public class DataSetManager implements IDataSetManager
 {
 
 	public DataSet getDataSetForName(String name) throws SQLException,

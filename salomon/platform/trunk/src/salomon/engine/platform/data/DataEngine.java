@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 import salomon.engine.platform.data.attribute.AttributeManager;
 import salomon.engine.platform.data.dataset.DataSetManager;
-import salomon.engine.platform.data.ruleset.RuleSetManager;
+import salomon.engine.platform.data.rule.RuleSetManager;
 
 /**
  *  Class holds  DataSetManager, RuleSetManager and AttributeManager instances.  
