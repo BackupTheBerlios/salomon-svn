@@ -203,8 +203,8 @@ public final class ProjectManager implements IProjectManager
 		// saving project header
         try {		 
 		 // saving tasks
-		 saveTasks(_currentProject.getProjectID());
          ((Project)_currentProject).save();
+		 saveTasks(_currentProject.getProjectID());
 		 LOGGER.info("Project successfully saved.");
 		 //TODO: bez tego czasem zawisa :-(
 		 _dbManager.commit();
