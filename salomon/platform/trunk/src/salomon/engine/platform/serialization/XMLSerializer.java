@@ -21,17 +21,16 @@
 
 package salomon.engine.platform.serialization;
 
-import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
-import org.xml.sax.SAXException;
 
 import salomon.platform.serialization.IObject;
 
@@ -40,6 +39,7 @@ import salomon.platform.serialization.IObject;
  */
 public final class XMLSerializer
 {
+private static final Logger LOGGER = Logger.getLogger(XMLSerializer.class);
 
 	public IObject deserialize(InputStream is)
 	{
@@ -51,19 +51,28 @@ public final class XMLSerializer
             document = builder.parse(is);
             Node root = document.getChildNodes().item(0);
             result = StructSerializer.deserialize(root);
-        } catch (ParserConfigurationException e) {
-            e.printStackTrace();
-        } catch (SAXException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+        	LOGGER.error("", e);
         }
+        
         return result;
 	}
 
-	public String serialize(IObject value)
+    
+    
+	public void serialize(IObject value, InputStream is)
 	{
-		throw new UnsupportedOperationException(
-				"Method serialize() not implemented yet!");
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        Document document = null;
+        try {
+			DocumentBuilder builder =  factory.newDocumentBuilder();
+            document=  builder.newDocument();
+		} catch (ParserConfigurationException e) {
+            LOGGER.error("", e);
+		}
+        //document.createE
+        Element root = document.createElement(StructSerializer.NODE_STRUCT); 
+        document.appendChild(root);
+        System.out.println(document.toString());
 	}
 }
