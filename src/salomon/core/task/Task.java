@@ -10,6 +10,16 @@ import salomon.plugin.ISettings;
  */
 public class Task
 {
+	public static final String ACTIVE = "AC";
+
+	public static final String ERROR = "ER";
+
+	public static final String EXCEPTION = "EX";
+
+	public static final String FINISHED = "FI";
+
+	public static final String REALIZATION = "RE";
+
 	private String _name;
 
 	private IPlugin _plugin;
@@ -17,6 +27,16 @@ public class Task
 	private IResult _result;
 
 	private ISettings _settings;
+
+	private String _status;
+	
+	private int _taksId;
+
+	public Task()
+	{
+		_taksId = 0;
+		_status = ACTIVE;
+	}
 
 	/**
 	 * @return Returns the name.
@@ -39,7 +59,7 @@ public class Task
 	 */
 	public IResult getResult()
 	{
-		return _result;
+		return (_result == null) ? new DefaultResult() : _result;
 	}
 
 	/**
@@ -48,6 +68,14 @@ public class Task
 	public ISettings getSettings()
 	{
 		return _settings;
+	}
+
+	/**
+	 * @return Returns the status.
+	 */
+	public String getStatus()
+	{
+		return _status;
 	}
 
 	/**
@@ -75,6 +103,11 @@ public class Task
 	public void setResult(IResult result)
 	{
 		_result = result;
+		if (_result.isSuccessful()) {
+			_status = Task.FINISHED;
+		} else {
+			_status = Task.ERROR;
+		}
 	}
 
 	/**
@@ -86,6 +119,15 @@ public class Task
 		_settings = settings;
 	}
 
+	/**
+	 * @param status
+	 *            The status to set.
+	 */
+	public void setStatus(String status)
+	{
+		this._status = status;
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -94,5 +136,42 @@ public class Task
 	public String toString()
 	{
 		return _name + " [" + _plugin + "]";
+	}
+	/**
+	 * @return Returns the taksId.
+	 */
+	public int getTaksId()
+	{
+		return _taksId;
+	}
+	/**
+	 * @param taksId The taksId to set.
+	 */
+	public void setTaksId(int taksId)
+	{
+		_taksId = taksId;
+	}
+	/**
+	 * Class represents empty result.
+	 * It is used to correctly save task before its execution.
+	 * 
+	 * @author nico	 
+	 */
+	class DefaultResult implements IResult {
+
+		public void parseResult(String result)
+		{
+						
+		}
+
+		public String resultToString()
+		{
+			return "";
+		}
+
+		public boolean isSuccessful()
+		{			
+			return true;
+		}		
 	}
 } // end Task
