@@ -17,6 +17,8 @@ import org.apache.log4j.Logger;
  */
 public class GUIButtons
 {
+	private static Logger _logger = Logger.getLogger(GUIButtons.class);
+
 	private JButton _btnAdd = null;
 
 	private JButton _btnAddAll = null;
@@ -36,8 +38,6 @@ public class GUIButtons
 	private ManipulationListener _manipulationListener = null;
 
 	private TaskEditionManager _taskEditionManager = null;
-
-	private static Logger _logger = Logger.getLogger(GUIButtons.class);
 
 	public GUIButtons()
 	{
