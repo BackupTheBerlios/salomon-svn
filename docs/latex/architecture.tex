@@ -28,14 +28,8 @@ W kolejnej wersji Salomona dodane zostan¹ klasy odpowiedzialne za przechowywanie
 \newpage
 Opis klas platformy:
 
-\subsubsection{IManagerEngine}
-Klasa zarz¹dza pozosta³ymi menad¿erami. Utrzymuje jedn¹ instancjê ka¿dego z nich 
-i udostêpnia je pozosta³ym klasom z platformy.
-
-\subsubsection{DBManager}
-Odpowiada za po³¹czenie z baz¹ danych. Dostarcza metody
-zapewniaj¹ce dostêp do danych przechowywanych w bazie. Swoj¹
-funkcjonalnoœæ udostêpnia odpowiednim menad¿erom.
+\subsubsection{DataEngine}
+Obiekt przekazywany pluginom do wykonania zadania. Udostêpnia im menad¿ery do operowania na danych (\emph{DataSetManager}, \emph{RuleSetManager}, w przysz³oœci \emph{AttributeManager} i inne).
 
 \subsubsection{DataSetManager}
 Zarz¹dza zbiorami danych. Pozwala tworzyæ nowe podzbiory danych na
@@ -46,15 +40,24 @@ na nich.
 Zarz¹dza regu³ami. Pozwala tworzyæ nowe regu³y oraz
 zarz¹dza dostêpem do ju¿ istniej¹cych.
 
-\subsubsection{ProjectManager}
+\subsubsection{DBManager}
+Odpowiada za po³¹czenie z baz¹ danych. Dostarcza metody
+zapewniaj¹ce dostêp do danych przechowywanych w bazie. Swoj¹
+funkcjonalnoœæ udostêpnia odpowiednim menad¿erom.
+
+\subsubsection{IManagerEngine}
+Klasa zarz¹dza pozosta³ymi menad¿erami. Utrzymuje jedn¹ instancjê ka¿dego z nich 
+i udostêpnia je pozosta³ym klasom z platformy.
+
+\subsubsection{IProjectManager}
 Zarz¹dza projektami. Pozwala na utworzenie nowego
 projektu, zapisanie bie¿¹cego do bazy danych oraz na za³adowanie z bazy.
 
-\subsubsection{IProjectManager}
-
 \subsubsection{IPluginManger}
+Zarz¹dza pluginami. Zapewnia zapis pluginów do bazy oraz za³adowanie listy dostêpnych pluginów.
 
 \subsubsection{ITaskManger}
+Zarz¹dza zadaniami. Jest odpowiedzialny za utworzenie nowego zadania, pobranie listy zadañ do wykonania oraz uruchomienie zadañ.
 
 \subsection{Kontrolery}
 Kontrolery odpowiadaj¹ za interakcjê
@@ -70,17 +73,17 @@ wykonywane sekwencyjnie. Zadaniem tego kontrolera jest dostarczenie
 interfejsu u¿ytkownika, pozwalaj¹cego na zarz¹dzanie projektami,
 wtyczkami i zadaniami.
 
-\subsubsection{ServerController}
+\subsubsection{MasterController}
 Zadaniem tego kontrolera jest dostarczenie interfejsu do
-zarz¹dzania zdalnymi kontrolerami (\emph{ClientController}). Po
+zarz¹dzania zdalnymi kontrolerami (\emph{ServantController}). Po
 uruchomieniu nas³uchuje na po³¹czenia od klientów, rozdziela
 zadania oraz wyœwietla ich wyniki.
 
-\subsubsection{ClientController}
+\subsubsection{ServantController}
 Zadaniem tego kontrolera jest odszukanie g³ównego kontrolera
 (\emph{ServerController}), zarejestrowanie siê i udostêpnianie mu
 swoich us³ug. Ta wersja kontrolera nie posiada GUI, zarz¹dzanie
-nim odbywa siê za pomoc¹ klasy \emph{ServerController}.
+nim odbywa siê za pomoc¹ klasy \emph{ServantController}.
 
 
 \subsection{Pluginy}
