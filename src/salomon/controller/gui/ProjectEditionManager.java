@@ -50,6 +50,7 @@ public final class ProjectEditionManager
 
 	private JTextField _txtProjectName;
 
+
 	/**
 	 * @param parent
 	 */
@@ -89,8 +90,7 @@ public final class ProjectEditionManager
 	}
 
 	/**
-	 * @param parent
-	 *            The parent to set.
+	 * @param parent The parent to set.
 	 */
 	public void setParent(ControllerFrame parent)
 	{
