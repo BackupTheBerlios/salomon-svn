@@ -11,5 +11,16 @@ package salomon.plugin;
  */
 public interface ISettings
 {
+	/** 
+	 *  Method parses settings from string their string representation.
+	 * 
+	 * @param stringSettings
+	 */
+	void parseSettings(String stringSettings);	
 	
+	/**
+	 * 
+	 * @return string representation of settings 
+	 */
+	String getSettings();
 }
