@@ -1,8 +1,6 @@
 /*
  * Created on 2004-05-04
  *
- * To change the template for this generated file go to
- * Window - Preferences - Java - Code Generation - Code and Comments
  */
 
 package salomon.core.data.common;
@@ -10,9 +8,9 @@ package salomon.core.data.common;
 import org.apache.log4j.Logger;
 
 /**
- * @author nico
- * 
  * Class represents condition used in SQL queries
+ * 
+ * @author nico
  */
 public class DBCondition
 {
@@ -64,13 +62,15 @@ public class DBCondition
 	}
 
 	/**
-	 * Initializes condition basing on given query. example: table name ==
-	 * car_sales whereClause == payment_type = 'card'
+	 * Initializes condition basing on given query. 
+     * Example: table name - "car_sales" 
+     *          whereClause - "payment_type = 'card'"
 	 * 
-	 * @param query
-	 *            TODO: JOIN support
+	 * @param tableName table name
+     * @param  whereClause where clause
 	 */
-	public DBCondition(String strTableName, String whereClause)
+    //TODO: JOIN support
+	public DBCondition(String tableName, String whereClause)
 	{
 		String columnValue = null;
 		String columnName = null;
@@ -95,11 +95,15 @@ public class DBCondition
 			_type = NUMBERIC;
 			_value = new Integer(columnValue);
 		}
-		DBTableName dbTableName = new DBTableName(strTableName);
+		DBTableName dbTableName = new DBTableName(tableName);
 		_columnName = new DBColumnName(dbTableName, columnName);
 	}
 
-	// returns table name of the left side of condition
+	/**
+	 * Method returns table name of the left side of condition
+	 * 
+	 * @return table name of the left side of condition
+	 */
 	public DBTableName getTableName()
 	{
 		return _columnName.getTableName();

@@ -1,7 +1,3 @@
-/** Java class "DataSet.java" generated from Poseidon for UML.
- *  Poseidon for UML is developed by <A HREF="http://www.gentleware.com">Gentleware</A>.
- *  Generated with <A HREF="http://jakarta.apache.org/velocity/">velocity</A> template engine.
- */
 
 package salomon.core.data.dataset;
 
@@ -19,12 +15,15 @@ import salomon.core.data.common.DBCondition;
 import salomon.core.data.common.DBTableName;
 
 /**
- *  
+ * Class represents data set. Data set is a subset of data stored in tables, its
+ * conditions specifies how to get this subset.
+ * 
+ * @author nico
  */
 public class DataSet
 {
 	/**
-	 * Conditions determinating data set. If _conditions == null it means that
+	 * Conditions determinating data set. If conditions are null it means that
 	 * data set includes all data
 	 */
 	private DBCondition[] _conditions = null;
@@ -33,6 +32,17 @@ public class DataSet
 
 	private static Logger _logger = Logger.getLogger(DataSet.class);
 
+	/**
+	 * Method selects data basing on given parameters. It takes into account
+	 * conditions determinating data set - conditions passed as the arguments of
+	 * method are concatenated to them.
+	 * 
+	 * @param columnNames column names to select
+	 * @param tableNames tables from which data should be selected
+	 * @param conditions conditions of query
+	 * @return @throws SQLException
+	 * @throws ClassNotFoundException
+	 */
 	public ResultSet selectData(DBColumnName[] columnNames,
 			DBTableName[] tableNames, DBCondition[] conditions)
 			throws SQLException, ClassNotFoundException
@@ -62,12 +72,10 @@ public class DataSet
 
 	/**
 	 * Method returns ResultSet basing on given query. Query is modified - all
-	 * conditions determinating data set are concatenated to the query; TODO:
-	 * first implementation, improve it(add support for "order by" itp...)
+	 * conditions determinating data set are concatenated to the query;
 	 * 
-	 * @param query
-	 * @return @throws
-	 *         ClassNotFoundException
+	 * @param query SQL query to be executed
+	 * @return @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
 	public ResultSet selectData(String query) throws SQLException,
@@ -119,7 +127,9 @@ public class DataSet
 	}
 
 	/**
-	 * @return Returns the _conditions.
+	 * Method returns the conditions determinating data set.
+	 * 
+	 * @return conditions determinating data set.
 	 */
 	public DBCondition[] getConditions()
 	{
@@ -127,7 +137,7 @@ public class DataSet
 	}
 
 	/**
-	 * Returns conditions which refers to tables specified by tableNames Data
+	 * Returns conditions which refers to tables specified by tableNames. Data
 	 * set is a subset of data stored in tables, conditions specifies how to get
 	 * this subset. Conditions got from plugin has to be added to condition list
 	 * determinating data set.
@@ -152,9 +162,14 @@ public class DataSet
 		return conditionList;
 	}
 
+	/**
+	 * Method sets conditions determinating data set.
+	 * 
+	 * @param conditions to set
+	 */
 	public void setConditions(DBCondition[] conditions)
 	{
-		_conditions = conditions;
+		_conditions = conditions; 
 	}
 
 	/*

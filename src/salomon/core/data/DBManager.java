@@ -20,8 +20,10 @@ import salomon.core.data.common.DBTableName;
 import salomon.core.data.common.DBValue;
 
 /**
+ * Class is responsible for data base operations. It enables executing SQL
+ * queries and transaction managing.
+ * 
  * @author nico
- *  
  */
 public class DBManager
 {
@@ -48,8 +50,14 @@ public class DBManager
 		_isEmbedded = Config.getString("EMBEDDED").equalsIgnoreCase("Y");
 	}
 
+	/**
+	 * Commits current transaction.
+	 * 
+	 * @throws SQLException
+	 */
 	public void commit() throws SQLException
 	{
+		_logger.info("Commit");
 		_connection.commit();
 	}
 
@@ -57,8 +65,7 @@ public class DBManager
 	 * Deletes records basing on given conditions. Table name is taken from the
 	 * first condition.
 	 * 
-	 * @param conditions
-	 *            conditions of query
+	 * @param conditions conditions of query
 	 * @return number of deleted records
 	 * @throws SQLException
 	 */
@@ -74,6 +81,11 @@ public class DBManager
 		return _statement.executeUpdate(query);
 	}
 
+	/**
+	 * Disconnects from data base.
+	 * 
+	 * @throws SQLException
+	 */
 	public void disconnect() throws SQLException
 	{
 		if (_statement != null) {
@@ -84,12 +96,20 @@ public class DBManager
 		}
 	}
 
+	/**
+	 * Executed given SQL query.
+	 * 
+	 * @param query to execute
+	 * @return @throws SQLException
+	 */
 	public boolean executeQuery(String query) throws SQLException
 	{
 		return _statement.execute(query);
 	}
 
 	/**
+	 * Returns result set for last executed query.
+	 * 
 	 * @return result set or null if query was INSERT, UPDATE or DELETE
 	 * @throws SQLException
 	 */
@@ -98,6 +118,12 @@ public class DBManager
 		return _statement.getResultSet();
 	}
 
+	/**
+	 * Returns count of records updated by last executed query.
+	 * 
+	 * @return count of updated records
+	 * @throws SQLException
+	 */
 	public int getUpdateCount() throws SQLException
 	{
 		return _statement.getUpdateCount();
@@ -107,8 +133,7 @@ public class DBManager
 	 * Inserts record specified in DBValue array. Table name is taken from the
 	 * first element from array.
 	 * 
-	 * @param values
-	 *            values to insert
+	 * @param values values to insert
 	 * @return always false
 	 * @throws SQLException
 	 */
@@ -135,10 +160,8 @@ public class DBManager
 	 * first element from array. Method autoincrement value in column
 	 * primaryKey.
 	 * 
-	 * @param values
-	 *            values to insert
-	 * @param primaryKey
-	 *            primary key column name
+	 * @param values values to insert
+	 * @param primaryKey primary key column name
 	 * @return generated primary key
 	 * @throws SQLException
 	 */
@@ -177,8 +200,15 @@ public class DBManager
 		return primaryKeyID;
 	}
 
+	/**
+	 * Annuls current transaction.
+	 * 
+	 * @throws SQLException
+	 */
+
 	public void rollback() throws SQLException
 	{
+		_logger.info("Rollback");
 		_connection.rollback();
 	}
 
@@ -188,12 +218,10 @@ public class DBManager
 	 * from tables basing on tableNames using conditions specified in
 	 * conditions. If conditions is null, all data is selected.
 	 * 
-	 * @param columnNames
-	 *            column names to select (if null all columns are selected)
-	 * @param tableNames
-	 *            tables used in conditions (not null)
-	 * @param conditions
-	 *            conditions of query (if null all data are selected)
+	 * @param columnNames column names to select (if null all columns are
+	 *            selected)
+	 * @param tableNames tables used in conditions (not null)
+	 * @param conditions conditions of query (if null all data are selected)
 	 * @return selected result set
 	 * @throws SQLException
 	 */
@@ -234,10 +262,8 @@ public class DBManager
 	 * conditions. Table name is taken from the first element of values array.
 	 * If conditions array is null, all data from appropriate table are updated.
 	 * 
-	 * @param values
-	 *            values to set
-	 * @param conditions
-	 *            conditions of query (if null all data are updated)
+	 * @param values values to set
+	 * @param conditions conditions of query (if null all data are updated)
 	 * @return number of updated rows
 	 * @throws SQLException
 	 */
@@ -277,10 +303,18 @@ public class DBManager
 		connectString += _dataBasePath;
 		_logger.info("connectString: " + connectString);
 		_connection = DriverManager.getConnection(connectString, _user, _passwd);
+        // setting auto commit off
 		_connection.setAutoCommit(false);
 		_statement = _connection.createStatement();
 	}
 
+	/**
+	 * Method returns instance of DBManager. It ensures that exactly one
+	 * instance of class will be created.
+	 * 
+	 * @return @throws SQLException
+	 * @throws ClassNotFoundException
+	 */
 	public static DBManager getInstance() throws SQLException,
 			ClassNotFoundException
 	{

@@ -23,10 +23,8 @@ public class DBTableName
 	}
 
 	/**
-	 * @param _tableName
-	 *            table _tableName
-	 * @param _tableAlias
-	 *            table _tableAlias
+	 * @param _tableName table _tableName
+	 * @param _tableAlias table _tableAlias
 	 */
 	public DBTableName(String name, String alias)
 	{

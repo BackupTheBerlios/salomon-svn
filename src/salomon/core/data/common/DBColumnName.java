@@ -8,9 +8,9 @@
 package salomon.core.data.common;
 
 /**
- * @author nico
+ * Class represents data base table column in SQL queries.
  * 
- * Class represents column _tableName in SQL queries
+ * @author nico
  */
 public class DBColumnName
 {
@@ -21,12 +21,9 @@ public class DBColumnName
 	private String _columnAlias;
 
 	/**
-	 * @param _tableName
-	 *            table name
-	 * @param _columnName
-	 *            column name
-	 * @param _columnAlias
-	 *            column alias
+	 * @param tableName table name
+	 * @param columnName column name
+	 * @param columnAlias column alias
 	 */
 	public DBColumnName(DBTableName tableName, String columnName,
 			String columnAlias)
@@ -56,15 +53,21 @@ public class DBColumnName
 		return name;
 	}
 
-	// returns e.g. "user_id".
-	// Some statements don't accept table name as a prefix
+	/**
+	 * Method returns qouted column name without table name or table alias. Some
+	 * statements don't accept table name as a prefix
+	 * 
+	 * @return qouted column name
+	 */
 	public String getForUpdate()
 	{
 		return "\"" + _columnName + "\"";
 	}
 
 	/**
-	 * @return Returns the _tableName.
+	 * Method returns table name.
+	 * 
+	 * @return the table name.
 	 */
 	public DBTableName getTableName()
 	{

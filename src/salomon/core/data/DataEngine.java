@@ -1,7 +1,4 @@
-/** Java class "DataEngine.java" generated from Poseidon for UML.
- *  Poseidon for UML is developed by <A HREF="http://www.gentleware.com">Gentleware</A>.
- *  Generated with <A HREF="http://jakarta.apache.org/velocity/">velocity</A> template engine.
- */
+
 
 package salomon.core.data;
 
@@ -38,7 +35,7 @@ public class DataEngine
 	public DataSetManager getTestingDataSetManager()
 	{
 		return _dataSetManager;
-	} // end getTestingDataSetManager
+	} 
 
 	/**
 	 * Does ...
@@ -47,9 +44,9 @@ public class DataEngine
 	 */
 	public RuleSetManager getRuleSetManager()
 	{
-		// your code here
+		
 		return null;
-	} // end getRuleSetManager
+	} 
 
 	/**
 	 * Does ...
@@ -58,7 +55,7 @@ public class DataEngine
 	 */
 	public AttributeManager getAttributeManager()
 	{
-		// your code here
+		
 		return null;
-	} // end getAttributeManager
-} // end DataEngine
+	} 
+} 
