@@ -110,6 +110,7 @@ public class DBManager
 	 */
 	public boolean executeQuery(String query) throws SQLException
 	{
+        _logger.info("Executing query = " + query); //$NON-NLS-1$
 		return _statement.execute(query);
 	}
 
