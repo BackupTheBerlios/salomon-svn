@@ -13,16 +13,15 @@ import java.awt.event.MouseListener;
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
-
 import javax.swing.DefaultListModel;
+import javax.swing.JComponent;
 import javax.swing.JList;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.JTextField;
-
 import org.apache.log4j.Logger;
-
+import salomon.core.Messages;
 import salomon.core.plugin.PluginLoader;
 import salomon.core.plugin.PluginManager;
 import salomon.core.task.Task;
@@ -37,7 +36,6 @@ import salomon.plugin.ISettings;
  */
 class TaskEditionManager
 {
-
 	private static Logger _logger = Logger.getLogger(TaskEditionManager.class);
 
 	private JList _pluginList = null;
@@ -47,6 +45,8 @@ class TaskEditionManager
 	private JPopupMenu _pluginPopup = null;
 
 	private MouseListener _popupListener = null;
+
+	private JComponent _positionComponent = null;
 
 	private int _selectedItem = -1;
 
@@ -66,13 +66,19 @@ class TaskEditionManager
 		_popupListener = new PopupListener();
 		_taskList.addMouseListener(_popupListener);
 		_pluginList.addMouseListener(_popupListener);
-
 		//TODO: getting plugin from Engine?
 		File[] files = new PluginManager().getAvailablePlugins();
-
 		for (int i = 0; i < files.length; i++) {
 			_pluginListModel.addElement(new LocalPlugin(files[i]));
 		}
+	}
+
+	/**
+	 * setting position component (to align dialogs)
+	 */
+	public void setPositionComponent(JComponent component)
+	{
+		_positionComponent = component;
 	}
 
 	/**
@@ -87,24 +93,18 @@ class TaskEditionManager
 			try {
 				plugin = localPlugin.getPlugin();
 				Task task = new Task();
-				task.setPlugin(plugin);			
+				task.setPlugin(plugin);
 				task.setName(getTaskName());
 				_taskListModel.addElement(task);
 			} catch (Exception e) {
 				_logger.fatal("", e); //$NON-NLS-1$
-				showErrorMessage(Messages.getString("ERR_CANNOT_LOAD_PLUGIN"));	 //$NON-NLS-1$
+				showErrorMessage(Messages.getString("ERR_CANNOT_LOAD_PLUGIN")); //$NON-NLS-1$
 			}
 		} else {
 			_logger.warn("Invalid index. Wrong list selected?"); //$NON-NLS-1$
 		}
 	}
 
-	private String getTaskName() {
-		JTextField txtTaskName = new JTextField();
-		JOptionPane.showMessageDialog(null, txtTaskName, Messages.getString("TXT_ENTER_TASK_NAME"), JOptionPane.INFORMATION_MESSAGE); //$NON-NLS-1$
-		return txtTaskName.getText();
-	}
-	
 	public JList getPluginList()
 	{
 		return _pluginList;
@@ -188,41 +188,35 @@ class TaskEditionManager
 		return _pluginPopup;
 	}
 
+	private String getTaskName()
+	{
+		JTextField txtTaskName = new JTextField();
+		JOptionPane
+				.showMessageDialog(
+						_positionComponent,
+						txtTaskName,
+						Messages.getString("TXT_ENTER_TASK_NAME"), JOptionPane.INFORMATION_MESSAGE); //$NON-NLS-1$
+		return txtTaskName.getText();
+	}
+
 	private JPopupMenu getTaskPopup()
 	{
 		if (_taskPopup == null) {
 			_taskPopup = new JPopupMenu();
-			JMenuItem itmSettings = new JMenuItem(Messages.getString("MNU_SETTINGS")); //$NON-NLS-1$
+			JMenuItem itmSettings = new JMenuItem(Messages
+					.getString("MNU_SETTINGS")); //$NON-NLS-1$
 			itmSettings.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e)
 				{
-					// TODO:
-					Task currentTask = (Task) _taskListModel.get(_selectedItem);
-					IPlugin plugin = currentTask.getPlugin();
-					ISettingComponent settingComponent = plugin
-							.getSettingComponent();
-					int result = JOptionPane.showConfirmDialog(null,
-							settingComponent.getComponent(), Messages.getString("TIT_PLUGIN_SETTINGS"), //$NON-NLS-1$
-							JOptionPane.OK_CANCEL_OPTION);
-					if (result == JOptionPane.OK_OPTION) {
-						ISettings settings = settingComponent.getSettings();
-						_logger.info("settings: " + settings); //$NON-NLS-1$
-						currentTask.setSettings(settings);
-					}
+					showSettingsPanel();
 				}
 			});
-			JMenuItem itmResult = new JMenuItem(Messages.getString("MNU_RESULT")); //$NON-NLS-1$
+			JMenuItem itmResult = new JMenuItem(Messages
+					.getString("MNU_RESULT")); //$NON-NLS-1$
 			itmResult.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e)
 				{
-					// TODO:
-					Task currentTask = (Task) _taskListModel.get(_selectedItem);
-					IPlugin plugin = currentTask.getPlugin();
-					IResultComponent resultComponent = plugin
-							.getResultComponent();
-					JOptionPane.showMessageDialog(null, resultComponent
-							.getComponent(currentTask.getResult()),
-							Messages.getString("TIT_PLUGIN_RESULT"), JOptionPane.INFORMATION_MESSAGE); //$NON-NLS-1$
+					showResultPanel();
 				}
 			});
 			_taskPopup.add(itmSettings);
@@ -231,9 +225,36 @@ class TaskEditionManager
 		return _taskPopup;
 	}
 
+	private void showSettingsPanel()
+	{
+		Task currentTask = (Task) _taskListModel.get(_selectedItem);
+		IPlugin plugin = currentTask.getPlugin();
+		ISettingComponent settingComponent = plugin.getSettingComponent();
+		int result = JOptionPane.showConfirmDialog(_positionComponent,
+				settingComponent.getComponent(), Messages
+						.getString("TIT_PLUGIN_SETTINGS"), //$NON-NLS-1$
+				JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+		if (result == JOptionPane.OK_OPTION) {
+			ISettings settings = settingComponent.getSettings();
+			_logger.info("settings: " + settings); //$NON-NLS-1$
+			currentTask.setSettings(settings);
+		}
+	}
+
+	private void showResultPanel()
+	{
+		Task currentTask = (Task) _taskListModel.get(_selectedItem);
+		IPlugin plugin = currentTask.getPlugin();
+		IResultComponent resultComponent = plugin.getResultComponent();
+		JOptionPane.showMessageDialog(_positionComponent, resultComponent
+				.getComponent(currentTask.getResult()), Messages
+				.getString("TIT_PLUGIN_RESULT"), JOptionPane.PLAIN_MESSAGE); //$NON-NLS-1$
+	}
+
 	private void showErrorMessage(String msg)
 	{
-		JOptionPane.showMessageDialog(null, msg, Messages.getString("TIT_ERROR"), //$NON-NLS-1$
+		JOptionPane.showMessageDialog(_positionComponent, msg, Messages
+				.getString("TIT_ERROR"), //$NON-NLS-1$
 				JOptionPane.ERROR_MESSAGE);
 	}
 
@@ -244,11 +265,11 @@ class TaskEditionManager
 		_logger.debug("plugin: " + plugin); //$NON-NLS-1$
 		try {
 			info = plugin.getPlugin().getDescription().getInfo();
-			JOptionPane.showMessageDialog(null, info);
+			JOptionPane.showMessageDialog(_positionComponent, info);
 		} catch (Exception e) {
-			_logger.fatal("", e);			 //$NON-NLS-1$
+			_logger.fatal("", e); //$NON-NLS-1$
 			showErrorMessage(Messages.getString("ERR_CANNOT_LOAD_PLUGIN")); //$NON-NLS-1$
-		}		
+		}
 	}
 
 	/** Class helps managing plugin loading */
@@ -277,9 +298,9 @@ class TaskEditionManager
 			}
 			return _plugin;
 		}
-		
+
 		public String toString()
-		{			
+		{
 			return _pluginFile.toString();
 		}
 	}
