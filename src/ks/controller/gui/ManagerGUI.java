@@ -1,4 +1,4 @@
-package ks.manager.gui;
+package ks.controller.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -33,7 +33,7 @@ import org.apache.log4j.Logger;
  * @author nico
  *  
  */
-public class ManagerGUI extends JFrame
+public class ControllerGUIGUI extends JFrame
 {
 	private JButton _btnAdd = null;
 
@@ -79,12 +79,12 @@ public class ManagerGUI extends JFrame
 
 	private List _taskListeners = null;
 
-	private static Logger _logger = Logger.getLogger(ManagerGUI.class);
+	private static Logger _logger = Logger.getLogger(ControllerGUI.class);
 
 	/**
 	 * This is the default constructor
 	 */
-	public ManagerGUI()
+	pControllerGUIrollerGUI()
 	{
 		super();
 		_taskEditionManager = new TaskEditionManager();
@@ -102,7 +102,7 @@ public class ManagerGUI extends JFrame
 
 	public static void main(String[] args)
 	{
-		new ManagerGUI().setVisible(true);
+		new ControllerGUI().setVisible(true);
 	}
 
 	/**

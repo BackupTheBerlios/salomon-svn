@@ -3,7 +3,7 @@
  *
  */
 
-package ks.manager.gui;
+package ks.controller.gui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

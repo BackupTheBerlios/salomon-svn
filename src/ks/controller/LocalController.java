@@ -8,12 +8,12 @@ package ks.controller;
 import java.util.Iterator;
 import java.util.List;
 
+import ks.controller.gui.ControllerGUI;
 import ks.core.ManagerEngine;
 import ks.core.event.TaskEvent;
 import ks.core.event.TaskListener;
 import ks.core.task.Task;
 import ks.core.task.TaskManager;
-import ks.manager.gui.ManagerGUI;
 
 import org.apache.log4j.Logger;
 
@@ -29,7 +29,7 @@ public final class LocalController implements IController
 	public void start(ManagerEngine engine)
 	{
 		_managerEngine = engine;
-		ManagerGUI managerGUI = new ManagerGUI();
+		ControllerGUI managerGUI = new ControllerGUI();
 		managerGUI.addTaskListener(new SAMTaskListener());
 		managerGUI.setVisible(true);
 	}
