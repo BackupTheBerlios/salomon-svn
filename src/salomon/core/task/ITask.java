@@ -7,7 +7,7 @@ import salomon.plugin.ISettings;
 
 /**
  * 
- * TODO: add comment.
+ * Interface for tasks.
  * 
  * @author krzychu
  *  
@@ -46,20 +46,20 @@ public interface ITask
 	public void setName(String name);
 
 	/**
-	 * @param _plugin
-	 *            The _plugin to set.
+	 * @param plugin
+	 *            The plugin to set.
 	 */
 	public void setPlugin(IPlugin plugin);
 
 	/**
-	 * @param _result
-	 *            The _result to set.
+	 * @param result
+	 *            The result to set.
 	 */
 	public void setResult(IResult result);
 
 	/**
-	 * @param _settings
-	 *            The _settings to set.
+	 * @param settings
+	 *            The settings to set.
 	 */
 	public void setSettings(ISettings settings);
 
@@ -75,8 +75,8 @@ public interface ITask
 	public int getTaskId();
 
 	/**
-	 * @param taksId
-	 *            The taksId to set.
+	 * @param taskId
+	 *            The taskId to set.
 	 */
 	public void setTaskId(int taskId);
 }
