@@ -1,10 +1,8 @@
 \section{Rozproszenie i równoleg³oœæ}
 \paragraph{}
-G³ównymi celami przy projektowaniu czêœci systemu odpowiedzialnych za rozproszenie systemu by³a ³atwoœæ wymiany architektury, na której zosta³o oparte rozproszenie. W naszym przypadku zosta³o zastosowane RMI. System zosta³ napisany w Javie i nie zale¿a³o nam przenoœnoœci kodu pomiêdzy ró¿ne platformy programistyczne. Samo j¹dro systemu ma byæ szybkie, liniowe i sekwencyjne, bez mo¿liwoœci wykonywania równoleg³ych zadañ, a równoleg³oœæ wykonywana jest na poziomie kontrolerów. 
+G³ównymi celami przy projektowaniu czêœci systemu odpowiedzialnych za rozproszenie systemu by³a ³atwoœæ wymiany architektury, na której zosta³o oparte rozproszenie. W naszym przypadku zosta³o zastosowane RMI. System zosta³ napisany w Javie i nie zale¿a³o nam przenoœnoœci kodu pomiêdzy ró¿ne platformy programistyczne. Samo j¹dro systemu ma byæ szybkie, bez mo¿liwoœci wykonywania równoleg³ych zadañ, a równoleg³oœæ wykonywana jest na poziomie kontrolerów. 
 
-
-\paragraph{Stworzyliœmy dwa kontrolery:}
-
+Stworzyliœmy dwa kontrolery:
 \begin{itemize}
 \item \emph{ServerController} - jego zadanie jest nas³uchiwanie na po³¹czenia klientów, udostêpniaj¹cych swoje mo¿liwoœci. Rozdziela on zadania pomiêdzy ró¿nych klientów i zbiera od nich wyniki.
 
@@ -60,11 +58,9 @@ Dziêki zastosowaniu budowy warstwowej interfejsy z j¹dra systemu nie musza dzied
 \paragraph{}
 Dodatkowo na potrzeby GUI serwera zosta³a stworzona kolejna warstwa, w której sk³ad wchodz¹: \emph{ManagerEngineHolder, PluginManagerHolder, ProjectManagerHolder, TaskManagerHolder}. Zadaniem tej warstwy jest zapewnienie bezpieczeñstwa zmiany obecnie konfigurowanego klienta. Klasy te to wrappery, które przechowuj¹ instancje odpowiednich klas z warstwy trzeciej. Dziêki takim wrapperom podmiana aktualnie konfigurowanego klienta nastêpuje tylko w jednym miejscu. Podmiana polega na podmianie instancji przechowywanych w Holderach. Warstwa zabezpiecza przed sytuacj¹, w której nie wszystkie instancje w GUI wskazuj¹ na jednego klienta. 
 
-Warstwowa struktura klas
-
-%\begin{figure}[htb]
-%	\centering
-%		\includegraphics[scale=0.45, angle=270]{img/Communication.jpg}
-%	\caption{Warstwowa struktura klas}
-%	\label{fig:Communication}
-%\end{figure}
+\begin{figure}[ht]
+	\centering
+		\includegraphics[scale=0.45, angle=270]{img/uml/communication.jpg}
+	\caption{Warstwowa struktura klas}
+	\label{fig:Communication}
+\end{figure}

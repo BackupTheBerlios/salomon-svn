@@ -1,19 +1,27 @@
 \section{Architektura}
 
-%diagram
+\subsection{Koncepcja systemu}
+
+Bardzo wa¿nym mechanizmem Salomona jest mo¿liwoœæ tworzenia powi¹zañ miêdzy poszczególnymi zadaniami. Wynik jednego zadania mo¿e pos³u¿yæ jako wejœcie nastêpnego. Salomon w tym celu dostarcza œrodowisko. Wtyczka w trakcie wykonywania zadania oprócz dostêpu  do manad¿erów posiada równie¿ dostêp do œrodowiska, z którego mo¿e pobraæ wartoœci zmiennych œrodowiskowych. Dane œrodowisko tworzone jest na pocz¹tku wykonania listy zadañ i przekazywane jest kolejno do nastêpnego zadania. Wtyczka w trakcie pracy mo¿e modyfikowaæ œrodowisko poprzez dodawanie, usuwanie oraz edycjê poszczególnych zmiennych. W ten sposób poszczególne zadania mog¹ miêdzy sob¹ przekazywaæ informacje. Zmienne œrodowiskowe, podobnie jak ustawienia i rezultaty zadañ, s¹ persystentne, a co za tym idzie potrzebny jest mechanizm serializacji i deserializacji.
+
+W obecnej wersji mechanizm ten jest bardzo ubogi  - pozwala on na przekazywanie wy³¹cznie danych tekstowych. Wraz z pojawieniem siê kolejnej wersji, zmienne œrodowiskowe wykorzystywaæ bêd¹ nowy mechanizm serializacji. Mo¿liwoœæ tworzenia zmiennych œrodowiskowych przez wtyczki mo¿e rodziæ wiele problemów z zapewnieniem kompatybilnoœci miêdzy ró¿nymi wersjami wtyczek, komunikuj¹cych siê ze sob¹, dlatego te¿ aby unikn¹æ takich problemów, ka¿da wtyczka zmuszona bêdzie dostarczyæ opis zmiennych, które mo¿e tworzyæ.
+
+W kolejnej wersji Salomona dodane zostan¹ klasy odpowiedzialne za przechowywanie danych. Klasy te bêd¹ odpowiadaæ poszczególnym typom prostym oraz strukturze (struktura bêdzie mog³a zawieraæ inne struktury oraz typy proste). Za pomoc¹ takich elementów, programista bêdzie móg³ stworzyæ hierarchiczne struktury danych. Wprowadzenie takiego mechanizmu podyktowane jest potrzeb¹ ukrycia przed programist¹ sposobu zapisu danych w bazie lub w pliku. W obecnej wersji Salomona, twórca wtyczki musi dostarczyæ mechanizm serializacji oraz deserializacji ustawieñ i rezultatów zadañ do napisu – taki mechanizm niesie za sob¹ niebezpieczeñstwo niepoprawnoœci oraz nieefektywnoœci implementacji. Dostarczenie spójnego modelu seralizacji danych pozwala na niewidoczny dla wtyczek sposób podmiany implementacji na bardziej efektywn¹ itp. Mechanizm ten mo¿e okazaæ siê równie¿ po¿yteczny po dodaniu do Salomona mo¿liwoœci definiowania zadañ w pliku (np. XML). Seralizacja danych mo¿e odbywaæ siê do wielu formatów np. XML, CSV, tabel w bazie danych itp. 
+
+\newpage
+\subsection{Struktura systemu}
 
 System zosta³ podzielony na 3 g³ówne czêœci: platformê, kontrolery
 i~pluginy.
 
-\begin{figure}[htb]
+\begin{figure}[ht]
 	\centering
 		\includegraphics[width=0.90\textwidth]{img/uml/core.jpg}
 	\caption{G³ówne klasy systemu}
 	\label{fig:core}
 \end{figure}
 
-
-\subsection{Platforma}
+\subsubsection{Platforma}
 
 Dostarcza podstawowej funkcjonalnoœci  umo¿liwiaj¹cej pracê ca³ego
 systemu,  ³aduje odpowiedni kontroler, wczytuje pluginy, uruchamia
@@ -26,35 +34,38 @@ pozosta³e nie s¹ dostêpne dla pluginów. Plugin, zale¿nie od
 potrzeb, pobiera z niego potrzebny mu menad¿er i za jego
 poœrednictwem wykonuje operacje na bazie danych.
 
-Bardzo wa¿nym mechanizmem Salomona jest mo¿liwoœæ tworzenia powi¹zañ miêdzy poszczególnymi zadaniami. Wynik jednego zadania mo¿e pos³u¿yæ jako wejœcie nastêpnego. Salomon w tym celu dostarcza œrodowisko. Wtyczka w trakcie wykonywania zadania oprócz dostêpu  do manad¿erów posiada równie¿ dostêp do œrodowiska, z którego mo¿e pobraæ wartoœci zmiennych œrodowiskowych. Dane œrodowisko tworzone jest na pocz¹tku wykonania listy zadañ i przekazywane jest kolejno do nastêpnego zadania. Wtyczka w trakcie pracy mo¿e modyfikowaæ œrodowisko poprzez dodawanie, usuwanie oraz edycjê poszczególnych zmiennych. W ten sposób poszczególne zadania mog¹ miêdzy sob¹ przekazywaæ informacje. Zmienne œrodowiskowe, podobnie jak ustawienia i rezultaty zadañ, s¹ persystentne, a co za tym idzie potrzebny jest mechanizm serializacji i deserializacji.
+\paragraph{DataEngine}
 
-W obecnej wersji mechanizm ten jest bardzo ubogi  - pozwala on na przekazywanie wy³¹cznie danych tekstowych. Wraz z pojawieniem siê kolejnej wersji, zmienne œrodowiskowe wykorzystywaæ bêd¹ nowy mechanizm serializacji. Mo¿liwoœæ tworzenia zmiennych œrodowiskowych przez wtyczki mo¿e rodziæ wiele problemów z zapewnieniem kompatybilnoœci miêdzy ró¿nymi wersjami wtyczek, komunikuj¹cych siê ze sob¹, dlatego te¿ aby unikn¹æ takich problemów, ka¿da wtyczka zmuszona bêdzie dostarczyæ opis zmiennych, które mo¿e tworzyæ.
+\begin{figure}[htb]
+	\centering
+		\includegraphics[width=0.90\textwidth]{img/uml/data_engine.jpg}
+	\caption{Schemat powi¹zañ klas zarz¹dzaj¹cych z DataEngine}
+	\label{fig:data_engine}
+\end{figure}
 
-W kolejnej wersji Salomona dodane zostan¹ klasy odpowiedzialne za przechowywanie danych. Klasy te bêd¹ odpowiadaæ poszczególnym typom prostym oraz strukturze (struktura bêdzie mog³a zawieraæ inne struktury oraz typy proste). Za pomoc¹ takich elementów, programista bêdzie móg³ stworzyæ hierarchiczne struktury danych. Wprowadzenie takiego mechanizmu podyktowane jest potrzeb¹ ukrycia przed programist¹ sposobu zapisu danych w bazie lub w pliku. W obecnej wersji Salomona, twórca wtyczki musi dostarczyæ mechanizm serializacji oraz deserializacji ustawieñ i rezultatów zadañ do napisu – taki mechanizm niesie za sob¹ niebezpieczeñstwo niepoprawnoœci oraz nieefektywnoœci implementacji. Dostarczenie spójnego modelu seralizacji danych pozwala na niewidoczny dla wtyczek sposób podmiany implementacji na bardziej efektywn¹ itp. Mechanizm ten mo¿e okazaæ siê równie¿ po¿yteczny po dodaniu do Salomona mo¿liwoœci definiowania zadañ w pliku (np. XML). Seralizacja danych mo¿e odbywaæ siê do wielu formatów np. XML, CSV, tabel w bazie danych itp. 
-
-
-\newpage
-
-\subsection{DataEngine}
 Klasa przekazywana pluginom podczas ich wykonania.
 Za pomoc¹ pobieranych z niej menad¿erów (\emph{DataSetManager}, \emph{RuleSetManager}, w przysz³oœci \emph{AttributeManager} i inne) wtyczki mog¹ operowaæ na danych znajduj¹cych siê w bazie.
 
-\subsubsection{DBManager}
+\paragraph{DBManager}
+
 Odpowiada za po³¹czenie z baz¹ danych. Dostarcza metody
 zapewniaj¹ce dostêp do danych przechowywanych w bazie. Swoj¹
 funkcjonalnoœæ udostêpnia odpowiednim menad¿erom.
 
-\subsubsection{DataSetManager}
+\paragraph{DataSetManager}
+
 Zarz¹dza zbiorami danych. Pozwala tworzyæ nowe podzbiory danych na
 podstawie zawartych w bazie informacji oraz umo¿liwia operowanie
 na nich.
-\subsubsection{RuleSetManager}
+
+\paragraph{RuleSetManager}
+
 Zarz¹dza regu³ami. Pozwala tworzyæ nowe regu³y oraz
 zarz¹dza dostêpem do ju¿ istniej¹cych.
 
-\newpage
 
-\subsubsection{IManagerEngine}
+\paragraph{IManagerEngine}
+
 Klasa zarz¹dza pozosta³ymi menad¿erami. Utrzymuje jedn¹ instancjê ka¿dego z nich 
 i udostêpnia je pozosta³ym klasom z platformy.
 
@@ -65,17 +76,20 @@ i udostêpnia je pozosta³ym klasom z platformy.
 	\label{fig:manager_engine}
 \end{figure}
 
-\subsubsection{IProjectManager}
+\paragraph{IProjectManager}
+
 Zarz¹dza projektami. Pozwala na utworzenie nowego
 projektu, zapisanie bie¿¹cego do bazy danych oraz na za³adowanie z bazy.
 
-\subsubsection{IPluginManger}
+\paragraph{IPluginManger}
+
 Zarz¹dza pluginami. Pozwala na utworzenie zapisanie informacji o nowym pluginie (jego nazwa, lokalizacja) oraz na pobranie listy dostêpnych pluginów.
 
-\subsubsection{ITaskManger}
+\paragraph{ITaskManger}
+
 Zarz¹dza zadaniami. 
 
-\subsection{Kontrolery}
+\subsubsection{Kontrolery}
 Kontrolery odpowiadaj¹ za interakcjê
 systemu z otoczeniem. W zale¿noœci od konfiguracji systemu przy
 starcie uruchamiany jest jeden z kontrolerów. Kontrolery operuj¹
@@ -83,41 +97,48 @@ na danych poprzez wspólny interfejs, a co za tym idzie, dane
 utworzone poprzez jeden z nich s¹ dostêpne pomiêdzy kolejnymi
 uruchomieniami programu dla pozosta³ych kontrolerów.
 
-\subsubsection{LocalController}
+\paragraph{LocalController}
+
 Jest najprostszym kontrolerem. Zarz¹dza zadaniami wykonywanymi na lokalnym komputerze. S¹ one
 wykonywane sekwencyjnie. Zadaniem tego kontrolera jest dostarczenie
 interfejsu u¿ytkownika, pozwalaj¹cego na zarz¹dzanie projektami,
 wtyczkami i zadaniami.
 
-\subsubsection{MasterController}
+\paragraph{MasterController}
+
 Zadaniem tego kontrolera jest dostarczenie interfejsu do
 zarz¹dzania zdalnymi kontrolerami (\emph{ServantController}). Po
 uruchomieniu nas³uchuje na po³¹czenia od klientów, rozdziela
 zadania oraz wyœwietla ich wyniki.
 
-\subsubsection{ServantController}
+\paragraph{ServantController}
+
 Zadaniem tego kontrolera jest odszukanie g³ównego kontrolera
 (\emph{MasterController}), zarejestrowanie siê i udostêpnianie mu
 swoich us³ug. Ta wersja kontrolera nie posiada GUI, zarz¹dzanie
 nim odbywa siê za pomoc¹ klasy \emph{MasterController}.
 
+\paragraph{WinSalomon}
 
-\subsection{Pluginy}
+\input{winsalomon}
+
+\subsubsection{Pluginy}
 G³ówna funkcjonalnoœæ zosta³a  przeniesiona
 do pluginów, zadaniem systemu jest tylko zarz¹dzanie ich
 wykonaniem. Dziêki takiemu podejœciu system jest ³atwo skalowalny
 i rozszerzalny o nowe mo¿liwoœci. Ka¿dy z pluginów musi
 implementowaæ nastêpuj¹ce interfejsy:
 
+\paragraph{IGraphicPlugin}
 
-\subsubsection{IGraphicPlugin}
 Pozwala pobraæ parametry od u¿ytkownika, które nastêpnie zostan¹
 przekazane do pluginów  przed ich wykonaniem. Zawiera dwie metody:
 \emph{getSettingsPanel()}  i \emph{getResultPanel()}.  Pierwsza z
 metod zwraca panel s³u¿¹cy do konfiguracji pluginu, druga – panel,
 na którym prezentowane s¹ wyniki jego dzia³ania.
 
-\subsubsection{IDataPlugin}
+\paragraph{IDataPlugin}
+
 Posiada tylko jedn¹ metodê \emph{doJob()}. Przyjmuje ona jako
 parametry obiekt klasy \emph{Environment}, reprezentuj¹cy aktualny
 stan systemu; \emph{DataEngine}, który umo¿liwia operowanie na

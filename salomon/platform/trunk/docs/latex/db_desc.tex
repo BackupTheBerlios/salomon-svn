@@ -1,8 +1,9 @@
 \section{Opis bazy danych}
 
-
 W systemie bardzo wa¿n¹ rolê odgrywaj¹ baza danych
 w której przechowywane s¹ ustawienia, projekty, regu³y itp.
+Poni¿sza struktura dotyczy tylko ogranizacji danych wykorzystywanych do przetwarzania wiedzy. Rzeczywiste dane, na podstawie których wiedza ta jest tworzona przechowywana jest w osobnych bazach danych i dane te nie s¹ kopiowane do bazy \emph{Salomona}.
+
 Dane zosta³y zorganizowane w nastêpuj¹cych tabelach:
 
 \paragraph{Projects}
@@ -17,9 +18,11 @@ z tabeli Tasks.
 \end{itemize}
 
 \paragraph{Plugins}
+
 Tabela zawiera informacje o pluginach, które mog¹ byæ wykorzystane
 przez system. Przechowuje dane o ich nazwach i lokalizacjach, sk¹d
 mog¹ byæ pobrane.
+
 \begin{itemize}
     \item \emph{plugin\_id} - identyfikator pluginu
     \item \emph{name} - nazwa
@@ -28,6 +31,7 @@ mog¹ byæ pobrane.
 \end{itemize}
 
 \paragraph{Tasks}
+
 Tabela zawiera zapis wykonania poszczególnych zadañ. Dla ka¿dego z nich
 przechowywane s¹ informacje o pluginie, który zosta³
 wykorzystany do wykonania zadania; projekcie, w ramach którego
@@ -56,7 +60,8 @@ Zawiera nag³ówki zbiorów zadañ.
 \paragraph{Dataset\_items}
 Zawiera definicje zbiorów zadañ. Zbiór danych definiowany jest
 przez nazwê tabeli oraz warunki, jakie ograniczaj¹ rekordy w tej
-tabeli.
+tabeli. Tabela ta s³u¿y do przechowywania podzbioru danych pochodz¹cych z rzeczywistej bazy danych.
+
 \begin{itemize}
     \item \emph{dataset\_item\_id} - identyfikator elementu zbioru danych
     \item \emph{dataset\_id} - identyfikator zbioru danych, do którego nale¿y
@@ -64,6 +69,12 @@ element
     \item \emph{table\_name} - nazwa tabeli
     \item \emph{condition} - warunek ograniczaj¹cy zakres danych
 \end{itemize}
-%    Relacje miêdzy nimi zobrazowane s¹ na
-%poni¿szym rysunku:
-%TODO: Wstawic obrazek
+
+    Relacje miêdzy nimi zobrazowane s¹ na rysunku (Rys \ref{fig:database})
+
+\begin{figure}[htb]
+	\centering
+		\includegraphics[width=0.90\textwidth]{img/concept/salomon_db.jpg}
+	\caption{Relacje miêdzy tabelami}
+	\label{fig:database}
+\end{figure}
