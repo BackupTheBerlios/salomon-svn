@@ -26,9 +26,9 @@ import javax.swing.JToolBar;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
+import ks.core.DBManager;
 import ks.data.DBCondition;
 import ks.data.DBColumnName;
-import ks.data.DBConnector;
 import ks.data.DBTableName;
 import ks.data.DataEngine;
 import ks.data.DataSet;
@@ -48,7 +48,7 @@ public class SQLConsole extends JFrame
 	private JButton _btnRollback = null;
 
 	// klasa odpowiedzialna za polaczenie z baza danych
-	private DBConnector _connector = null;
+	private DBManager _connector = null;
 
 	private JPanel _contentPane = null;
 
@@ -84,7 +84,7 @@ public class SQLConsole extends JFrame
 		super();
 		PropertyConfigurator.configure("log.conf");
 		try {
-			_connector = DBConnector.getInstance();
+			_connector = DBManager.getInstance();
 		} catch (SQLException e) {
 			_logger.fatal("", e);
 		} catch (ClassNotFoundException e) {

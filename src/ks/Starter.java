@@ -11,7 +11,7 @@ import org.apache.log4j.PropertyConfigurator;
 import ks.core.IManager;
 import ks.core.ManagerEngine;
 import ks.core.StandAloneManager;
-import ks.data.DBConnector;
+import ks.core.DBManager;
 
 /**
  *  
@@ -22,7 +22,7 @@ public final class Starter
 
 	private ManagerEngine _managerEngine;
 
-	private DBConnector _dbConnector;
+	private DBManager _dbConnector;
 
 	private static Logger _logger = Logger.getLogger(Starter.class);
 
@@ -37,7 +37,7 @@ public final class Starter
 		_manager = new StandAloneManager();
 		_managerEngine = new ManagerEngine();
 		try {
-			_dbConnector = DBConnector.getInstance();
+			_dbConnector = DBManager.getInstance();
 		} catch (SQLException e) {
 			_logger.fatal("", e);
 		} catch (ClassNotFoundException e) {
