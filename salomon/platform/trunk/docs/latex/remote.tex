@@ -1,0 +1,62 @@
+\section{Rozproszenie i równoleg³oœæ}
+
+G³ównymi celami przy projektowaniu czêœci systemu odpowiedzialnych za rozproszenie systemu by³a ³atwoœæ wymiany architektury, na której zosta³o oparte rozproszenie. W naszym przypadku zosta³o zastosowane RMI. System zosta³ napisany w Javie i nie zale¿a³o nam przenoœnoœci kodu pomiêdzy ró¿ne platformy programistyczne. Samo j¹dro systemu ma byæ szybkie, bez mo¿liwoœci wykonywania równoleg³ych zadañ, a równoleg³oœæ wykonywana jest na poziomie kontrolerów. 
+
+Stworzyliœmy dwa kontrolery:
+\begin{itemize}
+\item \emph{ServerController} - jego zadanie jest nas³uchiwanie na po³¹czenia klientów, udostêpniaj¹cych swoje mo¿liwoœci. Rozdziela on zadania pomiêdzy ró¿nych klientów i zbiera od nich wyniki.
+
+\item \emph{ClientContoller} - zadanie tego kontrolera jest zainicjalizowanie j¹dra systemu, zarejestrowanie siê u ServerContollera i odbieranie i wykonywanie zadañ otrzymanych od serwera i wysy³anie mu wyników. Kontroler ten nie posiada GUI, jego konfiguracja odbywa siê poprzez odpowiednie wpisy w pliki konfiguracyjne.
+\end{itemize}
+
+\paragraph{}
+Aby mo¿liwe by³o wykonanie zadania na kliencie, serwer i klient musz¹ posiadaæ w³asn¹ instancjê pluginów. Za³o¿enie to podyktowane jest tym, ¿e serwer wykorzystuje plugin do utworzenia danych wejœciowych dla zadania oraz do prezentacji wyników, a klient wykorzystuje plugin do odpalenia zadania. Dziêki takiemu podejœciu minimalizowany jest ruch pomiêdzy poszczególnymi elementami systemu. Gdy serwer chce zleciæ klientowi zadanie wysy³a mu adres, z którego klient mo¿e pobraæ dany plugin (aktualnie to FTP, HTTP). Klient sprawdza wersje pluginu na podstawie podanej lokalizacji, w razie posiadania starszej wersji lub jego braku, klient przed wykonaniem zadania pobiera plugin do swego lokalnego cache'a. 
+
+
+\subsection{Struktura klas}
+Struktura klas, które uczestnicz¹ w komunikacji jest zarazem warstwowa i drzewiasta. 
+
+\subsubsection{Drzewiasta} 
+Ze wzglêdu na funkcjonalnoœæ mo¿na wyró¿niæ drzewiast¹ strukturê klas, implementuj¹ podany interfejsy. Na szczycie drzewa znajduje siê IManagerEngine. Interfejs ten s³u¿y do zarz¹dzania poszczególnymi menad¿erami.
+ 
+\paragraph{Pluginy}
+\begin{itemize}
+\item \emph{IPluginManager} -  s³u¿y do zarz¹dzania pluginami
+\item \emph{IPlugin} -  udostêpnia funkcjonalnoœæ pluginów
+\end{itemize}
+
+\paragraph{Zadania}
+\begin{itemize}
+\item \emph{ITaskManager} - s³u¿y do zarz¹dzania zadniami
+\item \emph{ITask} - reprezentuje zadanie w systemie
+\item \emph{ISettings} - reprezentuje ustawienia dla zadania 
+\item \emph{IResult} - reprezentuje wynik zadania
+\end{itemize}
+
+\paragraph{Projekty}
+\begin{itemize} 
+\item \emph{IProjectManager} - s³u¿y do zarz¹dzania projektami
+\item \emph{IProject} - reprezentuje projekt w systemie
+\end{itemize}
+
+\subsubsection{Warstwowa} 
+
+W platformie wyró¿niamy trzy warstwy.
+
+W sk³ad pierwszej warstwy wchodz¹ nastêpuj¹ce klasy: \emph{ManagerEngine, PluginManager, Plugin, TaskManager, Task, ProjectManager, Project}. Warstwa ta wystêpuje w wersji rozproszonej i nierozproszonej. W tej warstwie zawarta jest g³ówna logika systemu. 
+
+
+Druga warstwa to warstwa odpowiedzialna za komunikacjê po stronie klienta. W sk³ad warstwy tej wchodz¹ interfejsy: \emph{IRemoteManagerEngine, IRemotePluginManager, IRemotePlugin, IRemoteTaskManager, IRemoteTask, IRemoteProjectManager, IRemoteProject} oraz odpowiednio klasy implementuj¹ce interfejsy:  \emph{RemoteManagerEngine, RemotePluginManager, RemotePlugin, RemoteTaskManager, RemoteTask, RemoteProjectManager, RemoteProject}. Interfejsy wchodz¹ce w sk³ad tej warstwy s¹ to w wiêkszoœci przypadków dok³adne odpowiedniki interfejsów, ale bez fragmentu ,,Remote''. Interfejsy te s¹ zdalne.
+
+Trzecia warstwa to warstwa odpowiedzialna za ukrycie po stronie serwera faktu zdalnoœci obiektów.  W sk³ad warstwy tej wchodz¹: \emph{ManagerEngineProxy, PluginManagerProxy, PluginProxy, TaskManagerProxy, TaskProxy, ProjectManagerProxy, ProjectProxy}. Klasy te to proste wrappery na zdalne obiekty, które implementuj¹ odpowiednie interfejsy z j¹dra systemu. Deleguj¹ wywo³ania metod do zdalnych obiektów i zajmuj¹ siê obs³ug¹ zdalnych wyj¹tków. 
+
+Dziêki zastosowaniu budowy warstwowej interfejsy z j¹dra systemu nie musza dziedziczyæ po Remote ani wyj¹tków \emph{RemoteException}, a podmiana technologii s³u¿¹cej do komunikacji, to tylko wymiana drugiej i trzeciej warstwy, bez ingerencji w logikê systemu. Nie ma wymagania na to, aby zdalne interfejsy dok³adnie odpowiada³y swoim odpowiednikom z j¹dra.
+
+Dodatkowo na potrzeby GUI serwera zosta³a stworzona kolejna warstwa, w której sk³ad wchodz¹: \emph{ManagerEngineHolder, PluginManagerHolder, ProjectManagerHolder, TaskManagerHolder}. Zadaniem tej warstwy jest zapewnienie bezpieczeñstwa zmiany obecnie konfigurowanego klienta. Klasy te to wrappery, które przechowuj¹ instancje odpowiednich klas z warstwy trzeciej. Dziêki takim wrapperom podmiana aktualnie konfigurowanego klienta nastêpuje tylko w jednym miejscu. Podmiana polega na podmianie instancji przechowywanych w Holderach. Warstwa zabezpiecza przed sytuacj¹, w której nie wszystkie instancje w GUI wskazuj¹ na jednego klienta. 
+
+\begin{figure}[ht]
+	\centering
+		\includegraphics[scale=0.45, angle=270]{img/uml/communication.jpg}
+	\caption{Warstwowa struktura klas}
+	\label{fig:Communication}
+\end{figure}

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="Salomon">
+
+  <title>Salomon</title>
+
+  <body>
+    <search/>
+
+    <links>
+      <item name="DSRG" href="http://www.ics.agh.edu.pl/"/>
+    </links>
+
+    <menu name="Salomon">
+      <item name="Overview"                href="/index.html" collapse="true"/>
+      <item name="Documentation"           href="/documentation.html" collapse="true"/>
+      <item name="Wiki"                    href="http://salomon.iisg.agh.edu.pl/twiki/bin/view.cgi"/>
+      <item name="Source Code"             href="/source.html" collapse="true"/>
+      <item name="Download"                href="/download.html" collapse="true"/>
+    </menu>
+
+    <footer><div>Copyright by AGH Drinking Team 2005</div></footer>
+
+  </body>
+</project>
