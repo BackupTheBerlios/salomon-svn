@@ -7,7 +7,6 @@ package salomon.controller.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -72,7 +71,7 @@ public class GUIMenu
 	JButton getBtnNew()
 	{
 		if (_btnNew == null) {
-			_btnNew = createProjectButton(Messages.getString("BTN_NEW")); //$NON-NLS-1$
+			_btnNew = createProjectButton(Config.getString("ICO_PROJECT_NEW")); //$NON-NLS-1$
 		}
 		return _btnNew;
 	}
@@ -80,7 +79,7 @@ public class GUIMenu
 	JButton getBtnOpen()
 	{
 		if (_btnOpen == null) {
-			_btnOpen = createProjectButton(Messages.getString("BTN_OPEN")); //$NON-NLS-1$
+			_btnOpen = createProjectButton(Config.getString("ICO_PROJECT_OPEN")); //$NON-NLS-1$
 		}
 		return _btnOpen;
 	}
@@ -88,7 +87,7 @@ public class GUIMenu
 	JButton getBtnSave()
 	{
 		if (_btnSave == null) {
-			_btnSave = createProjectButton(Messages.getString("BTN_SAVE")); //$NON-NLS-1$
+			_btnSave = createProjectButton(Config.getString("ICO_PROJECT_SAVE")); //$NON-NLS-1$
 		}
 		return _btnSave;
 	}
@@ -196,9 +195,8 @@ public class GUIMenu
 	private JButton createProjectButton(String text)
 	{
 		JButton button = new JButton();
-		button.setText(text);
-		button.addActionListener(_projectListener);
-		button.setFont(new Font("Dialog", Font.BOLD, 10)); //$NON-NLS-1$
+		button.setIcon(new ImageIcon(_resourcesDir + Config.FILE_SEPARATOR + text));
+		button.addActionListener(_projectListener);		
 		return button;
 	}
 
