@@ -4,35 +4,40 @@
  * To change the template for this generated file go to
  * Window - Preferences - Java - Code Generation - Code and Comments
  */
+
 package salomon.core.data.common;
 
 /**
  * @author nico
- *
+ * 
  * Class represents table in SQL queries
  */
 public class DBTableName
 {
 	private String _tableName = null;
+
 	private String _tableAlias = null;
-	
-	
+
 	/**
-	 * @param _tableName table _tableName
-	 * @param _tableAlias table _tableAlias
+	 * @param _tableName
+	 *            table _tableName
+	 * @param _tableAlias
+	 *            table _tableAlias
 	 */
 	public DBTableName(String name, String alias)
 	{
 		_tableName = name;
 		_tableAlias = alias;
 	}
-	
+
 	public DBTableName(String name)
 	{
-		_tableName = name;		
+		_tableName = name;
 	}
-	
-	/* (non-Javadoc)
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	public String toString()
@@ -45,39 +50,39 @@ public class DBTableName
 		}
 		return name;
 	}
+
 	// returns e.g "users" u ("name" alias)
-	public String getFromQuery() {
-		String fromQuery = "\"" + _tableName + "\"";
+	public String getForSelect()
+	{
+		String forSelect = "\"" + _tableName + "\"";
 		if (_tableAlias != null) {
-			fromQuery += " " + _tableAlias;
+			forSelect += " " + _tableAlias;
 		}
-		return fromQuery;
+		return forSelect;
 	}
-	/* (non-Javadoc)
+
+	public String getForUpdate()
+	{
+		return "\"" + _tableName + "\"";
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	public boolean equals(Object tableName)
-	{		
-		return _tableName.equalsIgnoreCase(((DBTableName)tableName)._tableName);
-	}
-		
-/*	public String getTableAlias()
 	{
-		return _tableAlias;
+		return _tableName
+				.equalsIgnoreCase(((DBTableName) tableName)._tableName);
 	}
-	
-	public void setTableAlias(String alias)
-	{
-		_tableAlias = alias;
-	}
-	
-	public String getTableName()
-	{
-		return _tableName;
-	}
-	
-	public void setTableName(String name)
-	{
-		_tableName = name;
-	} */	
+	/*
+	 * public String getTableAlias() { return _tableAlias; }
+	 * 
+	 * public void setTableAlias(String alias) { _tableAlias = alias; }
+	 * 
+	 * public String getTableName() { return _tableName; }
+	 * 
+	 * public void setTableName(String name) { _tableName = name; }
+	 */
 }
