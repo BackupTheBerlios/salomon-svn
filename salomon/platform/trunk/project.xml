@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+  <pomVersion>1</pomVersion>
+  <artifactId>null</artifactId>
+  <name>salomon</name>
+  <groupId>null</groupId>
+  <organization>
+    <name>agh</name>
+    <url>www.agh.edu.pl</url>
+  </organization>
+  <inceptionYear>2004</inceptionYear>
+  <package>salomon.*</package>
+  <description>Salomon to system do wyciągania wiedzy z danych zgodnie z metodologią Knowlege Mining.</description>
+  <url>salomon.iisg.agh.edu.pl</url>
+  <siteAddress>salomon.iisg.agh.edu.pl</siteAddress>
+  <repository>
+    <connection>scm:svn+ssh://salomon.iisg.agh.edu.pl/home/svn/salomon/platform</connection>
+    <url>http://salomon.iisg.agh.edu.pl/websvn/listing.php?repname=salomon&amp;path=%2F&amp;sc=0</url>
+  </repository>
+  <developers>
+    <developer>
+      <name>Krzysztof Rajda</name>
+      <id>0</id>
+      <email>krzycho@student.uci.agh.edu.pl</email>
+    </developer>
+    <developer>
+      <name>Jakub Pawłowski</name>
+      <id>1</id>
+      <email>qoooba@student.uci.agh.edu.pl</email>
+    </developer>
+    <developer>
+      <name>Nikodem Jura</name>
+      <id>2</id>
+      <email>nico@ernie.icslab.agh.edu.pl</email>
+    </developer>
+    <developer>
+      <name>Jakub Gałkowski</name>
+      <id>3</id>
+      <email>avi@student.uci.agh.edu.pl</email>
+    </developer>
+  </developers>
+  <dependencies>
+    <dependency>
+      <groupId>log4j</groupId>
+      <artifactId>log4j</artifactId>
+      <version>1.2.8</version>
+      <type>jar</type>
+      <url>http://jakarta.apache.org/log4j/</url>
+    </dependency>
+    <!--dependency>
+      <groupId>firebirdsql</groupId>
+      <artifactId>firebirdsql</artifactId>
+      <version>1.5.2</version>
+      <jar>firebirdsql.jar</jar>
+      <type>jar</type>
+      <url>http://firebird.sourceforge.net/</url>
+    </dependency-->
+  </dependencies>
+  <build>
+    <nagEmailAddress>qoooba@student.uci.agh.edu.pl</nagEmailAddress>
+    <sourceDirectory>${basedir}/src</sourceDirectory>
+  </build>
+  <reports>
+    <report>maven-junit-report-plugin</report>
+  </reports>
+</project>
+
