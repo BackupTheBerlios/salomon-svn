@@ -35,16 +35,16 @@ public final class Starter
 
 	}
 
-    public static void exit()
-    {
-    	getInstance().exitImpl();
-    }
-    
+	public static void exit()
+	{
+		getInstance().exitImpl();
+	}
+
 	private void exitImpl()
 	{
-        _logger.debug("controller: " + _contoroller.getClass());
+		_logger.debug("controller: " + _contoroller.getClass());
 		_contoroller.exit();
-        _logger.info("###  Application exited  ###");
+		_logger.info("###  Application exited  ###");
 		System.exit(0);
 	}
 
@@ -80,6 +80,7 @@ public final class Starter
 		_contoroller = new ServerController();
 		start();
 	}
+
 	public static void main(String[] args)
 	{
 		if (args.length > 0) {
