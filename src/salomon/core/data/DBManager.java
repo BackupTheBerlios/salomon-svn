@@ -13,6 +13,7 @@ import java.sql.Statement;
 
 import org.apache.log4j.Logger;
 
+import salomon.controller.gui.Utils;
 import salomon.core.Config;
 import salomon.core.data.common.DBColumnName;
 import salomon.core.data.common.DBCondition;
@@ -52,13 +53,18 @@ public class DBManager
 
 	/**
 	 * Commits current transaction.
-	 * 
-	 * @throws SQLException
+	 * Exception is caught, if occurs it inidicated critical error. 
 	 */
-	public void commit() throws SQLException
+	public void commit()
 	{
 		_logger.info("Commit");
-		_connection.commit();
+		try {
+			_connection.commit();
+		} catch (SQLException e) {
+            _logger.fatal("!!!COMMIT FAILED!!!");
+            Utils.showErrorMessage("ERR_CRITICAL");
+			_logger.fatal("", e);
+		}
 	}
 
 	/**
@@ -201,15 +207,59 @@ public class DBManager
 	}
 
 	/**
-	 * Annuls current transaction.
+	 * Method inserts new record if hasn't exist one with given id yet,
+	 * otherwise performs update.
 	 * 
+	 * @param values values to insert/update
+	 * @param primaryKey name of primary key of table name
+	 * @param id id of updated record
+	 * @return id of inserted/updated record
 	 * @throws SQLException
 	 */
+	public int insertOrUpdate(DBValue[] values, String primaryKey, int id)
+			throws SQLException
+	{
 
-	public void rollback() throws SQLException
+		DBTableName[] tableName = {values[0].getColumnName().getTableName()};
+		_logger.info("Inserting to table:  " + tableName[0]);
+		DBCondition[] conditions = {new DBCondition(new DBColumnName(
+				tableName[0], primaryKey), DBCondition.REL_EQ, new Integer(id),
+				DBCondition.NUMBERIC)};
+		ResultSet resultSet = null;
+		resultSet = select(null, tableName, conditions);
+		// 
+		// if record exists in base its id is selected
+		// otherwise new id is generated
+		//
+		if (resultSet.next()) {
+			id = resultSet.getInt(primaryKey);
+			_logger.info("Record found, id = " + id);
+			resultSet.close();
+			update(values, conditions);
+			_logger.info("Record updated");
+		} else {
+			id = insert(values, primaryKey);
+			_logger.info("New record inserted, id = " + id);
+		}
+		return id;
+	}
+
+	/**
+	 * Annuls current transaction. 
+	 * Exception is caught, if occurs it inidicated critical error.
+     * 
+	 */
+
+	public void rollback()
 	{
 		_logger.info("Rollback");
-		_connection.rollback();
+        try {
+            _connection.rollback();
+        } catch (SQLException e) {
+            _logger.fatal("!!!ROLLBACK FAILED!!!");
+            Utils.showErrorMessage("ERR_CRITICAL");
+            _logger.fatal("", e);
+        }
 	}
 
 	/**
@@ -303,7 +353,7 @@ public class DBManager
 		connectString += _dataBasePath;
 		_logger.info("connectString: " + connectString);
 		_connection = DriverManager.getConnection(connectString, _user, _passwd);
-        // setting auto commit off
+		// setting auto commit off
 		_connection.setAutoCommit(false);
 		_statement = _connection.createStatement();
 	}
