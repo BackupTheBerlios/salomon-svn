@@ -38,7 +38,7 @@ import org.apache.log4j.Logger;
 import salomon.engine.Config;
 import salomon.engine.Messages;
 import salomon.engine.Resources;
-//import salomon.engine.Version;
+import salomon.engine.Version;
 
 
 /**
@@ -179,7 +179,7 @@ public final class SplashScreen
 			g.setFont(newFont);
 			String version = Messages.getString("TIT_VERSION") + ": "
 					+ Messages.getString("VERSION");
-            String revision = Messages.getString("BUILD") + ": ";// + Version.getString("REVISION_VERSION");
+            String revision = Messages.getString("BUILD") + ": "  + Version.getString("REVISION_VERSION");
 			g.drawString(version, 255, 260);
             g.drawString(revision, 255, 290);
 			// setting back old color and font
