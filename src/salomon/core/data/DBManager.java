@@ -63,7 +63,7 @@ public class DBManager
 		Class.forName("org.firebirdsql.jdbc.FBDriver"); //$NON-NLS-1$
 		String connectString = "jdbc:firebirdsql:";
 		if (_isEmbedded) {
-			connectString += "embedded:";
+			connectString += "embedded:" + Config.CURR_DIR + Config.FILE_SEPARATOR;
 		} else {
 			connectString += _hostName + ":";
 		}
