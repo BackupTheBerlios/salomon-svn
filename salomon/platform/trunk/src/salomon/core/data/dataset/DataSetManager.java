@@ -4,98 +4,55 @@ package salomon.core.data.dataset;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collection;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.HashSet;
 
 import salomon.core.data.DBManager;
-import salomon.core.data.common.DBColumnName;
-import salomon.core.data.common.DBCondition;
-import salomon.core.data.common.DBTableName;
+import salomon.core.data.common.SQLSelect;
 
 /**
- *  Class manages with datasets.
+ * Class manages with datasets.
  */
 public class DataSetManager
 {
-	private final static String DATASET_TABLE = "datasets";
-
-	private final static String DATASET_ITEMS = "dataset_items";
 
 	public DataSet getDataSetForName(String name) throws SQLException,
 			ClassNotFoundException
 	{
 		DataSet dataSet = null;
 		ResultSet resultSet = getDataSetItems(name);
-		List conditions = new LinkedList();
-		//
-		//getting conditions
-		//
+		Collection<String> conditions = new HashSet<String>();
+		Collection<String> tableNames = new HashSet<String>();
+
+        //getting conditions
 		while (resultSet.next()) {
 			String tableName = resultSet.getString("table_name");
-			String condition = resultSet.getString("condition");
-			conditions.add(new DBCondition(tableName, condition));
+			String condition = resultSet.getString("condition");			
+            tableNames.add(tableName);
+            conditions.add(condition);            
 		}
 		dataSet = new DataSet();
-		DBCondition[] conditionsArray = null;
-		//
-		// if there is no conditions, data set includes all data
-		// and its conditions list remains null
-		//
-		if (!conditions.isEmpty()) {
-			conditionsArray = new DBCondition[conditions.size()];
-			dataSet.setConditions((DBCondition[]) conditions.toArray(conditionsArray));
-		}
+        
+        dataSet.setTableNames(tableNames);
+		dataSet.setConditions(conditions);        
+		
 		return dataSet;
 	}
 
 	private ResultSet getDataSetItems(String dataSetName) throws SQLException,
 			ClassNotFoundException
-	{
-		DBTableName[] tableNames = {new DBTableName("datasets"),
-				new DBTableName("dataset_items")};
-		DBColumnName[] columnNames = {
-				new DBColumnName(tableNames[1], "table_name"),
-				new DBColumnName(tableNames[1], "condition")};
-		DBCondition[] conditions = {
-				new DBCondition(new DBColumnName(tableNames[0], "dataset_id"),
-						DBCondition.REL_EQ, new DBColumnName(tableNames[1],
-								"dataset_id"), DBCondition.JOIN),
-				new DBCondition(
-						new DBColumnName(tableNames[0], "dataset_name"),
-						DBCondition.REL_EQ, dataSetName, DBCondition.TEXT)};
+	{		
+        SQLSelect select = new SQLSelect();
+        select.addColumn("table_name");
+        select.addColumn("condition");
+        select.addTable(DATASETS + " d");
+        select.addTable(DATASET_ITEMS + " di");
+        select.addCondition("d.dataset_id = di.dataset_id");
+        select.addCondition("dataset_name =", dataSetName);        
+        
 		DBManager connector = DBManager.getInstance();
-		return connector.select(columnNames, tableNames, conditions);
+		return connector.select(select);
 	}
 
-	/**
-	 * TODO: add comment.
-	 * @return
-	 */
-	public Collection getDataSets()
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/**
-	 * TODO: add comment.
-	 * @param firstDataSet
-	 * @param secondDataSet
-	 * @return
-	 */
-	public DataSet union(DataSet firstDataSet, DataSet secondDataSet)
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/**
-	 * TODO: add comment.
-	 * @param result
-	 */
-	public void add(DataSet result)
-	{
-		// TODO Auto-generated method stub
-		
-	}
+	private final static String DATASET_ITEMS = "dataset_items";
+	private final static String DATASETS = "datasets";
 }
