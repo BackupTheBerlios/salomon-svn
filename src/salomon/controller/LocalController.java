@@ -45,7 +45,7 @@ import salomon.core.data.DBManager;
 public final class LocalController implements IController
 {
 
-	private JPanel _contentPane;
+	private ControllerPanel _contentPane;
 
 	private LocalGUIMenu _guiMenu;
 
@@ -88,7 +88,7 @@ public final class LocalController implements IController
 		frame.setContentPane(getJContentPane());
 		frame.setJMenuBar(getJMenuBar());
 		frame.setJToolBar(getToolBar());
-
+		frame.setControllerPanel(_contentPane);
 		_taskEditionManager.setParent(frame);
 		_projectEditionManager.setParent(frame);
 		_projectEditionManager.setTaskEditionManager(_taskEditionManager);
