@@ -19,7 +19,7 @@
  * 
  */
 
-package salomon.engine.platform.project;
+package salomon.engine.project;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -31,12 +31,12 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import salomon.engine.DBManager;
+import salomon.engine.plugin.PluginLoader;
+import salomon.engine.task.Task;
 
 import salomon.engine.platform.IManagerEngine;
 import salomon.engine.platform.data.common.SQLSelect;
 import salomon.engine.platform.data.common.SQLUpdate;
-import salomon.engine.platform.plugin.PluginLoader;
-import salomon.engine.platform.task.Task;
 
 import salomon.util.gui.Utils;
 

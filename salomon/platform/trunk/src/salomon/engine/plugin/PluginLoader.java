@@ -19,7 +19,7 @@
  * 
  */
 
-package salomon.engine.platform.plugin;
+package salomon.engine.plugin;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;

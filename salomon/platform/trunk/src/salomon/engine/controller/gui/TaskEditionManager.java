@@ -49,8 +49,9 @@ import org.apache.log4j.Logger;
 
 import salomon.engine.Messages;
 import salomon.engine.controller.gui.action.ActionManager;
+import salomon.engine.plugin.PluginLoader;
+
 import salomon.engine.platform.IManagerEngine;
-import salomon.engine.platform.plugin.PluginLoader;
 import salomon.plugin.Description;
 import salomon.plugin.IPlugin;
 import salomon.plugin.IResultComponent;

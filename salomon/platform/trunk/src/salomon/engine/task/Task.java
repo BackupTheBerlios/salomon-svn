@@ -19,7 +19,7 @@
  * 
  */
 
-package salomon.engine.platform.task;
+package salomon.engine.task;
 
 import java.sql.Date;
 import java.sql.ResultSet;

@@ -19,7 +19,7 @@
  * 
  */
 
-package salomon.engine.platform.plugin;
+package salomon.engine.plugin;
 
 import java.lang.reflect.Proxy;
 import java.net.MalformedURLException;

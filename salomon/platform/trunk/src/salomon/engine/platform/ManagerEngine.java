@@ -21,9 +21,10 @@
 
 package salomon.engine.platform;
 
-import salomon.engine.platform.plugin.PluginManager;
-import salomon.engine.platform.project.ProjectManager;
-import salomon.engine.platform.task.TaskManager;
+import salomon.engine.plugin.PluginManager;
+import salomon.engine.project.ProjectManager;
+import salomon.engine.task.TaskManager;
+
 import salomon.platform.plugin.IPluginManager;
 import salomon.platform.project.IProjectManager;
 import salomon.platform.task.ITaskManager;

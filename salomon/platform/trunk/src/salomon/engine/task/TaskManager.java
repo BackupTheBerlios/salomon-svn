@@ -19,7 +19,7 @@
  * 
  */
 
-package salomon.engine.platform.task;
+package salomon.engine.task;
 
 import java.sql.SQLException;
 import java.util.Collection;
@@ -29,10 +29,10 @@ import java.util.LinkedList;
 import org.apache.log4j.Logger;
 
 import salomon.engine.DBManager;
+import salomon.engine.project.ProjectManager;
 
 import salomon.engine.platform.DataEngine;
 import salomon.engine.platform.Environment;
-import salomon.engine.platform.project.ProjectManager;
 
 import salomon.platform.exception.PlatformException;
 import salomon.platform.task.ITask;
