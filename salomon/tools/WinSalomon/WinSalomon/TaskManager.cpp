@@ -21,8 +21,9 @@
 
 
 #include "taskmanager.h"
+#include "stringhelper.h"
 
-const char* TaskManager::CLASS_NAME = "salomon/engine/task/ITaskManager";
+const char* TaskManager::CLASS_NAME = "salomon/engine/task/ITaskManager"; 
 
 DLL_SHARE void TaskManager::addTask(Task* task)
 {
@@ -31,6 +32,24 @@ DLL_SHARE void TaskManager::addTask(Task* task)
 	jmethodID addTaskMethod = this->findMethod("addTask", "(Lsalomon/engine/task/ITask;)V");	
 	
 	this->getEnv()->CallVoidMethod(this->getObject(), addTaskMethod, task->getObject());	
+
+	std::cout << "success" << std::endl;
+}
+
+DLL_SHARE void TaskManager::addTask(Task* task, std::string & url, std::string & settings)
+{
+	std::cout << "addTask...";
+
+	jmethodID addTaskMethod = this->findMethod("addTask", "(Lsalomon/engine/task/ITask;Ljava/lang/String;Ljava/lang/String;)V");
+
+	jstring strUrl = StringHelper::getString(getEnv(), url.c_str());
+
+	jstring strSettings = StringHelper::getString(getEnv(), settings.c_str());
+	
+	this->getEnv()->CallVoidMethod(this->getObject(), addTaskMethod, task->getObject(), strUrl, strSettings);	
+	
+	this->getEnv()->DeleteLocalRef(strUrl);
+	this->getEnv()->DeleteLocalRef(strSettings);
 
 	std::cout << "success" << std::endl;
 }
@@ -68,11 +87,6 @@ DLL_SHARE Task* TaskManager::getCurrentTask()
 	return NULL;
 }
 
-//DLL_SHARE vector<Task> TaskManager::getTasks()
-//{
-//	std::cout << "Not imlemented yet" << std::endl;
-//}
-
 DLL_SHARE void TaskManager::start()
 {
 	std::cout << "start..." << std::endl;
@@ -81,11 +95,3 @@ DLL_SHARE void TaskManager::start()
 	
 	this->getEnv()->CallVoidMethod(this->getObject(), startMethod);	
 }
-
-//TaskManager::TaskManager(void)
-//{
-//}
-//
-//TaskManager::~TaskManager(void)
-//{
-//}

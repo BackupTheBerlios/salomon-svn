@@ -43,7 +43,7 @@ DLL_SHARE int Task::getTaskId()
 	return 0;
 }
 
-DLL_SHARE void Task::setName(std::string name)
+DLL_SHARE void Task::setName(std::string & name)
 {
 	std::cout << "setName...";
 
@@ -54,7 +54,7 @@ DLL_SHARE void Task::setName(std::string name)
 	this->getEnv()->CallVoidMethod(this->getObject(), setNameMethod, strName);
 }
 
-DLL_SHARE void Task::setSettings(std::string settings)
+DLL_SHARE void Task::setSettings(std::string & settings)
 {
 	std::cout << "Not imlemented yet" << std::endl;
 }
@@ -64,10 +64,3 @@ DLL_SHARE void Task::setTaskId(int taskId)
 	std::cout << "Not imlemented yet" << std::endl;
 }
 
-//Task::Task(void)
-//{
-//}
-//
-//Task::~Task(void)
-//{
-//}

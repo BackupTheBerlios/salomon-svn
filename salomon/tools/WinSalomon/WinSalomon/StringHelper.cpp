@@ -35,7 +35,7 @@ jstring	StringHelper::getString(JNIEnv *env, const char *s)
 		return 0;
 	}
     ary = env->NewByteArray(len);
-    if (ary != 0) {	
+    if (ary != 0) {			
         jstring str = 0;
 		env->SetByteArrayRegion(ary, 0, len, (jbyte *)s);
 		if (!env->ExceptionOccurred()) {
@@ -44,9 +44,9 @@ jstring	StringHelper::getString(JNIEnv *env, const char *s)
 	   				  "([B)V"));
 				str = (jstring)env->NewObject(cls, mid, ary);
 			}
-		env->DeleteLocalRef(ary);
+		env->DeleteLocalRef(ary);		
 		return str;
-    }
+	} 
 	return 0;
 }
 

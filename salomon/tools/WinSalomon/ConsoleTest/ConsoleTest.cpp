@@ -3,6 +3,7 @@
 
 //#include "stdafx.h"
 #include <iostream>
+#include <string>
 #include <salomon.h>
 
 #include "LibraryController.h"
@@ -48,8 +49,16 @@ int main()
 		}
 		task->setName("DLLTask");
 	
-		taskManager->addTask(task);
+		//taskManager->addTask(task);
+		std::string url = "http://location.org/datasetunion.jar";
+		
+		std::string settings = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";							   
+		settings += "<!DOCTYPE struct SYSTEM \"config/struct.dtd\">";
+		settings += "<struct><string name=\"resultDataSet\" value=\"ResultDataSet\"/>";
+		settings += "<string name=\"firstDataSet\" value=\"second\"/>";
+		settings += "<string name=\"secondDataSet\" value=\"third\"/></struct>";		
 
+		taskManager->addTask(task, url, settings);
 		projectManager->saveProject();
 
 		taskManager->start();

@@ -49,6 +49,8 @@ public:
 
 	DLL_SHARE void addTask(Task* task);
 
+	DLL_SHARE void addTask(Task* task, std::string & url, std::string & settings);
+
 	DLL_SHARE void clearTaskList();
 	
 	DLL_SHARE Task* createTask();
