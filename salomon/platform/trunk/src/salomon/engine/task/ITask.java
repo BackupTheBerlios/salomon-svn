@@ -22,6 +22,7 @@
 package salomon.engine.task;
 
 import salomon.platform.exception.PlatformException;
+
 import salomon.plugin.IPlugin;
 import salomon.plugin.IResult;
 import salomon.plugin.ISettings;
@@ -29,7 +30,7 @@ import salomon.plugin.ISettings;
 /**
  * 
  * Interface for tasks.
- *
+ * 
  */
 public interface ITask
 {
@@ -59,48 +60,37 @@ public interface ITask
 	String getStatus() throws PlatformException;
 
 	/**
-	 * @param name
-	 *            The name to set.
-	 */
-	void setName(String name) throws PlatformException;
-
-	/**
-	 * @param plugin
-	 *            The plugin to set.
-	 */
-	void setPlugin(IPlugin plugin) throws PlatformException;
-
-	/**
-	 * @param result
-	 *            The result to set.
-	 */
-	void setResult(IResult result) throws PlatformException;
-
-	/**
-	 * @param settings
-	 *            The settings to set.
-	 */
-	void setSettings(ISettings settings) throws PlatformException;
-	/**
-	 * @param settings
-	 * @throws PlatformException
-	 */
-	void setSettings(String settings) throws PlatformException;
-	
-	/**
-	 * @param status
-	 *            The status to set.
-	 */
-	void setStatus(String status) throws PlatformException;
-
-	/**
 	 * @return Returns the taksId.
 	 */
 	int getTaskId() throws PlatformException;
 
 	/**
-	 * @param taskId
-	 *            The taskId to set.
+	 * @param name The name to set.
+	 */
+	void setName(String name) throws PlatformException;
+
+	/**
+	 * @param plugin The plugin to set.
+	 */
+	void setPlugin(IPlugin plugin) throws PlatformException;
+
+	/**
+	 * @param result The result to set.
+	 */
+	void setResult(IResult result) throws PlatformException;
+
+	/**
+	 * @param settings The settings to set.
+	 */
+	void setSettings(ISettings settings) throws PlatformException;
+
+	/**
+	 * @param status The status to set.
+	 */
+	void setStatus(String status) throws PlatformException;
+
+	/**
+	 * @param taskId The taskId to set.
 	 */
 	void setTaskId(int taskId) throws PlatformException;
 }

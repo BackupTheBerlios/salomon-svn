@@ -23,6 +23,7 @@ package salomon.plugin;
 
 import java.io.Serializable;
 
+import salomon.platform.serialization.IObject;
 import salomon.platform.serialization.IStruct;
 
 /**
@@ -31,5 +32,5 @@ import salomon.platform.serialization.IStruct;
  */
 public interface ISettings extends Serializable, IStruct
 {
-
+	void init(IObject o);
 }

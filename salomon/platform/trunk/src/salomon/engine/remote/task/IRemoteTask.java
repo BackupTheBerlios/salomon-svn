@@ -121,8 +121,7 @@ public interface IRemoteTask extends Remote
 	 */
 	void setSettings(ISettings settings) throws RemoteException,
 			PlatformException;
-
-	void setSettings(String settings) throws RemoteException, PlatformException;
+	
 
 	/**
 	 * @see salomon.engine.task.ITask#setStatus(String)

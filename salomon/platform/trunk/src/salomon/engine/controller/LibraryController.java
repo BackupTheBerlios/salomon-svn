@@ -21,15 +21,29 @@
 
 package salomon.engine.controller;
 
+import org.apache.log4j.Logger;
+
+import salomon.engine.project.IProjectManager;
+import salomon.engine.project.ProjectManager;
+import salomon.engine.task.TaskManager;
+
+import salomon.platform.exception.PlatformException;
+
 import salomon.engine.platform.IManagerEngine;
+import salomon.engine.platform.ManagerEngine;
 
 /**
  * 
  */
 public final class LibraryController implements IController
 {
-    private IManagerEngine _managerEngine;
+	private IManagerEngine _managerEngine;
 
+	public LibraryController()
+	{
+		initManagers();
+	}
+	
 	/**
 	 * @see salomon.engine.controller.IController#exit()
 	 */
@@ -38,10 +52,10 @@ public final class LibraryController implements IController
 		// empty body
 	}
 
-    public IManagerEngine getManagerEngine()
-    {
-    	return _managerEngine;
-    }
+	public IManagerEngine getManagerEngine()
+	{
+		return _managerEngine;
+	}
 
 	/**
 	 * @see salomon.engine.controller.IController#start(salomon.engine.platform.IManagerEngine)
@@ -50,4 +64,19 @@ public final class LibraryController implements IController
 	{
 		// empty body
 	}
+
+	private void initManagers()
+	{
+		// FIXME: Create
+		try {
+			_managerEngine = new ManagerEngine();
+			TaskManager taskManager = (TaskManager) _managerEngine.getTasksManager();
+			IProjectManager projectManager = _managerEngine.getProjectManager();
+			taskManager.setProjectManger((ProjectManager) projectManager);
+		} catch (PlatformException e) {
+			LOGGER.fatal("", e);
+		}
+	}
+
+	private static final Logger LOGGER = Logger.getLogger(LibraryController.class);
 }

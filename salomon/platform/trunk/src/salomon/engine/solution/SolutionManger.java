@@ -41,7 +41,8 @@ public final class SolutionManger implements ISolutionManager
 	 */
 	public ISolution getSolution(String name)
 	{
-		throw new UnsupportedOperationException("Method getSolution() not implemented yet!");
+		//TODO: only for dll		
+		return Solution.getInstance();
 	}
 
 	/**

@@ -245,18 +245,4 @@ public final class TaskProxy implements ITask
 	}
 
 	private static final Logger LOGGER = Logger.getLogger(TaskProxy.class);
-
-	/**
-	 * @see salomon.engine.task.ITask#setSettings(java.lang.String)
-	 */
-	public void setSettings(String settings) throws PlatformException
-	{
-		try {
-			_remoteTask.setSettings(settings);
-		} catch (RemoteException e) {
-			LOGGER.fatal("Remote error!", e);
-			throw new PlatformException(e.getLocalizedMessage());
-		}
-	}
-
 }

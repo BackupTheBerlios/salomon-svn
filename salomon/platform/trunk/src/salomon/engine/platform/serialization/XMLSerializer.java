@@ -57,7 +57,7 @@ public final class XMLSerializer
 	{
 		Document document = null;
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-		factory.setValidating(true);
+		factory.setValidating(false);
 		SimpleStruct result = null;
 		try {
 			DocumentBuilder builder = factory.newDocumentBuilder();
