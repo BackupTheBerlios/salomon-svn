@@ -39,8 +39,8 @@ import javax.swing.event.ListSelectionListener;
 import org.apache.log4j.Logger;
 
 import salomon.engine.Messages;
+import salomon.engine.holder.ManagerEngineHolder;
 
-import salomon.engine.platform.holder.ManagerEngineHolder;
 
 /**
  * Panel displaying list of connected clients. 

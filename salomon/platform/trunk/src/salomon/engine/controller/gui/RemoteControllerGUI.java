@@ -25,9 +25,10 @@ import java.rmi.RemoteException;
 
 import org.apache.log4j.Logger;
 
+import salomon.engine.remote.IRemoteController;
+import salomon.engine.remote.ManagerEngineProxy;
+
 import salomon.engine.platform.IManagerEngine;
-import salomon.engine.platform.remote.IRemoteController;
-import salomon.engine.platform.remote.ManagerEngineProxy;
 
 /**
  * Class is graphic representation of client controllers connected to server.

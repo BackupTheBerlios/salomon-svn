@@ -61,14 +61,14 @@ import salomon.engine.controller.gui.SplashScreen;
 import salomon.engine.controller.gui.TaskManagerGUI;
 import salomon.engine.controller.gui.action.ActionManager;
 import salomon.engine.database.DBManager;
+import salomon.engine.holder.ManagerEngineHolder;
+import salomon.engine.remote.CentralController;
+import salomon.engine.remote.event.IMasterControllerListener;
+import salomon.engine.remote.event.RemoteControllerEvent;
 
 import salomon.util.gui.Utils;
 
 import salomon.engine.platform.IManagerEngine;
-import salomon.engine.platform.holder.ManagerEngineHolder;
-import salomon.engine.platform.remote.CentralController;
-import salomon.engine.platform.remote.event.IMasterControllerListener;
-import salomon.engine.platform.remote.event.RemoteControllerEvent;
 
 /**
  * Server side implementation of IController interface.

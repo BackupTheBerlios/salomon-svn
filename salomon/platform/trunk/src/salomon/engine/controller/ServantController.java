@@ -26,10 +26,10 @@ import java.rmi.RemoteException;
 import org.apache.log4j.Logger;
 
 import salomon.engine.Config;
+import salomon.engine.remote.ICentralController;
+import salomon.engine.remote.IRemoteController;
 
 import salomon.engine.platform.IManagerEngine;
-import salomon.engine.platform.remote.ICentralController;
-import salomon.engine.platform.remote.IRemoteController;
 
 /**
  * Class is a client implementation of IController interface.
