@@ -7,7 +7,7 @@ import salomon.core.data.dataset.DataSetManager;
 import salomon.core.data.ruleset.RuleSetManager;
 
 /**
- *  
+ *  Class holds  DataSetManager, RuleSetManager and AttributeManager instances.  
  */
 public class DataEngine
 {
