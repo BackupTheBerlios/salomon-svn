@@ -1,7 +1,7 @@
 // This is the main project file for VC++ application project 
 // generated using an Application Wizard.
 
-#include "stdafx.h"
+//#include "stdafx.h"
 #include <iostream>
 #include <Salomon.h>
 

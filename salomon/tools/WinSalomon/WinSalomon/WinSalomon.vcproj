@@ -37,7 +37,7 @@
 				OutputFile="$(OutDir)/WinSalomon.dll"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="&quot;C:\Program Files\Java\jdk1.5\lib&quot;"
-				ModuleDefinitionFile=".\WinSalomon.def"
+				ModuleDefinitionFile=""
 				GenerateDebugInformation="TRUE"
 				SubSystem="2"
 				ImportLibrary="$(OutDir)/WinSalomon.lib"
