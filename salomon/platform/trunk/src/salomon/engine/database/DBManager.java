@@ -63,6 +63,12 @@ public final class DBManager
 		_user = Config.getString("USER"); //$NON-NLS-1$
 		_passwd = Config.getString("PASSWD"); //$NON-NLS-1$
 		_isEmbedded = Config.getString("EMBEDDED").equalsIgnoreCase("Y");
+		boolean useCurrDir = Config.getString("USE_CURR_DIR").equalsIgnoreCase(
+				"Y");
+		if (useCurrDir) {
+			_dataBasePath = Config.CURR_DIR + Config.FILE_SEPARATOR
+					+ _dataBasePath;
+		}
 	}
 
 	/**
@@ -114,7 +120,8 @@ public final class DBManager
 	 * Executed given SQL query.
 	 * 
 	 * @param query to execute
-	 * @return @throws SQLException
+	 * @return result of execution
+	 * @throws SQLException
 	 */
 	public boolean executeQuery(String query) throws SQLException
 	{
@@ -182,7 +189,7 @@ public final class DBManager
 		resultSet.close();
 
 		// Inserting data
-		//(primary key will be at the end of query, it's not nice
+		// (primary key will be at the end of query, it's not nice
 		// but doesn't requeire any changes in SQLInsert class
 		insertObject.addValue(primaryKey, primaryKeyID);
 		insert(insertObject);
@@ -213,7 +220,7 @@ public final class DBManager
 		resultSet.close();
 
 		// Inserting data
-		//(primary key will be at the end of query, it's not nice
+		// (primary key will be at the end of query, it's not nice
 		// but doesn't requeire any changes in SQLInsert class
 		insertObject.addValue(primaryKey, primaryKeyID);
 		insert(insertObject);
@@ -238,36 +245,38 @@ public final class DBManager
 			foundID = insert(updateObject.updateToInsert(), primaryKey);
 			LOGGER.info("New record inserted, id = " + foundID);
 		}
-        
+
 		return foundID;
 	}
-    /**
-     * Method inserts new record if hasn't exist one with given id yet,
-     * otherwise performs update.
-     * 
-     * @param updateObject object to insert/update
-     * @param primaryKey name of primary key of table
-     * @param id id of record to upddate/insert
-     * @param generator name of generator used to generate primary key
-     * @return id of inserted/updated record
-     * @throws SQLException
-     */
-    public int insertOrUpdate(SQLUpdate updateObject, String primaryKey, int id, String generator)
-            throws SQLException
-    {
-        int foundID = updateIfExists(updateObject, primaryKey, id);
-        if (foundID < 0) {            
-            foundID = insert(updateObject.updateToInsert(), primaryKey, generator);
-            LOGGER.info("New record inserted, id = " + foundID);
-        }
-        
-        return foundID;
-    }    
+
+	/**
+	 * Method inserts new record if hasn't exist one with given id yet,
+	 * otherwise performs update.
+	 * 
+	 * @param updateObject object to insert/update
+	 * @param primaryKey name of primary key of table
+	 * @param id id of record to upddate/insert
+	 * @param generator name of generator used to generate primary key
+	 * @return id of inserted/updated record
+	 * @throws SQLException
+	 */
+	public int insertOrUpdate(SQLUpdate updateObject, String primaryKey,
+			int id, String generator) throws SQLException
+	{
+		int foundID = updateIfExists(updateObject, primaryKey, id);
+		if (foundID < 0) {
+			foundID = insert(updateObject.updateToInsert(), primaryKey,
+					generator);
+			LOGGER.info("New record inserted, id = " + foundID);
+		}
+
+		return foundID;
+	}
 
 	/**
 	 * Annuls current transaction. Exception is caught, if occurs it indicates
 	 * critical error.
-	 *  
+	 * 
 	 */
 
 	public void rollback()
@@ -294,15 +303,14 @@ public final class DBManager
 	{
 		String query = selectObject.getQuery();
 		LOGGER.info("query = " + query); //$NON-NLS-1$
-        
+
 		return _statement.executeQuery(query);
 	}
 
 	/**
 	 * Updates records to values specified in SQLUpdate object.
+	 * @param updateObject 
 	 * 
-	 * @param values values to set
-	 * @param conditions conditions of query (if null all data are updated)
 	 * @return number of updated rows
 	 * @throws SQLException
 	 */
@@ -310,24 +318,24 @@ public final class DBManager
 	{
 		String query = updateObject.getQuery();
 		LOGGER.info("query = " + query); //$NON-NLS-1$
-        
+
 		return _statement.executeUpdate(query);
 	}
 
 	private void connect() throws SQLException, ClassNotFoundException
 	{
 		Class.forName("org.firebirdsql.jdbc.FBDriver"); //$NON-NLS-1$
-		String connectString = "jdbc:firebirdsql:";
+		StringBuilder connectString = new StringBuilder("jdbc:firebirdsql:");
 		if (_isEmbedded) {
-			connectString += "embedded:" + Config.CURR_DIR
-					+ Config.FILE_SEPARATOR;
+			connectString.append("embedded:");
+			connectString.append(Config.FILE_SEPARATOR);
 		} else {
-			connectString += _hostName + ":" + Config.CURR_DIR
-					+ Config.FILE_SEPARATOR;
+			connectString.append(_hostName).append(":");
 		}
-		connectString += _dataBasePath;
+		connectString.append(_dataBasePath);
 		LOGGER.info("connectString: " + connectString);
-		_connection = DriverManager.getConnection(connectString, _user, _passwd);
+		_connection = DriverManager.getConnection(connectString.toString(),
+				_user, _passwd);
 		// setting auto commit off
 		_connection.setAutoCommit(false);
 		_statement = _connection.createStatement();
@@ -342,7 +350,8 @@ public final class DBManager
 	 * @return id of found record or -1 if record does not exist
 	 * @throws SQLException
 	 */
-	private int updateIfExists(SQLUpdate updateObject, String primaryKey, int id) throws SQLException
+	private int updateIfExists(SQLUpdate updateObject, String primaryKey, int id)
+			throws SQLException
 	{
 		int foundID = -1;
 		SQLSelect select = new SQLSelect();
@@ -356,16 +365,16 @@ public final class DBManager
 		if (resultSet.next()) {
 			foundID = resultSet.getInt(primaryKey);
 			LOGGER.info("Record found, id = " + foundID);
-            updateObject.addCondition(primaryKey + " =", foundID);
-			resultSet.close();			
+			updateObject.addCondition(primaryKey + " =", foundID);
+			resultSet.close();
 			int updatedRows = update(updateObject);
-            if (updatedRows > 1) {
-            	LOGGER.error("TOO MANY ROWS: " + updatedRows);
-                foundID = -1;
-            }
+			if (updatedRows > 1) {
+				LOGGER.error("TOO MANY ROWS: " + updatedRows);
+				foundID = -1;
+			}
 			LOGGER.info("Record updated");
 		}
-        
+
 		return foundID;
 	}
 
@@ -373,7 +382,8 @@ public final class DBManager
 	 * Method returns instance of DBManager. It ensures that exactly one
 	 * instance of class will be created.
 	 * 
-	 * @return @throws SQLException
+	 * @return <code>DBManager</code> instance
+	 * @throws SQLException
 	 * @throws ClassNotFoundException
 	 */
 	public static DBManager getInstance() throws SQLException,
@@ -383,7 +393,7 @@ public final class DBManager
 			_instance = new DBManager();
 			_instance.connect();
 		}
-        
+
 		return _instance;
 	}
 
