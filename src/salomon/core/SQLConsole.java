@@ -141,7 +141,9 @@ public class SQLConsole extends JFrame
 			buffer.append("\n"); //$NON-NLS-1$
 		}
 		_logger.info(buffer);
-		return new JTable(data, columnNames);
+		JTable table = new JTable(data, columnNames);
+		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);		
+		return table;
 	}
 
 	public static void main(String[] args)
