@@ -10,6 +10,10 @@ import java.util.Collection;
  */
 public interface IProjectManager
 {
+    /**
+     * Creates new, empty project     
+     *
+     */
 	public void newProject();
 
 	/**

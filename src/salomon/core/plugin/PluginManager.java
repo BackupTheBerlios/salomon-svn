@@ -26,6 +26,8 @@ public final class PluginManager implements IPluginManager
 {
 	/**
 	 * Returns collection of plugin descriptions
+	 * 
+	 * @return plugin descriptions
 	 */
 	public Collection getAvailablePlugins()
 	{
@@ -35,10 +37,10 @@ public final class PluginManager implements IPluginManager
 		// executing query
 		ResultSet resultSet = null;
 		try {
-			resultSet = DBManager.getInstance().select(null, tableNames, null);		
+			resultSet = DBManager.getInstance().select(null, tableNames, null);
 			while (resultSet.next()) {
-                Description desc = new Description();
-                desc.init(resultSet);
+				Description desc = new Description();
+				desc.init(resultSet);
 				result.add(desc);
 			}
 		} catch (SQLException e) {
@@ -50,55 +52,61 @@ public final class PluginManager implements IPluginManager
 		}
 		return result;
 	}
-
-	private static Logger _logger = Logger.getLogger(PluginLoader.class);
+	/**
+     * Removes from data base information about given plugin.
+     * 
+     * @param description description of plugin to remove
+     * @return true if successfully removed, false otherwise 
+	 */
+	public boolean removePlugin(Description description)
+	{
+		boolean result = false;
+		DBManager dbManager = null;
+		try {
+			// remving all related tasks
+			DBTableName[] tableNames = {new DBTableName("tasks")};
+			DBCondition[] conditions = {new DBCondition(new DBColumnName(
+					tableNames[0], "plugin_id"), DBCondition.REL_EQ,
+					new Integer(description.getPluginID()),
+					DBCondition.NUMBERIC)};
+			dbManager = DBManager.getInstance();
+			dbManager.delete(conditions);
+			// removing plugin
+			description.delete();
+			result = true;
+			dbManager.commit();
+			_logger.info("Plugin successfully deleted.");
+		} catch (SQLException e) {
+			dbManager.rollback();
+			_logger.fatal("", e);
+		} catch (ClassNotFoundException e) {
+			dbManager.rollback();
+			_logger.fatal("", e);
+		}
+		return result;
+	}
 
 	/**
-	 * Adds plugin to database.
+	 * Saves plugin in database.
 	 * 
-	 * @return true if successfully added, false otherwise
+	 * @return true if successfully saved, false otherwise
 	 */
 	public boolean savePlugin(Description description)
 	{
 		boolean result = false;
-        try {
+		try {
 			description.save();
-            DBManager.getInstance().commit();
-            result = true;
-            _logger.info("Plugin successfully saved.");
+			DBManager.getInstance().commit();
+			result = true;
+			_logger.info("Plugin successfully saved.");
 		} catch (SQLException e) {
 			_logger.fatal("", e);
 		} catch (ClassNotFoundException e) {
 			_logger.fatal("", e);
 		}
-        return result;
+		return result;
 	}
-    
-    public boolean removePlugin(Description description)
-    {        
-        boolean result = false;
-        DBManager dbManager = null;
-        try {
-            // remving all related tasks
-            DBTableName[] tableNames = {new DBTableName("tasks")};
-            DBCondition[] conditions = {new DBCondition(new DBColumnName(
-                    tableNames[0], "plugin_id"), DBCondition.REL_EQ, new Integer(
-                    description.getPluginID()), DBCondition.NUMBERIC)};
-            dbManager = DBManager.getInstance();
-            dbManager.delete(conditions);
-            // removing plugin
-            description.delete();
-            result = true;
-            dbManager.commit();
-            _logger.info("Plugin successfully deleted.");
-        } catch (SQLException e) {
-            dbManager.rollback();
-            _logger.fatal("", e);
-        } catch (ClassNotFoundException e) {
-            dbManager.rollback();
-            _logger.fatal("", e);
-        }
-        return result;
-    }
+
+	private static Logger _logger = Logger.getLogger(PluginLoader.class);
 
 }
