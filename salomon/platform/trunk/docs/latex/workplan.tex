@@ -1,0 +1,92 @@
+%& --translate-file=cp1250pl
+%bez powyzszej linijki nie dzialaja polskie znaki (musi ona byc w pierwszej linii dokumentu
+%%&platex --translate-file=il2-pl % przeyestowac z tym
+\documentclass[a4paper,12pt]{article}
+\usepackage[english]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[dvips]{graphicx}
+%\usepackage{intendfirst}
+\usepackage{times}
+\usepackage{epsfig}
+\usepackage{color}
+\usepackage[urlcolor=blue, colorlinks=true, bookmarks=true, bookmarksnumbered=true]{hyperref}
+
+\usepackage{fancyhdr} 
+\pagestyle{fancy} 
+
+\rfoot{SALOMON}
+
+
+%ustawienie wielkosci akapitu
+%\setlength{\parindent}{0mm}
+%%odstÓp miÓdzy akapitami
+%\setlength{\parskip}{2mm}
+
+%ustawienia rozmiaru tekstu
+    \textwidth 16cm
+    \textheight 24cm 
+    \topmargin -15mm
+    \evensidemargin-3mm
+    \oddsidemargin -3mm
+    
+
+
+\title{Salomon - plan pracy}
+
+\author{Nikodem Jura \emph{(nico@icslab.agh.edu.pl)}
+        \\
+        Krzysztof Rajda \emph{(krzycho@student.uci.agh.edu.pl)}
+        \\
+        Jakub Ga³kowski \emph{(avi@student.uci.agh.edu.pl)}}               
+
+        
+
+\begin{document}
+
+\maketitle
+%wylaczenie numerowania na I stronie
+\thispagestyle{empty}
+
+\begin{center}
+\href{http://salomon.iisg.agh.edu.pl}{http://salomon.iisg.agh.edu.pl}
+\end{center}
+
+\pagebreak
+\section{Charakterystyka problemu}
+Celem projektu ma byæ rozbudowa systemu Salomon, poprzez rozszerzenie jego mechanizmów o wsparcie dla nowego rodzaju wiedzy jakim s¹ drzewa decyzyjne.
+
+W ramach tego przedsiêwziêcia nale¿y zapewniæ efektywny sposób sk³adowania informacji o drzewach w bazie danych Salomona. Nale¿y te¿ zaprojektowaæ przejrzysty interfejs programistyczny umo¿liwiaj¹cy operacje na drzewach decyzyjnych oraz dostarczyæ graficzny interfejs u¿ytkownika umo¿liwiaj¹cy zarz¹dzanie zgromadzon¹ wiedz¹. Dodatkowo nale¿y zrealizowaæ przyk³adowe pluginy demonstruj¹ce poprawnoœæ implementacji.
+
+\section{Wymagania wobec cz³onków zespo³u}
+\begin{itemize}
+	\item programowanie w Javie
+	\item stosowanie siê do przyjêtych standardów (Salomon coding standards)
+	\item Znajomoœæ jêzyka angielskiego (chcielibyœmy, aby dokumenty na wiki by³y po angielsku w miarê mo¿liwoœci)
+	\item Znajomoœæ ant, subversion, junit
+	\item Znajomoœæ SQL (Firebird)
+\end{itemize}
+
+\section{Grupy projektowe}
+
+\begin{enumerate}
+	\item Grupa I	
+	\begin{itemize}
+		\item Krzysztof Rajda
+		\item Nikodem Jura
+		\item Jakub Ga³kowski
+		\item Leszek Grzanka
+	\end{itemize}
+	\item Grupa II
+	
+	\begin{itemize}
+		\item Nadolski Krzysztof
+		\item Nowakowski Mateusz
+		\item Ostatek £ukasz
+		\item Misiuda Przemys³aw
+		\item W¹sala Tomasz
+		\item Dominik Seweryn 
+	\end{itemize}
+\end{enumerate}
+
+
+\end{document}
