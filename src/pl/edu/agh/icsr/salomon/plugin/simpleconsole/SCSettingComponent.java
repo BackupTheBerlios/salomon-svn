@@ -31,8 +31,9 @@ public class SCSettingComponent implements ISettingComponent
 		return settings;
 	}
 
-	public Component getComponent()
+	public Component getComponent(ISettings settings)
 	{
+		SCSettings scSettings = (SCSettings) settings;
 		if (_settingsPanel == null) {
 			_settingsPanel = new JPanel();
 			_settingsPanel.setLayout(new BorderLayout());
@@ -41,14 +42,8 @@ public class SCSettingComponent implements ISettingComponent
 					BorderLayout.CENTER);
 			_settingsPanel.setSize(80, 70);
 		}
-		return _settingsPanel;
-	}
-
-	public Component getComponent(ISettings settings)
-	{
-		SCSettings scSettings = (SCSettings) settings;		
 		_txtQueryEditor.setText(scSettings.getQuery());
-		return getComponent();
+		return _settingsPanel;
 	}
 
 	private JTextArea getQueryEditor()
