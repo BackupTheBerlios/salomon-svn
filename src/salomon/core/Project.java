@@ -86,4 +86,9 @@ public class Project
 	{
 		_projectID = projectId;
 	}
+	
+	public String toString()
+	{		
+		return "[" +_projectID + ", " + _name + ", " + _info + "]";
+	}
 }
