@@ -65,7 +65,10 @@ public final class PluginLoader
 		File pluginFile = getFromCache(url);
 		if (pluginFile == null) {
 			pluginFile = downloadFile(url);
+		} else {
+			url = new URL("file:///" + pluginFile.getAbsolutePath());
 		}
+		LOGGER.debug("plugin url: " + url.toString());
 		// creating class loader
 		PluginClassLoader classLoader = PluginClassLoader.getInstance();
 		classLoader.addUrl(url);
