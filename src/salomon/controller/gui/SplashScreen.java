@@ -159,7 +159,7 @@ public final class SplashScreen
 			super.paint(g);
 			Color oldColor = g.getColor();
 			Font oldFont = g.getFont();
-			Color newColor = Color.BLUE;
+			Color newColor = Color.WHITE;
 			Font newFont = new Font("Dialog", Font.BOLD, 15);
 			g.setColor(newColor);
 			g.setFont(newFont);
