@@ -1,3 +1,5 @@
+#pragma once
+
 /*
  * Copyright (C) 2005 Salomon Team
  *
@@ -19,48 +21,14 @@
  * 
  */
 
+#include <jni.h>
 
-#include "task.h"
-
-const char* Task::CLASS_NAME = "salomon/engine/task/ITask";
-
-DLL_SHARE std::string Task::getName()
+class StringHelper
 {
-	std::cout << "Not imlemented yet" << std::endl;
-	return NULL;
-}
+public:
 
-DLL_SHARE std::string Task::getResult()
-{
-	std::cout << "Not imlemented yet" << std::endl;
-	return NULL;
-}
+static jobjectArray getStringArray(JNIEnv *env, char **strv, int strc);
 
-DLL_SHARE int Task::getTaskId()
-{
-	std::cout << "Not imlemented yet" << std::endl;
-	return 0;
-}
+static jstring	getString(JNIEnv *env, char *s);
 
-DLL_SHARE void Task::setName(std::string name)
-{
-	std::cout << "Not imlemented yet" << std::endl;
-}
-
-DLL_SHARE void Task::setSettings(std::string settings)
-{
-	std::cout << "Not imlemented yet" << std::endl;
-}
-
-DLL_SHARE void Task::setTaskId(int taskId)
-{
-	std::cout << "Not imlemented yet" << std::endl;
-}
-
-//Task::Task(void)
-//{
-//}
-//
-//Task::~Task(void)
-//{
-//}
+};

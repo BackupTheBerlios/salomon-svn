@@ -159,6 +159,9 @@
 				RelativePath=".\SolutionManager.cpp">
 			</File>
 			<File
+				RelativePath=".\StringHelper.cpp">
+			</File>
+			<File
 				RelativePath=".\Task.cpp">
 			</File>
 			<File
@@ -195,6 +198,9 @@
 			</File>
 			<File
 				RelativePath=".\SolutionManager.h">
+			</File>
+			<File
+				RelativePath=".\StringHelper.h">
 			</File>
 			<File
 				RelativePath=".\Task.h">

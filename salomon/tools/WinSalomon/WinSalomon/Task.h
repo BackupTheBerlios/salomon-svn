@@ -42,4 +42,17 @@ public:
 	~Task(void)
 	{
 	}
+
+	DLL_SHARE std::string getName();
+
+	DLL_SHARE std::string getResult();	
+
+	DLL_SHARE int getTaskId();
+
+	DLL_SHARE void setName(std::string name);
+
+	DLL_SHARE void setSettings(std::string settings);
+
+	DLL_SHARE void setTaskId(int taskId);
+
 };
