@@ -27,9 +27,10 @@ public final class RemoteController extends UnicastRemoteObject
 	private IRemoteManagerEngine _remoteManagerEngine;
 
 	/**
-	 * @throws RemoteException
-	 *  
-	 */
+     * @throws RemoteException
+     * @pre $none
+     * @post $none
+     */
 	public RemoteController(IManagerEngine managerEngine, String name)
 			throws RemoteException
 	{
@@ -76,5 +77,5 @@ public final class RemoteController extends UnicastRemoteObject
 		_logger.debug("RemoteController.exit()");
 		Starter.exit();
 	}	
-    private static Logger _logger = Logger.getLogger(RemoteController.class);
+    private static final Logger _logger = Logger.getLogger(RemoteController.class);
 }
