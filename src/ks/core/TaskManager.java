@@ -7,9 +7,10 @@ package ks.core;
 
 import java.util.Iterator;
 import java.util.LinkedList;
-import ks.data.DataEngine;
-import ks.data.Environment;
-import ks.plugins.Settings;
+
+import ks.core.data.DataEngine;
+import ks.core.data.Environment;
+import ks.core.plugin.Settings;
 import org.apache.log4j.Logger;
 
 /**

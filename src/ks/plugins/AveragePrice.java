@@ -10,13 +10,15 @@ import java.util.List;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import ks.data.DBCondition;
-import ks.data.DBColumnName;
-import ks.data.DBTableName;
-import ks.data.DataEngine;
-import ks.data.DataSet;
-import ks.data.DataSetManager;
-import ks.data.Environment;
+
+import ks.core.data.DataEngine;
+import ks.core.data.Environment;
+import ks.core.data.common.DBColumnName;
+import ks.core.data.common.DBCondition;
+import ks.core.data.common.DBTableName;
+import ks.core.data.dataset.DataSet;
+import ks.core.data.dataset.DataSetManager;
+import ks.core.plugin.*;
 import org.apache.log4j.Logger;
 
 /*

@@ -5,9 +5,9 @@
 
 package ks.core;
 
-import ks.data.Environment;
-import ks.plugins.AbstractPlugin;
-import ks.plugins.Settings;
+import ks.core.data.Environment;
+import ks.core.plugin.AbstractPlugin;
+import ks.core.plugin.Settings;
 
 /**
  *  

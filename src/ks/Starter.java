@@ -8,10 +8,10 @@ package ks;
 import java.sql.SQLException;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
-import ks.core.IManager;
 import ks.core.ManagerEngine;
-import ks.core.StandAloneManager;
-import ks.core.DBManager;
+import ks.core.data.DBManager;
+import ks.manager.IManager;
+import ks.manager.StandAloneManager;
 
 /**
  *  

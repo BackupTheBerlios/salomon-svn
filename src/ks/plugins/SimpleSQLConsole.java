@@ -14,10 +14,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.*;
 import org.apache.log4j.Logger;
-import ks.SQLConsole;
-import ks.core.DBManager;
-import ks.data.DataEngine;
-import ks.data.Environment;
+
+import ks.core.SQLConsole;
+import ks.core.data.DBManager;
+import ks.core.data.DataEngine;
+import ks.core.data.Environment;
+import ks.core.plugin.*;
 
 /**
  * @author nico
