@@ -131,7 +131,7 @@
 	
 	
 	<target name="build_rmi_stubs" >
-		<rmic classname="salomon.core.remote.MasterController" base="${bin_dir}"/>
+		<rmic classname="salomon.core.remote.CentralController" base="${bin_dir}"/>
 		<rmic classname="salomon.core.remote.RemoteController" base="${bin_dir}"/>
 		<rmic classname="salomon.core.remote.RemoteManagerEngine" base="${bin_dir}"/>
 		<rmic classname="salomon.core.remote.RemotePluginManager" base="${bin_dir}"/>
