@@ -28,7 +28,7 @@ import javax.swing.JToolBar;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
-import pl.edu.agh.icsr.salomon.plugin.averageprice.AveragePrice;
+import pl.edu.agh.icsr.salomon.plugin.averageprice2.AveragePrice;
 import salomon.core.data.DBManager;
 import salomon.core.data.DataEngine;
 import salomon.core.data.common.DBColumnName;
@@ -39,7 +39,6 @@ import salomon.core.data.dataset.DataSetManager;
 
 public class SQLConsole extends JFrame
 {
-	private static Logger _logger = Logger.getLogger(SQLConsole.class);
 
 	private JButton _btnCommit = null;
 
@@ -82,9 +81,11 @@ public class SQLConsole extends JFrame
 
 	private JToolBar _toolCommands = null;
 
-	/**
-	 * This is the default constructor
-	 */
+    /**
+     * Creates instance of SQLConsole object.
+     * 
+     * @param isStandAlone if true SQLConsole is standalone application
+     */
 	public SQLConsole(boolean isStandAlone)
 	{
 		super();
@@ -102,101 +103,6 @@ public class SQLConsole extends JFrame
 		_msgArea = getMessageArea();
 		_history = new CommandHistory(100);
 		initialize();
-	}
-
-	public static JTable createResultTable(ResultSet resultSet)
-			throws SQLException
-	{
-		ResultSetMetaData metaData = resultSet.getMetaData();
-		int columnCount = metaData.getColumnCount();
-		String[] columnNames = new String[columnCount];
-		// getting column names
-		for (int i = 0; i < columnCount; i++) {
-			columnNames[i] = metaData.getColumnLabel(i + 1);
-		}
-		// getting data
-		LinkedList rows = new LinkedList();
-		int size = 0;
-		while (resultSet.next()) {
-			Object[] row = new Object[columnCount];
-			int i = 0;
-			for (; i < columnCount; i++) {
-				row[i] = resultSet.getObject(i + 1);
-			}
-			rows.add(row);
-			size++;
-		}
-		// creating result table
-		Object[][] data = new Object[size][columnCount];
-		for (int i = 0; i < size; i++) {
-			data[i] = (Object[]) rows.get(i);
-		}
-		// printing result
-		StringBuffer buffer = new StringBuffer(512);
-		for (int i = 0; i < columnCount; i++) {
-			buffer.append(columnNames[i] + " "); //$NON-NLS-1$
-		}
-		buffer.append("\n=============================================\n"); //$NON-NLS-1$
-		for (int i = 0; i < size; i++) {
-			for (int j = 0; j < columnCount; j++) {
-				buffer.append(data[i][j] + "|"); //$NON-NLS-1$
-			}
-			buffer.append("\n"); //$NON-NLS-1$
-		}
-		_logger.info(buffer);
-		JTable table = new JTable(data, columnNames);
-		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-		return table;
-	}
-
-	public static void main(String[] args)
-	{
-		new SQLConsole(true);
-	}
-
-	public static void printResultSet(ResultSet resultSet) throws SQLException
-	{
-		if (resultSet == null) {
-			_logger.fatal("Result set is empty"); //$NON-NLS-1$
-			return;
-		}
-		ResultSetMetaData metaData = resultSet.getMetaData();
-		int columnCount = metaData.getColumnCount();
-		String[] columnNames = new String[columnCount];
-		// getting column names
-		for (int i = 0; i < columnCount; i++) {
-			columnNames[i] = metaData.getColumnLabel(i + 1);
-		}
-		// getting data
-		LinkedList rows = new LinkedList();
-		int size = 0;
-		while (resultSet.next()) {
-			Object[] row = new Object[columnCount];
-			int i = 0;
-			for (; i < columnCount; i++) {
-				row[i] = resultSet.getObject(i + 1);
-			}
-			rows.add(row);
-			size++;
-		}
-		// creating result table
-		Object[][] data = new Object[size][columnCount];
-		for (int i = 0; i < size; i++) {
-			data[i] = (Object[]) rows.get(i);
-		}
-		// printing result
-		StringBuffer buffer = new StringBuffer(512);
-		for (int i = 0; i < columnCount; i++) {
-			buffer.append(columnNames[i] + " "); //$NON-NLS-1$
-		}
-		buffer.append("\n=============================================\n"); //$NON-NLS-1$
-		for (int i = 0; i < size; i++) {
-			for (int j = 0; j < columnCount; j++) {
-				buffer.append(data[i][j] + "|"); //$NON-NLS-1$
-			}
-			buffer.append("\n"); //$NON-NLS-1$
-		}
-		_logger.fatal(buffer);
 	}
 
 	private void commit()
@@ -557,7 +463,111 @@ public class SQLConsole extends JFrame
 	}
 
 	/**
-	 * @author nico Class manages command history list.
+	 * Method creates JTable representing given result set.
+	 * 
+	 * @param resultSet result of SQL query
+	 * @return table representing given result set.
+	 * @throws SQLException
+	 */
+	public static JTable createResultTable(ResultSet resultSet)
+			throws SQLException
+	{
+		ResultSetMetaData metaData = resultSet.getMetaData();
+		int columnCount = metaData.getColumnCount();
+		String[] columnNames = new String[columnCount];
+		// getting column names
+		for (int i = 0; i < columnCount; i++) {
+			columnNames[i] = metaData.getColumnLabel(i + 1);
+		}
+		// getting data
+		LinkedList rows = new LinkedList();
+		int size = 0;
+		while (resultSet.next()) {
+			Object[] row = new Object[columnCount];
+			int i = 0;
+			for (; i < columnCount; i++) {
+				row[i] = resultSet.getObject(i + 1);
+			}
+			rows.add(row);
+			size++;
+		}
+		// creating result table
+		Object[][] data = new Object[size][columnCount];
+		for (int i = 0; i < size; i++) {
+			data[i] = (Object[]) rows.get(i);
+		}
+		// printing result
+		StringBuffer buffer = new StringBuffer(512);
+		for (int i = 0; i < columnCount; i++) {
+			buffer.append(columnNames[i] + " "); //$NON-NLS-1$
+		}
+		buffer.append("\n=============================================\n"); //$NON-NLS-1$
+		for (int i = 0; i < size; i++) {
+			for (int j = 0; j < columnCount; j++) {
+				buffer.append(data[i][j] + "|"); //$NON-NLS-1$
+			}
+			buffer.append("\n"); //$NON-NLS-1$
+		}
+		_logger.info(buffer);
+		JTable table = new JTable(data, columnNames);
+		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		return table;
+	}
+
+	public static void main(String[] args)
+	{
+		new SQLConsole(true);
+	}
+
+	private static void printResultSet(ResultSet resultSet) throws SQLException
+	{
+		if (resultSet == null) {
+			_logger.fatal("Result set is empty"); //$NON-NLS-1$
+			return;
+		}
+		ResultSetMetaData metaData = resultSet.getMetaData();
+		int columnCount = metaData.getColumnCount();
+		String[] columnNames = new String[columnCount];
+		// getting column names
+		for (int i = 0; i < columnCount; i++) {
+			columnNames[i] = metaData.getColumnLabel(i + 1);
+		}
+		// getting data
+		LinkedList rows = new LinkedList();
+		int size = 0;
+		while (resultSet.next()) {
+			Object[] row = new Object[columnCount];
+			int i = 0;
+			for (; i < columnCount; i++) {
+				row[i] = resultSet.getObject(i + 1);
+			}
+			rows.add(row);
+			size++;
+		}
+		// creating result table
+		Object[][] data = new Object[size][columnCount];
+		for (int i = 0; i < size; i++) {
+			data[i] = (Object[]) rows.get(i);
+		}
+		// printing result
+		StringBuffer buffer = new StringBuffer(512);
+		for (int i = 0; i < columnCount; i++) {
+			buffer.append(columnNames[i] + " "); //$NON-NLS-1$
+		}
+		buffer.append("\n=============================================\n"); //$NON-NLS-1$
+		for (int i = 0; i < size; i++) {
+			for (int j = 0; j < columnCount; j++) {
+				buffer.append(data[i][j] + "|"); //$NON-NLS-1$
+			}
+			buffer.append("\n"); //$NON-NLS-1$
+		}
+		_logger.fatal(buffer);
+	}
+
+	/**
+	 * Class manages command history list.
+	 * 
+	 * @author nico
 	 */
 	class CommandHistory
 	{
@@ -565,7 +575,7 @@ public class SQLConsole extends JFrame
 
 		private int _currentPosition = -1;
 
-		public CommandHistory(int initialSize)
+		CommandHistory(int initialSize)
 		{
 			_commandHistory = new ArrayList(initialSize);
 			_currentPosition = -1;
@@ -574,10 +584,9 @@ public class SQLConsole extends JFrame
 		/**
 		 * Method adds command at the end of command history.
 		 * 
-		 * @param command
-		 *            command to add
+		 * @param command command to add
 		 */
-		public void addCommand(String command)
+		void addCommand(String command)
 		{
 			_currentPosition = _commandHistory.size();
 			_commandHistory.add(command);
@@ -586,7 +595,7 @@ public class SQLConsole extends JFrame
 		/**
 		 * @return command or null if there is no next command
 		 */
-		public String getNextCommand()
+		String getNextCommand()
 		{
 			String command = null;
 			if (_currentPosition < _commandHistory.size() - 1) {
@@ -599,7 +608,7 @@ public class SQLConsole extends JFrame
 		/**
 		 * @return command or null if there is no previous command
 		 */
-		public String getPreviousCommand()
+		String getPreviousCommand()
 		{
 			String command = null;
 			if (_commandHistory.size() > 1 && _currentPosition > 0) {
@@ -609,4 +618,6 @@ public class SQLConsole extends JFrame
 			return command;
 		}
 	}
+
+	private static Logger _logger = Logger.getLogger(SQLConsole.class);
 }
