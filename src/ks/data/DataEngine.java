@@ -5,47 +5,30 @@
 
 package ks.data;
 
-import ks.plugins.IDataPlugin;
 
 /**
  *  
  */
 public class DataEngine
 {
-	///////////////////////////////////////
-	// associations
-	/**
-	 *  
-	 */
-	public IDataPlugin iDataPlugin;
+	
+	private AttributeManager _attributeManager;
 
-	/**
-	 *  
-	 */
-	public AttributeManager attributeManager;
+	
+	private  DataSetManager _dataSetManager;
 
-	/**
-	 *  
-	 */
-	public DataSetManager dataSetManager;
+	
+	private  RuleSetManager _ruleSetManager;
 
-	/**
-	 *  
-	 */
-	public RuleSetManager ruleSetManager;
-
-	///////////////////////////////////////
-	// operations
-	/**
-	 * Does ...
-	 * 
-	 * @return
-	 */
+	public DataEngine() {
+		_dataSetManager = new DataSetManager();
+	}
+	
 	public DataSetManager getTrainingDataSetManager()
 	{
-		// your code here
-		return null;
-	} // end getTrainingDataSetManager
+		
+		return _dataSetManager;
+	} 
 
 	/**
 	 * Does ...
@@ -54,8 +37,7 @@ public class DataEngine
 	 */
 	public DataSetManager getTestingDataSetManager()
 	{
-		// your code here
-		return null;
+		return _dataSetManager;
 	} // end getTestingDataSetManager
 
 	/**
