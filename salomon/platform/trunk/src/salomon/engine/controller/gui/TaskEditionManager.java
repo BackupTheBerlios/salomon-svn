@@ -389,8 +389,7 @@ public final class TaskEditionManager
 		if (prefDim.width > maxDim.width) {
 			prefDim.width = maxDim.width;
 		}
-		comp.setMaximumSize(prefDim);
-		comp.setPreferredSize(prefDim);
+        comp.setSize(prefDim);
 		JOptionPane.showMessageDialog(
 				_positionComponent,
 				comp,

@@ -50,6 +50,9 @@
 		
 	</target>
 
+	<target name="init">
+		<mkdir dir="${bin_dir}"/>
+	</target>
 
 	<target name="build_salomon_jar" depends="build_rmi_stubs">
 		<jar destfile="salomon.jar"	basedir="${bin_dir}"   			
@@ -131,14 +134,14 @@
 	
 	
 	<target name="build_rmi_stubs" >
-		<rmic classname="salomon.core.remote.CentralController" base="${bin_dir}"/>
-		<rmic classname="salomon.core.remote.RemoteController" base="${bin_dir}"/>
-		<rmic classname="salomon.core.remote.RemoteManagerEngine" base="${bin_dir}"/>
-		<rmic classname="salomon.core.remote.RemotePluginManager" base="${bin_dir}"/>
-		<rmic classname="salomon.core.remote.RemoteProjectManager" base="${bin_dir}"/>
-		<rmic classname="salomon.core.remote.RemoteTaskManager" base="${bin_dir}"/>
-		<rmic classname="salomon.core.remote.RemoteTask" base="${bin_dir}"/>
-		<rmic classname="salomon.core.remote.RemoteProject" base="${bin_dir}"/>
+		<rmic classname="salomon.engine.platform.remote.CentralController" base="${bin_dir}"/>
+		<rmic classname="salomon.engine.platform.remote.RemoteController" base="${bin_dir}"/>
+		<rmic classname="salomon.engine.platform.remote.RemoteManagerEngine" base="${bin_dir}"/>
+		<rmic classname="salomon.engine.platform.remote.RemotePluginManager" base="${bin_dir}"/>
+		<rmic classname="salomon.engine.platform.remote.RemoteProjectManager" base="${bin_dir}"/>
+		<rmic classname="salomon.engine.platform.remote.RemoteTaskManager" base="${bin_dir}"/>
+		<rmic classname="salomon.engine.platform.remote.RemoteTask" base="${bin_dir}"/>
+		<rmic classname="salomon.engine.platform.remote.RemoteProject" base="${bin_dir}"/>
 	</target>
 
 	<target name="all" depends="copy_salomon, copy_plugins, 
