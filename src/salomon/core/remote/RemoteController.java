@@ -4,6 +4,9 @@ package salomon.core.remote;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
+import org.apache.log4j.Logger;
+
+import salomon.Starter;
 import salomon.core.IManagerEngine;
 
 /**
@@ -62,7 +65,16 @@ public final class RemoteController extends UnicastRemoteObject
 	 */
 	public String getName() throws RemoteException
 	{
-
 		return _name;
 	}
+
+	/* (non-Javadoc)
+	 * @see salomon.core.remote.IRemoteController#exit(int)
+	 */
+	public void exit() throws RemoteException
+	{
+		_logger.debug("RemoteController.exit()");
+		Starter.exit();
+	}	
+    private static Logger _logger = Logger.getLogger(RemoteController.class);
 }

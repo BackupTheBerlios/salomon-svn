@@ -14,6 +14,7 @@ import javax.swing.JToolBar;
 
 import org.apache.log4j.Logger;
 
+import salomon.Starter;
 import salomon.core.Config;
 import salomon.core.Messages;
 
@@ -95,9 +96,7 @@ public final class ControllerFrame extends JFrame
 
 	private void exit()
 	{
-		//TODO: change it
-		_logger.fatal("###  Application exited  ###"); //$NON-NLS-1$
-		System.exit(0);
+        Starter.exit();
 	}
 
 	/**

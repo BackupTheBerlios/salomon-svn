@@ -58,10 +58,22 @@ public final class RemoteControllerPanel
 	}
 
 	public void removeController(RemoteControllerGUI controller)
-	{
-		_controllerListModel.removeElement(controller);
+	{   
+        _logger.debug("RemoteControllerPanel.removeController()");
+        controller.exit(); 
+		_controllerListModel.removeElement(controller);        
 		_logger.debug("controller removed.");
 	}
+    
+    public void removeAllControllers()
+    {
+        _logger.debug("Removing controllers: " + _controllerListModel.getSize());        
+        // slow but simple ;-)        
+        Object[] controllers = _controllerListModel.toArray();
+        for(int i = 0; i < controllers.length; i++) {        	 
+            removeController((RemoteControllerGUI) controllers[i]);
+        }
+    }
 
 	/**
 	 * @param parent

@@ -115,7 +115,17 @@ public final class RemoteControllerGUI
 		}
 		return name;
 	}
-
+    
+    public void exit()
+    {
+        _logger.debug("RemoteController.exit()");
+    	try {
+			_remoteController.exit();
+		} catch (RemoteException e) {
+			_logger.fatal(e.getLocalizedMessage());
+		}
+    }
+	
 	private static Logger _logger = Logger.getLogger(RemoteControllerGUI.class);
 
 }

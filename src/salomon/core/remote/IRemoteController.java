@@ -18,4 +18,6 @@ public interface IRemoteController extends Remote
 	String getName() throws RemoteException;
 
 	String getDescription() throws RemoteException;
+       
+    void exit() throws RemoteException;
 }

@@ -67,7 +67,8 @@ public final class MasterController extends UnicastRemoteObject
 			throws RemoteException
 	{
 		_remoteControllers.remove(remoteController);
-		fireControllerRemoved(remoteController);
+        //commented to avoid loop while finishing client application
+		//fireControllerRemoved(remoteController);
 	}
 
 	private void fireControllerAdded(IRemoteController controller)
