@@ -28,6 +28,7 @@ import salomon.engine.platform.IManagerEngine;
  */
 public final class LibraryController implements IController
 {
+    private IManagerEngine _managerEngine;
 
 	/**
 	 * @see salomon.engine.controller.IController#exit()
@@ -37,15 +38,10 @@ public final class LibraryController implements IController
 		// empty body
 	}
 
-	/**
-	 * Temp method!
-	 * runs the task result
-	 * @return String with the 
-	 */
-	public String runTask()
-	{
-		return "";
-	}
+    public IManagerEngine getManagerEngine()
+    {
+    	return _managerEngine;
+    }
 
 	/**
 	 * @see salomon.engine.controller.IController#start(salomon.engine.platform.IManagerEngine)

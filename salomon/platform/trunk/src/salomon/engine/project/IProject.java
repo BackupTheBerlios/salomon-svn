@@ -65,6 +65,7 @@ public interface IProject
 	void setName(String name) throws PlatformException;
 
 	/**
+     * @deprecated id should be created by ProjectManager when project is being created.
 	 * @param projectId The projectID to set.
 	 */
 	void setProjectID(int projectId) throws PlatformException;

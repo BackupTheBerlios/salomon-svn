@@ -86,8 +86,9 @@ Installation file for salomon project
 	    <file src="../lib/mini-j2ee.jar" targetdir="$INSTALL_PATH/lib"/>
 
             <!-- plugins -->
-	    <file src="../plugins/AveragePrice.jar" targetdir="$INSTALL_PATH/plugins"/>
-	    <file src="../plugins/SimpleSQLConsole.jar" targetdir="$INSTALL_PATH/plugins"/>
+	    <!--<file src="../plugins/AveragePrice.jar" targetdir="$INSTALL_PATH/plugins"/>
+	    <file src="../plugins/SimpleSQLConsole.jar" targetdir="$INSTALL_PATH/plugins"/> src-->
+	<file src="../plugins/datasetunion.jar" targetdir="$INSTALL_PATH/plugins"/>
 	    
 	    
 	    <file src="../salomon.jar" targetdir="$INSTALL_PATH"/>
