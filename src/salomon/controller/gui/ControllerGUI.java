@@ -26,7 +26,9 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.JToolBar;
 import javax.swing.JWindow;
 import javax.swing.SwingUtilities;
@@ -34,6 +36,9 @@ import javax.swing.border.TitledBorder;
 import org.apache.log4j.Logger;
 import salomon.core.Config;
 import salomon.core.Messages;
+import salomon.core.Project;
+import salomon.core.event.ProjectEvent;
+import salomon.core.event.ProjectListener;
 import salomon.core.event.TaskEvent;
 import salomon.core.event.TaskListener;
 
@@ -77,6 +82,10 @@ public class ControllerGUI extends JFrame
 
 	private JPanel _pnlTasks = null;
 
+	private JPanel _pnlProjectProperties = null;
+
+	private List _projectListeners = null;
+
 	private String _resourcesDir = null;
 
 	private JWindow _splashScreen = null;
@@ -91,6 +100,10 @@ public class ControllerGUI extends JFrame
 
 	private JToolBar _toolBar = null;
 
+	private JTextField _txtProjectName = null;
+
+	private JTextField _txtProjectInfo = null;
+
 	public ControllerGUI()
 	{
 		super();
@@ -104,9 +117,11 @@ public class ControllerGUI extends JFrame
 			}
 		});
 		_taskEditionManager = new TaskEditionManager();
+		// event handlers
 		_taskListeners = new LinkedList();
+		_projectListeners = new LinkedList();
 		_guiButtons = new GUIButtons();
-		_guiMenu = new GUIMenu();
+		_guiMenu = new GUIMenu(this);
 		initialize();
 		_taskEditionManager.setPositionComponent(_contentPane);
 		_guiMenu.setPositionComponent(_contentPane);
@@ -139,14 +154,52 @@ public class ControllerGUI extends JFrame
 		});
 	}
 
-	public static void main(String[] args)
+	public void addProjectListener(ProjectListener listener)
 	{
-		new ControllerGUI().setVisible(true);
+		_projectListeners.add(listener);
 	}
 
 	public void addTaskListener(TaskListener listener)
 	{
 		_taskListeners.add(listener);
+	}
+
+	/**
+	 * Called after project save/load/creation
+	 * 
+	 * @param project
+	 */
+	public void refreshGui(Project project)
+	{
+		_taskEditionManager.reloadTasks(project.getManagerEngine()
+				.getTasksManager().getTasks());
+	}
+
+	/**
+	 * Shows dialog which enables to initialize project settings.
+	 * 
+	 * @param project
+	 */
+	public void setProjectProperties(Project project)
+	{
+		if (_pnlProjectProperties == null) {
+			_pnlProjectProperties = new JPanel();
+			_pnlProjectProperties.setLayout(new GridLayout(0, 2));
+			_txtProjectName = new JTextField();
+			_txtProjectInfo = new JTextField();
+			_pnlProjectProperties.add(new JLabel("Project name"));
+			_pnlProjectProperties.add(_txtProjectName);
+			_pnlProjectProperties.add(new JLabel("Project info"));
+			_pnlProjectProperties.add(_txtProjectInfo);
+		}
+		String name = project.getName();
+		String info = project.getInfo();
+		_txtProjectName.setText(name == null ? "" : name);
+		_txtProjectName.setText(info == null ? "" : info);
+		JOptionPane.showMessageDialog(_contentPane, _pnlProjectProperties,
+				"Enter project properties", JOptionPane.INFORMATION_MESSAGE);
+		project.setName(_txtProjectName.getText());
+		project.setInfo(_txtProjectInfo.getText());
 	}
 
 	/**
@@ -174,9 +227,41 @@ public class ControllerGUI extends JFrame
 		return _menuBar;
 	}
 
+	public void removeProjectListener(ProjectListener listener)
+	{
+		_projectListeners.remove(listener);
+	}
+
 	public void removeTaskListener(TaskListener listener)
 	{
 		_taskListeners.remove(listener);
+	}
+
+	public void showErrorMessage(String msg)
+	{
+		JOptionPane.showMessageDialog(_contentPane, msg, Messages
+				.getString("TIT_ERROR"), JOptionPane.ERROR_MESSAGE);
+	}
+
+	public void showInfoMessage(String msg)
+	{
+		JOptionPane.showMessageDialog(_contentPane, msg, Messages
+				.getString("TIT_INFO"), JOptionPane.INFORMATION_MESSAGE);
+	}
+
+	public boolean showQuestionMessage(String title, String msg)
+	{
+		int retVal = JOptionPane.showConfirmDialog(_contentPane, msg, title,
+				JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+		return (retVal == JOptionPane.YES_OPTION);
+	}
+
+	public boolean showWarningMessage(String msg)
+	{
+		int retVal = JOptionPane.showConfirmDialog(_contentPane, msg, Messages
+				.getString("TIT_WARN"), JOptionPane.YES_NO_OPTION,
+				JOptionPane.WARNING_MESSAGE);
+		return (retVal == JOptionPane.YES_OPTION);
 	}
 
 	/**
@@ -226,11 +311,35 @@ public class ControllerGUI extends JFrame
 		}
 	}
 
-	private void fireRunTasks(TaskEvent event)
+	private void fireLoadProject(ProjectEvent event)
+	{
+		for (Iterator iter = _projectListeners.iterator(); iter.hasNext();) {
+			ProjectListener listener = (ProjectListener) iter.next();
+			listener.loadProject(event);
+		}
+	}
+
+	void fireNewProject(ProjectEvent event)
+	{
+		for (Iterator iter = _projectListeners.iterator(); iter.hasNext();) {
+			ProjectListener listener = (ProjectListener) iter.next();
+			listener.newProject(event);
+		}
+	}
+
+	void fireRunTasks(TaskEvent event)
 	{
 		for (Iterator iter = _taskListeners.iterator(); iter.hasNext();) {
 			TaskListener listener = (TaskListener) iter.next();
 			listener.runTasks(event);
+		}
+	}
+
+	void fireSaveProject(ProjectEvent event)
+	{
+		for (Iterator iter = _projectListeners.iterator(); iter.hasNext();) {
+			ProjectListener listener = (ProjectListener) iter.next();
+			listener.saveProject(event);
 		}
 	}
 
