@@ -9,8 +9,7 @@ import java.io.Serializable;
 
 /**
  * Represents plugin settings.
- * 
- * @author nico
+ *
  */
 public interface ISettings extends Serializable
 {

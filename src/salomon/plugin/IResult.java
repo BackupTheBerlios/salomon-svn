@@ -7,8 +7,7 @@ package salomon.plugin;
 
 /**
  * Represents result of plugin execution.
- * 
- * @author nico 
+ *
  */
 public interface IResult
 {

@@ -10,8 +10,7 @@ import java.awt.Component;
 /**
  * Interface represents object, which is responsible for showing plugin
  * settings.
- * 
- * @author nico 
+ *
  */
 public interface ISettingComponent
 {

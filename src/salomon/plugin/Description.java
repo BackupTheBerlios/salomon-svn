@@ -15,8 +15,7 @@ import salomon.core.data.common.DBValue;
 
 /**
  * Class represents plugin description.
- * 
- * @author nico
+ *
  */
 public class Description implements Serializable
 {

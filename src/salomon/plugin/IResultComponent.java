@@ -10,8 +10,7 @@ import java.awt.Component;
 /**
  * Interface represents object, which is responsible for showing result of
  * plugin execution.
- * 
- * @author nico 
+ *
  */
 public interface IResultComponent
 {

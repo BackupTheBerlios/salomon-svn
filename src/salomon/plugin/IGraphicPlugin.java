@@ -8,8 +8,7 @@ package salomon.plugin;
 /**
  * Interface supplies graphic interface for plugin. It enables configuration and
  * showing result of plugin execution.
- * 
- * @author nico 
+ *
  */
 public interface IGraphicPlugin
 {
