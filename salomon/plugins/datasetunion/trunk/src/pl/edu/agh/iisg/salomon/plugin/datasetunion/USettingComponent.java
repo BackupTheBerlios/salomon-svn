@@ -33,6 +33,7 @@ import salomon.platform.IDataEngine;
 import salomon.platform.data.dataset.IDataSet;
 import salomon.platform.data.dataset.IDataSetManager;
 import salomon.platform.exception.PlatformException;
+import salomon.platform.serialization.IObject;
 
 import salomon.plugin.ISettingComponent;
 import salomon.plugin.ISettings;
@@ -56,11 +57,12 @@ public final class USettingComponent implements ISettingComponent
 	 */
 	public USettingComponent()
 	{
-        // empty body
+		// empty body
 	}
 
 	/**
-	 * @see salomon.plugin.ISettingComponent#getComponent(salomon.plugin.ISettings, salomon.platform.IDataEngine)
+	 * @see salomon.plugin.ISettingComponent#getComponent(salomon.plugin.ISettings,
+	 *      salomon.platform.IDataEngine)
 	 */
 	public Component getComponent(ISettings settings, IDataEngine dataEngine)
 	{
@@ -77,34 +79,35 @@ public final class USettingComponent implements ISettingComponent
 			_settingPanel.add(new JLabel("Result data set"));
 			_settingPanel.add(_txtResultDataSet);
 		}
-		//FIXME
+		// FIXME
 		/*
-		IDataSetManager dataSetManager = dataEngine.getDataSetManager();
-		IDataSet[] dataSets = null;
-
-		try {
-			dataSetManager.getDataSets();
-		} catch (PlatformException e) {
-			// TODO:
-		}
-		*/
-		String[] strDataSets = {"first", "seconf", "third"};
+		 * IDataSetManager dataSetManager = dataEngine.getDataSetManager();
+		 * IDataSet[] dataSets = null;
+		 * 
+		 * try { dataSetManager.getDataSets(); } catch (PlatformException e) { //
+		 * TODO: }
+		 */
+		String[] strDataSets = {"first", "second", "third"};
 		_cmbFirstDataSet.removeAllItems();
 		_cmbSecondDataSet.removeAllItems();
-		
-//		for (int i = 0; i < dataSets.length; i++) {
-//			_cmbFirstDataSet.addItem(dataSets[i].getName());
-//			_cmbSecondDataSet.addItem(dataSets[i].getName());
-//		}
-		for(String name : strDataSets) {
-			_cmbFirstDataSet.addItem(strDataSets);
-			_cmbSecondDataSet.addItem(strDataSets);
+
+		// for (int i = 0; i < dataSets.length; i++) {
+		// _cmbFirstDataSet.addItem(dataSets[i].getName());
+		// _cmbSecondDataSet.addItem(dataSets[i].getName());
+		// }
+		for (String name : strDataSets) {
+			_cmbFirstDataSet.addItem(name);
+			_cmbSecondDataSet.addItem(name);
 		}
 
 		USettings uSettings = (USettings) settings;
-		_cmbFirstDataSet.setSelectedItem(((SimpleString)uSettings.getField(USettings.FIRST_DATA_SET)).getValue());
-		_cmbSecondDataSet.setSelectedItem(((SimpleString)uSettings.getField(USettings.SECOND_DATA_SET)).getValue());
-		_txtResultDataSet.setText(((SimpleString)uSettings.getField(USettings.RESULT_DATA_SET)).getValue());
+
+		_cmbFirstDataSet.setSelectedItem(((SimpleString) uSettings
+				.getField(USettings.FIRST_DATA_SET)).getValue());
+		_cmbSecondDataSet.setSelectedItem(((SimpleString) uSettings
+				.getField(USettings.SECOND_DATA_SET)).getValue());
+		_txtResultDataSet.setText(((SimpleString) uSettings
+				.getField(USettings.RESULT_DATA_SET)).getValue());
 
 		return _settingPanel;
 	}
@@ -114,7 +117,11 @@ public final class USettingComponent implements ISettingComponent
 	 */
 	public ISettings getDefaultSettings()
 	{
-		return new USettings();
+		USettings result = new USettings();
+		result.setField(USettings.FIRST_DATA_SET, new SimpleString("first"));
+		result.setField(USettings.SECOND_DATA_SET, new SimpleString("second"));
+		result.setField(USettings.RESULT_DATA_SET, new SimpleString("result"));
+		return result;
 	}
 
 	/**
@@ -122,12 +129,15 @@ public final class USettingComponent implements ISettingComponent
 	 */
 	public ISettings getSettings()
 	{
-        
+
 		USettings uSettings = new USettings();
-		uSettings.setField(USettings.FIRST_DATA_SET, new SimpleString((String) _cmbFirstDataSet.getSelectedItem()));
-        //uSettings.setF
-        uSettings.setField(USettings.SECOND_DATA_SET, new SimpleString((String) _cmbSecondDataSet.getSelectedItem()));
-        uSettings.setField(USettings.RESULT_DATA_SET, new SimpleString(_txtResultDataSet.getText()));
+		uSettings.setField(USettings.FIRST_DATA_SET, new SimpleString(
+				(String) _cmbFirstDataSet.getSelectedItem()));
+		// uSettings.setF
+		uSettings.setField(USettings.SECOND_DATA_SET, new SimpleString(
+				(String) _cmbSecondDataSet.getSelectedItem()));
+		uSettings.setField(USettings.RESULT_DATA_SET, new SimpleString(
+				_txtResultDataSet.getText()));
 		return uSettings;
 	}
 }
