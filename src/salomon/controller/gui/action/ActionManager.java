@@ -13,17 +13,24 @@ import salomon.controller.gui.TaskEditionManager;
  */
 public final class ActionManager
 {
+
+	private AddPluginAction _addPluginAction;
+
 	private NewProjectAction _newProjectAction;
+
+	private OpenProjectAction _openProjectAction;
+
+	private ProjectEditionManager _projectEditionManager;
+
+	private RemovePluginAction _removePluginAction;
 
 	private RunTaskAction _runTaskAction;
 
-	private OpenProjectAction _loadProjectAction;
+	private SavePluginAction _savePluginAction;
 
 	private SaveProjectAction _saveProjectAction;
 
 	private TaskEditionManager _taskEditionManager;
-
-	private ProjectEditionManager _projectEditionManager;
 
 	/**
 	 * @param taskEditionManager
@@ -36,15 +43,12 @@ public final class ActionManager
 		_projectEditionManager = projectEditionManager;
 	}
 
-	/**
-	 * @return Returns the loadProjectAction.
-	 */
-	public OpenProjectAction getOpenProjectAction()
+	public AddPluginAction getAddPluginAction()
 	{
-		if (_loadProjectAction == null) {
-			_loadProjectAction = new OpenProjectAction(_projectEditionManager);
+		if (_addPluginAction == null) {
+			_addPluginAction = new AddPluginAction(_taskEditionManager);
 		}
-		return _loadProjectAction;
+		return _addPluginAction;
 	}
 
 	/**
@@ -59,6 +63,25 @@ public final class ActionManager
 	}
 
 	/**
+	 * @return Returns the openProjectAction.
+	 */
+	public OpenProjectAction getOpenProjectAction()
+	{
+		if (_openProjectAction == null) {
+			_openProjectAction = new OpenProjectAction(_projectEditionManager);
+		}
+		return _openProjectAction;
+	}
+
+	public RemovePluginAction getRemovePluginAction()
+	{
+		if (_removePluginAction == null) {
+			_removePluginAction = new RemovePluginAction(_taskEditionManager);
+		}
+		return _removePluginAction;
+	}
+
+	/**
 	 * @return Returns the runTaskAction.
 	 */
 	public RunTaskAction getRunTaskAction()
@@ -67,6 +90,14 @@ public final class ActionManager
 			_runTaskAction = new RunTaskAction(_taskEditionManager);
 		}
 		return _runTaskAction;
+	}
+
+	public SavePluginAction getSavePluginAction()
+	{
+		if (_savePluginAction == null) {
+			_savePluginAction = new SavePluginAction(_taskEditionManager);
+		}
+		return _savePluginAction;
 	}
 
 	/**

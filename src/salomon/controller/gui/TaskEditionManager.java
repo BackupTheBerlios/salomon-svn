@@ -7,7 +7,6 @@ package salomon.controller.gui;
 
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -20,6 +19,8 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -32,6 +33,7 @@ import javax.swing.JTextField;
 
 import org.apache.log4j.Logger;
 
+import salomon.controller.gui.action.ActionManager;
 import salomon.core.IManagerEngine;
 import salomon.core.Messages;
 import salomon.core.plugin.PluginLoader;
@@ -49,7 +51,9 @@ import salomon.plugin.ISettings;
 public final class TaskEditionManager
 {
 
-	private JComponent _addPluginPanel;
+	private ActionManager _actionManager;
+
+	private JComponent _editPluginPanel;
 
 	private IManagerEngine _managerEngine;
 
@@ -90,14 +94,37 @@ public final class TaskEditionManager
 		_popupListener = new PopupListener();
 		_taskList.addMouseListener(_popupListener);
 		_pluginList.addMouseListener(_popupListener);
-		//TODO: getting plugin from Engine?
-		// commented to avoid loading plugin list from server
-		//Collection urls =
-		// _managerEngine.getPluginManager().getAvailablePlugins();
-		//for (Iterator iter = urls.iterator(); iter.hasNext();) {
-		//	URL url = (URL) iter.next();
-		//	_pluginListModel.addElement(new LocalPlugin(url));
-		//}
+	}
+
+	public void addPlugin()
+	{
+        //TODO: change it
+        getEditPluginPanel();
+		_txtPluginName.setText("");
+		_txtPluginLocation.setText("");
+		_txtPluginInfo.setText("");
+		int retVal = JOptionPane.showConfirmDialog(_parent,
+				getEditPluginPanel(), Messages.getString("MNU_ADD_PLUGIN"),
+				JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+		if (retVal == JOptionPane.OK_OPTION) {
+			URL url = null;
+			try {
+				url = new URL(_txtPluginLocation.getText());
+			} catch (MalformedURLException e) {
+				_logger.fatal("", e);
+				Utils.showErrorMessage(Messages.getString("ERR_CANNOT_SAVE_PLUGIN"));
+				return;
+			}
+			Description desc = new Description();
+			desc.setName(_txtPluginName.getText());
+			desc.setLocation(url);
+			desc.setInfo(_txtPluginInfo.getText());
+			if (_managerEngine.getPluginManager().savePlugin(desc)) {
+				refresh();
+			} else {
+				Utils.showErrorMessage(Messages.getString("ERR_CANNOT_SAVE_PLUGIN"));
+			}
+		}
 	}
 
 	/**
@@ -201,6 +228,19 @@ public final class TaskEditionManager
 
 	}
 
+	public void removePlugin()
+	{
+		if (Utils.showQuestionMessage(Messages.getString("TIT_WARN"),
+				Messages.getString("TXT_REMOVE_PLUGIN_QUESTION"))) {
+			Description desc = ((LocalPlugin) _pluginListModel.get(_selectedItem)).getPluginDescription();
+			if (_managerEngine.getPluginManager().removePlugin(desc)) {
+				_pluginListModel.remove(_selectedItem);
+			} else {
+				Utils.showErrorMessage(Messages.getString("ERR_CANNOT_SAVE_PLUGIN"));
+			}
+		}
+	}
+
 	/**
 	 * Removes plugin from list of tasks and adds it to available plugins list
 	 * (?)
@@ -222,6 +262,42 @@ public final class TaskEditionManager
 		_managerEngine.getTasksManager().start();
 	}
 
+	public void savePlugin()
+	{
+		Description desc = ((LocalPlugin) _pluginListModel.get(_selectedItem)).getPluginDescription();
+		// to initialize components
+		getEditPluginPanel();
+		_txtPluginName.setText(desc.getName());
+		_txtPluginLocation.setText(desc.getLocation().toString());
+		_txtPluginInfo.setText(desc.getInfo());
+		int retVal = JOptionPane.showConfirmDialog(_parent,
+				getEditPluginPanel(), Messages.getString("MNU_EDIT_PLUGIN"),
+				JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+		if (retVal == JOptionPane.OK_OPTION) {
+			URL url = null;
+			try {
+				url = new URL(_txtPluginLocation.getText());
+			} catch (MalformedURLException e) {
+				_logger.fatal("", e);
+				Utils.showErrorMessage(Messages.getString("ERR_CANNOT_SAVE_PLUGIN"));
+				return;
+			}
+			desc.setName(_txtPluginName.getText());
+			desc.setLocation(url);
+			desc.setInfo(_txtPluginInfo.getText());
+			if (_managerEngine.getPluginManager().savePlugin(desc)) {
+				//refresh();
+			} else {
+				Utils.showErrorMessage(Messages.getString("ERR_CANNOT_SAVE_PLUGIN"));
+			}
+		}
+	}
+
+	public void setActionManager(ActionManager actionManager)
+	{
+		_actionManager = actionManager;
+	}
+
 	/**
 	 * @param parent The parent to set.
 	 */
@@ -230,64 +306,29 @@ public final class TaskEditionManager
 		_parent = parent;
 	}
 
-	private JComponent getAddPluginPanel()
+	private JComponent getEditPluginPanel()
 	{
-		if (_addPluginPanel == null) {
-			_addPluginPanel = new JPanel(new GridLayout(0, 2));
-
-			_addPluginPanel.add(new JLabel(
-					Messages.getString("TXT_PLUGIN_NAME")));
-			_txtPluginName = new JTextField();
-			_addPluginPanel.add(_txtPluginName);
-			_addPluginPanel.add(new JLabel(
-					Messages.getString("TXT_PLUGIN_LOCATION")));
-			_txtPluginLocation = new JTextField();
-			_addPluginPanel.add(_txtPluginLocation);
-			_addPluginPanel.add(new JLabel(
-					Messages.getString("TXT_PLUGIN_INFO")));
-			_txtPluginInfo = new JTextField();
-			_addPluginPanel.add(_txtPluginInfo);
+		if (_editPluginPanel == null) {
+			_editPluginPanel = new PluginEditPanel();
 		}
-		return _addPluginPanel;
+		return _editPluginPanel;
 	}
 
 	private JPopupMenu getPluginPopup()
 	{
 		if (_pluginPopup == null) {
 			_pluginPopup = new JPopupMenu();
-			JMenuItem itmInfo = new JMenuItem(Messages.getString("MNU_INFO")); //$NON-NLS-1$
-			itmInfo.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e)
-				{
-					showPluginInfo();
-				}
-			});
+
 			JMenuItem itmAdd = new JMenuItem(
-					Messages.getString("MNU_ADD_PLUGIN")); //$NON-NLS-1$
-			itmAdd.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e)
-				{
-					showAddPlugin();
-				}
+					_actionManager.getAddPluginAction());
+			itmAdd.setText(Messages.getString("MNU_ADD_PLUGIN")); //$NON-NLS-1$
 
-			});
 			JMenuItem itmEdit = new JMenuItem(
-					Messages.getString("MNU_EDIT_PLUGIN")); //$NON-NLS-1$
-			itmEdit.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e)
-				{
-					showEditPlugin();
-				}
-
-			});
+					_actionManager.getSavePluginAction()); //$NON-NLS-1$
+			itmEdit.setText(Messages.getString("MNU_EDIT_PLUGIN"));
 			JMenuItem itmRemove = new JMenuItem(
-					Messages.getString("MNU_REMOVE_PLUGIN")); //$NON-NLS-1$
-			itmRemove.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e)
-				{
-					showRemovePlugin();
-				}
-			});
+					_actionManager.getRemovePluginAction()); //$NON-NLS-1$
+			itmRemove.setText(Messages.getString("MNU_REMOVE_PLUGIN"));
 			_pluginPopup.add(itmAdd);
 			_pluginPopup.add(itmEdit);
 			_pluginPopup.add(itmRemove);
@@ -329,94 +370,6 @@ public final class TaskEditionManager
 			_taskPopup.add(itmResult);
 		}
 		return _taskPopup;
-	}
-
-	private void showAddPlugin()
-	{
-		_txtPluginName.setText("");
-		_txtPluginLocation.setText("");
-		_txtPluginInfo.setText("");
-		int retVal = JOptionPane.showConfirmDialog(_parent,
-				getAddPluginPanel(), Messages.getString("MNU_ADD_PLUGIN"),
-				JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
-		if (retVal == JOptionPane.OK_OPTION) {
-			URL url = null;
-			try {
-				url = new URL(_txtPluginLocation.getText());
-			} catch (MalformedURLException e) {
-				_logger.fatal("", e);
-				Utils.showErrorMessage(Messages.getString("ERR_CANNOT_SAVE_PLUGIN"));
-				return;
-			}
-			Description desc = new Description();
-			desc.setName(_txtPluginName.getText());
-			desc.setLocation(url);
-			desc.setInfo(_txtPluginInfo.getText());
-			if (_managerEngine.getPluginManager().savePlugin(desc)) {
-				refresh();
-			} else {
-				Utils.showErrorMessage(Messages.getString("ERR_CANNOT_SAVE_PLUGIN"));
-			}
-		}
-	}
-
-	private void showEditPlugin()
-	{
-		Description desc = ((LocalPlugin) _pluginListModel.get(_selectedItem)).getPluginDescription();
-		// to initialize components
-		getAddPluginPanel();
-		_txtPluginName.setText(desc.getName());
-		_txtPluginLocation.setText(desc.getLocation().toString());
-		_txtPluginInfo.setText(desc.getInfo());
-		int retVal = JOptionPane.showConfirmDialog(_parent,
-				getAddPluginPanel(), Messages.getString("MNU_EDIT_PLUGIN"),
-				JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
-		if (retVal == JOptionPane.OK_OPTION) {
-			URL url = null;
-			try {
-				url = new URL(_txtPluginLocation.getText());
-			} catch (MalformedURLException e) {
-				_logger.fatal("", e);
-				Utils.showErrorMessage(Messages.getString("ERR_CANNOT_SAVE_PLUGIN"));
-				return;
-			}
-			desc.setName(_txtPluginName.getText());
-			desc.setLocation(url);
-			desc.setInfo(_txtPluginInfo.getText());
-			if (_managerEngine.getPluginManager().savePlugin(desc)) {
-				//refresh();
-			} else {
-				Utils.showErrorMessage(Messages.getString("ERR_CANNOT_SAVE_PLUGIN"));
-			}
-		}
-	}
-
-	//TODO: remove it, its unnessesry since we have full plugin descripton
-	private void showPluginInfo()
-	{
-		LocalPlugin plugin = (LocalPlugin) _pluginListModel.get(_selectedItem);
-		String info;
-		_logger.debug("plugin: " + plugin); //$NON-NLS-1$
-		try {
-			info = plugin.getPlugin().getDescription().getInfo();
-			JOptionPane.showMessageDialog(_positionComponent, info);
-		} catch (Exception e) {
-			_logger.fatal("", e); //$NON-NLS-1$
-			Utils.showErrorMessage(Messages.getString("ERR_CANNOT_LOAD_PLUGIN")); //$NON-NLS-1$
-		}
-	}
-
-	private void showRemovePlugin()
-	{
-		if (Utils.showQuestionMessage(Messages.getString("TIT_WARN"),
-				Messages.getString("TXT_REMOVE_PLUGIN_QUESTION"))) {
-			Description desc = ((LocalPlugin) _pluginListModel.get(_selectedItem)).getPluginDescription();
-			if (_managerEngine.getPluginManager().removePlugin(desc)) {
-				_pluginListModel.remove(_selectedItem);
-			} else {
-				Utils.showErrorMessage(Messages.getString("ERR_CANNOT_SAVE_PLUGIN"));
-			}
-		}
 	}
 
 	private void showResultPanel()
@@ -467,6 +420,7 @@ public final class TaskEditionManager
 	{
 
 		Description _pluginDescription;
+
 		private IPlugin _plugin;
 
 		public LocalPlugin(Description pluginDescription)
@@ -501,6 +455,45 @@ public final class TaskEditionManager
 			int index = path.lastIndexOf('/');
 
 			return path.substring(index + 1);
+		}
+	}
+
+	private class PluginEditPanel extends JPanel
+	{
+
+		private Dimension _labelDim = new Dimension(100, 20);
+
+		private Dimension _textDim = new Dimension(250, 20);
+
+		public PluginEditPanel()
+		{
+			_txtPluginName = new JTextField();
+			_txtPluginLocation = new JTextField();
+			_txtPluginInfo = new JTextField();
+			this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+			this.add(createLabeledText(Messages.getString("TXT_PLUGIN_NAME"),
+					_txtPluginName));
+			this.add(createLabeledText(
+					Messages.getString("TXT_PLUGIN_LOCATION"),
+					_txtPluginLocation));
+			this.add(createLabeledText(Messages.getString("TXT_PLUGIN_INFO"),
+					_txtPluginInfo));
+		}
+
+		private Box createLabeledText(String labelText, JTextField textField)
+		{
+			Box box = Box.createHorizontalBox();
+			JLabel label = new JLabel(labelText);
+			label.setPreferredSize(_labelDim);
+            label.setMinimumSize(_labelDim);
+            label.setMaximumSize(_labelDim);
+			textField.setPreferredSize(_textDim);
+            textField.setMinimumSize(_textDim);
+            textField.setMaximumSize(_textDim);
+			box.add(label);
+			box.add(textField);
+
+			return box;
 		}
 	}
 
