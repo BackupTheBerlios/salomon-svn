@@ -28,6 +28,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
 
+import org.apache.log4j.Logger;
+
 import salomon.engine.database.DBManager;
 import salomon.engine.database.IDBSupporting;
 import salomon.engine.database.queries.SQLDelete;
@@ -35,8 +37,7 @@ import salomon.engine.database.queries.SQLUpdate;
 
 import salomon.util.serialization.SimpleStruct;
 
-import salomon.platform.exception.PlatformException;
-import salomon.platform.serialization.IStruct;
+import salomon.platform.serialization.IObject;
 
 import salomon.plugin.IPlugin;
 import salomon.plugin.IResult;
@@ -167,8 +168,14 @@ public final class Task implements ITask, IDBSupporting
 		_info = resultSet.getString("task_info");
 		// setting has to be set
 		String settings = resultSet.getString("plugin_settings");
+		if (_plugin != null) {
+			LOGGER.debug("loading settings...");
+		
 		ByteArrayInputStream bis = new ByteArrayInputStream(settings.getBytes());
-		_settings = (ISettings) XMLSerializer.deserialize(bis);
+		IObject object = XMLSerializer.deserialize(bis);
+		_settings = _plugin.getSettingComponent().getDefaultSettings();
+		_settings.init(object);
+		} 
 		// TODO: support result loading?
 		_status = resultSet.getString("status");
 	}
@@ -257,7 +264,6 @@ public final class Task implements ITask, IDBSupporting
 	{
 		_settings = settings;
 	}
-	
 
 	/**
 	 * @param status The status to set.
@@ -296,4 +302,6 @@ public final class Task implements ITask, IDBSupporting
 	public static final String TABLE_NAME = "tasks";
 
 	private static final String GEN_NAME = "gen_task_id";
+	
+	private static final Logger LOGGER = Logger.getLogger(Task.class);
 } // end Task
