@@ -29,8 +29,9 @@ public final class TaskManagerProxy implements ITaskManager
 	private IRemoteTaskManager _remoteTaskManager;
 
 	/**
-	 *  
-	 */
+     * @pre $remoteTaskManager != null
+     * @post $none
+     */
 	public TaskManagerProxy(IRemoteTaskManager remoteTaskManager)
 	{
 		_remoteTaskManager = remoteTaskManager;
@@ -129,5 +130,5 @@ public final class TaskManagerProxy implements ITaskManager
 		return task;
 	}
 
-	private static Logger _logger = Logger.getLogger(TaskManagerProxy.class);
+	private static final Logger _logger = Logger.getLogger(TaskManagerProxy.class);
 }
