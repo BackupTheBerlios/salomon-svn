@@ -1,15 +1,4 @@
-\section{Architektura}
-
-\subsection{Koncepcja systemu}
-
-Bardzo wa¿nym mechanizmem Salomona jest mo¿liwoœæ tworzenia powi¹zañ miêdzy poszczególnymi zadaniami. Wynik jednego zadania mo¿e pos³u¿yæ jako wejœcie nastêpnego. Salomon w tym celu dostarcza œrodowisko. Wtyczka w trakcie wykonywania zadania oprócz dostêpu  do manad¿erów posiada równie¿ dostêp do œrodowiska, z którego mo¿e pobraæ wartoœci zmiennych œrodowiskowych. Dane œrodowisko tworzone jest na pocz¹tku wykonania listy zadañ i przekazywane jest kolejno do nastêpnego zadania. Wtyczka w trakcie pracy mo¿e modyfikowaæ œrodowisko poprzez dodawanie, usuwanie oraz edycjê poszczególnych zmiennych. W ten sposób poszczególne zadania mog¹ miêdzy sob¹ przekazywaæ informacje. Zmienne œrodowiskowe, podobnie jak ustawienia i rezultaty zadañ, s¹ persystentne, a co za tym idzie potrzebny jest mechanizm serializacji i deserializacji.
-
-W obecnej wersji mechanizm ten jest bardzo ubogi  - pozwala on na przekazywanie wy³¹cznie danych tekstowych. Wraz z pojawieniem siê kolejnej wersji, zmienne œrodowiskowe wykorzystywaæ bêd¹ nowy mechanizm serializacji. Mo¿liwoœæ tworzenia zmiennych œrodowiskowych przez wtyczki mo¿e rodziæ wiele problemów z zapewnieniem kompatybilnoœci miêdzy ró¿nymi wersjami wtyczek, komunikuj¹cych siê ze sob¹, dlatego te¿ aby unikn¹æ takich problemów, ka¿da wtyczka zmuszona bêdzie dostarczyæ opis zmiennych, które mo¿e tworzyæ.
-
-W kolejnej wersji Salomona dodane zostan¹ klasy odpowiedzialne za przechowywanie danych. Klasy te bêd¹ odpowiadaæ poszczególnym typom prostym oraz strukturze (struktura bêdzie mog³a zawieraæ inne struktury oraz typy proste). Za pomoc¹ takich elementów, programista bêdzie móg³ stworzyæ hierarchiczne struktury danych. Wprowadzenie takiego mechanizmu podyktowane jest potrzeb¹ ukrycia przed programist¹ sposobu zapisu danych w bazie lub w pliku. W obecnej wersji Salomona, twórca wtyczki musi dostarczyæ mechanizm serializacji oraz deserializacji ustawieñ i rezultatów zadañ do napisu – taki mechanizm niesie za sob¹ niebezpieczeñstwo niepoprawnoœci oraz nieefektywnoœci implementacji. Dostarczenie spójnego modelu seralizacji danych pozwala na niewidoczny dla wtyczek sposób podmiany implementacji na bardziej efektywn¹ itp. Mechanizm ten mo¿e okazaæ siê równie¿ po¿yteczny po dodaniu do Salomona mo¿liwoœci definiowania zadañ w pliku (np. XML). Seralizacja danych mo¿e odbywaæ siê do wielu formatów np. XML, CSV, tabel w bazie danych itp. 
-
-\newpage
-\subsection{Struktura systemu}
+\section{Struktura systemu}
 
 System zosta³ podzielony na 3 g³ówne czêœci: platformê, kontrolery
 i~pluginy.
@@ -21,7 +10,7 @@ i~pluginy.
 	\label{fig:core}
 \end{figure}
 
-\subsubsection{Platforma}
+\subsection{Platforma}
 
 Dostarcza podstawowej funkcjonalnoœci  umo¿liwiaj¹cej pracê ca³ego
 systemu,  ³aduje odpowiedni kontroler, wczytuje pluginy, uruchamia
@@ -89,7 +78,7 @@ Zarz¹dza pluginami. Pozwala na utworzenie zapisanie informacji o nowym pluginie 
 
 Zarz¹dza zadaniami. 
 
-\subsubsection{Kontrolery}
+\subsection{Kontrolery}
 Kontrolery odpowiadaj¹ za interakcjê
 systemu z otoczeniem. W zale¿noœci od konfiguracji systemu przy
 starcie uruchamiany jest jeden z kontrolerów. Kontrolery operuj¹
@@ -122,7 +111,7 @@ nim odbywa siê za pomoc¹ klasy \emph{MasterController}.
 
 \input{winsalomon}
 
-\subsubsection{Pluginy}
+\subsection{Pluginy}
 G³ówna funkcjonalnoœæ zosta³a  przeniesiona
 do pluginów, zadaniem systemu jest tylko zarz¹dzanie ich
 wykonaniem. Dziêki takiemu podejœciu system jest ³atwo skalowalny

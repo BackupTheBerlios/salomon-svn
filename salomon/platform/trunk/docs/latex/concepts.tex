@@ -1,0 +1,32 @@
+\section{Koncepcja systemu}
+
+\subsection{Ogólne za³o¿enia}
+
+Bardzo wa¿nym mechanizmem Salomona jest mo¿liwoœæ tworzenia powi¹zañ miêdzy poszczególnymi zadaniami. Wynik jednego zadania mo¿e pos³u¿yæ jako wejœcie nastêpnego. Salomon w tym celu dostarcza œrodowisko. Wtyczka w trakcie wykonywania zadania oprócz dostêpu  do manad¿erów posiada równie¿ dostêp do œrodowiska, z którego mo¿e pobraæ wartoœci zmiennych œrodowiskowych. Dane œrodowisko tworzone jest na pocz¹tku wykonania listy zadañ i przekazywane jest kolejno do nastêpnego zadania. Wtyczka w trakcie pracy mo¿e modyfikowaæ œrodowisko poprzez dodawanie, usuwanie oraz edycjê poszczególnych zmiennych. W ten sposób poszczególne zadania mog¹ miêdzy sob¹ przekazywaæ informacje. Zmienne œrodowiskowe, podobnie jak ustawienia i rezultaty zadañ, s¹ persystentne, a co za tym idzie potrzebny jest mechanizm serializacji i deserializacji.
+
+W obecnej wersji mechanizm ten jest bardzo ubogi  - pozwala on na przekazywanie wy³¹cznie danych tekstowych. Wraz z pojawieniem siê kolejnej wersji, zmienne œrodowiskowe wykorzystywaæ bêd¹ nowy mechanizm serializacji. Mo¿liwoœæ tworzenia zmiennych œrodowiskowych przez wtyczki mo¿e rodziæ wiele problemów z zapewnieniem kompatybilnoœci miêdzy ró¿nymi wersjami wtyczek, komunikuj¹cych siê ze sob¹, dlatego te¿ aby unikn¹æ takich problemów, ka¿da wtyczka zmuszona bêdzie dostarczyæ opis zmiennych, które mo¿e tworzyæ.
+
+W kolejnej wersji Salomona dodane zostan¹ klasy odpowiedzialne za przechowywanie danych. Klasy te bêd¹ odpowiadaæ poszczególnym typom prostym oraz strukturze (struktura bêdzie mog³a zawieraæ inne struktury oraz typy proste). Za pomoc¹ takich elementów, programista bêdzie móg³ stworzyæ hierarchiczne struktury danych. Wprowadzenie takiego mechanizmu podyktowane jest potrzeb¹ ukrycia przed programist¹ sposobu zapisu danych w bazie lub w pliku. W obecnej wersji Salomona, twórca wtyczki musi dostarczyæ mechanizm serializacji oraz deserializacji ustawieñ i rezultatów zadañ do napisu – taki mechanizm niesie za sob¹ niebezpieczeñstwo niepoprawnoœci oraz nieefektywnoœci implementacji. Dostarczenie spójnego modelu serializacji danych pozwala na niewidoczny dla wtyczek sposób podmiany implementacji na bardziej efektywn¹ itp. Mechanizm ten mo¿e okazaæ siê równie¿ po¿yteczny po dodaniu do Salomona mo¿liwoœci definiowania zadañ w pliku (np. XML). Serializacja danych mo¿e odbywaæ siê do wielu formatów np. XML, CSV, tabel w bazie danych itp.
+
+\subsection{Podstawowe pojêcia}
+
+\paragraph{Kontroler}
+Kontroler to jedna instancja Salomona pracuj¹ca w okreœlonym trybie: lokalnym, jako serwer lub klient. 
+
+\paragraph{Menad¿er} 
+Klasy maj¹ce w nazwie s³owo \emph{Manager} pe³ni¹ szczególn¹ funkcjê - najczêœciej odpowiadaj¹ za zarz¹dzanie innymi klasami, z regu³y tymi, które stanowi¹ resztê nazwy (np. \emph{PluginManger} zarz¹dza pluginami, \emph{ProjectManger} - projektami). G³ównym zadaniem menad¿erów jest odseparowanie wtyczek od operacji bezpoœrednio na danych.
+
+\paragraph{Solution} 
+Terminem tym okreœlamy strukturê grupuj¹c¹ projekty. Dotycz¹ one tej samej bazy z rzeczywistymi danymi.
+
+\paragraph{Projekt}
+W ramach projektów zapisywana jest konfiguracja systemu przed wykonaniem kolejki zadañ. Zapisywana jest lista zadañ do wykonania, ich ustawienia oraz pluginy, które maj¹ byæ u¿yte do ich wykonania.
+
+\paragraph{Plugin (wtyczka)}
+Jest to zewnêtrzny program odpowiedzialny za wykonanie konkretnego zadania. Nie jest integraln¹ czêœci¹ systemu, w razie koniecznoœci jest pobierany z okreœlonej lokalizacji i przekazywane jest mu konkretne zadanie do wykonania.
+
+\paragraph{Œrodowisko}
+Miejsce w którym przechowywane s¹ zmienne œrodowiskowe.
+
+\paragraph{Zmienna œrodowiskowa}
+S³u¿y do przekazywania informacji miêdzy kolejnymi zadaniami.
