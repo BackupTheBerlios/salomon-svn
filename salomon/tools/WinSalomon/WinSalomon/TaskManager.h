@@ -21,8 +21,11 @@
 
 
 #pragma once
+//#include <vector>
+
 #include "winsalomon.h"
 
+#include "Task.h"
 #include "JavaObject.h"
 
 
@@ -43,4 +46,16 @@ public:
 	~TaskManager(void)
 	{
 	}
+
+	DLL_SHARE void addTask(Task* task);
+
+	DLL_SHARE void clearTaskList();
+	
+	DLL_SHARE Task* createTask();
+
+	DLL_SHARE Task* getCurrentTask();
+
+	//DLL_SHARE vector<Task> getTasks();
+
+	DLL_SHARE void start();
 };

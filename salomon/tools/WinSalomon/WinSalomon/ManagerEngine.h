@@ -26,6 +26,7 @@
 
 #include "JavaObject.h"
 #include "SolutionManager.h"
+#include "ProjectManager.h"
 #include "PluginManager.h"
 #include "TaskManager.h"
 
@@ -46,7 +47,7 @@ public:
 	}
 
 	DLL_SHARE SolutionManager* getSolutionManager();
+	DLL_SHARE ProjectManager* getProjectManger();	
+    DLL_SHARE TaskManager* getTaskManager();
 	DLL_SHARE PluginManager* getPluginManager();
-    DLL_SHARE TaskManager* getTasksManager();
-
 };

@@ -23,7 +23,53 @@
 
 const char* ManagerEngine::CLASS_NAME = "salomon/engine/platform/IManagerEngine";
 
-DLL_SHARE TaskManager* ManagerEngine::getTasksManager()
+DLL_SHARE SolutionManager* ManagerEngine::getSolutionManager()
+{
+	std::cout << "Getting SolutionManager...";
+
+	jmethodID getSolutionManagerMethod = this->findMethod("getSolutionManager", "()Lsalomon/engine/solution/ISolutionManager;");
+
+	jobject solutionManager = this->getEnv()->CallObjectMethod(this->getObject(), getSolutionManagerMethod);
+
+	SolutionManager* result = new SolutionManager(getEnv(), solutionManager);
+
+	if (result != 0)
+	{
+		std::cout << "success" << std::endl;
+	}
+	else
+	{
+		std::cout << "failure" << std::endl;
+	}
+
+	return result;
+
+}
+
+DLL_SHARE ProjectManager* ManagerEngine::getProjectManger()
+{
+	std::cout << "Getting ProjecManager...";
+
+	jmethodID getProjectManagerMethod = this->findMethod("getProjectManager", "()Lsalomon/engine/project/IProjectManager;");
+
+	jobject projectManager = this->getEnv()->CallObjectMethod(this->getObject(), getProjectManagerMethod);
+
+	ProjectManager* result = new ProjectManager(getEnv(), projectManager);
+
+	if (result != 0)
+	{
+		std::cout << "success" << std::endl;
+	}
+	else
+	{
+		std::cout << "failure" << std::endl;
+	}
+
+	return result;
+
+}
+
+DLL_SHARE TaskManager* ManagerEngine::getTaskManager()
 {
 	std::cout << "Getting TaskManager...";
 

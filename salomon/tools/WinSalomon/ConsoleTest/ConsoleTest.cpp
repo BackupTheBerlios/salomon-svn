@@ -28,10 +28,31 @@ int main()
 
 	ManagerEngine* managerEngine = libraryController->getManagerEngine();
 
-	if (managerEngine->getTasksManager() != 0)
-	{
-		std::cout << "HURRA!!!" << std::endl;
+	if (managerEngine->getSolutionManager() != 0)
+	{		
 	}
+	
+	TaskManager* taskManager = managerEngine->getTaskManager();
+	if ( taskManager != 0)
+	{		
+		taskManager->start();		
+	}
+
+	Task* task = taskManager->createTask();
+	if ( task != 0)
+	{		
+		std::cout << "Task created" << std::endl;
+	}
+
+	if (managerEngine->getProjectManger() != 0)
+	{
+		
+	}
+
+	//if (managerEngine->getPluginManager() != 0)
+	//{
+	//	std::cout << "HURRA!!!" << std::endl;
+	//}
 
 	return 0;
 }

@@ -24,6 +24,62 @@
 
 const char* TaskManager::CLASS_NAME = "salomon/engine/task/ITaskManager";
 
+DLL_SHARE void TaskManager::addTask(Task* task)
+{
+	std::cout << "addTask...";
+
+	jmethodID addTaskMethod = this->findMethod("addTask", "(Lsalomon/engine/task/ITask;)V");	
+	
+	this->getEnv()->CallVoidMethod(this->getObject(), addTaskMethod, task);	
+}
+
+DLL_SHARE void TaskManager::clearTaskList()
+{
+	std::cout << "Not imlemented yet" << std::endl;
+}
+
+DLL_SHARE Task* TaskManager::createTask()
+{
+	std::cout << "createTask...";
+
+	jmethodID createTaskMethod = this->findMethod("createTask", "()Lsalomon/engine/task/ITask;");	
+	
+	jobject task = this->getEnv()->CallObjectMethod(this->getObject(), createTaskMethod);
+	
+	Task* result = new Task(getEnv(), task);
+
+	if (result != 0)
+	{
+		std::cout << "success" << std::endl;
+	}
+	else
+	{
+		std::cout << "failure" << std::endl;
+	}
+
+	return result;
+}
+
+DLL_SHARE Task* TaskManager::getCurrentTask()
+{
+	std::cout << "Not imlemented yet" << std::endl;
+	return NULL;
+}
+
+//DLL_SHARE vector<Task> TaskManager::getTasks()
+//{
+//	std::cout << "Not imlemented yet" << std::endl;
+//}
+
+DLL_SHARE void TaskManager::start()
+{
+	std::cout << "start..." << std::endl;
+
+	jmethodID startMethod = this->findMethod("start", "()V");	
+	
+	this->getEnv()->CallVoidMethod(this->getObject(), startMethod);	
+}
+
 //TaskManager::TaskManager(void)
 //{
 //}
