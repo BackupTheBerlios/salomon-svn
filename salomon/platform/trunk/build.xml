@@ -132,17 +132,17 @@
 
 
 	<target name="build_rmi_stubs" depends="compile_salomon">
-		<rmic classname="salomon.engine.remote.CentralController" base="${bin_dir}" />
-		<rmic classname="salomon.engine.remote.RemoteController" base="${bin_dir}" />
-		<rmic classname="salomon.engine.remote.RemoteManagerEngine" base="${bin_dir}" />
-		<rmic classname="salomon.engine.remote.plugin.RemotePluginManager" base="${bin_dir}" />
-		<rmic classname="salomon.engine.remote.project.RemoteProjectManager" base="${bin_dir}" />
-		<rmic classname="salomon.engine.remote.project.RemoteProject" base="${bin_dir}" />
-		<rmic classname="salomon.engine.remote.task.RemoteTaskManager" base="${bin_dir}" />
-		<rmic classname="salomon.engine.remote.task.RemoteTask" base="${bin_dir}" />
-		<rmic classname="salomon.engine.remote.task.RemoteTaskRunner" base="${bin_dir}" />
-		<rmic classname="salomon.engine.remote.solution.RemoteSolutionManager" base="${bin_dir}" />
-		<rmic classname="salomon.engine.remote.solution.RemoteSolution" base="${bin_dir}" />
+		<rmic classname="salomon.engine.remote.CentralController" base="${bin_dir}" stubversion="-v1.2"/>
+		<rmic classname="salomon.engine.remote.RemoteController" base="${bin_dir}" stubversion="-v1.2"/>
+		<rmic classname="salomon.engine.remote.RemoteManagerEngine" base="${bin_dir}" stubversion="-v1.2"/>
+		<rmic classname="salomon.engine.remote.plugin.RemotePluginManager" base="${bin_dir}" stubversion="-v1.2"/>
+		<rmic classname="salomon.engine.remote.project.RemoteProjectManager" base="${bin_dir}" stubversion="-v1.2"/>
+		<rmic classname="salomon.engine.remote.project.RemoteProject" base="${bin_dir}" stubversion="-v1.2"/>
+		<rmic classname="salomon.engine.remote.task.RemoteTaskManager" base="${bin_dir}" stubversion="-v1.2"/>
+		<rmic classname="salomon.engine.remote.task.RemoteTask" base="${bin_dir}" stubversion="-v1.2"/>
+		<rmic classname="salomon.engine.remote.task.RemoteTaskRunner" base="${bin_dir}" stubversion="-v1.2"/>
+		<rmic classname="salomon.engine.remote.solution.RemoteSolutionManager" base="${bin_dir}" stubversion="-v1.2"/>
+		<rmic classname="salomon.engine.remote.solution.RemoteSolution" base="${bin_dir}" stubversion="-v1.2"/>
 	</target>
 
 	<target name="all" depends="copy_salomon, copy_plugins, 

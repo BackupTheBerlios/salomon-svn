@@ -21,15 +21,21 @@
 
 package salomon.engine.controller;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.rmi.NotBoundException;
+import java.rmi.RMISecurityManager;
 import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 
 import org.apache.log4j.Logger;
 
 import salomon.engine.Config;
+import salomon.engine.platform.IManagerEngine;
 import salomon.engine.remote.ICentralController;
 import salomon.engine.remote.IRemoteController;
-
-import salomon.engine.platform.IManagerEngine;
+import salomon.engine.remote.RemoteController;
 
 /**
  * Class is a client implementation of IController interface.
@@ -67,35 +73,33 @@ public final class ServantController implements IController
 
 	private void initRMI()
 	{
-        throw new UnsupportedOperationException(
-				"Method initRMI() not implemented yet!");
-//		try {
-//			System.setSecurityManager(new RMISecurityManager());
-//			String hostName = "remote";
-//
-//			try {
-//				hostName = InetAddress.getLocalHost().getHostName();
-//			} catch (UnknownHostException e) {
-//				LOGGER.fatal("", e);
-//			}
-//
-//			_remoteController = new RemoteController(_managerEngine, hostName);
-//			// new project is created at the beggining
-//			//FIXME _remoteController.getManagerEngine().getProjectManager().createProject();
-//			Registry registry = LocateRegistry.getRegistry(_serverHost,
-//					_serverPort);
-//			try {
-//				_masterController = (ICentralController) registry.lookup("CentralController");
-//				_masterController.register(_remoteController);
-//			} catch (NotBoundException e) {
-//				LOGGER.fatal("", e);
-//			}
-//
-//		} catch (RemoteException e) {
-//			LOGGER.fatal("", e);
-//		}
+		// throw new UnsupportedOperationException(
+		// "Method initRMI() not implemented yet!");
+		try {
+			System.setSecurityManager(new RMISecurityManager());
+			_remoteController = new RemoteController(_managerEngine,
+					_serverHost);
+			// new project is created at the beggining
+			// FIXME
+			// _remoteController.getManagerEngine().getProjectManager().createProject();
+			Registry registry = LocateRegistry.getRegistry(_serverHost,
+					_serverPort);
+			LOGGER.debug("Registry at: " + _serverHost + ", on port: "
+					+ _serverPort);
+			try {
+				_masterController = (ICentralController) registry
+						.lookup("CentralController");
+				_masterController.register(_remoteController);
+			} catch (NotBoundException e) {
+				LOGGER.fatal("", e);
+			}
+
+		} catch (RemoteException e) {
+			LOGGER.fatal("", e);
+		}
 	}
 
-	private static final Logger LOGGER = Logger.getLogger(ServantController.class);
-    
+	private static final Logger LOGGER = Logger
+			.getLogger(ServantController.class);
+
 } // end ClientManager
