@@ -29,6 +29,7 @@ import salomon.core.plugin.PluginLoader;
 import salomon.core.plugin.PluginManager;
 import salomon.core.task.Task;
 import salomon.plugin.IPlugin;
+import salomon.plugin.IResult;
 import salomon.plugin.IResultComponent;
 import salomon.plugin.ISettingComponent;
 import salomon.plugin.ISettings;
