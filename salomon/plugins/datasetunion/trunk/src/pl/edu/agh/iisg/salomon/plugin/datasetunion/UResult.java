@@ -21,6 +21,8 @@
 
 package pl.edu.agh.iisg.salomon.plugin.datasetunion;
 
+import org.apache.log4j.Logger;
+
 import salomon.plugin.IResult;
 
 /**
@@ -30,6 +32,8 @@ public class UResult implements IResult
 {
 
 	private boolean _isSuccessfull = false;
+
+	private String _result;
 
 	/**
 	 * @see salomon.plugin.IResult#isSuccessful()
@@ -44,7 +48,7 @@ public class UResult implements IResult
 	 */
 	public void parseResult(String result)
 	{
-
+		_result = result;
 	}
 
 	/**
@@ -52,7 +56,7 @@ public class UResult implements IResult
 	 */
 	public String resultToString()
 	{
-		return "Hello";
+		return _result;
 	}
 
 	/**
@@ -62,4 +66,12 @@ public class UResult implements IResult
 	{
 		_isSuccessfull = isSuccessfull;
 	}
+
+	void setResult(String result)
+	{
+		LOGGER.warn("Workaround. Don't use this method");
+		_result = result;
+	}
+
+	private static final Logger LOGGER = Logger.getLogger(UResult.class);
 }

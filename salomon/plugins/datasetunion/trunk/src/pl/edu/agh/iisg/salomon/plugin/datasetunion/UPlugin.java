@@ -25,6 +25,7 @@ import salomon.platform.IDataEngine;
 import salomon.platform.IEnvironment;
 import salomon.platform.data.dataset.IDataSet;
 import salomon.platform.data.dataset.IDataSetManager;
+import salomon.platform.serialization.IObject;
 
 import salomon.plugin.Description;
 import salomon.plugin.IPlugin;
@@ -32,6 +33,7 @@ import salomon.plugin.IResult;
 import salomon.plugin.IResultComponent;
 import salomon.plugin.ISettingComponent;
 import salomon.plugin.ISettings;
+import salomon.util.serialization.SimpleString;
 
 /**
  * 
@@ -77,7 +79,8 @@ public final class UPlugin implements IPlugin
 			// result.setName(uSettings.getResultDataSet());
 			// dataSetManager.add(result);
 			// TODO: implement
-
+			IObject resultObject = uSettings.getField(USettings.RESULT_DATA_SET);
+			uResult.setResult(((SimpleString)resultObject).getValue());
 			uResult.setSuccessfull(true);
 		} catch (Exception e) {
 			uResult.setSuccessfull(false);
