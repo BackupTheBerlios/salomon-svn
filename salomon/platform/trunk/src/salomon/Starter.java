@@ -139,5 +139,6 @@ public final class Starter
 
 	private static Starter _instance;
 
+
 	private static Logger _logger = Logger.getLogger(Starter.class);
 }
