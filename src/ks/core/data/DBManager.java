@@ -5,17 +5,9 @@
 
 package ks.core.data;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-
+import java.sql.*;
 import ks.core.Config;
-import ks.core.data.common.DBColumnName;
-import ks.core.data.common.DBCondition;
-import ks.core.data.common.DBTableName;
-
+import ks.core.data.common.*;
 import org.apache.log4j.Logger;
 
 /**
@@ -31,22 +23,28 @@ public class DBManager
 	private static DBManager _instance = null;
 
 	private static Logger _logger = Logger.getLogger(DBManager.class);
-	
+
 	private String _hostName = null;
+
 	private String _dataBasePath = null;
+
 	private String _user = null;
+
 	private String _passwd = null;
-	
-	private DBManager()	
+
+	private boolean _isEmbedded = false;
+
+	private DBManager()
 	{
 		_hostName = Config.getString("HOSTNAME"); //$NON-NLS-1$
 		_dataBasePath = Config.getString("DB_PATH"); //$NON-NLS-1$
 		_user = Config.getString("USER"); //$NON-NLS-1$
 		_passwd = Config.getString("PASSWD"); //$NON-NLS-1$
-		
+		_isEmbedded = Config.getString("EMBEDDED").equalsIgnoreCase("T");
 	}
 
-	public static DBManager getInstance() throws SQLException, ClassNotFoundException 
+	public static DBManager getInstance() throws SQLException,
+			ClassNotFoundException
 	{
 		if (_instance == null) {
 			_instance = new DBManager();
@@ -63,9 +61,16 @@ public class DBManager
 	private void connect() throws SQLException, ClassNotFoundException
 	{
 		Class.forName("org.firebirdsql.jdbc.FBDriver"); //$NON-NLS-1$
-		_connection = DriverManager.getConnection(
-				"jdbc:firebirdsql://" + _hostName +  "/" + _dataBasePath, //$NON-NLS-1$ //$NON-NLS-2$
-				_user, _passwd);
+		String connectString = "jdbc:firebirdsql:";
+		if (_isEmbedded) {
+			connectString += "embedded://localhost/";
+		} else {
+			connectString += "//" + _hostName + "/";
+		}
+		connectString += _dataBasePath;
+		_logger.info("connectString: " + connectString);
+		_connection = DriverManager
+				.getConnection(connectString, _user, _passwd);
 		_connection.setAutoCommit(false);
 		_statement = _connection.createStatement();
 	}
@@ -86,7 +91,8 @@ public class DBManager
 	}
 
 	public ResultSet selectData(DBColumnName[] columnNames,
-			DBTableName[] tableNames, DBCondition[] conditions) throws SQLException
+			DBTableName[] tableNames, DBCondition[] conditions)
+			throws SQLException
 	{
 		//TODO: synchronizacja aliasow
 		String query = "SELECT "; //$NON-NLS-1$
@@ -99,15 +105,12 @@ public class DBManager
 			query += columnNames[columnNames.length - 1];
 		}
 		_logger.debug("query = " + query); //$NON-NLS-1$
-		
 		query += " FROM "; //$NON-NLS-1$
 		for (int i = 0; i < tableNames.length - 1; i++) {
 			query += tableNames[i].getFromQuery() + ", "; //$NON-NLS-1$
 		}
 		query += tableNames[tableNames.length - 1].getFromQuery();
-		
 		_logger.debug("query = " + query); //$NON-NLS-1$
-		
 		if (conditions != null) {
 			query += " WHERE "; //$NON-NLS-1$
 			for (int i = 0; i < conditions.length - 1; i++) {
@@ -116,7 +119,6 @@ public class DBManager
 			query += conditions[conditions.length - 1];
 		}
 		_logger.info("query = " + query); //$NON-NLS-1$
-		
 		return _statement.executeQuery(query);
 	}
 
