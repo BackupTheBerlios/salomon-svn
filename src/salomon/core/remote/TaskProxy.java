@@ -24,8 +24,9 @@ public final class TaskProxy implements ITask
 	private IRemoteTask _remoteTask;
 
 	/**
-	 *  
-	 */
+     * @pre remoteTask != null
+     * @post $none
+     */
 	public TaskProxy(IRemoteTask remoteTask)
 	{
 		_remoteTask = remoteTask;
