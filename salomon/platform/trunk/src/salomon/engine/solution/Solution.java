@@ -28,9 +28,8 @@ import java.sql.SQLException;
 import salomon.engine.database.IDBSupporting;
 import salomon.engine.project.IProjectManager;
 
+import salomon.platform.IDataEngine;
 import salomon.platform.exception.PlatformException;
-
-import salomon.engine.platform.IManagerEngine;
 
 /**
  * 
@@ -48,9 +47,9 @@ final class Solution implements ISolution, IDBSupporting
 	}
 
 	/**
-	 * @see salomon.engine.solution.ISolution#getManagerEngine()
+	 * @see salomon.engine.solution.ISolution#getDataEngine()
 	 */
-	public IManagerEngine getManagerEngine() throws PlatformException
+	public IDataEngine getDataEngine() throws PlatformException
 	{
 		throw new UnsupportedOperationException(
 				"Method getManagerEngine() not implemented yet!");

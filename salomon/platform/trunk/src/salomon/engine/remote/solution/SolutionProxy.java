@@ -29,9 +29,9 @@ import salomon.engine.project.IProjectManager;
 import salomon.engine.remote.project.ProjectManagerProxy;
 import salomon.engine.solution.ISolution;
 
+import salomon.platform.IDataEngine;
 import salomon.platform.exception.PlatformException;
 
-import salomon.engine.platform.IManagerEngine;
 
 /**
  * 
@@ -51,9 +51,9 @@ public final class SolutionProxy implements ISolution
 	}
 
 	/**
-	 * @see salomon.engine.solution.ISolution#getManagerEngine()
+	 * @see salomon.engine.solution.ISolution#getDataEngine()
 	 */
-	public IManagerEngine getManagerEngine() throws PlatformException
+	public IDataEngine getDataEngine() throws PlatformException
 	{
 		throw new UnsupportedOperationException("Method getManagerEngine() not implemented yet!");
 	}
