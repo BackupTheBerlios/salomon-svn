@@ -3,7 +3,7 @@ package salomon.controller.gui;
 
 import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.sql.ResultSet;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -18,10 +18,7 @@ import javax.swing.JTextField;
 import org.apache.log4j.Logger;
 
 import salomon.core.IManagerEngine;
-import salomon.core.SQLConsole;
 import salomon.core.data.DBManager;
-import salomon.core.data.common.DBColumnName;
-import salomon.core.data.common.DBTableName;
 import salomon.core.project.IProject;
 import salomon.core.project.IProjectManager;
 import salomon.core.task.ITaskManager;
@@ -42,7 +39,9 @@ public final class ProjectEditionManager
 
 	private JPanel _pnlProjectProperties;
 
-	private IProjectManager _projectManager;
+	//private IProjectManager _projectManager;
+
+	//private ITaskManager _taskManager;
 
 	private TaskEditionManager _taskEditionManager;
 
@@ -50,20 +49,25 @@ public final class ProjectEditionManager
 
 	private JTextField _txtProjectName;
 
-
 	/**
 	 * @param parent
 	 */
 	public ProjectEditionManager(IManagerEngine managerEngine)
 	{
 		_managerEngine = managerEngine;
-		_projectManager = _managerEngine.getProjectManager();
+		// projects are saved on server
+		// if we want to save them on clients, we have to
+		// get projectManager and taskManager from managerEngine
+		// before every operation
+		//		_projectManager = _managerEngine.getProjectManager();
+		//        _taskManager = _managerEngine.getTasksManager();
 	}
 
 	public void newProject()
 	{
-		_projectManager.newProject();
-		IProject project = _projectManager.getCurrentProject();
+		IProjectManager projectManager = _managerEngine.getProjectManager();
+		projectManager.newProject();
+		IProject project = projectManager.getCurrentProject();
 		setProjectProperties(project);
 		_parent.refreshGui();
 	}
@@ -72,10 +76,10 @@ public final class ProjectEditionManager
 	{
 		try {
 			int projectId = chooseProject();
-            if (projectId > 0) {
-            	_projectManager.loadProject(projectId);
-            	_parent.refreshGui();
-            }
+			if (projectId > 0) {
+				_managerEngine.getProjectManager().loadProject(projectId);
+				_parent.refreshGui();
+			}
 		} catch (Exception e) {
 			_logger.fatal("", e);
 			Utils.showErrorMessage("Cannot load project.");
@@ -84,7 +88,7 @@ public final class ProjectEditionManager
 
 	public void saveProject()
 	{
-		IProject project = _projectManager.getCurrentProject();
+		IProject project = _managerEngine.getProjectManager().getCurrentProject();
 		if (project.getName() == null) {
 			setProjectProperties(project);
 		}
@@ -135,29 +139,23 @@ public final class ProjectEditionManager
 	private int chooseProject()
 	{
 		int projectID = 0;
-		DBTableName[] tableNames = {new DBTableName("projects")};
-		DBColumnName[] columnNames = {
-				new DBColumnName(tableNames[0], "project_id", "Id"),
-				new DBColumnName(tableNames[0], "name", "Name"),
-				new DBColumnName(tableNames[0], "info", "Info")};
-		// executing query
-		ResultSet resultSet = null;
+		
 		try {
-			resultSet = DBManager.getInstance().select(columnNames, tableNames,
-					null);
+			Collection projects = _managerEngine.getProjectManager().getAvailableProjects();
 			JTable projectTable = null;
-			projectTable = SQLConsole.createResultTable(resultSet);
+			projectTable = Utils.createResultTable(projects);
 			projectID = showProjectList(projectTable);
 		} catch (Exception e) {
 			_logger.fatal("", e);
 			Utils.showErrorMessage("Cannot load project list.");
 		}
+
 		return projectID;
 	}
 
 	private void saveTaskList(List taskList)
 	{
-		_logger.info("taskList" + taskList);
+		_logger.info("taskList = " + taskList);
 		//
 		// task list cannot be empty
 		//
@@ -204,6 +202,7 @@ public final class ProjectEditionManager
 			// removing old tasks
 			//
 			ITaskManager taskManager = _managerEngine.getTasksManager();
+
 			taskManager.clearTaskList();
 			for (Iterator iter = taskList.iterator(); iter.hasNext();) {
 				TaskGUI taskGUI = (TaskGUI) iter.next();
@@ -211,7 +210,7 @@ public final class ProjectEditionManager
 			}
 
 			// saving project
-			_projectManager.saveProject();
+			_managerEngine.getProjectManager().saveProject();
 			DBManager.getInstance().commit();
 			_logger.info("Transaction commited");
 			Utils.showInfoMessage("Project saved successfully");
