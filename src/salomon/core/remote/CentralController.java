@@ -13,12 +13,12 @@ import salomon.core.remote.event.IMasterControllerListener;
 import salomon.core.remote.event.RemoteControllerEvent;
 
 /**
- * Class implements IMasterController interface. It is responsible for
+ * Class implements ICentralController interface. It is responsible for
  * establishing connection and disconnecting of remote clients.
  *  
  */
-public final class MasterController extends UnicastRemoteObject
-		implements IMasterController
+public final class CentralController extends UnicastRemoteObject
+		implements ICentralController
 {
 
 	private List _listeners = new LinkedList();
@@ -30,7 +30,7 @@ public final class MasterController extends UnicastRemoteObject
 	 * @pre $none
 	 * @post $none
 	 */
-	public MasterController() throws RemoteException
+	public CentralController() throws RemoteException
 	{
 	}
 
@@ -42,7 +42,7 @@ public final class MasterController extends UnicastRemoteObject
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see salomon.core.IMasterController#register()
+	 * @see salomon.core.ICentralController#register()
 	 */
 	public void register(IRemoteController remoteController)
 			throws RemoteException
@@ -60,7 +60,7 @@ public final class MasterController extends UnicastRemoteObject
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see salomon.core.IMasterController#unregister()
+	 * @see salomon.core.ICentralController#unregister()
 	 */
 	public void unregister(IRemoteController remoteController)
 			throws RemoteException

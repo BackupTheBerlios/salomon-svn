@@ -6,10 +6,10 @@ import java.util.MissingResourceException;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
-import salomon.controller.ClientController;
+import salomon.controller.ServantController;
 import salomon.controller.IController;
 import salomon.controller.LocalController;
-import salomon.controller.ServerController;
+import salomon.controller.MasterController;
 import salomon.core.Config;
 import salomon.core.IManagerEngine;
 import salomon.core.ManagerEngine;
@@ -62,8 +62,8 @@ public final class Starter
 
 	private void startClientImpl()
 	{
-		_logger.debug("starting ClientController");
-		_contoroller = new ClientController();
+		_logger.debug("starting ServantController");
+		_contoroller = new ServantController();
 		start();
 	}
 
@@ -76,8 +76,8 @@ public final class Starter
 
 	private void startServerImpl()
 	{
-		_logger.debug("starting ServerController");
-		_contoroller = new ServerController();
+		_logger.debug("starting MasterController");
+		_contoroller = new MasterController();
 		start();
 	}
 

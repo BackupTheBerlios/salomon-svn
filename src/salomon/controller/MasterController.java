@@ -1,4 +1,3 @@
-
 package salomon.controller;
 
 import java.awt.BorderLayout;
@@ -43,7 +42,7 @@ import salomon.core.Resources;
 import salomon.core.SQLConsole;
 import salomon.core.data.DBManager;
 import salomon.core.holder.ManagerEngineHolder;
-import salomon.core.remote.MasterController;
+import salomon.core.remote.CentralController;
 import salomon.core.remote.event.IMasterControllerListener;
 import salomon.core.remote.event.RemoteControllerEvent;
 
@@ -51,7 +50,7 @@ import salomon.core.remote.event.RemoteControllerEvent;
  * Server side implementation of IController interface.
  *  
  */
-public final class ServerController implements IController
+public final class MasterController implements IController
 {
 
 	private ActionManager _actionManager;
@@ -60,11 +59,11 @@ public final class ServerController implements IController
 
 	private ControllerPanel _controllerPanel;
 
-	private ServerGUIMenu _guiMenu;
+	private MasterGUIMenu _guiMenu;
 
 	private ManagerEngineHolder _managerEngineHolder;
 
-	private MasterController _masterController;
+	private CentralController _masterController;
 
 	private JMenuBar _menuBar;
 
@@ -87,7 +86,7 @@ public final class ServerController implements IController
 	 */
 	public void exit()
 	{
-		_logger.debug("ServerController.exit()");
+		_logger.debug("MasterController.exit()");
 		_remoteControllerPanel.removeAllControllers();
 	}
 
@@ -174,7 +173,7 @@ public final class ServerController implements IController
 		_taskEditionManager = new TaskEditionManager(_managerEngineHolder);
 		_actionManager = new ActionManager(_projectEditionManager,
 				_taskEditionManager);
-		_guiMenu = new ServerGUIMenu(_actionManager);
+		_guiMenu = new MasterGUIMenu(_actionManager);
 		ControllerFrame frame = new ControllerFrame();
 		//frame.setContentPane(getJContentPane());
 		frame.setMainPanel(getJContentPane());
@@ -202,17 +201,17 @@ public final class ServerController implements IController
 	{
 		try {
 			System.setSecurityManager(new RMISecurityManager());
-			_masterController = new MasterController();
-			_masterController.addMasterControllerListener(new MasterControllerListener());
+			_masterController = new CentralController();
+			_masterController.addMasterControllerListener(new CentralControllerListener());
 			_registry = LocateRegistry.createRegistry(RMI_PORT);
 			//TODO: Use bind method
-			_registry.rebind("MasterController", _masterController);
+			_registry.rebind("CentralController", _masterController);
 		} catch (RemoteException e) {
 			_logger.error(e);
 		}
 	}
 
-	private final class MasterControllerListener
+	private final class CentralControllerListener
 			implements IMasterControllerListener
 	{
 
@@ -235,7 +234,7 @@ public final class ServerController implements IController
 		 */
 		public void controllerRemoved(RemoteControllerEvent event)
 		{
-			_logger.debug("MasterControllerListener.controllerRemoved()");
+			_logger.debug("CentralControllerListener.controllerRemoved()");
 			RemoteControllerGUI controllerGUI = new RemoteControllerGUI(
 					event.getController());
 			controllerGUI.exit();
@@ -244,7 +243,7 @@ public final class ServerController implements IController
 
 	}
 
-	private final static class ServerGUIMenu
+	private final static class MasterGUIMenu
 	{
 
 		private ActionManager _actionManager;
@@ -273,7 +272,7 @@ public final class ServerController implements IController
 
 		private String _resourcesDir;
 
-		public ServerGUIMenu(ActionManager actionManager)
+		public MasterGUIMenu(ActionManager actionManager)
 		{
 			_actionManager = actionManager;
 			_resourcesDir = Config.getString("RESOURCES_DIR");
@@ -499,7 +498,7 @@ public final class ServerController implements IController
 
 	}
 
-	private static Logger _logger = Logger.getLogger(ServerController.class);
+	private static Logger _logger = Logger.getLogger(MasterController.class);
 
 	private static final int RMI_PORT = 4321;
 } // end ServerManager

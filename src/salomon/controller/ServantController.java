@@ -1,4 +1,3 @@
-
 package salomon.controller;
 
 import java.net.InetAddress;
@@ -13,19 +12,19 @@ import org.apache.log4j.Logger;
 
 import salomon.core.Config;
 import salomon.core.IManagerEngine;
-import salomon.core.remote.IMasterController;
+import salomon.core.remote.ICentralController;
 import salomon.core.remote.IRemoteController;
 import salomon.core.remote.RemoteController;
 
 /**
  * Class is a client implementation of IController interface.
  */
-public final class ClientController implements IController
+public final class ServantController implements IController
 {
 
 	private IManagerEngine _managerEngine;
 
-	private IMasterController _masterController;
+	private ICentralController _masterController;
 
 	private IRemoteController _remoteController;
 
@@ -69,7 +68,7 @@ public final class ClientController implements IController
 			Registry registry = LocateRegistry.getRegistry(_serverHost,
 					_serverPort);
 			try {
-				_masterController = (IMasterController) registry.lookup("MasterController");
+				_masterController = (ICentralController) registry.lookup("CentralController");
 				_masterController.register(_remoteController);
 			} catch (NotBoundException e) {
 				_logger.fatal("", e);
@@ -80,5 +79,5 @@ public final class ClientController implements IController
 		}
 	}
 
-	private static Logger _logger = Logger.getLogger(ClientController.class);
+	private static Logger _logger = Logger.getLogger(ServantController.class);
 } // end ClientManager

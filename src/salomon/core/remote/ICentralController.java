@@ -8,7 +8,7 @@ import java.rmi.RemoteException;
  * An interface including methods to establish remote connction.  
  *  
  */
-public interface IMasterController extends Remote
+public interface ICentralController extends Remote
 {
 	void register(IRemoteController remoteController) throws RemoteException;
 
