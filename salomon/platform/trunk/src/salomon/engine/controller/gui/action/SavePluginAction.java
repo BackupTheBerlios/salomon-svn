@@ -23,28 +23,27 @@ package salomon.engine.controller.gui.action;
 
 import java.awt.event.ActionEvent;
 
-import salomon.engine.controller.gui.TaskEditionManager;
+import salomon.engine.controller.gui.PluginMangerGUI;
 
 /**
  * TODO: add comment.
  */
 public final class SavePluginAction extends AbstractPluginAction
 {
-
 	/**
 	 * @param editionManager
 	 */
-	public SavePluginAction(TaskEditionManager editionManager)
+	public SavePluginAction(PluginMangerGUI pluginMangerGUI)
 	{
-		super(editionManager);	
+		super(pluginMangerGUI);
 	}
 
 	/**
 	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
 	 */
 	public void actionPerformed(ActionEvent arg0)
-	{		
-		_taskEditionManager.savePlugin();
+	{
+		_pluginMangerGUI.savePlugin();
 	}
 
 }

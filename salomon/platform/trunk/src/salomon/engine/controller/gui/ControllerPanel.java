@@ -78,16 +78,19 @@ public final class ControllerPanel extends JPanel
 
 	private int _strutWidth = 10;
 
-	private TaskEditionManager _taskEditionManager;
+	private TaskManagerGUI _taskManagerGUI;
+	
+	private PluginMangerGUI _pluginMangerGUI;
 
-	public ControllerPanel(TaskEditionManager taskEditionManager,
+	public ControllerPanel(TaskManagerGUI taskManagerGUI, PluginMangerGUI pluginMangerGUI,
 			ActionManager actionManager)
 	{
 		super();
 		_actionManager = actionManager;
-		_taskEditionManager = taskEditionManager;
+		_taskManagerGUI = taskManagerGUI;
+		_pluginMangerGUI = pluginMangerGUI;
 		_resourcesDir = Config.getString("RESOURCES_DIR");
-		_guiButtons = new GUIButtons(_taskEditionManager);
+		_guiButtons = new GUIButtons(_taskManagerGUI);
 		this.setLayout(new BorderLayout());
 		this.add(getPnlManagerButtons(), BorderLayout.SOUTH);
 		this.add(getPnlInit(), BorderLayout.CENTER);
@@ -96,24 +99,25 @@ public final class ControllerPanel extends JPanel
 	/**
 	 * @return Returns the taskEditionManager.
 	 */
-	public TaskEditionManager getTaskEditionManager()
+	public TaskManagerGUI getTaskEditionManager()
 	{
-		return _taskEditionManager;
+		return _taskManagerGUI;
 	}
 
 	public void refresh()
 	{
 		LOGGER.debug("ControllerPane: refreshing...");
 		super.validate();
-		_taskEditionManager.refresh();
+		_pluginMangerGUI.refresh();
+		_taskManagerGUI.refresh();		
 	}
 
 	/**
 	 * @param taskEditionManager The taskEditionManager to set.
 	 */
-	public void setTaskEditionManager(TaskEditionManager taskEditionManager)
+	public void setTaskEditionManager(TaskManagerGUI taskEditionManager)
 	{
-		_taskEditionManager = taskEditionManager;
+		_taskManagerGUI = taskEditionManager;
 	}
 
 	/**
@@ -152,7 +156,7 @@ public final class ControllerPanel extends JPanel
 	private JList getLstPlugins()
 	{
 		if (_lstPlugins == null) {
-			_lstPlugins = _taskEditionManager.getPluginList();
+			_lstPlugins = _pluginMangerGUI.getPluginList();
 			_lstPlugins.setBorder(BorderFactory.createLoweredBevelBorder());
 			_lstPlugins.setPreferredSize(new Dimension(100, 200));
 		}
@@ -167,7 +171,7 @@ public final class ControllerPanel extends JPanel
 	private JList getLstTasks()
 	{
 		if (_lstTasks == null) {
-			_lstTasks = _taskEditionManager.getTaskList();
+			_lstTasks = _taskManagerGUI.getTaskList();
 			_lstTasks.setBorder(BorderFactory.createLoweredBevelBorder());
 			_lstTasks.setPreferredSize(new Dimension(100, 200));
 		}

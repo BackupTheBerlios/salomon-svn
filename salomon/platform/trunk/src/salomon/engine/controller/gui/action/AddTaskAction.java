@@ -21,24 +21,36 @@
 
 package salomon.engine.controller.gui.action;
 
-import javax.swing.AbstractAction;
+import java.awt.event.ActionEvent;
 
-import salomon.engine.controller.gui.ProjectManagerGUI;
+import salomon.engine.controller.gui.TaskManagerGUI;
+import salomon.engine.plugin.LocalPlugin;
 
 /**
- * Represents abstract action caused while editing projects.
  * 
  */
-abstract class AbstractProjectAction extends AbstractAction
+public final class AddTaskAction extends AbstractTaskAction
 {
+	private LocalPlugin _plugin;
+	
 	/**
-	 * an object which method are called in implementation of actionPerformed()
-	 * method
+	 * @param editionManager
 	 */
-	protected ProjectManagerGUI _projectEditionManager;
-
-	protected AbstractProjectAction(ProjectManagerGUI projectEditionManager)
+	protected AddTaskAction(TaskManagerGUI editionManager)
 	{
-		_projectEditionManager = projectEditionManager;
+		super(editionManager);
+	}
+
+	/**
+	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+	 */
+	public void actionPerformed(ActionEvent e)
+	{
+		_taskEditionManager.addTask(_plugin);
+	}
+
+	public void setPlugin(LocalPlugin plugin)
+	{
+		_plugin = plugin;
 	}
 }

@@ -21,24 +21,31 @@
 
 package salomon.engine.controller.gui.action;
 
-import javax.swing.AbstractAction;
+import java.awt.event.ActionEvent;
 
-import salomon.engine.controller.gui.ProjectManagerGUI;
+import salomon.engine.controller.gui.TaskManagerGUI;
 
 /**
- * Represents abstract action caused while editing projects.
  * 
  */
-abstract class AbstractProjectAction extends AbstractAction
+public final class RemoveTaskAction extends AbstractTaskAction
 {
-	/**
-	 * an object which method are called in implementation of actionPerformed()
-	 * method
-	 */
-	protected ProjectManagerGUI _projectEditionManager;
 
-	protected AbstractProjectAction(ProjectManagerGUI projectEditionManager)
+	/**
+	 * @param editionManager
+	 */
+	protected RemoveTaskAction(TaskManagerGUI editionManager)
 	{
-		_projectEditionManager = projectEditionManager;
+		super(editionManager);
+		// TODO Auto-generated constructor stub
 	}
+
+	/**
+	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+	 */
+	public void actionPerformed(ActionEvent e)
+	{
+		_taskEditionManager.removeTask();
+	}
+
 }

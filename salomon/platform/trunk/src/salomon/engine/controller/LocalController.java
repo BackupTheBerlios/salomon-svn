@@ -49,9 +49,10 @@ import salomon.engine.SQLConsole;
 import salomon.engine.Starter;
 import salomon.engine.controller.gui.ControllerFrame;
 import salomon.engine.controller.gui.ControllerPanel;
-import salomon.engine.controller.gui.ProjectEditionManager;
+import salomon.engine.controller.gui.PluginMangerGUI;
+import salomon.engine.controller.gui.ProjectManagerGUI;
 import salomon.engine.controller.gui.SplashScreen;
-import salomon.engine.controller.gui.TaskEditionManager;
+import salomon.engine.controller.gui.TaskManagerGUI;
 import salomon.engine.controller.gui.action.ActionManager;
 import salomon.engine.database.DBManager;
 
@@ -74,9 +75,11 @@ public final class LocalController implements IController
 
 	private JMenuBar _menuBar;
 
-	private ProjectEditionManager _projectEditionManager;
+	private ProjectManagerGUI _projectManagerGUI;
 
-	private TaskEditionManager _taskEditionManager;
+	private TaskManagerGUI _taskManagerGUI;
+
+	private PluginMangerGUI _pluginMangerGUI;
 
 	private JToolBar _toolBar;
 
@@ -95,7 +98,7 @@ public final class LocalController implements IController
 	 */
 	public void start(IManagerEngine managerEngine)
 	{
-        
+
 		try {
 			DBManager.getInstance();
 		} catch (SQLException e) {
@@ -105,24 +108,28 @@ public final class LocalController implements IController
 		}
 		_managerEngine = managerEngine;
 		// Creates a new empty project
-//FIXME	add support for Solution	
-        //_managerEngine.getProjectManager().ceateProject();
-		_projectEditionManager = new ProjectEditionManager(_managerEngine);
-		_taskEditionManager = new TaskEditionManager(_managerEngine);
-		_actionManager = new ActionManager(_projectEditionManager,
-				_taskEditionManager);
+		// FIXME add support for Solution
+		// _managerEngine.getProjectManager().ceateProject();
+		_projectManagerGUI = new ProjectManagerGUI(_managerEngine);
+		_taskManagerGUI = new TaskManagerGUI(_managerEngine);
+		_pluginMangerGUI = new PluginMangerGUI(_managerEngine);
+
+		_actionManager = new ActionManager(_projectManagerGUI, _taskManagerGUI,
+				_pluginMangerGUI);
 		_guiMenu = new LocalGUIMenu(_actionManager);
 		ControllerFrame frame = new ControllerFrame();
+		_taskManagerGUI.setParent(frame);
+		_projectManagerGUI.setParent(frame);
+		_pluginMangerGUI.setActionManager(_actionManager);
+		_taskManagerGUI.setActionManager(_actionManager);		
+		_projectManagerGUI.setTaskManagerGUI(_taskManagerGUI);
+		// loading plugins
+		_pluginMangerGUI.refresh();
+		_taskManagerGUI.refresh();
 		frame.setContentPane(getJContentPane());
 		frame.setJMenuBar(getJMenuBar());
 		frame.setJToolBar(getToolBar());
 		frame.setControllerPanel(_contentPane);
-		_taskEditionManager.setParent(frame);
-		_projectEditionManager.setParent(frame);
-		_taskEditionManager.setActionManager(_actionManager);
-		_projectEditionManager.setTaskEditionManager(_taskEditionManager);
-		// loading plugins
-		_taskEditionManager.refresh();
 		Utils.setParent(getJContentPane());
 		SplashScreen.hide();
 		frame.setVisible(true);
@@ -131,8 +138,8 @@ public final class LocalController implements IController
 	private JComponent getJContentPane()
 	{
 		if (_contentPane == null) {
-			_contentPane = new ControllerPanel(_taskEditionManager,
-					_actionManager);
+			_contentPane = new ControllerPanel(_taskManagerGUI,
+					_pluginMangerGUI, _actionManager);
 		}
 		return _contentPane;
 	}

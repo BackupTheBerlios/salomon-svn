@@ -55,7 +55,7 @@ import salomon.engine.platform.IManagerEngine;
  * Class used to manage with projects editing.
  * 
  */
-public final class ProjectEditionManager
+public final class ProjectManagerGUI
 {
 	private IManagerEngine _managerEngine;
 
@@ -63,7 +63,7 @@ public final class ProjectEditionManager
 
 	private JPanel _pnlProjectProperties;
 
-	private TaskEditionManager _taskEditionManager;
+	private TaskManagerGUI _taskEditionManager;
 
 	private JTextField _txtProjectInfo;
 
@@ -71,7 +71,7 @@ public final class ProjectEditionManager
 
 	/**
 	 */
-	public ProjectEditionManager(IManagerEngine managerEngine)
+	public ProjectManagerGUI(IManagerEngine managerEngine)
 	{
 		_managerEngine = managerEngine;
 	}
@@ -232,7 +232,7 @@ public final class ProjectEditionManager
 		}
 	}
 
-	public void setTaskEditionManager(TaskEditionManager taskEditionManager)
+	public void setTaskManagerGUI(TaskManagerGUI taskEditionManager)
 	{
 		_taskEditionManager = taskEditionManager;
 	}
@@ -277,5 +277,5 @@ public final class ProjectEditionManager
 		return projectID;
 	}
 
-	private static final Logger LOGGER = Logger.getLogger(ProjectEditionManager.class);
+	private static final Logger LOGGER = Logger.getLogger(ProjectManagerGUI.class);
 }

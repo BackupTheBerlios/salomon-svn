@@ -21,8 +21,9 @@
 
 package salomon.engine.controller.gui.action;
 
-import salomon.engine.controller.gui.ProjectEditionManager;
-import salomon.engine.controller.gui.TaskEditionManager;
+import salomon.engine.controller.gui.PluginMangerGUI;
+import salomon.engine.controller.gui.ProjectManagerGUI;
+import salomon.engine.controller.gui.TaskManagerGUI;
 
 /**
  * Class manages with actions. It creates and holds actions used to create most
@@ -33,13 +34,17 @@ public final class ActionManager
 
 	private AddPluginAction _addPluginAction;
 
+	private AddTaskAction _addTaskAction;
+
 	private NewProjectAction _newProjectAction;
 
 	private OpenProjectAction _openProjectAction;
 
-	private ProjectEditionManager _projectEditionManager;
+	private ProjectManagerGUI _projectManagerGUI;
 
 	private RemovePluginAction _removePluginAction;
+
+	private RemoveTaskAction _removeTaskAction;
 
 	private RunTaskAction _runTaskAction;
 
@@ -47,19 +52,22 @@ public final class ActionManager
 
 	private SaveProjectAction _saveProjectAction;
 
-	private TaskEditionManager _taskEditionManager;
+	private TaskManagerGUI _taskManagerGUI;
+
+	private PluginMangerGUI _pluginMangerGUI;
 
 	/**
 	 * Sets object used to create actions.
 	 * 
-	 * @param taskEditionManager
-	 * @param projectEditionManager
+	 * @param taskManagerGUI
+	 * @param projectManagerGUI
 	 */
-	public ActionManager(ProjectEditionManager projectEditionManager,
-			TaskEditionManager taskEditionManager)
+	public ActionManager(ProjectManagerGUI projectManagerGUI,
+			TaskManagerGUI taskManagerGUI, PluginMangerGUI pluginMangerGUI)
 	{
-		_taskEditionManager = taskEditionManager;
-		_projectEditionManager = projectEditionManager;
+		_projectManagerGUI = projectManagerGUI;
+		_taskManagerGUI = taskManagerGUI;
+		_pluginMangerGUI = pluginMangerGUI;
 	}
 
 	/**
@@ -70,9 +78,17 @@ public final class ActionManager
 	public AddPluginAction getAddPluginAction()
 	{
 		if (_addPluginAction == null) {
-			_addPluginAction = new AddPluginAction(_taskEditionManager);
+			_addPluginAction = new AddPluginAction(_pluginMangerGUI);
 		}
 		return _addPluginAction;
+	}
+
+	public AddTaskAction getAddTaskAction()
+	{
+		if (_addTaskAction == null) {
+			_addTaskAction = new AddTaskAction(_taskManagerGUI);
+		}
+		return _addTaskAction;
 	}
 
 	/**
@@ -83,7 +99,7 @@ public final class ActionManager
 	public NewProjectAction getNewProjectAction()
 	{
 		if (_newProjectAction == null) {
-			_newProjectAction = new NewProjectAction(_projectEditionManager);
+			_newProjectAction = new NewProjectAction(_projectManagerGUI);
 		}
 		return _newProjectAction;
 	}
@@ -96,7 +112,7 @@ public final class ActionManager
 	public OpenProjectAction getOpenProjectAction()
 	{
 		if (_openProjectAction == null) {
-			_openProjectAction = new OpenProjectAction(_projectEditionManager);
+			_openProjectAction = new OpenProjectAction(_projectManagerGUI);
 		}
 		return _openProjectAction;
 	}
@@ -109,9 +125,17 @@ public final class ActionManager
 	public RemovePluginAction getRemovePluginAction()
 	{
 		if (_removePluginAction == null) {
-			_removePluginAction = new RemovePluginAction(_taskEditionManager);
+			_removePluginAction = new RemovePluginAction(_pluginMangerGUI);
 		}
 		return _removePluginAction;
+	}
+
+	public RemoveTaskAction getRemoveTaskAction()
+	{
+		if (_removeTaskAction == null) {
+			_removeTaskAction = new RemoveTaskAction(_taskManagerGUI);
+		}
+		return _removeTaskAction;
 	}
 
 	/**
@@ -122,7 +146,7 @@ public final class ActionManager
 	public RunTaskAction getRunTaskAction()
 	{
 		if (_runTaskAction == null) {
-			_runTaskAction = new RunTaskAction(_taskEditionManager);
+			_runTaskAction = new RunTaskAction(_taskManagerGUI);
 		}
 		return _runTaskAction;
 	}
@@ -135,7 +159,7 @@ public final class ActionManager
 	public SavePluginAction getSavePluginAction()
 	{
 		if (_savePluginAction == null) {
-			_savePluginAction = new SavePluginAction(_taskEditionManager);
+			_savePluginAction = new SavePluginAction(_pluginMangerGUI);
 		}
 		return _savePluginAction;
 	}
@@ -148,7 +172,7 @@ public final class ActionManager
 	public SaveProjectAction getSaveProjectAction()
 	{
 		if (_saveProjectAction == null) {
-			_saveProjectAction = new SaveProjectAction(_projectEditionManager);
+			_saveProjectAction = new SaveProjectAction(_projectManagerGUI);
 		}
 		return _saveProjectAction;
 	}

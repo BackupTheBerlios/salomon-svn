@@ -23,11 +23,11 @@ package salomon.engine.controller.gui.action;
 
 import javax.swing.AbstractAction;
 
-import salomon.engine.controller.gui.TaskEditionManager;
+import salomon.engine.controller.gui.PluginMangerGUI;
 
 /**
  * Represents abstract action caused while editing plugins.
- *  
+ * 
  */
 public abstract class AbstractPluginAction extends AbstractAction
 {
@@ -35,10 +35,10 @@ public abstract class AbstractPluginAction extends AbstractAction
 	 * an object which method are called in implementation of actionPerformed()
 	 * method
 	 */
-	protected TaskEditionManager _taskEditionManager;
+	protected PluginMangerGUI _pluginMangerGUI;
 
-	public AbstractPluginAction(TaskEditionManager editionManager)
+	public AbstractPluginAction(PluginMangerGUI editionManager)
 	{
-		_taskEditionManager = editionManager;
+		_pluginMangerGUI = editionManager;
 	}
 }

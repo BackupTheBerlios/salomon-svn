@@ -30,6 +30,7 @@ import java.rmi.RMISecurityManager;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.sql.SQLException;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -50,12 +51,18 @@ import salomon.engine.Config;
 import salomon.engine.Messages;
 import salomon.engine.Resources;
 import salomon.engine.SQLConsole;
+import salomon.engine.controller.gui.ControllerFrame;
 import salomon.engine.controller.gui.ControllerPanel;
-import salomon.engine.controller.gui.ProjectEditionManager;
+import salomon.engine.controller.gui.PluginMangerGUI;
+import salomon.engine.controller.gui.ProjectManagerGUI;
 import salomon.engine.controller.gui.RemoteControllerGUI;
 import salomon.engine.controller.gui.RemoteControllerPanel;
-import salomon.engine.controller.gui.TaskEditionManager;
+import salomon.engine.controller.gui.SplashScreen;
+import salomon.engine.controller.gui.TaskManagerGUI;
 import salomon.engine.controller.gui.action.ActionManager;
+import salomon.engine.database.DBManager;
+
+import salomon.util.gui.Utils;
 
 import salomon.engine.platform.IManagerEngine;
 import salomon.engine.platform.holder.ManagerEngineHolder;
@@ -65,7 +72,7 @@ import salomon.engine.platform.remote.event.RemoteControllerEvent;
 
 /**
  * Server side implementation of IController interface.
- *  
+ * 
  */
 public final class MasterController implements IController
 {
@@ -84,7 +91,7 @@ public final class MasterController implements IController
 
 	private JMenuBar _menuBar;
 
-	private ProjectEditionManager _projectEditionManager;
+	private ProjectManagerGUI _projectManagerGUI;
 
 	private Registry _registry;
 
@@ -92,9 +99,11 @@ public final class MasterController implements IController
 
 	private JSplitPane _splitPane;
 
-	private TaskEditionManager _taskEditionManager;
+	private TaskManagerGUI _taskManagerGUI;
 
 	private JToolBar _toolBar;
+
+	private PluginMangerGUI _pluginMangerGUI;
 
 	/*
 	 * (non-Javadoc)
@@ -107,10 +116,11 @@ public final class MasterController implements IController
 		_remoteControllerPanel.removeAllControllers();
 	}
 
-	//TODO: change it
+	// TODO: change it
 	public void refresh()
 	{
-		_taskEditionManager.refresh();
+		_pluginMangerGUI.refresh();
+		_taskManagerGUI.refresh();		
 	}
 
 	public void start(IManagerEngine managerEngine)
@@ -129,8 +139,8 @@ public final class MasterController implements IController
 			_remoteControllerPanel = new RemoteControllerPanel(
 					_managerEngineHolder);
 			_splitPane.setLeftComponent(_remoteControllerPanel.getControllerPanel());
-			_controllerPanel = new ControllerPanel(_taskEditionManager,
-					_actionManager);
+			_controllerPanel = new ControllerPanel(_taskManagerGUI,
+					_pluginMangerGUI, _actionManager);
 			_splitPane.setRightComponent(_controllerPanel);
 			_contentPane.add(_splitPane);
 		}
@@ -171,44 +181,44 @@ public final class MasterController implements IController
 
 	/**
 	 * TODO: add comment.
-	 *  
+	 * 
 	 */
 	private void initGUI()
 	{
-        throw new UnsupportedOperationException(
-				"Method initGUI() not implemented yet!");
-//		SplashScreen.show();
-//		try {
-//			DBManager.getInstance();
-//		} catch (SQLException e) {
-//			LOGGER.fatal("", e);
-//		} catch (ClassNotFoundException e) {
-//			LOGGER.error("", e);
-//		}
-//
-//		// Creates a new empty project
-//		//FIXME _managerEngineHolder.getProjectManager().ceateProject();
-//		_projectEditionManager = new ProjectEditionManager(_managerEngineHolder);
-//		_taskEditionManager = new TaskEditionManager(_managerEngineHolder);
-//		_actionManager = new ActionManager(_projectEditionManager,
-//				_taskEditionManager);
-//		_guiMenu = new MasterGUIMenu(_actionManager);
-//		ControllerFrame frame = new ControllerFrame();
-//		//frame.setContentPane(getJContentPane());
-//		frame.setMainPanel(getJContentPane());
-//		frame.setJMenuBar(getJMenuBar());
-//		frame.setJToolBar(getToolBar());
-//		frame.setControllerPanel(_controllerPanel);
-//
-//		_taskEditionManager.setParent(frame);
-//		_projectEditionManager.setParent(frame);
-//		_remoteControllerPanel.setParent(frame);
-//		
-//        _taskEditionManager.setActionManager(_actionManager);
-//		_projectEditionManager.setTaskEditionManager(_taskEditionManager);
-//        Utils.setParent(getJContentPane());
-//		SplashScreen.hide();
-//		frame.setVisible(true);
+		SplashScreen.show();
+		try {
+			DBManager.getInstance();
+		} catch (SQLException e) {
+			LOGGER.fatal("", e);
+		} catch (ClassNotFoundException e) {
+			LOGGER.error("", e);
+		}
+
+		// Creates a new empty project
+		// FIXME _managerEngineHolder.getProjectManager().ceateProject();
+		_projectManagerGUI = new ProjectManagerGUI(_managerEngineHolder);
+		_taskManagerGUI = new TaskManagerGUI(_managerEngineHolder);
+		_pluginMangerGUI = new PluginMangerGUI(_managerEngineHolder);
+		_actionManager = new ActionManager(_projectManagerGUI, _taskManagerGUI,
+				_pluginMangerGUI);
+		_guiMenu = new MasterGUIMenu(_actionManager);
+		ControllerFrame frame = new ControllerFrame();
+		// frame.setContentPane(getJContentPane());
+
+		_taskManagerGUI.setParent(frame);
+		_projectManagerGUI.setParent(frame);
+		_remoteControllerPanel.setParent(frame);
+		_pluginMangerGUI.setActionManager(_actionManager);
+		_taskManagerGUI.setActionManager(_actionManager);
+		// FIXME
+		_projectManagerGUI.setTaskManagerGUI(_taskManagerGUI);
+		frame.setMainPanel(getJContentPane());
+		frame.setJMenuBar(getJMenuBar());
+		frame.setJToolBar(getToolBar());
+		frame.setControllerPanel(_controllerPanel);
+		Utils.setParent(getJContentPane());
+		SplashScreen.hide();
+		frame.setVisible(true);
 	}
 
 	private void initialize()
@@ -223,7 +233,7 @@ public final class MasterController implements IController
 			_masterController = new CentralController();
 			_masterController.addMasterControllerListener(new CentralControllerListener());
 			_registry = LocateRegistry.createRegistry(RMI_PORT);
-			//TODO: Use bind method
+			// TODO: Use bind method
 			_registry.rebind("CentralController", _masterController);
 		} catch (RemoteException e) {
 			LOGGER.error(e);
@@ -297,32 +307,38 @@ public final class MasterController implements IController
 			_resourcesDir = Config.getString("RESOURCES_DIR");
 		}
 
-        JButton getBtnNew()
-        {
-            if (_btnNew == null) {
-                _btnNew = new JButton(_actionManager.getNewProjectAction());
-                _btnNew.setIcon(new ImageIcon(_resourcesDir + Config.FILE_SEPARATOR + Resources.getString("ICO_PROJECT_NEW"))); //$NON-NLS-1$
-            }
-            return _btnNew;
-        }
+		JButton getBtnNew()
+		{
+			if (_btnNew == null) {
+				_btnNew = new JButton(_actionManager.getNewProjectAction());
+				_btnNew.setIcon(new ImageIcon(_resourcesDir
+						+ Config.FILE_SEPARATOR
+						+ Resources.getString("ICO_PROJECT_NEW"))); //$NON-NLS-1$
+			}
+			return _btnNew;
+		}
 
-        JButton getBtnOpen()
-        {
-            if (_btnOpen == null) {
-                _btnOpen = new JButton(_actionManager.getOpenProjectAction());
-                _btnOpen.setIcon(new ImageIcon(_resourcesDir + Config.FILE_SEPARATOR + Resources.getString("ICO_PROJECT_OPEN"))); //$NON-NLS-1$                
-            }
-            return _btnOpen;
-        }
+		JButton getBtnOpen()
+		{
+			if (_btnOpen == null) {
+				_btnOpen = new JButton(_actionManager.getOpenProjectAction());
+				_btnOpen.setIcon(new ImageIcon(_resourcesDir
+						+ Config.FILE_SEPARATOR
+						+ Resources.getString("ICO_PROJECT_OPEN"))); //$NON-NLS-1$                
+			}
+			return _btnOpen;
+		}
 
-        JButton getBtnSave()
-        {
-            if (_btnSave == null) {
-                _btnSave = new JButton(_actionManager.getSaveProjectAction());                
-                _btnSave.setIcon(new ImageIcon(_resourcesDir + Config.FILE_SEPARATOR + Resources.getString("ICO_PROJECT_SAVE"))); //$NON-NLS-1$
-            }
-            return _btnSave;
-        }
+		JButton getBtnSave()
+		{
+			if (_btnSave == null) {
+				_btnSave = new JButton(_actionManager.getSaveProjectAction());
+				_btnSave.setIcon(new ImageIcon(_resourcesDir
+						+ Config.FILE_SEPARATOR
+						+ Resources.getString("ICO_PROJECT_SAVE"))); //$NON-NLS-1$
+			}
+			return _btnSave;
+		}
 
 		JMenuItem getItmAbout()
 		{
@@ -347,7 +363,7 @@ public final class MasterController implements IController
 				_itmExit.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e)
 					{
-						//exit();
+						// exit();
 					}
 				});
 			}

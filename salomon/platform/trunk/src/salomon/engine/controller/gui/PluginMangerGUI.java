@@ -21,17 +21,12 @@
 
 package salomon.engine.controller.gui;
 
-import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Arrays;
-import java.util.List;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -44,13 +39,14 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JTextField;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import org.apache.log4j.Logger;
 
 import salomon.engine.Messages;
 import salomon.engine.controller.gui.action.ActionManager;
 import salomon.engine.plugin.LocalPlugin;
-import salomon.engine.task.ITask;
 
 import salomon.util.gui.Utils;
 
@@ -58,19 +54,14 @@ import salomon.platform.exception.PlatformException;
 
 import salomon.plugin.Description;
 import salomon.plugin.IPlugin;
-import salomon.plugin.IResultComponent;
-import salomon.plugin.ISettingComponent;
-import salomon.plugin.ISettings;
 
 import salomon.engine.platform.IManagerEngine;
 
 /**
- * Class used to manage with tasks editing. It enables creating and configuring
- * tasks and a queue of tasks.
+ * 
  */
-public final class TaskEditionManager
+public final class PluginMangerGUI
 {
-
 	private ActionManager _actionManager;
 
 	private JComponent _editPluginPanel;
@@ -87,15 +78,7 @@ public final class TaskEditionManager
 
 	private MouseListener _popupListener;
 
-	private JComponent _positionComponent;
-
 	private int _selectedItem;
-
-	private JList _taskList;
-
-	private DefaultListModel _taskListModel;
-
-	private JPopupMenu _taskPopup;
 
 	private JTextField _txtPluginInfo;
 
@@ -103,22 +86,25 @@ public final class TaskEditionManager
 
 	private JTextField _txtPluginName;
 
-	public TaskEditionManager(IManagerEngine managerEngine)
+	/**
+	 * 
+	 */
+	public PluginMangerGUI(IManagerEngine managerEngine)
 	{
 		_managerEngine = managerEngine;
-		_taskListModel = new DefaultListModel();
+
 		_pluginListModel = new DefaultListModel();
-		_taskList = new JList(_taskListModel);
 		_pluginList = new JList(_pluginListModel);
 		// adding listener
 		_popupListener = new PopupListener();
-		_taskList.addMouseListener(_popupListener);
 		_pluginList.addMouseListener(_popupListener);
+		// TODO:
+		_pluginList.addListSelectionListener(new PluginSelectionListener());
 	}
 
 	public void addPlugin()
 	{
-		//TODO: change it
+		// TODO: change it
 		getEditPluginPanel();
 		_txtPluginName.setText("");
 		_txtPluginLocation.setText("");
@@ -135,13 +121,13 @@ public final class TaskEditionManager
 				Utils.showErrorMessage(Messages.getString("ERR_CANNOT_SAVE_PLUGIN_INVALID_URL"));
 				return;
 			}
-            IPlugin plugin = null;             
-            try {
+			IPlugin plugin = null;
+			try {
 				plugin = _managerEngine.getPluginManager().createPlugin();
 			} catch (PlatformException e) {
 				LOGGER.fatal("", e);
-                Utils.showErrorMessage(Messages.getString("ERR_CANNOT_SAVE_PLUGIN"));
-                return;
+				Utils.showErrorMessage(Messages.getString("ERR_CANNOT_SAVE_PLUGIN"));
+				return;
 			}
 			Description desc = plugin.getDescription();
 			desc.setName(_txtPluginName.getText());
@@ -152,7 +138,7 @@ public final class TaskEditionManager
 				wasOk = _managerEngine.getPluginManager().savePlugin(plugin);
 			} catch (PlatformException e) {
 				LOGGER.error("", e);
-                Utils.showErrorMessage(Messages.getString("ERR_CANNOT_SAVE_PLUGIN"));
+				Utils.showErrorMessage(Messages.getString("ERR_CANNOT_SAVE_PLUGIN"));
 			}
 			if (wasOk) {
 				refresh();
@@ -162,118 +148,28 @@ public final class TaskEditionManager
 		}
 	}
 
-	/**
-	 * Adds selected plugin to list of tasks
-	 */
-	public void addTask()
-	{
-		int index = _pluginList.getSelectedIndex();
-		if (index >= 0) {
-			LocalPlugin localPlugin = (LocalPlugin) _pluginListModel.get(index);
-			IPlugin plugin;
-			try {
-                // loading plugin
-				plugin = localPlugin.load();
-				TaskGUI taskGUI = new TaskGUI();
-				taskGUI.setPlugin(plugin);
-				taskGUI.setName(getTaskName());
-				_taskListModel.addElement(taskGUI);
-			} catch (Exception e) {
-				LOGGER.fatal("", e); //$NON-NLS-1$				
-				Utils.showErrorMessage(Messages.getString("ERR_CANNOT_LOAD_PLUGIN"));
-			}
-		} else {
-			LOGGER.warn("Invalid index. Wrong list selected?"); //$NON-NLS-1$
-		}
-	}
-
 	public JList getPluginList()
 	{
 		return _pluginList;
 	}
 
-	public JList getTaskList()
-	{
-		return _taskList;
-	}
-
-	public List getTasks()
-	{
-		//FIXME
-		return Arrays.asList(_taskListModel.toArray());
-	}
-
-	/**
-	 * Moves task up in the task list. It will be executed earlier.
-	 *  
-	 */
-	public void moveDown()
-	{
-		if (_taskListModel.size() > 1) {
-			int index = _taskList.getSelectedIndex();
-			if (index >= 0 && index < _taskListModel.getSize() - 1) {
-				Object task = _taskListModel.remove(index);
-				_taskListModel.add(index + 1, task);
-				_taskList.setSelectedIndex(index + 1);
-			} else {
-				LOGGER.warn("Nothing or wrong index selected"); //$NON-NLS-1$
-			}
-		}
-	}
-
-	/**
-	 * Moves task down in the task list. It will be executed later.
-	 *  
-	 */
-	public void moveUp()
-	{
-		if (_taskListModel.size() > 1) {
-			int index = _taskList.getSelectedIndex();
-			if (index >= 1) {
-				Object task = _taskListModel.remove(index);
-				_taskListModel.add(index - 1, task);
-				_taskList.setSelectedIndex(index - 1);
-			} else {
-				LOGGER.warn("Nothing or wrong index selected"); //$NON-NLS-1$
-			}
-		}
-	}
-
-	/**
-	 * Loads tasks to task list.
-	 */
 	public void refresh()
 	{
 		LOGGER.debug("reloading plugins");
 		_pluginListModel.removeAllElements();
-        
+
 		IPlugin[] plugins = null;
-		try {            
+		try {
 			plugins = _managerEngine.getPluginManager().getPlugins();
 		} catch (PlatformException e) {
 			LOGGER.fatal("", e);
-            Utils.showErrorMessage("Cannot load plugin list");
-            return;
+			Utils.showErrorMessage("Cannot load plugin list");
+			return;
 		}
 		for (IPlugin plugin : plugins) {
 			LOGGER.debug("adding plugin:" + plugin);
 			LOGGER.debug("description:" + plugin.getDescription());
 			_pluginListModel.addElement(plugin);
-		}
-		LOGGER.debug("reloading tasks");
-		_taskListModel.removeAllElements();
-		ITask[] tasks = null;
-		try {
-            //TODO: change it
-			tasks = _managerEngine.getTasksManager().getTasks();
-		} catch (PlatformException e1) {
-			LOGGER.fatal("", e1);
-            Utils.showErrorMessage("Cannot load task list");
-            return;
-		}
-		for (ITask task : tasks) {
-			LOGGER.debug("adding task");
-			_taskListModel.addElement(new TaskGUI(task));   
 		}
 	}
 
@@ -287,7 +183,7 @@ public final class TaskEditionManager
 			try {
 				wasOk = _managerEngine.getPluginManager().removePlugin(plugin);
 			} catch (PlatformException e) {
-				LOGGER.error("", e);				   
+				LOGGER.error("", e);
 			}
 
 			if (wasOk) {
@@ -298,36 +194,10 @@ public final class TaskEditionManager
 		}
 	}
 
-	/**
-	 * Removes plugin from list of tasks and adds it to available plugins list
-	 * (?)
-	 *  
-	 */
-	public void removeTask()
-	{
-		int index = _taskList.getSelectedIndex();
-		if (index >= 0) {
-			TaskGUI task = (TaskGUI) _taskListModel.remove(index);
-			LOGGER.debug("plugin = " + task); //$NON-NLS-1$
-		} else {
-			LOGGER.warn("Invalid index. Wrong list selected?"); //$NON-NLS-1$
-		}
-	}
-
-	/**
-	 * Starts executing task.
-	 */
-	public void runTasks()
-	{
-		throw new UnsupportedOperationException(
-				"Method runTasks() not implemented yet!");
-		//FIXME		_managerEngine.getTasksManager().start();
-	}
-
 	public void savePlugin()
 	{
 		IPlugin plugin = (IPlugin) _pluginListModel.get(_selectedItem);
-        Description desc = plugin.getDescription(); 
+		Description desc = plugin.getDescription();
 		// to initialize components
 		getEditPluginPanel();
 		_txtPluginName.setText(desc.getName());
@@ -358,7 +228,7 @@ public final class TaskEditionManager
 			}
 
 			if (wasOk) {
-				//refresh();
+				// refresh();
 			} else {
 				Utils.showErrorMessage(Messages.getString("ERR_CANNOT_SAVE_PLUGIN"));
 			}
@@ -368,14 +238,6 @@ public final class TaskEditionManager
 	public void setActionManager(ActionManager actionManager)
 	{
 		_actionManager = actionManager;
-	}
-
-	/**
-	 * @param parent The parent to set.
-	 */
-	public void setParent(ControllerFrame parent)
-	{
-		_parent = parent;
 	}
 
 	private JComponent getEditPluginPanel()
@@ -409,83 +271,11 @@ public final class TaskEditionManager
 		return _pluginPopup;
 	}
 
-	private String getTaskName()
+	private final class PluginSelectionListener implements ListSelectionListener
 	{
-		JTextField txtTaskName = new JTextField();
-		JOptionPane.showMessageDialog(
-				_positionComponent,
-				txtTaskName,
-				Messages.getString("TXT_ENTER_TASK_NAME"), JOptionPane.INFORMATION_MESSAGE); //$NON-NLS-1$
-
-		return txtTaskName.getText();
-	}
-
-	private JPopupMenu getTaskPopup()
-	{
-		if (_taskPopup == null) {
-			_taskPopup = new JPopupMenu();
-			JMenuItem itmSettings = new JMenuItem(
-					Messages.getString("MNU_SETTINGS")); //$NON-NLS-1$
-			itmSettings.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e)
-				{
-					showSettingsPanel();
-				}
-			});
-			JMenuItem itmResult = new JMenuItem(
-					Messages.getString("MNU_RESULT")); //$NON-NLS-1$
-			itmResult.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e)
-				{
-					showResultPanel();
-				}
-			});
-			_taskPopup.add(itmSettings);
-			_taskPopup.add(itmResult);
-		}
-        
-		return _taskPopup;
-	}
-
-	private void showResultPanel()
-	{
-		TaskGUI currentTask = (TaskGUI) _taskListModel.get(_selectedItem);
-		IPlugin plugin = currentTask.getPlugin();
-		IResultComponent resultComponent = plugin.getResultComponent();
-		Component comp = resultComponent.getComponent(currentTask.getResult());
-		Dimension maxDim = new Dimension(400, 300);
-		Dimension prefDim = comp.getPreferredSize();
-		// setting maximum size
-		if (prefDim.height > maxDim.height) {
-			prefDim.height = maxDim.height;
-		}
-		if (prefDim.width > maxDim.width) {
-			prefDim.width = maxDim.width;
-		}
-		comp.setSize(prefDim);
-		JOptionPane.showMessageDialog(
-				_positionComponent,
-				comp,
-				Messages.getString("TIT_PLUGIN_RESULT"), JOptionPane.PLAIN_MESSAGE); //$NON-NLS-1$
-	}
-
-	private void showSettingsPanel()
-	{
-		TaskGUI currentTask = (TaskGUI) _taskListModel.get(_selectedItem);
-		IPlugin plugin = currentTask.getPlugin();
-		ISettingComponent settingComponent = plugin.getSettingComponent();
-		ISettings inputSettings = currentTask.getSettings();
-		if (inputSettings == null) {
-			inputSettings = plugin.getSettingComponent().getDefaultSettings();
-		}
-		int result = JOptionPane.showConfirmDialog(_positionComponent,
-				settingComponent.getComponent(inputSettings, null), //TODO: change it!!!
-				Messages.getString("TIT_PLUGIN_SETTINGS"), //$NON-NLS-1$
-				JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
-		if (result == JOptionPane.OK_OPTION) {
-			ISettings settings = settingComponent.getSettings();
-			LOGGER.info("settings: " + settings); //$NON-NLS-1$
-			currentTask.setSettings(settings);
+		public void valueChanged(ListSelectionEvent e)
+		{
+			_actionManager.getAddTaskAction().setPlugin((LocalPlugin)((JList)e.getSource()).getSelectedValue());				
 		}
 	}
 
@@ -543,21 +333,14 @@ public final class TaskEditionManager
 		private void maybeShowPopup(MouseEvent e)
 		{
 			if (e.isPopupTrigger()) {
-				// zapamietanie ktory komponent z listy wywoluje menu
 				JList list = (JList) e.getSource();
 				_selectedItem = list.locationToIndex(e.getPoint());
 				if (_selectedItem >= 0) {
-					if (list == _pluginList) {
-						getPluginPopup().show(e.getComponent(), e.getX(),
-								e.getY());
-					} else {
-						getTaskPopup().show(e.getComponent(), e.getX(),
-								e.getY());
-					}
+					getPluginPopup().show(e.getComponent(), e.getX(), e.getY());
 				}
 			}
 		}
 	}
 
-	static final Logger LOGGER = Logger.getLogger(TaskEditionManager.class);
+	private static final Logger LOGGER = Logger.getLogger(PluginMangerGUI.class);
 }

@@ -23,7 +23,7 @@ package salomon.engine.controller.gui.action;
 
 import javax.swing.AbstractAction;
 
-import salomon.engine.controller.gui.TaskEditionManager;
+import salomon.engine.controller.gui.TaskManagerGUI;
 
 /**
  * 
@@ -36,9 +36,9 @@ abstract class AbstractTaskAction extends AbstractAction
 	 * an object which method are called in implementation of actionPerformed()
 	 * method
 	 */
-	protected TaskEditionManager _taskEditionManager = null;
+	protected TaskManagerGUI _taskEditionManager = null;
 
-	protected AbstractTaskAction(TaskEditionManager editionManager)
+	protected AbstractTaskAction(TaskManagerGUI editionManager)
 	{
 		_taskEditionManager = editionManager;
 	}
