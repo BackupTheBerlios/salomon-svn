@@ -1,7 +1,3 @@
-/** Java class "KnowledgeSystem.java" generated from Poseidon for UML.
- *  Poseidon for UML is developed by <A HREF="http://www.gentleware.com">Gentleware</A>.
- *  Generated with <A HREF="http://jakarta.apache.org/velocity/">velocity</A> template engine.
- */
 
 package salomon.core;
 
@@ -10,53 +6,15 @@ package salomon.core;
  */
 public class Project
 {
-	/**
-	 * @return Returns the projectID.
-	 */
-	public int getProjectID()
-	{
-		return _projectID;
-	}
-
-	/**
-	 * @param projectId
-	 *            The projectID to set.
-	 */
-	public void setProjectID(int projectId)
-	{
-		_projectID = projectId;
-	}
-
-	private int _projectID = 0;
-
-	private String _name = null;
-
 	private String _info = null;
 
 	private ManagerEngine _managerEngine = null;
 
-	public Project(int projectID)
-	{
-		_projectID = projectID;
-	}
+	private String _name = null;
 
-	public Project()
-	{
-	}
+	private int _projectID = 0;
 
-	/**
-	 * @return Returns the managerEngine.
-	 */
-	public ManagerEngine getManagerEngine()
-	{
-		return _managerEngine;
-	}
-
-	/**
-	 * @param managerEngine
-	 *            The managerEngine to set.
-	 */
-	public void setManagerEngine(ManagerEngine managerEngine)
+	public Project(ManagerEngine managerEngine)
 	{
 		_managerEngine = managerEngine;
 	}
@@ -70,12 +28,11 @@ public class Project
 	}
 
 	/**
-	 * @param info
-	 *            The info to set.
+	 * @return Returns the managerEngine.
 	 */
-	public void setInfo(String info)
+	public ManagerEngine getManagerEngine()
 	{
-		_info = info;
+		return _managerEngine;
 	}
 
 	/**
@@ -87,11 +44,46 @@ public class Project
 	}
 
 	/**
+	 * @return Returns the projectID.
+	 */
+	public int getProjectID()
+	{
+		return _projectID;
+	}
+
+	/**
+	 * @param info
+	 *            The info to set.
+	 */
+	public void setInfo(String info)
+	{
+		_info = info;
+	}
+
+	/**
+	 * @param managerEngine
+	 *            The managerEngine to set.
+	 */
+	public void setManagerEngine(ManagerEngine managerEngine)
+	{
+		_managerEngine = managerEngine;
+	}
+
+	/**
 	 * @param name
 	 *            The name to set.
 	 */
 	public void setName(String name)
 	{
 		_name = name;
+	}
+
+	/**
+	 * @param projectId
+	 *            The projectID to set.
+	 */
+	public void setProjectID(int projectId)
+	{
+		_projectID = projectId;
 	}
 }
