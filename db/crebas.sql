@@ -176,9 +176,12 @@ values (1, 'test1', 'testowy data set');
 insert into "datasets"
 values (2, 'test2', 'drugi testowy data set');
 
+insert into "datasets"
+values (3, 'all_data', 'wszystkie dane');
+
 -- dataset_items 
 insert into  "dataset_items"
-values (1, 1, 'car_sales', 'price >= 50000');
+values (1, 1, 'cars', 'price >= 50000');
 
 insert into  "dataset_items"
 values (2, 1, 'car_sales', 'payment_type = ''card''');
