@@ -76,7 +76,7 @@ public final class ProjectEditionManager
 			_parent.refreshGui();
 		} catch (Exception e) {
 			_logger.fatal("", e);
-			_parent.showErrorMessage("Cannot load project.");
+			Utils.showErrorMessage("Cannot load project.");
 		}
 	}
 
@@ -148,7 +148,7 @@ public final class ProjectEditionManager
 			projectID = showProjectList(projectTable);
 		} catch (Exception e) {
 			_logger.fatal("", e);
-			_parent.showErrorMessage("Cannot load project list.");
+			Utils.showErrorMessage("Cannot load project list.");
 		}
 		return projectID;
 	}
@@ -160,7 +160,7 @@ public final class ProjectEditionManager
 		// task list cannot be empty
 		//
 		if (taskList.isEmpty()) {
-			_parent.showErrorMessage("There is no tasks to save");
+			Utils.showErrorMessage("There is no tasks to save");
 			return;
 		}
 		//
@@ -182,7 +182,7 @@ public final class ProjectEditionManager
 				message += task.getName() + "\n";
 			}
 			message += "Do you want to use default settings?";
-			if (_parent.showWarningMessage(message)) {
+			if (Utils.showWarningMessage(message)) {
 				// getting default settings
 				_logger.debug("getting default settings");
 				for (Iterator iter = incorrectTasks.iterator(); iter.hasNext();) {
@@ -212,15 +212,15 @@ public final class ProjectEditionManager
 			_projectManager.saveProject();
 			DBManager.getInstance().commit();
 			_logger.info("Transaction commited");
-			_parent.showInfoMessage("Project saved successfully");
+			Utils.showInfoMessage("Project saved successfully");
 		} catch (Exception e1) {
 			_logger.fatal("", e1);
-			_parent.showErrorMessage("Could not save project.");
+			Utils.showErrorMessage("Could not save project.");
 			try {
 				DBManager.getInstance().rollback();
 			} catch (Exception sqlEx) {
 				_logger.fatal("", sqlEx);
-				_parent.showErrorMessage("Could not rollback transaction.");
+				Utils.showErrorMessage("Could not rollback transaction.");
 			}
 		}
 	}

@@ -7,11 +7,13 @@ package salomon.controller.gui;
 
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.Collection;
@@ -20,9 +22,11 @@ import java.util.List;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JComponent;
+import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JTextField;
 
@@ -32,6 +36,7 @@ import salomon.core.IManagerEngine;
 import salomon.core.Messages;
 import salomon.core.plugin.PluginLoader;
 import salomon.core.task.ITask;
+import salomon.plugin.Description;
 import salomon.plugin.IPlugin;
 import salomon.plugin.IResultComponent;
 import salomon.plugin.ISettingComponent;
@@ -43,6 +48,8 @@ import salomon.plugin.ISettings;
  */
 public final class TaskEditionManager
 {
+
+	private JComponent _addPluginPanel;
 
 	private IManagerEngine _managerEngine;
 
@@ -66,6 +73,12 @@ public final class TaskEditionManager
 
 	private JPopupMenu _taskPopup;
 
+	private JTextField _txtPluginInfo;
+
+	private JTextField _txtPluginLocation;
+
+	private JTextField _txtPluginName;
+
 	public TaskEditionManager(IManagerEngine managerEngine)
 	{
 		_managerEngine = managerEngine;
@@ -78,11 +91,13 @@ public final class TaskEditionManager
 		_taskList.addMouseListener(_popupListener);
 		_pluginList.addMouseListener(_popupListener);
 		//TODO: getting plugin from Engine?
-		Collection urls = _managerEngine.getPluginManager().getAvailablePlugins();
-		for (Iterator iter = urls.iterator(); iter.hasNext();) {
-			URL url = (URL) iter.next();
-			_pluginListModel.addElement(new LocalPlugin(url));
-		}
+		// commented to avoid loading plugin list from server
+		//Collection urls =
+		// _managerEngine.getPluginManager().getAvailablePlugins();
+		//for (Iterator iter = urls.iterator(); iter.hasNext();) {
+		//	URL url = (URL) iter.next();
+		//	_pluginListModel.addElement(new LocalPlugin(url));
+		//}
 	}
 
 	/**
@@ -102,7 +117,7 @@ public final class TaskEditionManager
 				_taskListModel.addElement(taskGUI);
 			} catch (Exception e) {
 				_logger.fatal("", e); //$NON-NLS-1$				
-				_parent.showErrorMessage(Messages.getString("ERR_CANNOT_LOAD_PLUGIN"));
+				Utils.showErrorMessage(Messages.getString("ERR_CANNOT_LOAD_PLUGIN"));
 			}
 		} else {
 			_logger.warn("Invalid index. Wrong list selected?"); //$NON-NLS-1$
@@ -172,6 +187,7 @@ public final class TaskEditionManager
 		Collection plugins = _managerEngine.getPluginManager().getAvailablePlugins();
 		for (Iterator iter = plugins.iterator(); iter.hasNext();) {
 			LocalPlugin localPlugin = new LocalPlugin((URL) iter.next());
+            _logger.debug("adding plugin:" + localPlugin);
 			_pluginListModel.addElement(localPlugin);
 		}
 		_logger.debug("reloading tasks");
@@ -206,12 +222,33 @@ public final class TaskEditionManager
 	}
 
 	/**
-	 * @param parent
-	 *            The parent to set.
+	 * @param parent The parent to set.
 	 */
 	public void setParent(ControllerFrame parent)
 	{
 		_parent = parent;
+	}
+
+	private JComponent getAddPluginPanel()
+	{
+		if (_addPluginPanel == null) {
+			_addPluginPanel = new JPanel(new GridLayout(0, 2));
+
+			_addPluginPanel.add(new JLabel(Messages.getString("TXT_PLUGIN_NAME")));
+			_txtPluginName = new JTextField();
+			_addPluginPanel.add(_txtPluginName);
+			_addPluginPanel.add(new JLabel(Messages.getString("TXT_PLUGIN_LOCATION")));
+			_txtPluginLocation = new JTextField();
+			_addPluginPanel.add(_txtPluginLocation);
+			_addPluginPanel.add(new JLabel(Messages.getString("TXT_PLUGIN_INFO")));
+			_txtPluginInfo = new JTextField();
+			_addPluginPanel.add(_txtPluginInfo);
+		} else {
+			_txtPluginName.setText("");
+			_txtPluginLocation.setText("");
+			_txtPluginInfo.setText("");
+		}
+		return _addPluginPanel;
 	}
 
 	private JPopupMenu getPluginPopup()
@@ -225,7 +262,18 @@ public final class TaskEditionManager
 					showPluginInfo();
 				}
 			});
+			JMenuItem itmAdd = new JMenuItem(
+					Messages.getString("MNU_ADD_PLUGIN")); //$NON-NLS-1$
+			itmAdd.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e)
+				{
+					showAddPlugin();
+				}
+
+			});
 			_pluginPopup.add(itmInfo);
+			_pluginPopup.addSeparator();
+			_pluginPopup.add(itmAdd);
 		}
 		return _pluginPopup;
 	}
@@ -266,6 +314,30 @@ public final class TaskEditionManager
 		return _taskPopup;
 	}
 
+	private void showAddPlugin()
+	{
+		int retVal = JOptionPane.showConfirmDialog(_parent,
+				getAddPluginPanel(), Messages.getString("MNU_ADD_PLUGIN"),
+				JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+		if (retVal == JOptionPane.OK_OPTION) {
+			URL url = null;
+			try {
+				url = new URL(_txtPluginLocation.getText());
+			} catch (MalformedURLException e) {
+				_logger.fatal("", e);
+			}
+			Description desc = new Description();
+			desc.setName(_txtPluginName.getText());
+			desc.setLocation(url);
+			desc.setInfo(_txtPluginInfo.getText());
+			if (_managerEngine.getPluginManager().addPlugin(desc)) {                
+				refresh();
+            } else {
+                Utils.showErrorMessage(Messages.getString("ERR_CANNOT_ADD_PLUGIN"));
+            }            
+		}
+	}
+
 	private void showPluginInfo()
 	{
 		LocalPlugin plugin = (LocalPlugin) _pluginListModel.get(_selectedItem);
@@ -276,7 +348,7 @@ public final class TaskEditionManager
 			JOptionPane.showMessageDialog(_positionComponent, info);
 		} catch (Exception e) {
 			_logger.fatal("", e); //$NON-NLS-1$
-			_parent.showErrorMessage(Messages.getString("ERR_CANNOT_LOAD_PLUGIN")); //$NON-NLS-1$
+			Utils.showErrorMessage(Messages.getString("ERR_CANNOT_LOAD_PLUGIN")); //$NON-NLS-1$
 		}
 	}
 
@@ -378,13 +450,15 @@ public final class TaskEditionManager
 				// zapamietanie ktory komponent z listy wywoluje menu
 				JList list = (JList) e.getSource();
 				_selectedItem = list.locationToIndex(e.getPoint());
-                if (_selectedItem >= 0) {
-    				if (list == _pluginList) {
-    					getPluginPopup().show(e.getComponent(), e.getX(), e.getY());
-    				} else {
-    					getTaskPopup().show(e.getComponent(), e.getX(), e.getY());
-    				}
-                }
+				if (_selectedItem >= 0) {
+					if (list == _pluginList) {
+						getPluginPopup().show(e.getComponent(), e.getX(),
+								e.getY());
+					} else {
+						getTaskPopup().show(e.getComponent(), e.getX(),
+								e.getY());
+					}
+				}
 			}
 		}
 	}

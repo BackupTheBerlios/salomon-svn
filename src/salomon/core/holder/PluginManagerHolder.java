@@ -4,6 +4,7 @@ package salomon.core.holder;
 import java.util.Collection;
 
 import salomon.core.plugin.IPluginManager;
+import salomon.plugin.Description;
 
 /**
  * 
@@ -34,6 +35,14 @@ final class PluginManagerHolder implements IPluginManager
 	void setCurrent(IPluginManager pluginManager)
 	{
 		_currentPluginManager = pluginManager;
+	}
+
+	/* (non-Javadoc)
+	 * @see salomon.core.plugin.IPluginManager#addPlugin(salomon.plugin.Description)
+	 */
+	public boolean addPlugin(Description description)
+	{
+        return _currentPluginManager.addPlugin(description);
 	}
 
 	//	/* (non-Javadoc)

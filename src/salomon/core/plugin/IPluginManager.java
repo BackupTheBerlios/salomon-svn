@@ -3,6 +3,8 @@ package salomon.core.plugin;
 
 import java.util.Collection;
 
+import salomon.plugin.Description;
+
 /**
  * 
  * TODO: add comment.
@@ -13,5 +15,7 @@ import java.util.Collection;
 public interface IPluginManager
 {
 	public Collection getAvailablePlugins();
+    
+    public boolean addPlugin(Description description);
 	//    public IPlugin getPlugin(URL url);
 }
