@@ -27,12 +27,12 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
 import salomon.engine.controller.IController;
+import salomon.engine.controller.LibraryController;
 import salomon.engine.controller.LocalController;
 import salomon.engine.controller.MasterController;
 import salomon.engine.controller.ServantController;
 import salomon.engine.project.IProjectManager;
 import salomon.engine.project.ProjectManager;
-import salomon.engine.task.ITaskManager;
 import salomon.engine.task.TaskManager;
 
 import salomon.platform.exception.PlatformException;
@@ -70,15 +70,17 @@ public final class Starter
 	private void initManagers()
 	{
 		//FIXME: Create 
-        try {
-        	_managerEngine = new ManagerEngine();
-            TaskManager taskManager = (TaskManager) _managerEngine.getTasksManager();
-            IProjectManager projectManager = _managerEngine.getProjectManager();
-            taskManager.setProjectManger((ProjectManager) projectManager);
-        } catch (PlatformException e) {
-        	LOGGER.fatal("", e);   
-        }
-	}	private void start()
+		try {
+			_managerEngine = new ManagerEngine();
+			TaskManager taskManager = (TaskManager) _managerEngine.getTasksManager();
+			IProjectManager projectManager = _managerEngine.getProjectManager();
+			taskManager.setProjectManger((ProjectManager) projectManager);
+		} catch (PlatformException e) {
+			LOGGER.fatal("", e);
+		}
+	}
+
+	private void start()
 	{
 		initManagers();
 		_contoroller.start(_managerEngine);
@@ -89,6 +91,15 @@ public final class Starter
 		LOGGER.debug("starting ServantController");
 		_contoroller = new ServantController();
 		start();
+	}
+
+	private LibraryController startLibraryImpl()
+	{
+		LOGGER.debug("starting MasterController");
+		_contoroller = new LibraryController();
+		start();
+
+		return (LibraryController) _contoroller;
 	}
 
 	private void startLocalImpl()
@@ -103,6 +114,11 @@ public final class Starter
 		LOGGER.debug("starting MasterController");
 		_contoroller = new MasterController();
 		start();
+	}
+
+	public static LibraryController createLibraryController()
+	{
+		return Starter.startLibrary();
 	}
 
 	public static void exit()
@@ -155,6 +171,11 @@ public final class Starter
 	private static void startClient()
 	{
 		getInstance().startClientImpl();
+	}
+
+	private static LibraryController startLibrary()
+	{
+		return getInstance().startLibraryImpl();
 	}
 
 	private static void startLocal()
