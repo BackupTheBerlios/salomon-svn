@@ -1,5 +1,5 @@
 
-package salomon.core;
+package salomon.platform;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -29,8 +29,8 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
 import salomon.controller.gui.Utils;
-import salomon.core.data.DBManager;
-import salomon.core.data.DataEngine;
+import salomon.platform.data.DBManager;
+import salomon.platform.data.DataEngine;
 
 /**
  * Class represents simple SQL console. It is used to debug application. Allows

@@ -14,8 +14,8 @@ import javax.swing.JToolBar;
 import org.apache.log4j.Logger;
 
 import salomon.Starter;
-import salomon.core.Config;
-import salomon.core.Messages;
+import salomon.platform.Config;
+import salomon.platform.Messages;
 
 /**
  * Class represents main program frame. All components are put on its content

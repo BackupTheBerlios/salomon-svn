@@ -1,10 +1,10 @@
 
-package salomon.core.remote.event;
+package salomon.platform.remote.event;
 
 import java.util.EventObject;
 
-import salomon.core.remote.IRemoteController;
-import salomon.core.remote.CentralController;
+import salomon.platform.remote.IRemoteController;
+import salomon.platform.remote.CentralController;
 
 /**
  * An event used to notify about client's connection or disconnection from

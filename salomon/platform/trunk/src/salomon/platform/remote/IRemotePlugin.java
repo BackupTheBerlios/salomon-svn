@@ -1,11 +1,11 @@
 
-package salomon.core.remote;
+package salomon.platform.remote;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
-import salomon.core.data.DataEngine;
-import salomon.core.data.Environment;
+import salomon.platform.data.DataEngine;
+import salomon.platform.data.Environment;
 import salomon.plugin.IResult;
 import salomon.plugin.ISettings;
 

@@ -30,12 +30,12 @@ import salomon.controller.gui.SplashScreen;
 import salomon.controller.gui.TaskEditionManager;
 import salomon.controller.gui.Utils;
 import salomon.controller.gui.action.ActionManager;
-import salomon.core.Config;
-import salomon.core.IManagerEngine;
-import salomon.core.Messages;
-import salomon.core.Resources;
-import salomon.core.SQLConsole;
-import salomon.core.data.DBManager;
+import salomon.platform.Config;
+import salomon.platform.IManagerEngine;
+import salomon.platform.Messages;
+import salomon.platform.Resources;
+import salomon.platform.SQLConsole;
+import salomon.platform.data.DBManager;
 
 /**
  * Local implementation of IController interface.
@@ -63,7 +63,7 @@ public final class LocalController implements IController
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see salomon.controller.IController#start(salomon.core.IProjectManager)
+	 * @see salomon.controller.IController#start(salomon.platform.IProjectManager)
 	 */
 	public void start(IManagerEngine managerEngine)
 	{

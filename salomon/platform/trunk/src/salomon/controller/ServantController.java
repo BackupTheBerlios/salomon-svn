@@ -10,11 +10,11 @@ import java.rmi.registry.Registry;
 
 import org.apache.log4j.Logger;
 
-import salomon.core.Config;
-import salomon.core.IManagerEngine;
-import salomon.core.remote.ICentralController;
-import salomon.core.remote.IRemoteController;
-import salomon.core.remote.RemoteController;
+import salomon.platform.Config;
+import salomon.platform.IManagerEngine;
+import salomon.platform.remote.ICentralController;
+import salomon.platform.remote.IRemoteController;
+import salomon.platform.remote.RemoteController;
 
 /**
  * Class is a client implementation of IController interface.

@@ -1,5 +1,5 @@
 
-package salomon.core.remote;
+package salomon.platform.remote;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -9,8 +9,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
-import salomon.core.remote.event.IMasterControllerListener;
-import salomon.core.remote.event.RemoteControllerEvent;
+import salomon.platform.remote.event.IMasterControllerListener;
+import salomon.platform.remote.event.RemoteControllerEvent;
 
 /**
  * Class implements ICentralController interface. It is responsible for
@@ -42,7 +42,7 @@ public final class CentralController extends UnicastRemoteObject
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see salomon.core.ICentralController#register()
+	 * @see salomon.platform.ICentralController#register()
 	 */
 	public void register(IRemoteController remoteController)
 			throws RemoteException
@@ -60,7 +60,7 @@ public final class CentralController extends UnicastRemoteObject
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see salomon.core.ICentralController#unregister()
+	 * @see salomon.platform.ICentralController#unregister()
 	 */
 	public void unregister(IRemoteController remoteController)
 			throws RemoteException

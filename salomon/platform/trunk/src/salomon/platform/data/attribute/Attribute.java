@@ -1,4 +1,4 @@
-package salomon.core.data.attribute;
+package salomon.platform.data.attribute;
 
 /**
  *  Not used yet.

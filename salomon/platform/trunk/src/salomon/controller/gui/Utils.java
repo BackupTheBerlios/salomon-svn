@@ -15,7 +15,7 @@ import javax.swing.JTable;
 
 import org.apache.log4j.Logger;
 
-import salomon.core.Messages;
+import salomon.platform.Messages;
 
 /**
  * Class supply some useful methods used in GUI. All public methods are static

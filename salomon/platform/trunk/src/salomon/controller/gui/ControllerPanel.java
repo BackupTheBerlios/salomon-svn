@@ -17,8 +17,8 @@ import javax.swing.border.TitledBorder;
 import org.apache.log4j.Logger;
 
 import salomon.controller.gui.action.ActionManager;
-import salomon.core.Config;
-import salomon.core.Messages;
+import salomon.platform.Config;
+import salomon.platform.Messages;
 
 /**
  * Class represents main panel - list of tasks and available plugins, buttons to

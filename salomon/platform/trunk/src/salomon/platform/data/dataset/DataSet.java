@@ -1,5 +1,5 @@
 
-package salomon.core.data.dataset;
+package salomon.platform.data.dataset;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -8,8 +8,8 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import salomon.core.data.DBManager;
-import salomon.core.data.common.SQLSelect;
+import salomon.platform.data.DBManager;
+import salomon.platform.data.common.SQLSelect;
 
 /**
  * Class represents data set. Data set is a subset of data stored in tables, its

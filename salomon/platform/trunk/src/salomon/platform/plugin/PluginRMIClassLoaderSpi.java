@@ -1,5 +1,5 @@
 
-package salomon.core.plugin;
+package salomon.platform.plugin;
 
 import java.lang.reflect.Proxy;
 import java.net.MalformedURLException;

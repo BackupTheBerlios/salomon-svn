@@ -1,5 +1,5 @@
 
-package salomon.core.data.common;
+package salomon.platform.data.common;
 
 /**
  * 

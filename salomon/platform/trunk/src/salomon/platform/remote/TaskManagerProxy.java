@@ -1,5 +1,5 @@
 
-package salomon.core.remote;
+package salomon.platform.remote;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -12,8 +12,8 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 
-import salomon.core.task.ITask;
-import salomon.core.task.ITaskManager;
+import salomon.platform.task.ITask;
+import salomon.platform.task.ITaskManager;
 
 /**
  * Class is a sever side wrapper of IRemoteTaskManager object. It implements
@@ -39,7 +39,7 @@ public final class TaskManagerProxy implements ITaskManager
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see salomon.core.task.ITaskManager#clearTaskList()
+	 * @see salomon.platform.task.ITaskManager#clearTaskList()
 	 */
 	public void clearTaskList()
 	{
@@ -53,7 +53,7 @@ public final class TaskManagerProxy implements ITaskManager
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see salomon.core.task.ITaskManager#createTask()
+	 * @see salomon.platform.task.ITaskManager#createTask()
 	 */
 	public ITask createTask()
 	{
@@ -69,7 +69,7 @@ public final class TaskManagerProxy implements ITaskManager
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see salomon.core.task.ITaskManager#getCurrentTask()
+	 * @see salomon.platform.task.ITaskManager#getCurrentTask()
 	 */
 	public ITask getCurrentTask()
 	{
@@ -85,7 +85,7 @@ public final class TaskManagerProxy implements ITaskManager
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see salomon.core.task.ITaskManager#getTasks()
+	 * @see salomon.platform.task.ITaskManager#getTasks()
 	 */
 	public ITask[] getTasks()
 	{
@@ -106,7 +106,7 @@ public final class TaskManagerProxy implements ITaskManager
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see salomon.core.task.ITaskManager#start()
+	 * @see salomon.platform.task.ITaskManager#start()
 	 */
 	public void start()
 	{

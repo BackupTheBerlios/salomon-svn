@@ -34,10 +34,10 @@ import javax.swing.JTextField;
 import org.apache.log4j.Logger;
 
 import salomon.controller.gui.action.ActionManager;
-import salomon.core.IManagerEngine;
-import salomon.core.Messages;
-import salomon.core.plugin.PluginLoader;
-import salomon.core.task.ITask;
+import salomon.platform.IManagerEngine;
+import salomon.platform.Messages;
+import salomon.platform.plugin.PluginLoader;
+import salomon.platform.task.ITask;
 import salomon.plugin.Description;
 import salomon.plugin.IPlugin;
 import salomon.plugin.IResultComponent;

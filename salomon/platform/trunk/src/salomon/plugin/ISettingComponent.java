@@ -7,7 +7,7 @@ package salomon.plugin;
 
 import java.awt.Component;
 
-import salomon.core.data.DataEngine;
+import salomon.platform.data.DataEngine;
 
 /**
  * Interface represents object, which is responsible for showing plugin

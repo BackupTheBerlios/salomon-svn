@@ -1,5 +1,5 @@
 
-package salomon.core.remote;
+package salomon.platform.remote;
 
 import java.net.URL;
 import java.rmi.Remote;

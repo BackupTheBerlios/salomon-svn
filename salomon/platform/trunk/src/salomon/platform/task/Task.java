@@ -1,14 +1,14 @@
 
-package salomon.core.task;
+package salomon.platform.task;
 
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import salomon.core.data.DBManager;
-import salomon.core.data.IDBSupporting;
-import salomon.core.data.common.SQLDelete;
-import salomon.core.data.common.SQLUpdate;
+import salomon.platform.data.DBManager;
+import salomon.platform.data.IDBSupporting;
+import salomon.platform.data.common.SQLDelete;
+import salomon.platform.data.common.SQLUpdate;
 import salomon.plugin.IPlugin;
 import salomon.plugin.IResult;
 import salomon.plugin.ISettings;

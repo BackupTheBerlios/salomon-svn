@@ -15,9 +15,9 @@ import javax.swing.SwingUtilities;
 
 import org.apache.log4j.Logger;
 
-import salomon.core.Config;
-import salomon.core.Messages;
-import salomon.core.Resources;
+import salomon.platform.Config;
+import salomon.platform.Messages;
+import salomon.platform.Resources;
 
 /**
  * Class represents splash screen.

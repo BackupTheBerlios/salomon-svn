@@ -1,14 +1,14 @@
 
-package salomon.core.remote;
+package salomon.platform.remote;
 
 import java.rmi.RemoteException;
 
 import org.apache.log4j.Logger;
 
-import salomon.core.IManagerEngine;
-import salomon.core.plugin.IPluginManager;
-import salomon.core.project.IProjectManager;
-import salomon.core.task.ITaskManager;
+import salomon.platform.IManagerEngine;
+import salomon.platform.plugin.IPluginManager;
+import salomon.platform.project.IProjectManager;
+import salomon.platform.task.ITaskManager;
 
 /**
  * Class is a sever side wrapper of IRemoteManagerEngine object. It implements
@@ -42,7 +42,7 @@ public final class ManagerEngineProxy implements IManagerEngine
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see salomon.core.IManagerEngine#getPluginManager()
+	 * @see salomon.platform.IManagerEngine#getPluginManager()
 	 */
 	public IPluginManager getPluginManager()
 	{
@@ -52,7 +52,7 @@ public final class ManagerEngineProxy implements IManagerEngine
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see salomon.core.IManagerEngine#getProjectManager()
+	 * @see salomon.platform.IManagerEngine#getProjectManager()
 	 */
 	public IProjectManager getProjectManager()
 	{
@@ -62,7 +62,7 @@ public final class ManagerEngineProxy implements IManagerEngine
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see salomon.core.IManagerEngine#getTasksManager()
+	 * @see salomon.platform.IManagerEngine#getTasksManager()
 	 */
 	public ITaskManager getTasksManager()
 	{

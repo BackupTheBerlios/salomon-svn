@@ -1,5 +1,5 @@
 
-package salomon.core.task;
+package salomon.platform.task;
 
 import java.sql.SQLException;
 import java.util.Collection;
@@ -9,10 +9,10 @@ import java.util.LinkedList;
 
 import org.apache.log4j.Logger;
 
-import salomon.core.data.DBManager;
-import salomon.core.data.DataEngine;
-import salomon.core.data.Environment;
-import salomon.core.project.ProjectManager;
+import salomon.platform.data.DBManager;
+import salomon.platform.data.DataEngine;
+import salomon.platform.data.Environment;
+import salomon.platform.project.ProjectManager;
 import salomon.plugin.IPlugin;
 import salomon.plugin.IResult;
 import salomon.plugin.ISettings;

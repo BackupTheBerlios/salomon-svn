@@ -1,5 +1,5 @@
 
-package salomon.core.task;
+package salomon.platform.task;
 
 import salomon.plugin.IPlugin;
 import salomon.plugin.IResult;

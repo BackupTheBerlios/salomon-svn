@@ -1,5 +1,5 @@
 
-package salomon.core.data.common;
+package salomon.platform.data.common;
 
 import java.sql.Date;
 import java.sql.Time;

@@ -1,4 +1,4 @@
-package salomon.core.data.dataset;
+package salomon.platform.data.dataset;
 
 /**
  *  Not used.

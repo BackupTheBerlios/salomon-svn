@@ -1,5 +1,5 @@
 
-package salomon.core.project;
+package salomon.platform.project;
 
 import java.sql.SQLException;
 import java.util.Collection;

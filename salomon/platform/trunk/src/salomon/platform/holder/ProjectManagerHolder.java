@@ -1,11 +1,11 @@
 
-package salomon.core.holder;
+package salomon.platform.holder;
 
 import java.sql.SQLException;
 import java.util.Collection;
 
-import salomon.core.project.IProject;
-import salomon.core.project.IProjectManager;
+import salomon.platform.project.IProject;
+import salomon.platform.project.IProjectManager;
 
 /**
  * Holds projectManager of current client.
@@ -27,7 +27,7 @@ final class ProjectManagerHolder implements IProjectManager
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see salomon.core.IProjectManager#newProject()
+	 * @see salomon.platform.IProjectManager#newProject()
 	 */
 	public void newProject()
 	{
@@ -37,7 +37,7 @@ final class ProjectManagerHolder implements IProjectManager
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see salomon.core.IProjectManager#loadProject(int)
+	 * @see salomon.platform.IProjectManager#loadProject(int)
 	 */
 	public void loadProject(int projectID) throws Exception
 	{
@@ -47,7 +47,7 @@ final class ProjectManagerHolder implements IProjectManager
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see salomon.core.IProjectManager#saveProject(salomon.core.Project)
+	 * @see salomon.platform.IProjectManager#saveProject(salomon.platform.Project)
 	 */
 	public void saveProject() throws Exception, ClassNotFoundException
 	{
@@ -57,7 +57,7 @@ final class ProjectManagerHolder implements IProjectManager
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see salomon.core.IProjectManager#getCurrentProject()
+	 * @see salomon.platform.IProjectManager#getCurrentProject()
 	 */
 	public IProject getCurrentProject()
 	{
@@ -70,7 +70,7 @@ final class ProjectManagerHolder implements IProjectManager
 	}
 
 	/* (non-Javadoc)
-	 * @see salomon.core.project.IProjectManager#getAvailableProjects()
+	 * @see salomon.platform.project.IProjectManager#getAvailableProjects()
 	 */
 	public Collection getAvailableProjects() throws SQLException, ClassNotFoundException
 	{

@@ -1,12 +1,12 @@
 
 
-package salomon.core.data;
+package salomon.platform.data;
 
 import java.sql.SQLException;
 
-import salomon.core.data.attribute.AttributeManager;
-import salomon.core.data.dataset.DataSetManager;
-import salomon.core.data.ruleset.RuleSetManager;
+import salomon.platform.data.attribute.AttributeManager;
+import salomon.platform.data.dataset.DataSetManager;
+import salomon.platform.data.ruleset.RuleSetManager;
 
 /**
  *  Class holds  DataSetManager, RuleSetManager and AttributeManager instances.  

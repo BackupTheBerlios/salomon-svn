@@ -1,11 +1,11 @@
 
-package salomon.core.remote;
+package salomon.platform.remote;
 
 import java.rmi.RemoteException;
 
 import org.apache.log4j.Logger;
 
-import salomon.core.project.IProject;
+import salomon.platform.project.IProject;
 
 /**
  * Class is a sever side wrapper of IRemoteProject object. It implements
@@ -29,7 +29,7 @@ public final class ProjectProxy implements IProject
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see salomon.core.project.IProject#getInfo()
+	 * @see salomon.platform.project.IProject#getInfo()
 	 */
 	public String getInfo()
 	{
@@ -45,7 +45,7 @@ public final class ProjectProxy implements IProject
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see salomon.core.project.IProject#getName()
+	 * @see salomon.platform.project.IProject#getName()
 	 */
 	public String getName()
 	{
@@ -61,7 +61,7 @@ public final class ProjectProxy implements IProject
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see salomon.core.project.IProject#getProjectID()
+	 * @see salomon.platform.project.IProject#getProjectID()
 	 */
 	public int getProjectID()
 	{
@@ -77,7 +77,7 @@ public final class ProjectProxy implements IProject
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see salomon.core.project.IProject#setInfo(java.lang.String)
+	 * @see salomon.platform.project.IProject#setInfo(java.lang.String)
 	 */
 	public void setInfo(String info)
 	{
@@ -91,7 +91,7 @@ public final class ProjectProxy implements IProject
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see salomon.core.project.IProject#setName(java.lang.String)
+	 * @see salomon.platform.project.IProject#setName(java.lang.String)
 	 */
 	public void setName(String name)
 	{
@@ -105,7 +105,7 @@ public final class ProjectProxy implements IProject
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see salomon.core.project.IProject#setProjectID(int)
+	 * @see salomon.platform.project.IProject#setProjectID(int)
 	 */
 	public void setProjectID(int projectId)
 	{

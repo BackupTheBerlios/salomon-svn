@@ -10,11 +10,11 @@ import salomon.controller.ServantController;
 import salomon.controller.IController;
 import salomon.controller.LocalController;
 import salomon.controller.MasterController;
-import salomon.core.Config;
-import salomon.core.IManagerEngine;
-import salomon.core.ManagerEngine;
-import salomon.core.project.ProjectManager;
-import salomon.core.task.TaskManager;
+import salomon.platform.Config;
+import salomon.platform.IManagerEngine;
+import salomon.platform.ManagerEngine;
+import salomon.platform.project.ProjectManager;
+import salomon.platform.task.TaskManager;
 
 /**
  * Class starts application execution.

@@ -1,13 +1,13 @@
 
-package salomon.core.remote;
+package salomon.platform.remote;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.sql.SQLException;
 import java.util.Collection;
 
-import salomon.core.project.IProject;
-import salomon.core.project.IProjectManager;
+import salomon.platform.project.IProject;
+import salomon.platform.project.IProjectManager;
 
 /**
  * Class representing remote instance of IProjectManager.
@@ -34,7 +34,7 @@ public final class RemoteProjectManager extends UnicastRemoteObject
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see salomon.core.IRemoteProjectManager#newProject()
+	 * @see salomon.platform.IRemoteProjectManager#newProject()
 	 */
 	public void newProject() throws RemoteException
 	{
@@ -44,7 +44,7 @@ public final class RemoteProjectManager extends UnicastRemoteObject
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see salomon.core.IRemoteProjectManager#loadProject(int)
+	 * @see salomon.platform.IRemoteProjectManager#loadProject(int)
 	 */
 	public void loadProject(int projectID) throws Exception, RemoteException
 	{
@@ -54,7 +54,7 @@ public final class RemoteProjectManager extends UnicastRemoteObject
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see salomon.core.IRemoteProjectManager#saveProject(salomon.core.Project)
+	 * @see salomon.platform.IRemoteProjectManager#saveProject(salomon.platform.Project)
 	 */
 	public void saveProject() throws Exception, RemoteException,
 			ClassNotFoundException
@@ -65,7 +65,7 @@ public final class RemoteProjectManager extends UnicastRemoteObject
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see salomon.core.IRemoteProjectManager#getCurrentProject()
+	 * @see salomon.platform.IRemoteProjectManager#getCurrentProject()
 	 */
 	public IRemoteProject getCurrentProject() throws RemoteException
 	{
@@ -81,7 +81,7 @@ public final class RemoteProjectManager extends UnicastRemoteObject
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see salomon.core.remote.IRemoteProjectManager#getAvailableProjects()
+	 * @see salomon.platform.remote.IRemoteProjectManager#getAvailableProjects()
 	 */
 	public Collection getAvailableProjects() throws RemoteException,
 			SQLException, ClassNotFoundException

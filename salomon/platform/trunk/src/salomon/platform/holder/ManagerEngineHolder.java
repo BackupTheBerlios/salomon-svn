@@ -1,10 +1,10 @@
 
-package salomon.core.holder;
+package salomon.platform.holder;
 
-import salomon.core.IManagerEngine;
-import salomon.core.plugin.IPluginManager;
-import salomon.core.project.IProjectManager;
-import salomon.core.task.ITaskManager;
+import salomon.platform.IManagerEngine;
+import salomon.platform.plugin.IPluginManager;
+import salomon.platform.project.IProjectManager;
+import salomon.platform.task.ITaskManager;
 
 /**
  * Holds all other holders.
@@ -38,7 +38,7 @@ public final class ManagerEngineHolder implements IManagerEngine
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see salomon.core.IManagerEngine#getPluginManager()
+	 * @see salomon.platform.IManagerEngine#getPluginManager()
 	 */
 	public IPluginManager getPluginManager()
 	{
@@ -48,7 +48,7 @@ public final class ManagerEngineHolder implements IManagerEngine
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see salomon.core.IManagerEngine#getProjectManager()
+	 * @see salomon.platform.IManagerEngine#getProjectManager()
 	 */
 	public IProjectManager getProjectManager()
 	{
@@ -58,7 +58,7 @@ public final class ManagerEngineHolder implements IManagerEngine
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see salomon.core.IManagerEngine#getTasksManager()
+	 * @see salomon.platform.IManagerEngine#getTasksManager()
 	 */
 	public ITaskManager getTasksManager()
 	{

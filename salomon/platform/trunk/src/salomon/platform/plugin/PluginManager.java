@@ -3,7 +3,7 @@
  *
  */
 
-package salomon.core.plugin;
+package salomon.platform.plugin;
 
 import java.net.MalformedURLException;
 import java.sql.ResultSet;
@@ -13,9 +13,9 @@ import java.util.LinkedList;
 
 import org.apache.log4j.Logger;
 
-import salomon.core.data.DBManager;
-import salomon.core.data.common.SQLDelete;
-import salomon.core.data.common.SQLSelect;
+import salomon.platform.data.DBManager;
+import salomon.platform.data.common.SQLDelete;
+import salomon.platform.data.common.SQLSelect;
 import salomon.plugin.Description;
 
 /**

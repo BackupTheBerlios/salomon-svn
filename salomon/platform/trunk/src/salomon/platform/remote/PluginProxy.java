@@ -1,8 +1,8 @@
 
-package salomon.core.remote;
+package salomon.platform.remote;
 
-import salomon.core.data.DataEngine;
-import salomon.core.data.Environment;
+import salomon.platform.data.DataEngine;
+import salomon.platform.data.Environment;
 import salomon.plugin.Description;
 import salomon.plugin.IPlugin;
 import salomon.plugin.IResult;
@@ -56,8 +56,8 @@ public final class PluginProxy implements IPlugin
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see salomon.plugin.IDataPlugin#doJob(salomon.core.data.DataEngine,
-	 *      salomon.core.data.Environment, salomon.plugin.ISettings)
+	 * @see salomon.plugin.IDataPlugin#doJob(salomon.platform.data.DataEngine,
+	 *      salomon.platform.data.Environment, salomon.plugin.ISettings)
 	 */
 	public IResult doJob(DataEngine engine, Environment environment,
 			ISettings settings)

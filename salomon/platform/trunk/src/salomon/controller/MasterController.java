@@ -35,16 +35,16 @@ import salomon.controller.gui.SplashScreen;
 import salomon.controller.gui.TaskEditionManager;
 import salomon.controller.gui.Utils;
 import salomon.controller.gui.action.ActionManager;
-import salomon.core.Config;
-import salomon.core.IManagerEngine;
-import salomon.core.Messages;
-import salomon.core.Resources;
-import salomon.core.SQLConsole;
-import salomon.core.data.DBManager;
-import salomon.core.holder.ManagerEngineHolder;
-import salomon.core.remote.CentralController;
-import salomon.core.remote.event.IMasterControllerListener;
-import salomon.core.remote.event.RemoteControllerEvent;
+import salomon.platform.Config;
+import salomon.platform.IManagerEngine;
+import salomon.platform.Messages;
+import salomon.platform.Resources;
+import salomon.platform.SQLConsole;
+import salomon.platform.data.DBManager;
+import salomon.platform.holder.ManagerEngineHolder;
+import salomon.platform.remote.CentralController;
+import salomon.platform.remote.event.IMasterControllerListener;
+import salomon.platform.remote.event.RemoteControllerEvent;
 
 /**
  * Server side implementation of IController interface.
@@ -218,7 +218,7 @@ public final class MasterController implements IController
 		/*
 		 * (non-Javadoc)
 		 * 
-		 * @see salomon.core.remote.event.IMasterControllerListener#controllerAdded(salomon.core.remote.event.RemoteControllerEvent)
+		 * @see salomon.platform.remote.event.IMasterControllerListener#controllerAdded(salomon.platform.remote.event.RemoteControllerEvent)
 		 */
 		public void controllerAdded(RemoteControllerEvent event)
 		{
@@ -230,7 +230,7 @@ public final class MasterController implements IController
 		/*
 		 * (non-Javadoc)
 		 * 
-		 * @see salomon.core.remote.event.IMasterControllerListener#controllerRemoved(salomon.core.remote.event.RemoteControllerEvent)
+		 * @see salomon.platform.remote.event.IMasterControllerListener#controllerRemoved(salomon.platform.remote.event.RemoteControllerEvent)
 		 */
 		public void controllerRemoved(RemoteControllerEvent event)
 		{

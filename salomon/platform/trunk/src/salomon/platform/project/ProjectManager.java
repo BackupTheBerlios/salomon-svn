@@ -1,5 +1,5 @@
 
-package salomon.core.project;
+package salomon.platform.project;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,14 +11,14 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import salomon.controller.gui.Utils;
-import salomon.core.IManagerEngine;
-import salomon.core.data.DBManager;
-import salomon.core.data.common.SQLSelect;
-import salomon.core.data.common.SQLUpdate;
-import salomon.core.plugin.PluginLoader;
-import salomon.core.task.ITask;
-import salomon.core.task.Task;
-import salomon.core.task.TaskManager;
+import salomon.platform.IManagerEngine;
+import salomon.platform.data.DBManager;
+import salomon.platform.data.common.SQLSelect;
+import salomon.platform.data.common.SQLUpdate;
+import salomon.platform.plugin.PluginLoader;
+import salomon.platform.task.ITask;
+import salomon.platform.task.Task;
+import salomon.platform.task.TaskManager;
 import salomon.plugin.Description;
 import salomon.plugin.IPlugin;
 import salomon.plugin.ISettings;
@@ -237,7 +237,7 @@ public final class ProjectManager implements IProjectManager
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see salomon.core.project.IProjectManager#getAvailableProjects()
+	 * @see salomon.platform.project.IProjectManager#getAvailableProjects()
 	 */
 	public Collection getAvailableProjects() throws SQLException,
 			ClassNotFoundException

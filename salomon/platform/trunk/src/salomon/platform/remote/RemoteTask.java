@@ -1,5 +1,5 @@
 
-package salomon.core.remote;
+package salomon.platform.remote;
 
 import java.net.URL;
 import java.rmi.RemoteException;
@@ -7,8 +7,8 @@ import java.rmi.server.UnicastRemoteObject;
 
 import org.apache.log4j.Logger;
 
-import salomon.core.plugin.PluginLoader;
-import salomon.core.task.ITask;
+import salomon.platform.plugin.PluginLoader;
+import salomon.platform.task.ITask;
 import salomon.plugin.IResult;
 import salomon.plugin.ISettings;
 
@@ -32,7 +32,7 @@ public final class RemoteTask extends UnicastRemoteObject
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see salomon.core.remote.IRemoteTask#getName()
+	 * @see salomon.platform.remote.IRemoteTask#getName()
 	 */
 	public String getName() throws RemoteException
 	{
@@ -42,7 +42,7 @@ public final class RemoteTask extends UnicastRemoteObject
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see salomon.core.remote.IRemoteTask#getPlugin()
+	 * @see salomon.platform.remote.IRemoteTask#getPlugin()
 	 */
 	public URL getPlugin() throws RemoteException
 	{
@@ -52,7 +52,7 @@ public final class RemoteTask extends UnicastRemoteObject
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see salomon.core.remote.IRemoteTask#getResult()
+	 * @see salomon.platform.remote.IRemoteTask#getResult()
 	 */
 	public IResult getResult() throws RemoteException
 	{
@@ -62,7 +62,7 @@ public final class RemoteTask extends UnicastRemoteObject
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see salomon.core.remote.IRemoteTask#getSettings()
+	 * @see salomon.platform.remote.IRemoteTask#getSettings()
 	 */
 	public ISettings getSettings() throws RemoteException
 	{
@@ -72,7 +72,7 @@ public final class RemoteTask extends UnicastRemoteObject
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see salomon.core.remote.IRemoteTask#getStatus()
+	 * @see salomon.platform.remote.IRemoteTask#getStatus()
 	 */
 	public String getStatus() throws RemoteException
 	{
@@ -82,7 +82,7 @@ public final class RemoteTask extends UnicastRemoteObject
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see salomon.core.remote.IRemoteTask#getTaksId()
+	 * @see salomon.platform.remote.IRemoteTask#getTaksId()
 	 */
 	public int getTaskId() throws RemoteException
 	{
@@ -92,7 +92,7 @@ public final class RemoteTask extends UnicastRemoteObject
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see salomon.core.remote.IRemoteTask#setName(java.lang.String)
+	 * @see salomon.platform.remote.IRemoteTask#setName(java.lang.String)
 	 */
 	public void setName(String name) throws RemoteException
 	{
@@ -102,7 +102,7 @@ public final class RemoteTask extends UnicastRemoteObject
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see salomon.core.remote.IRemoteTask#setPlugin(salomon.plugin.IPlugin)
+	 * @see salomon.platform.remote.IRemoteTask#setPlugin(salomon.plugin.IPlugin)
 	 */
 	public void setPlugin(URL plugin) throws RemoteException
 	{
@@ -116,7 +116,7 @@ public final class RemoteTask extends UnicastRemoteObject
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see salomon.core.remote.IRemoteTask#setResult(salomon.plugin.IResult)
+	 * @see salomon.platform.remote.IRemoteTask#setResult(salomon.plugin.IResult)
 	 */
 	public void setResult(IResult result) throws RemoteException
 	{
@@ -126,7 +126,7 @@ public final class RemoteTask extends UnicastRemoteObject
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see salomon.core.remote.IRemoteTask#setSettings(salomon.plugin.ISettings)
+	 * @see salomon.platform.remote.IRemoteTask#setSettings(salomon.plugin.ISettings)
 	 */
 	public void setSettings(ISettings settings) throws RemoteException
 	{
@@ -136,7 +136,7 @@ public final class RemoteTask extends UnicastRemoteObject
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see salomon.core.remote.IRemoteTask#setStatus(java.lang.String)
+	 * @see salomon.platform.remote.IRemoteTask#setStatus(java.lang.String)
 	 */
 	public void setStatus(String status) throws RemoteException
 	{
@@ -146,7 +146,7 @@ public final class RemoteTask extends UnicastRemoteObject
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see salomon.core.remote.IRemoteTask#setTaksId(int)
+	 * @see salomon.platform.remote.IRemoteTask#setTaksId(int)
 	 */
 	public void setTaskId(int taskId) throws RemoteException
 	{

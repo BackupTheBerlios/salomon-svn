@@ -1,5 +1,5 @@
 
-package salomon.core.remote;
+package salomon.platform.remote;
 
 import java.rmi.RemoteException;
 import java.sql.SQLException;
@@ -7,8 +7,8 @@ import java.util.Collection;
 
 import org.apache.log4j.Logger;
 
-import salomon.core.project.IProject;
-import salomon.core.project.IProjectManager;
+import salomon.platform.project.IProject;
+import salomon.platform.project.IProjectManager;
 
 /**
  * Class is a sever side wrapper of IRemoteProjectManager object. It implements
@@ -36,7 +36,7 @@ public final class ProjectManagerProxy implements IProjectManager
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see salomon.core.IProjectManager#getCurrentProject()
+	 * @see salomon.platform.IProjectManager#getCurrentProject()
 	 */
 	public IProject getCurrentProject()
 	{
@@ -55,7 +55,7 @@ public final class ProjectManagerProxy implements IProjectManager
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see salomon.core.IProjectManager#loadProject(int)
+	 * @see salomon.platform.IProjectManager#loadProject(int)
 	 */
 	public void loadProject(int projectID) throws Exception
 	{
@@ -70,7 +70,7 @@ public final class ProjectManagerProxy implements IProjectManager
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see salomon.core.IProjectManager#newProject()
+	 * @see salomon.platform.IProjectManager#newProject()
 	 */
 	public void newProject()
 	{
@@ -85,7 +85,7 @@ public final class ProjectManagerProxy implements IProjectManager
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see salomon.core.IProjectManager#saveProject(salomon.core.Project)
+	 * @see salomon.platform.IProjectManager#saveProject(salomon.platform.Project)
 	 */
 	public void saveProject() throws Exception, ClassNotFoundException
 	{
@@ -99,7 +99,7 @@ public final class ProjectManagerProxy implements IProjectManager
 	private static Logger _logger = Logger.getLogger(ProjectManagerProxy.class);
 
 	/* (non-Javadoc)
-	 * @see salomon.core.project.IProjectManager#getAvailableProjects()
+	 * @see salomon.platform.project.IProjectManager#getAvailableProjects()
 	 */
 	public Collection getAvailableProjects() throws ClassNotFoundException, SQLException 
 	{

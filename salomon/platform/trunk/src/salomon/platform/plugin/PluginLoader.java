@@ -3,7 +3,7 @@
  *
  */
 
-package salomon.core.plugin;
+package salomon.platform.plugin;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -19,7 +19,7 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 
-import salomon.core.Config;
+import salomon.platform.Config;
 import salomon.plugin.IPlugin;
 
 /**
