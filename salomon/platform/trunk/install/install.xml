@@ -109,7 +109,7 @@ Installation file for salomon project
         </pack>
         <pack name="Docs" required="no">
             <description>The documentation</description>
-	    <file src="../docs/salomon.pdf" targetdir="$INSTALL_PATH/docs"/> <!-- Reccursive adding -->
+	    <file src="../docs/latex/salomon.pdf" targetdir="$INSTALL_PATH/docs"/> <!-- Reccursive adding -->
         </pack>
         <pack name="Sources" required="no">
 		<description>The sources</description>
