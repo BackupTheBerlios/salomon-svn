@@ -39,8 +39,8 @@ public final class Starter
 
 	public void start()
 	{
-		//		initManagers();
-		//		_contoroller.start(_managerEngine);
+		initManagers();
+		_contoroller.start(_managerEngine);
 		//		try {
 		//			new ProjectManager().loadProject(1);
 		//		} catch (Exception e) {
@@ -50,8 +50,7 @@ public final class Starter
 		//testInsert();
 		//testAutoInsert();
 		//testDelete();
-		testUpdate();
-		
+		//testUpdate();
 	}
 
 	public static void main(String[] args)
@@ -76,7 +75,7 @@ public final class Starter
 	private void testInsert()
 	{
 		DBTableName tableName = new DBTableName("tasks");
-		DBValue[] values = {				
+		DBValue[] values = {
 				new DBValue(new DBColumnName(tableName, "project_id"),
 						new Integer(2), DBValue.NUMBERIC),
 				new DBValue(new DBColumnName(tableName, "plugin_id"),
@@ -97,17 +96,17 @@ public final class Starter
 			_logger.fatal("", e);
 		}
 	}
+
 	private void testAutoInsert()
 	{
 		DBTableName tableName = new DBTableName("tasks");
-		DBValue[] values = {				
+		DBValue[] values = {
 				new DBValue(new DBColumnName(tableName, "project_id"),
 						new Integer(2), DBValue.NUMBERIC),
 				new DBValue(new DBColumnName(tableName, "plugin_id"),
 						new Integer(2), DBValue.NUMBERIC),
-				new DBValue(new DBColumnName(tableName, "name"), "test name auto inc",
-						DBValue.TEXT),
-				};		 
+				new DBValue(new DBColumnName(tableName, "name"),
+						"test name auto inc", DBValue.TEXT),};
 		try {
 			DBManager.getInstance().insert(values, "task_id");
 		} catch (SQLException e) {
@@ -116,6 +115,7 @@ public final class Starter
 			_logger.fatal("", e);
 		}
 	}
+
 	private void testDelete()
 	{
 		DBTableName tableName = new DBTableName("tasks");
@@ -123,19 +123,21 @@ public final class Starter
 				new DBCondition(new DBColumnName(tableName, "task_id"),
 						DBCondition.REL_M, new Integer(1), DBCondition.NUMBERIC),
 				new DBCondition(new DBColumnName(tableName, "plugin_id"),
-						DBCondition.REL_NEQ, new Integer(2), DBCondition.NUMBERIC)};
+						DBCondition.REL_NEQ, new Integer(2),
+						DBCondition.NUMBERIC)};
 		try {
-			DBManager.getInstance().delete(conditions);			
-		} catch (SQLException e) {			
-			_logger.fatal("",e);
-		} catch (ClassNotFoundException e) {			
-			_logger.fatal("",e);
+			DBManager.getInstance().delete(conditions);
+		} catch (SQLException e) {
+			_logger.fatal("", e);
+		} catch (ClassNotFoundException e) {
+			_logger.fatal("", e);
 		}
 	}
+
 	private void testUpdate()
 	{
 		DBTableName tableName = new DBTableName("tasks");
-		DBValue[] values = {				
+		DBValue[] values = {
 				new DBValue(new DBColumnName(tableName, "project_id"),
 						new Integer(2), DBValue.NUMBERIC),
 				new DBValue(new DBColumnName(tableName, "plugin_id"),
@@ -146,7 +148,8 @@ public final class Starter
 				new DBCondition(new DBColumnName(tableName, "task_id"),
 						DBCondition.REL_M, new Integer(1), DBCondition.NUMBERIC),
 				new DBCondition(new DBColumnName(tableName, "plugin_id"),
-						DBCondition.REL_NEQ, new Integer(2), DBCondition.NUMBERIC)};
+						DBCondition.REL_NEQ, new Integer(2),
+						DBCondition.NUMBERIC)};
 		try {
 			DBManager.getInstance().update(values, conditions);
 			DBManager.getInstance().update(values, null);
