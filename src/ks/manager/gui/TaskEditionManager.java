@@ -19,9 +19,9 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 
-import ks.core.Task;
 import ks.core.plugin.AbstractPlugin;
 import ks.core.plugin.Settings;
+import ks.core.task.Task;
 import ks.plugins.AveragePrice;
 import ks.plugins.SimpleSQLConsole;
 

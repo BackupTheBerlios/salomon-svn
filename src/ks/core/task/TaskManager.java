@@ -3,7 +3,7 @@
  *  Generated with <A HREF="http://jakarta.apache.org/velocity/">velocity</A> template engine.
  */
 
-package ks.core;
+package ks.core.task;
 
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -11,6 +11,7 @@ import java.util.LinkedList;
 import ks.core.data.DataEngine;
 import ks.core.data.Environment;
 import ks.core.plugin.Settings;
+
 import org.apache.log4j.Logger;
 
 /**
@@ -21,8 +22,6 @@ public final class TaskManager
 	private LinkedList _tasks;
 
 	private TaskEngine _taskEngine;
-
-	private DataPluginManager _dataPluginManager;
 
 	private DataEngine _dataEngine;
 

@@ -10,10 +10,10 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import ks.core.ManagerEngine;
-import ks.core.Task;
-import ks.core.TaskManager;
 import ks.core.event.TaskEvent;
 import ks.core.event.TaskListener;
+import ks.core.task.Task;
+import ks.core.task.TaskManager;
 import ks.manager.gui.*;
 
 /**

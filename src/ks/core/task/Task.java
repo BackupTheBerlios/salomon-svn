@@ -3,7 +3,7 @@
  *  Generated with <A HREF="http://jakarta.apache.org/velocity/">velocity</A> template engine.
  */
 
-package ks.core;
+package ks.core.task;
 
 import ks.core.data.Environment;
 import ks.core.plugin.AbstractPlugin;

@@ -5,21 +5,13 @@
 
 package ks.manager;
 
-import ks.core.Core;
 import ks.core.ManagerEngine;
 
 /**
  *  
  */
-public class ServerManager implements IManager
+public final class ServerManager implements IManager
 {
-	///////////////////////////////////////
-	// associations
-	/**
-	 *  
-	 */
-	public Core core;
-
 	/*
 	 * (non-Javadoc)
 	 * 

@@ -5,11 +5,16 @@
 
 package ks.core.data;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 import ks.core.Config;
-import ks.core.data.common.*;
-import ks.data.*;
+import ks.core.data.common.DBColumnName;
+import ks.core.data.common.DBCondition;
+import ks.core.data.common.DBTableName;
 
 import org.apache.log4j.Logger;
 
