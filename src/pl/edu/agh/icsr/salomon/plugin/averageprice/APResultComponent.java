@@ -30,4 +30,12 @@ public class APResultComponent implements IResultComponent
 		resultPanel.setSize(70, 70);
 		return resultPanel;
 	}
+
+	public IResult getDefaultResult()
+	{		
+		APResult result = new APResult();
+		result.setAveragePrice(0);
+		result.setSuccessful(true);
+		return result;
+	}
 }
