@@ -1,3 +1,23 @@
+/*
+ * Copyright (C) 2004 Salomon Team
+ *
+ * This file is part of Salomon.
+ *
+ * Salomon is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * Salomon is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with Salomon; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * 
+ */
 
 package pl.edu.agh.iisg.salomon.plugin.datasetunion;
 
@@ -5,6 +25,7 @@ import salomon.platform.IDataEngine;
 import salomon.platform.IEnvironment;
 import salomon.platform.data.dataset.IDataSet;
 import salomon.platform.data.dataset.IDataSetManager;
+
 import salomon.plugin.Description;
 import salomon.plugin.IPlugin;
 import salomon.plugin.IResult;
@@ -13,15 +34,10 @@ import salomon.plugin.ISettingComponent;
 import salomon.plugin.ISettings;
 
 /**
- * 
- * TODO: add comment.
- * 
- * @author krzychu
  *  
  */
-public class UPlugin implements IPlugin
+public final class UPlugin implements IPlugin
 {
-
 	private Description _description;
 
 	/**
@@ -32,9 +48,7 @@ public class UPlugin implements IPlugin
 		_description = new Description("UPlugin", DESCRPTION);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
+	/**
 	 * @see salomon.plugin.IPlugin#destroy()
 	 */
 	public void destroy()
@@ -42,18 +56,15 @@ public class UPlugin implements IPlugin
 		// not used
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see salomon.plugin.IDataPlugin#doJob(salomon.engine.platform.data.DataEngine,
-	 *      salomon.engine.platform.data.Environment, salomon.plugin.ISettings)
+	/**
+	 * @see salomon.plugin.IDataPlugin#doJob(salomon.platform.IDataEngine, salomon.platform.IEnvironment, salomon.plugin.ISettings)
 	 */
 	public IResult doJob(IDataEngine engine, IEnvironment environment,
 			ISettings settings)
 	{
 		IDataSetManager dataSetManager = engine.getDataSetManager();
 		USettings uSettings = (USettings) settings;
-        UResult uResult = new UResult();
+		UResult uResult = new UResult();
 		IDataSet firstDataSet;
 		try {
 			firstDataSet = dataSetManager.getDataSet(uSettings.getFirstDataSet());
@@ -61,16 +72,14 @@ public class UPlugin implements IPlugin
 			IDataSet result = dataSetManager.union(firstDataSet, secondDataSet);
 			result.setName(uSettings.getResultDataSet());
 			dataSetManager.add(result);
-			uResult.setSuccessfull(true);    
+			uResult.setSuccessfull(true);
 		} catch (Exception e) {
-            uResult.setSuccessfull(false);
+			uResult.setSuccessfull(false);
 		}
 		return uResult;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
+	/**
 	 * @see salomon.plugin.IPlugin#getDescription()
 	 */
 	public Description getDescription()
@@ -79,9 +88,7 @@ public class UPlugin implements IPlugin
 		return _description;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
+	/**
 	 * @see salomon.plugin.IGraphicPlugin#getResultComponent()
 	 */
 	public IResultComponent getResultComponent()
@@ -89,9 +96,7 @@ public class UPlugin implements IPlugin
 		return null;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
+	/**
 	 * @see salomon.plugin.IGraphicPlugin#getSettingComponent()
 	 */
 	public ISettingComponent getSettingComponent()
@@ -99,10 +104,8 @@ public class UPlugin implements IPlugin
 		return new USettingComponent();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see salomon.plugin.IPlugin#initizalize(salomon.engine.platform.data.DataEngine)
+	/**
+	 * @see salomon.plugin.IPlugin#initizalize()
 	 */
 	public void initizalize()
 	{

@@ -1,3 +1,23 @@
+/*
+ * Copyright (C) 2004 Salomon Team
+ *
+ * This file is part of Salomon.
+ *
+ * Salomon is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * Salomon is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with Salomon; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * 
+ */
 
 package pl.edu.agh.iisg.salomon.plugin.datasetunion;
 
@@ -13,14 +33,11 @@ import salomon.platform.IDataEngine;
 import salomon.platform.data.dataset.IDataSet;
 import salomon.platform.data.dataset.IDataSetManager;
 import salomon.platform.exception.PlatformException;
+
 import salomon.plugin.ISettingComponent;
 import salomon.plugin.ISettings;
 
 /**
- * 
- * TODO: add comment.
- * 
- * @author krzychu
  * 
  */
 public final class USettingComponent implements ISettingComponent
@@ -29,46 +46,20 @@ public final class USettingComponent implements ISettingComponent
 
 	private JComboBox _cmbSecondDataSet;
 
-	private JTextField _txtResultDataSet;
-
 	private JPanel _settingPanel;
+
+	private JTextField _txtResultDataSet;
 
 	/**
 	 * 
 	 */
 	public USettingComponent()
 	{
+        // empty body
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see salomon.plugin.ISettingComponent#getSettings()
-	 */
-	public ISettings getSettings()
-	{
-		USettings uSettings = new USettings();
-		uSettings.setFirstDataSet((String) _cmbFirstDataSet.getSelectedItem());
-		uSettings.setSecondDataSet((String) _cmbSecondDataSet.getSelectedItem());
-		uSettings.setResultDataSet(_txtResultDataSet.getText());
-		return uSettings;
-
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see salomon.plugin.ISettingComponent#getDefaultSettings()
-	 */
-	public ISettings getDefaultSettings()
-	{
-		return new USettings();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see salomon.plugin.ISettingComponent#getComponent(salomon.plugin.ISettings)
+	/**
+	 * @see salomon.plugin.ISettingComponent#getComponent(salomon.plugin.ISettings, salomon.platform.IDataEngine)
 	 */
 	public Component getComponent(ISettings settings, IDataEngine dataEngine)
 	{
@@ -87,7 +78,7 @@ public final class USettingComponent implements ISettingComponent
 		}
 		IDataSetManager dataSetManager = dataEngine.getDataSetManager();
 		IDataSet[] dataSets = null;
-        
+
 		try {
 			dataSetManager.getDataSets();
 		} catch (PlatformException e) {
@@ -107,5 +98,26 @@ public final class USettingComponent implements ISettingComponent
 		_txtResultDataSet.setText(uSettings.getResultDataSet());
 
 		return _settingPanel;
+	}
+
+	/**
+	 * @see salomon.plugin.ISettingComponent#getDefaultSettings()
+	 */
+	public ISettings getDefaultSettings()
+	{
+		return new USettings();
+	}
+
+	/**
+	 * @see salomon.plugin.ISettingComponent#getSettings()
+	 */
+	public ISettings getSettings()
+	{
+		USettings uSettings = new USettings();
+		uSettings.setFirstDataSet((String) _cmbFirstDataSet.getSelectedItem());
+		uSettings.setSecondDataSet((String) _cmbSecondDataSet.getSelectedItem());
+		uSettings.setResultDataSet(_txtResultDataSet.getText());
+        
+		return uSettings;
 	}
 }
