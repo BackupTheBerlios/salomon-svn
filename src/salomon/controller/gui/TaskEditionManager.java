@@ -45,8 +45,8 @@ import salomon.plugin.ISettingComponent;
 import salomon.plugin.ISettings;
 
 /**
- * @author nico
- *  
+ * Class used to manage with tasks editing. It enables creating and configuring
+ * tasks and a queue of tasks.
  */
 public final class TaskEditionManager
 {
@@ -98,8 +98,8 @@ public final class TaskEditionManager
 
 	public void addPlugin()
 	{
-        //TODO: change it
-        getEditPluginPanel();
+		//TODO: change it
+		getEditPluginPanel();
 		_txtPluginName.setText("");
 		_txtPluginLocation.setText("");
 		_txtPluginInfo.setText("");
@@ -485,11 +485,11 @@ public final class TaskEditionManager
 			Box box = Box.createHorizontalBox();
 			JLabel label = new JLabel(labelText);
 			label.setPreferredSize(_labelDim);
-            label.setMinimumSize(_labelDim);
-            label.setMaximumSize(_labelDim);
+			label.setMinimumSize(_labelDim);
+			label.setMaximumSize(_labelDim);
 			textField.setPreferredSize(_textDim);
-            textField.setMinimumSize(_textDim);
-            textField.setMaximumSize(_textDim);
+			textField.setMinimumSize(_textDim);
+			textField.setMaximumSize(_textDim);
 			box.add(label);
 			box.add(textField);
 

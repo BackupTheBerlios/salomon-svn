@@ -21,11 +21,8 @@ import salomon.core.Config;
 import salomon.core.Messages;
 
 /**
- * 
- * TODO: add comment.
- * 
- * @author krzychu
- *  
+ * Class represents main panel - list of tasks and available plugins, buttons to
+ * manage them.
  */
 public final class ControllerPanel extends JPanel
 {
@@ -87,16 +84,15 @@ public final class ControllerPanel extends JPanel
 		return _taskEditionManager;
 	}
 
-    public void refresh()
-    {
-        _logger.debug("ControllerPane: refreshing...");
-        super.validate();
-        _taskEditionManager.refresh();        
-    }
-    
+	public void refresh()
+	{
+		_logger.debug("ControllerPane: refreshing...");
+		super.validate();
+		_taskEditionManager.refresh();
+	}
+
 	/**
-	 * @param taskEditionManager
-	 *            The taskEditionManager to set.
+	 * @param taskEditionManager The taskEditionManager to set.
 	 */
 	public void setTaskEditionManager(TaskEditionManager taskEditionManager)
 	{

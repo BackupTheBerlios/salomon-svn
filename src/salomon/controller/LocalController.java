@@ -38,10 +38,7 @@ import salomon.core.SQLConsole;
 import salomon.core.data.DBManager;
 
 /**
- * 
- * TODO: add comment.
- * 
- * @author krzychu
+ * Local implementation of IController interface.
  *  
  */
 public final class LocalController implements IController

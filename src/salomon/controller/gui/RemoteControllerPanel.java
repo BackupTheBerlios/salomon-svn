@@ -22,11 +22,7 @@ import salomon.core.Messages;
 import salomon.core.holder.ManagerEngineHolder;
 
 /**
- * 
- * TODO: add comment.
- * 
- * @author krzychu
- *  
+ * Panel displaying list of connected clients. 
  */
 public final class RemoteControllerPanel
 {

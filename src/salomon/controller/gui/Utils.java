@@ -18,11 +18,8 @@ import org.apache.log4j.Logger;
 import salomon.core.Messages;
 
 /**
- * 
- * TODO: add comment.
- * 
- * @author nico
- *  
+ * Class supply some useful methods used in GUI. All public methods are static
+ * to simplyfy usage.
  */
 public class Utils
 {
@@ -61,6 +58,12 @@ public class Utils
 		return (retVal == JOptionPane.YES_OPTION);
 	}
 
+	/**
+	 * Creates JTable basing on given collection of data.
+	 * 
+	 * @param allData collection of data
+	 * @return JTable representing given data
+	 */
 	public static JTable createResultTable(Collection allData)
 	{
 		String[] columnNames = null;
@@ -151,26 +154,52 @@ public class Utils
 		return allData;
 	}
 
+	/**
+	 * Sets parent component. It is used to display messages relativly to it
+	 * 
+	 * @param parent parent component
+	 */
 	public static void setParent(JComponent parent)
 	{
 		getInstance().setParentImpl(parent);
 	}
 
+	/**
+	 * Shows an error message
+	 * 
+	 * @param msg text of the message
+	 */
 	public static void showErrorMessage(String msg)
 	{
 		getInstance().showErrorMessageImpl(msg);
 	}
 
+	/**
+	 * Shows an information message
+	 * 
+	 * @param msg text of the message
+	 */
 	public static void showInfoMessage(String msg)
 	{
 		getInstance().showInfoMessageImpl(msg);
 	}
 
+	/**
+	 * Shows a question message
+	 * 
+	 * @param title title of message
+	 * @param msg text of the message
+	 */
 	public static boolean showQuestionMessage(String title, String msg)
 	{
 		return getInstance().showQuestionMessageImpl(title, msg);
 	}
 
+	/**
+	 * Shows a warning message
+	 * 
+	 * @param msg text of the message
+	 */
 	public static boolean showWarningMessage(String msg)
 	{
 		return getInstance().showWarningMessageImpl(msg);
@@ -185,5 +214,6 @@ public class Utils
 	}
 
 	private static Utils _instance;
+
 	private static Logger _logger = Logger.getLogger(Utils.class);
 }

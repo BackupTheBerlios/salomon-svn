@@ -48,6 +48,7 @@ import salomon.core.remote.event.IMasterControllerListener;
 import salomon.core.remote.event.RemoteControllerEvent;
 
 /**
+ * Server side implementation of IController interface.
  *  
  */
 public final class ServerController implements IController

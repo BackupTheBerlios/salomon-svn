@@ -20,16 +20,10 @@ import salomon.core.Messages;
 import salomon.core.Resources;
 
 /**
- * 
- * TODO: add comment.
- * 
- * @author krzychu
- *  
+ * Class represents splash screen.
  */
 public final class SplashScreen
 {
-
-	//TODO:
 	private String _resourcesDir = null;
 
 	private JWindow _splashScreen = null;
@@ -54,7 +48,6 @@ public final class SplashScreen
 		if (SwingUtilities.isEventDispatchThread()) {
 			getInstance().hideSplashScreen();
 		} else {
-			_logger.debug("nie w gui");
 			try {
 				SwingUtilities.invokeAndWait(new Runnable() {
 					public void run()
@@ -130,10 +123,9 @@ public final class SplashScreen
 	}
 
 	/**
-	 * @author nico
 	 * 
 	 * Class represents splash screen label. It allows to place version and
-	 * other information at the scree
+	 * other information at the screen
 	 *  
 	 */
 	private class SplashLabel extends JLabel

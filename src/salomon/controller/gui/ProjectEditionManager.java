@@ -25,10 +25,7 @@ import salomon.core.task.ITaskManager;
 import salomon.plugin.ISettings;
 
 /**
- * 
- * TODO: add comment.
- * 
- * @author krzychu
+ * Class used to manage with projects editing.  
  *  
  */
 public final class ProjectEditionManager
@@ -38,10 +35,6 @@ public final class ProjectEditionManager
 	private ControllerFrame _parent;
 
 	private JPanel _pnlProjectProperties;
-
-	//private IProjectManager _projectManager;
-
-	//private ITaskManager _taskManager;
 
 	private TaskEditionManager _taskEditionManager;
 
@@ -55,12 +48,6 @@ public final class ProjectEditionManager
 	public ProjectEditionManager(IManagerEngine managerEngine)
 	{
 		_managerEngine = managerEngine;
-		// projects are saved on server
-		// if we want to save them on clients, we have to
-		// get projectManager and taskManager from managerEngine
-		// before every operation
-		//		_projectManager = _managerEngine.getProjectManager();
-		//        _taskManager = _managerEngine.getTasksManager();
 	}
 
 	public void newProject()

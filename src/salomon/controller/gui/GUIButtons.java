@@ -18,7 +18,7 @@ import salomon.core.Config;
 import salomon.core.Resources;
 
 /**
- * @author nico Class agregates all buttons used in GUIController.
+ * Class agregates all buttons used in GUIController.
  */
 public final class GUIButtons
 {

@@ -4,7 +4,7 @@ package salomon.controller;
 import salomon.core.IManagerEngine;
 
 /**
- *  
+ * An interface implemented by all controllers. 
  */
 public interface IController
 {

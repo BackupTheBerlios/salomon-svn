@@ -7,10 +7,8 @@ import salomon.plugin.IResult;
 import salomon.plugin.ISettings;
 
 /**
- * 
- * TODO: add comment.
- * 
- * @author krzychu
+ * Class is graphic representation of a task.
+ * It is used to display them on the list of tasks. 
  *  
  */
 public final class TaskGUI

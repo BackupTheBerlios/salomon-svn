@@ -10,10 +10,8 @@ import salomon.core.remote.IRemoteController;
 import salomon.core.remote.ManagerEngineProxy;
 
 /**
- * 
- * TODO: add comment.
- * 
- * @author krzychu
+ * Class is graphic representation of client controllers connected to server.
+ * It is used to display then on the list of connected clients. 
  *  
  */
 public final class RemoteControllerGUI

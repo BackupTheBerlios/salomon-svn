@@ -17,12 +17,9 @@ import salomon.Starter;
 import salomon.core.Config;
 import salomon.core.Messages;
 
-/*
- * Created on 2004-05-03
- *  
- */
 /**
- * @author nico
+ * Class represents main program frame. All components are put on its content
+ * pane.
  *  
  */
 public final class ControllerFrame extends JFrame
@@ -47,7 +44,7 @@ public final class ControllerFrame extends JFrame
 	public void refreshGui()
 	{
 		_logger.debug("refreshing GUI");
-        _controllerPanel.refresh();	
+		_controllerPanel.refresh();
 	}
 
 	public void setControllerPanel(ControllerPanel controllerPanel)
@@ -68,7 +65,7 @@ public final class ControllerFrame extends JFrame
 
 	private void exit()
 	{
-        Starter.exit();
+		Starter.exit();
 	}
 
 	/**

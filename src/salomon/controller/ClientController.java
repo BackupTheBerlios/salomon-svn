@@ -18,7 +18,7 @@ import salomon.core.remote.IRemoteController;
 import salomon.core.remote.RemoteController;
 
 /**
- *  
+ * Class is a client implementation of IController interface.
  */
 public final class ClientController implements IController
 {
