@@ -10,31 +10,17 @@ package ks.core;
  */
 public class ManagerEngine
 {
-	///////////////////////////////////////
-	// associations
-	/**
-	 *  
-	 */
-	public TaskManager taskManager;
-
-	///////////////////////////////////////
-	// operations
-	/**
-	 * Does ...
-	 * 
-	 * @return
-	 */
+	private TaskManager _taskManager = null;
+	
+	public ManagerEngine() {
+		_taskManager = new TaskManager();
+	}
+	
 	public TaskManager getTasksManager()
-	{
-		// your code here
-		return null;
-	} // end getTasksManager
-
-	/**
-	 * Does ...
-	 * 
-	 * @return
-	 */
+	{		
+		return _taskManager;
+	} 
+	
 	public KnowledgeSystem getKnowledgeSystems()
 	{
 		// your code here
