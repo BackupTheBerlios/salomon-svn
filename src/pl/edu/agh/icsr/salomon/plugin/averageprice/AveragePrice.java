@@ -140,28 +140,28 @@ public class AveragePrice implements IPlugin
 		// getting additional conditions (from settings)
 		//
 		List additionalConditions = new LinkedList();
-		Object value = null;
+		String value = null;
 		APSettings apSettings = (APSettings) settings;
 		value = apSettings.getName();
-		if (value != null) {
+		if (value != null && ! "".equals(value.trim())) {
 			additionalConditions.add(new DBCondition(new DBColumnName(
 					tableNames[0], "name"), DBCondition.REL_LIKE,
 					value.toString(), DBCondition.TEXT));
 		}
 		value = apSettings.getSurname();
-		if (value != null) {
+		if (value != null && ! "".equals(value.trim())) {
 			additionalConditions.add(new DBCondition(new DBColumnName(
 					tableNames[0], "surname"), DBCondition.REL_LIKE,
 					value.toString(), DBCondition.TEXT));
 		}
 		value = apSettings.getNick();
-		if (value != null) {
+		if (value != null && ! "".equals(value.trim())) {
 			additionalConditions.add(new DBCondition(new DBColumnName(
 					tableNames[0], "nick"), DBCondition.REL_LIKE,
 					value.toString(), DBCondition.TEXT));
 		}
 		value = apSettings.getEmail();
-		if (value != null) {
+		if (value != null && ! "".equals(value.trim())) {
 			additionalConditions.add(new DBCondition(new DBColumnName(
 					tableNames[0], "email"), DBCondition.REL_LIKE,
 					value.toString(), DBCondition.TEXT));
