@@ -44,13 +44,13 @@ public final class PluginLoader
 		}
 		// creating class loader
 		PluginClassLoader classLoader = PluginClassLoader.getInstance();
-        classLoader.addUrl(url);
+		classLoader.addUrl(url);
 		// loading appropriate plugin (it has to be in *.jar file
 		plugin = (IPlugin) classLoader.findMainClass(pluginFile).newInstance();
 
 		plugin.getDescription().setLocation(url);
 		_pluginsLoaded.put(plugin, url);
-        
+
 		return plugin;
 	}
 
