@@ -7,10 +7,8 @@ import salomon.core.plugin.IPluginManager;
 import salomon.plugin.Description;
 
 /**
- * 
- * TODO: add comment.
- * 
- * @author krzychu
+ * Holds pluginManager of current client.
+ * It is used by ManagerEngineHolder to switch between connected clients.
  *  
  */
 final class PluginManagerHolder implements IPluginManager

@@ -7,10 +7,8 @@ import salomon.core.task.ITask;
 import salomon.core.task.ITaskManager;
 
 /**
- * 
- * TODO: add comment.
- * 
- * @author krzychu
+ * Holds taskManager of current client.
+ * It is used by ManagerEngineHolder to switch between connected clients.
  *  
  */
 final class TaskManagerHolder implements ITaskManager

@@ -7,10 +7,8 @@ import salomon.core.project.IProjectManager;
 import salomon.core.task.ITaskManager;
 
 /**
- * 
- * TODO: add comment.
- * 
- * @author krzychu
+ * Holds all other holders.
+ * It manges with swithing between connected clients.
  *  
  */
 public final class ManagerEngineHolder implements IManagerEngine

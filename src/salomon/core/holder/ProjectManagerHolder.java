@@ -8,10 +8,8 @@ import salomon.core.project.IProject;
 import salomon.core.project.IProjectManager;
 
 /**
- * 
- * TODO: add comment.
- * 
- * @author krzychu
+ * Holds projectManager of current client.
+ * It is used by ManagerEngineHolder to switch between connected clients.
  *  
  */
 final class ProjectManagerHolder implements IProjectManager
