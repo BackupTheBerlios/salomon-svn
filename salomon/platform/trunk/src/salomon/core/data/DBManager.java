@@ -15,10 +15,10 @@ import org.apache.log4j.Logger;
 
 import salomon.controller.gui.Utils;
 import salomon.core.Config;
-import salomon.core.data.common.DBColumnName;
-import salomon.core.data.common.DBCondition;
-import salomon.core.data.common.DBTableName;
-import salomon.core.data.common.DBValue;
+import salomon.core.data.common.SQLDelete;
+import salomon.core.data.common.SQLInsert;
+import salomon.core.data.common.SQLSelect;
+import salomon.core.data.common.SQLUpdate;
 
 /**
  * Class is responsible for data base operations. It enables executing SQL
@@ -52,8 +52,8 @@ public class DBManager
 	}
 
 	/**
-	 * Commits current transaction.
-	 * Exception is caught, if occurs it inidicated critical error. 
+	 * Commits current transaction. Exception is caught, if occurs it indicates
+	 * critical error.
 	 */
 	public void commit()
 	{
@@ -61,28 +61,22 @@ public class DBManager
 		try {
 			_connection.commit();
 		} catch (SQLException e) {
-            _logger.fatal("!!!COMMIT FAILED!!!");
-            Utils.showErrorMessage("ERR_CRITICAL");
+			_logger.fatal("!!!COMMIT FAILED!!!");
+			Utils.showErrorMessage("ERR_CRITICAL");
 			_logger.fatal("", e);
 		}
 	}
 
 	/**
-	 * Deletes records basing on given conditions. Table name is taken from the
-	 * first condition.
+	 * Deletes records basing on given SQLDelete object.
 	 * 
-	 * @param conditions conditions of query
+	 * @param deleteObject object holding DELETE query
 	 * @return number of deleted records
 	 * @throws SQLException
 	 */
-	public int delete(DBCondition[] conditions) throws SQLException
+	public int delete(SQLDelete deleteObject) throws SQLException
 	{
-		String tableName = conditions[0].getTableName().getForUpdate();
-		String query = "DELETE FROM " + tableName + " WHERE ";
-		for (int i = 0; i < conditions.length - 1; i++) {
-			query += conditions[i] + " AND "; //$NON-NLS-1$
-		}
-		query += conditions[conditions.length - 1];
+		String query = deleteObject.getQuery();
 		_logger.info("query = " + query); //$NON-NLS-1$
 		return _statement.executeUpdate(query);
 	}
@@ -110,7 +104,7 @@ public class DBManager
 	 */
 	public boolean executeQuery(String query) throws SQLException
 	{
-        _logger.info("Executing query = " + query); //$NON-NLS-1$
+		_logger.info("Executing query = " + query); //$NON-NLS-1$
 		return _statement.execute(query);
 	}
 
@@ -137,73 +131,78 @@ public class DBManager
 	}
 
 	/**
-	 * Inserts record specified in DBValue array. Table name is taken from the
-	 * first element from array.
+	 * Inserts record specified SQLInsert object.
 	 * 
-	 * @param values values to insert
+	 * @param insertObject object holding INSERT query
 	 * @return always false
 	 * @throws SQLException
 	 */
-	public boolean insert(DBValue[] values) throws SQLException
+	public boolean insert(SQLInsert insertObject) throws SQLException
 	{
-		String query = "INSERT INTO ";
-		String tableName = values[0].getColumnName().getTableName().toString();
-		query += tableName + "(";
-		for (int i = 0; i < values.length - 1; i++) {
-			query += values[i].getColumnName().getForUpdate() + ",";
-		}
-		query += values[values.length - 1].getColumnName().getForUpdate()
-				+ ") VALUES (";
-		for (int i = 0; i < values.length - 1; i++) {
-			query += values[i].getStringValue() + ",";
-		}
-		query += values[values.length - 1].getStringValue() + ")";
+		String query = insertObject.getQuery();
 		_logger.info("query = " + query); //$NON-NLS-1$	
 		return _statement.execute(query);
 	}
 
 	/**
-	 * Inserts record specified in DBValue array. Table name is taken from the
-	 * first element from array. Method autoincrement value in column
-	 * primaryKey.
+	 * Inserts record specified SQLInsert object. Method autoincrement value in
+	 * column primaryKey.
 	 * 
-	 * @param values values to insert
+	 * @param insertObject object holding INSERT query
 	 * @param primaryKey primary key column name
 	 * @return generated primary key
 	 * @throws SQLException
 	 */
-	public int insert(DBValue[] values, String primaryKey) throws SQLException
+	public int insert(SQLInsert insertObject, String primaryKey)
+			throws SQLException
 	{
-		String tableName = values[0].getColumnName().getTableName().toString();
-		//
 		// selecting value of primary key
-		//
-		String autoIncrement = "SELECT coalesce(max(\"" + primaryKey
-				+ "\"), 0) + 1 ";
-		autoIncrement += "FROM " + tableName;
+		String autoIncrement = "SELECT coalesce(max(" + primaryKey
+				+ "), 0) + 1 ";
+		autoIncrement += "FROM " + insertObject.getTableName();
 		_logger.debug("autoIncrement: " + autoIncrement);
 		ResultSet resultSet = _statement.executeQuery(autoIncrement);
 		resultSet.next();
 		int primaryKeyID = resultSet.getInt(1);
 		_logger.debug("primaryKeyID: " + primaryKeyID);
-		//
+		resultSet.close();
+
 		// Inserting data
-		//
-		String query = "INSERT INTO ";
-		//
-		// first column name is primary key
-		//
-		query += tableName + "(\"" + primaryKey + "\"";
-		for (int i = 0; i < values.length; i++) {
-			query += "," + values[i].getColumnName().getForUpdate();
-		}
-		query += ") VALUES (" + primaryKeyID;
-		for (int i = 0; i < values.length; i++) {
-			query += "," + values[i].getStringValue();
-		}
-		query += ")";
-		_logger.info("query = " + query); //$NON-NLS-1$
-		_statement.execute(query);
+		//(primary key will be at the end of query, it's not nice
+		// but doesn't requeire any changes in SQLInsert class
+		insertObject.addValue(primaryKey, primaryKeyID);
+		insert(insertObject);
+		return primaryKeyID;
+	}
+
+	/**
+	 * Inserts record specified SQLInsert object. Method autoincrement value in
+	 * column primaryKey using specified generator.
+	 * 
+	 * @param insertObject object holding INSERT query
+	 * @param primaryKey primary key column name
+	 * @param generator generator name
+	 * @return generated primary key
+	 * @throws SQLException
+	 */
+	public int insert(SQLInsert insertObject, String primaryKey,
+			String generator) throws SQLException
+	{
+		// selecting value of primary key
+		String autoIncrement = "SELECT GEN_ID(" + generator
+				+ ", 1) FROM RDB$DATABASE";
+		_logger.debug("autoIncrement: " + autoIncrement);
+		ResultSet resultSet = _statement.executeQuery(autoIncrement);
+		resultSet.next();
+		int primaryKeyID = resultSet.getInt(1);
+		_logger.debug("primaryKeyID: " + primaryKeyID);
+		resultSet.close();
+
+		// Inserting data
+		//(primary key will be at the end of query, it's not nice
+		// but doesn't requeire any changes in SQLInsert class
+		insertObject.addValue(primaryKey, primaryKeyID);
+		insert(insertObject);
 		return primaryKeyID;
 	}
 
@@ -211,131 +210,88 @@ public class DBManager
 	 * Method inserts new record if hasn't exist one with given id yet,
 	 * otherwise performs update.
 	 * 
-	 * @param values values to insert/update
-	 * @param primaryKey name of primary key of table name
-	 * @param id id of updated record
+	 * @param updateObject object to insert/update
+	 * @param primaryKey name of primary key of table
+	 * @param id id of record to upddate/insert
 	 * @return id of inserted/updated record
 	 * @throws SQLException
 	 */
-	public int insertOrUpdate(DBValue[] values, String primaryKey, int id)
+	public int insertOrUpdate(SQLUpdate updateObject, String primaryKey, int id)
 			throws SQLException
 	{
-
-		DBTableName[] tableName = {values[0].getColumnName().getTableName()};
-		_logger.info("Inserting to table:  " + tableName[0]);
-		DBCondition[] conditions = {new DBCondition(new DBColumnName(
-				tableName[0], primaryKey), DBCondition.REL_EQ, new Integer(id),
-				DBCondition.NUMBERIC)};
-		ResultSet resultSet = null;
-		resultSet = select(null, tableName, conditions);
-		// 
-		// if record exists in base its id is selected
-		// otherwise new id is generated
-		//
-		if (resultSet.next()) {
-			id = resultSet.getInt(primaryKey);
-			_logger.info("Record found, id = " + id);
-			resultSet.close();
-			update(values, conditions);
-			_logger.info("Record updated");
-		} else {
-			id = insert(values, primaryKey);
-			_logger.info("New record inserted, id = " + id);
+		int foundID = updateIfExists(updateObject, primaryKey, id);
+		if (foundID < 0) {
+			foundID = insert(updateObject.updateToInsert(), primaryKey);
+			_logger.info("New record inserted, id = " + foundID);
 		}
-		return id;
+		return foundID;
 	}
+    /**
+     * Method inserts new record if hasn't exist one with given id yet,
+     * otherwise performs update.
+     * 
+     * @param updateObject object to insert/update
+     * @param primaryKey name of primary key of table
+     * @param id id of record to upddate/insert
+     * @param generator name of generator used to generate primary key
+     * @return id of inserted/updated record
+     * @throws SQLException
+     */
+    public int insertOrUpdate(SQLUpdate updateObject, String primaryKey, int id, String generator)
+            throws SQLException
+    {
+        int foundID = updateIfExists(updateObject, primaryKey, id);
+        if (foundID < 0) {            
+            foundID = insert(updateObject.updateToInsert(), primaryKey, generator);
+            _logger.info("New record inserted, id = " + foundID);
+        }
+        return foundID;
+    }    
 
 	/**
-	 * Annuls current transaction. 
-	 * Exception is caught, if occurs it inidicated critical error.
-     * 
+	 * Annuls current transaction. Exception is caught, if occurs it indicates
+	 * critical error.
+	 *  
 	 */
 
 	public void rollback()
 	{
 		_logger.info("Rollback");
-        try {
-            _connection.rollback();
-        } catch (SQLException e) {
-            _logger.fatal("!!!ROLLBACK FAILED!!!");
-            Utils.showErrorMessage("ERR_CRITICAL");
-            _logger.fatal("", e);
-        }
+		try {
+			_connection.rollback();
+		} catch (SQLException e) {
+			_logger.fatal("!!!ROLLBACK FAILED!!!");
+			Utils.showErrorMessage("ERR_CRITICAL");
+			_logger.fatal("", e);
+		}
 	}
 
 	/**
-	 * Method selects data from data base. It selects columns specified in
-	 * columnNames or all columns if columnNames are null. Selection is made
-	 * from tables basing on tableNames using conditions specified in
-	 * conditions. If conditions is null, all data is selected.
+	 * Method selects data from data base getting query from given SQLInsert
+	 * object.
 	 * 
-	 * @param columnNames column names to select (if null all columns are
-	 *            selected)
-	 * @param tableNames tables used in conditions (not null)
-	 * @param conditions conditions of query (if null all data are selected)
+	 * @param selectObject object holgind SELECT query
 	 * @return selected result set
 	 * @throws SQLException
 	 */
-	public ResultSet select(DBColumnName[] columnNames,
-			DBTableName[] tableNames, DBCondition[] conditions)
-			throws SQLException
+	public ResultSet select(SQLSelect selectObject) throws SQLException
 	{
-		//TODO: synchronizacja aliasow
-		String query = "SELECT "; //$NON-NLS-1$
-		if (columnNames == null) {
-			query += "*"; //$NON-NLS-1$
-		} else {
-			for (int i = 0; i < columnNames.length - 1; i++) {
-				query += columnNames[i] + ", "; //$NON-NLS-1$
-			}
-			query += columnNames[columnNames.length - 1];
-		}
-		_logger.debug("query = " + query); //$NON-NLS-1$
-		query += " FROM "; //$NON-NLS-1$
-		for (int i = 0; i < tableNames.length - 1; i++) {
-			query += tableNames[i].getForSelect() + ", "; //$NON-NLS-1$
-		}
-		query += tableNames[tableNames.length - 1].getForSelect();
-		_logger.debug("query = " + query); //$NON-NLS-1$
-		if (conditions != null) {
-			query += " WHERE "; //$NON-NLS-1$
-			for (int i = 0; i < conditions.length - 1; i++) {
-				query += conditions[i] + " AND "; //$NON-NLS-1$
-			}
-			query += conditions[conditions.length - 1];
-		}
+		String query = selectObject.getQuery();
 		_logger.info("query = " + query); //$NON-NLS-1$
 		return _statement.executeQuery(query);
 	}
 
 	/**
-	 * Updates records to values specified in values array basing on given
-	 * conditions. Table name is taken from the first element of values array.
-	 * If conditions array is null, all data from appropriate table are updated.
+	 * Updates records to values specified in SQLUpdate object.
 	 * 
 	 * @param values values to set
 	 * @param conditions conditions of query (if null all data are updated)
 	 * @return number of updated rows
 	 * @throws SQLException
 	 */
-	public int update(DBValue[] values, DBCondition[] conditions)
-			throws SQLException
+	public int update(SQLUpdate updateObject) throws SQLException
 	{
-		String tableName = values[0].getColumnName().getTableName().getForUpdate();
-		String query = "UPDATE " + tableName + " SET ";
-		for (int i = 0; i < values.length - 1; i++) {
-			query += values[i].getColumnName().getForUpdate() + "=";
-			query += values[i].getStringValue() + ",";
-		}
-		query += values[values.length - 1].getColumnName().getForUpdate() + "=";
-		query += values[values.length - 1].getStringValue();
-		if (conditions != null) {
-			query += " WHERE "; //$NON-NLS-1$
-			for (int i = 0; i < conditions.length - 1; i++) {
-				query += conditions[i] + " AND "; //$NON-NLS-1$
-			}
-			query += conditions[conditions.length - 1];
-		}
+		String query = updateObject.getQuery();
 		_logger.info("query = " + query); //$NON-NLS-1$
 		return _statement.executeUpdate(query);
 	}
@@ -357,6 +313,41 @@ public class DBManager
 		// setting auto commit off
 		_connection.setAutoCommit(false);
 		_statement = _connection.createStatement();
+	}
+
+	/**
+	 * Updates record if exists in data base.
+	 * 
+	 * @param updateObject
+	 * @param primaryKey
+	 * @param id
+	 * @return id of found record or -1 if record does not exist
+	 * @throws SQLException
+	 */
+	private int updateIfExists(SQLUpdate updateObject, String primaryKey, int id) throws SQLException
+	{
+		int foundID = -1;
+		SQLSelect select = new SQLSelect();
+		select.addTable(updateObject.getTableName());
+		select.addCondition(primaryKey + " =", id);
+
+		ResultSet resultSet = null;
+		resultSet = select(select);
+		// if record exists in base its id is selected
+		// otherwise new id is generated
+		if (resultSet.next()) {
+			foundID = resultSet.getInt(primaryKey);
+			_logger.info("Record found, id = " + foundID);
+            updateObject.addCondition(primaryKey + " =", foundID);
+			resultSet.close();			
+			int updatedRows = update(updateObject);
+            if (updatedRows > 1) {
+            	_logger.error("TOO MANY ROWS: " + updatedRows);
+                foundID = -1;
+            }
+			_logger.info("Record updated");
+		}
+		return foundID;
 	}
 
 	/**
