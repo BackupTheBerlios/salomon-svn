@@ -195,7 +195,7 @@ public final class TaskEditionManager
 	{
 		int index = _taskList.getSelectedIndex();
 		if (index >= 0) {
-			Task task = (Task) _taskListModel.remove(index);
+			TaskGUI task = (TaskGUI) _taskListModel.remove(index);
 			System.out.println("plugin = " + task); //$NON-NLS-1$
 		} else {
 			_logger.warn("Invalid index. Wrong list selected?"); //$NON-NLS-1$
