@@ -20,8 +20,9 @@ public final class RemoteProject extends UnicastRemoteObject
 	IProject _project;
 
 	/**
-	 *  
-	 */
+     * @pre project != null
+     * @post $none
+     */
 	public RemoteProject(IProject project) throws RemoteException
 	{
 		_project = project;
