@@ -26,8 +26,13 @@ public class ProjectManager
 
 	private DBManager _dbManager;
 
-	public ProjectManager()
+	private ManagerEngine _managerEngine = null;
+
+	private Project _currentProject = null;
+
+	public ProjectManager(ManagerEngine managerEngine)
 	{
+		_managerEngine = managerEngine;
 		try {
 			_dbManager = DBManager.getInstance();
 		} catch (SQLException e) {
@@ -35,6 +40,12 @@ public class ProjectManager
 		} catch (ClassNotFoundException e) {
 			_logger.fatal("", e);
 		}
+	}
+
+	public Project newProject()
+	{
+		_currentProject = new Project(_managerEngine);
+		return _currentProject;
 	}
 
 	/**
@@ -46,7 +57,7 @@ public class ProjectManager
 	 */
 	public Project loadProject(int projectID) throws Exception
 	{
-		Project project = new Project(projectID);
+		Project project = new Project(_managerEngine);
 		//
 		// loading plugin information
 		//
@@ -73,12 +84,17 @@ public class ProjectManager
 		resultSet.close();
 		project.setName(projectName);
 		project.setInfo(projectInfo);
+		project.setProjectID(projectID);
 		//
 		// adding tasks
 		//		
 		List tasks = getTasksForProject(projectID);
 		_logger.info("Project successfully loaded.");
 		project.getManagerEngine().getTasksManager().addAllTasks(tasks);
+		//
+		// setting current project
+		//
+		_currentProject = project;
 		return project;
 	}
 
@@ -180,10 +196,11 @@ public class ProjectManager
 	 */
 	private void savePlugins(Project project) throws SQLException
 	{
-		Task[] tasks = project.getManagerEngine().getTasksManager().getTasks();
+		List tasks = project.getManagerEngine().getTasksManager().getTasks();
 		Set plugins = new HashSet();
-		for (int i = 0; i < tasks.length; i++) {
-			plugins.add(tasks[i].getPlugin());
+		for (Iterator iter = tasks.iterator(); iter.hasNext();) {
+			Task task = (Task) iter.next();
+			plugins.add(task.getPlugin());
 		}
 		//
 		// for each plugin checking, if exists in base (if there is plugin with
@@ -193,6 +210,8 @@ public class ProjectManager
 			IPlugin plugin = (IPlugin) iter.next();
 			Description desc = plugin.getDescription();
 			DBTableName[] tableNames = {new DBTableName("plugins")};
+			DBColumnName[] columnNames = {new DBColumnName(tableNames[0],
+					"plugin_id")};
 			DBCondition[] conditions = {
 					new DBCondition(new DBColumnName(tableNames[0], "name"),
 							DBCondition.REL_EQ, desc.getName(),
@@ -203,11 +222,16 @@ public class ProjectManager
 							DBCondition.TEXT)};
 			// executing query
 			ResultSet resultSet = null;
-			resultSet = _dbManager.select(null, tableNames, conditions);
+			resultSet = _dbManager.select(columnNames, tableNames, conditions);
 			// 
 			// if plugin does not exist in base it is inserted
+			// otherwise plugin_id is set
 			//
-			if (!resultSet.next()) {
+			if (resultSet.next()) {
+				int pluginID = resultSet.getInt("plugin_id");
+				desc.setPluginID(pluginID);
+				resultSet.close();
+			} else {
 				DBValue[] values = {
 						new DBValue(new DBColumnName(tableNames[0], "name"),
 								desc.getName(), DBValue.TEXT),
@@ -235,32 +259,80 @@ public class ProjectManager
 	{
 		//
 		// deleting all tasks connected to given project
+		// with status == Task.ACTIVE
 		//
 		DBTableName tableName = new DBTableName("tasks");
-		DBCondition[] conditions = {new DBCondition(new DBColumnName(tableName,
-				"project_id"), DBCondition.REL_EQ, new Integer(project
-				.getProjectID()), DBCondition.NUMBERIC)};
+		DBCondition[] conditions = {
+				new DBCondition(new DBColumnName(tableName, "project_id"),
+						DBCondition.REL_EQ,
+						new Integer(project.getProjectID()),
+						DBCondition.NUMBERIC),
+				new DBCondition(new DBColumnName(tableName, "status"),
+						DBCondition.REL_EQ, Task.ACTIVE, DBCondition.TEXT)};
 		_dbManager.delete(conditions);
 		//
 		// saving tasks
 		//
-		Task[] tasks = project.getManagerEngine().getTasksManager().getTasks();
-		for (int i = 0; i < tasks.length; i++) {
-			//TODO: insert task info and plugin result
+		List tasks = project.getManagerEngine().getTasksManager().getTasks();
+		for (Iterator iter = tasks.iterator(); iter.hasNext();) {
+			Task task = (Task) iter.next();
 			DBValue[] values = {
 					new DBValue(new DBColumnName(tableName, "project_id"),
 							new Integer(project.getProjectID()),
 							DBValue.NUMBERIC),
 					new DBValue(new DBColumnName(tableName, "plugin_id"),
-							new Integer(tasks[i].getPlugin().getDescription()
+							new Integer(task.getPlugin().getDescription()
 									.getPluginID()), DBValue.NUMBERIC),
-					new DBValue(new DBColumnName(tableName, "name"), tasks[i]
+					new DBValue(new DBColumnName(tableName, "name"), task
 							.getName(), DBValue.TEXT),
 					new DBValue(new DBColumnName(tableName, "plugin_settings"),
-							tasks[i].getSettings().getSettings(), DBValue.TEXT),
-					new DBValue(new DBColumnName(tableName, "name"), tasks[i]
-							.getName(), DBValue.TEXT)};
-			_dbManager.insert(values, "task_id");
+							task.getSettings().settingsToString(), DBValue.TEXT),
+					new DBValue(new DBColumnName(tableName, "plugin_result"),
+							task.getResult().resultToString(), DBValue.TEXT),
+					new DBValue(new DBColumnName(tableName, "status"), task
+							.getStatus(), DBValue.TEXT)};
+			int taskId = _dbManager.insert(values, "task_id");
+			task.setTaksId(taskId);
+		}
+	}
+
+	/**
+	 * Updates tasks connected to project. Method can change only status and
+	 * result of task. Other columns will be unaffected. If one want change
+	 * other settings, saveProject() method should be used. The Project object
+	 * is not passed to this method, so method allows to save only one task and
+	 * may be called after every task processing. TODO: update date_finished
+	 * 
+	 * @param
+	 * @throws SQLException
+	 */
+	public void updateTasks(Task[] tasks, int projectId) throws SQLException
+	{
+		DBTableName tableName = new DBTableName("tasks");
+		//
+		// common condition for all tasks
+		//
+		DBCondition commonCondition = new DBCondition(new DBColumnName(
+				tableName, "project_id"), DBCondition.REL_EQ, new Integer(
+				projectId), DBCondition.NUMBERIC);
+		//Task[] tasks =
+		// project.getManagerEngine().getTasksManager().getTasks();
+		//
+		// updating tasks
+		// while update only status, settings
+		//
+		for (int i = 0; i < tasks.length; i++) {
+			DBValue[] values = {
+					new DBValue(new DBColumnName(tableName, "plugin_result"),
+							tasks[i].getResult().resultToString(), DBValue.TEXT),
+					new DBValue(new DBColumnName(tableName, "status"), tasks[i]
+							.getStatus(), DBValue.TEXT)};
+			DBCondition[] conditions = {
+					commonCondition,
+					new DBCondition(new DBColumnName(tableName, "task_id"),
+							DBCondition.REL_EQ, new Integer(tasks[i]
+									.getTaksId()), DBCondition.NUMBERIC)};
+			_dbManager.update(values, conditions);
 		}
 	}
 
@@ -294,6 +366,7 @@ public class ProjectManager
 		//
 		if (resultSet.next()) {
 			projectID = resultSet.getInt("project_id");
+			resultSet.close();
 		} else {
 			DBTableName tableName = new DBTableName("projects");
 			DBValue[] values = {
@@ -303,7 +376,14 @@ public class ProjectManager
 							.getInfo(), DBValue.TEXT)};
 			projectID = _dbManager.insert(values, "project_id");
 		}
-		resultSet.close();
 		return projectID;
+	}
+
+	/**
+	 * @return Returns the currentProject.
+	 */
+	public Project getCurrentProject()
+	{
+		return _currentProject;
 	}
 } // end KnowledgeSystemManager
