@@ -20,6 +20,7 @@
 		 displaying results etc. They implement logic of the specified task. They can be
 		  dynamically loaded and unloaded.</li>
 		</ul>
+		</p>
 		
 		<p>Thanks to the core plug-ins are separated from details of implementation and 
 		operate on very high level of abstraction using API given by the core.</p>

@@ -20,14 +20,13 @@
 			</p>
 		</section>
         <section name="Normal Subversion Access">
-            <P> TO 
             <p>URL to Salomons repository  is: "svn+ssh://salomon.iisg.agh.edu.pl/home/svn/salomon/platform/trunk"</p>
             <ul>
                 <li>
                     <h5>Console SVN: </h5>
                     <p>if you have console svn client and you are familiar with cvs then there's nothing new for you here, just type the command: <br/>
                         <div class="source"><pre>
-                        svn co svn+ssh://salomon.iisg.agh.edu.pl/home/svn/salomon/platform/trunk -q --username [USERNAME]
+svn co svn+ssh://salomon.iisg.agh.edu.pl/home/svn/salomon/platform/trunk -q --username [USERNAME]
                         </pre></div>
                         [USERNAME] is four account name <br/>            
                     </p>
@@ -45,7 +44,7 @@
                     its time to commit it back to the repository, the best way to do it is to type: <br/>
                     
                 <div class="source"><pre>
-                        svn commit
+svn commit
                 </pre></div>
                     
                     in the directory of the source code, svn will check which files did you change and send them to the repository, but before you do that make sure that the source that you want to commit is compilable and there are no silly printouts or comments in it. You will be prompted for comment about your commit, write something about what you have changed (not to long ... just somethin meaningful like, "changed this , fixed that", this sort of stuff)
