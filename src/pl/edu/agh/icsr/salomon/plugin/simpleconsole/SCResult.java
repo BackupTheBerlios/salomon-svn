@@ -5,13 +5,15 @@
 
 package pl.edu.agh.icsr.salomon.plugin.simpleconsole;
 
+import java.io.Serializable;
+
 import salomon.plugin.IResult;
 
 /**
  * @author nico
  *  
  */
-public class SCResult implements IResult
+public final class SCResult implements IResult, Serializable
 {
 	public static final int SC_OK = 0;
 
