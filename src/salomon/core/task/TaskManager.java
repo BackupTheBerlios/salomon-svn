@@ -7,6 +7,7 @@ package salomon.core.task;
 
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 import org.apache.log4j.Logger;
 import salomon.core.data.DataEngine;
 import salomon.core.data.Environment;
@@ -35,20 +36,21 @@ public final class TaskManager
 		_taskEngine = new TaskEngine();
 		//TODO: where it should be created?
 		_environment = new Environment();
-		//TODO: temporary		
-		_environment.put("CURRENT_DATA_SET", "all_data");		
+		//TODO: temporary
+		_environment.put("CURRENT_DATA_SET", "all_data");
 	}
 
 	public void start()
 	{
 		//_taskEngine.start();
-		new TaskEngine().start();		
+		new TaskEngine().start();
 	}
-	
-	public void clearTaskList() {
+
+	public void clearTaskList()
+	{
 		_tasks.clear();
 	}
-	
+
 	public void addTask(Task task)
 	{
 		//		synchronized (_tasks) {
@@ -56,6 +58,17 @@ public final class TaskManager
 		//		}
 		//		_tasks.notifyAll();
 	} // end addTask
+
+	public void addAllTasks(List tasks)
+	{
+		_tasks.addAll(tasks);
+	}
+
+	public Task[] getTasks()
+	{
+		Task[] tasks = new Task[_tasks.size()];
+		return (Task[]) _tasks.toArray(tasks);
+	}
 
 	public Task getCurrentTask()
 	{
@@ -102,11 +115,12 @@ public final class TaskManager
 				//TODO:
 				if (settings == null) {
 					_logger.error("settings for task: " + task + " are NULL ");
-					_logger.error("creating empty settings");					
-				}				
-				IResult result = task.getPlugin().doJob(_dataEngine, _environment, settings);
+					_logger.error("creating empty settings");
+				}
+				IResult result = task.getPlugin().doJob(_dataEngine,
+						_environment, settings);
 				task.setResult(result);
-				// removing task after execution?				
+				// removing task after execution?
 			}
 			//_tasks.clear();
 		}
