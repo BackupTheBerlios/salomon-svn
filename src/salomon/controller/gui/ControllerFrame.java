@@ -7,9 +7,9 @@ import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JToolBar;
 
 import org.apache.log4j.Logger;
@@ -28,7 +28,9 @@ import salomon.core.Messages;
 public final class ControllerFrame extends JFrame
 {
 
-	private String _resourcesDir = null;
+	private ControllerPanel _controllerPanel;
+
+	private String _resourcesDir;
 
 	public ControllerFrame()
 	{
@@ -44,18 +46,24 @@ public final class ControllerFrame extends JFrame
 	 */
 	public void refreshGui()
 	{
-		super.validate();
+		_logger.debug("refreshing GUI");
+        _controllerPanel.refresh();	
 	}
 
-	public void setMainPanel(JPanel panel)
+	public void setControllerPanel(ControllerPanel controllerPanel)
 	{
-		//TODO: getContentPane().remove();
-		getContentPane().add(panel, BorderLayout.CENTER);
+		_controllerPanel = controllerPanel;
 	}
 
 	public void setJToolBar(JToolBar toolBar)
 	{
 		getContentPane().add(toolBar, BorderLayout.NORTH);
+	}
+
+	public void setMainPanel(JComponent panel)
+	{
+		//TODO: getContentPane().remove();
+		getContentPane().add(panel, BorderLayout.CENTER);
 	}
 
 	public void showErrorMessage(String msg)

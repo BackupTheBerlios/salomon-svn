@@ -77,7 +77,6 @@ public final class ControllerPanel extends JPanel
 		this.setLayout(new BorderLayout());
 		this.add(getPnlManagerButtons(), BorderLayout.SOUTH);
 		this.add(getPnlInit(), BorderLayout.CENTER);
-
 	}
 
 	/**
@@ -88,18 +87,13 @@ public final class ControllerPanel extends JPanel
 		return _taskEditionManager;
 	}
 
-	/**
-	 * This method initializes _menuBar
-	 * 
-	 * @return
-	 */
-
-	public void validate()
-	{
-		super.validate();
-		_taskEditionManager.refresh();
-	}
-
+    public void refresh()
+    {
+        _logger.debug("ControllerPane: refreshing...");
+        super.validate();
+        _taskEditionManager.refresh();        
+    }
+    
 	/**
 	 * @param taskEditionManager
 	 *            The taskEditionManager to set.
