@@ -1,0 +1,126 @@
+\subsection{Przypadki u¿ycia}
+Aktorem w systemie jest u¿ytkownik Salomona. To on(i tylko on) jest odpowiedzialny za skonfigurowanie sobie m.in. po³¹czenia do bazy danych, on te¿ tworzy zadania, ustala sekwencjê ich wykonywania, a nastêpnie uruchamia je i monitoruje wyniki.
+
+\begin{figure}[h]
+	\centering
+		\includegraphics[width=\textwidth]{img/uml/use_case_1.png}
+	\caption{Use case - operacje administracyjne: tworzenie zadañ}
+	\label{fig:use_case}
+\end{figure}
+
+\begin{center}
+\begin{tabular}{|l|l|}
+\hline  
+\textbf{Use Case} & \textbf{Opis} \\
+\hline  
+Create Solution & Terminem tym okreœlamy strukturê \\
+								& grupuj¹c¹ kilka projektów. Zadanie to \\
+								& wymaga konfiguracji, w szczególnoœci \\ 
+								& wskazania lokacji bazy danych \\
+\hline  
+Create Project & Stworzenie projektu  \\
+\hline 
+Add Task & Akcja dodania nowego zadania polega na \\
+										& wstawieniu do kolejki zadañ do wykonania,\\
+										& pluginu implementuj¹cego funkcjonalnoœæ tego\\
+										& zadania. Dodatkowo okreœlamy nastêpuj¹ce po \\
+										& nim zadnie oraz zadanie poprzedzaj¹ce, oraz \\
+										& dokonujemy edycji ustawieñ zadania. \\
+\hline 
+Remove Task & Akcja usuwa aktualnie zaznaczone zadnie. \\
+\hline  
+Organize Tasks & Organizowanie zadañ \\
+												 & Ustawianie poprzedników, nastêpników \\
+            						 & Pozwala na zmianê aktualnej kolejnoœci \\
+            						 & wykonywania zadañ. \\
+\hline  
+DB connection configuration & Konfiguracja Bazy danych \\
+\hline  												 
+\end{tabular}  
+\end{center}
+
+
+
+
+
+
+\begin{figure}[h]
+	\centering
+		\includegraphics[width=\textwidth]{img/uml/use_case_2.png}
+	\caption{Use case - operacje administracyjne: operacje na pluginach}
+	\label{fig:use_case}
+\end{figure}
+\begin{center}
+\begin{tabular}{|l|l|}
+\hline  
+\textbf{Use Case} & \textbf{Opis} \\
+\hline  
+Configure & Konfiguracja pozwala nam dostosowaæ system \\
+												 & do w³asnych potrzeb, podczas tego kroku \\
+												 & mo¿emy wyspecyfikowaæ wszystkie parametry pracy \\
+												 & systemu jako ca³oœci, czyli parametry takie jak \\
+												 & lokalizacja bazy danych b¹dŸ rozproszenie systemu.  \\
+\hline  
+Choose controller & Wybranie rodzaju kontrolera \\
+																 & Pozwala ustaliæ jak¹ funkcjê ma pe³niæ Salomon \\
+																 & tj. Czy ma pe³niæ rolê Serwera, Klienta czy \\
+																 & mo¿e ma pracowaæ sam. \\
+\hline  
+Add plugin & Dodanie Pluginu \\
+\hline  
+Remove plugin & Usuniêcie pluginu \\
+\hline  												 
+\end{tabular}  
+\end{center}
+
+
+
+
+
+\begin{figure}[h]
+	\centering
+		\includegraphics[width=\textwidth]{img/uml/use_case_3.png}
+	\caption{Use case: operacje na projekcie}
+	\label{fig:use_case}
+\end{figure}
+
+\begin{center}
+\begin{tabular}{|l|l|}
+\hline  
+\textbf{Use Case} & \textbf{Opis} \\
+\hline 
+Run & Akcja ta powoduje wykonanie zadañ zgromadzonych\\
+											 & w tym projekcie. Wykonanie tej akcji wymaga wczeœniejszej\\
+											 & konfiguracji w postaci specyfikacji listy zadañ do \\
+											 & wykonania oraz ich indywidualnej konfiguracji.  \\
+\hline  
+Stop & Przerywa aktualnie wykonywana listê zadañ. \\
+												& Jeœli aktualnie wykonywane jest zadnie, to czy \\
+												& je przerwaæ le¿y w gestii u¿ytkownika. Jeœli \\
+												& dokona on wyboru, ¿e zadanie ma byæ przerwane \\
+												& natychmiast, wyniki z poprzedniego zadnia nie \\
+												& ulegaj¹ zmianie, w przeciwnym wypadku projekt \\ 
+												& zostaje zakoñczony po zakoñczeniu bie¿¹cego zadnia \\
+\hline  											
+Monitor & W podstawowej wersji monitorowanie wykonania\\
+													 & polegaæ bêdzie na wyœwietleniu progress bar'a,\\
+													 & którego stan bêdzie zmieniany po ka¿dym wykonaniu\\
+													 & zadnia atomowego. W nastêpnych wersjach mo¿e \\
+													 & pojawiæ siê mo¿liwoœæ rejestracji zdarzeñ aktualnie \\
+													 & wykonywanego zadania informuj¹cych o jego stanie. \\
+\hline  												 
+View Results & Ka¿de zadnie samo specyfikuje jak bêdzie \\
+																& prezentowaæ swoje wyniki, wiêc po wybraniu \\
+																& tej akcji inicjatywa prezentacji wyników spada\\
+																& na zadanie. Domyœlnie prezentowane s¹ wyniki \\
+																& ostatniego zadnia koñcz¹cego przetwarzanie,\\
+																& mo¿emy jednak, podczas wykonywania projektu,\\
+																& przejrzeæ wyniki ka¿dego z zadañ cz¹stkowych z \\
+																& osobna. \\
+\hline  												 
+Distribute tasks & Ka¿de zadanie z projektu bêdzie dystrybuowane \\
+																& pomiêdzy dostêpne hosty, w zale¿noœci \\
+																& od ich obci¹¿enia\\
+\hline  												 
+\end{tabular}  
+\end{center}

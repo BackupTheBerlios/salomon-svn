@@ -5,12 +5,20 @@
 \usepackage[polish]{babel}
 \usepackage[T1]{fontenc}
 \usepackage[dvips]{graphicx}
+\usepackage{fancyvrb}
 
 \usepackage[urlcolor=blue, colorlinks=true, bookmarks=true, bookmarksnumbered=true]{hyperref}
 %\usepackage{intendfirst}
 \usepackage{times}
 \usepackage{epsfig}
 \usepackage{color}
+
+\usepackage{fancyhdr} 
+
+\pagestyle{fancy} 
+
+\rfoot{SALOMON}
+
 
 %ustawienie wielkosci akapitu
 %\setlength{\parindent}{0mm}
@@ -62,10 +70,17 @@ Prowadz¹cy: dr in¿. Marek Kisiel-Dorohinicki
 \include{architecture}
 \include{db_desc}
 \include{user_plugin}
+\include{functionality}
+\include{usecases}
+\include{sequences}
 \include{running}
 \include{ui}
 \include{remote}
 \include{production}
+\include{junit}
+\include{abbot}
+\include{grinder}
+\include{security}
 \include{roadmap}
 \include{dictionary}
 \include{links}
