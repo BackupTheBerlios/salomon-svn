@@ -28,7 +28,7 @@ import javax.swing.JToolBar;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
-import pl.edu.agh.icsr.salomon.plugin.averageprice2.AveragePrice;
+import pl.edu.agh.icsr.salomon.plugin.averageprice.AveragePrice;
 import salomon.core.data.DBManager;
 import salomon.core.data.DataEngine;
 import salomon.core.data.common.DBColumnName;
