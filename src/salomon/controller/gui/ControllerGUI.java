@@ -34,20 +34,20 @@ public class ControllerGUI extends JFrame
 	private JButton _btnFirst = null;
 
 	private JButton _btnLast = null;
+	
+	private JButton _btnNew = null;
+
+	private JButton _btnOpen = null;
 
 	private JButton _btnRemove = null;
 
 	private JButton _btnRemoveAll = null;
 
 	private JButton _btnRun = null;
-
-	private JButton _btnUp = null;
-	
-	private JButton _btnNew = null;
-
-	private JButton _btnOpen = null;
 	
 	private JButton _btnSave = null;
+
+	private JButton _btnUp = null;
 	
 	private JPanel _contentPane = null;
 
@@ -68,8 +68,6 @@ public class ControllerGUI extends JFrame
 	private JList _lstTasks = null;
 
 	private ManipulationListener _manipulationListener = null;
-	
-	private ProjectListener _projectListener = null;
 
 	private JMenuBar _menuBar = null;
 
@@ -84,6 +82,8 @@ public class ControllerGUI extends JFrame
 	private JPanel _pnlTaskButtons = null;
 
 	private JPanel _pnlTasks = null;
+	
+	private ProjectListener _projectListener = null;
 
 	private int _strutHeight = 10;
 
@@ -94,6 +94,8 @@ public class ControllerGUI extends JFrame
 	private List _taskListeners = null;
 
 	private JToolBar _toolBar = null;
+	
+	private JPanel _pnlAbout = null;
 
 	public ControllerGUI()
 	{
@@ -115,13 +117,6 @@ public class ControllerGUI extends JFrame
 		_taskListeners.add(listener);
 	}
 
-	private void exit()
-	{
-		//TODO: change it
-		_logger.fatal("###  Application exited  ###");
-		System.exit(0);
-	}
-
 	/**
 	 * This method initializes _menuBar
 	 * 
@@ -131,14 +126,14 @@ public class ControllerGUI extends JFrame
 	{
 		if (_menuBar == null) {
 			_menuBar = new JMenuBar();
-			JMenu project = new JMenu("Project");
+			JMenu project = new JMenu(Messages.getString("MNU_PROJECT")); //$NON-NLS-1$
 			project.add(getItmNew());
 			project.add(getItmOpen());
 			project.add(getItmSave());
 			project.add(getItmExit());
-			JMenu tools = new JMenu("Tools");
+			JMenu tools = new JMenu(Messages.getString("MNU_TOOLS")); //$NON-NLS-1$
 			tools.add(getItmSQLConsole());
-			JMenu help = new JMenu("Help");
+			JMenu help = new JMenu(Messages.getString("MNU_HELP")); //$NON-NLS-1$
 			help.add(getItmAbout());
 			_menuBar.add(project);
 			_menuBar.add(tools);
@@ -162,7 +157,7 @@ public class ControllerGUI extends JFrame
 	{
 		JButton button = new JButton();
 		button.setText(text);
-		button.setFont(new Font("Dialog", Font.BOLD, 10));
+		button.setFont(new Font("Dialog", Font.BOLD, 10)); //$NON-NLS-1$
 		button.addActionListener(_manipulationListener);
 		Dimension dim = new Dimension(50, 25);
 		button.setPreferredSize(dim);
@@ -175,8 +170,15 @@ public class ControllerGUI extends JFrame
 		JButton button = new JButton();
 		button.setText(text);
 		button.addActionListener(_projectListener);
-		button.setFont(new Font("Dialog", Font.BOLD, 10));
+		button.setFont(new Font("Dialog", Font.BOLD, 10)); //$NON-NLS-1$
 		return button;
+	}
+
+	private void exit()
+	{
+		//TODO: change it
+		_logger.fatal("###  Application exited  ###"); //$NON-NLS-1$
+		System.exit(0);
 	}
 	
 	private void fireApplyTasks(TaskEvent event)
@@ -203,33 +205,9 @@ public class ControllerGUI extends JFrame
 	private JButton getBtnAdd()
 	{
 		if (_btnAdd == null) {
-			_btnAdd = createManipulationButton(">");
+			_btnAdd = createManipulationButton(">"); //$NON-NLS-1$
 		}
 		return _btnAdd;
-	}
-
-	private JButton getBtnNew()
-	{
-		if (_btnNew == null) {
-			_btnNew = createProjectButton("New");
-		}
-		return _btnNew;
-	}
-
-	private JButton getBtnOpen()
-	{
-		if (_btnOpen == null) {
-			_btnOpen = createProjectButton("Open");
-		}
-		return _btnOpen;
-	}
-	
-	private JButton getBtnSave()
-	{
-		if (_btnSave == null) {
-			_btnSave = createProjectButton("Save");
-		}
-		return _btnSave;
 	}
 	
 	/**
@@ -240,11 +218,49 @@ public class ControllerGUI extends JFrame
 	private JButton getBtnAddAll()
 	{
 		if (_btnAddAll == null) {
-			_btnAddAll = createManipulationButton(">>");
+			_btnAddAll = createManipulationButton(">>"); //$NON-NLS-1$
 		}
 		return _btnAddAll;
 	}
-
+	/** Method shows about dialog. */
+	private void showAboutDialog()
+	{
+		JOptionPane.showMessageDialog(null, getPnlAbout());
+	}
+	
+	private JPanel getPnlAbout() {
+		if (_pnlAbout == null){
+			_pnlAbout = new JPanel();
+			_pnlAbout.setLayout(new BorderLayout());			
+			_pnlAbout.setBorder(javax.swing.BorderFactory.createEmptyBorder(30,30,30,30));
+			//
+			// application name
+			//
+			JLabel lblAppName = new JLabel();
+			lblAppName.setText(Messages.getString("APP_NAME")); //$NON-NLS-1$
+			lblAppName.setForeground(Color.BLUE);
+			lblAppName.setFont(new Font("Dialog", Font.BOLD, 24)); //$NON-NLS-1$
+			//
+			// version and author panel
+			//
+			JPanel detailsPanel = new JPanel();
+			detailsPanel.setLayout(new GridLayout(0, 2));
+			JLabel lblVersionTitle = new JLabel(Messages.getString("TIT_VERSION")); //$NON-NLS-1$
+			JLabel lblVersion = new JLabel(Messages.getString("VERSION")); //$NON-NLS-1$
+			lblVersion.setForeground(Color.RED);
+			JLabel lblAuthorsTitle = new JLabel(Messages.getString("TIT_AUTHORS")); //$NON-NLS-1$
+			JLabel lblAuthors = new JLabel(Messages.getString("AUTHORS"));  //$NON-NLS-1$
+			detailsPanel.add(lblVersionTitle);
+			detailsPanel.add(lblVersion);
+			detailsPanel.add(lblAuthorsTitle);
+			detailsPanel.add(lblAuthors);
+			// adding componens
+			_pnlAbout.add(lblAppName, BorderLayout.CENTER);
+			_pnlAbout.add(detailsPanel, BorderLayout.SOUTH);
+		}		
+		return _pnlAbout;
+	}
+	
 	/**
 	 * This method initializes _btnApply
 	 * 
@@ -254,13 +270,13 @@ public class ControllerGUI extends JFrame
 	{
 		if (_btnApply == null) {
 			_btnApply = new JButton();
-			_btnApply.setText("Apply");
+			_btnApply.setText(Messages.getString("BTN_APPLY")); //$NON-NLS-1$
 			_btnApply.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e)
 				{
 					TaskEvent taskEvent = new TaskEvent();
 					taskEvent.setTaskList(_taskEditionManager.getTasks());
-					_logger.debug("applying tasks - sending TaskEvent");
+					_logger.debug("applying tasks - sending TaskEvent"); //$NON-NLS-1$
 					fireApplyTasks(taskEvent);
 				}
 			});
@@ -276,7 +292,7 @@ public class ControllerGUI extends JFrame
 	private JButton getBtnDown()
 	{
 		if (_btnDown == null) {
-			_btnDown = createManipulationButton("v");
+			_btnDown = createManipulationButton("v"); //$NON-NLS-1$
 		}
 		return _btnDown;
 	}
@@ -289,7 +305,7 @@ public class ControllerGUI extends JFrame
 	private JButton getBtnFirst()
 	{
 		if (_btnFirst == null) {
-			_btnFirst = createManipulationButton("^^");
+			_btnFirst = createManipulationButton("^^"); //$NON-NLS-1$
 		}
 		return _btnFirst;
 	}
@@ -302,9 +318,25 @@ public class ControllerGUI extends JFrame
 	private JButton getBtnLast()
 	{
 		if (_btnLast == null) {
-			_btnLast = createManipulationButton("vv");
+			_btnLast = createManipulationButton("vv"); //$NON-NLS-1$
 		}
 		return _btnLast;
+	}
+
+	private JButton getBtnNew()
+	{
+		if (_btnNew == null) {
+			_btnNew = createProjectButton(Messages.getString("BTN_NEW")); //$NON-NLS-1$
+		}
+		return _btnNew;
+	}
+
+	private JButton getBtnOpen()
+	{
+		if (_btnOpen == null) {
+			_btnOpen = createProjectButton(Messages.getString("BTN_OPEN")); //$NON-NLS-1$
+		}
+		return _btnOpen;
 	}
 
 	/**
@@ -315,7 +347,7 @@ public class ControllerGUI extends JFrame
 	private JButton getBtnRemove()
 	{
 		if (_btnRemove == null) {
-			_btnRemove = createManipulationButton("X");
+			_btnRemove = createManipulationButton("X"); //$NON-NLS-1$
 		}
 		return _btnRemove;
 	}
@@ -328,7 +360,7 @@ public class ControllerGUI extends JFrame
 	private JButton getBtnRemoveAll()
 	{
 		if (_btnRemoveAll == null) {
-			_btnRemoveAll = createManipulationButton("X");
+			_btnRemoveAll = createManipulationButton("XX"); //$NON-NLS-1$
 		}
 		return _btnRemoveAll;
 	}
@@ -342,7 +374,7 @@ public class ControllerGUI extends JFrame
 	{
 		if (_btnRun == null) {
 			_btnRun = new JButton();
-			_btnRun.setText("Run");
+			_btnRun.setText(Messages.getString("BTN_RUN")); //$NON-NLS-1$
 			_btnRun.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e)
 				{
@@ -353,6 +385,14 @@ public class ControllerGUI extends JFrame
 		}
 		return _btnRun;
 	}
+	
+	private JButton getBtnSave()
+	{
+		if (_btnSave == null) {
+			_btnSave = createProjectButton(Messages.getString("BTN_SAVE")); //$NON-NLS-1$
+		}
+		return _btnSave;
+	}
 
 	/**
 	 * This method initializes _btnUp
@@ -362,7 +402,7 @@ public class ControllerGUI extends JFrame
 	private JButton getBtnUp()
 	{
 		if (_btnUp == null) {
-			_btnUp = createManipulationButton("^");
+			_btnUp = createManipulationButton("^"); //$NON-NLS-1$
 		}
 		return _btnUp;
 	}
@@ -371,26 +411,26 @@ public class ControllerGUI extends JFrame
 	{
 		if (_itmAbout == null) {
 			_itmAbout = new JMenuItem();
-			_itmAbout.setText("About");
+			_itmAbout.setText(Messages.getString("MNU_ABOUT")); //$NON-NLS-1$
 			_itmAbout.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e)
 				{
-					System.out.println("actionPerformed()");
+					showAboutDialog();
 				}
 			});
 		}
 		return _itmAbout;
-	}
-
+	}	
+	
 	private JMenuItem getItmExit()
 	{
 		if (_itmExit == null) {
 			_itmExit = new JMenuItem();
-			_itmExit.setText("Exit");
+			_itmExit.setText(Messages.getString("MNU_EXIT")); //$NON-NLS-1$
 			_itmExit.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e)
 				{
-					System.out.println("actionPerformed()");
+					System.out.println("actionPerformed()"); //$NON-NLS-1$
 				}
 			});
 		}
@@ -401,7 +441,7 @@ public class ControllerGUI extends JFrame
 	{
 		if (_itmNew == null) {
 			_itmNew = new JMenuItem();
-			_itmNew.setText("New");
+			_itmNew.setText(Messages.getString("MNU_NEW")); //$NON-NLS-1$
 			_itmNew.addActionListener(_projectListener);
 		}
 		return _itmNew;
@@ -411,7 +451,7 @@ public class ControllerGUI extends JFrame
 	{
 		if (_itmOpen == null) {
 			_itmOpen = new JMenuItem();
-			_itmOpen.setText("Open");
+			_itmOpen.setText(Messages.getString("MNU_OPEN")); //$NON-NLS-1$
 			_itmOpen.addActionListener(_projectListener);
 		}
 		return _itmOpen;
@@ -421,7 +461,7 @@ public class ControllerGUI extends JFrame
 	{
 		if (_itmSave == null) {
 			_itmSave = new JMenuItem();
-			_itmSave.setText("Save");
+			_itmSave.setText(Messages.getString("MNU_SAVE")); //$NON-NLS-1$
 			_itmSave.addActionListener(_projectListener);
 		}
 		return _itmSave;
@@ -431,7 +471,7 @@ public class ControllerGUI extends JFrame
 	{
 		if (_itmSQLConsole == null) {
 			_itmSQLConsole = new JMenuItem();
-			_itmSQLConsole.setText("SQLConsole");
+			_itmSQLConsole.setText(Messages.getString("MNU_CONSOLE")); //$NON-NLS-1$
 			_itmSQLConsole.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e)
 				{
@@ -557,7 +597,7 @@ public class ControllerGUI extends JFrame
 			_pnlPlugins.add(getPnlPluginButtons(), BorderLayout.EAST);
 			_pnlPlugins.add(getLstPlugins(), BorderLayout.CENTER);
 			_pnlPlugins.setBorder(BorderFactory
-					.createTitledBorder(null, "Plugins", TitledBorder.LEFT,
+					.createTitledBorder(null, Messages.getString("TIT_PLUGINS"), TitledBorder.LEFT, //$NON-NLS-1$
 							TitledBorder.DEFAULT_POSITION));
 		}
 		return _pnlPlugins;
@@ -599,7 +639,7 @@ public class ControllerGUI extends JFrame
 			_pnlTasks.setLayout(new BorderLayout());
 			_pnlTasks.add(getPnlTaskButtons(), BorderLayout.EAST);
 			_pnlTasks.add(getLstTasks(), BorderLayout.CENTER);
-			_pnlTasks.setBorder(BorderFactory.createTitledBorder(null, "Tasks",
+			_pnlTasks.setBorder(BorderFactory.createTitledBorder(null, Messages.getString("TIT_TASKS"), //$NON-NLS-1$
 					TitledBorder.LEFT, TitledBorder.DEFAULT_POSITION));
 		}
 		return _pnlTasks;
@@ -628,7 +668,7 @@ public class ControllerGUI extends JFrame
 	{
 		this.setContentPane(getJContentPane());
 		this.setSize(600, 500);
-		this.setTitle("Task manager");
+		this.setTitle(Messages.getString("APP_NAME")); //$NON-NLS-1$
 		this.setJMenuBar(getJMenuBar());
 		this.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e)
@@ -673,7 +713,7 @@ public class ControllerGUI extends JFrame
 			} else if (object == _btnLast) {
 				//TODO:
 			} else {
-				_logger.error("Not supported button: " + object);
+				_logger.error("Not supported button: " + object); //$NON-NLS-1$
 			}
 		}
 	}
@@ -691,13 +731,13 @@ public class ControllerGUI extends JFrame
 		{
 			Object object = e.getSource();
 			if (object == _btnNew || object == _itmNew) {
-				_logger.debug("New");
+				_logger.debug("New"); //$NON-NLS-1$
 			} else if (object == _btnOpen || object == _itmOpen) {
-				_logger.debug("Open");
+				_logger.debug("Open"); //$NON-NLS-1$
 			} else if (object == _btnSave || object == _itmSave) {
-				_logger.debug("Save");
+				_logger.debug("Save"); //$NON-NLS-1$
 			} else {
-				_logger.error("Not supported button: " + object);
+				_logger.error("Not supported button: " + object); //$NON-NLS-1$
 			}
 		}
 	}
