@@ -6,6 +6,7 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Toolkit;
+import java.lang.reflect.InvocationTargetException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -45,19 +46,26 @@ public final class SplashScreen
 		_splashScreen.setLocation(splashLabel.getLocation());
 		_splashScreen.getContentPane().add(splashLabel);
 		_splashScreen.pack();
-	}
+	} 
 
 	public static void hide()
 	{
 		if (SwingUtilities.isEventDispatchThread()) {
-			getInstance()._splashScreen.setVisible(true);
+			getInstance().hideSplashScreen();            
 		} else {
-			SwingUtilities.invokeLater(new Runnable() {
-				public void run()
-				{
-					getInstance().hideSplashScreen();
-				}
-			});
+            _logger.debug("nie w gui");
+			try {
+				SwingUtilities.invokeAndWait(new Runnable() {
+					public void run()
+					{
+						getInstance().hideSplashScreen();
+					}
+				});
+			} catch (InterruptedException e) {			
+				_logger.fatal("", e);
+			} catch (InvocationTargetException e) {
+				_logger.error("", e);
+			}
 		}
 	}
 
@@ -94,14 +102,20 @@ public final class SplashScreen
 	{
 
 		if (SwingUtilities.isEventDispatchThread()) {
-			getInstance()._splashScreen.setVisible(true);
-		} else {
-			SwingUtilities.invokeLater(new Runnable() {
-				public void run()
-				{
-					getInstance().showSplashScreen();
-				}
-			});
+			getInstance().showSplashScreen();
+		} else {            
+			try {
+				SwingUtilities.invokeAndWait(new Runnable() {
+					public void run()
+					{
+						getInstance().showSplashScreen();
+					}
+				});
+			} catch (InterruptedException e) {			
+				_logger.fatal("", e);
+			} catch (InvocationTargetException e) {
+				_logger.fatal("", e);
+			}
 		}
 	}
 
