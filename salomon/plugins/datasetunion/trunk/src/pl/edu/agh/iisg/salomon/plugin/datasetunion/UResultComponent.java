@@ -45,7 +45,6 @@ public class UResultComponent implements IResultComponent
 	public IResult getDefaultResult()
 	{
         IResult result = new UResult();
-		// TODO implement
 		return result;
 	}
 

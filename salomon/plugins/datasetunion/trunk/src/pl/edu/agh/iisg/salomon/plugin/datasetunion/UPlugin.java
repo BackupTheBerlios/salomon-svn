@@ -95,7 +95,8 @@ public final class UPlugin implements IPlugin
 	 */
 	public IResultComponent getResultComponent()
 	{
-		return null;
+		UResultComponent result = new UResultComponent();
+		return result;
 	}
 
 	/**

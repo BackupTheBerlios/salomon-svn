@@ -52,7 +52,7 @@ public class UResult implements IResult
 	 */
 	public String resultToString()
 	{
-		return null;
+		return "Hello";
 	}
 
 	/**
