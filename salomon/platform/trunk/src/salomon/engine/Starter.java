@@ -26,12 +26,16 @@ import java.util.MissingResourceException;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
-import salomon.engine.controller.ServantController;
 import salomon.engine.controller.IController;
 import salomon.engine.controller.LocalController;
 import salomon.engine.controller.MasterController;
+import salomon.engine.controller.ServantController;
+import salomon.engine.project.IProjectManager;
 import salomon.engine.project.ProjectManager;
+import salomon.engine.task.ITaskManager;
 import salomon.engine.task.TaskManager;
+
+import salomon.platform.exception.PlatformException;
 
 import salomon.engine.platform.IManagerEngine;
 import salomon.engine.platform.ManagerEngine;
@@ -55,11 +59,6 @@ public final class Starter
 
 	}
 
-	public static void exit()
-	{
-		getInstance().exitImpl();
-	}
-
 	private void exitImpl()
 	{
 		LOGGER.debug("controller: " + _contoroller.getClass());
@@ -70,11 +69,16 @@ public final class Starter
 
 	private void initManagers()
 	{
-		_managerEngine = new ManagerEngine();
-		((TaskManager) _managerEngine.getTasksManager()).setProjectManger((ProjectManager) _managerEngine.getProjectManager());
-	}
-
-	private void start()
+		//FIXME: Create 
+        try {
+        	_managerEngine = new ManagerEngine();
+            TaskManager taskManager = (TaskManager) _managerEngine.getTasksManager();
+            IProjectManager projectManager = _managerEngine.getProjectManager();
+            taskManager.setProjectManger((ProjectManager) projectManager);
+        } catch (PlatformException e) {
+        	LOGGER.fatal("", e);   
+        }
+	}	private void start()
 	{
 		initManagers();
 		_contoroller.start(_managerEngine);
@@ -99,6 +103,11 @@ public final class Starter
 		LOGGER.debug("starting MasterController");
 		_contoroller = new MasterController();
 		start();
+	}
+
+	public static void exit()
+	{
+		getInstance().exitImpl();
 	}
 
 	public static void main(String[] args)
@@ -133,12 +142,13 @@ public final class Starter
 			}
 		}
 	}
-	
+
 	private static Starter getInstance()
 	{
 		if (_instance == null) {
 			_instance = new Starter();
 		}
+
 		return _instance;
 	}
 
@@ -158,7 +168,6 @@ public final class Starter
 	}
 
 	private static Starter _instance;
-
 
 	private static final Logger LOGGER = Logger.getLogger(Starter.class);
 }

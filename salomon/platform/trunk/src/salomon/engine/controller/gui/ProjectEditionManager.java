@@ -23,7 +23,6 @@ package salomon.engine.controller.gui;
 
 import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -175,7 +174,7 @@ public final class ProjectEditionManager
 		//		return projectID;
 	}
 
-	private void saveTaskList(List taskList)
+	private void saveTaskList(List<TaskGUI> taskList)
 	{
 		LOGGER.info("taskList = " + taskList);
 		//
@@ -190,25 +189,22 @@ public final class ProjectEditionManager
 		// if not - question to user, if he agrees
 		// default settings will be set and project will be saved
 		//
-		List incorrectTasks = new LinkedList();
-		for (Iterator iter = taskList.iterator(); iter.hasNext();) {
-			TaskGUI task = (TaskGUI) iter.next();
+		List<TaskGUI> incorrectTasks = new LinkedList<TaskGUI>();
+		for (TaskGUI task : taskList) {
 			if (task.getSettings() == null) {
 				incorrectTasks.add(task);
 			}
 		}
 		if (!incorrectTasks.isEmpty()) {
 			String message = "There are tasks with settings not set:\n";
-			for (Iterator iter = incorrectTasks.iterator(); iter.hasNext();) {
-				TaskGUI task = (TaskGUI) iter.next();
+            for (TaskGUI task : incorrectTasks) {
 				message += task.getName() + "\n";
 			}
 			message += "Do you want to use default settings?";
 			if (Utils.showWarningMessage(message)) {
 				// getting default settings
 				LOGGER.debug("getting default settings");
-				for (Iterator iter = incorrectTasks.iterator(); iter.hasNext();) {
-					TaskGUI task = (TaskGUI) iter.next();
+				for (TaskGUI task : incorrectTasks) {
 					ISettings defaultSettings = task.getPlugin().getSettingComponent().getDefaultSettings();
 					task.setSettings(defaultSettings);
 				}
@@ -226,8 +222,7 @@ public final class ProjectEditionManager
 			ITaskManager taskManager = _managerEngine.getTasksManager();
 
 			taskManager.clearTaskList();
-			for (Iterator iter = taskList.iterator(); iter.hasNext();) {
-				TaskGUI taskGUI = (TaskGUI) iter.next();
+			for (TaskGUI taskGUI : taskList) {
 				taskGUI.save(taskManager.createTask());
 			}
 
@@ -266,6 +261,7 @@ public final class ProjectEditionManager
 				projectID = ((Integer) table.getValueAt(selectedRow, 0)).intValue();
 			}
 		}
+        
 		return projectID;
 	}
 

@@ -21,6 +21,8 @@
 
 package salomon.engine.project;
 
+import salomon.engine.task.ITaskManager;
+
 import salomon.platform.exception.PlatformException;
 
 /**
@@ -44,6 +46,16 @@ public interface IProject
 	int getProjectID() throws PlatformException;
 
 	/**
+	 * Returns the TaskManager.
+	 * @return The TaskManager
+	 * @throws PlatformException
+	 * 
+	 * @pre $none
+	 * @post $result != null
+	 */
+	ITaskManager getTaskManager() throws PlatformException;
+
+	/**
 	 * @param info The info to set.
 	 */
 	void setInfo(String info) throws PlatformException;
@@ -56,5 +68,5 @@ public interface IProject
 	/**
 	 * @param projectId The projectID to set.
 	 */
-	void setProjectID(int projectId) throws PlatformException; 
+	void setProjectID(int projectId) throws PlatformException;
 }

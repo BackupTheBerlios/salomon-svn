@@ -28,6 +28,9 @@ import salomon.engine.project.IProject;
 
 import salomon.platform.exception.PlatformException;
 
+import salomon.engine.platform.remote.task.IRemoteTaskManager;
+import salomon.engine.platform.remote.task.RemoteTaskManager;
+
 /** 
  * Class representing remote instance of IProject.
  * 
@@ -37,6 +40,8 @@ public final class RemoteProject extends UnicastRemoteObject
 		implements IRemoteProject
 {
 	private IProject _project;
+
+	private IRemoteTaskManager _remoteTaskManager;
 
 	/**
 	 * @pre project != null
@@ -69,6 +74,20 @@ public final class RemoteProject extends UnicastRemoteObject
 	public int getProjectID() throws RemoteException, PlatformException
 	{
 		return _project.getProjectID();
+	}
+
+	/**
+	 * @see salomon.engine.platform.remote.project.IRemoteProject#getTaskManager()
+	 */
+	public IRemoteTaskManager getTaskManager() throws RemoteException,
+			PlatformException
+	{
+		if (_remoteTaskManager == null) {
+			_remoteTaskManager = new RemoteTaskManager(
+					_project.getTaskManager());
+		}
+
+		return _remoteTaskManager;
 	}
 
 	/**

@@ -27,7 +27,7 @@ import salomon.platform.data.tree.ITreeManager;
 /**
  * 
  */
-public class TreeManager implements ITreeManager
+public final class TreeManager implements ITreeManager
 {
 
 	/**

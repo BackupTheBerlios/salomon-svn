@@ -22,6 +22,8 @@
 package salomon.util.serialization;
 
 import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 import salomon.platform.serialization.IObject;
 import salomon.platform.serialization.IStruct;
@@ -31,7 +33,7 @@ import salomon.platform.serialization.IStruct;
  */
 public class SimpleStruct implements IStruct
 {
-	private HashMap<String, IObject> _fields;
+	private Map<String, IObject> _fields = new HashMap<String, IObject>();
     
 	/**
 	 * @see salomon.platform.serialization.IStruct#setField(java.lang.String, salomon.platform.serialization.IObject)
@@ -54,7 +56,8 @@ public class SimpleStruct implements IStruct
 	 */
 	public String[] getFieldNames()
 	{
-        //TODO: Remove cast (eclipse bug)
-        return (String[]) _fields.keySet().toArray();
+        Set<String> keys = _fields.keySet();
+        
+        return keys.toArray(new String[keys.size()]);
 	}
 }

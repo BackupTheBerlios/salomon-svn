@@ -26,6 +26,8 @@ import java.rmi.RemoteException;
 
 import salomon.platform.exception.PlatformException;
 
+import salomon.engine.platform.remote.task.IRemoteTaskManager;
+
 /**
  * Remote version of <code>IProject</code> interface.
  * It has all methods from IProject interface, 
@@ -36,8 +38,8 @@ import salomon.platform.exception.PlatformException;
 public interface IRemoteProject extends Remote
 {
 	/**
-     * @see salomon.engine.project.IProject#getInfo()
-     * 
+	 * @see salomon.engine.project.IProject#getInfo()
+	 * 
 	 * @return Returns the info.
 	 * @pre $none
 	 * @post $result != null
@@ -45,8 +47,8 @@ public interface IRemoteProject extends Remote
 	String getInfo() throws RemoteException, PlatformException;
 
 	/**
-     * @see salomon.engine.project.IProject#getName()
-     * 
+	 * @see salomon.engine.project.IProject#getName()
+	 * 
 	 * @return Returns the name.
 	 * @pre $none
 	 * @post $result != null
@@ -54,8 +56,8 @@ public interface IRemoteProject extends Remote
 	String getName() throws RemoteException, PlatformException;
 
 	/**
-     * @see salomon.engine.project.IProject#getProjectID()
-     * 
+	 * @see salomon.engine.project.IProject#getProjectID()
+	 * 
 	 * @return Returns the projectID.
 	 * @pre $none
 	 * @post $none
@@ -63,8 +65,14 @@ public interface IRemoteProject extends Remote
 	int getProjectID() throws RemoteException, PlatformException;
 
 	/**
-     * @see salomon.engine.project.IProject#setInfo(String)
-     * 
+	 * @see salomon.engine.project.IProject#getTaskManager()
+	 */
+	IRemoteTaskManager getTaskManager() throws RemoteException,
+			PlatformException;
+
+	/**
+	 * @see salomon.engine.project.IProject#setInfo(String)
+	 * 
 	 * @param info The info to set.
 	 * @pre info != null
 	 * @post $none
@@ -72,8 +80,8 @@ public interface IRemoteProject extends Remote
 	void setInfo(String info) throws RemoteException, PlatformException;
 
 	/**
-     * @see salomon.engine.project.IProject#setName(String)
-     * 
+	 * @see salomon.engine.project.IProject#setName(String)
+	 * 
 	 * @param name The name to set.
 	 * @pre name != null
 	 * @post $none
@@ -81,11 +89,12 @@ public interface IRemoteProject extends Remote
 	void setName(String name) throws RemoteException, PlatformException;
 
 	/**
-     * @see salomon.engine.project.IProject#setProjectID(int)
-     * 
+	 * @see salomon.engine.project.IProject#setProjectID(int)
+	 * 
 	 * @param projectId The projectID to set.
 	 * @pre $none
 	 * @post $none
 	 */
 	void setProjectID(int projectId) throws RemoteException, PlatformException;
+
 }

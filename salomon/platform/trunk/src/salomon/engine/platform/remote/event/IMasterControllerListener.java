@@ -26,7 +26,15 @@ package salomon.engine.platform.remote.event;
  */
 public interface IMasterControllerListener
 {
+	/**
+	 * @pre event != null
+	 * @post $none
+	 */
 	void controllerAdded(RemoteControllerEvent event);
 
+	/**
+	 * @pre event != null
+	 * @post $none
+     */
 	void controllerRemoved(RemoteControllerEvent event);
 }

@@ -30,6 +30,7 @@ import salomon.engine.solution.ISolution;
 
 import salomon.platform.exception.PlatformException;
 
+import salomon.engine.platform.IManagerEngine;
 import salomon.engine.platform.remote.project.ProjectManagerProxy;
 
 /**
@@ -37,8 +38,8 @@ import salomon.engine.platform.remote.project.ProjectManagerProxy;
  */
 public final class SolutionProxy implements ISolution
 {
-
 	private IProjectManager _projectManager;
+    
 	private IRemoteSolution _remoteSolution;
 
 	/**
@@ -47,6 +48,14 @@ public final class SolutionProxy implements ISolution
 	public SolutionProxy(IRemoteSolution remoteSolution)
 	{
 		_remoteSolution = remoteSolution;
+	}
+
+	/**
+	 * @see salomon.engine.solution.ISolution#getManagerEngine()
+	 */
+	public IManagerEngine getManagerEngine() throws PlatformException
+	{
+		throw new UnsupportedOperationException("Method getManagerEngine() not implemented yet!");
 	}
 
 	/**

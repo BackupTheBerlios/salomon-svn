@@ -23,7 +23,6 @@ package salomon.engine.task;
 
 import java.sql.SQLException;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.LinkedList;
 
 import org.apache.log4j.Logger;
@@ -31,14 +30,14 @@ import org.apache.log4j.Logger;
 import salomon.engine.database.DBManager;
 import salomon.engine.project.ProjectManager;
 
-import salomon.engine.platform.DataEngine;
-import salomon.engine.platform.Environment;
-
 import salomon.platform.exception.PlatformException;
 
 import salomon.plugin.IPlugin;
 import salomon.plugin.IResult;
 import salomon.plugin.ISettings;
+
+import salomon.engine.platform.DataEngine;
+import salomon.engine.platform.Environment;
 
 /**
  * An implemetation of ITaskManager interface. Class manages with tasks editing
@@ -56,11 +55,11 @@ public final class TaskManager implements ITaskManager
 
 	private TaskEngine _taskEngine;
 
-	private LinkedList<ITask> _tasks;
+	private LinkedList<Task> _tasks;
 
 	public TaskManager()
 	{
-		_tasks = new LinkedList<ITask>();
+		_tasks = new LinkedList<Task>();
 		_dataEngine = new DataEngine();
 		_taskEngine = new TaskEngine();
 		// TODO: where it should be created?
@@ -69,7 +68,7 @@ public final class TaskManager implements ITaskManager
 		_environment.put("CURRENT_DATA_SET", "all_data");
 	}
 
-	public void addAllTasks(Collection<ITask> tasks)
+	public void addAllTasks(Collection<Task> tasks)
 	{
 		_tasks.addAll(tasks);
 	}
@@ -90,7 +89,7 @@ public final class TaskManager implements ITaskManager
 
 	public ITask createTask()
 	{
-		ITask newTask = new Task();
+		Task newTask = new Task();
 		_tasks.add(newTask);
 
 		return newTask;
@@ -98,9 +97,8 @@ public final class TaskManager implements ITaskManager
 
 	public ITask getCurrentTask()
 	{
-		Task result = null;
-		return result;
-		// if (_tasks.)
+        throw new UnsupportedOperationException(
+				"Method getCurrentTask() not implemented yet!");
 	} // end getCurrentTask
 
 	/**
@@ -147,8 +145,7 @@ public final class TaskManager implements ITaskManager
                 //TODO: Create an exception
             	return;
             }
-			for (Iterator iter = _tasks.iterator(); iter.hasNext();) {
-				Task task = (Task) iter.next();
+            for (Task task : _tasks) {
 				ISettings settings = task.getSettings();
 				task.setStatus(Task.REALIZATION);
 				try {
@@ -217,14 +214,14 @@ public final class TaskManager implements ITaskManager
 				_tasks.notifyAll();
 				if (currentTask != null) {
 					break;
-				} else {
-					try {
-						_tasks.wait();
-					} catch (InterruptedException e) {
-						LOGGER.fatal("", e);
-					}
+				}
+				try {
+					_tasks.wait();
+				} catch (InterruptedException e) {
+					LOGGER.fatal("", e);
 				}
 			} // while (currentTask != null);
+            
 			return currentTask;
 		}
 	}

@@ -108,7 +108,7 @@ public final class SQLDelete
         // adding conditions
         if (!_conditions.isEmpty()) {
             query += " WHERE "; //$NON-NLS-1$
-            Iterator condIter = _conditions.iterator();
+            Iterator<String> condIter = _conditions.iterator();
             query += condIter.next();
             while (condIter.hasNext()) {
                 query += " AND " + condIter.next();

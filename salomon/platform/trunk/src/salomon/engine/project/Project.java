@@ -29,6 +29,9 @@ import salomon.engine.database.DBManager;
 import salomon.engine.database.IDBSupporting;
 import salomon.engine.database.queries.SQLDelete;
 import salomon.engine.database.queries.SQLUpdate;
+import salomon.engine.task.ITaskManager;
+
+import salomon.platform.exception.PlatformException;
 
 
 /**
@@ -145,9 +148,17 @@ public final class Project implements IProject, IDBSupporting
 	{
 		return "[" + _projectID + ", " + _name + ", " + _info + "]";
 	}
-    
+        
 	public static final String TABLE_NAME = "projects";
     
     private static final String GEN_NAME = "gen_project_id";
+
+	/**
+	 * @see salomon.engine.project.IProject#getTaskManager()
+	 */
+	public ITaskManager getTaskManager() throws PlatformException
+	{
+		throw new UnsupportedOperationException("Method getTaskManager() not implemented yet!");
+	}
 
 }

@@ -176,30 +176,30 @@ public final class SQLUpdate
 	 */
 	public String getQuery()
 	{
-		String query = "UPDATE " + _tableName + " SET ";
+		StringBuffer query = new StringBuffer("UPDATE ").append(_tableName).append(" SET ");
 
-		Iterator colIter = _values.iterator();
+		Iterator<SQLPair> colIter = _values.iterator();
 		// first column is added without comma
-		SQLPair pair = (SQLPair) colIter.next();
-		query += pair.getColumnName() + " = " + pair.getValue();
+		SQLPair pair = colIter.next();
+		query.append(pair.getColumnName()).append(" = ").append(pair.getValue());
 
 		// rest of column - with comma
 		while (colIter.hasNext()) {
-			pair = (SQLPair) colIter.next();
-			query += ", " + pair.getColumnName() + " = " + pair.getValue();
+			pair = colIter.next();
+			query.append(", ").append(pair.getColumnName()).append(" = ").append(pair.getValue());
 		}
 
 		// adding conditions
 		if (!_conditions.isEmpty()) {
-			query += " WHERE "; //$NON-NLS-1$
-			Iterator condIter = _conditions.iterator();
-			query += condIter.next();
+			query.append(" WHERE "); //$NON-NLS-1$
+			Iterator<String> condIter = _conditions.iterator();
+			query.append(condIter.next());
 			while (condIter.hasNext()) {
-				query += " AND " + condIter.next();
+				query.append(" AND ").append(condIter.next());
 			}
 		}
 
-		return query;
+		return query.toString();
 	}
 
 	/**
@@ -232,6 +232,7 @@ public final class SQLUpdate
     {
     	SQLInsert insert = new SQLInsert(_tableName);
         insert.addAllValues(_values);
+        
         return insert;
     }
 	

@@ -36,7 +36,6 @@ import salomon.engine.database.queries.SQLUpdate;
 
 /**
  * Class represents plugin description.
- *
  */
 public class Description implements Serializable, IDBSupporting
 {
@@ -60,7 +59,8 @@ public class Description implements Serializable, IDBSupporting
 
 	public Description()
 	{
-	};
+        // empty body
+	}
 
 	/**
 	 * @param info
@@ -231,7 +231,6 @@ public class Description implements Serializable, IDBSupporting
      * Removes itself from database.
      * After successsful finish object should be destroyed.
 	 * 
-	 * @return
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */

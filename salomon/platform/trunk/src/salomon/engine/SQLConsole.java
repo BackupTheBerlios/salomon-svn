@@ -455,7 +455,7 @@ public final class SQLConsole extends JFrame
 			columnNames[i] = metaData.getColumnLabel(i + 1);
 		}
 		// getting data
-		LinkedList rows = new LinkedList();
+		LinkedList<Object[]> rows = new LinkedList<Object[]>();
 		int size = 0;
 		while (resultSet.next()) {
 			Object[] row = new Object[columnCount];
@@ -469,7 +469,7 @@ public final class SQLConsole extends JFrame
 		// creating result table
 		Object[][] data = new Object[size][columnCount];
 		for (int i = 0; i < size; i++) {
-			data[i] = (Object[]) rows.get(i);
+			data[i] = rows.get(i);
 		}
 		// printing result
 		StringBuffer buffer = new StringBuffer(512);
@@ -492,13 +492,13 @@ public final class SQLConsole extends JFrame
 	 */
 	private static final class CommandHistory
 	{
-		private List _commandHistory = null;
+		private List<String> _commandHistory = null;
 
 		private int _currentPosition = -1;
 
 		CommandHistory(int initialSize)
 		{
-			_commandHistory = new ArrayList(initialSize);
+			_commandHistory = new ArrayList<String>(initialSize);
 			_currentPosition = -1;
 		}
 
@@ -521,8 +521,9 @@ public final class SQLConsole extends JFrame
 			String command = null;
 			if (_currentPosition < _commandHistory.size() - 1) {
 				_currentPosition++;
-				command = (String) _commandHistory.get(_currentPosition);
+				command = _commandHistory.get(_currentPosition);
 			}
+            
 			return command;
 		}
 
@@ -534,8 +535,9 @@ public final class SQLConsole extends JFrame
 			String command = null;
 			if (_commandHistory.size() > 1 && _currentPosition > 0) {
 				_currentPosition--;
-				command = (String) _commandHistory.get(_currentPosition);
+				command = _commandHistory.get(_currentPosition);
 			}
+            
 			return command;
 		}
 	}

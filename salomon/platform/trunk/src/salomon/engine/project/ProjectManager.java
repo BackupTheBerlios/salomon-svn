@@ -74,7 +74,7 @@ public final class ProjectManager implements IProjectManager
 	}
 
 	/**
-	 * @see salomon.engine.project.IProjectManager#addProject(IRemoteProject)
+	 * @see IProjectManager#addProject(IProject)
 	 */
 	public void addProject(IProject project)
 	{
@@ -210,7 +210,6 @@ public final class ProjectManager implements IProjectManager
 	 * may be called after every task processing. 
      * TODO: update date_finished
 	 * 
-	 * @param
 	 * @throws SQLException
 	 */
 	public void updateTask(Task task, int projectId) throws SQLException
@@ -276,6 +275,7 @@ public final class ProjectManager implements IProjectManager
 			throw e;
 		}
 		resultSet.close();
+        
 		return tasks;
 	}
 

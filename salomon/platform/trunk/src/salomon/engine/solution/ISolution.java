@@ -25,6 +25,8 @@ import salomon.engine.project.IProjectManager;
 
 import salomon.platform.exception.PlatformException;
 
+import salomon.engine.platform.IManagerEngine;
+
 /**
  * Represents a solution.
  * @see salomon.engine.solution.ISolutionManager
@@ -32,4 +34,6 @@ import salomon.platform.exception.PlatformException;
 public interface ISolution
 {
     IProjectManager getProjectManager() throws PlatformException;
+    
+    IManagerEngine getManagerEngine() throws PlatformException;
 }

@@ -26,7 +26,6 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.LinkedList;
 
 import javax.swing.JComponent;
@@ -37,12 +36,11 @@ import org.apache.log4j.Logger;
 
 import salomon.engine.Messages;
 
-
 /**
  * Class supply some useful methods used in GUI. All public methods are static
  * to simplyfy usage.
  */
-public class Utils
+public final class Utils
 {
 	private JComponent _parent;
 
@@ -67,6 +65,7 @@ public class Utils
 	{
 		int retVal = JOptionPane.showConfirmDialog(_parent, msg, title,
 				JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+
 		return (retVal == JOptionPane.YES_OPTION);
 	}
 
@@ -75,6 +74,7 @@ public class Utils
 		int retVal = JOptionPane.showConfirmDialog(_parent, msg,
 				Messages.getString("TIT_WARN"), JOptionPane.YES_NO_OPTION,
 				JOptionPane.WARNING_MESSAGE);
+
 		return (retVal == JOptionPane.YES_OPTION);
 	}
 
@@ -84,17 +84,15 @@ public class Utils
 	 * @param allData collection of data
 	 * @return JTable representing given data
 	 */
-	public static JTable createResultTable(Collection allData)
+	public static JTable createResultTable(Collection<Object[]> allData)
 	{
 		String[] columnNames = null;
 		Object[][] data = null;
 
 		int rowCount = 0;
-		for (Iterator iter = allData.iterator(); iter.hasNext();) {
-			Object[] row = (Object[]) iter.next();
+		for (Object[] row : allData) {
 			if (rowCount == 0) {
-				columnNames = (String[]) Arrays.asList(row).toArray(
-						new String[row.length]);
+				columnNames = Arrays.asList(row).toArray(new String[row.length]);
 				// creating matrix for data
 				data = new Object[allData.size() - 1][columnNames.length];
 			} else {
@@ -134,7 +132,7 @@ public class Utils
 	public static Collection getDataFromResultSet(ResultSet resultSet)
 			throws SQLException
 	{
-		LinkedList allData = new LinkedList();
+		LinkedList<Object[]> allData = new LinkedList<Object[]>();
 		ResultSetMetaData metaData = resultSet.getMetaData();
 		int columnCount = metaData.getColumnCount();
 		String[] columnNames = new String[columnCount];
@@ -159,8 +157,7 @@ public class Utils
 		StringBuffer buffer = new StringBuffer(512);
 		int rowCount = 0;
 		buffer.append("\n");
-		for (Iterator iter = allData.iterator(); iter.hasNext();) {
-			Object[] row = (Object[]) iter.next();
+		for (Object[] row : allData) {
 			for (int i = 0; i < row.length; i++) {
 				buffer.append(row[i] + "|"); //$NON-NLS-1$
 			}

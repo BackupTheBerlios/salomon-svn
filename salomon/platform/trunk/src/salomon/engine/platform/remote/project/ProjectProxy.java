@@ -26,8 +26,11 @@ import java.rmi.RemoteException;
 import org.apache.log4j.Logger;
 
 import salomon.engine.project.IProject;
+import salomon.engine.task.ITaskManager;
 
 import salomon.platform.exception.PlatformException;
+
+import salomon.engine.platform.remote.task.TaskManagerProxy;
 
 /**
  * Class is a sever side wrapper of IRemoteProject object. It implements
@@ -39,6 +42,8 @@ import salomon.platform.exception.PlatformException;
 public final class ProjectProxy implements IProject
 {
 	private IRemoteProject _remoteProject;
+
+	private ITaskManager _taskManagerProxy;
 
 	/**
 	 * @pre $none
@@ -95,6 +100,24 @@ public final class ProjectProxy implements IProject
 		}
 
 		return id;
+	}
+
+	/**
+	 * @see salomon.engine.project.IProject#getTaskManager()
+	 */
+	public ITaskManager getTaskManager() throws PlatformException
+	{
+		if (_taskManagerProxy == null) {
+			try {
+				_taskManagerProxy = new TaskManagerProxy(
+						_remoteProject.getTaskManager());
+			} catch (RemoteException e) {
+				LOGGER.error("Remote error!");
+				throw new PlatformException(e.getLocalizedMessage());
+			}
+		}
+
+		return _taskManagerProxy;
 	}
 
 	/**

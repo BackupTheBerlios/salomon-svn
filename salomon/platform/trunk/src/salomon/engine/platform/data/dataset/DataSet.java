@@ -73,7 +73,6 @@ class DataSet implements IDataSet
 	 * method are concatenated to them. TODO: reimplement it
 	 * 
 	 * @param select SELECT query
-	 * @return
 	 * @throws SQLException
 	 * @throws ClassNotFoundException
 	 */
@@ -111,7 +110,6 @@ class DataSet implements IDataSet
 	 * reimplement it
 	 * 
 	 * @param query SQL query to be executed
-	 * @return
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
@@ -211,12 +209,11 @@ class DataSet implements IDataSet
 	 * set is a subset of data stored in tables, conditions specifies how to get
 	 * this subset. Conditions got from plugin has to be added to condition list
 	 * determinating data set.
-	 * 
+	 * TODO: reimplement it
 	 * @param tableNames
 	 * @return
 	 */
-	// TODO: reimplement it
-	private List getConditionsByTable(Collection<String> tableNames)
+	private List<String> getConditionsByTable(Collection<String> tableNames)
 	{
 		// List conditionList = new LinkedList();
 		// // Checking which condition determinating data set

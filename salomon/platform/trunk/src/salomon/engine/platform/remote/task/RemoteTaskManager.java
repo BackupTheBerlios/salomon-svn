@@ -41,7 +41,7 @@ import salomon.platform.exception.PlatformException;
 public final class RemoteTaskManager extends UnicastRemoteObject
 		implements IRemoteTaskManager
 {
-	private Map _proxies = new HashMap();
+	private Map<ITask, IRemoteTask> _proxies = new HashMap<ITask, IRemoteTask>();
 
 	private IRemoteTaskRunner _remoteTaskRunner;
 
@@ -129,16 +129,17 @@ public final class RemoteTaskManager extends UnicastRemoteObject
 		_taskManager.start();
 	}
 
-	private IRemoteTask getRemoteTask(ITask task) throws RemoteException, PlatformException
+	private IRemoteTask getRemoteTask(ITask task) throws RemoteException,
+			PlatformException
 	{
 		IRemoteTask remoteTask = null;
 		if (_proxies.containsKey(task)) {
-			remoteTask = (IRemoteTask) _proxies.get(task);
+			remoteTask = _proxies.get(task);
 		} else {
 			remoteTask = new RemoteTask(task);
 			_proxies.put(task, remoteTask);
 		}
-        
+
 		return remoteTask;
 	}
 

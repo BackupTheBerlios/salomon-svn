@@ -46,7 +46,8 @@ public final class DataSetManager implements IDataSetManager
 	 */
 	public void add(IDataSet dataSet) throws PlatformException
 	{
-        throw new UnsupportedOperationException("Method add() not implemented yet!");
+		throw new UnsupportedOperationException(
+				"Method add() not implemented yet!");
 	}
 
 	public IDataSet getDataSet(String name) throws PlatformException
@@ -87,23 +88,28 @@ public final class DataSetManager implements IDataSetManager
 	 */
 	public IDataSet[] getDataSets() throws PlatformException
 	{
-        throw new UnsupportedOperationException("Method getDataSets() not implemented yet!");
+		throw new UnsupportedOperationException(
+				"Method getDataSets() not implemented yet!");
 	}
 
 	/**
 	 * @see salomon.platform.data.dataset.IDataSetManager#intersection(salomon.platform.data.dataset.IDataSet, salomon.platform.data.dataset.IDataSet)
 	 */
-	public IDataSet intersection(IDataSet firstDataSet, IDataSet secondDataSet) throws PlatformException
+	public IDataSet intersection(IDataSet firstDataSet, IDataSet secondDataSet)
+			throws PlatformException
 	{
-		throw new UnsupportedOperationException("Method intersection() not implemented yet!");
+		throw new UnsupportedOperationException(
+				"Method intersection() not implemented yet!");
 	}
 
 	/**
 	 * @see salomon.platform.data.dataset.IDataSetManager#minus(salomon.platform.data.dataset.IDataSet, salomon.platform.data.dataset.IDataSet)
 	 */
-	public IDataSet minus(IDataSet firstDataSet, IDataSet secondDataSet) throws PlatformException
+	public IDataSet minus(IDataSet firstDataSet, IDataSet secondDataSet)
+			throws PlatformException
 	{
-		throw new UnsupportedOperationException("Method minus() not implemented yet!");
+		throw new UnsupportedOperationException(
+				"Method minus() not implemented yet!");
 	}
 
 	/**
@@ -113,7 +119,8 @@ public final class DataSetManager implements IDataSetManager
 	public IDataSet union(IDataSet firstDataSet, IDataSet secondDataSet)
 			throws PlatformException
 	{
-        throw new UnsupportedOperationException("Method union() not implemented yet!");
+		throw new UnsupportedOperationException(
+				"Method union() not implemented yet!");
 	}
 
 	private ResultSet getDataSetItems(String dataSetName) throws SQLException,
@@ -130,10 +137,10 @@ public final class DataSetManager implements IDataSetManager
 		DBManager connector = DBManager.getInstance();
 		return connector.select(select);
 	}
-    
-	private static final Logger LOGGER = Logger.getLogger(DataSetManager.class);
 
 	private static final String DATASET_ITEMS = "dataset_items";
 
 	private static final String DATASETS = "datasets";
+
+	private static final Logger LOGGER = Logger.getLogger(DataSetManager.class);
 }

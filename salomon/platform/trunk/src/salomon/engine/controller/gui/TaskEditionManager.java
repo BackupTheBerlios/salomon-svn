@@ -136,13 +136,13 @@ public final class TaskEditionManager
 			desc.setName(_txtPluginName.getText());
 			desc.setLocation(url);
 			desc.setInfo(_txtPluginInfo.getText());
-            boolean wasOk = false;
-            try {
-            	wasOk = _managerEngine.getPluginManager().savePlugin(desc);
-            } catch (PlatformException e) {
-                LOGGER.error("", e);
-                //FIXME
-            }
+			boolean wasOk = false;
+			try {
+				wasOk = _managerEngine.getPluginManager().savePlugin(desc);
+			} catch (PlatformException e) {
+				LOGGER.error("", e);
+				//FIXME
+			}
 			if (wasOk) {
 				refresh();
 			} else {
@@ -162,9 +162,9 @@ public final class TaskEditionManager
 			IPlugin plugin;
 			try {
 				plugin = localPlugin.getPlugin();
-               // TODO: change it !!!
-                int pluginID = localPlugin.getPluginDescription().getPluginID();                
-                plugin.getDescription().setPluginID(pluginID);                
+				// TODO: change it !!!
+				int pluginID = localPlugin.getPluginDescription().getPluginID();
+				plugin.getDescription().setPluginID(pluginID);
 				TaskGUI taskGUI = new TaskGUI();
 				taskGUI.setPlugin(plugin);
 				taskGUI.setName(getTaskName());
@@ -190,6 +190,7 @@ public final class TaskEditionManager
 
 	public List getTasks()
 	{
+		//FIXME
 		return Arrays.asList(_taskListModel.toArray());
 	}
 
@@ -234,26 +235,26 @@ public final class TaskEditionManager
 	 */
 	public void refresh()
 	{
-        //FIXME
-        
-        throw new UnsupportedOperationException(
+		//FIXME
+
+		throw new UnsupportedOperationException(
 				"Method refresh() not implemented yet!");
-//		LOGGER.debug("reloading plugins");
-//		_pluginListModel.removeAllElements();
-//		Collection plugins = _managerEngine.getPluginManager().getPlugins();
-//		for (Iterator iter = plugins.iterator(); iter.hasNext();) {
-//			LocalPlugin localPlugin = new LocalPlugin((Description) iter.next());
-//			LOGGER.debug("adding plugin:" + localPlugin);
-//			LOGGER.debug("description:" + localPlugin.getPluginDescription());
-//			_pluginListModel.addElement(localPlugin);
-//		}
-//		LOGGER.debug("reloading tasks");
-//		_taskListModel.removeAllElements();
-//		ITask[] tasks = _managerEngine.getTasksManager().getTasks();
-//        for (ITask task : tasks) {
-//            LOGGER.debug("adding task");
-//            _taskListModel.addElement(new TaskGUI(task));   
-//        }
+		//		LOGGER.debug("reloading plugins");
+		//		_pluginListModel.removeAllElements();
+		//		Collection plugins = _managerEngine.getPluginManager().getPlugins();
+		//		for (Iterator iter = plugins.iterator(); iter.hasNext();) {
+		//			LocalPlugin localPlugin = new LocalPlugin((Description) iter.next());
+		//			LOGGER.debug("adding plugin:" + localPlugin);
+		//			LOGGER.debug("description:" + localPlugin.getPluginDescription());
+		//			_pluginListModel.addElement(localPlugin);
+		//		}
+		//		LOGGER.debug("reloading tasks");
+		//		_taskListModel.removeAllElements();
+		//		ITask[] tasks = _managerEngine.getTasksManager().getTasks();
+		//        for (ITask task : tasks) {
+		//            LOGGER.debug("adding task");
+		//            _taskListModel.addElement(new TaskGUI(task));   
+		//        }
 	}
 
 	public void removePlugin()
@@ -261,15 +262,15 @@ public final class TaskEditionManager
 		if (Utils.showQuestionMessage(Messages.getString("TIT_WARN"),
 				Messages.getString("TXT_REMOVE_PLUGIN_QUESTION"))) {
 			Description desc = ((LocalPlugin) _pluginListModel.get(_selectedItem)).getPluginDescription();
-            
-            boolean wasOk = false;
-            try {
-            	wasOk = _managerEngine.getPluginManager().removePlugin(desc);                
-            } catch (PlatformException e) {
-                LOGGER.error("", e);
-                //FIXME   
-            }
-            
+
+			boolean wasOk = false;
+			try {
+				wasOk = _managerEngine.getPluginManager().removePlugin(desc);
+			} catch (PlatformException e) {
+				LOGGER.error("", e);
+				//FIXME   
+			}
+
 			if (wasOk) {
 				_pluginListModel.remove(_selectedItem);
 			} else {
@@ -288,20 +289,20 @@ public final class TaskEditionManager
 		int index = _taskList.getSelectedIndex();
 		if (index >= 0) {
 			TaskGUI task = (TaskGUI) _taskListModel.remove(index);
-			System.out.println("plugin = " + task); //$NON-NLS-1$
+			LOGGER.debug("plugin = " + task); //$NON-NLS-1$
 		} else {
 			LOGGER.warn("Invalid index. Wrong list selected?"); //$NON-NLS-1$
 		}
 	}
 
-    /**
-     * Starts executing task.
-     */
+	/**
+	 * Starts executing task.
+	 */
 	public void runTasks()
 	{
-        throw new UnsupportedOperationException(
+		throw new UnsupportedOperationException(
 				"Method runTasks() not implemented yet!");
-//FIXME		_managerEngine.getTasksManager().start();
+		//FIXME		_managerEngine.getTasksManager().start();
 	}
 
 	public void savePlugin()
@@ -327,15 +328,15 @@ public final class TaskEditionManager
 			desc.setName(_txtPluginName.getText());
 			desc.setLocation(url);
 			desc.setInfo(_txtPluginInfo.getText());
-            
-            boolean wasOk = false;
-            try {
-            	wasOk = _managerEngine.getPluginManager().savePlugin(desc);
-            } catch (PlatformException e) {
-                LOGGER.error("", e);
-                //FIXME
-            }
-            
+
+			boolean wasOk = false;
+			try {
+				wasOk = _managerEngine.getPluginManager().savePlugin(desc);
+			} catch (PlatformException e) {
+				LOGGER.error("", e);
+				//FIXME
+			}
+
 			if (wasOk) {
 				//refresh();
 			} else {
@@ -362,6 +363,7 @@ public final class TaskEditionManager
 		if (_editPluginPanel == null) {
 			_editPluginPanel = new PluginEditPanel();
 		}
+
 		return _editPluginPanel;
 	}
 
@@ -394,6 +396,7 @@ public final class TaskEditionManager
 				_positionComponent,
 				txtTaskName,
 				Messages.getString("TXT_ENTER_TASK_NAME"), JOptionPane.INFORMATION_MESSAGE); //$NON-NLS-1$
+
 		return txtTaskName.getText();
 	}
 
@@ -420,6 +423,7 @@ public final class TaskEditionManager
 			_taskPopup.add(itmSettings);
 			_taskPopup.add(itmResult);
 		}
+        
 		return _taskPopup;
 	}
 
@@ -438,7 +442,7 @@ public final class TaskEditionManager
 		if (prefDim.width > maxDim.width) {
 			prefDim.width = maxDim.width;
 		}
-        comp.setSize(prefDim);
+		comp.setSize(prefDim);
 		JOptionPane.showMessageDialog(
 				_positionComponent,
 				comp,
@@ -466,10 +470,9 @@ public final class TaskEditionManager
 	}
 
 	/** Class helps managing plugin loading */
-	public class LocalPlugin
+	public static final class LocalPlugin
 	{
-
-		Description _pluginDescription;
+		private Description _pluginDescription;
 
 		private IPlugin _plugin;
 
@@ -490,6 +493,7 @@ public final class TaskEditionManager
 				LOGGER.debug("trying to load plugin"); //$NON-NLS-1$
 				_plugin = PluginLoader.loadPlugin(_pluginDescription.getLocation());
 			}
+            
 			return _plugin;
 		}
 
@@ -508,7 +512,7 @@ public final class TaskEditionManager
 		}
 	}
 
-	private class PluginEditPanel extends JPanel
+	private final class PluginEditPanel extends JPanel
 	{
 
 		private Dimension _labelDim = new Dimension(100, 20);
@@ -547,7 +551,7 @@ public final class TaskEditionManager
 		}
 	}
 
-	private class PopupListener extends MouseAdapter
+	private final class PopupListener extends MouseAdapter
 	{
 		public void mousePressed(MouseEvent e)
 		{

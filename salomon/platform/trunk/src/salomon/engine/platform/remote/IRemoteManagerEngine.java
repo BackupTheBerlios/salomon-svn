@@ -24,6 +24,8 @@ package salomon.engine.platform.remote;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
+import salomon.platform.exception.PlatformException;
+
 import salomon.engine.platform.remote.plugin.IRemotePluginManager;
 import salomon.engine.platform.remote.project.IRemoteProjectManager;
 import salomon.engine.platform.remote.solution.IRemoteSolutionManager;
@@ -45,24 +47,27 @@ public interface IRemoteManagerEngine extends Remote
 	 * @pre $none
 	 * @post $result != null
 	 */
-	IRemotePluginManager getPluginManager() throws RemoteException;
+	IRemotePluginManager getPluginManager() throws RemoteException, PlatformException;
 
 	/**
+     * 
+     * @deprecated Use (@link salomon.engine.platform.remote.solution.IRemoteSolution#getProjectManager()}
 	 * @see salomon.engine.platform.IManagerEngine#getProjectManager()
 	 * 
 	 * @return Returns the projectManager.
 	 * @pre $none
 	 * @post $result != null
 	 */
-	IRemoteProjectManager getProjectManager() throws RemoteException;
+	IRemoteProjectManager getProjectManager() throws RemoteException, PlatformException;
 
 	/**
+     * @deprecated Use {@link salomon.engine.platform.remote.project.IRemoteProject#getTaskManager()}
 	 * @see salomon.engine.platform.IManagerEngine#getTasksManager()
 	 */
-	IRemoteTaskManager getTasksManager() throws RemoteException;
+	IRemoteTaskManager getTasksManager() throws RemoteException, PlatformException;
     
     /**
      * @see salomon.engine.platform.IManagerEngine#getSolutionManager()
      */
-    IRemoteSolutionManager getSolutionManager() throws RemoteException;
+    IRemoteSolutionManager getSolutionManager() throws RemoteException, PlatformException;
 }

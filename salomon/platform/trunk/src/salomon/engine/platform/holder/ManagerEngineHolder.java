@@ -21,10 +21,14 @@
 
 package salomon.engine.platform.holder;
 
+import org.apache.log4j.Logger;
+
 import salomon.engine.plugin.IPluginManager;
 import salomon.engine.project.IProjectManager;
 import salomon.engine.solution.ISolutionManager;
 import salomon.engine.task.ITaskManager;
+
+import salomon.platform.exception.PlatformException;
 
 import salomon.engine.platform.IManagerEngine;
 
@@ -50,14 +54,18 @@ public final class ManagerEngineHolder implements IManagerEngine
 	public ManagerEngineHolder(IManagerEngine managerEngine)
 	{
 		_currentManagerEngine = managerEngine;
-		_pluginManagerHolder = new PluginManagerHolder(
-				_currentManagerEngine.getPluginManager());
-		_projectManagerHolder = new ProjectManagerHolder(
-				_currentManagerEngine.getProjectManager());
-		_taskManagerHolder = new TaskManagerHolder(
-				_currentManagerEngine.getTasksManager());
-		_solutionManagerHolder = new SolutionManagerHolder(
-				_currentManagerEngine.getSolutionManager());
+		try {
+			_pluginManagerHolder = new PluginManagerHolder(
+					_currentManagerEngine.getPluginManager());
+			_projectManagerHolder = new ProjectManagerHolder(
+					_currentManagerEngine.getProjectManager());
+			_taskManagerHolder = new TaskManagerHolder(
+					_currentManagerEngine.getTasksManager());
+			_solutionManagerHolder = new SolutionManagerHolder(
+					_currentManagerEngine.getSolutionManager());
+		} catch (PlatformException e) {
+			LOGGER.fatal("", e);
+		}
 	}
 
 	/**
@@ -77,6 +85,14 @@ public final class ManagerEngineHolder implements IManagerEngine
 	}
 
 	/**
+	 * @see salomon.engine.platform.IManagerEngine#getSolutionManager()
+	 */
+	public ISolutionManager getSolutionManager()
+	{
+		return _solutionManagerHolder;
+	}
+
+	/**
 	 * @see salomon.engine.platform.IManagerEngine#getTasksManager()
 	 */
 	public ITaskManager getTasksManager()
@@ -92,16 +108,14 @@ public final class ManagerEngineHolder implements IManagerEngine
 	public void setCurrentManager(IManagerEngine managerEngine)
 	{
 		_currentManagerEngine = managerEngine;
-		_pluginManagerHolder.setCurrent(_currentManagerEngine.getPluginManager());
-		_projectManagerHolder.setCurrent(_currentManagerEngine.getProjectManager());
-		_taskManagerHolder.setCurrent(_currentManagerEngine.getTasksManager());
+		try {
+			_pluginManagerHolder.setCurrent(_currentManagerEngine.getPluginManager());
+			_projectManagerHolder.setCurrent(_currentManagerEngine.getProjectManager());
+			_taskManagerHolder.setCurrent(_currentManagerEngine.getTasksManager());
+		} catch (PlatformException e) {
+			LOGGER.fatal("", e);
+		}
 	}
 
-	/**
-	 * @see salomon.engine.platform.IManagerEngine#getSolutionManager()
-	 */
-	public ISolutionManager getSolutionManager()
-	{
-		return _solutionManagerHolder;
-	}
+	private static final Logger LOGGER = Logger.getLogger(ManagerEngineHolder.class);
 }

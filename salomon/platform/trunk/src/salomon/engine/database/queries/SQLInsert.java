@@ -130,16 +130,16 @@ public final class SQLInsert
 		String colNames = " (";
 		String colValues = " VALUES (";
 
-		Iterator colIter = _values.iterator();
+		Iterator<SQLPair> colIter = _values.iterator();
 		// first column is added without comma
-		SQLPair pair = (SQLPair) colIter.next();
+		SQLPair pair = colIter.next();
 		colNames += pair.getColumnName();
 		colValues += pair.getValue();
 
 		// rest of column - with comma
 		// TODO: Use StringBuffer
 		while (colIter.hasNext()) {
-			pair = (SQLPair) colIter.next();
+			pair = colIter.next();
 			colNames += ", " + pair.getColumnName();
 			colValues += ", " + pair.getValue();
 		}

@@ -29,7 +29,7 @@ import salomon.platform.IEnvironment;
 /**
  *  Class represents environment of task execution.
  */
-public class Environment implements IEnvironment
+public final class Environment implements IEnvironment
 {
 	private Map<String, String> _environment = new HashMap<String, String>();
 

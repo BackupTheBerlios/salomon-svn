@@ -107,39 +107,40 @@ public final class SQLSelect
 	 */
 	public String getQuery()
 	{
-		String query = "SELECT "; //$NON-NLS-1$
+		StringBuffer query = new StringBuffer("SELECT "); //$NON-NLS-1$
 
 		// adding column to select
 		if (_columns.isEmpty()) {
-			query += "*"; //$NON-NLS-1$
+			query.append("*"); //$NON-NLS-1$
 		} else {
-			Iterator colIter = _columns.iterator();
+			Iterator<String> colIter = _columns.iterator();
 			// first column is added without comma
-			query += colIter.next();
+			query.append(colIter.next());
 			// rest of column - with comma
 			while (colIter.hasNext()) {
-				query += ", " + colIter.next();
+				query.append(", ").append(colIter.next());
 			}
 		}
-		query += " FROM "; //$NON-NLS-1$
+		query.append(" FROM "); //$NON-NLS-1$
 
 		// adding tables
-		Iterator tabIter = _tables.iterator();
-		query += tabIter.next();
+		Iterator<String> tabIter = _tables.iterator();
+		query.append(tabIter.next());
 		while (tabIter.hasNext()) {
-			query += ", " + tabIter.next();
+			query.append(", ").append(tabIter.next());
 		}
 
 		// adding conditions
 		if (!_conditions.isEmpty()) {
-			query += " WHERE "; //$NON-NLS-1$
-			Iterator condIter = _conditions.iterator();
-			query += condIter.next();
+			query.append(" WHERE "); //$NON-NLS-1$
+			Iterator<String> condIter = _conditions.iterator();
+			query.append(condIter.next());
 			while (condIter.hasNext()) {
-				query += " AND " + condIter.next();
+				query.append(" AND ").append(condIter.next());
 			}
 		}
-		return query;
+        
+		return query.toString();
     }
     
     /**

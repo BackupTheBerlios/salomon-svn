@@ -47,6 +47,7 @@ public final class ManagerEngine implements IManagerEngine
 
 	public ManagerEngine()
 	{
+        //FIXME
 		_taskManager = new TaskManager();
 		_projectManager = new ProjectManager(this);
 		_pluginManager = new PluginManager();

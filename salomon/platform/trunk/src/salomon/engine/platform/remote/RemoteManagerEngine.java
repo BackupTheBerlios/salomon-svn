@@ -24,6 +24,10 @@ package salomon.engine.platform.remote;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
+import org.apache.log4j.Logger;
+
+import salomon.platform.exception.PlatformException;
+
 import salomon.engine.platform.IManagerEngine;
 import salomon.engine.platform.remote.plugin.IRemotePluginManager;
 import salomon.engine.platform.remote.plugin.RemotePluginManager;
@@ -46,9 +50,9 @@ public final class RemoteManagerEngine extends UnicastRemoteObject
 
 	private IRemoteProjectManager _remoteProjectManager;
 
+	private IRemoteSolutionManager _remoteSolutionManager;
+
 	private IRemoteTaskManager _remoteTaskManager;
-    
-    private IRemoteSolutionManager _remoteSolutionManager;
 
 	/**
 	 * @throws RemoteException
@@ -58,13 +62,18 @@ public final class RemoteManagerEngine extends UnicastRemoteObject
 	public RemoteManagerEngine(IManagerEngine managerEngine)
 			throws RemoteException
 	{
-		_remotePluginManager = new RemotePluginManager(
-				managerEngine.getPluginManager());
-		_remoteProjectManager = new RemoteProjectManager(
-				managerEngine.getProjectManager());
-		_remoteTaskManager = new RemoteTaskManager(
-				managerEngine.getTasksManager());
-        _remoteSolutionManager = new RemoteSolutionManager(managerEngine.getSolutionManager());
+		try {
+			_remotePluginManager = new RemotePluginManager(
+					managerEngine.getPluginManager());
+			_remoteProjectManager = new RemoteProjectManager(
+					managerEngine.getProjectManager());
+			_remoteTaskManager = new RemoteTaskManager(
+					managerEngine.getTasksManager());
+			_remoteSolutionManager = new RemoteSolutionManager(
+					managerEngine.getSolutionManager());
+		} catch (PlatformException e) {
+			LOGGER.error("", e);
+		}
 	}
 
 	/**
@@ -84,6 +93,14 @@ public final class RemoteManagerEngine extends UnicastRemoteObject
 	}
 
 	/**
+	 * @see IRemoteManagerEngine#getSolutionManager()
+	 */
+	public IRemoteSolutionManager getSolutionManager() throws RemoteException
+	{
+		return _remoteSolutionManager;
+	}
+
+	/**
 	 * @see IRemoteManagerEngine#getTasksManager()
 	 */
 	public IRemoteTaskManager getTasksManager() throws RemoteException
@@ -91,12 +108,6 @@ public final class RemoteManagerEngine extends UnicastRemoteObject
 		return _remoteTaskManager;
 	}
 
-	/**
-	 * @see IRemoteManagerEngine#getSolutionManager()
-	 */
-	public IRemoteSolutionManager getSolutionManager() throws RemoteException
-	{
-		return _remoteSolutionManager;
-	}
-    
+	private static final Logger LOGGER = Logger.getLogger(RemoteManagerEngine.class);
+
 }

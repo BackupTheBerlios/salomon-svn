@@ -37,7 +37,6 @@ import org.apache.log4j.Logger;
 
 import salomon.engine.Config;
 
-
 import salomon.plugin.IPlugin;
 
 /**
@@ -49,7 +48,7 @@ public final class PluginLoader
 
 	public static URL getPluginLocation(IPlugin plugin)
 	{
-		return (URL) _pluginsLoaded.get(plugin);
+		return _pluginsLoaded.get(plugin);
 	}
 
 	/**
@@ -98,6 +97,7 @@ public final class PluginLoader
 		input.close();
 		output.close();
 		LOGGER.info("downloaded file: " + pluginFile);
+
 		return pluginFile;
 	}
 
@@ -123,6 +123,7 @@ public final class PluginLoader
 				break;
 			}
 		}
+
 		return pluginFile;
 	}
 
@@ -182,7 +183,7 @@ public final class PluginLoader
 
 	private static String _pluginsDir = Config.getString("PLUGINS_DIR");
 
-	private static Map _pluginsLoaded = new HashMap();
+	private static Map<IPlugin, URL> _pluginsLoaded = new HashMap<IPlugin, URL>();
 
 	private static final Logger LOGGER = Logger.getLogger(PluginLoader.class);
 }

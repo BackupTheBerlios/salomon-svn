@@ -51,9 +51,6 @@ public interface ITaskManager
 
     /**
      * 
-     * TODO: add comment.
-     * @return
-     * @throws PlatformException
      */
 	ITaskRunner getRunner() throws PlatformException;
 

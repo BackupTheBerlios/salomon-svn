@@ -24,10 +24,9 @@ package salomon.engine.platform.remote;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.HashSet;
-import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import salomon.engine.platform.remote.event.IMasterControllerListener;
 import salomon.engine.platform.remote.event.RemoteControllerEvent;
@@ -35,14 +34,13 @@ import salomon.engine.platform.remote.event.RemoteControllerEvent;
 /**
  * Class implements ICentralController interface. It is responsible for
  * establishing connection and disconnecting of remote clients.
- * 
  */
 public final class CentralController extends UnicastRemoteObject
 		implements ICentralController
 {
-	private List<IMasterControllerListener> _listeners = new LinkedList<IMasterControllerListener>();
+	private List<IMasterControllerListener> _listeners = new CopyOnWriteArrayList<IMasterControllerListener>();
 
-	private Set _remoteControllers = new HashSet();
+	private Set<IRemoteController> _remoteControllers = new HashSet<IRemoteController>();
 
 	/**
 	 * @throws RemoteException
@@ -91,8 +89,7 @@ public final class CentralController extends UnicastRemoteObject
 		RemoteControllerEvent event = new RemoteControllerEvent(this,
 				controller);
 
-		for (Iterator iter = _listeners.iterator(); iter.hasNext();) {
-			IMasterControllerListener listener = (IMasterControllerListener) iter.next();
+		for (IMasterControllerListener listener : _listeners) {
 			listener.controllerAdded(event);
 		}
 	}
@@ -102,8 +99,7 @@ public final class CentralController extends UnicastRemoteObject
 		RemoteControllerEvent event = new RemoteControllerEvent(this,
 				controller);
 
-		for (Iterator iter = _listeners.iterator(); iter.hasNext();) {
-			IMasterControllerListener listener = (IMasterControllerListener) iter.next();
+		for (IMasterControllerListener listener : _listeners) {
 			listener.controllerRemoved(event);
 		}
 	}

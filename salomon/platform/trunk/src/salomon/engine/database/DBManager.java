@@ -240,6 +240,7 @@ public final class DBManager
 			foundID = insert(updateObject.updateToInsert(), primaryKey);
 			LOGGER.info("New record inserted, id = " + foundID);
 		}
+        
 		return foundID;
 	}
     /**
@@ -261,6 +262,7 @@ public final class DBManager
             foundID = insert(updateObject.updateToInsert(), primaryKey, generator);
             LOGGER.info("New record inserted, id = " + foundID);
         }
+        
         return foundID;
     }    
 
@@ -294,6 +296,7 @@ public final class DBManager
 	{
 		String query = selectObject.getQuery();
 		LOGGER.info("query = " + query); //$NON-NLS-1$
+        
 		return _statement.executeQuery(query);
 	}
 
@@ -309,6 +312,7 @@ public final class DBManager
 	{
 		String query = updateObject.getQuery();
 		LOGGER.info("query = " + query); //$NON-NLS-1$
+        
 		return _statement.executeUpdate(query);
 	}
 
@@ -363,6 +367,7 @@ public final class DBManager
             }
 			LOGGER.info("Record updated");
 		}
+        
 		return foundID;
 	}
 
@@ -380,6 +385,7 @@ public final class DBManager
 			_instance = new DBManager();
 			_instance.connect();
 		}
+        
 		return _instance;
 	}
 

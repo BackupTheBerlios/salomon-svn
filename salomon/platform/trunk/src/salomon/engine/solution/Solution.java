@@ -23,6 +23,9 @@ package salomon.engine.solution;
 
 import salomon.engine.project.IProjectManager;
 
+import salomon.platform.exception.PlatformException;
+
+import salomon.engine.platform.IManagerEngine;
 
 /**
  * 
@@ -31,10 +34,20 @@ final class Solution implements ISolution
 {
 
 	/**
+	 * @see salomon.engine.solution.ISolution#getManagerEngine()
+	 */
+	public IManagerEngine getManagerEngine() throws PlatformException
+	{
+		throw new UnsupportedOperationException(
+				"Method getManagerEngine() not implemented yet!");
+	}
+
+	/**
 	 * @see salomon.engine.solution.ISolution#getProjectManager()
 	 */
 	public IProjectManager getProjectManager()
 	{
-		throw new UnsupportedOperationException("Method getProjectManager() not implemented yet!");
+		throw new UnsupportedOperationException(
+				"Method getProjectManager() not implemented yet!");
 	}
 }

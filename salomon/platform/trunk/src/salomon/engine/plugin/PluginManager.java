@@ -49,8 +49,8 @@ public final class PluginManager implements IPluginManager
 	public IPlugin[] getPlugins()
 	{
 		Collection<Description> result = new LinkedList<Description>();
-        SQLSelect select = new SQLSelect();
-        select.addTable(Description.TABLE_NAME);
+		SQLSelect select = new SQLSelect();
+		select.addTable(Description.TABLE_NAME);
 		// executing query
 		ResultSet resultSet = null;
 		try {
@@ -67,14 +67,16 @@ public final class PluginManager implements IPluginManager
 		} catch (MalformedURLException e) {
 			LOGGER.fatal("", e);
 		}
-        //FIXME
-        throw new UnsupportedOperationException("Method union() not implemented yet!");
+		//FIXME
+		throw new UnsupportedOperationException(
+				"Method union() not implemented yet!");
 	}
+
 	/**
-     * Removes from data base information about given plugin.
-     * 
-     * @param description description of plugin to remove
-     * @return true if successfully removed, false otherwise 
+	 * Removes from data base information about given plugin.
+	 * 
+	 * @param description description of plugin to remove
+	 * @return true if successfully removed, false otherwise 
 	 */
 	public boolean removePlugin(Description description)
 	{
@@ -82,10 +84,10 @@ public final class PluginManager implements IPluginManager
 		DBManager dbManager = null;
 		try {
 			// removing all related tasks
-            //TODO: change to Task.TABLE_NAME
-            SQLDelete delete = new SQLDelete("tasks");
-            delete.addCondition("plugin_id =", description.getPluginID());
-            
+			//TODO: change to Task.TABLE_NAME
+			SQLDelete delete = new SQLDelete("tasks");
+			delete.addCondition("plugin_id =", description.getPluginID());
+
 			dbManager = DBManager.getInstance();
 			dbManager.delete(delete);
 			// removing plugin
@@ -100,6 +102,7 @@ public final class PluginManager implements IPluginManager
 			dbManager.rollback();
 			LOGGER.fatal("", e);
 		}
+
 		return result;
 	}
 
@@ -121,6 +124,7 @@ public final class PluginManager implements IPluginManager
 		} catch (ClassNotFoundException e) {
 			LOGGER.fatal("", e);
 		}
+
 		return result;
 	}
 

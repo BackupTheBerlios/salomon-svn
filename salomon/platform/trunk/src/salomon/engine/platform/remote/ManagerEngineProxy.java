@@ -28,8 +28,9 @@ import org.apache.log4j.Logger;
 import salomon.engine.plugin.IPluginManager;
 import salomon.engine.project.IProjectManager;
 import salomon.engine.solution.ISolutionManager;
-import salomon.engine.solution.SolutionManger;
 import salomon.engine.task.ITaskManager;
+
+import salomon.platform.exception.PlatformException;
 
 import salomon.engine.platform.IManagerEngine;
 import salomon.engine.platform.remote.plugin.PluginManagerProxy;
@@ -50,9 +51,9 @@ public final class ManagerEngineProxy implements IManagerEngine
 
 	private IProjectManager _projectManager;
 
-	private ITaskManager _taskManager;
-
 	private ISolutionManager _solutionManager;
+
+	private ITaskManager _taskManager;
 
 	public ManagerEngineProxy(IRemoteManagerEngine remoteManagerEngine)
 	{
@@ -65,8 +66,10 @@ public final class ManagerEngineProxy implements IManagerEngine
 					remoteManagerEngine.getPluginManager());
 			_solutionManager = new SolutionManagerProxy(
 					remoteManagerEngine.getSolutionManager());
+		} catch (PlatformException e) {
+			LOGGER.error("", e);
 		} catch (RemoteException e) {
-			LOGGER.error(e);
+			LOGGER.error("", e);
 		}
 
 	}
@@ -88,6 +91,14 @@ public final class ManagerEngineProxy implements IManagerEngine
 	}
 
 	/**
+	 * @see salomon.engine.platform.IManagerEngine#getSolutionManager()
+	 */
+	public ISolutionManager getSolutionManager()
+	{
+		return _solutionManager;
+	}
+
+	/**
 	 * @see salomon.engine.platform.IManagerEngine#getTasksManager()
 	 */
 	public ITaskManager getTasksManager()
@@ -96,13 +107,5 @@ public final class ManagerEngineProxy implements IManagerEngine
 	}
 
 	private static final Logger LOGGER = Logger.getLogger(ManagerEngineProxy.class);
-
-	/**
-	 * @see salomon.engine.platform.IManagerEngine#getSolutionManager()
-	 */
-	public ISolutionManager getSolutionManager()
-	{
-		return _solutionManager;
-	}
 
 }
