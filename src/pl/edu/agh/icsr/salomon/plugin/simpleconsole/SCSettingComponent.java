@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
+import salomon.core.data.DataEngine;
 import salomon.plugin.ISettingComponent;
 import salomon.plugin.ISettings;
 
@@ -59,5 +60,14 @@ public class SCSettingComponent implements ISettingComponent
 	public ISettings getDefaultSettings()
 	{
 		return new SCSettings();
+	}
+
+	/* (non-Javadoc)
+	 * @see salomon.plugin.ISettingComponent#getComponent(salomon.plugin.ISettings, salomon.core.data.DataEngine)
+	 */
+	public Component getComponent(ISettings settings, DataEngine dataEngine)
+	{
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

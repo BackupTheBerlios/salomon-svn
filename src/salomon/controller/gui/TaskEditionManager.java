@@ -405,7 +405,7 @@ public final class TaskEditionManager
 			inputSettings = plugin.getSettingComponent().getDefaultSettings();
 		}
 		int result = JOptionPane.showConfirmDialog(_positionComponent,
-				settingComponent.getComponent(inputSettings),
+				settingComponent.getComponent(inputSettings, null), //TODO: !!!!!!
 				Messages.getString("TIT_PLUGIN_SETTINGS"), //$NON-NLS-1$
 				JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
 		if (result == JOptionPane.OK_OPTION) {

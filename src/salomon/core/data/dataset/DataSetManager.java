@@ -3,6 +3,7 @@ package salomon.core.data.dataset;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -64,5 +65,37 @@ public class DataSetManager
 						DBCondition.REL_EQ, dataSetName, DBCondition.TEXT)};
 		DBManager connector = DBManager.getInstance();
 		return connector.select(columnNames, tableNames, conditions);
+	}
+
+	/**
+	 * TODO: add comment.
+	 * @return
+	 */
+	public Collection getDataSets()
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/**
+	 * TODO: add comment.
+	 * @param firstDataSet
+	 * @param secondDataSet
+	 * @return
+	 */
+	public DataSet union(DataSet firstDataSet, DataSet secondDataSet)
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/**
+	 * TODO: add comment.
+	 * @param result
+	 */
+	public void add(DataSet result)
+	{
+		// TODO Auto-generated method stub
+		
 	}
 }

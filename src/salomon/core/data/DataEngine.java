@@ -65,4 +65,14 @@ public class DataEngine
 	{
 		return DBManager.getInstance();
 	}
+
+	/**
+	 * TODO: add comment.
+	 * 
+	 */
+	public DataSetManager getDataSetManager()
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
 } 

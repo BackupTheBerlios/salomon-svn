@@ -186,4 +186,23 @@ public class DataSet
 		dataSet += "]";
 		return dataSet;
 	}
+
+	/**
+	 * TODO: add comment.
+	 * @return
+	 */
+	public String getName()
+	{		
+		return null;
+	}
+
+	/**
+	 * TODO: add comment.
+	 * @param resultDataSet
+	 */
+	public void setName(String resultDataSet)
+	{
+		// TODO Auto-generated method stub
+		
+	}
 }

@@ -13,6 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import salomon.core.data.DataEngine;
 import salomon.plugin.ISettingComponent;
 import salomon.plugin.ISettings;
 
@@ -138,5 +139,14 @@ public class APSettingComponent implements ISettingComponent
 		apSettings.setNick("");
 		apSettings.setEmail("");
 		return apSettings;
+	}
+
+	/* (non-Javadoc)
+	 * @see salomon.plugin.ISettingComponent#getComponent(salomon.plugin.ISettings, salomon.core.data.DataEngine)
+	 */
+	public Component getComponent(ISettings settings, DataEngine dataEngine)
+	{
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

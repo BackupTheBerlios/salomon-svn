@@ -7,6 +7,8 @@ package salomon.plugin;
 
 import java.awt.Component;
 
+import salomon.core.data.DataEngine;
+
 /**
  * Interface represents object, which is responsible for showing plugin
  * settings.
@@ -35,5 +37,5 @@ public interface ISettingComponent
 	 * @param settings settings object
 	 * @return component showing given settings
 	 */
-	Component getComponent(ISettings settings);
+	Component getComponent(ISettings settings, DataEngine dataEngine);
 }
