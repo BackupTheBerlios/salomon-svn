@@ -26,6 +26,7 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
 import pl.edu.agh.icsr.salomon.plugin.averageprice.AveragePrice;
+import salomon.controller.gui.Messages;
 import salomon.core.data.DBManager;
 import salomon.core.data.DataEngine;
 import salomon.core.data.common.*;
@@ -84,14 +85,14 @@ public class SQLConsole extends JFrame
 		super();
 		_isStandAlone = isStandAlone;
 		if (isStandAlone) {
-			PropertyConfigurator.configure("log.conf");
+			PropertyConfigurator.configure("log.conf"); //$NON-NLS-1$
 		}
 		try {
 			_connector = DBManager.getInstance();
 		} catch (SQLException e) {
-			_logger.fatal("", e);
+			_logger.fatal("", e); //$NON-NLS-1$
 		} catch (ClassNotFoundException e) {
-			_logger.fatal("", e);
+			_logger.fatal("", e); //$NON-NLS-1$
 		}
 		_msgArea = getMessageArea();
 		_history = new CommandHistory(100);
@@ -115,9 +116,9 @@ public class SQLConsole extends JFrame
 	{
 		try {
 			_connector.commit();
-			showMessage("Commit complete");
+			showMessage(Messages.getString("TXT_COMMIT_COMPLETE")); //$NON-NLS-1$
 		} catch (SQLException e) {
-			_logger.fatal("", e);
+			_logger.fatal("", e); //$NON-NLS-1$
 			showMessage(e.getLocalizedMessage());
 		}
 	}
@@ -152,14 +153,14 @@ public class SQLConsole extends JFrame
 		// printing result
 		StringBuffer buffer = new StringBuffer(512);
 		for (int i = 0; i < columnCount; i++) {
-			buffer.append(columnNames[i] + " ");
+			buffer.append(columnNames[i] + " "); //$NON-NLS-1$
 		}
-		buffer.append("\n=============================================\n");
+		buffer.append("\n=============================================\n"); //$NON-NLS-1$
 		for (int i = 0; i < size; i++) {
 			for (int j = 0; j < columnCount; j++) {
-				buffer.append(data[i][j] + " ");
+				buffer.append(data[i][j] + " "); //$NON-NLS-1$
 			}
-			buffer.append("\n");
+			buffer.append("\n"); //$NON-NLS-1$
 		}
 		_logger.info(buffer);
 		return new JTable(data, columnNames);
@@ -168,7 +169,7 @@ public class SQLConsole extends JFrame
 	public static void printResultSet(ResultSet resultSet) throws SQLException
 	{
 		if (resultSet == null) {
-			_logger.fatal("Result set is empty");
+			_logger.fatal("Result set is empty"); //$NON-NLS-1$
 			return;
 		}
 		ResultSetMetaData metaData = resultSet.getMetaData();
@@ -198,14 +199,14 @@ public class SQLConsole extends JFrame
 		// printing result
 		StringBuffer buffer = new StringBuffer(512);
 		for (int i = 0; i < columnCount; i++) {
-			buffer.append(columnNames[i] + " ");
+			buffer.append(columnNames[i] + " "); //$NON-NLS-1$
 		}
-		buffer.append("\n=============================================\n");
+		buffer.append("\n=============================================\n"); //$NON-NLS-1$
 		for (int i = 0; i < size; i++) {
 			for (int j = 0; j < columnCount; j++) {
-				buffer.append(data[i][j] + " | ");
+				buffer.append(data[i][j] + " | "); //$NON-NLS-1$
 			}
-			buffer.append("\n");
+			buffer.append("\n"); //$NON-NLS-1$
 		}
 		_logger.fatal(buffer);
 	}
@@ -224,7 +225,7 @@ public class SQLConsole extends JFrame
 			resultSet = _connector.getResultSet();
 			if (resultSet == null) {
 				int updatedRows = _connector.getUpdateCount();
-				showMessage("Updated rows: " + updatedRows);
+				showMessage(Messages.getString("TXT_UPDATED_ROWS") + updatedRows); //$NON-NLS-1$
 			} else {
 				cmpResult = createResultTable(resultSet);
 				_scrlResult.setViewportView(cmpResult);
@@ -232,7 +233,7 @@ public class SQLConsole extends JFrame
 			// if there was no exception, then adding command to the history
 			_history.addCommand(query);
 		} catch (SQLException e) {
-			_logger.fatal("", e);
+			_logger.fatal("", e); //$NON-NLS-1$
 			showMessage(e.getLocalizedMessage());
 		}
 	}
@@ -246,7 +247,7 @@ public class SQLConsole extends JFrame
 	{
 		if (_btnCommit == null) {
 			_btnCommit = new JButton();
-			_btnCommit.setText("Commit");
+			_btnCommit.setText(Messages.getString("BTN_COMMIT")); //$NON-NLS-1$
 			_btnCommit.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e)
 				{
@@ -266,7 +267,7 @@ public class SQLConsole extends JFrame
 	{
 		if (_btnExecute == null) {
 			_btnExecute = new JButton();
-			_btnExecute.setText("Execute");
+			_btnExecute.setText(Messages.getString("BTN_EXECUTE")); //$NON-NLS-1$
 			_btnExecute.setMnemonic(KeyEvent.VK_ENTER);
 			_btnExecute.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e)
@@ -287,7 +288,7 @@ public class SQLConsole extends JFrame
 	{
 		if (_btnNext == null) {
 			_btnNext = new JButton();
-			_btnNext.setText("->");
+			_btnNext.setText("->"); //$NON-NLS-1$
 			_btnNext.setMnemonic(KeyEvent.VK_DOWN);
 			_btnNext.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e)
@@ -308,7 +309,7 @@ public class SQLConsole extends JFrame
 	{
 		if (_btnPrevious == null) {
 			_btnPrevious = new JButton();
-			_btnPrevious.setText("<-");
+			_btnPrevious.setText("<-"); //$NON-NLS-1$
 			_btnPrevious.setMnemonic(KeyEvent.VK_UP);
 			_btnPrevious.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e)
@@ -329,7 +330,7 @@ public class SQLConsole extends JFrame
 	{
 		if (_btnRollback == null) {
 			_btnRollback = new JButton();
-			_btnRollback.setText("Rollback");
+			_btnRollback.setText(Messages.getString("BTN_ROLLBACK")); //$NON-NLS-1$
 			_btnRollback.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e)
 				{
@@ -455,7 +456,7 @@ public class SQLConsole extends JFrame
 	{
 		this.setContentPane(getPnlMain());
 		this.setSize(400, 400);
-		this.setTitle("Console");
+		this.setTitle(Messages.getString("TIT_CONSOLE")); //$NON-NLS-1$
 		this.addWindowListener(new java.awt.event.WindowAdapter() {
 			public void windowClosing(java.awt.event.WindowEvent e)
 			{
@@ -463,7 +464,7 @@ public class SQLConsole extends JFrame
 					try {
 						_connector.disconnect();
 					} catch (SQLException e1) {
-						_logger.fatal("", e1);
+						_logger.fatal("", e1); //$NON-NLS-1$
 					}
 					System.exit(0);
 				}
@@ -500,10 +501,10 @@ public class SQLConsole extends JFrame
 	{
 		try {
 			_connector.rollback();
-			showMessage("Rollback complete");
+			showMessage(Messages.getString("TXT_ROLLBACK_COMPLETE")); //$NON-NLS-1$
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			_logger.fatal("", e);
+			_logger.fatal("", e); //$NON-NLS-1$
 			showMessage(e.getLocalizedMessage());
 		}
 	}
@@ -572,28 +573,28 @@ public class SQLConsole extends JFrame
 	{
 		DataSet dataSet = null;
 		try {
-			dataSet = new DataSetManager().getDataSetForName("test1");
+			dataSet = new DataSetManager().getDataSetForName("test1"); //$NON-NLS-1$
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
-			_logger.fatal("", e);
+			_logger.fatal("", e); //$NON-NLS-1$
 		} catch (SQLException e) {
-			_logger.fatal("", e);
+			_logger.fatal("", e); //$NON-NLS-1$
 		}
-		_logger.debug("dataSet: " + dataSet);
-		DBTableName[] tableNames = {new DBTableName("cars", "c")};
+		_logger.debug("dataSet: " + dataSet); //$NON-NLS-1$
+		DBTableName[] tableNames = {new DBTableName("cars", "c")}; //$NON-NLS-1$ //$NON-NLS-2$
 		DBColumnName[] columnNames = {
-				new DBColumnName(tableNames[0], "car_id", "id"),
-				new DBColumnName(tableNames[0], "brand", "marka"),
-				new DBColumnName(tableNames[0], "name", "model"),};
+				new DBColumnName(tableNames[0], "car_id", "id"), //$NON-NLS-1$ //$NON-NLS-2$
+				new DBColumnName(tableNames[0], "brand", "marka"), //$NON-NLS-1$ //$NON-NLS-2$
+				new DBColumnName(tableNames[0], "name", "model"),}; //$NON-NLS-1$ //$NON-NLS-2$
 		DBCondition[] conditions = {new DBCondition(new DBColumnName(
-				tableNames[0], "car_id"), DBCondition.REL_M, new Integer(1),
+				tableNames[0], "car_id"), DBCondition.REL_M, new Integer(1), //$NON-NLS-1$
 				DBCondition.NUMBERIC)};
 		try {
 			dataSet.selectData(columnNames, tableNames, conditions);
 		} catch (SQLException e) {
-			_logger.fatal("", e);
+			_logger.fatal("", e); //$NON-NLS-1$
 		} catch (ClassNotFoundException e) {
-			_logger.fatal("", e);
+			_logger.fatal("", e); //$NON-NLS-1$
 		}
 	}
 
