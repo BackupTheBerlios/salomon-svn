@@ -21,18 +21,44 @@
 
 package salomon.engine.platform.serialization;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.xml.sax.SAXException;
+
 import salomon.platform.serialization.IObject;
 
 /**
  * 
  */
-public final class XMLSerializator
+public final class XMLSerializer
 {
 
-	public IObject deserialize(String value)
+	public IObject deserialize(InputStream is)
 	{
-		throw new UnsupportedOperationException(
-				"Method deserialize() not implemented yet!");
+        Document document = null;
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        IObject result = null;
+        try {
+            DocumentBuilder builder =  factory.newDocumentBuilder();
+            document = builder.parse(is);
+            Node root = document.getChildNodes().item(0);
+            result = StructSerializer.deserialize(root);
+        } catch (ParserConfigurationException e) {
+            e.printStackTrace();
+        } catch (SAXException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return result;
 	}
 
 	public String serialize(IObject value)
