@@ -92,8 +92,46 @@ public final class TaskManager implements ITaskManager
 	 */
 	public void addTask(ITask task)
 	{
-		LOGGER.debug("TaskManager.addTask(): " + task);
 		_tasks.add(task);
+	}
+
+	/**
+	 * @see salomon.engine.task.ITaskManager#addTask(salomon.engine.task.ITask,
+	 *      java.lang.String, java.lang.String)
+	 */
+	public void addTask(ITask task, String pluginUrl, String settings)
+			throws PlatformException
+	{
+		try {
+			LOGGER.debug("TaskManager.addTask()");
+			LOGGER.debug("pluginURL: " + pluginUrl);
+			LOGGER.debug("settings: " + settings);
+			IPlugin plugin = null;
+			URL url = null;
+
+			url = new URL(pluginUrl);
+
+			plugin = PluginLoader.loadPlugin(url);
+			Description desc = new Description();
+
+			desc.setLocation(url);
+
+			desc.setPluginID(67);
+			plugin.setDescription(desc);
+
+			ByteArrayInputStream bis = new ByteArrayInputStream(
+					settings.getBytes());
+			IStruct struct = XMLSerializer.deserialize(bis);
+
+			ISettings set = plugin.getSettingComponent().getDefaultSettings();
+			set.init(struct);
+			task.setSettings(set);
+			task.setPlugin(plugin);
+			addTask(task);
+		} catch (Exception e) {
+			LOGGER.fatal("", e);
+			throw new PlatformException(e.getLocalizedMessage());
+		}
 	}
 
 	public void clearTaskList()
@@ -228,40 +266,4 @@ public final class TaskManager implements ITaskManager
 	}
 
 	private static final Logger LOGGER = Logger.getLogger(TaskManager.class);
-
-	/**
-	 * @see salomon.engine.task.ITaskManager#addTask(salomon.engine.task.ITask,
-	 *      java.lang.String, java.lang.String)
-	 */
-	public void addTask(ITask task, String pluginUrl, String settings)
-			throws PlatformException
-	{
-		IPlugin plugin = null;
-		URL url = null;
-		try {
-			url = new URL(pluginUrl);
-		} catch (MalformedURLException e) {
-			LOGGER.fatal("", e);
-		}
-		try {
-			plugin = PluginLoader.loadPlugin(url);
-		} catch (Exception e) {
-			LOGGER.fatal("", e);
-		}
-		Description desc = new Description();
-
-		desc.setLocation(url);
-
-		desc.setPluginID(67);
-		plugin.setDescription(desc);
-
-		ByteArrayInputStream bis = new ByteArrayInputStream(settings.getBytes());
-		IStruct struct = XMLSerializer.deserialize(bis);
-
-		ISettings set = plugin.getSettingComponent().getDefaultSettings();
-		set.init(struct);
-		task.setSettings(set);
-		task.setPlugin(plugin);
-		addTask(task);
-	}
 }

@@ -59,12 +59,14 @@ public class LibraryControllerTest extends TestCase
 		} catch (PlatformException e) {
 			LOGGER.fatal("Exception was thrown!", e);
 		}
+		
 		IProject project = projectManager.createProject();
 		project.setName("testLib");
 		project.setInfo("Created from library controller");
 		ITaskManager taskManager = controller.getManagerEngine().getTasksManager(); 
 		ITask task = taskManager.createTask();
 		task.setName("testName");
+		
 		StringBuilder builder = new StringBuilder();
 		builder.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
 		builder.append("<!DOCTYPE struct SYSTEM \"config/struct.dtd\">");
@@ -72,7 +74,7 @@ public class LibraryControllerTest extends TestCase
 		builder.append("<string name=\"firstDataSet\" value=\"second\"/>");
 		builder.append("<string name=\"secondDataSet\" value=\"third\"/></struct>");		
 		//task.setSettings(builder.toString());	
-		
+		/*
 		IPlugin plugin = null;
 		try {
 			plugin = PluginLoader.loadPlugin(new URL("http://location.org/datasetunion.jar"));
@@ -99,7 +101,10 @@ public class LibraryControllerTest extends TestCase
 		settings.init(struct);
 		task.setSettings(settings);
 		task.setPlugin(plugin);		
-		taskManager.addTask(task);		
+		taskManager.addTask(task);	
+		*/
+		String pluginUrl = "http://location.org/datasetunion.jar";
+		taskManager.addTask(task, pluginUrl, builder.toString());
 		projectManager.saveProject();
 		taskManager.start();
 	}
