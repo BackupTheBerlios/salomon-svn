@@ -18,8 +18,9 @@ public final class RemoteControllerEvent extends EventObject
 	private IRemoteController _controller;
 
 	/**
-	 *  
-	 */
+     * @pre $none
+     * @post $none
+     */
 	public RemoteControllerEvent(MasterController source,
 			IRemoteController controller)
 	{
