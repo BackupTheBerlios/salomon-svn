@@ -26,52 +26,42 @@ import junit.framework.TestCase;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
-import salomon.engine.platform.IManagerEngine;
 import salomon.engine.project.IProjectManager;
-import salomon.platform.exception.PlatformException;
 
-public class SolutionTest extends TestCase {
-    private Solution _solution ;
-    protected void setUp() throws Exception {
-        super.setUp();
-        _solution = new Solution() ;
-    	PropertyConfigurator.configure("log.conf");
+public class SolutionTest extends TestCase
+{
+	private Solution _solution;
+
+	public void testEverything()
+	{
+
 	}
-    
-    public void testGetManagerEngine() throws PlatformException {
-		LOGGER.info("SolutionTest.testGetManagerEngine()");
-		boolean success = false;
-		try {
-		    IManagerEngine me = _solution.getManagerEngine() ; 
-			assertFalse(me == null) ;
-		    success = true;
-		} catch (Exception e) {
-			LOGGER.fatal("", e);
-		}
-		assertTrue(success);
-    }
-    
-    public void testGetProjectManager() {
+
+	public void testGetProjectManager()
+	{
 		LOGGER.info("SolutionTest.testGetProjectManager()");
 		boolean success = false;
 		try {
-		    IProjectManager pm = _solution.getProjectManager() ; 
-			assertFalse(pm == null) ;
-		    success = true;
+			IProjectManager pm = _solution.getProjectManager();
+			assertFalse(pm == null);
+			success = true;
 		} catch (Exception e) {
 			LOGGER.fatal("", e);
 		}
 		assertTrue(success);
-    }
-    
-    public void testEverything() {
-        
-    }
-    
-    public static void main(String[] args) {
-        junit.textui.TestRunner.run(SolutionTest.class);
-    }
+	}
 
+	protected void setUp() throws Exception
+	{
+		super.setUp();
+		_solution = (Solution) Solution.getInstance();
+		PropertyConfigurator.configure("log.conf");
+	}
 
-    private static Logger LOGGER = Logger.getLogger(SolutionTest.class);
+	public static void main(String[] args)
+	{
+		junit.textui.TestRunner.run(SolutionTest.class);
+	}
+
+	private static Logger LOGGER = Logger.getLogger(SolutionTest.class);
 }

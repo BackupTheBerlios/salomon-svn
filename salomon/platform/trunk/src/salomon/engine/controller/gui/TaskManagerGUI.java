@@ -44,10 +44,12 @@ import org.apache.log4j.Logger;
 import salomon.engine.Messages;
 import salomon.engine.controller.gui.action.ActionManager;
 import salomon.engine.plugin.LocalPlugin;
+import salomon.engine.solution.Solution;
 import salomon.engine.task.ITask;
 
 import salomon.util.gui.Utils;
 
+import salomon.platform.IDataEngine;
 import salomon.platform.exception.PlatformException;
 
 import salomon.plugin.IPlugin;
@@ -307,10 +309,15 @@ public final class TaskManagerGUI
 		if (inputSettings == null) {
 			inputSettings = plugin.getSettingComponent().getDefaultSettings();
 		}
-		int result = JOptionPane.showConfirmDialog(_positionComponent,
-				settingComponent.getComponent(inputSettings, null), // TODO:
-				// change
-				// it!!!
+		//FIXME!!!
+		IDataEngine dataEngine = null;
+		try {
+			dataEngine = Solution.getInstance().getDataEngine();
+		} catch (PlatformException e) {
+			LOGGER.fatal("", e);
+		} 
+		int result = JOptionPane.showConfirmDialog(_positionComponent,				
+				settingComponent.getComponent(inputSettings, dataEngine), 
 				Messages.getString("TIT_PLUGIN_SETTINGS"), //$NON-NLS-1$
 				JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
 		if (result == JOptionPane.OK_OPTION) {

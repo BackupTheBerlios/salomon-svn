@@ -31,11 +31,20 @@ import salomon.engine.project.IProjectManager;
 import salomon.platform.IDataEngine;
 import salomon.platform.exception.PlatformException;
 
+import salomon.engine.platform.DataEngine;
+
 /**
  * 
  */
-final class Solution implements ISolution, IDBSupporting
+public final class Solution implements ISolution, IDBSupporting
 {
+
+	private DataEngine _dataEngine;
+
+	private Solution()
+	{
+		_dataEngine = new DataEngine();
+	}
 
 	/**
 	 * @see salomon.engine.database.IDBSupporting#delete()
@@ -51,8 +60,7 @@ final class Solution implements ISolution, IDBSupporting
 	 */
 	public IDataEngine getDataEngine() throws PlatformException
 	{
-		throw new UnsupportedOperationException(
-				"Method getManagerEngine() not implemented yet!");
+		return _dataEngine;
 	}
 
 	/**
@@ -82,4 +90,19 @@ final class Solution implements ISolution, IDBSupporting
 		throw new UnsupportedOperationException(
 				"Method save() not implemented yet!");
 	}
+
+	/**
+	 * Returns instance.
+	 * 
+	 * @return The _instance
+	 */
+	public static ISolution getInstance()
+	{
+		if (_instance == null) {
+			_instance = new Solution();
+		}
+		return _instance;
+	}
+
+	static ISolution _instance;
 }

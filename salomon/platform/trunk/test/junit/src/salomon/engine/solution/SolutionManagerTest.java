@@ -59,7 +59,7 @@ public class SolutionManagerTest extends TestCase {
         LOGGER.info("SolutionManger.testGetAddSolution()");
         
         boolean result = false ; 
-        ISolution solution = new Solution() ;
+        ISolution solution = Solution.getInstance() ;
         _solutionManager.addSolution(solution) ;
         
         ISolution solutions[] = _solutionManager.getSolutions() ;

@@ -29,14 +29,15 @@ import org.apache.log4j.Logger;
 
 import salomon.engine.database.DBManager;
 import salomon.engine.project.ProjectManager;
+import salomon.engine.solution.Solution;
 
+import salomon.platform.IDataEngine;
 import salomon.platform.exception.PlatformException;
 
 import salomon.plugin.IPlugin;
 import salomon.plugin.IResult;
 import salomon.plugin.ISettings;
 
-import salomon.engine.platform.DataEngine;
 import salomon.engine.platform.Environment;
 
 /**
@@ -47,7 +48,7 @@ import salomon.engine.platform.Environment;
 public final class TaskManager implements ITaskManager
 {
 
-	private DataEngine _dataEngine;
+	private IDataEngine _dataEngine;
 
 	private Environment _environment;
 
@@ -60,7 +61,12 @@ public final class TaskManager implements ITaskManager
 	public TaskManager()
 	{
 		_tasks = new LinkedList<ITask>();
-		_dataEngine = new DataEngine();
+		//FIXME
+		try {
+			_dataEngine = Solution.getInstance().getDataEngine();
+		} catch (PlatformException e) {
+			LOGGER.fatal("", e);
+		}
 		_taskEngine = new TaskEngine();
 		// TODO: where it should be created?
 		_environment = new Environment();
