@@ -4,7 +4,9 @@ DROP TABLE "cars";
 DROP TABLE "users";
 DROP TABLE "dataset_items";
 DROP TABLE "datasets";
-
+DROP TABLE "tasks";
+DROP TABLE "plugins";
+DROP TABLE "projects";
 
 CREATE TABLE "users" (
     "user_id" INTEGER NOT NULL,
@@ -112,7 +114,6 @@ ALTER TABLE "car_sales" ADD CONSTRAINT "PK_car_sales" UNIQUE ("car_id", "user_id
 ALTER TABLE "car_sales" ADD CONSTRAINT "FK_car_sales" FOREIGN KEY ("car_id") REFERENCES "cars" ("car_id");
 ALTER TABLE "car_sales" ADD CONSTRAINT "FK_car_sales1" FOREIGN KEY ("user_id") REFERENCES "users" ("user_id");
 
-
 -- Indices definition 
 
 --CREATE INDEX "FK_car_sales" ON "car_sales" ("car_id");
@@ -124,67 +125,56 @@ ALTER TABLE "car_sales" ADD CONSTRAINT "FK_car_sales1" FOREIGN KEY ("user_id") R
 
 --CREATE UNIQUE INDEX "PK_cars" ON "cars" ("car_id");
 
--- inserty
-insert into "users"
-values (1, 'Nikodem', 'Jura', 'nico', 'nico@icslab.agh.edu.pl', '21', 'Wieprz');
 
-insert into "users"
-values (2, 'Krzysztof', 'Rajda', 'krzycho', 'krzycho@student.uci.agh.edu.pl', '22', 'Anrychow');
+-- Tablica: projects 
 
-insert into "users"
-values (3, 'Kuba', 'Galkowski', 'pan galka', 'avi@student.uci.agh.edu.pl', '22', 'Sosnowiec');
-
-insert into "users"
-values (4, 'Tomek', 'Jaworski', 'jawora', 'tjawor@student.uci.agh.edu.pl', '22', 'Tarnow');
-
--- cars 
-insert into "cars"
-values (1, 'Porsche', '911 Turbo', 3600, 450, 30000, 100000, '');
-insert into "cars"
-values (2, 'Ferrari', 'Maranello', 3600, 400, 50000, 150000, '');
-insert into "cars"
-values (3, 'Mercedes', 'SL 500', 5000, 400, 60000, 250000, '');
-insert into "cars"
-values (4, 'Mercedes', 'C 220', 220, 193, 25000, 150000, '');
-insert into "cars"
-values (5, 'Renault', 'Megane', 1999, 115, 10000, 40000, '');
-insert into "cars"
-values (6, 'Renault', 'Megane Scenic', 1999, 115, 15000, 45000, '');
+CREATE TABLE "projects" (
+    "project_id" INTEGER NOT NULL,
+    "name" VARCHAR (32) CHARACTER SET ASCII COLLATE ASCII,
+    "info" VARCHAR (256) CHARACTER SET ASCII COLLATE ASCII
+    );
 
 
--- car sales
+-- Primary keys definition 
+ALTER TABLE "projects" ADD CONSTRAINT "PK_projects" PRIMARY KEY ("project_id");
 
-insert into "car_sales"
-values (1, 1 , 'card');
+-- Tablica: plugins
 
-insert into "car_sales"
-values (2, 3 , 'card');
+CREATE TABLE "plugins" (
+    "plugin_id" INTEGER NOT NULL,
+    "name" VARCHAR (32) CHARACTER SET ASCII COLLATE ASCII,    
+    "info" VARCHAR (256) CHARACTER SET ASCII COLLATE ASCII,    
+    "location" VARCHAR (128) CHARACTER SET ASCII COLLATE ASCII
+    );
 
-insert into "car_sales"
-values (3, 2 , 'cash');
+-- Primary keys definition 
+ALTER TABLE "plugins" ADD CONSTRAINT "PK_plugins" PRIMARY KEY ("plugin_id");
 
-insert into "car_sales"
-values (4, 3 , 'card');
 
-insert into "car_sales"
-values (5, 1 , 'card');
+-- Tablica: tasks
 
--- datasets
-insert into "datasets"
-values (1, 'test1', 'testowy data set');
+CREATE TABLE "tasks" (
+    "task_id" INTEGER NOT NULL,
+    "project_id" INTEGER NOT NULL, 
+    "plugin_id" INTEGER NOT NULL,
+    "name" VARCHAR (32) CHARACTER SET ASCII COLLATE ASCII,    
+    "info" VARCHAR (256) CHARACTER SET ASCII COLLATE ASCII,    
+    "plugin_settings" VARCHAR (1024) CHARACTER SET ASCII COLLATE ASCII,
+    "plugin_result" VARCHAR (1024) CHARACTER SET ASCII COLLATE ASCII
+    );
 
-insert into "datasets"
-values (2, 'test2', 'drugi testowy data set');
 
-insert into "datasets"
-values (3, 'all_data', 'wszystkie dane');
 
--- dataset_items 
-insert into  "dataset_items"
-values (1, 1, 'cars', 'price >= 50000');
+-- Primary keys definition 
+ALTER TABLE "tasks" ADD CONSTRAINT "PK_tasks" PRIMARY KEY ("task_id");
 
-insert into  "dataset_items"
-values (2, 1, 'car_sales', 'payment_type = ''card''');
+
+-- Foreign keys definition 
+
+ALTER TABLE "tasks" ADD CONSTRAINT "FK_tasks_projects" FOREIGN KEY ("project_id") REFERENCES "projects" ("project_id");
+
+ALTER TABLE "tasks" ADD CONSTRAINT "FK_tasks_plugins" FOREIGN KEY ("plugin_id") REFERENCES "plugins" ("plugin_id");
+
 
 
 
