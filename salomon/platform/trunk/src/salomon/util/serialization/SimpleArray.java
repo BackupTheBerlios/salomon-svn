@@ -70,6 +70,17 @@ public class SimpleArray implements IArray
 	{
         return IObject.Types.STRING;
 	}
+
+	/**
+	 * @see salomon.platform.serialization.IObject#equals(salomon.platform.serialization.IObject)
+	 */
+	public boolean equals(IObject object)
+	{
+        throw new UnsupportedOperationException(
+				"Method equals() not implemented yet!");
+		// TODO Auto-generated method stub
+		//return false;
+	}
     
 
 }

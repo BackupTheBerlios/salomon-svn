@@ -71,4 +71,16 @@ public class SimpleInteger implements IInteger
 		// TODO Auto-generated method stub
 		return IObject.Types.INT;
 	}
+
+	/**
+	 * @see salomon.platform.serialization.IObject#equals(salomon.platform.serialization.IObject)
+	 */
+	public boolean equals(IObject object)
+	{
+        boolean result = false;
+        if (object.getType() == getType()) {
+        	result = (_value == ((SimpleInteger)object).getValue());
+        }
+		return result;
+	}
 }

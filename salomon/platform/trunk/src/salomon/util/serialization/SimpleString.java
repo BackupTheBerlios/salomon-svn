@@ -72,4 +72,21 @@ public class SimpleString implements IString
         return IObject.Types.STRING;
     }
 
+	/**
+	 * @see salomon.platform.serialization.IObject#equals(salomon.platform.serialization.IObject)
+	 */
+	public boolean equals(IObject object)
+	{
+        boolean result = false;
+        if (object.getType() == getType()) {
+            String toCompare = ((SimpleString)object).getValue();
+            if (_value == null) {
+            	result = (toCompare == null); 
+            } else {
+            result = (_value.equals(toCompare));
+            }
+        }
+        return result;
+	}
+
 }

@@ -30,5 +30,6 @@ public interface IObject
     enum Types {STRUCT, STRING, INT, ARRAY};
     
     Types getType();
-	// empty body
+
+    boolean equals(IObject object);
 }
