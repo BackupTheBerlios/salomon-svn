@@ -12,12 +12,8 @@ import salomon.core.task.ITask;
 import salomon.plugin.IResult;
 import salomon.plugin.ISettings;
 
-/**
- * 
- * TODO: add comment.
- * 
- * @author krzychu
- *  
+/** 
+ * Class representing remote instance of ITask.  
  */
 public final class RemoteTask extends UnicastRemoteObject
 		implements IRemoteTask

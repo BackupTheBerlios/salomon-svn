@@ -13,10 +13,9 @@ import salomon.plugin.IResult;
 import salomon.plugin.ISettings;
 
 /**
- * 
- * TODO: add comment.
- * 
- * @author krzychu
+ * Class is a sever side wrapper of IRemoteTask object. It implements ITask
+ * interface and delegates methods execution to remote object catching all
+ * RemoteExceptions.
  *  
  */
 public final class TaskProxy implements ITask
@@ -24,9 +23,9 @@ public final class TaskProxy implements ITask
 	private IRemoteTask _remoteTask;
 
 	/**
-     * @pre remoteTask != null
-     * @post $none
-     */
+	 * @pre remoteTask != null
+	 * @post $none
+	 */
 	public TaskProxy(IRemoteTask remoteTask)
 	{
 		_remoteTask = remoteTask;

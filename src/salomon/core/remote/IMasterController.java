@@ -5,10 +5,7 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 
 /**
- * 
- * TODO: add comment.
- * 
- * @author krzychu
+ * An interface including methods to establish remote connction.  
  *  
  */
 public interface IMasterController extends Remote

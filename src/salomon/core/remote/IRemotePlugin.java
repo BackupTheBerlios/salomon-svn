@@ -10,10 +10,8 @@ import salomon.plugin.IResult;
 import salomon.plugin.ISettings;
 
 /**
- * 
- * TODO: add comment.
- * 
- * @author krzychu
+ * Remote version of IDataPlugin interface. It has all methods from IDataPlugin
+ * interface, but adds throwing RemoteException declaration to each of methods.
  *  
  */
 public interface IRemotePlugin extends Remote

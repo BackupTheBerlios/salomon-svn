@@ -11,10 +11,9 @@ import salomon.core.project.IProjectManager;
 import salomon.core.task.ITaskManager;
 
 /**
- * 
- * TODO: add comment.
- * 
- * @author krzychu
+ * Class is a sever side wrapper of IRemoteManagerEngine object. It implements
+ * IManagerEngine interface and delegates methods execution to remote object
+ * catching all RemoteExceptions.
  *  
  */
 public final class ManagerEngineProxy implements IManagerEngine
@@ -35,7 +34,6 @@ public final class ManagerEngineProxy implements IManagerEngine
 			_pluginManager = new PluginManagerProxy(
 					remoteManagerEngine.getPluginManager());
 		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
 			_logger.error(e);
 		}
 

@@ -7,11 +7,7 @@ import java.rmi.server.UnicastRemoteObject;
 import salomon.core.IManagerEngine;
 
 /**
- * 
- * TODO: add comment.
- * 
- * @author krzychu
- *  
+ * Class representing remote instance of IManagerEngine.
  */
 
 public final class RemoteManagerEngine extends UnicastRemoteObject
@@ -26,10 +22,10 @@ public final class RemoteManagerEngine extends UnicastRemoteObject
 	private IRemoteTaskManager _remoteTaskManager;
 
 	/**
-     * @throws RemoteException
-     * @pre managerEngine != null
-     * @post $none
-     */
+	 * @throws RemoteException
+	 * @pre managerEngine != null
+	 * @post $none
+	 */
 	public RemoteManagerEngine(IManagerEngine managerEngine)
 			throws RemoteException
 	{

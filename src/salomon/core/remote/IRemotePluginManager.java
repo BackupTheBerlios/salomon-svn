@@ -8,10 +8,9 @@ import java.util.Collection;
 import salomon.plugin.Description;
 
 /**
- * 
- * TODO: add comment.
- * 
- * @author krzychu
+ * Remote version of IPluginManager interface. It has all methods from
+ * IPluginManager interface, but adds throwing RemoteException declaration to
+ * each of methods.
  *  
  */
 public interface IRemotePluginManager extends Remote

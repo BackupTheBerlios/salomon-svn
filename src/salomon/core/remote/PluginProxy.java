@@ -11,10 +11,9 @@ import salomon.plugin.ISettingComponent;
 import salomon.plugin.ISettings;
 
 /**
- * 
- * TODO: add comment.
- * 
- * @author krzychu
+ * Class is a sever side wrapper of IPluginProxy object. It implements IPlugin
+ * interface and delegates methods execution to remote object catching all
+ * RemoteExceptions.
  *  
  */
 public final class PluginProxy implements IPlugin

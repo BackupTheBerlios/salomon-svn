@@ -10,10 +10,8 @@ import salomon.Starter;
 import salomon.core.IManagerEngine;
 
 /**
- * 
- * TODO: add comment.
- * 
- * @author krzychu
+ * An implementation of IRemoteController interface.
+ * Its represents remote IController instance.    
  *  
  */
 public final class RemoteController extends UnicastRemoteObject

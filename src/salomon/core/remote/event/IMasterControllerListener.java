@@ -2,11 +2,7 @@
 package salomon.core.remote.event;
 
 /**
- * 
- * TODO: add comment.
- * 
- * @author krzychu
- *  
+ * An interface used to manage with connection and disconnection from server.
  */
 public interface IMasterControllerListener
 {

@@ -8,10 +8,9 @@ import org.apache.log4j.Logger;
 import salomon.core.project.IProject;
 
 /**
- * 
- * TODO: add comment.
- * 
- * @author krzychu
+ * Class is a sever side wrapper of IRemoteProject object. It implements
+ * IProject interface and delegates methods execution to remote object catching
+ * all RemoteExceptions.
  *  
  */
 public final class ProjectProxy implements IProject
@@ -19,9 +18,9 @@ public final class ProjectProxy implements IProject
 	private IRemoteProject _remoteProject;
 
 	/**
-     * @pre $none
-     * @post $none
-     */
+	 * @pre $none
+	 * @post $none
+	 */
 	public ProjectProxy(IRemoteProject remoteProject)
 	{
 		_remoteProject = remoteProject;

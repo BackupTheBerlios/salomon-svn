@@ -9,11 +9,7 @@ import salomon.core.plugin.IPluginManager;
 import salomon.plugin.Description;
 
 /**
- * 
- * TODO: add comment.
- * 
- * @author krzychu
- *  
+ * Class representing remote instance of IPluginManager.
  */
 public final class RemotePluginManager extends UnicastRemoteObject
 		implements IRemotePluginManager

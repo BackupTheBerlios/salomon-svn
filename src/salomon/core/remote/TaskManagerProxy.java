@@ -16,10 +16,9 @@ import salomon.core.task.ITask;
 import salomon.core.task.ITaskManager;
 
 /**
- * 
- * TODO: add comment.
- * 
- * @author krzychu
+ * Class is a sever side wrapper of IRemoteTaskManager object. It implements
+ * ITaskManager interface and delegates methods execution to remote object
+ * catching all RemoteExceptions.
  *  
  */
 public final class TaskManagerProxy implements ITaskManager
@@ -29,9 +28,9 @@ public final class TaskManagerProxy implements ITaskManager
 	private IRemoteTaskManager _remoteTaskManager;
 
 	/**
-     * @pre $remoteTaskManager != null
-     * @post $none
-     */
+	 * @pre $remoteTaskManager != null
+	 * @post $none
+	 */
 	public TaskManagerProxy(IRemoteTaskManager remoteTaskManager)
 	{
 		_remoteTaskManager = remoteTaskManager;

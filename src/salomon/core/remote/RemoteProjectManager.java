@@ -10,11 +10,7 @@ import salomon.core.project.IProject;
 import salomon.core.project.IProjectManager;
 
 /**
- * 
- * TODO: add comment.
- * 
- * @author krzychu
- *  
+ * Class representing remote instance of IProjectManager.
  */
 public final class RemoteProjectManager extends UnicastRemoteObject
 		implements IRemoteProjectManager
@@ -82,11 +78,14 @@ public final class RemoteProjectManager extends UnicastRemoteObject
 		return _currentRemoteProject;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see salomon.core.remote.IRemoteProjectManager#getAvailableProjects()
 	 */
-	public Collection getAvailableProjects() throws RemoteException, SQLException, ClassNotFoundException
-	{		
+	public Collection getAvailableProjects() throws RemoteException,
+			SQLException, ClassNotFoundException
+	{
 		return _projectManager.getAvailableProjects();
 	}
 }

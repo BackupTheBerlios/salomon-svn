@@ -6,10 +6,9 @@ import java.rmi.RemoteException;
 import java.util.Collection;
 
 /**
- * 
- * TODO: add comment.
- * 
- * @author krzychu
+ * Remote version of ITaskManager interface. It has all methods from
+ * ITaskManager interface, but adds throwing RemoteException declaration to each
+ * of methods.
  *  
  */
 public interface IRemoteTaskManager extends Remote

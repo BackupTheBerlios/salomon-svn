@@ -7,10 +7,8 @@ import salomon.core.remote.IRemoteController;
 import salomon.core.remote.MasterController;
 
 /**
- * 
- * TODO: add comment.
- * 
- * @author krzychu
+ * An event used to notify about client's connection or disconnection from
+ * server.
  *  
  */
 public final class RemoteControllerEvent extends EventObject
@@ -18,9 +16,9 @@ public final class RemoteControllerEvent extends EventObject
 	private IRemoteController _controller;
 
 	/**
-     * @pre $none
-     * @post $none
-     */
+	 * @pre $none
+	 * @post $none
+	 */
 	public RemoteControllerEvent(MasterController source,
 			IRemoteController controller)
 	{

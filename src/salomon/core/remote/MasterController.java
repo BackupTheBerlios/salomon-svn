@@ -13,10 +13,8 @@ import salomon.core.remote.event.IMasterControllerListener;
 import salomon.core.remote.event.RemoteControllerEvent;
 
 /**
- * 
- * TODO: add comment.
- * 
- * @author krzychu
+ * Class implements IMasterController interface. It is responsible for
+ * establishing connection and disconnecting of remote clients.
  *  
  */
 public final class MasterController extends UnicastRemoteObject
@@ -28,10 +26,10 @@ public final class MasterController extends UnicastRemoteObject
 	private Set _remoteControllers = new HashSet();
 
 	/**
-     * @throws RemoteException
-     * @pre $none
-     * @post $none
-     */
+	 * @throws RemoteException
+	 * @pre $none
+	 * @post $none
+	 */
 	public MasterController() throws RemoteException
 	{
 	}
@@ -68,7 +66,7 @@ public final class MasterController extends UnicastRemoteObject
 			throws RemoteException
 	{
 		_remoteControllers.remove(remoteController);
-        //commented to avoid loop while finishing client application
+		//commented to avoid loop while finishing client application
 		//fireControllerRemoved(remoteController);
 	}
 

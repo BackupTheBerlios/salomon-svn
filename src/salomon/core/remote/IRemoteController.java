@@ -5,10 +5,7 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 
 /**
- * 
- * TODO: add comment.
- * 
- * @author krzychu
+ * An interface corresponding to IController interface.   
  *  
  */
 public interface IRemoteController extends Remote

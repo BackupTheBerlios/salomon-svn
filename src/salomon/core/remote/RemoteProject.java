@@ -6,12 +6,8 @@ import java.rmi.server.UnicastRemoteObject;
 
 import salomon.core.project.IProject;
 
-/**
- * 
- * TODO: add comment.
- * 
- * @author krzychu
- *  
+/** 
+ * Class representing remote instance of IProject.  
  */
 public final class RemoteProject extends UnicastRemoteObject
 		implements IRemoteProject

@@ -17,11 +17,7 @@ import salomon.core.task.ITask;
 import salomon.core.task.ITaskManager;
 
 /**
- * 
- * TODO: add comment.
- * 
- * @author krzychu
- *  
+ * Class representing remote instance of ITaskManager.
  */
 public final class RemoteTaskManager extends UnicastRemoteObject
 		implements IRemoteTaskManager
