@@ -1,3 +1,4 @@
+
 package salomon.controller.gui;
 
 import java.awt.*;
@@ -5,8 +6,10 @@ import java.awt.event.*;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import javax.accessibility.Accessible;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
+import salomon.core.Config;
 import salomon.core.SQLConsole;
 import salomon.core.event.*;
 import org.apache.log4j.Logger;
@@ -23,6 +26,8 @@ public class ControllerGUI extends JFrame
 {
 	private static Logger _logger = Logger.getLogger(ControllerGUI.class);
 
+	private JWindow _splashScreen = null;
+
 	private JButton _btnAdd = null;
 
 	private JButton _btnAddAll = null;
@@ -34,7 +39,7 @@ public class ControllerGUI extends JFrame
 	private JButton _btnFirst = null;
 
 	private JButton _btnLast = null;
-	
+
 	private JButton _btnNew = null;
 
 	private JButton _btnOpen = null;
@@ -44,11 +49,11 @@ public class ControllerGUI extends JFrame
 	private JButton _btnRemoveAll = null;
 
 	private JButton _btnRun = null;
-	
+
 	private JButton _btnSave = null;
 
 	private JButton _btnUp = null;
-	
+
 	private JPanel _contentPane = null;
 
 	private JMenuItem _itmAbout = null;
@@ -71,6 +76,8 @@ public class ControllerGUI extends JFrame
 
 	private JMenuBar _menuBar = null;
 
+	private JPanel _pnlAbout = null;
+
 	private JPanel _pnlInit = null;
 
 	private JPanel _pnlManagerButtons = null;
@@ -82,7 +89,7 @@ public class ControllerGUI extends JFrame
 	private JPanel _pnlTaskButtons = null;
 
 	private JPanel _pnlTasks = null;
-	
+
 	private ProjectListener _projectListener = null;
 
 	private int _strutHeight = 10;
@@ -94,22 +101,89 @@ public class ControllerGUI extends JFrame
 	private List _taskListeners = null;
 
 	private JToolBar _toolBar = null;
-	
-	private JPanel _pnlAbout = null;
+
+	private String _resourcesDir = null;
 
 	public ControllerGUI()
 	{
 		super();
+		_resourcesDir = Config.getString("RESOURCES_DIR");
+		createSplashScreen();
+		long startTime = System.currentTimeMillis();
+		SwingUtilities.invokeLater(new Runnable() {
+			public void run()
+			{
+				showSplashScreen();
+			}
+		});
 		_taskEditionManager = new TaskEditionManager();
 		_manipulationListener = new ManipulationListener();
 		_projectListener = new ProjectListener();
 		_taskListeners = new LinkedList();
 		initialize();
+		// waiting configured time
+		long currentTime = System.currentTimeMillis();
+		long splashTime = 0;
+		long waitingTime = 0;
+		try {
+			splashTime = Long.parseLong(Config.getString("SPLASH_TIME")) * 1000;
+			waitingTime = splashTime - (currentTime - startTime);
+		} catch (NumberFormatException e) {
+			_logger.fatal("", e);
+		}
+		_logger.debug("waitingtime: " + waitingTime);
+		if (waitingTime > 0) {
+			try {
+				Thread.sleep(waitingTime);
+			} catch (InterruptedException e) {
+				_logger.fatal("", e);
+			}
+		}
+		SwingUtilities.invokeLater(new Runnable() {
+			public void run()
+			{
+				hideSplashScreen();
+			}
+		});
 	}
 
 	public static void main(String[] args)
 	{
 		new ControllerGUI().setVisible(true);
+	}
+
+	private void createSplashScreen()
+	{
+		//		ImageIcon image = new ImageIcon(_resourcesDir + "/"
+		//				+ Config.getString("SPLASH_SCREEN"));
+		//		_logger.debug("image: " + image);
+		//		JLabel splashLabel = new JLabel(image);
+		//		_splashScreen = new JWindow();
+		//		int x = (Toolkit.getDefaultToolkit().getScreenSize().width - image
+		//				.getIconWidth()) / 2;
+		//		int y = (Toolkit.getDefaultToolkit().getScreenSize().height - image
+		//				.getIconHeight()) / 2;
+		//		_splashScreen.setLocation(x, y);
+		//		_splashScreen.getContentPane().add(splashLabel);
+		//		_splashScreen.pack();
+		ImageIcon image = new ImageIcon(_resourcesDir + "/"
+				+ Config.getString("SPLASH_SCREEN"));
+		SplashLabel splashLabel = new SplashLabel(image);
+		_splashScreen = new JWindow();
+		_splashScreen.setLocation(splashLabel.getLocation());
+		_splashScreen.getContentPane().add(splashLabel);
+		_splashScreen.pack();
+	}
+
+	private void hideSplashScreen()
+	{
+		_splashScreen.setVisible(false);
+		_splashScreen = null;
+	}
+
+	private void showSplashScreen()
+	{
+		_splashScreen.setVisible(true);
 	}
 
 	public void addTaskListener(TaskListener listener)
@@ -165,8 +239,9 @@ public class ControllerGUI extends JFrame
 		button.setMaximumSize(dim);
 		return button;
 	}
-	
-	private JButton createProjectButton(String text) {
+
+	private JButton createProjectButton(String text)
+	{
 		JButton button = new JButton();
 		button.setText(text);
 		button.addActionListener(_projectListener);
@@ -180,7 +255,7 @@ public class ControllerGUI extends JFrame
 		_logger.fatal("###  Application exited  ###"); //$NON-NLS-1$
 		System.exit(0);
 	}
-	
+
 	private void fireApplyTasks(TaskEvent event)
 	{
 		for (Iterator iter = _taskListeners.iterator(); iter.hasNext();) {
@@ -209,7 +284,7 @@ public class ControllerGUI extends JFrame
 		}
 		return _btnAdd;
 	}
-	
+
 	/**
 	 * This method initializes _btnAddAll
 	 * 
@@ -222,45 +297,7 @@ public class ControllerGUI extends JFrame
 		}
 		return _btnAddAll;
 	}
-	/** Method shows about dialog. */
-	private void showAboutDialog()
-	{
-		JOptionPane.showMessageDialog(null, getPnlAbout());
-	}
-	
-	private JPanel getPnlAbout() {
-		if (_pnlAbout == null){
-			_pnlAbout = new JPanel();
-			_pnlAbout.setLayout(new BorderLayout());			
-			_pnlAbout.setBorder(javax.swing.BorderFactory.createEmptyBorder(30,30,30,30));
-			//
-			// application name
-			//
-			JLabel lblAppName = new JLabel();
-			lblAppName.setText(Messages.getString("APP_NAME")); //$NON-NLS-1$
-			lblAppName.setForeground(Color.BLUE);
-			lblAppName.setFont(new Font("Dialog", Font.BOLD, 24)); //$NON-NLS-1$
-			//
-			// version and author panel
-			//
-			JPanel detailsPanel = new JPanel();
-			detailsPanel.setLayout(new GridLayout(0, 2));
-			JLabel lblVersionTitle = new JLabel(Messages.getString("TIT_VERSION")); //$NON-NLS-1$
-			JLabel lblVersion = new JLabel(Messages.getString("VERSION")); //$NON-NLS-1$
-			lblVersion.setForeground(Color.RED);
-			JLabel lblAuthorsTitle = new JLabel(Messages.getString("TIT_AUTHORS")); //$NON-NLS-1$
-			JLabel lblAuthors = new JLabel(Messages.getString("AUTHORS"));  //$NON-NLS-1$
-			detailsPanel.add(lblVersionTitle);
-			detailsPanel.add(lblVersion);
-			detailsPanel.add(lblAuthorsTitle);
-			detailsPanel.add(lblAuthors);
-			// adding componens
-			_pnlAbout.add(lblAppName, BorderLayout.CENTER);
-			_pnlAbout.add(detailsPanel, BorderLayout.SOUTH);
-		}		
-		return _pnlAbout;
-	}
-	
+
 	/**
 	 * This method initializes _btnApply
 	 * 
@@ -385,7 +422,7 @@ public class ControllerGUI extends JFrame
 		}
 		return _btnRun;
 	}
-	
+
 	private JButton getBtnSave()
 	{
 		if (_btnSave == null) {
@@ -420,8 +457,8 @@ public class ControllerGUI extends JFrame
 			});
 		}
 		return _itmAbout;
-	}	
-	
+	}
+
 	private JMenuItem getItmExit()
 	{
 		if (_itmExit == null) {
@@ -529,6 +566,42 @@ public class ControllerGUI extends JFrame
 		return _lstTasks;
 	}
 
+	private JPanel getPnlAbout()
+	{
+		if (_pnlAbout == null) {
+			_pnlAbout = new JPanel();
+			_pnlAbout.setLayout(new BorderLayout());
+			_pnlAbout.setBorder(BorderFactory.createEmptyBorder(30, 0, 30, 0));
+			//
+			// application name
+			//
+			JLabel lblAppName = new JLabel(new ImageIcon(_resourcesDir
+					+ "/" + Config.getString("LOGO"))); //$NON-NLS-1$
+			//
+			// version and author panel
+			//
+			JPanel detailsPanel = new JPanel();
+			detailsPanel.setLayout(new GridLayout(0, 2));
+			JLabel lblVersionTitle = new JLabel(Messages
+					.getString("TIT_VERSION")); //$NON-NLS-1$
+			JLabel lblVersion = new JLabel(Messages.getString("VERSION")); //$NON-NLS-1$
+			lblVersion.setForeground(Color.RED);
+			JLabel lblAuthorsTitle = new JLabel(Messages
+					.getString("TIT_AUTHORS")); //$NON-NLS-1$
+			JLabel lblAuthors = new JLabel(Messages.getString("AUTHORS")); //$NON-NLS-1$
+			detailsPanel.add(lblVersionTitle);
+			detailsPanel.add(lblVersion);
+			detailsPanel.add(lblAuthorsTitle);
+			detailsPanel.add(lblAuthors);
+			detailsPanel
+					.setBorder(BorderFactory.createEmptyBorder(30, 0, 0, 0));
+			// adding componens
+			_pnlAbout.add(lblAppName, BorderLayout.CENTER);
+			_pnlAbout.add(detailsPanel, BorderLayout.SOUTH);
+		}
+		return _pnlAbout;
+	}
+
 	private JPanel getPnlInit()
 	{
 		if (_pnlInit == null) {
@@ -596,9 +669,9 @@ public class ControllerGUI extends JFrame
 			_pnlPlugins.setLayout(new BorderLayout());
 			_pnlPlugins.add(getPnlPluginButtons(), BorderLayout.EAST);
 			_pnlPlugins.add(getLstPlugins(), BorderLayout.CENTER);
-			_pnlPlugins.setBorder(BorderFactory
-					.createTitledBorder(null, Messages.getString("TIT_PLUGINS"), TitledBorder.LEFT, //$NON-NLS-1$
-							TitledBorder.DEFAULT_POSITION));
+			_pnlPlugins.setBorder(BorderFactory.createTitledBorder(null,
+					Messages.getString("TIT_PLUGINS"), TitledBorder.LEFT, //$NON-NLS-1$
+					TitledBorder.DEFAULT_POSITION));
 		}
 		return _pnlPlugins;
 	}
@@ -639,7 +712,8 @@ public class ControllerGUI extends JFrame
 			_pnlTasks.setLayout(new BorderLayout());
 			_pnlTasks.add(getPnlTaskButtons(), BorderLayout.EAST);
 			_pnlTasks.add(getLstTasks(), BorderLayout.CENTER);
-			_pnlTasks.setBorder(BorderFactory.createTitledBorder(null, Messages.getString("TIT_TASKS"), //$NON-NLS-1$
+			_pnlTasks.setBorder(BorderFactory.createTitledBorder(null, Messages
+					.getString("TIT_TASKS"), //$NON-NLS-1$
 					TitledBorder.LEFT, TitledBorder.DEFAULT_POSITION));
 		}
 		return _pnlTasks;
@@ -658,7 +732,7 @@ public class ControllerGUI extends JFrame
 		}
 		return _toolBar;
 	}
-		
+
 	/**
 	 * This method initializes this
 	 * 
@@ -676,19 +750,28 @@ public class ControllerGUI extends JFrame
 				exit();
 			}
 		});
+		_logger.debug("initialize end");
+	}
+
+	/** Method shows about dialog. */
+	private void showAboutDialog()
+	{
+		JOptionPane.showMessageDialog(null, getPnlAbout(), "About",
+				JOptionPane.PLAIN_MESSAGE);
 	}
 
 	/**
-	 *  Method show SQLConsole.
+	 * Method show SQLConsole.
 	 */
 	private void showSQLConsole()
 	{
 		new SQLConsole(false);
 	}
+
 	/**
 	 * 
 	 * @author nico
-	 *
+	 * 
 	 * Class handles events from buttons, which are used to manage tasks.
 	 */
 	private class ManipulationListener implements ActionListener
@@ -717,13 +800,13 @@ public class ControllerGUI extends JFrame
 			}
 		}
 	}
-	
+
 	/**
 	 * 
 	 * @author nico
-	 *
-	 * Class handles events from buttons and menu items, 
-	 * which are used to manage projects.
+	 * 
+	 * Class handles events from buttons and menu items, which are used to
+	 * manage projects.
 	 */
 	private class ProjectListener implements ActionListener
 	{
@@ -739,6 +822,50 @@ public class ControllerGUI extends JFrame
 			} else {
 				_logger.error("Not supported button: " + object); //$NON-NLS-1$
 			}
+		}
+	}
+
+	/**
+	 * @author nico
+	 * 
+	 * Class represents splash screen label. It allows to place version and
+	 * other information at the screen
+	 *  
+	 */
+	private class SplashLabel extends JLabel
+	{
+		Point _location = null;
+
+		public SplashLabel(ImageIcon image)
+		{
+			super(image);
+			_logger.debug("image: " + image);
+			_location = new Point();
+			_location.x = (Toolkit.getDefaultToolkit().getScreenSize().width - image
+					.getIconWidth()) / 2;
+			_location.y = (Toolkit.getDefaultToolkit().getScreenSize().height - image
+					.getIconHeight()) / 2;
+		}
+
+		public void paint(Graphics g)
+		{
+			super.paint(g);
+			Color oldColor = g.getColor();
+			Font oldFont = g.getFont();
+			Color newColor = Color.BLUE;
+			Font newFont = new Font("Dialog", Font.BOLD, 15);
+			g.setColor(newColor);
+			g.setFont(newFont);
+			String version = Config.getString("VERSION") + ": " + Messages.getString("VERSION"); 
+			g.drawString(version, 200, 200);
+			// setting back old color and font
+			g.setColor(oldColor);
+			g.setFont(oldFont);
+		}
+
+		public Point getLocation()
+		{
+			return _location;
 		}
 	}
 }
