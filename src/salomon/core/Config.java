@@ -11,8 +11,10 @@ import java.util.ResourceBundle;
 import org.apache.log4j.Logger;
 
 /**
- * @author nico
- *  
+ * Class is responsible for managing base configuration of application.
+ * It holds resource bundle for config.properties file.
+ * 
+ * @author nico  
  */
 public class Config
 {
@@ -36,18 +38,6 @@ public class Config
 		}
 	}
 
-	/**
-	 *  
-	 */
-	private Config()
-	{
-		// TODO Auto-generated constructor stub
-	}
-
-	/**
-	 * @param key
-	 * @return
-	 */
 	public static String getString(String key)
 	{
 		try {

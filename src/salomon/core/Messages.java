@@ -11,8 +11,10 @@ import java.util.ResourceBundle;
 import org.apache.log4j.Logger;
 
 /**
+ * Class is responsible for managing all texts in application.
+ * It holds resource bundle for messages.properties file.
+ * 
  * @author nico
- *  
  */
 public final class Messages
 {
