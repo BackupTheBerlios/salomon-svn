@@ -10,10 +10,9 @@ import salomon.core.plugin.IPluginManager;
 import salomon.plugin.Description;
 
 /**
- * 
- * TODO: add comment.
- * 
- * @author krzychu
+ * Class is a sever side wrapper of IRemotePluginManager object. It implements
+ * IPluginManager interface and delegates methods execution to remote object
+ * catching all RemoteExceptions.
  *  
  */
 public final class PluginManagerProxy implements IPluginManager

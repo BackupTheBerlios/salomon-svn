@@ -11,10 +11,9 @@ import salomon.core.project.IProject;
 import salomon.core.project.IProjectManager;
 
 /**
- * 
- * TODO: add comment.
- * 
- * @author krzychu
+ * Class is a sever side wrapper of IRemoteProjectManager object. It implements
+ * IProjectManager interface and delegates methods execution to remote object
+ * catching all RemoteExceptions.
  *  
  */
 public final class ProjectManagerProxy implements IProjectManager
