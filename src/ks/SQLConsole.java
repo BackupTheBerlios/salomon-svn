@@ -4,14 +4,10 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -26,6 +22,18 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextPane;
 import javax.swing.JToolBar;
+
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
+
+import ks.data.Condition;
+import ks.data.DBColumnName;
+import ks.data.DBConnector;
+import ks.data.DBTableName;
+import ks.data.DataEngine;
+import ks.data.DataSet;
+import ks.data.DataSetManager;
+import ks.plugins.AveragePrice;
 
 public class SQLConsole extends JFrame
 {
@@ -48,7 +56,7 @@ public class SQLConsole extends JFrame
 
 	private JPanel _pnlMain = null;
 
-	private JScrollPane _scrlResult = null;
+	private JScrollPane _scrlResult = null; 
 
 	//  @jve:visual-info decl-index=0 visual-constraint="33,72"
 	private JSplitPane _sptConsolePane = null;
@@ -67,15 +75,25 @@ public class SQLConsole extends JFrame
 	 */
 	private JTextArea _msgArea;
 
+	private static Logger _logger = Logger.getLogger(SQLConsole.class);
 	/**
 	 * This is the default constructor
 	 */
 	public SQLConsole()
 	{
 		super();
-		_connector = new DBConnector();
+		PropertyConfigurator.configure("log.conf");
+		try {
+			_connector = DBConnector.getInstance();
+		} catch (SQLException e) {
+			_logger.fatal("", e);
+		} catch (ClassNotFoundException e) {
+			_logger.fatal("", e);
+		}
 		_msgArea = getMessageArea();
 		_history = new CommandHistory(100);
+		//queryTest();
+		//pluginTest();
 		initialize();
 	}
 
@@ -90,7 +108,7 @@ public class SQLConsole extends JFrame
 	public static void main(String[] args)
 	{
 		new SQLConsole();
-		System.out.println("SQLConsole.main()");
+		_logger.warn("SQLConsole started");
 	}
 
 	private void commit()
@@ -100,12 +118,12 @@ public class SQLConsole extends JFrame
 			showMessage("Commit complete");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			_logger.fatal("",e);
 			showMessage(e.getLocalizedMessage());
 		}
 	}
 
-	private JTable createResultTable(ResultSet resultSet) throws SQLException
+	public static JTable createResultTable(ResultSet resultSet) throws SQLException
 	{
 		ResultSetMetaData metaData = resultSet.getMetaData();
 		int columnCount = metaData.getColumnCount();
@@ -113,7 +131,7 @@ public class SQLConsole extends JFrame
 		// getting column names
 		for (int i = 0; i < columnCount; i++) {
 			columnNames[i] = metaData.getColumnLabel(i + 1);
-		}
+		}		
 		// getting data
 		LinkedList rows = new LinkedList();
 		int size = 0;
@@ -132,20 +150,68 @@ public class SQLConsole extends JFrame
 			data[i] = (Object[]) rows.get(i);
 		}
 		// printing result
+		StringBuffer buffer = new StringBuffer(512);
 		for (int i = 0; i < columnCount; i++) {
-			System.out.print(columnNames[i] + " ");
+			buffer.append(columnNames[i] + " ");
 		}
-		System.out.println("=============================================");
+		buffer.append("\n=============================================\n");
 		for (int i = 0; i < size; i++) {
 			for (int j = 0; j < columnCount; j++) {
-				System.out.print(data[i][j] + " ");
+				buffer.append(data[i][j] + " ");
 			}
-			System.out.println("");
+			buffer.append("\n");
 		}
-		//TODO: use TableModel
+		_logger.info(buffer);
 		return new JTable(data, columnNames);
 	}
-
+	
+	public static void printResultSet(ResultSet resultSet) throws SQLException {
+		
+		if (resultSet == null) {
+			_logger.fatal("Result set is empty");
+			return;
+		}
+		
+		ResultSetMetaData metaData = resultSet.getMetaData();
+		int columnCount = metaData.getColumnCount();
+		String[] columnNames = new String[columnCount];
+		// getting column names
+		for (int i = 0; i < columnCount; i++) {
+			columnNames[i] = metaData.getColumnLabel(i + 1);
+		}		
+		// getting data
+		LinkedList rows = new LinkedList();
+		int size = 0;
+		while (resultSet.next()) {
+			Object[] row = new Object[columnCount];
+			int i = 0;
+			for (; i < columnCount; i++) {
+				row[i] = resultSet.getObject(i + 1);
+			}
+			rows.add(row);
+			size++;
+		}		
+		// creating result table
+		Object[][] data = new Object[size][columnCount];
+		for (int i = 0; i < size; i++) {
+			data[i] = (Object[]) rows.get(i);
+		}
+		
+		// printing result
+		StringBuffer buffer = new StringBuffer(512);
+		for (int i = 0; i < columnCount; i++) {
+			buffer.append(columnNames[i] + " ");
+		}
+		buffer.append("\n=============================================\n");
+		for (int i = 0; i < size; i++) {
+			for (int j = 0; j < columnCount; j++) {
+				buffer.append(data[i][j] + " | ");
+			}
+			buffer.append("\n");
+		}
+		_logger.fatal(buffer);
+	}
+	
 	/**
 	 * Method executes query from text pane and places results in the table
 	 *  
@@ -168,8 +234,7 @@ public class SQLConsole extends JFrame
 			// if there was no exception, then adding command to the history
 			_history.addCommand(query);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			_logger.fatal("", e);
 			showMessage(e.getLocalizedMessage());
 		}
 	}
@@ -225,7 +290,7 @@ public class SQLConsole extends JFrame
 		if (_btnNext == null) {
 			_btnNext = new JButton();
 			_btnNext.setText("->");
-			_btnNext.setMnemonic(KeyEvent.VK_DOWN);			
+			_btnNext.setMnemonic(KeyEvent.VK_DOWN);
 			_btnNext.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e)
 				{
@@ -286,25 +351,6 @@ public class SQLConsole extends JFrame
 	{
 		if (_edtSQLQuery == null) {
 			_edtSQLQuery = new JTextPane();
-			_edtSQLQuery.addKeyListener(new KeyAdapter() {
-				public void keyTyped(KeyEvent e)
-				{
-					if (e.isControlDown()) {
-						System.out.println("SQLConsole.getEdtSQLQuery(): " + e.getKeyCode());
-						switch (e.getKeyCode()) {
-							case KeyEvent.VK_F8 :
-								executeQuery();
-								break;
-							case KeyEvent.VK_DOWN :
-								nextCommand();
-								break;
-							case KeyEvent.VK_UP :
-								previousCommand();
-								break;
-						}
-					}
-				}
-			});
 		}
 		return _edtSQLQuery;
 	}
@@ -362,7 +408,7 @@ public class SQLConsole extends JFrame
 	{
 		if (_sptConsolePane == null) {
 			_sptConsolePane = new JSplitPane();
-			_sptConsolePane.setTopComponent(getEdtSQLQuery());
+			_sptConsolePane.setTopComponent(new JScrollPane(getEdtSQLQuery()));
 			_sptConsolePane.setBottomComponent(getScrlResult());
 			_sptConsolePane.setOrientation(JSplitPane.VERTICAL_SPLIT);
 			_sptConsolePane.setDividerLocation(100);
@@ -413,15 +459,6 @@ public class SQLConsole extends JFrame
 		this.setSize(400, 400);
 		this.setTitle("Console");
 		// connecting to data base
-		try {
-			_connector.connect();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		this.addWindowListener(new java.awt.event.WindowAdapter() {
 			public void windowClosing(java.awt.event.WindowEvent e)
 			{
@@ -430,7 +467,7 @@ public class SQLConsole extends JFrame
 					_connector.disconnect();
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					_logger.fatal("",e1);
 				}
 				System.exit(0);
 			}
@@ -444,7 +481,6 @@ public class SQLConsole extends JFrame
 	private void nextCommand()
 	{
 		// TODO Auto-generated method stub
-		System.out.println("SQLConsole.nextCommand()");
 		String command = _history.getNextCommand();
 		if (command != null) {
 			_edtSQLQuery.setText(command);
@@ -470,7 +506,7 @@ public class SQLConsole extends JFrame
 			showMessage("Rollback complete");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			_logger.fatal("",e);
 			showMessage(e.getLocalizedMessage());
 		}
 	}
@@ -535,60 +571,36 @@ public class SQLConsole extends JFrame
 		}
 	}
 
-	// TODO: ta klasa powinna byc gdzie indziej, nie jako wewnetrzna
-	class DBConnector
+	private void queryTest()
 	{
-		private Connection _connection = null;
-
-		private Statement _statement = null;
-
-		public void commit() throws SQLException
-		{
-			_connection.commit();
+		DataSet dataSet = null;
+		try {
+			dataSet = new DataSetManager().getDataSetForName("test1");
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			_logger.fatal("",e);
+		} catch (SQLException e) {
+			_logger.fatal("",e);
 		}
-
-		public void connect() throws SQLException, ClassNotFoundException
-		{
-			Class.forName("org.firebirdsql.jdbc.FBDriver");
-			_connection = DriverManager.getConnection(
-					"jdbc:firebirdsql://127.0.0.1/c:/database/testbase.gdb",
-					"SYSDBA", "masterkey");
-			_connection.setAutoCommit(false);
-			_statement = _connection.createStatement();
-		}
-
-		public void disconnect() throws SQLException
-		{
-			if (_statement != null) {
-				_statement.close();
-			}
-			if (_connection != null) {
-				_connection.close();
-			}
-		}
-
-		public boolean executeQuery(String query) throws SQLException
-		{
-			return _statement.execute(query);
-		}
-
-		/**
-		 * @return result set or null if query was INSERT, UPDATE or DELETE
-		 * @throws SQLException
-		 */
-		public ResultSet getResultSet() throws SQLException
-		{
-			return _statement.getResultSet();
-		}
-
-		public int getUpdateCount() throws SQLException
-		{
-			return _statement.getUpdateCount();
-		}
-
-		public void rollback() throws SQLException
-		{
-			_connection.rollback();
+		_logger.debug("dataSet: " + dataSet);
+		DBTableName[] tableNames = {new DBTableName("cars", "c")};
+		DBColumnName[] columnNames = {
+				new DBColumnName(tableNames[0], "car_id", "id"),
+				new DBColumnName(tableNames[0], "brand", "marka"),
+				new DBColumnName(tableNames[0], "name", "model"),};
+		Condition[] conditions = {new Condition(new DBColumnName(tableNames[0],
+				"car_id"), Condition.REL_M, new Integer(1), Condition.NUMBERIC)};
+		try {
+			dataSet.selectData(columnNames, tableNames, conditions);
+		} catch (SQLException e) {
+			_logger.fatal("",e);
+		} catch (ClassNotFoundException e) {
+			_logger.fatal("",e);
 		}
 	}
-} //  @jve:visual-info decl-index=0 visual-constraint="37,22"
+	
+	private void pluginTest() {
+		
+		new AveragePrice().doJob(new DataEngine(), null, null);
+	}	
+} 
