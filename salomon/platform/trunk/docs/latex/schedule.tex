@@ -47,11 +47,50 @@
 
 \newpage
 
-Obecn¹ wersj¹ Salomona jest wersja 1.0. 
-Kolejne zmiany opisane w tym planie bêd¹ wchodzi³y do jego kolejnych wersji (1.1, 1.2 itd). 
+Obecn¹ wersj¹ Salomona jest wersja 0.9 alfa. 
+Kolejne zmiany opisane w tym planie bêd¹ wchodzi³y do jego kolejnych wersji (0.9, 1.0 itd). 
 
 \begin{enumerate}
-	\item Stworzenie wersji dystrybucyjnej dla tworców pluginów	
+	\item Wersja 0.8 - usprawnienie procesu zarz¹dzania projektem \textbf{(100\%)}
+	\begin{enumerate}
+		\item Portal do Salomona	
+		\begin{itemize}
+			\item Uruchomienie portalu na serwerze
+			\item Dodanie forum, galerii, newsów itp.
+%			\item Zainstalowanie Gemini(\href{http://www.countersoft.com}{http://www.countersoft.com})
+			\item Zainstalowanie Bugzilli
+			\item Zainstalowanie Twiki
+			\item Podpiêcie WebSVN
+		\end{itemize}
+	
+	\item Zarz¹dzenie projektem
+		
+		\begin{itemize}
+			\item Rozdzielanie zadañ za pomoc¹ systemu GEMINI
+			\item Rozwijanie dokumentacji za pomoc¹ WIKI
+			\item Œledzenie b³êdów za pomoc¹ Bugzilli i szybkie fixy
+			\item Automatycznie zarz¹dzanie kodem i dokumentacj¹ za pomoc¹ programu Maven
+		\end{itemize}
+	
+	\item Dokumentacja	
+	\begin{itemize}		
+		\item poprawiæ wprowadzenie
+		\item przet³umaczyæ je na angielski
+		\item dodanie/modyfikacja diagramów klas, use-case, sekwencji	
+		\item utworzenie portalu dla Salomona (maven)
+	\end{itemize}
+	
+	Dokumentacja systemu rozwijana ma byæ na bie¿¹co, wraz z wprowadzanymi zmianami. Na podstawie zebranego dotychczas doœwiadczenia mo¿na twierdziæ, ¿e jest on obarczony du¿ym ryzykiem i trzeba na niego zwróciæ szczególn¹ uwagê.
+	
+	\item Testy	
+	\begin{itemize}
+		\item JUnit - testy jednostkowe dla klas, które da siê w ten sposób przetestowaæ
+		\item JUnit - GUI testy
+		\item prezentacja wyników testów na stronie
+	\end{itemize}		
+	\end{enumerate}
+	
+	\item Wersja 0.9 - Refactoring kodu \textbf{(85\%)}
 	\begin{enumerate}
 		\item poprawienie przejrzystoœci kodu		
 		\begin{itemize}
@@ -63,20 +102,31 @@ Kolejne zmiany opisane w tym planie bêd¹ wchodzi³y do jego kolejnych wersji (1.1
 			\end{itemize}
 			\item refaktoring kodu w klasach GUI
 			\item support dla Javy 1.5
-			\item dok³adne odseparowanie GUI od logiki
+			\item dok³adne odseparowanie GUI od logiki		
+			\item zamieniæ klasy platformy u¿ywane przez pluginy na interfejsy
+			\item zdefiniowaæ interfejsy dla klas zarz¹dzaj¹cych strukturami danych
+			\item nowa serializacja
+			\item przyk³adowy plugin (wysokie ryzyko)
+			\item odseparowanie kontrolerów od reszty klas		
+			\item odseparowanie klas wykorzystywanych przez pluginy od reszty klas platformy
+			\item poprawienie b³êdów powsta³ych po refactoringu
 		\end{itemize}
-		\item zamieniæ klasy platformy u¿ywane przez pluginy na interfejsy
-		\item zdefiniowaæ interfejsy dla klas zarz¹dzaj¹cych strukturami danych
-		\item nowa serializacja
-		\item przyk³adowy plugin (wysokie ryzyko)
-		\item odseparowaæ kontrolery od reszty klas		
 	\end{enumerate}
+	
 
-	Prace zwi¹zane z przygotowaniem wersji w postaci paczki \emph{jar} dla twórców pluginów s¹ ju¿ dalece posuniête, przeprowadzony zosta³ refaktoring kodu i wydzielenie czêœci, która bêdzie wchodzi³a w sk³ad paczki dla atorów pluginów.
+	\item Wersja 1.0 - wersja dystrybucyjna dla tworców pluginów \textbf{(0\%)}
+	\begin{enumerate}		
+		\item utworzenie paczki, z której korzystaæ bêd¹ twórcy pluginów
+		\item utworzenie przyk³adowego pluginu
+		\item dodanie szablonów dla szybkiej implementacji wymaganych interfejsów	
+	\end{enumerate}	
+
+	Prace zwi¹zane z przygotowaniem wersji w postaci paczki \emph{jar} dla twórców pluginów s¹ ju¿ dalece posuniête, przeprowadzony zosta³ refaktoring kodu i wydzielenie czêœci, która bêdzie wchodzi³a w sk³ad paczki dla autorów pluginów.	
 	
-	Nie wszystkie wymienione dzia³ania musz¹ znaleŸæ siê w tej wersji, np. refaktoring kodu w klasach GUI czy odseparowanie go 	od logiki nie jest z punktu widzenia twórcy pluginu istotne i jest spraw¹ wewnêtrznej implementacji samej platformy.
-	Najwa¿niejsz¹ czêœci¹ tego punktu jest zdefiniowanie interfejsów dla klas zarz¹dzaj¹cych strukturami danych. Od ich odpowiedniego zdefiniowania zale¿y stopieñ funkcjonalnoœci platformy. By móc przewidzieæ, jaka funkcjonalnoœæ mo¿e byæ potrzebna, konieczne jest zaimplementowanie przyk³adowego pluginu operuj¹cego np. na zbiorach danych i regu³ach. Punkty te s¹ obarczone najwiêkszym ryzykiem i mog¹ opóŸniæ zakoñczenie ca³ego etapu. Jego zakoñczenie jest wymagane do stworzenia wersji 1.1 Salomona.	
+	Najwa¿niejsz¹ czêœci¹ tego punktu jest zdefiniowanie interfejsów dla klas zarz¹dzaj¹cych strukturami danych. Od ich odpowiedniego zdefiniowania zale¿y stopieñ funkcjonalnoœci platformy. By móc przewidzieæ, jaka funkcjonalnoœæ mo¿e byæ potrzebna, konieczne jest zaimplementowanie przyk³adowego pluginu operuj¹cego np. na zbiorach danych i regu³ach. Punkty te s¹ obarczone najwiêkszym ryzykiem i mog¹ opóŸniæ zakoñczenie ca³ego etapu. Jego zakoñczenie jest wymagane do stworzenia wersji 1.0 Salomona.	
 	
+	\item Wersja 1.1 i póŸniejsze - dalszy rozwój systemu \textbf{(0\%)}
+	\begin{enumerate}
 	\item Rozbudowa funkcjonalnoœci platformy	
 	\begin{itemize}
 		\item obs³uga nowych typów danych		
@@ -148,28 +198,9 @@ Kolejne zmiany opisane w tym planie bêd¹ wchodzi³y do jego kolejnych wersji (1.1
 		\item wybór kontrolerów na etapie instalacji
 	\end{itemize}
 	
-	Prace w planowane w tym etapie realizowane bêd¹ w okresie mniejszego obci¹¿enia innymi pracami, nie planuje siê jeszcze konkretnych wersji, do których mia³yby zostaæ w³¹czone.
-	
-	\item Dokumentacja	
-	\begin{itemize}
-		\item poprawiæ wprowadzenie
-		\item przet³umaczyæ je na angielski
-		\item dodanie/modyfikacja diagramów klas, use-case, sekwencji
-		\item utworzenie prezentacji w Latex - u
-		\item utworzenie portalu dla Salomona (maven)
-	\end{itemize}
-	
-	Dokumentacja systemu rozwijana ma byæ na bie¿¹co, wraz z wprowadzanymi zmianami. Na podstawie zebranego dotychczas doœwiadczenia mo¿na twierdziæ, ¿e jest on obarczony du¿ym ryzykiem i trzeba na niego zwróciæ szczególn¹ uwagê.
-	
-	\item Testy	
-	\begin{itemize}
-		\item JUnit - testy jednostkowe dla klas, które da siê w ten sposób przetestowaæ
-		\item JUnit - GUI testy
-		\item prezentacja wyników testów na stronie
-	\end{itemize}
-	
-	Testy systemu tworzone s¹ na bie¿¹co, wraz z wprowadzanymi zmianami (dotyczy to \emph{JUnit}). W przysz³oœci planowane jest uruchomienie automatycznych nocnych testów. Etap ten nie jest obarczony du¿ym ryzykiem.
-	
+	Prace w planowane w tym etapie realizowane bêd¹ w okresie mniejszego obci¹¿enia innymi pracami, nie planuje siê jeszcze konkretnych wersji, do których mia³yby zostaæ w³¹czone.	
+
+	\end{enumerate}	
 \end{enumerate}
 
 \end{document}
