@@ -3,7 +3,11 @@
 	<!-- Allows us to use the IzPack Ant task -->
 	<taskdef name="izpack" classpath="${basedir}/lib/compiler.jar"
 		classname="com.izforge.izpack.ant.IzPackTask"/>
-
+	<taskdef name="svn" 
+		classpath="${basedir}/lib/svn/svnant.jar;${basedir}/lib/svn/svnClientAdapter.jar;${basedir}/lib/svn/svnjavahl.jar"
+			classname="org.tigris.subversion.svnant.SvnTask" />
+		<!--	resource="svntask.properties"/> -->
+	
 	<property name="src_dir" value="src"/>
 
 	
@@ -158,5 +162,14 @@
 			installerType="standard"
 			basedir="${basedir}/install"
 			izPackDir="${izpackdir}/"/>
+	</target>
+	<target name="get_version">
+		<svn>
+			<status 
+				path="${basedir}"
+				revisionProperty="testStatus.revision"/>
+			
+		</svn>
+		<echo message="REVISION_VERSION=${testStatus.revision}" file="version.properties"/>
 	</target>
 </project>
