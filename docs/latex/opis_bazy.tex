@@ -1,0 +1,67 @@
+\section{Opis bazy danych}sz
+
+Do przechowywania danych wykorzystywanych przez system
+wykorzystana zosta³a baza danych. Dane zosta³y zorganizowane w
+nastêpuj¹cych tabelach:
+
+\paragraph{Projects}
+
+Tabela zawiera nag³ówki projektów, do których odnosz¹ siê rekordy
+z tabeli Tasks.
+
+\begin{itemize}
+    \item \emph{project\_id} - identyfikator projektu
+    \item \emph{name} - nazwa
+    \item \emph{info} - dodatkowy opis
+\end{itemize}
+
+\paragraph{Plugins}
+Tabela zawiera informacje o pluginach, które mog¹ byæ wykorzystane
+przez system. Przechowuje dane o ich nazwach i lokalizacjach, sk¹d
+mog¹ byæ pobrane.
+\begin{itemize}
+    \item \emph{plugin\_id} - identyfikator pluginu
+    \item \emph{name} - nazwa
+    \item \emph{info} - dodatkowy opis
+    \item \emph{location} - lokalizacja pluginu.
+\end{itemize}
+
+\paragraph{Tasks}
+ Tabela zawiera zapis wykonania poszczególnych tasków . Dla ka¿dego
+zadania przechowywane s¹ dane o pluginie, który zosta³
+wykorzystany do wykonania zadania, projekcie, w ramach którego
+zadanie zosta³o zapisane, ustawienia, z jakimi zosta³o wykonane,
+rezultat zadania oraz status, w jakim pozostaje po wykonaniu.
+
+\begin{itemize}
+    \item \emph{task\_id} - identyfikator taska
+    \item \emph{project\_id} - identyfikator projektu, do którego nale¿y task
+    \item \emph{plugin\_id} - identyfikator pluginu, który wykonywany jest w ramach tego taska
+    \item \emph{name} - nazwa
+    \item \emph{info} - dodatkowy opis
+    \item \emph{plugin\_settings} - ustawienia pocz¹tkowe pluginu
+    \item \emph{plugin\_result} - rezultat dzia³ania pluginu
+    \item \emph{status} - status wykonania taska
+\end{itemize}
+
+\paragraph{Datasets}
+Zawiera nag³ówki zbiorów zadañ.
+\begin{itemize}
+    \item \emph{dataset\_id} - identyfikator zbioru danych
+    \item \emph{dataset\_name} - nazwa
+    \item \emph{info} - dodatkowy opis
+\end{itemize}
+
+\paragraph{Dataset\_items}
+Zawiera definicje zbiorów zadañ. Zbiór danych definiowany jest
+przez nazwê tabeli oraz warunki, jaki ograniczaj¹ rekordy w tej
+tabeli.
+\begin{itemize}
+    \item \emph{dataset\_item\_id} - identyfikator elementu zbioru danych
+    \item \emph{dataset\_id} - identyfikator zbioru danych do którego nale¿y
+element
+    \item \emph{table\_name} - nazwa tabeli
+    \item \emph{condition} - warunek ograniczaj¹cy zakres danych
+\end{itemize}
+    Relacje miêdzy nimi zobrazowane s¹ na
+poni¿szym rysunku:

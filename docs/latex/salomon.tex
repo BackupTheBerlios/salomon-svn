@@ -1,0 +1,49 @@
+%& --translate-file=cp1250pl
+%bez powyzszej linijki nie dzialaja polskie znaki (musi ona byc w pierwszej linii dokumentu
+%%&platex --translate-file=il2-pl % przeyestowac z tym
+\documentclass[a4paper,12pt]{article}
+\usepackage[polish]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[dvips]{graphicx}
+%\usepackage{intendfirst}
+\usepackage{times}
+\usepackage{epsfig}
+\usepackage{color}
+
+%ustawienie wielkosci akapitu
+%\setlength{\parindent}{0mm}
+%%odstàp miàdzy akapitami
+%\setlength{\parskip}{2mm}
+
+%ustawienia rozmiaru tekstu
+    \textwidth 16cm
+    \topmargin -15mm
+    \evensidemargin-3mm
+    \oddsidemargin -3mm
+
+
+\title{Salomon}
+
+\author{Nikodem Jura \emph{(nico@icslab.agh.edu.pl)}
+        \\
+        Krzysztof Rajda \emph{(krzycho@student.uci.agh.edu.pl)}
+        \\
+        Jakub Ga³kowski \emph{(avi@student.uci.agh.edu.pl)}
+        \\
+        \\
+        Prowadz¹cy: dr in¿. Marek Kisiel-Dorohinicki}
+
+\begin{document}
+
+\maketitle
+\newpage
+
+\tableofcontents
+\newpage
+
+\include{wstep}
+\include{architektura}
+\include{interfejsy_pluginow}
+\include{opis_bazy}
+
+\end{document}

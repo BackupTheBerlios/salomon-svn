@@ -1,0 +1,48 @@
+\section{Wprowadzenie}
+
+Salomon to system realizuj¹cy koncepcjê \emph{Knowlege Mining}.
+Sk³ada siê on z dwóch zasadniczych czêœci - pierwsz¹ z nich
+stanowi silnik, którego zadaniem jest zarz¹dzanie i~uruchamianie
+zadañ. Druga czêœæ to zbiór wtyczek, dostarczaj¹cych logikê
+potrzebn¹ do skonfigurowania, wykonania i~wyœwietlenia rezultatów
+zadania. System jest otwarty - oznacza to, ¿e jego funkcjonalnoœæ
+mo¿e byæ w ³atwy sposób rozszerzalna poprzez dostarczenie nowych
+wtyczek.
+\\
+
+
+%\begin{figure}[htb]
+%\begin{center}
+    %\includegraphics[width=0.4\hsize]{Core}
+    %\includegraphics{Core}
+    %\caption{Mapa bitowa}
+    %\label{dupa}
+%\end{center}
+%\end{figure}
+
+Podstawowe za³o¿enia projektowe:
+\begin{itemize}
+    \item ca³a funkcjonalnoœæ w pluginach. J¹dro systemu ma byæ jak najmniejsze.
+    Jego zadaniem jest stworzenie œrodowiska do realizacji logiki dostarczanej we wtyczkach
+    \item otwarta~architektura. Wprowadzenie warstwy poœredniej pomiêdzy baz¹ danych~a wtyczkami.
+    Jej zadaniem jest ukrycie sposobu organizacji danych przez
+    wtyczkami. Otwartoœæ~architektury polega na mo¿liwoœci rozszerzenia tej warstwy
+    \item niezale¿noœæ od platformy. System ma byæ niezale¿ny od platformy, mo¿liwie ³atwo przenaszalny.
+    Poszczególne czêœci systemu mog¹ byæ uruchamiane na ró¿nych
+    platformach.
+    \item ³atwa~adaptacja funkcjonalnoœci zawartej w \emph{Vinlenie}.
+    Projekt powsta³ jako platforma uruchomieniowa dla logiki zaimplementowanej w programie \emph{Vinlen},
+    stworzonego pod kierownictwem prof. Ryszarda Michalskiego.
+\end{itemize}
+
+
+Salomon ma na celu wyeliminowanie ograniczeñ oryginalnego
+\emph{Vinlena} poprzez wprowadzenie:
+
+\begin{itemize}
+    \item kolejkowania zadañ
+    \item rozproszenie
+    \item równoleg³oœæ
+    \item rozszerzalnoœæ (mechanizm wtyczek)
+    \item przenoœnoœæ (Java,Firebird)
+\end{itemize}
