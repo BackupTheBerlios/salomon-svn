@@ -122,7 +122,7 @@ public final class RemoteControllerGUI
     	try {
 			_remoteController.exit();
 		} catch (RemoteException e) {
-			_logger.fatal(e.getLocalizedMessage());
+			_logger.debug(e.getLocalizedMessage());
 		}
     }
 	
