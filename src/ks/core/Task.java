@@ -6,8 +6,8 @@
 package ks.core;
 
 import ks.data.Environment;
-import ks.plugins.IDataPlugin;
-import ks.plugins.ISettings;
+import ks.plugins.AbstractPlugin;
+import ks.plugins.Settings;
 
 /**
  *  
@@ -19,22 +19,66 @@ public class Task
 	/**
 	 * Represents ...
 	 */
-	private Environment environment;
+	private Environment _environment;
 
 	/**
 	 * Represents ...
 	 */
-	private IDataPlugin plugin;
+	private AbstractPlugin _plugin;
 
 	/**
 	 * Represents ...
 	 */
-	private ISettings settings;
+	private Settings _settings;
 
-	///////////////////////////////////////
-	// associations
+	
 	/**
-	 *  
+	 * @return Returns the _environment.
 	 */
-	public TaskManager taskManager;
+	public Environment getEnvironment()
+	{
+		return _environment;
+	}
+	/**
+	 * @param _environment The _environment to set.
+	 */
+	public void setEnvironment(Environment environment)
+	{
+		_environment = environment;
+	}
+	/**
+	 * @return Returns the _plugin.
+	 */
+	public AbstractPlugin getPlugin()
+	{
+		return _plugin;
+	}
+	/**
+	 * @param _plugin The _plugin to set.
+	 */
+	public void setPlugin(AbstractPlugin plugin)
+	{
+		_plugin = plugin;
+	}
+	/**
+	 * @return Returns the _settings.
+	 */
+	public Settings getSettings()
+	{
+		return _settings;
+	}
+	/**
+	 * @param _settings The _settings to set.
+	 */
+	public void setSettings(Settings settings)
+	{
+		_settings = settings;
+	}
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	public String toString()
+	{		
+		return super.toString() + "[" + _plugin + "]";
+	}
 } // end Task
