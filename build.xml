@@ -9,6 +9,9 @@
 	<property name="plugin_dir" value="plugins"/>
 	<property name="db_dir" value="db"/>
 	<property name="db_file" value="salomon.gdb"/>	
+	<property name="crebas_file" value="crebas.sql"/>	
+	<property name="run_script" value="run.bat"/>	
+	
 	<property name="release_dir" value="_release" />
 
 	<target name="compile_salomon" >
@@ -33,7 +36,7 @@
 		<jar destfile="${plugin_dir}/SimpleSQLConsole.jar" basedir="${bin_dir}"	   
 			includes="pl/**/simpleconsole/**">	
 			<manifest>				
-			<attribute name="Main-Class" value="pl.edu.agh.icsr.salomon.plugin.simpleconsole.SimpleConsole"/>      	
+			<attribute name="Main-Class" value="pl.edu.agh.icsr.salomon.plugin.simpleconsole.SimpleSQLConsole"/>      	
 		</manifest>
 		</jar>		
 		
@@ -41,8 +44,8 @@
 
 
 	<target name="build_salomon_jar" depends="build_rmi_stubs">
-		<jar destfile="salomon.jar"	   			
-			includes="${bin_dir}/salomon/**">	
+		<jar destfile="salomon.jar"	basedir="${bin_dir}"   			
+			includes="salomon/**">	
 			<manifest>				
 			<attribute name="Main-Class" value="salomon.Starter"/>      	
 			<attribute name="Class-Path" value="${lib_dir}/firebirdsql.jar ${lib_dir}/log4j-1.2.8.jar ${lib_dir}/mini-j2ee.jar ."/>      			   
@@ -59,6 +62,12 @@
 	<target name="copy_data_base">
 		<mkdir dir="${release_dir}/${db_dir}"/>			
 		<copy 	file="${db_dir}/${db_file}"
+			todir="${release_dir}/${db_dir}"/>
+	</target>
+
+	<target name="copy_init_db">
+		<mkdir dir="${release_dir}/${db_dir}"/>			
+		<copy 	file="${db_dir}/${crebas_file}"
 			todir="${release_dir}/${db_dir}"/>
 	</target>
 
@@ -86,15 +95,24 @@
 
 	<target name="copy_libs">
 		<mkdir dir="${release_dir}/${lib_dir}"/>	
-		<copy 	todir="${release_dir}/${lib_dir}">
-			<fileset file="${lib_dir}/*.jar"/>	
-		</copy>
+		<copy file="${run_script}"
+			todir="${release_dir}"/>
+		<copy file="all.policy"
+			todir="${release_dir}"/>
 	</target>	
-
+	
 	<target name="copy_drivers">
-		<copy 	todir="${release_dir}">
+		<mkdir dir="${release_dir}"/>
+		<copy todir="${release_dir}">
 			<fileset file="*.dll"/>	
 		</copy>
+	</target>	
+	
+	<target name="copy_run_files">
+		<mkdir dir="${release_dir}"/>	
+		<copy todir="${release_dir}">
+			<fileset file="*.conf" />
+		</copy>	
 	</target>	
 	
 	<target name="copy_salomon" depends="build_salomon_jar">
@@ -116,7 +134,9 @@
 		<rmic classname="salomon.core.remote.RemoteProject" base="${bin_dir}"/>
 	</target>
 
-	<target name="all" depends="copy_salomon, copy_plugins, copy_libs, copy_drivers, copy_data_base, copy_res, copy_config"/>
+	<target name="all" depends="copy_salomon, copy_plugins, 
+								copy_libs, copy_drivers, copy_data_base, copy_init_db, 
+								copy_res, copy_config, copy_run_files"/>
 
 	<target name="compress" depends="all">			
  		<zip destfile="salomon.zip"
