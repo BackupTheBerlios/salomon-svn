@@ -9,11 +9,13 @@ import java.sql.SQLException;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+
 import org.apache.log4j.Logger;
-import salomon.core.ProjectManager;
+
 import salomon.core.data.DBManager;
 import salomon.core.data.DataEngine;
 import salomon.core.data.Environment;
+import salomon.core.project.ProjectManager;
 import salomon.plugin.IPlugin;
 import salomon.plugin.IResult;
 import salomon.plugin.ISettings;
@@ -21,7 +23,7 @@ import salomon.plugin.ISettings;
 /**
  *  
  */
-public final class TaskManager
+public final class TaskManager implements ITaskManager
 {
 	private static Logger _logger = Logger.getLogger(TaskManager.class);
 
@@ -72,8 +74,8 @@ public final class TaskManager
 	} // end getCurrentTask
 
 	public List getTasks()
-	{		
-		return  _tasks;
+	{
+		return _tasks;
 	}
 
 	public void start()
@@ -110,9 +112,10 @@ public final class TaskManager
 					// processing task
 					//
 					IPlugin plugin = task.getPlugin();
-					_logger.debug("plugin: " + plugin + " id: " + plugin.getDescription().getPluginID());
-					IResult result = plugin.doJob(_dataEngine,
-							_environment, settings);
+					_logger.debug("plugin: " + plugin + " id: "
+							+ plugin.getDescription().getPluginID());
+					IResult result = plugin.doJob(_dataEngine, _environment,
+							settings);
 					//
 					// saving result of its execution
 					//

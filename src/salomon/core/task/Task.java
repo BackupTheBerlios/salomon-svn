@@ -29,7 +29,7 @@ public class Task
 	private ISettings _settings;
 
 	private String _status;
-	
+
 	private int _taksId;
 
 	public Task()
@@ -59,7 +59,7 @@ public class Task
 	 */
 	public IResult getResult()
 	{
-		IResult result = _result; 
+		IResult result = _result;
 		if (_result == null) {
 			result = _plugin.getResultComponent().getDefaultResult();
 		}
@@ -141,6 +141,7 @@ public class Task
 	{
 		return _name + " [" + _plugin + "]";
 	}
+
 	/**
 	 * @return Returns the taksId.
 	 */
@@ -148,8 +149,10 @@ public class Task
 	{
 		return _taksId;
 	}
+
 	/**
-	 * @param taksId The taksId to set.
+	 * @param taksId
+	 *            The taksId to set.
 	 */
 	public void setTaksId(int taksId)
 	{
