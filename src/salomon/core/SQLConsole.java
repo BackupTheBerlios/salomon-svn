@@ -136,7 +136,7 @@ public class SQLConsole extends JFrame
 		buffer.append("\n=============================================\n"); //$NON-NLS-1$
 		for (int i = 0; i < size; i++) {
 			for (int j = 0; j < columnCount; j++) {
-				buffer.append(data[i][j] + " "); //$NON-NLS-1$
+				buffer.append(data[i][j] + "|"); //$NON-NLS-1$
 			}
 			buffer.append("\n"); //$NON-NLS-1$
 		}
@@ -189,7 +189,7 @@ public class SQLConsole extends JFrame
 		buffer.append("\n=============================================\n"); //$NON-NLS-1$
 		for (int i = 0; i < size; i++) {
 			for (int j = 0; j < columnCount; j++) {
-				buffer.append(data[i][j] + " | "); //$NON-NLS-1$
+				buffer.append(data[i][j] + "|"); //$NON-NLS-1$
 			}
 			buffer.append("\n"); //$NON-NLS-1$
 		}
