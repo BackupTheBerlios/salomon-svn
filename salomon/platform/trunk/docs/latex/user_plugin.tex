@@ -22,22 +22,25 @@ implementowaæ nastêpuj¹ce \mbox{interfejsy:}
 
 \subsubsection{IPlugin}
 
-    \paragraph{getDescription()} - zwraca obiekt klasy
+\begin{itemize}
+	\item \emph{getDescription()} - zwraca obiekt klasy
     \emph{Description} zawieraj¹cy opis pluginu (nazwê, lokalizacjê,
     wersjê itp.)
+\end{itemize}    
 
 \subsubsection{IDataPlugin}
-    \paragraph{doJob()} - metoda wykonuje g³ówne zadanie pluginu
+	\begin{itemize}
+		\item \emph{doJob()} - metoda wykonuje g³ówne zadanie pluginu
+	\end{itemize}
+    
 
 \subsubsection{IGraphicPlugin}
-
-    \paragraph{getSettingComponent()} - zwraca obiekt
+\begin{itemize}
+	\item \emph{getSettingComponent()} - zwraca obiekt
     implementuj¹cy interfejs \emph{ISettingComponent}
-
-    \paragraph{getResultComponent()} - zwraca obiekt implementuj¹cy
-    interfejs \emph{IResultComponent}\\
-
-
+	\item \emph{getResultComponent()} - zwraca obiekt implementuj¹cy
+    interfejs \emph{IResultComponent}\\    
+\end{itemize}
 
 Interfejs \emph{IGraphicComponent} zapewnia interakcjê z
 u¿ytkownikiem. Jego metody zwracaj¹ komponenty pozwalaj¹ce na
@@ -46,42 +49,42 @@ dzia³ania. Obiekty zwracane przez metody tego interfejsu
 implementuj¹ interfejsy:
 
 \subsubsection{ISettingComponent}
-
-    \paragraph{getComponent(ISettings settings)} - zwraca graficzny
+\begin{itemize}
+	\item \emph{getComponent(ISettings settings)} - zwraca graficzny
     komponent s³u¿¹cy do edycji ustawieñ pluginu. Jest on wype³niany
     wartoœciami przekazanymi w obiekcie \emph{ISettings}.
-
-    \paragraph{getSettings()} - zwraca ustawienia pluginu.
-
-    \paragraph{getDefaultSettings()} - zwraca domyœlne ustawienia
+	\item \emph{getSettings()} - zwraca ustawienia pluginu.    
+	\item \emph{getDefaultSettings()} - zwraca domyœlne ustawienia
     pluginu. Wykorzystywane, gdy u¿ytkownik nie wprowadzi³ w³asnych
-    ustawieñ.
+    ustawieñ.    
+\end{itemize}    
 
 \subsubsection{IResultComponent}
-
-    \paragraph{getComponent(IResult result)} - zwraca graficzny
+\begin{itemize}
+	\item \emph{getComponent(IResult result)} - zwraca graficzny
     komponent wyœwietlaj¹cy rezultat wykonania pluginu. Wype³niany
     jest on na podstawie obiektu  \emph{IResult} zwróconego wczeœniej
     przez metodê \emph{doJob()}.
-
-    \paragraph{getDefaultResult()} - zwraca domyœlny rezultat wykonania pluginu.
+	\item  \emph{getDefaultResult()} - zwraca domyœlny rezultat wykonania pluginu.
+\end{itemize}    
 
 \subsubsection{ISettings}Implementowany przez obiekt reprezentuj¹cy
 	ustawienia pluginu.
-
-    \paragraph{parseSettings(String settings)} - metoda inicjalizuje obiekt klasy
+\begin{itemize}
+	\item \emph{parseSettings(String settings)} - metoda inicjalizuje obiekt klasy
     \emph{ISettings}  na podstawie jego  tekstowej reprezentacji.
     U¿ywana przy ³adowaniu ustawieñ pluginu z  bazy danych.
-
-    \paragraph{settingsToString()} - zwraca tekstow¹ reprezentacjê
+	\item \emph{settingsToString()} - zwraca tekstow¹ reprezentacjê
     obiektu klasy \emph{ISettings}. U¿ywana przy zapisie ustawieñ pluginu do
-    bazy danych.
+    bazy danych.    
+\end{itemize}    
 
 \subsubsection{IResult} Implementowany przez obiekt reprezentuj¹cy rezultat dzia³ania pluginu.
-
-    \paragraph{parseResult(String result)}- metoda inicjalizuje obiekt klasy
+\begin{itemize}
+	\item \emph{parseResult(String result)} - metoda inicjalizuje obiekt klasy
     \emph{IResult}  na podstawie jego  tekstowej reprezentacji.
     U¿ywana przy ³adowaniu rezultatu dzia³ania pluginu z bazy danych.
-
-    \paragraph{resultToString()} - zwraca tekstow¹ reprezentacjê obiektu klasy
+	\item \emph{resultToString()} - zwraca tekstow¹ reprezentacjê obiektu klasy
     \emph{IResult}. U¿ywana przy zapisie rezultatu dzia³ania pluginu do bazy danych.
+\end{itemize}   
+

@@ -33,7 +33,7 @@ Nastêpnym mo¿liwym problemem jest pobieranie listy pluginów z bazy danych. Ataku
 
 \subsubsection{U¿ytkownik lokalny}
 Wiêkszoœæ spraw bezpieczeñstwa wykonania kodu jest kontrolowana przez œrodowisko tj. Wirtualn¹ Maszynê Javy. Odpada dziêki temu ca³kiem spora klasa ataków typu buffer overflow, Zakresy tablic s¹ kontrolowane przez Javê co nie pozwala na wyjœcie poza swoj¹ pamiêæ i nadpisanie stosu. Dziêki odpowiednio ustawionej polityce bezpieczeñstwa maszyny wirtualnej mo¿emy zabroniæ jakichkolwiek prób komunikacji pluginów ze œrodowiskiem. 
-Bardzo wa¿nym jest aby zabroniæ pluginom wiêkszoœci ¿yczy z grupy runtime tak jak ³adowanie bibliotek z natywnym kodem (praktycznie nieograniczone mo¿liwoœci), zamkniêcia maszyny (denial-of-service), tworzenia w³asnych ClassLoaderów (Wykonanie niebezpiecznego kodu) czy ustawiania w³asnych fabryk dla gniazd (Mo¿liwoœæ podmiany implementacji gniazda a co za tym idzie zmiana danych które przez nie przechodz¹). Ca³ej aplikacji musi byæ wolno u¿ywaæ JDBC oraz otwieraæ gniazda, pluginy bêd¹ korzysta³y tylko z klas engine'u salomona wiec i tej funkcjonalnoœci nie potrzebuj¹.
+Bardzo wa¿nym jest aby zabroniæ pluginom wiêkszoœci rzeczy z grupy runtime tak jak ³adowanie bibliotek z natywnym kodem (praktycznie nieograniczone mo¿liwoœci), zamkniêcia maszyny (denial-of-service), tworzenia w³asnych ClassLoaderów (Wykonanie niebezpiecznego kodu) czy ustawiania w³asnych fabryk dla gniazd (Mo¿liwoœæ podmiany implementacji gniazda a co za tym idzie zmiana danych które przez nie przechodz¹). Ca³ej aplikacji musi byæ wolno u¿ywaæ JDBC oraz otwieraæ gniazda, pluginy bêd¹ korzysta³y tylko z klas engine'u salomona wiec i tej funkcjonalnoœci nie potrzebuj¹.
 \newpage
 
 \subsection{Propozycje bezpiecznej konfiguracji}

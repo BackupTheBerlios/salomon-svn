@@ -41,12 +41,12 @@ Ze wzglêdu na funkcjonalnoœæ mo¿na wyró¿niæ drzewiast¹ strukturê klas, implement
 
 \subsubsection{Warstwowa} 
 
-\paragraph{Wyró¿niamy trzy warstwy:}
+W platformie wyró¿niamy trzy warstwy.
 
-W sk³ad pierwszej warstwy wchodz¹ nastêpuj¹ce klasy: \emph{ManagerEngine, PluginManager, Plugin, TaskManager, Task, ProjectManager, Project}. Warstwa ta wystêpuje w wersji rozproszonej i nierozproszonej. W tej warstwie zawarta jest g³ówna logika systemu. 
+W sk³ad pierwszej warstwy wchodz¹ nastêpuj¹ce klasy: \emph{ManagerEngine, PluginManager, Plugin, TaskManager, Task, ProjectManager, Project}. Warstwa ta wystêpuje w wersji rozproszonej i nierozproszonej. W tej warstwie zawarta jest g³ówna logika systemu. 
 
 
-Druga warstwa to warstwa odpowiedzialna za komunikacjê po stronie klienta. W sk³ad warstwy tej wchodz¹ interfejsy: \emph{IRemoteManagerEngine, IRemotePluginManager, IRemotePlugin, IRemoteTaskManager, IRemoteTask, IRemoteProjectManager, IRemoteProject} oraz odpowiednio klasy implementuj¹ce interfejsy:  \emph{RemoteManagerEngine, RemotePluginManager, RemotePlugin, RemoteTaskManager, RemoteTask, RemoteProjectManager, RemoteProject}. Interfejsy wchodz¹ce w sk³ad tej warstwy s¹ to w wiêkszoœci przypadków dok³adne odpowiedniki interfejsów, ale bez fragmentu “Remote”. Interfejsy te s¹ zdalne.
+Druga warstwa to warstwa odpowiedzialna za komunikacjê po stronie klienta. W sk³ad warstwy tej wchodz¹ interfejsy: \emph{IRemoteManagerEngine, IRemotePluginManager, IRemotePlugin, IRemoteTaskManager, IRemoteTask, IRemoteProjectManager, IRemoteProject} oraz odpowiednio klasy implementuj¹ce interfejsy:  \emph{RemoteManagerEngine, RemotePluginManager, RemotePlugin, RemoteTaskManager, RemoteTask, RemoteProjectManager, RemoteProject}. Interfejsy wchodz¹ce w sk³ad tej warstwy s¹ to w wiêkszoœci przypadków dok³adne odpowiedniki interfejsów, ale bez fragmentu ,,Remote''. Interfejsy te s¹ zdalne.
 
 Trzecia warstwa to warstwa odpowiedzialna za ukrycie po stronie serwera faktu zdalnoœci obiektów.  W sk³ad warstwy tej wchodz¹: \emph{ManagerEngineProxy, PluginManagerProxy, PluginProxy, TaskManagerProxy, TaskProxy, ProjectManagerProxy, ProjectProxy}. Klasy te to proste wrappery na zdalne obiekty, które implementuj¹ odpowiednie interfejsy z j¹dra systemu. Deleguj¹ wywo³ania metod do zdalnych obiektów i zajmuj¹ siê obs³ug¹ zdalnych wyj¹tków. 
 
