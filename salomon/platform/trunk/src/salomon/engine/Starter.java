@@ -94,11 +94,10 @@ public final class Starter
 	private LibraryController startLibraryImpl()
 	{
 		LOGGER.debug("starting MasterController");
-        return new LibraryController();
-//		_contoroller = new LibraryController();
-//		start();
-//
-//		return (LibraryController) _contoroller;
+		_contoroller = new LibraryController();
+        start();
+        
+        return (LibraryController) _contoroller;
 	}
 
 	private void startLocalImpl()
