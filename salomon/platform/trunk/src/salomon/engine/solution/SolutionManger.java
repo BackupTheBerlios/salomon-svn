@@ -19,7 +19,7 @@
  * 
  */
 
-package salomon.engine.platform.solution;
+package salomon.engine.solution;
 
 import salomon.platform.solution.ISolution;
 import salomon.platform.solution.ISolutionManager;
