@@ -12,18 +12,18 @@ import org.apache.log4j.Logger;
 
 /**
  * @author nico
- *
+ *  
  */
 public class Config
 {
 	private static final String BUNDLE_NAME = "config";//$NON-NLS-1$
-	 
+
 	private static ResourceBundle RESOURCE_BUNDLE = null;
-	
+
 	private static Logger _logger = Logger.getLogger(Config.class);
-	
+
 	public static String FILE_SEPARATOR = null;
-	
+
 	public static String CURR_DIR = null;
 
 	static {
@@ -32,12 +32,12 @@ public class Config
 			FILE_SEPARATOR = System.getProperty("file.separator");
 			CURR_DIR = System.getProperty("user.dir");
 		} catch (Exception e) {
-			_logger.fatal("", e);			
+			_logger.fatal("", e);
 		}
 	}
-	
+
 	/**
-	 * 
+	 *  
 	 */
 	private Config()
 	{
@@ -49,7 +49,7 @@ public class Config
 	 * @return
 	 */
 	public static String getString(String key)
-	{		
+	{
 		try {
 			return RESOURCE_BUNDLE.getString(key);
 		} catch (MissingResourceException e) {

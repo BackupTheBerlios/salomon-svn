@@ -8,13 +8,15 @@ package salomon.core.plugin;
 import java.io.File;
 import java.io.FileFilter;
 import java.util.Arrays;
+
 import org.apache.log4j.Logger;
+
 import salomon.core.Config;
 
 /**
  * @author nico Class manager available plugins.
  */
-public class PluginManager
+public final class PluginManager implements IPluginManager
 {
 	private static Logger _logger = Logger.getLogger(PluginLoader.class);
 
@@ -43,7 +45,7 @@ public class PluginManager
 		public PluginFileFilter(String extension)
 		{
 			this();
-			this.extension = extension;		
+			this.extension = extension;
 		}
 
 		public boolean accept(File file)

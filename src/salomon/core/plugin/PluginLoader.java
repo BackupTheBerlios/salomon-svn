@@ -11,7 +11,9 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.jar.JarFile;
+
 import org.apache.log4j.Logger;
+
 import salomon.plugin.IPlugin;
 
 /**
@@ -34,7 +36,7 @@ public class PluginLoader
 		plugin.getDescription().setLocation(pluginFile);
 		return plugin;
 	}
-	
+
 	public static IPlugin loadPlugin(String pluginFileName) throws Exception
 	{
 		return loadPlugin(new File(pluginFileName));
@@ -56,8 +58,8 @@ public class PluginLoader
 			_logger.debug("file: " + _file.getAbsolutePath());
 			JarFile jarFile = new JarFile(_file);
 			// reading manifest to find main class
-			String className = jarFile.getManifest().getMainAttributes()
-					.getValue("Main-Class");
+			String className = jarFile.getManifest().getMainAttributes().getValue(
+					"Main-Class");
 			_logger.info("Looking for class: " + className);
 			foundClass = super.findClass(className);
 			_logger.info("Found class: " + foundClass);

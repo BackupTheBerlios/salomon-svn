@@ -7,13 +7,14 @@ package salomon.core;
 
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
+
 import org.apache.log4j.Logger;
 
 /**
  * @author nico
  *  
  */
-public class Messages
+public final class Messages
 {
 	private static final String BUNDLE_NAME = "messages";//$NON-NLS-1$
 
@@ -24,7 +25,7 @@ public class Messages
 		try {
 			RESOURCE_BUNDLE = ResourceBundle.getBundle(BUNDLE_NAME);
 		} catch (Exception e) {
-			_logger.fatal("", e);			
+			_logger.fatal("", e);
 		}
 	}
 

@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+
 import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -23,8 +24,10 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextPane;
 import javax.swing.JToolBar;
+
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
+
 import pl.edu.agh.icsr.salomon.plugin.averageprice.AveragePrice;
 import salomon.core.data.DBManager;
 import salomon.core.data.DataEngine;
@@ -142,7 +145,7 @@ public class SQLConsole extends JFrame
 		}
 		_logger.info(buffer);
 		JTable table = new JTable(data, columnNames);
-		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);		
+		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		return table;
 	}
 
