@@ -22,6 +22,7 @@ import javax.swing.JToolBar;
 
 import org.apache.log4j.Logger;
 
+import salomon.Starter;
 import salomon.controller.gui.ControllerFrame;
 import salomon.controller.gui.ControllerPanel;
 import salomon.controller.gui.ProjectEditionManager;
@@ -46,6 +47,8 @@ import salomon.core.data.DBManager;
 public final class LocalController implements IController
 {
 
+	private ActionManager _actionManager;
+
 	private ControllerPanel _contentPane;
 
 	private LocalGUIMenu _guiMenu;
@@ -54,13 +57,11 @@ public final class LocalController implements IController
 
 	private JMenuBar _menuBar;
 
-	private JToolBar _toolBar;
-
-	private ActionManager _actionManager;
+	private ProjectEditionManager _projectEditionManager;
 
 	private TaskEditionManager _taskEditionManager;
 
-	private ProjectEditionManager _projectEditionManager;
+	private JToolBar _toolBar;
 
 	/*
 	 * (non-Javadoc)
@@ -92,8 +93,11 @@ public final class LocalController implements IController
 		frame.setControllerPanel(_contentPane);
 		_taskEditionManager.setParent(frame);
 		_projectEditionManager.setParent(frame);
+		_taskEditionManager.setActionManager(_actionManager);
 		_projectEditionManager.setTaskEditionManager(_taskEditionManager);
-	    Utils.setParent(getJContentPane());
+		// loading plugins
+		_taskEditionManager.refresh();
+		Utils.setParent(getJContentPane());
 		SplashScreen.hide();
 		frame.setVisible(true);
 	}
@@ -144,8 +148,10 @@ public final class LocalController implements IController
 
 	}
 
-	private final static class LocalGUIMenu
+	private final class LocalGUIMenu
 	{
+
+		private ActionManager _actionManager;
 
 		private JButton _btnNew;
 
@@ -171,8 +177,6 @@ public final class LocalController implements IController
 
 		private String _resourcesDir;
 
-		private ActionManager _actionManager;
-
 		public LocalGUIMenu(ActionManager actionManager)
 		{
 			_actionManager = actionManager;
@@ -182,7 +186,10 @@ public final class LocalController implements IController
 		JButton getBtnNew()
 		{
 			if (_btnNew == null) {
-				_btnNew = createProjectButton(Resources.getString("ICO_PROJECT_NEW")); //$NON-NLS-1$
+				_btnNew = new JButton(_actionManager.getNewProjectAction());
+				_btnNew.setIcon(new ImageIcon(_resourcesDir
+						+ Config.FILE_SEPARATOR
+						+ Resources.getString("ICO_PROJECT_NEW"))); //$NON-NLS-1$
 			}
 			return _btnNew;
 		}
@@ -190,7 +197,10 @@ public final class LocalController implements IController
 		JButton getBtnOpen()
 		{
 			if (_btnOpen == null) {
-				_btnOpen = createProjectButton(Resources.getString("ICO_PROJECT_OPEN")); //$NON-NLS-1$
+				_btnOpen = new JButton(_actionManager.getOpenProjectAction());
+				_btnOpen.setIcon(new ImageIcon(_resourcesDir
+						+ Config.FILE_SEPARATOR
+						+ Resources.getString("ICO_PROJECT_OPEN"))); //$NON-NLS-1$                
 			}
 			return _btnOpen;
 		}
@@ -198,7 +208,10 @@ public final class LocalController implements IController
 		JButton getBtnSave()
 		{
 			if (_btnSave == null) {
-				_btnSave = createProjectButton(Resources.getString("ICO_PROJECT_SAVE")); //$NON-NLS-1$
+				_btnSave = new JButton(_actionManager.getSaveProjectAction());
+				_btnSave.setIcon(new ImageIcon(_resourcesDir
+						+ Config.FILE_SEPARATOR
+						+ Resources.getString("ICO_PROJECT_SAVE"))); //$NON-NLS-1$
 			}
 			return _btnSave;
 		}
@@ -226,7 +239,7 @@ public final class LocalController implements IController
 				_itmExit.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e)
 					{
-						//exit();
+						Starter.exit();
 					}
 				});
 			}
@@ -301,15 +314,6 @@ public final class LocalController implements IController
 		void showSQLConsole()
 		{
 			new SQLConsole(false);
-		}
-
-		private JButton createProjectButton(String text)
-		{
-			JButton button = new JButton();
-			button.setIcon(new ImageIcon(_resourcesDir + Config.FILE_SEPARATOR
-					+ text));
-			//      TODO:button.addActionListener(_projectListener);
-			return button;
 		}
 
 		private JPanel getOfficialAbout()
@@ -411,6 +415,7 @@ public final class LocalController implements IController
 	 * @see salomon.controller.IController#exit()
 	 */
 	public void exit()
-	{		
+	{
+		
 	}
 }

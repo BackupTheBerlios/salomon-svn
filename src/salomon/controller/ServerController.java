@@ -184,7 +184,8 @@ public final class ServerController implements IController
 		_taskEditionManager.setParent(frame);
 		_projectEditionManager.setParent(frame);
 		_remoteControllerPanel.setParent(frame);
-
+		
+        _taskEditionManager.setActionManager(_actionManager);
 		_projectEditionManager.setTaskEditionManager(_taskEditionManager);
         Utils.setParent(getJContentPane());
 		SplashScreen.hide();
@@ -277,29 +278,32 @@ public final class ServerController implements IController
 			_resourcesDir = Config.getString("RESOURCES_DIR");
 		}
 
-		JButton getBtnNew()
-		{
-			if (_btnNew == null) {
-				_btnNew = createProjectButton(Resources.getString("ICO_PROJECT_NEW")); //$NON-NLS-1$
-			}
-			return _btnNew;
-		}
+        JButton getBtnNew()
+        {
+            if (_btnNew == null) {
+                _btnNew = new JButton(_actionManager.getNewProjectAction());
+                _btnNew.setIcon(new ImageIcon(_resourcesDir + Config.FILE_SEPARATOR + Resources.getString("ICO_PROJECT_NEW"))); //$NON-NLS-1$
+            }
+            return _btnNew;
+        }
 
-		JButton getBtnOpen()
-		{
-			if (_btnOpen == null) {
-				_btnOpen = createProjectButton(Resources.getString("ICO_PROJECT_OPEN")); //$NON-NLS-1$
-			}
-			return _btnOpen;
-		}
+        JButton getBtnOpen()
+        {
+            if (_btnOpen == null) {
+                _btnOpen = new JButton(_actionManager.getOpenProjectAction());
+                _btnOpen.setIcon(new ImageIcon(_resourcesDir + Config.FILE_SEPARATOR + Resources.getString("ICO_PROJECT_OPEN"))); //$NON-NLS-1$                
+            }
+            return _btnOpen;
+        }
 
-		JButton getBtnSave()
-		{
-			if (_btnSave == null) {
-				_btnSave = createProjectButton(Resources.getString("ICO_PROJECT_SAVE")); //$NON-NLS-1$
-			}
-			return _btnSave;
-		}
+        JButton getBtnSave()
+        {
+            if (_btnSave == null) {
+                _btnSave = new JButton(_actionManager.getSaveProjectAction());                
+                _btnSave.setIcon(new ImageIcon(_resourcesDir + Config.FILE_SEPARATOR + Resources.getString("ICO_PROJECT_SAVE"))); //$NON-NLS-1$
+            }
+            return _btnSave;
+        }
 
 		JMenuItem getItmAbout()
 		{
@@ -399,15 +403,6 @@ public final class ServerController implements IController
 		void showSQLConsole()
 		{
 			new SQLConsole(false);
-		}
-
-		private JButton createProjectButton(String text)
-		{
-			JButton button = new JButton();
-			button.setIcon(new ImageIcon(_resourcesDir + Config.FILE_SEPARATOR
-					+ text));
-			//      TODO:button.addActionListener(_projectListener);
-			return button;
 		}
 
 		private JPanel getOfficialAbout()
