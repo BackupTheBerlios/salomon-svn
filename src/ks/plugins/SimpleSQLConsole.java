@@ -15,7 +15,7 @@ import java.sql.SQLException;
 import javax.swing.*;
 import org.apache.log4j.Logger;
 import ks.SQLConsole;
-import ks.data.DBConnector;
+import ks.core.DBManager;
 import ks.data.DataEngine;
 import ks.data.Environment;
 
@@ -52,9 +52,9 @@ public class SimpleSQLConsole extends AbstractPlugin
 		String query = (String)settings.get("query");
 		Object queryResult = null;
 		_result = new Result();
-		DBConnector connector = null;
+		DBManager connector = null;
 		try {
-			connector = DBConnector.getInstance();
+			connector = DBManager.getInstance();
 			connector.executeQuery(query);
 			ResultSet resultSet = connector.getResultSet();
 			if (resultSet == null) {
