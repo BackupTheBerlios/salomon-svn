@@ -67,7 +67,7 @@ public final class RemoteProjectManager extends UnicastRemoteObject
 	public IRemoteProject createProject() throws RemoteException,
 			PlatformException
 	{
-		IProject newProject = _projectManager.ceateProject();
+		IProject newProject = _projectManager.createProject();
 
 		return getRemoteProject(newProject);
 	}

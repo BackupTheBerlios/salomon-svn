@@ -35,6 +35,20 @@ public class ProjectManagerTest extends TestCase
 {
 	private ProjectManager _projectManager;
 
+	public void testCreateProject() throws Exception 
+	{
+		LOGGER.info("ProjectManagerTest.testCreateProject()");
+		boolean success = false;
+		try {
+			_projectManager.createProject();
+			success = true;
+		} catch (Exception e) {
+			LOGGER.fatal("", e);
+            throw e ;
+		}
+		assertTrue(success);
+	}
+	
 	public void testGetProject() throws Exception 
 	{
 		LOGGER.info("ProjectManagerTest.testGetProject()");

@@ -71,9 +71,9 @@ public final class ProjectManagerProxy implements IProjectManager
 	}
 
 	/**
-	 * @see salomon.engine.project.IProjectManager#ceateProject()
+	 * @see salomon.engine.project.IProjectManager#createProject()
 	 */
-	public IProject ceateProject() throws PlatformException
+	public IProject createProject() throws PlatformException
 	{
 		IProject project = null;
 		try {

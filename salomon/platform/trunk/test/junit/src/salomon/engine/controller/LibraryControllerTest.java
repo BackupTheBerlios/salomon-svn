@@ -59,7 +59,7 @@ public class LibraryControllerTest extends TestCase
 		} catch (PlatformException e) {
 			LOGGER.fatal("Exception was thrown!", e);
 		}
-		IProject project = projectManager.ceateProject();
+		IProject project = projectManager.createProject();
 		project.setName("testLib");
 		project.setInfo("Created from library controller");
 		ITaskManager taskManager = controller.getManagerEngine().getTasksManager(); 

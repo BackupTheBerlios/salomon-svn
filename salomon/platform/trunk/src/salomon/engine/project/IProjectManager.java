@@ -38,7 +38,7 @@ public interface IProjectManager
 	/**
 	 * Creates new, empty project
 	 */
-	IProject ceateProject() throws PlatformException;
+	IProject createProject() throws PlatformException;
 
 	/**
 	 * Returns collection of available projects.

@@ -80,9 +80,9 @@ public final class ProjectManager implements IProjectManager
 	}
 
 	/**
-	 * @see salomon.engine.project.IProjectManager#ceateProject()
+	 * @see salomon.engine.project.IProjectManager#createProject()
 	 */
-	public IProject ceateProject() throws PlatformException
+	public IProject createProject() throws PlatformException
 	{
 		// clearing old tasks
 		// TODO: add support for Solution
@@ -112,7 +112,7 @@ public final class ProjectManager implements IProjectManager
 	 */
 	public IProject getProject(int projectID) throws PlatformException
 	{
-		IProject project = this.ceateProject();
+		IProject project = this.createProject();
 		// loading plugin information
 		// building query
 		SQLSelect select = new SQLSelect();

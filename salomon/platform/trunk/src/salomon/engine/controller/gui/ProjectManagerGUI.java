@@ -77,7 +77,7 @@ public final class ProjectManagerGUI
 		IProjectManager projectManager;
 		try {
 			projectManager = _managerEngine.getProjectManager();
-			IProject project = projectManager.ceateProject();
+			IProject project = projectManager.createProject();
 			setProjectProperties(project);
 			projectManager.addProject(project);
 			_parent.refreshGui();

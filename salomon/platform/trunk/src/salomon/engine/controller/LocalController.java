@@ -110,7 +110,7 @@ public final class LocalController implements IController
 		// FIXME add support for Solution
 		IProject project;
 		try {
-			project = _managerEngine.getProjectManager().ceateProject();
+			project = _managerEngine.getProjectManager().createProject();
 			_managerEngine.getProjectManager().addProject(project);
 		} catch (PlatformException e) {
 			LOGGER.fatal("", e);

@@ -44,7 +44,7 @@ public interface IRemoteProjectManager extends Remote
 			RemoteException;
 
 	/**
-	 * @see salomon.engine.project.IProjectManager#ceateProject()
+	 * @see salomon.engine.project.IProjectManager#createProject()
 	 * 
 	 * @throws PlatformException
 	 * @throws RemoteException

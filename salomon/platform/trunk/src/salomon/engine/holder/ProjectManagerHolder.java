@@ -26,16 +26,16 @@ import salomon.engine.project.IProjectManager;
 import salomon.platform.exception.PlatformException;
 
 /**
- * Holds projectManager of current client.
- * It is used by ManagerEngineHolder to switch between connected clients.
- *  
+ * Holds projectManager of current client. It is used by ManagerEngineHolder to
+ * switch between connected clients.
+ * 
  */
 final class ProjectManagerHolder implements IProjectManager
 {
 	private IProjectManager _currentProjectManager;
 
 	/**
-	 *  
+	 * 
 	 */
 	ProjectManagerHolder(IProjectManager projectManager)
 	{
@@ -51,19 +51,19 @@ final class ProjectManagerHolder implements IProjectManager
 	}
 
 	/**
-	 * @see IProjectManager#ceateProject()
-	 */
-	public IProject ceateProject() throws PlatformException
-	{
-        return _currentProjectManager.ceateProject();
-	}
-
-	/**
-	 * @see IProjectManager#ceateProject()
+	 * @see IProjectManager#createProject()
 	 */
 	public IProject createProject() throws PlatformException
 	{
-        return _currentProjectManager.ceateProject();
+		return _currentProjectManager.createProject();
+	}
+
+	/**
+	 * @see salomon.engine.project.IProjectManager#getCurrentProject()
+	 */
+	public IProject getCurrentProject() throws PlatformException
+	{
+		return _currentProjectManager.getCurrentProject();
 	}
 
 	/**
@@ -79,7 +79,7 @@ final class ProjectManagerHolder implements IProjectManager
 	 */
 	public IProject[] getProjects() throws PlatformException
 	{
-        return _currentProjectManager.getProjects();
+		return _currentProjectManager.getProjects();
 	}
 
 	/**
@@ -87,24 +87,16 @@ final class ProjectManagerHolder implements IProjectManager
 	 */
 	public void saveProject() throws PlatformException
 	{
-        _currentProjectManager.saveProject();
+		_currentProjectManager.saveProject();
 	}
-    
-    /**
-     * @pre currentProjectManager != null
-     * @post $none
-     */
-    void setCurrent(IProjectManager currentProjectManager)
-    {
-    	_currentProjectManager = currentProjectManager;
-    }
 
 	/**
-	 * @see salomon.engine.project.IProjectManager#getCurrentProject()
+	 * @pre currentProjectManager != null
+	 * @post $none
 	 */
-	public IProject getCurrentProject() throws PlatformException
+	void setCurrent(IProjectManager currentProjectManager)
 	{
-		return _currentProjectManager.getCurrentProject();
+		_currentProjectManager = currentProjectManager;
 	}
 
 }
