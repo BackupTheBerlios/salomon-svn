@@ -5,13 +5,15 @@
 
 package pl.edu.agh.icsr.salomon.plugin.simpleconsole;
 
+import java.io.Serializable;
+
 import salomon.plugin.ISettings;
 
 /**
  * @author nico
  *  
  */
-public class SCSettings implements ISettings
+public final class SCSettings implements ISettings, Serializable
 {
 	private String _query = null;
 
