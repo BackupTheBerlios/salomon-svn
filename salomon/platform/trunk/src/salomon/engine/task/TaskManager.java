@@ -22,12 +22,14 @@
 package salomon.engine.task;
 
 import java.sql.SQLException;
+import java.sql.Time;
 import java.util.Collection;
 import java.util.LinkedList;
 
 import org.apache.log4j.Logger;
 
 import salomon.engine.database.DBManager;
+import salomon.engine.database.queries.SQLUpdate;
 import salomon.engine.project.ProjectManager;
 
 import salomon.platform.exception.PlatformException;
@@ -55,11 +57,11 @@ public final class TaskManager implements ITaskManager
 
 	private TaskEngine _taskEngine;
 
-	private LinkedList<Task> _tasks;
+	private LinkedList<ITask> _tasks;
 
 	public TaskManager()
 	{
-		_tasks = new LinkedList<Task>();
+		_tasks = new LinkedList<ITask>();
 		_dataEngine = new DataEngine();
 		_taskEngine = new TaskEngine();
 		// TODO: where it should be created?
@@ -68,7 +70,7 @@ public final class TaskManager implements ITaskManager
 		_environment.put("CURRENT_DATA_SET", "all_data");
 	}
 
-	public void addAllTasks(Collection<Task> tasks)
+	public void addAllTasks(Collection<ITask> tasks)
 	{
 		_tasks.addAll(tasks);
 	}
@@ -78,8 +80,7 @@ public final class TaskManager implements ITaskManager
 	 */
 	public void addTask(ITask task)
 	{
-		throw new UnsupportedOperationException(
-				"Method addTask() not implemented yet!");
+		_tasks.add(task);
 	}
 
 	public void clearTaskList()
@@ -87,17 +88,16 @@ public final class TaskManager implements ITaskManager
 		_tasks.clear();
 	}
 
-	public ITask createTask()
+	public ITask createTask() throws PlatformException
 	{
 		Task newTask = new Task();
-		_tasks.add(newTask);
-
+        newTask.setProjectID(_projectManger.getCurrentProject().getProjectID());
 		return newTask;
 	}
 
 	public ITask getCurrentTask()
 	{
-        throw new UnsupportedOperationException(
+		throw new UnsupportedOperationException(
 				"Method getCurrentTask() not implemented yet!");
 	} // end getCurrentTask
 
@@ -106,7 +106,8 @@ public final class TaskManager implements ITaskManager
 	 */
 	public ITaskRunner getRunner() throws PlatformException
 	{
-		throw new UnsupportedOperationException("Method getRunner() not implemented yet!");
+		throw new UnsupportedOperationException(
+				"Method getRunner() not implemented yet!");
 	}
 
 	public ITask[] getTasks()
@@ -128,6 +129,31 @@ public final class TaskManager implements ITaskManager
 		new TaskEngine().start();
 	}
 
+    /**
+     * Updates task connected to project. Method can change only status and
+     * result of task. Other columns will be unaffected. If one want change
+     * other settings, saveProject() method should be used. The Project object
+     * is not passed to this method, so method allows to save only one task and
+     * may be called after every task processing. 
+     * 
+     * @throws SQLException
+     */
+    
+    public void updateTask(ITask task) throws PlatformException
+    {
+        SQLUpdate update = new SQLUpdate(Task.TABLE_NAME);
+        update.addValue("plugin_result", task.getResult().resultToString());
+        update.addValue("status", task.getStatus());
+        update.addValue("stop_time", new Time(System.currentTimeMillis()));
+        update.addCondition("taks_id =", task.getTaskId());
+        try {
+        	DBManager.getInstance().update(update);
+        } catch (Exception e) {
+        	LOGGER.fatal("", e);
+            throw new PlatformException(e.getLocalizedMessage());
+        }
+    }
+    
 	private final class TaskEngine extends Thread
 	{
 		public void run()
@@ -137,20 +163,13 @@ public final class TaskManager implements ITaskManager
 			 * task.getPlugin(); Settings settings = task.getSettings();
 			 * plugin.doJob(_dataEngine, _environment, settings);
 			 */
-			int projectId = -1;
-            try {
-            	_projectManger.getCurrentProject().getProjectID();
-            } catch (PlatformException e) {
-                LOGGER.fatal("", e);
-                //TODO: Create an exception
-            	return;
-            }
-            for (Task task : _tasks) {
-				ISettings settings = task.getSettings();
-				task.setStatus(Task.REALIZATION);
+			
+			for (ITask task : _tasks) {
 				try {
+					ISettings settings = task.getSettings();
+					task.setStatus(Task.REALIZATION);
 					// changing status
-					_projectManger.updateTask(task, projectId);
+					updateTask(task);
 					try {
 						DBManager.getInstance().commit();
 					} catch (ClassNotFoundException e1) {
@@ -170,7 +189,7 @@ public final class TaskManager implements ITaskManager
 					// saving result of its execution
 					//
 					task.setResult(result);
-					_projectManger.updateTask(task, projectId);
+                    
 					try {
 						DBManager.getInstance().commit();
 					} catch (ClassNotFoundException e1) {
@@ -183,11 +202,11 @@ public final class TaskManager implements ITaskManager
 					// exception is caught and shoul be handled here
 					//
 				} catch (Exception e) {
-					LOGGER.fatal("TASK PROCESSING ERROR", e);
-					task.setStatus(Task.EXCEPTION);
+					LOGGER.fatal("TASK PROCESSING ERROR", e);					
 					try {
-						_projectManger.updateTask(task, projectId);
-					} catch (SQLException e1) {
+                        task.setStatus(Task.EXCEPTION);
+						updateTask(task);
+					} catch (Exception e1) {
 						LOGGER.fatal("", e1);
 					}
 					try {
@@ -221,7 +240,7 @@ public final class TaskManager implements ITaskManager
 					LOGGER.fatal("", e);
 				}
 			} // while (currentTask != null);
-            
+
 			return currentTask;
 		}
 	}

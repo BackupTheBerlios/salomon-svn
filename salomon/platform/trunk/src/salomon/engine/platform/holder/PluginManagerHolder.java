@@ -26,7 +26,6 @@ import salomon.engine.plugin.IPluginManager;
 
 import salomon.platform.exception.PlatformException;
 
-import salomon.plugin.Description;
 import salomon.plugin.IPlugin;
 
 /**
@@ -51,19 +50,19 @@ final class PluginManagerHolder implements IPluginManager
 	}
 
 	/**
-	 * @see IPluginManager#removePlugin(salomon.plugin.Description)
+	 * @see IPluginManager#removePlugin(IPlugin)
 	 */
-	public boolean removePlugin(Description description) throws PlatformException
+	public boolean removePlugin(IPlugin description) throws PlatformException
 	{
 		return _currentPluginManager.removePlugin(description);
 	}
 
 	/**
-	 * @see IPluginManager#savePlugin(Description)
+	 * @see IPluginManager#savePlugin(IPlugin)
 	 */
-	public boolean savePlugin(Description description) throws PlatformException
+	public boolean savePlugin(IPlugin plugin) throws PlatformException
 	{
-        return _currentPluginManager.savePlugin(description);
+        return _currentPluginManager.savePlugin(plugin);
 	}
 
     /**
@@ -73,6 +72,22 @@ final class PluginManagerHolder implements IPluginManager
 	void setCurrent(IPluginManager pluginManager)
 	{
 		_currentPluginManager = pluginManager;
+	}
+
+	/**
+	 * @see salomon.engine.plugin.IPluginManager#createPlugin()
+	 */
+	public IPlugin createPlugin()
+	{
+		return _currentPluginManager.createPlugin();
+	}
+
+	/**
+	 * @see salomon.engine.plugin.IPluginManager#addPlugin(salomon.plugin.IPlugin)
+	 */
+	public void addPlugin(IPlugin plugin)
+	{
+		_currentPluginManager.addPlugin(plugin);
 	}
 
 	//	/* (non-Javadoc)

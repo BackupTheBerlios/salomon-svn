@@ -26,6 +26,7 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -46,10 +47,15 @@ import salomon.engine.Messages;
 import salomon.engine.Resources;
 import salomon.engine.SQLConsole;
 import salomon.engine.Starter;
+import salomon.engine.controller.gui.ControllerFrame;
 import salomon.engine.controller.gui.ControllerPanel;
 import salomon.engine.controller.gui.ProjectEditionManager;
+import salomon.engine.controller.gui.SplashScreen;
 import salomon.engine.controller.gui.TaskEditionManager;
 import salomon.engine.controller.gui.action.ActionManager;
+import salomon.engine.database.DBManager;
+
+import salomon.util.gui.Utils;
 
 import salomon.engine.platform.IManagerEngine;
 
@@ -89,39 +95,37 @@ public final class LocalController implements IController
 	 */
 	public void start(IManagerEngine managerEngine)
 	{
-        throw new UnsupportedOperationException(
-				"Method start() not implemented yet!");
-
-// SplashScreen.show();
-//		try {
-//			DBManager.getInstance();
-//		} catch (SQLException e) {
-//			LOGGER.fatal("", e);
-//		} catch (ClassNotFoundException e) {
-//			LOGGER.error("", e);
-//		}
-//		_managerEngine = managerEngine;
-//		// Creates a new empty project
-////FIXME		_managerEngine.getProjectManager().ceateProject();
-//		_projectEditionManager = new ProjectEditionManager(_managerEngine);
-//		_taskEditionManager = new TaskEditionManager(_managerEngine);
-//		_actionManager = new ActionManager(_projectEditionManager,
-//				_taskEditionManager);
-//		_guiMenu = new LocalGUIMenu(_actionManager);
-//		ControllerFrame frame = new ControllerFrame();
-//		frame.setContentPane(getJContentPane());
-//		frame.setJMenuBar(getJMenuBar());
-//		frame.setJToolBar(getToolBar());
-//		frame.setControllerPanel(_contentPane);
-//		_taskEditionManager.setParent(frame);
-//		_projectEditionManager.setParent(frame);
-//		_taskEditionManager.setActionManager(_actionManager);
-//		_projectEditionManager.setTaskEditionManager(_taskEditionManager);
-//		// loading plugins
-//		_taskEditionManager.refresh();
-//		Utils.setParent(getJContentPane());
-//		SplashScreen.hide();
-//		frame.setVisible(true);
+        
+		try {
+			DBManager.getInstance();
+		} catch (SQLException e) {
+			LOGGER.fatal("", e);
+		} catch (ClassNotFoundException e) {
+			LOGGER.error("", e);
+		}
+		_managerEngine = managerEngine;
+		// Creates a new empty project
+//FIXME	add support for Solution	
+        //_managerEngine.getProjectManager().ceateProject();
+		_projectEditionManager = new ProjectEditionManager(_managerEngine);
+		_taskEditionManager = new TaskEditionManager(_managerEngine);
+		_actionManager = new ActionManager(_projectEditionManager,
+				_taskEditionManager);
+		_guiMenu = new LocalGUIMenu(_actionManager);
+		ControllerFrame frame = new ControllerFrame();
+		frame.setContentPane(getJContentPane());
+		frame.setJMenuBar(getJMenuBar());
+		frame.setJToolBar(getToolBar());
+		frame.setControllerPanel(_contentPane);
+		_taskEditionManager.setParent(frame);
+		_projectEditionManager.setParent(frame);
+		_taskEditionManager.setActionManager(_actionManager);
+		_projectEditionManager.setTaskEditionManager(_taskEditionManager);
+		// loading plugins
+		_taskEditionManager.refresh();
+		Utils.setParent(getJContentPane());
+		SplashScreen.hide();
+		frame.setVisible(true);
 	}
 
 	private JComponent getJContentPane()

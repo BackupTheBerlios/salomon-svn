@@ -23,6 +23,7 @@ package salomon.engine.controller.gui;
 
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -37,6 +38,9 @@ import org.apache.log4j.Logger;
 
 import salomon.engine.database.DBManager;
 import salomon.engine.project.IProject;
+import salomon.engine.project.IProjectManager;
+import salomon.engine.project.ProjectManager;
+import salomon.engine.task.ITask;
 import salomon.engine.task.ITaskManager;
 
 import salomon.util.gui.Utils;
@@ -48,8 +52,8 @@ import salomon.plugin.ISettings;
 import salomon.engine.platform.IManagerEngine;
 
 /**
- * Class used to manage with projects editing.  
- *  
+ * Class used to manage with projects editing.
+ * 
  */
 public final class ProjectEditionManager
 {
@@ -74,14 +78,17 @@ public final class ProjectEditionManager
 
 	public void newProject()
 	{
-		//FIXME
-		throw new UnsupportedOperationException(
-				"Method newProject() not implemented yet!");
-		//		IProjectManager projectManager = _managerEngine.getProjectManager();
-		//		projectManager.ceateProject();
-		//IProject project = projectManager.getCurrentProject();
-		//		setProjectProperties(project);
-		//		_parent.refreshGui();
+		IProjectManager projectManager;
+		try {
+			projectManager = _managerEngine.getProjectManager();
+			IProject project = projectManager.ceateProject();
+			setProjectProperties(project);
+			projectManager.addProject(project);
+			_parent.refreshGui();
+		} catch (PlatformException e) {
+			LOGGER.fatal("", e);
+			Utils.showErrorMessage("Cannot create project");
+		}
 	}
 
 	public void openProject()
@@ -100,12 +107,88 @@ public final class ProjectEditionManager
 
 	public void saveProject()
 	{
-		//FIXME
-		//		IProject project = _managerEngine.getProjectManager().getCurrentProject();
-		//		if (project.getName() == null) {
-		//			setProjectProperties(project);
-		//		}
-		//		saveTaskList(_taskEditionManager.getTasks());
+		try {
+			IProject project = _managerEngine.getProjectManager().getCurrentProject();
+
+			// setting project name if neccessary
+			// TODO: remove this checking, make user to enter project name while
+			// creating it
+			if (project.getName() == null) {
+				setProjectProperties(project);
+			}
+
+			List<TaskGUI> taskList = _taskEditionManager.getTasks();
+			LOGGER.info("taskList = " + taskList);
+			//
+			// task list cannot be empty
+			//
+			if (taskList.isEmpty()) {
+				Utils.showErrorMessage("WRN_NO_TASK_TO_SAVE");
+				return;
+			}
+			//
+			// checking if all tasks have settings set
+			// if not - question to user, if he agrees
+			// default settings will be set and project will be saved
+			//
+			List<TaskGUI> incorrectTasks = new LinkedList<TaskGUI>();
+			for (TaskGUI task : taskList) {
+				if (task.getSettings() == null) {
+					incorrectTasks.add(task);
+				}
+			}
+			if (!incorrectTasks.isEmpty()) {
+				String message = "There are tasks with settings not set:\n";
+				for (TaskGUI task : incorrectTasks) {
+					message += task.getName() + "\n";
+				}
+				message += "Do you want to use default settings?";
+				if (Utils.showWarningMessage(message)) {
+					// getting default settings
+					LOGGER.debug("getting default settings");
+					for (TaskGUI task : incorrectTasks) {
+						ISettings defaultSettings = task.getPlugin().getSettingComponent().getDefaultSettings();
+						task.setSettings(defaultSettings);
+					}
+				} else {
+					return;
+				}
+			}
+			//
+			// saving project
+			//
+
+			//
+			// removing old tasks
+			//
+			ITaskManager taskManager;
+			try {
+				taskManager = _managerEngine.getTasksManager();
+				taskManager.clearTaskList();
+				for (TaskGUI taskGUI : taskList) {
+					ITask task = taskManager.createTask();
+					taskGUI.initialize(task);
+					taskManager.addTask(task);
+				}
+				// saving project
+				_managerEngine.getProjectManager().saveProject();
+				DBManager.getInstance().commit();
+				LOGGER.info("Transaction commited");
+				Utils.showInfoMessage("Project saved successfully");
+			} catch (Exception e1) {
+				LOGGER.fatal("", e1);
+				Utils.showErrorMessage("Could not save project.");
+				try {
+					DBManager.getInstance().rollback();
+				} catch (Exception sqlEx) {
+					LOGGER.fatal("", sqlEx);
+					Utils.showErrorMessage("Could not rollback transaction.");
+				}
+			}
+		} catch (PlatformException e) {
+			LOGGER.fatal("", e);
+			Utils.showErrorMessage("ERR_CANNOT_SAVE_PROJECT");
+		}
 	}
 
 	/**
@@ -138,14 +221,14 @@ public final class ProjectEditionManager
 			String info = project.getInfo();
 			_txtProjectName.setText(name == null ? "" : name);
 			_txtProjectInfo.setText(info == null ? "" : info);
-			//TODO:
+			// TODO:
 			JOptionPane.showMessageDialog(_parent, _pnlProjectProperties,
 					"Enter project properties", JOptionPane.INFORMATION_MESSAGE);
 			project.setName(_txtProjectName.getText());
 			project.setInfo(_txtProjectInfo.getText());
 		} catch (PlatformException e) {
 			LOGGER.error("", e);
-			//FIXME   
+			// FIXME
 		}
 	}
 
@@ -156,91 +239,20 @@ public final class ProjectEditionManager
 
 	private int chooseProject()
 	{
-		//FIXME
-		throw new UnsupportedOperationException(
-				"Method chooseProject() not implemented yet!");
-		//		int projectID = 0;
-		//		
-		//		try {
-		//			Collection projects = _managerEngine.getProjectManager().getProjects();
-		//			JTable projectTable = null;
-		//			projectTable = Utils.createResultTable(projects);
-		//			projectID = showProjectList(projectTable);
-		//		} catch (Exception e) {
-		//			LOGGER.fatal("", e);
-		//			Utils.showErrorMessage("Cannot load project list.");
-		//		}
-		//
-		//		return projectID;
-	}
+		int projectID = 0;
 
-	private void saveTaskList(List<TaskGUI> taskList)
-	{
-		LOGGER.info("taskList = " + taskList);
-		//
-		// task list cannot be empty
-		//
-		if (taskList.isEmpty()) {
-			Utils.showErrorMessage("There is no tasks to save");
-			return;
-		}
-		//
-		// checking if all tasks have settings set
-		// if not - question to user, if he agrees
-		// default settings will be set and project will be saved
-		//
-		List<TaskGUI> incorrectTasks = new LinkedList<TaskGUI>();
-		for (TaskGUI task : taskList) {
-			if (task.getSettings() == null) {
-				incorrectTasks.add(task);
-			}
-		}
-		if (!incorrectTasks.isEmpty()) {
-			String message = "There are tasks with settings not set:\n";
-            for (TaskGUI task : incorrectTasks) {
-				message += task.getName() + "\n";
-			}
-			message += "Do you want to use default settings?";
-			if (Utils.showWarningMessage(message)) {
-				// getting default settings
-				LOGGER.debug("getting default settings");
-				for (TaskGUI task : incorrectTasks) {
-					ISettings defaultSettings = task.getPlugin().getSettingComponent().getDefaultSettings();
-					task.setSettings(defaultSettings);
-				}
-			} else {
-				return;
-			}
-		}
-		//
-		// saving project
-		//
 		try {
-			//
-			// removing old tasks
-			//
-			ITaskManager taskManager = _managerEngine.getTasksManager();
-
-			taskManager.clearTaskList();
-			for (TaskGUI taskGUI : taskList) {
-				taskGUI.save(taskManager.createTask());
-			}
-
-			// saving project
-			_managerEngine.getProjectManager().saveProject();
-			DBManager.getInstance().commit();
-			LOGGER.info("Transaction commited");
-			Utils.showInfoMessage("Project saved successfully");
-		} catch (Exception e1) {
-			LOGGER.fatal("", e1);
-			Utils.showErrorMessage("Could not save project.");
-			try {
-				DBManager.getInstance().rollback();
-			} catch (Exception sqlEx) {
-				LOGGER.fatal("", sqlEx);
-				Utils.showErrorMessage("Could not rollback transaction.");
-			}
+            //FIXME ugly but quick
+			Collection projects = ((ProjectManager)_managerEngine.getProjectManager()).getProjectList();
+			JTable projectTable = null;
+			projectTable = Utils.createResultTable(projects);
+			projectID = showProjectList(projectTable);
+		} catch (Exception e) {
+			LOGGER.fatal("", e);
+			Utils.showErrorMessage("Cannot load project list.");
 		}
+
+		return projectID;
 	}
 
 	private int showProjectList(JTable table)
@@ -261,7 +273,7 @@ public final class ProjectEditionManager
 				projectID = ((Integer) table.getValueAt(selectedRow, 0)).intValue();
 			}
 		}
-        
+
 		return projectID;
 	}
 

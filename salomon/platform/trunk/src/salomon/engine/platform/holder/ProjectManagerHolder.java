@@ -100,4 +100,12 @@ final class ProjectManagerHolder implements IProjectManager
     	_currentProjectManager = currentProjectManager;
     }
 
+	/**
+	 * @see salomon.engine.project.IProjectManager#getCurrentProject()
+	 */
+	public IProject getCurrentProject() throws PlatformException
+	{
+		return _currentProjectManager.getCurrentProject();
+	}
+
 }

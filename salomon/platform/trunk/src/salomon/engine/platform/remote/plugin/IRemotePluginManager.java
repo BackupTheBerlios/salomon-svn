@@ -26,7 +26,6 @@ import java.rmi.RemoteException;
 
 import salomon.platform.exception.PlatformException;
 
-import salomon.plugin.Description;
 import salomon.plugin.IPlugin;
 
 /**
@@ -48,12 +47,12 @@ public interface IRemotePluginManager extends Remote
 	IPlugin[] getPlugins() throws RemoteException, PlatformException;
 
     /**
-     * @see salomon.engine.plugin.IPluginManager#removePlugin(Description)
+     * @see salomon.engine.plugin.IPluginManager#removePlugin(IPlugin)
      */
-	boolean removePlugin(Description description) throws RemoteException, PlatformException;
+	boolean removePlugin(IPlugin plugin) throws RemoteException, PlatformException;
 
     /**
-     * @see salomon.engine.plugin.IPluginManager#savePlugin(Description)
+     * @see salomon.engine.plugin.IPluginManager#savePlugin(IPlugin)
      */
-	boolean savePlugin(Description description) throws RemoteException, PlatformException;
+	boolean savePlugin(IPlugin plugin) throws RemoteException, PlatformException;
 }

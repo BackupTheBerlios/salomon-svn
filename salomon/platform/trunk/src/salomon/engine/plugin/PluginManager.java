@@ -21,7 +21,6 @@
 
 package salomon.engine.plugin;
 
-import java.net.MalformedURLException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collection;
@@ -33,6 +32,8 @@ import salomon.engine.database.DBManager;
 import salomon.engine.database.queries.SQLDelete;
 import salomon.engine.database.queries.SQLSelect;
 
+import salomon.platform.exception.PlatformException;
+
 import salomon.plugin.Description;
 import salomon.plugin.IPlugin;
 
@@ -42,11 +43,11 @@ import salomon.plugin.IPlugin;
 public final class PluginManager implements IPluginManager
 {
 	/**
-	 * Returns collection of plugin descriptions
+	 * Returns collection of LocalPlugins
 	 * 
 	 * @return plugin descriptions
 	 */
-	public IPlugin[] getPlugins()
+	public LocalPlugin[] getPlugins() throws PlatformException
 	{
 		Collection<Description> result = new LinkedList<Description>();
 		SQLSelect select = new SQLSelect();
@@ -60,31 +61,38 @@ public final class PluginManager implements IPluginManager
 				desc.load(resultSet);
 				result.add(desc);
 			}
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			LOGGER.fatal("", e);
-		} catch (ClassNotFoundException e) {
-			LOGGER.fatal("", e);
-		} catch (MalformedURLException e) {
-			LOGGER.fatal("", e);
+			throw new PlatformException(e.getLocalizedMessage());
 		}
-		//FIXME
-		throw new UnsupportedOperationException(
-				"Method union() not implemented yet!");
+
+		LocalPlugin[] plugins = null;
+		if (!result.isEmpty()) {
+			plugins = new LocalPlugin[result.size()];
+			int i = 0;
+			for (Description desc : result) {
+                plugins[i] = this.createPlugin();
+				plugins[i].setDescription(desc);
+				i++;
+			}
+		}
+		return plugins;
 	}
 
 	/**
 	 * Removes from data base information about given plugin.
 	 * 
-	 * @param description description of plugin to remove
-	 * @return true if successfully removed, false otherwise 
+	 * @param plugin to remove
+	 * @return true if successfully removed, false otherwise
 	 */
-	public boolean removePlugin(Description description)
+	public boolean removePlugin(IPlugin plugin)
 	{
 		boolean result = false;
 		DBManager dbManager = null;
 		try {
 			// removing all related tasks
-			//TODO: change to Task.TABLE_NAME
+			Description description = plugin.getDescription();
+			// TODO: change to Task.TABLE_NAME
 			SQLDelete delete = new SQLDelete("tasks");
 			delete.addCondition("plugin_id =", description.getPluginID());
 
@@ -111,11 +119,11 @@ public final class PluginManager implements IPluginManager
 	 * 
 	 * @return true if successfully saved, false otherwise
 	 */
-	public boolean savePlugin(Description description)
+	public boolean savePlugin(IPlugin plugin)
 	{
 		boolean result = false;
 		try {
-			description.save();
+			plugin.getDescription().save();
 			DBManager.getInstance().commit();
 			result = true;
 			LOGGER.info("Plugin successfully saved.");
@@ -129,5 +137,21 @@ public final class PluginManager implements IPluginManager
 	}
 
 	private static final Logger LOGGER = Logger.getLogger(PluginLoader.class);
+
+	/**
+	 * @see salomon.engine.plugin.IPluginManager#createPlugin()
+	 */
+	public LocalPlugin createPlugin()
+	{
+		return new LocalPlugin();
+	}
+
+	/**
+	 * @see salomon.engine.plugin.IPluginManager#addPlugin(salomon.plugin.IPlugin)
+	 */
+	public void addPlugin(IPlugin plugin)
+	{
+		throw new UnsupportedOperationException("Method addPlugin() not implemented yet!");
+	}
 
 }

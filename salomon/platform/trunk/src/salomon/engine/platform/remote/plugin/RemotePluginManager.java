@@ -28,7 +28,6 @@ import salomon.engine.plugin.IPluginManager;
 
 import salomon.platform.exception.PlatformException;
 
-import salomon.plugin.Description;
 import salomon.plugin.IPlugin;
 
 /**
@@ -59,22 +58,22 @@ public final class RemotePluginManager extends UnicastRemoteObject
 	}
 
 	/**
-	 * @see IRemotePluginManager#removePlugin(salomon.plugin.Description)
+	 * @see IRemotePluginManager#removePlugin(IPlugin)
 	 */
-	public boolean removePlugin(Description description)
+	public boolean removePlugin(IPlugin plugin)
 			throws RemoteException, PlatformException
 	{
-		return _pluginManager.removePlugin(description);
+		return _pluginManager.removePlugin(plugin);
 	}
 
 	/**
 	 * @throws PlatformException
-	 * @see IRemotePluginManager#savePlugin(Description)
+	 * @see IRemotePluginManager#savePlugin(IPlugin)
 	 */
-	public boolean savePlugin(Description description) throws RemoteException,
+	public boolean savePlugin(IPlugin plugin) throws RemoteException,
 			PlatformException
 	{
-		return _pluginManager.savePlugin(description);
+		return _pluginManager.savePlugin(plugin);
 	}
     
 }

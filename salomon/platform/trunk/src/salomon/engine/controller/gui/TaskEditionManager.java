@@ -49,17 +49,20 @@ import org.apache.log4j.Logger;
 
 import salomon.engine.Messages;
 import salomon.engine.controller.gui.action.ActionManager;
-import salomon.engine.plugin.PluginLoader;
+import salomon.engine.plugin.LocalPlugin;
+import salomon.engine.task.ITask;
 
-import salomon.engine.platform.IManagerEngine;
+import salomon.util.gui.Utils;
+
+import salomon.platform.exception.PlatformException;
+
 import salomon.plugin.Description;
 import salomon.plugin.IPlugin;
 import salomon.plugin.IResultComponent;
 import salomon.plugin.ISettingComponent;
 import salomon.plugin.ISettings;
-import salomon.util.gui.Utils;
 
-import salomon.platform.exception.PlatformException;
+import salomon.engine.platform.IManagerEngine;
 
 /**
  * Class used to manage with tasks editing. It enables creating and configuring
@@ -129,19 +132,27 @@ public final class TaskEditionManager
 				url = new URL(_txtPluginLocation.getText());
 			} catch (MalformedURLException e) {
 				LOGGER.fatal("", e);
-				Utils.showErrorMessage(Messages.getString("ERR_CANNOT_SAVE_PLUGIN"));
+				Utils.showErrorMessage(Messages.getString("ERR_CANNOT_SAVE_PLUGIN_INVALID_URL"));
 				return;
 			}
-			Description desc = new Description();
+            IPlugin plugin = null;             
+            try {
+				plugin = _managerEngine.getPluginManager().createPlugin();
+			} catch (PlatformException e) {
+				LOGGER.fatal("", e);
+                Utils.showErrorMessage(Messages.getString("ERR_CANNOT_SAVE_PLUGIN"));
+                return;
+			}
+			Description desc = plugin.getDescription();
 			desc.setName(_txtPluginName.getText());
 			desc.setLocation(url);
 			desc.setInfo(_txtPluginInfo.getText());
 			boolean wasOk = false;
 			try {
-				wasOk = _managerEngine.getPluginManager().savePlugin(desc);
+				wasOk = _managerEngine.getPluginManager().savePlugin(plugin);
 			} catch (PlatformException e) {
 				LOGGER.error("", e);
-				//FIXME
+                Utils.showErrorMessage(Messages.getString("ERR_CANNOT_SAVE_PLUGIN"));
 			}
 			if (wasOk) {
 				refresh();
@@ -161,10 +172,8 @@ public final class TaskEditionManager
 			LocalPlugin localPlugin = (LocalPlugin) _pluginListModel.get(index);
 			IPlugin plugin;
 			try {
-				plugin = localPlugin.getPlugin();
-				// TODO: change it !!!
-				int pluginID = localPlugin.getPluginDescription().getPluginID();
-				plugin.getDescription().setPluginID(pluginID);
+                // loading plugin
+				plugin = localPlugin.load();
 				TaskGUI taskGUI = new TaskGUI();
 				taskGUI.setPlugin(plugin);
 				taskGUI.setName(getTaskName());
@@ -235,40 +244,50 @@ public final class TaskEditionManager
 	 */
 	public void refresh()
 	{
-		//FIXME
-
-		throw new UnsupportedOperationException(
-				"Method refresh() not implemented yet!");
-		//		LOGGER.debug("reloading plugins");
-		//		_pluginListModel.removeAllElements();
-		//		Collection plugins = _managerEngine.getPluginManager().getPlugins();
-		//		for (Iterator iter = plugins.iterator(); iter.hasNext();) {
-		//			LocalPlugin localPlugin = new LocalPlugin((Description) iter.next());
-		//			LOGGER.debug("adding plugin:" + localPlugin);
-		//			LOGGER.debug("description:" + localPlugin.getPluginDescription());
-		//			_pluginListModel.addElement(localPlugin);
-		//		}
-		//		LOGGER.debug("reloading tasks");
-		//		_taskListModel.removeAllElements();
-		//		ITask[] tasks = _managerEngine.getTasksManager().getTasks();
-		//        for (ITask task : tasks) {
-		//            LOGGER.debug("adding task");
-		//            _taskListModel.addElement(new TaskGUI(task));   
-		//        }
+		LOGGER.debug("reloading plugins");
+		_pluginListModel.removeAllElements();
+        
+		IPlugin[] plugins = null;
+		try {            
+			plugins = _managerEngine.getPluginManager().getPlugins();
+		} catch (PlatformException e) {
+			LOGGER.fatal("", e);
+            Utils.showErrorMessage("Cannot load plugin list");
+            return;
+		}
+		for (IPlugin plugin : plugins) {
+			LOGGER.debug("adding plugin:" + plugin);
+			LOGGER.debug("description:" + plugin.getDescription());
+			_pluginListModel.addElement(plugin);
+		}
+		LOGGER.debug("reloading tasks");
+		_taskListModel.removeAllElements();
+		ITask[] tasks = null;
+		try {
+            //TODO: change it
+			tasks = _managerEngine.getTasksManager().getTasks();
+		} catch (PlatformException e1) {
+			LOGGER.fatal("", e1);
+            Utils.showErrorMessage("Cannot load task list");
+            return;
+		}
+		for (ITask task : tasks) {
+			LOGGER.debug("adding task");
+			_taskListModel.addElement(new TaskGUI(task));   
+		}
 	}
 
 	public void removePlugin()
 	{
 		if (Utils.showQuestionMessage(Messages.getString("TIT_WARN"),
 				Messages.getString("TXT_REMOVE_PLUGIN_QUESTION"))) {
-			Description desc = ((LocalPlugin) _pluginListModel.get(_selectedItem)).getPluginDescription();
+			IPlugin plugin = (LocalPlugin) _pluginListModel.get(_selectedItem);
 
 			boolean wasOk = false;
 			try {
-				wasOk = _managerEngine.getPluginManager().removePlugin(desc);
+				wasOk = _managerEngine.getPluginManager().removePlugin(plugin);
 			} catch (PlatformException e) {
-				LOGGER.error("", e);
-				//FIXME   
+				LOGGER.error("", e);				   
 			}
 
 			if (wasOk) {
@@ -307,7 +326,8 @@ public final class TaskEditionManager
 
 	public void savePlugin()
 	{
-		Description desc = ((LocalPlugin) _pluginListModel.get(_selectedItem)).getPluginDescription();
+		IPlugin plugin = (IPlugin) _pluginListModel.get(_selectedItem);
+        Description desc = plugin.getDescription(); 
 		// to initialize components
 		getEditPluginPanel();
 		_txtPluginName.setText(desc.getName());
@@ -331,10 +351,10 @@ public final class TaskEditionManager
 
 			boolean wasOk = false;
 			try {
-				wasOk = _managerEngine.getPluginManager().savePlugin(desc);
+				wasOk = _managerEngine.getPluginManager().savePlugin(plugin);
 			} catch (PlatformException e) {
 				LOGGER.error("", e);
-				//FIXME
+				Utils.showErrorMessage(Messages.getString("ERR_CANNOT_SAVE_PLUGIN"));
 			}
 
 			if (wasOk) {
@@ -469,49 +489,6 @@ public final class TaskEditionManager
 		}
 	}
 
-	/** Class helps managing plugin loading */
-	public static final class LocalPlugin
-	{
-		private Description _pluginDescription;
-
-		private IPlugin _plugin;
-
-		public LocalPlugin(Description pluginDescription)
-		{
-			_pluginDescription = pluginDescription;
-		}
-
-		/**
-		 * Method returns plugin. If it is not loaded, tries load it using
-		 * PluginLoader
-		 * 
-		 * @throws Exception
-		 */
-		public IPlugin getPlugin() throws Exception
-		{
-			if (_plugin == null) {
-				LOGGER.debug("trying to load plugin"); //$NON-NLS-1$
-				_plugin = PluginLoader.loadPlugin(_pluginDescription.getLocation());
-			}
-            
-			return _plugin;
-		}
-
-		public Description getPluginDescription()
-		{
-			return _pluginDescription;
-		}
-
-		public String toString()
-		{
-			//TODO: change it to name:version or sth
-			String path = _pluginDescription.getLocation().getPath();
-			int index = path.lastIndexOf('/');
-
-			return path.substring(index + 1);
-		}
-	}
-
 	private final class PluginEditPanel extends JPanel
 	{
 
@@ -582,5 +559,5 @@ public final class TaskEditionManager
 		}
 	}
 
-	private static final Logger LOGGER = Logger.getLogger(TaskEditionManager.class);
+	static final Logger LOGGER = Logger.getLogger(TaskEditionManager.class);
 }

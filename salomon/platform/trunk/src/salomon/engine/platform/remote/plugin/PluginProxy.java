@@ -101,4 +101,12 @@ public final class PluginProxy implements IPlugin
 	{
 		_localPlugin.initizalize();
 	}
+
+	/**
+	 * @see salomon.plugin.IPlugin#setDescription(salomon.plugin.Description)
+	 */
+	public void setDescription(Description description)
+	{
+		_localPlugin.setDescription(description);
+	}
 }

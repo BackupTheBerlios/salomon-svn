@@ -65,4 +65,6 @@ public interface IProjectManager
 	 * saved.
 	 */
 	void saveProject() throws PlatformException;
+     
+    IProject getCurrentProject() throws PlatformException;
 }

@@ -74,6 +74,16 @@ public final class RemoteProjectManager extends UnicastRemoteObject
 	}
 
 	/**
+	 * @see salomon.engine.platform.remote.project.IRemoteProjectManager#getCurrentProject()
+	 */
+	public IRemoteProject getCurrentProject() throws PlatformException,
+			RemoteException
+	{
+		IProject project = _projectManager.getCurrentProject();
+		return getRemoteProject(project);
+	}
+
+	/**
 	 * @see IRemoteProjectManager#getProject(int)
 	 */
 	public IRemoteProject getProject(int projectID) throws PlatformException,

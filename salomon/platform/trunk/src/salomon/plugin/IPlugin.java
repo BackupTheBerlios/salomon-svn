@@ -34,4 +34,6 @@ public interface IPlugin extends IDataPlugin, IGraphicPlugin
 	void destroy();
 
 	Description getDescription();
+    
+    void setDescription(Description description);
 }

@@ -21,6 +21,11 @@
 
 package salomon.engine.solution;
 
+import java.net.MalformedURLException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import salomon.engine.database.IDBSupporting;
 import salomon.engine.project.IProjectManager;
 
 import salomon.platform.exception.PlatformException;
@@ -30,8 +35,17 @@ import salomon.engine.platform.IManagerEngine;
 /**
  * 
  */
-final class Solution implements ISolution
+final class Solution implements ISolution, IDBSupporting
 {
+
+	/**
+	 * @see salomon.engine.database.IDBSupporting#delete()
+	 */
+	public boolean delete() throws SQLException, ClassNotFoundException
+	{
+		throw new UnsupportedOperationException(
+				"Method delete() not implemented yet!");
+	}
 
 	/**
 	 * @see salomon.engine.solution.ISolution#getManagerEngine()
@@ -49,5 +63,24 @@ final class Solution implements ISolution
 	{
 		throw new UnsupportedOperationException(
 				"Method getProjectManager() not implemented yet!");
+	}
+
+	/**
+	 * @see salomon.engine.database.IDBSupporting#load(java.sql.ResultSet)
+	 */
+	public void load(ResultSet resultSet) throws MalformedURLException,
+			SQLException
+	{
+		throw new UnsupportedOperationException(
+				"Method load() not implemented yet!");
+	}
+
+	/**
+	 * @see salomon.engine.database.IDBSupporting#save()
+	 */
+	public int save() throws SQLException, ClassNotFoundException
+	{
+		throw new UnsupportedOperationException(
+				"Method save() not implemented yet!");
 	}
 }

@@ -42,9 +42,9 @@ import salomon.platform.exception.PlatformException;
  */
 public final class ProjectManagerProxy implements IProjectManager
 {
-	private IRemoteProjectManager _remoteProjectManager;
 
 	private Map<IRemoteProject, IProject> _proxies = new HashMap<IRemoteProject, IProject>();
+	private IRemoteProjectManager _remoteProjectManager;
 
 	/**
 	 * @pre $none
@@ -61,7 +61,7 @@ public final class ProjectManagerProxy implements IProjectManager
 	public void addProject(IProject project) throws PlatformException
 	{
 		try {
-            ProjectProxy projectProxy = (ProjectProxy) project;
+			ProjectProxy projectProxy = (ProjectProxy) project;
 			_remoteProjectManager.addProject(projectProxy.getRemoteProject());
 		} catch (RemoteException e) {
 			LOGGER.fatal("Remote error!", e);
@@ -78,7 +78,7 @@ public final class ProjectManagerProxy implements IProjectManager
 	{
 		IProject project = null;
 		try {
-            IRemoteProject remoteProject = _remoteProjectManager.createProject(); 
+			IRemoteProject remoteProject = _remoteProjectManager.createProject();
 			project = getProject(remoteProject);
 		} catch (RemoteException e) {
 			LOGGER.fatal("Remote error!", e);
@@ -89,13 +89,30 @@ public final class ProjectManagerProxy implements IProjectManager
 	}
 
 	/**
+	 * @see salomon.engine.project.IProjectManager#getCurrentProject()
+	 */
+	public IProject getCurrentProject() throws PlatformException
+	{
+        IProject project = null;
+        try {
+            IRemoteProject remoteProject = _remoteProjectManager.getCurrentProject();
+            project = getProject(remoteProject);
+        } catch (RemoteException e) {
+            LOGGER.fatal("Remote error!", e);
+            throw new PlatformException(e.getLocalizedMessage());
+        }
+
+        return project;
+	}
+
+	/**
 	 * @see IProjectManager#getProject(int)
 	 */
 	public IProject getProject(int projectID) throws PlatformException
 	{
 		IProject project = null;
 		try {
-            IRemoteProject remoteProject = _remoteProjectManager.getProject(projectID); 
+			IRemoteProject remoteProject = _remoteProjectManager.getProject(projectID);
 			project = getProject(remoteProject);
 		} catch (RemoteException e) {
 			LOGGER.fatal("Remote error!", e);
@@ -113,8 +130,8 @@ public final class ProjectManagerProxy implements IProjectManager
 		IProject[] projects = null;
 		try {
 			IRemoteProject[] remoteProjects = _remoteProjectManager.getProjects();
-            projects = new IProject[remoteProjects.length];
-            for (int i = 0; i < remoteProjects.length; i++) {
+			projects = new IProject[remoteProjects.length];
+			for (int i = 0; i < remoteProjects.length; i++) {
 				projects[i] = getProject(remoteProjects[i]);
 			}
 		} catch (RemoteException e) {
@@ -137,19 +154,19 @@ public final class ProjectManagerProxy implements IProjectManager
 			throw new PlatformException(e.getLocalizedMessage());
 		}
 	}
-    
-    IProject getProject(IRemoteProject remoteProject)
-    {
-    	IProject project = null;
-        if (_proxies.containsKey(remoteProject)) {
-        	project = _proxies.get(remoteProject);
-        } else {
-        	project = new ProjectProxy(remoteProject);
-            _proxies.put(remoteProject, project);
-        }
-        
-        return project;
-    }
+
+	IProject getProject(IRemoteProject remoteProject)
+	{
+		IProject project = null;
+		if (_proxies.containsKey(remoteProject)) {
+			project = _proxies.get(remoteProject);
+		} else {
+			project = new ProjectProxy(remoteProject);
+			_proxies.put(remoteProject, project);
+		}
+
+		return project;
+	}
 
 	private static final Logger LOGGER = Logger.getLogger(ProjectManagerProxy.class);
 

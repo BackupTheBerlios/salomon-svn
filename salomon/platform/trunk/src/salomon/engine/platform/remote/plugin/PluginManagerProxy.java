@@ -29,7 +29,6 @@ import salomon.engine.plugin.IPluginManager;
 
 import salomon.platform.exception.PlatformException;
 
-import salomon.plugin.Description;
 import salomon.plugin.IPlugin;
 
 /**
@@ -70,14 +69,14 @@ public final class PluginManagerProxy implements IPluginManager
 	}
 
 	/**
-     * @see IPluginManager#removePlugin(Description)
+     * @see IPluginManager#removePlugin(IPlugin)
 	 */
-	public boolean removePlugin(Description description) throws PlatformException
+	public boolean removePlugin(IPlugin plugin) throws PlatformException
 	{
 
 		boolean result = false;
 		try {
-			result = _remotePluginManager.removePlugin(description);
+			result = _remotePluginManager.removePlugin(plugin);
 		} catch (RemoteException e) {
 			LOGGER.fatal("Remote error!", e);
             throw new PlatformException(e.getLocalizedMessage());
@@ -87,13 +86,13 @@ public final class PluginManagerProxy implements IPluginManager
 	}
 
 	/**
-	 * @see IPluginManager#savePlugin(Description)
+	 * @see IPluginManager#savePlugin(IPlugin)
 	 */
-	public boolean savePlugin(Description description) throws PlatformException
+	public boolean savePlugin(IPlugin plugin) throws PlatformException
 	{
 		boolean result = false;
 		try {
-			result = _remotePluginManager.savePlugin(description);
+			result = _remotePluginManager.savePlugin(plugin);
 		} catch (RemoteException e) {
             LOGGER.fatal("Remote error!", e);
             throw new PlatformException(e.getLocalizedMessage());
@@ -103,5 +102,21 @@ public final class PluginManagerProxy implements IPluginManager
 	}
 
 	private static final Logger LOGGER = Logger.getLogger(PluginManagerProxy.class);
+
+	/**
+	 * @see salomon.engine.plugin.IPluginManager#createPlugin()
+	 */
+	public IPlugin createPlugin()
+	{
+		throw new UnsupportedOperationException("Method createPlugin() not implemented yet!");
+	}
+
+	/**
+	 * @see salomon.engine.plugin.IPluginManager#addPlugin(salomon.plugin.IPlugin)
+	 */
+	public void addPlugin(IPlugin plugin)
+	{
+		throw new UnsupportedOperationException("Method addPlugin() not implemented yet!");
+	}
 
 }
