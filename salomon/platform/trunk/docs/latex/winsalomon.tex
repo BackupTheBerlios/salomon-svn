@@ -1,0 +1,33 @@
+\section{WinSalomon}
+
+\emph{WinSalomon} to projekt maj¹cy na celu stworzenie biblioteki DLL, za pomoc¹ której mo¿liwe bêdzie uruchamianie i kontrolowanie Salomona.
+
+Protoplasta \emph{Salomona} - \emph{Vinlen} - zosta³ napisany w \emph{C++} (\emph{C++ Builder}). Graficzny interfejs tego œrodowiska jest bardzo zaawansowany i dostarcza znacznie wiêkszych mo¿liwoœci ni¿ \emph{Salomon}. Aby mo¿liwe by³o wykorzystanie tylko logiki \emph{Salomona} i pozostawienie graficznego interfejsu \emph{Vinlena} konieczne by³o stworzenie warstwy ³¹cz¹cej  GUI napisane w \emph{C++} z logik¹ napisan¹ w \emph{Javie}.
+
+Mo¿liwe sposoby po³¹czenie \emph{Vinlena} z \emph{Salomonem}:
+\begin{itemize}
+	\item \emph{JNI} - Java Native Interface
+	\item CORBA
+	\item inne sposoby komunikacji miêdzy procesowej (pamiêæ dzielona, pipe'y, komunikaty)
+\end{itemize}
+
+W celu realizacji projektu wybraliœmy \emph{JNI}. Przemawia³o za nim:
+\begin{itemize}
+	\item wydajnoœæ implementacji
+	\item prostota
+\end{itemize}
+
+Etapy projektu
+\begin{enumerate}
+	\item LibraryController
+
+Pierwszym etapem projektu by³o stworzenie kontrolera, który umo¿liwia³by wykorzystywanie \emph{Salomona} nie jako odrêbnej aplikacji, ale jako biblioteki dla programów dzia³aj¹cych w œrodowisku \emph{Java}.	
+
+	\item WinSalomon DLL
+
+Drugim etapem by³o stworzenie biblioteki DLL, w której znajdowa³yby siê	,,wrappery'' dla wszystkich interfejsów udostêpnianych przez \emph{LibraryControllera}. Klasy te ukrywaj¹ przez u¿ytkownikiem fakt, ¿e komunikacja odbywa siê przez \emph{JNI}, wiêc nic nie stoi na przeszkodzie, by dorobiæ wersjê \emph{WinSalomona}, której wewnêtrzna imlementacja opiera³aby siê np. na technologii \emph{CORBA}.
+	
+\end{enumerate}
+
+
+
