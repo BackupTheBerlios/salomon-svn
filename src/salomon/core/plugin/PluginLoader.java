@@ -14,6 +14,7 @@ import java.util.jar.JarFile;
 
 import org.apache.log4j.Logger;
 
+import salomon.core.Config;
 import salomon.plugin.IPlugin;
 
 /**
@@ -25,26 +26,30 @@ public class PluginLoader
 {
 	private static Logger _logger = Logger.getLogger(PluginLoader.class);
 
-	public static IPlugin loadPlugin(String pluginName) throws Exception
+	public static IPlugin loadPlugin(File pluginFile) throws Exception
 	{
 		IPlugin plugin = null;
 		// creating class loader
-		PluginClassLoader classLoader = new PluginLoader().new PluginClassLoader(pluginName);
+		PluginClassLoader classLoader = new PluginLoader().new PluginClassLoader(
+				pluginFile);
 		// loading appropriate plugin (it has to be in *.jar file
 		plugin = (IPlugin) classLoader.findMainClass().newInstance();
 		return plugin;
+	}
+	
+	public static IPlugin loadPlugin(String pluginFileName) throws Exception
+	{
+		return loadPlugin(new File(pluginFileName));
 	}
 
 	class PluginClassLoader extends URLClassLoader
 	{
 		private File _file = null;
 
-		PluginClassLoader(String path) throws MalformedURLException
+		PluginClassLoader(File file) throws MalformedURLException
 		{
-			super(new URL[]{(new File(path).toURL())});
-			// this suffix is necessary for JarFile()
-			//TODO: remove this when using PluginManager
-			_file = new File(path + ".jar");
+			super(new URL[]{file.toURL()});
+			_file = file;
 		}
 
 		public Class findMainClass() throws ClassNotFoundException, IOException
