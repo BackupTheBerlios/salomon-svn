@@ -10,30 +10,113 @@ package salomon.plugin;
  */
 public class Description
 {
-	///////////////////////////////////////
-	// attributes
-	/**
-	 * Represents ...
-	 */
-	private String name;
+
+	private String _info;
+
+	private String _input;
+
+	private String _name;
+
+	private String _output;
+
+	private String _version;
+
+	public Description()
+	{
+	};
 
 	/**
-	 * Represents ...
+	 * @param info
+	 * @param name
 	 */
-	private String version;
+	public Description(String name, String info)
+	{
+		_name = name;
+		_info = info;
+	}
 
 	/**
-	 * Represents ...
+	 * @return Returns the info.
 	 */
-	private String output;
+	public String getInfo()
+	{
+		return _info;
+	}
 
 	/**
-	 * Represents ...
+	 * @return Returns the input.
 	 */
-	private String input;
+	public String getInput()
+	{
+		return _input;
+	}
 
 	/**
-	 * Represents ...
+	 * @return Returns the name.
 	 */
-	private String info;
+	public String getName()
+	{
+		return _name;
+	}
+
+	/**
+	 * @return Returns the output.
+	 */
+	public String getOutput()
+	{
+		return _output;
+	}
+
+	/**
+	 * @return Returns the version.
+	 */
+	public String getVersion()
+	{
+		return _version;
+	}
+
+	/**
+	 * @param info
+	 *            The info to set.
+	 */
+	public void setInfo(String info)
+	{
+		_info = info;
+	}
+
+	/**
+	 * @param input
+	 *            The input to set.
+	 */
+	public void setInput(String input)
+	{
+		_input = input;
+	}
+
+	/**
+	 * @param name
+	 *            The name to set.
+	 */
+	public void setName(String name)
+	{
+		_name = name;
+	}
+
+	/**
+	 * @param output
+	 *            The output to set.
+	 */
+	public void setOutput(String output)
+	{
+		_output = output;
+	}
+
+	/**
+	 * @param version
+	 *            The version to set.
+	 */
+	public void setVersion(String version)
+	{
+		_version = version;
+	}
 } // end Description
