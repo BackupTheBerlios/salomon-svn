@@ -161,6 +161,6 @@
 			<status path="${basedir}" revisionProperty="testStatus.revision" />
 
 		</svn>
-		<echo message="REVISION_VERSION=${testStatus.revision}" file="version.properties" />
+		<echo message="REVISION_VERSION=${testStatus.revision}" file="${src_dir}/version.properties" />
 	</target>
 </project>
