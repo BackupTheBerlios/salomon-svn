@@ -22,25 +22,29 @@
 package salomon.engine.database.queries;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Iterator;
-import java.util.LinkedList;
+
+import org.apache.log4j.Logger;
 
 /**
- * Class is responsible for building SELECT query.
+ * Class is responsible for building SELECT query. It does not support multiple
+ * select from the same table.
+ * 
  */
-public final class SQLSelect
+public final class SQLSelect implements Cloneable
 {
 	private Collection<String> _columns;
 
 	private Collection<String> _conditions;
 
 	private Collection<String> _tables;
-    
+
 	public SQLSelect()
 	{
-		_columns = new LinkedList<String>();
-		_tables = new LinkedList<String>();
-		_conditions = new LinkedList<String>();
+		_columns = new HashSet<String>();
+		_tables = new HashSet<String>();
+		_conditions = new HashSet<String>();
 	}
 
 	public void addColumn(String columnName)
@@ -90,7 +94,7 @@ public final class SQLSelect
 	 * @param value value of condition
 	 */
 	public void addCondition(String condition, String value)
-	{		
+	{
 		SQLHelper.addCondition(_conditions, condition, value);
 	}
 
@@ -99,6 +103,23 @@ public final class SQLSelect
 		_tables.add(tableName);
 	}
 
+	/**
+	 * @see java.lang.Object#clone()
+	 */
+	public Object clone()
+	{
+		SQLSelect object = null;
+		try {
+			object = (SQLSelect) super.clone();
+		} catch (CloneNotSupportedException e) {
+			LOGGER.fatal("", e);
+		}
+		// deep copy of collections
+		object._columns = (Collection<String>) ((HashSet)object._columns).clone();
+		object._tables = (Collection<String>) ((HashSet)object._tables).clone();
+		object._conditions = (Collection<String>) ((HashSet)object._conditions).clone();
+		return object;
+	}
 
 	/**
 	 * Method returns SELECT query.
@@ -139,16 +160,18 @@ public final class SQLSelect
 				query.append(" AND ").append(condIter.next());
 			}
 		}
-        
+
 		return query.toString();
-    }
-    
-    /**
+	}
+
+	/**
 	 * 
 	 * @return Returns the tables.
 	 */
-	public Collection<String> getTables() 
-    {
+	public Collection<String> getTables()
+	{
 		return _tables;
-    }
+	}
+
+	private static final Logger LOGGER = Logger.getLogger(SQLSelect.class);
 }
