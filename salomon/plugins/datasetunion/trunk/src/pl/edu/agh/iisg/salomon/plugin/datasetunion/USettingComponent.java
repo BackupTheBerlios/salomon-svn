@@ -3,18 +3,16 @@ package pl.edu.agh.iisg.salomon.plugin.datasetunion;
 
 import java.awt.Component;
 import java.awt.GridLayout;
-import java.util.Collection;
-import java.util.Iterator;
 
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import salomon.engine.platform.exception.PlatformException;
 import salomon.platform.IDataEngine;
 import salomon.platform.data.dataset.IDataSet;
 import salomon.platform.data.dataset.IDataSetManager;
+import salomon.platform.exception.PlatformException;
 import salomon.plugin.ISettingComponent;
 import salomon.plugin.ISettings;
 
