@@ -59,7 +59,11 @@ public class Task
 	 */
 	public IResult getResult()
 	{
-		return (_result == null) ? new DefaultResult() : _result;
+		IResult result = _result; 
+		if (_result == null) {
+			result = _plugin.getResultComponent().getDefaultResult();
+		}
+		return result;
 	}
 
 	/**
@@ -150,28 +154,5 @@ public class Task
 	public void setTaksId(int taksId)
 	{
 		_taksId = taksId;
-	}
-	/**
-	 * Class represents empty result.
-	 * It is used to correctly save task before its execution.
-	 * 
-	 * @author nico	 
-	 */
-	class DefaultResult implements IResult {
-
-		public void parseResult(String result)
-		{
-						
-		}
-
-		public String resultToString()
-		{
-			return "";
-		}
-
-		public boolean isSuccessful()
-		{			
-			return true;
-		}		
 	}
 } // end Task
