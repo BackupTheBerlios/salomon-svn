@@ -69,30 +69,16 @@
       <groupId>firebirdsql</groupId>
       <artifactId>firebirdsql</artifactId>
       <version>1.5.2</version>
-      <jar>lib/firebirdsql.jar</jar>
+      <jar>firebirdsql.jar</jar>
       <type>jar</type>
       <url>http://firebird.sourceforge.net/</url>
     </dependency>
     <dependency>
-      <groupId>xalan</groupId>
-      <artifactId>xalan</artifactId>
-      <version>2.4.1</version>
+      <groupId>mini-j2ee</groupId>
+      <artifactId>mini-j2ee</artifactId>
       <type>jar</type>
-      <url>http://xml.apache.org/xalan-j/</url>
-    </dependency>
-    <dependency>
-      <groupId>xml-apis</groupId>
-      <artifactId>xml-apis</artifactId>
-      <version>1.0.b2</version>
-      <type>jar</type>
-      <url>http://xml.apache.org/commons/</url>
-    </dependency>
-    <dependency>
-      <groupId>jdom</groupId>
-      <artifactId>jdom</artifactId>
-      <version>1.0</version>
-      <type>jar</type>
-      <url>http://http://www.jdom.org</url>
+      <jar>mini-j2ee.jar</jar>
+      <url>http://firebird.sourceforge.net/</url>
     </dependency>
   </dependencies>
   <build>
@@ -115,7 +101,7 @@
     </resources>
   </build>
   <reports>
-    <!--report>maven-junit-report-plugin</report-->
+    <report>maven-junit-report-plugin</report>
     <report>maven-changes-plugin</report>
     <report>maven-javadoc-plugin</report>
     <report>maven-jdepend-plugin</report>

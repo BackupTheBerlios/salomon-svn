@@ -36,6 +36,7 @@ import salomon.engine.platform.IManagerEngine;
 import salomon.engine.remote.ICentralController;
 import salomon.engine.remote.IRemoteController;
 import salomon.engine.remote.RemoteController;
+import salomon.platform.exception.PlatformException;
 
 /**
  * Class is a client implementation of IController interface.
@@ -81,7 +82,7 @@ public final class ServantController implements IController
 					_serverHost);
 			// new project is created at the beggining
 			// FIXME
-			// _remoteController.getManagerEngine().getProjectManager().createProject();
+			_remoteController.getManagerEngine().getProjectManager().createProject();
 			Registry registry = LocateRegistry.getRegistry(_serverHost,
 					_serverPort);
 			LOGGER.debug("Registry at: " + _serverHost + ", on port: "
@@ -98,6 +99,8 @@ public final class ServantController implements IController
 			LOGGER.fatal("Fatal error while initializing RMI."
 					+ " Application will be terminated", e);
 			System.exit(1);
+		} catch (PlatformException e) {
+			LOGGER.fatal("PlatformException while creating project!", e);
 		}
 	}
 
