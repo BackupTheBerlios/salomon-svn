@@ -20,8 +20,9 @@ public final class RemotePluginManager extends UnicastRemoteObject
 	private IPluginManager _pluginManager;
 
 	/**
-	 *  
-	 */
+     * @pre pluginManager != null
+     * @post $none
+     */
 	public RemotePluginManager(IPluginManager pluginManager)
 			throws RemoteException
 	{
