@@ -81,11 +81,11 @@ public class SQLConsole extends JFrame
 
 	private JToolBar _toolCommands = null;
 
-    /**
-     * Creates instance of SQLConsole object.
-     * 
-     * @param isStandAlone if true SQLConsole is standalone application
-     */
+	/**
+	 * Creates instance of SQLConsole object.
+	 * 
+	 * @param isStandAlone if true SQLConsole is standalone application
+	 */
 	public SQLConsole(boolean isStandAlone)
 	{
 		super();
@@ -107,13 +107,8 @@ public class SQLConsole extends JFrame
 
 	private void commit()
 	{
-		try {
-			_connector.commit();
-			showMessage(Messages.getString("TXT_COMMIT_COMPLETE")); //$NON-NLS-1$
-		} catch (SQLException e) {
-			_logger.fatal("", e); //$NON-NLS-1$
-			showMessage(e.getLocalizedMessage());
-		}
+		_connector.commit();
+		showMessage(Messages.getString("TXT_COMMIT_COMPLETE")); //$NON-NLS-1$
 	}
 
 	/**
@@ -446,14 +441,8 @@ public class SQLConsole extends JFrame
 
 	private void rollback()
 	{
-		try {
-			_connector.rollback();
-			showMessage(Messages.getString("TXT_ROLLBACK_COMPLETE")); //$NON-NLS-1$
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			_logger.fatal("", e); //$NON-NLS-1$
-			showMessage(e.getLocalizedMessage());
-		}
+		_connector.rollback();
+		showMessage(Messages.getString("TXT_ROLLBACK_COMPLETE")); //$NON-NLS-1$
 	}
 
 	private void showMessage(String message)
