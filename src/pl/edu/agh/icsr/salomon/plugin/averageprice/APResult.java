@@ -12,5 +12,5 @@ import salomon.plugin.IResult;
  */
 public class APResult implements IResult
 {
-	double averagePrice = 0.0;
+	public double averagePrice = 0.0;
 }

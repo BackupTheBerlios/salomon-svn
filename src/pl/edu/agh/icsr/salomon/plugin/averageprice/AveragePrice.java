@@ -1,3 +1,4 @@
+
 package pl.edu.agh.icsr.salomon.plugin.averageprice;
 
 import java.sql.ResultSet;
@@ -43,19 +44,20 @@ public class AveragePrice implements IPlugin
 
 	private JPanel _pnlAttributes = null;
 
-		private JTextField _txtResult = null;
+	private JTextField _txtResult = null;
+
+	private Description _description = null;
 
 	private static Logger _logger = Logger.getLogger(AveragePrice.class);
-
-
 
 	/**
 	 * This is the default constructor
 	 */
 	public AveragePrice()
 	{
-		super();
 		initizalize();
+		_description = new Description("AveragePrice",
+				"Calculates average price of sold cars");
 	}
 
 	/**
@@ -69,8 +71,6 @@ public class AveragePrice implements IPlugin
 		}
 		return _settingsPanel;
 	}
-
-	
 
 	/*
 	 * (non-Javadoc)
@@ -99,8 +99,7 @@ public class AveragePrice implements IPlugin
 	 */
 	public Description getDescription()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return _description;
 	}
 
 	public IResult doJob(DataEngine engine, Environment environment,
@@ -118,7 +117,9 @@ public class AveragePrice implements IPlugin
 			_logger.fatal("", e1);
 			return null;
 		}
+		//
 		// bulding query (getting all sold cars)
+		//
 		DBTableName[] tableNames = {new DBTableName("users"),
 				new DBTableName("cars"), new DBTableName("car_sales")};
 		DBColumnName[] columnNames = {
@@ -134,9 +135,10 @@ public class AveragePrice implements IPlugin
 				new DBCondition(new DBColumnName(tableNames[1], "car_id"),
 						DBCondition.REL_EQ, new DBColumnName(tableNames[2],
 								"car_id"), DBCondition.JOIN)};
-		//		TODO: wykorzystac je :-)
 		_logger.info("settings = " + settings);
+		//
 		// getting additional conditions (from settings)
+		//
 		List additionalConditions = new LinkedList();
 		Object value = null;
 		APSettings apSettings = (APSettings) settings;
@@ -164,7 +166,9 @@ public class AveragePrice implements IPlugin
 					tableNames[0], "email"), DBCondition.REL_LIKE, value
 					.toString(), DBCondition.TEXT));
 		}
+		//
 		// concatenating with old conditons
+		//
 		DBCondition[] queryConditions = null;
 		_logger.info("AveragePrice.doJob() additionalConditions: "
 				+ additionalConditions);
@@ -178,7 +182,9 @@ public class AveragePrice implements IPlugin
 		} else {
 			queryConditions = conditions;
 		}
+		//
 		// executing plugin
+		//
 		ResultSet resultSet = null;
 		try {
 			resultSet = dataSet.selectData(columnNames, tableNames,
@@ -190,15 +196,9 @@ public class AveragePrice implements IPlugin
 			_logger.fatal("", e);
 			return null;
 		}
-		//!!!!!!!! if we want to see all result set using method
-		// printResultSet
-		// we have to execute query again to get result
-		/*
-		 * try { SQLConsole.printResultSet(resultSet); } catch (SQLException e) {
-		 * _logger.fatal("", e);
-		 */
-		// getting result:
-		// getting data
+		//
+		// Getting result
+		//
 		LinkedList rows = new LinkedList();
 		int size = 0;
 		int priceSum = 0;
@@ -218,20 +218,23 @@ public class AveragePrice implements IPlugin
 			_logger.fatal("", e);
 			return null;
 		}
+		//
 		// returning result
+		//
 		double result = (size > 0) ? ((double) priceSum / (double) size) : 0;
 		APResult apResult = new APResult();
 		apResult.averagePrice = result;
 		return apResult;
 	}
-	
+
 	public String toString()
 	{
-		// TODO Auto-generated method stub
-		return "Average price";
+		return _description.getName();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see salomon.plugin.IGraphicPlugin#getSettingComponent()
 	 */
 	public ISettingComponent getSettingComponent()
@@ -239,7 +242,9 @@ public class AveragePrice implements IPlugin
 		return new APSettingComponent();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see salomon.plugin.IGraphicPlugin#getResultComponent()
 	 */
 	public IResultComponent getResultComponent()

@@ -8,12 +8,12 @@ import salomon.plugin.ISettings;
 
 /**
  * @author nico
- *
+ * 
  */
 public class APSettings implements ISettings
 {
-	String name = null;
-	String surname = null;
-	String nick = null;
-	String email = null;
+	public String name = null;
+	public String surname = null;
+	public String nick = null;
+	public String email = null;
 }
