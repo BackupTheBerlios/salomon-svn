@@ -26,7 +26,7 @@ import javax.swing.JToolBar;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
-import ks.data.Condition;
+import ks.data.DBCondition;
 import ks.data.DBColumnName;
 import ks.data.DBConnector;
 import ks.data.DBTableName;
@@ -588,8 +588,8 @@ public class SQLConsole extends JFrame
 				new DBColumnName(tableNames[0], "car_id", "id"),
 				new DBColumnName(tableNames[0], "brand", "marka"),
 				new DBColumnName(tableNames[0], "name", "model"),};
-		Condition[] conditions = {new Condition(new DBColumnName(tableNames[0],
-				"car_id"), Condition.REL_M, new Integer(1), Condition.NUMBERIC)};
+		DBCondition[] conditions = {new DBCondition(new DBColumnName(tableNames[0],
+				"car_id"), DBCondition.REL_M, new Integer(1), DBCondition.NUMBERIC)};
 		try {
 			dataSet.selectData(columnNames, tableNames, conditions);
 		} catch (SQLException e) {
