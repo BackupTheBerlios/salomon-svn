@@ -5,6 +5,8 @@
 
 package salomon.controller.gui;
 
+import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -73,8 +75,9 @@ class TaskEditionManager
 			_pluginListModel.addElement(new LocalPlugin(files[i]));
 		}
 	}
+
 	/**
-	 *  Loads tasks to task list.
+	 * Loads tasks to task list.
 	 * 
 	 * @param tasks
 	 */
@@ -245,8 +248,12 @@ class TaskEditionManager
 		Task currentTask = (Task) _taskListModel.get(_selectedItem);
 		IPlugin plugin = currentTask.getPlugin();
 		ISettingComponent settingComponent = plugin.getSettingComponent();
+		ISettings inputSettings = currentTask.getSettings();
+		if (inputSettings == null) {
+			inputSettings = plugin.getSettingComponent().getDefaultSettings();
+		}		
 		int result = JOptionPane.showConfirmDialog(_positionComponent,
-				settingComponent.getComponent(), Messages
+				settingComponent.getComponent(inputSettings), Messages
 						.getString("TIT_PLUGIN_SETTINGS"), //$NON-NLS-1$
 				JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
 		if (result == JOptionPane.OK_OPTION) {
@@ -260,9 +267,20 @@ class TaskEditionManager
 	{
 		Task currentTask = (Task) _taskListModel.get(_selectedItem);
 		IPlugin plugin = currentTask.getPlugin();
-		IResultComponent resultComponent = plugin.getResultComponent();
-		JOptionPane.showMessageDialog(_positionComponent, resultComponent
-				.getComponent(currentTask.getResult()), Messages
+		IResultComponent resultComponent = plugin.getResultComponent();		
+		Component comp = resultComponent.getComponent(currentTask.getResult());
+		Dimension maxDim = new Dimension(400, 300);		
+		Dimension prefDim = comp.getPreferredSize();
+		// setting maximum size
+		if (prefDim.height > maxDim.height) {
+			prefDim.height = maxDim.height;
+		}
+		if (prefDim.width > maxDim.width) {
+			prefDim.width = maxDim.width;
+		}
+		comp.setMaximumSize(prefDim);
+		comp.setPreferredSize(prefDim); 
+		JOptionPane.showMessageDialog(_positionComponent, comp, Messages
 				.getString("TIT_PLUGIN_RESULT"), JOptionPane.PLAIN_MESSAGE); //$NON-NLS-1$
 	}
 
