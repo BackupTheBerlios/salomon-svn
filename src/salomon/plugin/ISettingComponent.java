@@ -8,14 +8,18 @@ package salomon.plugin;
 import java.awt.Component;
 
 /**
- * @author nico
- *  
+ * Interface represents object, which is responsible for showing plugin
+ * settings.
+ * 
+ * @author nico 
  */
 public interface ISettingComponent
 {
 	/**
 	 * Returns settings object. It is set basing on user selections in setting
 	 * panel
+	 * 
+	 * @return plugin settings
 	 */
 	ISettings getSettings();
 
@@ -26,6 +30,11 @@ public interface ISettingComponent
 	 */
 	ISettings getDefaultSettings();
 
-	/** Fills settings component basing on settings */
+	/**
+	 * Fills settings component basing on given settings.
+	 * 
+	 * @param settings settings object
+	 * @return component showing given settings
+	 */
 	Component getComponent(ISettings settings);
 }
