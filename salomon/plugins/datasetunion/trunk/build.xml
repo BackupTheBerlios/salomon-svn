@@ -1,0 +1,53 @@
+<project name="pdptw" default="compile" basedir=".">
+
+	<property name="src_dir" value="src"/>
+	
+	<property name="bin_dir" value="bin"/>
+	<property name="lib_dir" value="lib"/>	
+	<property name="doc_dir" value="docs"/>	
+
+	
+	<path id="project.class.path">
+		<fileset dir="${lib}">
+			<include name="**/*.jar"/>
+		</fileset>
+		<fileset dir="${ext}">
+			<include name="**/*.jar"/>
+		</fileset>
+		<pathelement location="${build}"/>
+	</path>
+
+
+	
+	<target name="compile" >
+		<echo message="Building project"/>
+		<javac srcdir="${src_dir}/" 
+		       includes="**.java">
+			<classpath refid="project.class.path"/>
+		</javac>
+	</target>
+	
+	<target name="init">
+		<mkdir dir="${bin_dir}"/>
+	</target>
+
+
+	<target name="clean">
+		<delete dir="${bin_dir}" />		
+	</target>	
+
+	
+    <target name="javadoc">
+    	<javadoc destdir="${doc_dir}/api" access="public" source="1.5" use="true" 
+    		notree="false" nonavbar="false" noindex="false" splitindex="true" 
+    		author="true" version="true" nodeprecatedlist="false" 
+    		link="http://java.sun.com/j2se/1.5.0/docs/api/index.html"
+    		nodeprecated="false" 
+    		packagenames="com.ifactory.cms.*" 
+    		sourcepath="config:src/java">
+    		<classpath refid="project.class.path" />
+    		<bottom><![CDATA[<i>Copyright &#169; 2004-2005 AGH. All Rights Reserved.</i>]]></bottom>
+    	</javadoc>
+    </target>
+
+</project>
