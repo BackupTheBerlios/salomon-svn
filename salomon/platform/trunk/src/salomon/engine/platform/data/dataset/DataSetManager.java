@@ -59,27 +59,20 @@ public final class DataSetManager implements IDataSetManager
 		} catch (Exception e) {
 			LOGGER.fatal("", e);
 			throw new PlatformException(e.getLocalizedMessage());
-		}
-		Collection<String> conditions = new HashSet<String>();
-		Collection<String> tableNames = new HashSet<String>();
+		}	
 
 		// getting conditions
 		try {
+			dataSet = new DataSet(name);
 			while (resultSet.next()) {
 				String tableName = resultSet.getString("table_name");
 				String condition = resultSet.getString("condition");
-				tableNames.add(tableName);
-				conditions.add(condition);
+				dataSet.addCondition(tableName, condition);
 			}
 		} catch (SQLException e) {
 			LOGGER.fatal("", e);
 			throw new PlatformException(e.getLocalizedMessage());
 		}
-		dataSet = new DataSet(name);
-
-		dataSet.setTableNames(tableNames);
-		dataSet.setConditions(conditions);
-
 		return dataSet;
 	}
 
