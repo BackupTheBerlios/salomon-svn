@@ -33,19 +33,28 @@ import salomon.engine.database.queries.SQLUpdate;
 
 /**
  * Represents a project, it is an implementation of IProject interface.
- *  
  */
 public final class Project implements IProject, IDBSupporting
 {
-	public static final String TABLE_NAME = "projects";
-    
-    private static final String GEN_NAME = "gen_project_id";
-
 	private String _info;
 
 	private String _name;
 
 	private int _projectID = 0;
+
+	/**
+	 * Removes itself from database. After successsful finish object should be
+	 * destroyed.
+	 * 
+	 * @return @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	public boolean delete() throws SQLException, ClassNotFoundException
+	{
+		SQLDelete delete = new SQLDelete(TABLE_NAME);
+		delete.addCondition("project_id =", _projectID);
+		return (DBManager.getInstance().delete(delete) > 0);
+	}
 
 	/**
 	 * @return Returns the info.
@@ -69,35 +78,6 @@ public final class Project implements IProject, IDBSupporting
 	public int getProjectID()
 	{
 		return _projectID;
-	}
-
-	/**
-	 * @param info The info to set.
-	 */
-	public void setInfo(String info)
-	{
-		_info = info;
-	}
-
-	/**
-	 * @param name The name to set.
-	 */
-	public void setName(String name)
-	{
-		_name = name;
-	}
-
-	/**
-	 * @param projectId The projectID to set.
-	 */
-	public void setProjectID(int projectId)
-	{
-		_projectID = projectId;
-	}
-
-	public String toString()
-	{
-		return "[" + _projectID + ", " + _name + ", " + _info + "]";
 	}
 
 	/**
@@ -138,17 +118,36 @@ public final class Project implements IProject, IDBSupporting
 	}
 
 	/**
-	 * Removes itself from database. After successsful finish object should be
-	 * destroyed.
-	 * 
-	 * @return @throws ClassNotFoundException
-	 * @throws SQLException
+	 * @param info The info to set.
 	 */
-	public boolean delete() throws SQLException, ClassNotFoundException
+	public void setInfo(String info)
 	{
-		SQLDelete delete = new SQLDelete(TABLE_NAME);
-		delete.addCondition("project_id =", _projectID);
-		return (DBManager.getInstance().delete(delete) > 0);
+		_info = info;
 	}
+
+	/**
+	 * @param name The name to set.
+	 */
+	public void setName(String name)
+	{
+		_name = name;
+	}
+
+	/**
+	 * @param projectId The projectID to set.
+	 */
+	public void setProjectID(int projectId)
+	{
+		_projectID = projectId;
+	}
+
+	public String toString()
+	{
+		return "[" + _projectID + ", " + _name + ", " + _info + "]";
+	}
+    
+	public static final String TABLE_NAME = "projects";
+    
+    private static final String GEN_NAME = "gen_project_id";
 
 }

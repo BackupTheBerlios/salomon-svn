@@ -28,12 +28,15 @@ import salomon.engine.database.DBManager;
 import salomon.engine.platform.data.attribute.AttributeManager;
 import salomon.engine.platform.data.dataset.DataSetManager;
 import salomon.engine.platform.data.rule.RuleSetManager;
+import salomon.engine.platform.data.tree.TreeManager;
+
 import salomon.platform.IDataEngine;
+import salomon.platform.data.tree.ITreeManager;
 
 /**
  *  Class holds  DataSetManager, RuleSetManager and AttributeManager instances.  
  */
-public class DataEngine implements IDataEngine
+public final class DataEngine implements IDataEngine
 {
 	private AttributeManager _attributeManager;
 
@@ -41,45 +44,51 @@ public class DataEngine implements IDataEngine
 
 	private RuleSetManager _ruleSetManager;
 
+	private TreeManager _treeManager;
+
 	public DataEngine()
 	{
+        _attributeManager = new AttributeManager();
 		_dataSetManager = new DataSetManager();
+        _ruleSetManager = new RuleSetManager();
+        _treeManager = new TreeManager();
+        
 	}
 
 	/**
-	 * Does ...
 	 * 
-	 * @return
+	 */
+	public AttributeManager getAttributeManager()
+	{
+		return _attributeManager;
+	}
+
+	/**
+	 * 
 	 */
 	public DataSetManager getDataSetManager()
 	{
 		return _dataSetManager;
-	} 
+	}
 
-	/**
-	 * Does ...
-	 * 
-	 * @return
-	 */
-	public RuleSetManager getRuleSetManager()
-	{
-		
-		return null;
-	} 
-
-	/**
-	 * Does ...
-	 * 
-	 * @return
-	 */
-	public AttributeManager getAttributeManager()
-	{
-		
-		return null;
-	} 
-    
 	public DBManager getDbManager() throws SQLException, ClassNotFoundException
 	{
 		return DBManager.getInstance();
-	}	
-} 
+	}
+
+	/**
+	 * 
+	 */
+	public RuleSetManager getRuleSetManager()
+	{
+		return _ruleSetManager;
+	}
+
+	/**
+	 * @see salomon.platform.IDataEngine#getTreeManager()
+	 */
+	public ITreeManager getTreeManager()
+	{
+		return _treeManager;
+	}
+}

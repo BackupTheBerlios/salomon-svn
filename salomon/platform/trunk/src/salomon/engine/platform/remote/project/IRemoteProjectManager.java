@@ -39,33 +39,31 @@ public interface IRemoteProjectManager extends Remote
 {
 
 	/**
-	 * TODO: add comment.
-	 * @param project
+	 * @see salomon.engine.project.IProjectManager#addProject(IProject)
 	 */
-	void addProject(IProject project) throws PlatformException, RemoteException;
+	void addProject(IRemoteProject project) throws PlatformException,
+			RemoteException;
+
 	/**
 	 * @see salomon.engine.project.IProjectManager#ceateProject()
 	 * 
 	 * @throws PlatformException
 	 * @throws RemoteException
 	 */
-	IProject createProject() throws PlatformException, RemoteException;
+	IRemoteProject createProject() throws PlatformException, RemoteException;
 
 	/**
 	 * Method loads project from data base.
-	 * FIXME: make IRemoveProject 
-	 * @param projectID
-	 * @throws PlatformException
 	 * @pre $none
 	 * @post $none
 	 */
-	IProject getProject(int projectID) throws PlatformException,
+	IRemoteProject getProject(int projectID) throws PlatformException,
 			RemoteException;
 
 	/**
 	 * @see salomon.engine.project.IProjectManager#getProjects()
 	 */
-	IProject[] getProjects() throws RemoteException, PlatformException;
+	IRemoteProject[] getProjects() throws RemoteException, PlatformException;
 
 	/**
 	 * Method saves project in data base - project header, plugins and tasks are

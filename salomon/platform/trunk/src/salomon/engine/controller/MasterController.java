@@ -30,7 +30,6 @@ import java.rmi.RMISecurityManager;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
-import java.sql.SQLException;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -51,22 +50,18 @@ import salomon.engine.Config;
 import salomon.engine.Messages;
 import salomon.engine.Resources;
 import salomon.engine.SQLConsole;
-import salomon.engine.controller.gui.ControllerFrame;
 import salomon.engine.controller.gui.ControllerPanel;
 import salomon.engine.controller.gui.ProjectEditionManager;
 import salomon.engine.controller.gui.RemoteControllerGUI;
 import salomon.engine.controller.gui.RemoteControllerPanel;
-import salomon.engine.controller.gui.SplashScreen;
 import salomon.engine.controller.gui.TaskEditionManager;
 import salomon.engine.controller.gui.action.ActionManager;
-import salomon.engine.database.DBManager;
 
 import salomon.engine.platform.IManagerEngine;
 import salomon.engine.platform.holder.ManagerEngineHolder;
 import salomon.engine.platform.remote.CentralController;
 import salomon.engine.platform.remote.event.IMasterControllerListener;
 import salomon.engine.platform.remote.event.RemoteControllerEvent;
-import salomon.util.gui.Utils;
 
 /**
  * Server side implementation of IController interface.

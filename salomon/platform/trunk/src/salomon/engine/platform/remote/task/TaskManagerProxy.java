@@ -42,7 +42,7 @@ import salomon.platform.exception.PlatformException;
  */
 public final class TaskManagerProxy implements ITaskManager
 {
-	private Map _proxies = new HashMap();
+	private Map<IRemoteTask, ITask> _proxies = new HashMap<IRemoteTask, ITask>();
 
 	private IRemoteTaskManager _remoteTaskManager;
 
@@ -171,7 +171,7 @@ public final class TaskManagerProxy implements ITaskManager
 	{
 		ITask task = null;
 		if (_proxies.containsKey(remoteTask)) {
-			task = (ITask) _proxies.get(remoteTask);
+			task = _proxies.get(remoteTask);
 		} else {
 			task = new TaskProxy(remoteTask);
 			_proxies.put(remoteTask, task);

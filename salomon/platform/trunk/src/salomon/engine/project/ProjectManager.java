@@ -38,6 +38,7 @@ import salomon.engine.task.ITask;
 import salomon.engine.task.Task;
 
 import salomon.engine.platform.IManagerEngine;
+import salomon.engine.platform.remote.project.IRemoteProject;
 
 import salomon.util.gui.Utils;
 
@@ -73,7 +74,7 @@ public final class ProjectManager implements IProjectManager
 	}
 
 	/**
-	 * @see salomon.engine.project.IProjectManager#addProject(salomon.platform.project.IProject)
+	 * @see salomon.engine.project.IProjectManager#addProject(IRemoteProject)
 	 */
 	public void addProject(IProject project)
 	{

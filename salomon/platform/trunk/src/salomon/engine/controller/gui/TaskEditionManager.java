@@ -231,8 +231,6 @@ public final class TaskEditionManager
 
 	/**
 	 * Loads tasks to task list.
-	 * 
-	 * @param tasks
 	 */
 	public void refresh()
 	{

@@ -214,7 +214,7 @@ public final class TaskGUI
 	}
 
 	/**
-	 * @param _plugin The _plugin to set.
+	 * @param plugin The plugin to set.
 	 */
 	public void setPlugin(IPlugin plugin)
 	{
@@ -236,7 +236,7 @@ public final class TaskGUI
 	//    }
 
 	/**
-	 * @param _settings The _settings to set.
+	 * @param settings The settings to set.
 	 */
 	public void setSettings(ISettings settings)
 	{

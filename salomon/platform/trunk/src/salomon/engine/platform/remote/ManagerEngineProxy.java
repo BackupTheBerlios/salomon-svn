@@ -27,11 +27,14 @@ import org.apache.log4j.Logger;
 
 import salomon.engine.plugin.IPluginManager;
 import salomon.engine.project.IProjectManager;
+import salomon.engine.solution.ISolutionManager;
+import salomon.engine.solution.SolutionManger;
 import salomon.engine.task.ITaskManager;
 
 import salomon.engine.platform.IManagerEngine;
 import salomon.engine.platform.remote.plugin.PluginManagerProxy;
 import salomon.engine.platform.remote.project.ProjectManagerProxy;
+import salomon.engine.platform.remote.solution.SolutionManagerProxy;
 import salomon.engine.platform.remote.task.TaskManagerProxy;
 
 /**
@@ -49,6 +52,8 @@ public final class ManagerEngineProxy implements IManagerEngine
 
 	private ITaskManager _taskManager;
 
+	private ISolutionManager _solutionManager;
+
 	public ManagerEngineProxy(IRemoteManagerEngine remoteManagerEngine)
 	{
 		try {
@@ -58,6 +63,8 @@ public final class ManagerEngineProxy implements IManagerEngine
 					remoteManagerEngine.getProjectManager());
 			_pluginManager = new PluginManagerProxy(
 					remoteManagerEngine.getPluginManager());
+			_solutionManager = new SolutionManagerProxy(
+					remoteManagerEngine.getSolutionManager());
 		} catch (RemoteException e) {
 			LOGGER.error(e);
 		}
@@ -89,5 +96,13 @@ public final class ManagerEngineProxy implements IManagerEngine
 	}
 
 	private static final Logger LOGGER = Logger.getLogger(ManagerEngineProxy.class);
+
+	/**
+	 * @see salomon.engine.platform.IManagerEngine#getSolutionManager()
+	 */
+	public ISolutionManager getSolutionManager()
+	{
+		return _solutionManager;
+	}
 
 }

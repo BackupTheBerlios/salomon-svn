@@ -26,6 +26,7 @@ import java.rmi.RemoteException;
 
 import salomon.engine.platform.remote.plugin.IRemotePluginManager;
 import salomon.engine.platform.remote.project.IRemoteProjectManager;
+import salomon.engine.platform.remote.solution.IRemoteSolutionManager;
 import salomon.engine.platform.remote.task.IRemoteTaskManager;
 
 /**
@@ -37,7 +38,6 @@ import salomon.engine.platform.remote.task.IRemoteTaskManager;
  */
 public interface IRemoteManagerEngine extends Remote
 {
-
 	/**
 	 * @see salomon.engine.platform.IManagerEngine#getPluginManager()
 	 * 
@@ -60,4 +60,9 @@ public interface IRemoteManagerEngine extends Remote
 	 * @see salomon.engine.platform.IManagerEngine#getTasksManager()
 	 */
 	IRemoteTaskManager getTasksManager() throws RemoteException;
+    
+    /**
+     * @see salomon.engine.platform.IManagerEngine#getSolutionManager()
+     */
+    IRemoteSolutionManager getSolutionManager() throws RemoteException;
 }

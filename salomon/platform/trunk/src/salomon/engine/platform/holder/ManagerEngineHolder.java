@@ -23,6 +23,7 @@ package salomon.engine.platform.holder;
 
 import salomon.engine.plugin.IPluginManager;
 import salomon.engine.project.IProjectManager;
+import salomon.engine.solution.ISolutionManager;
 import salomon.engine.task.ITaskManager;
 
 import salomon.engine.platform.IManagerEngine;
@@ -39,10 +40,12 @@ public final class ManagerEngineHolder implements IManagerEngine
 
 	private ProjectManagerHolder _projectManagerHolder;
 
+	private SolutionManagerHolder _solutionManagerHolder;
+
 	private TaskManagerHolder _taskManagerHolder;
 
 	/**
-     * 
+	 * 
 	 */
 	public ManagerEngineHolder(IManagerEngine managerEngine)
 	{
@@ -53,6 +56,8 @@ public final class ManagerEngineHolder implements IManagerEngine
 				_currentManagerEngine.getProjectManager());
 		_taskManagerHolder = new TaskManagerHolder(
 				_currentManagerEngine.getTasksManager());
+		_solutionManagerHolder = new SolutionManagerHolder(
+				_currentManagerEngine.getSolutionManager());
 	}
 
 	/**
@@ -79,16 +84,24 @@ public final class ManagerEngineHolder implements IManagerEngine
 		return _taskManagerHolder;
 	}
 
-    /**
-     * 
-     * TODO: add comment.
-     * @param managerEngine
-     */
+	/**
+	 * 
+	 * TODO: add comment.
+	 * @param managerEngine
+	 */
 	public void setCurrentManager(IManagerEngine managerEngine)
 	{
 		_currentManagerEngine = managerEngine;
 		_pluginManagerHolder.setCurrent(_currentManagerEngine.getPluginManager());
 		_projectManagerHolder.setCurrent(_currentManagerEngine.getProjectManager());
 		_taskManagerHolder.setCurrent(_currentManagerEngine.getTasksManager());
+	}
+
+	/**
+	 * @see salomon.engine.platform.IManagerEngine#getSolutionManager()
+	 */
+	public ISolutionManager getSolutionManager()
+	{
+		return _solutionManagerHolder;
 	}
 }

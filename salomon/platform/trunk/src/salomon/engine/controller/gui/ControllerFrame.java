@@ -90,8 +90,6 @@ public final class ControllerFrame extends JFrame
 
 	/**
 	 * This method initializes this
-	 * 
-	 * @return void
 	 */
 	private void initialize()
 	{

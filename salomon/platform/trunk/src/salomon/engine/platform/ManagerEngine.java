@@ -25,9 +25,10 @@ import salomon.engine.plugin.IPluginManager;
 import salomon.engine.plugin.PluginManager;
 import salomon.engine.project.IProjectManager;
 import salomon.engine.project.ProjectManager;
+import salomon.engine.solution.ISolutionManager;
+import salomon.engine.solution.SolutionManger;
 import salomon.engine.task.ITaskManager;
 import salomon.engine.task.TaskManager;
-
 
 /**
  * Class creates and holds all managers used by plugins. They are created only
@@ -35,17 +36,21 @@ import salomon.engine.task.TaskManager;
  */
 public final class ManagerEngine implements IManagerEngine
 {
-	private ITaskManager _taskManager = null;
 
-	private IProjectManager _projectManager = null;
+	private IPluginManager _pluginManager;
 
-	private IPluginManager _pluginManager = null;
+	private IProjectManager _projectManager;
+
+	private ITaskManager _taskManager;
+    
+    private ISolutionManager _solutionManager;
 
 	public ManagerEngine()
 	{
 		_taskManager = new TaskManager();
 		_projectManager = new ProjectManager(this);
 		_pluginManager = new PluginManager();
+        _solutionManager = new SolutionManger(); 
 
 	}
 
@@ -55,11 +60,6 @@ public final class ManagerEngine implements IManagerEngine
 		_taskManager = taskManager;
 		_projectManager = projectManager;
 		_pluginManager = pluginManager;
-	}
-
-	public ITaskManager getTasksManager()
-	{
-		return _taskManager;
 	}
 
 	/**
@@ -76,5 +76,18 @@ public final class ManagerEngine implements IManagerEngine
 	public IProjectManager getProjectManager()
 	{
 		return _projectManager;
+	}
+
+	/**
+	 * @see salomon.engine.platform.IManagerEngine#getSolutionManager()
+	 */
+	public ISolutionManager getSolutionManager()
+	{
+        return _solutionManager;
+	}
+
+	public ITaskManager getTasksManager()
+	{
+		return _taskManager;
 	}
 } // end ManagerEngine

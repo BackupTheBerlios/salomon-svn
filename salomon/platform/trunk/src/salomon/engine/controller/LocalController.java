@@ -26,7 +26,6 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -47,17 +46,12 @@ import salomon.engine.Messages;
 import salomon.engine.Resources;
 import salomon.engine.SQLConsole;
 import salomon.engine.Starter;
-import salomon.engine.controller.gui.ControllerFrame;
 import salomon.engine.controller.gui.ControllerPanel;
 import salomon.engine.controller.gui.ProjectEditionManager;
-import salomon.engine.controller.gui.SplashScreen;
 import salomon.engine.controller.gui.TaskEditionManager;
 import salomon.engine.controller.gui.action.ActionManager;
-import salomon.engine.database.DBManager;
 
 import salomon.engine.platform.IManagerEngine;
-
-import salomon.util.gui.Utils;
 
 /**
  * Local implementation of IController interface.

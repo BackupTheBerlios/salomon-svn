@@ -29,8 +29,6 @@ import salomon.engine.project.IProject;
 
 import salomon.platform.exception.PlatformException;
 
-
-
 /**
  * Class is a sever side wrapper of IRemoteProject object. It implements
  * IProject interface and delegates methods execution to remote object catching
@@ -61,9 +59,9 @@ public final class ProjectProxy implements IProject
 			info = _remoteProject.getInfo();
 		} catch (RemoteException e) {
 			LOGGER.fatal("Remote error!", e);
-            throw new PlatformException(e.getLocalizedMessage());
+			throw new PlatformException(e.getLocalizedMessage());
 		}
-        
+
 		return info;
 	}
 
@@ -76,10 +74,10 @@ public final class ProjectProxy implements IProject
 		try {
 			name = _remoteProject.getName();
 		} catch (RemoteException e) {
-            LOGGER.fatal("Remote error!", e);
-            throw new PlatformException(e.getLocalizedMessage());
+			LOGGER.fatal("Remote error!", e);
+			throw new PlatformException(e.getLocalizedMessage());
 		}
-        
+
 		return name;
 	}
 
@@ -92,10 +90,10 @@ public final class ProjectProxy implements IProject
 		try {
 			id = _remoteProject.getProjectID();
 		} catch (RemoteException e) {
-            LOGGER.fatal("Remote error!", e);
-            throw new PlatformException(e.getLocalizedMessage());
+			LOGGER.fatal("Remote error!", e);
+			throw new PlatformException(e.getLocalizedMessage());
 		}
-        
+
 		return id;
 	}
 
@@ -107,8 +105,8 @@ public final class ProjectProxy implements IProject
 		try {
 			_remoteProject.setInfo(info);
 		} catch (RemoteException e) {
-            LOGGER.fatal("Remote error!", e);
-            throw new PlatformException(e.getLocalizedMessage());
+			LOGGER.fatal("Remote error!", e);
+			throw new PlatformException(e.getLocalizedMessage());
 		}
 	}
 
@@ -120,8 +118,8 @@ public final class ProjectProxy implements IProject
 		try {
 			_remoteProject.setName(name);
 		} catch (RemoteException e) {
-            LOGGER.fatal("Remote error!", e);
-            throw new PlatformException(e.getLocalizedMessage());
+			LOGGER.fatal("Remote error!", e);
+			throw new PlatformException(e.getLocalizedMessage());
 		}
 	}
 
@@ -133,10 +131,15 @@ public final class ProjectProxy implements IProject
 		try {
 			_remoteProject.setProjectID(projectId);
 		} catch (RemoteException e) {
-            LOGGER.fatal("Remote error!", e);
-            throw new PlatformException(e.getLocalizedMessage());
+			LOGGER.fatal("Remote error!", e);
+			throw new PlatformException(e.getLocalizedMessage());
 		}
 
+	}
+
+	IRemoteProject getRemoteProject()
+	{
+		return _remoteProject;
 	}
 
 	private static final Logger LOGGER = Logger.getLogger(ProjectProxy.class);

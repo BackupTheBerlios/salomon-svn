@@ -46,7 +46,7 @@ public final class RemoteSolutionManager extends UnicastRemoteObject
 	/**
 	 * @throws RemoteException
 	 */
-	protected RemoteSolutionManager(ISolutionManager solutionManager)
+	public RemoteSolutionManager(ISolutionManager solutionManager)
 			throws RemoteException
 	{
 		_solutionManager = solutionManager;

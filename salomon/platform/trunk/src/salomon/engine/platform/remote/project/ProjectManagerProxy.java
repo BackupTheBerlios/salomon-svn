@@ -22,6 +22,8 @@
 package salomon.engine.platform.remote.project;
 
 import java.rmi.RemoteException;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 
@@ -29,7 +31,6 @@ import salomon.engine.project.IProject;
 import salomon.engine.project.IProjectManager;
 
 import salomon.platform.exception.PlatformException;
-
 
 /**
  * Class is a sever side wrapper of IRemoteProjectManager object. It implements
@@ -42,6 +43,8 @@ import salomon.platform.exception.PlatformException;
 public final class ProjectManagerProxy implements IProjectManager
 {
 	private IRemoteProjectManager _remoteProjectManager;
+
+	private Map<IRemoteProject, IProject> _proxies = new HashMap<IRemoteProject, IProject>();
 
 	/**
 	 * @pre $none
@@ -57,12 +60,13 @@ public final class ProjectManagerProxy implements IProjectManager
 	 */
 	public void addProject(IProject project) throws PlatformException
 	{
-        try {
-        	_remoteProjectManager.addProject(project);
-        } catch (RemoteException e) {
-            LOGGER.fatal("Remote error!", e);
-            throw new PlatformException(e.getLocalizedMessage());        	
-        }
+		try {
+            ProjectProxy projectProxy = (ProjectProxy) project;
+			_remoteProjectManager.addProject(projectProxy.getRemoteProject());
+		} catch (RemoteException e) {
+			LOGGER.fatal("Remote error!", e);
+			throw new PlatformException(e.getLocalizedMessage());
+		}
 		throw new UnsupportedOperationException(
 				"Method addProject() not implemented yet!");
 	}
@@ -72,15 +76,16 @@ public final class ProjectManagerProxy implements IProjectManager
 	 */
 	public IProject ceateProject() throws PlatformException
 	{
-        IProject project = null;
+		IProject project = null;
 		try {
-			project = _remoteProjectManager.createProject();
+            IRemoteProject remoteProject = _remoteProjectManager.createProject(); 
+			project = getProject(remoteProject);
 		} catch (RemoteException e) {
 			LOGGER.fatal("Remote error!", e);
 			throw new PlatformException(e.getLocalizedMessage());
 		}
-        
-        return project;
+
+		return project;
 	}
 
 	/**
@@ -88,15 +93,16 @@ public final class ProjectManagerProxy implements IProjectManager
 	 */
 	public IProject getProject(int projectID) throws PlatformException
 	{
-        IProject project = null;
+		IProject project = null;
 		try {
-			project = _remoteProjectManager.getProject(projectID);
+            IRemoteProject remoteProject = _remoteProjectManager.getProject(projectID); 
+			project = getProject(remoteProject);
 		} catch (RemoteException e) {
 			LOGGER.fatal("Remote error!", e);
 			throw new PlatformException(e.getLocalizedMessage());
 		}
-        
-        return project;
+
+		return project;
 	}
 
 	/**
@@ -106,7 +112,11 @@ public final class ProjectManagerProxy implements IProjectManager
 	{
 		IProject[] projects = null;
 		try {
-			projects = _remoteProjectManager.getProjects();
+			IRemoteProject[] remoteProjects = _remoteProjectManager.getProjects();
+            projects = new IProject[remoteProjects.length];
+            for (int i = 0; i < remoteProjects.length; i++) {
+				projects[i] = getProject(remoteProjects[i]);
+			}
 		} catch (RemoteException e) {
 			LOGGER.fatal("Remote error!", e);
 			throw new PlatformException(e.getLocalizedMessage());
@@ -127,6 +137,19 @@ public final class ProjectManagerProxy implements IProjectManager
 			throw new PlatformException(e.getLocalizedMessage());
 		}
 	}
+    
+    IProject getProject(IRemoteProject remoteProject)
+    {
+    	IProject project = null;
+        if (_proxies.containsKey(remoteProject)) {
+        	project = _proxies.get(remoteProject);
+        } else {
+        	project = new ProjectProxy(remoteProject);
+            _proxies.put(remoteProject, project);
+        }
+        
+        return project;
+    }
 
 	private static final Logger LOGGER = Logger.getLogger(ProjectManagerProxy.class);
 

@@ -90,8 +90,14 @@ public final class RemoteProject extends UnicastRemoteObject
 	/**
 	 * @see IRemoteProject#setProjectID(int)
 	 */
-	public void setProjectID(int projectId) throws RemoteException, PlatformException
+	public void setProjectID(int projectId) throws RemoteException,
+			PlatformException
 	{
 		_project.setProjectID(projectId);
+	}
+
+	IProject getProject()
+	{
+		return _project;
 	}
 }

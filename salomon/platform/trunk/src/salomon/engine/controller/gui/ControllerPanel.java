@@ -31,7 +31,6 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JList;
 import javax.swing.JPanel;
-import javax.swing.JToolBar;
 import javax.swing.border.TitledBorder;
 
 import org.apache.log4j.Logger;

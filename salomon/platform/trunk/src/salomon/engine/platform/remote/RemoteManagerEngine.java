@@ -29,6 +29,8 @@ import salomon.engine.platform.remote.plugin.IRemotePluginManager;
 import salomon.engine.platform.remote.plugin.RemotePluginManager;
 import salomon.engine.platform.remote.project.IRemoteProjectManager;
 import salomon.engine.platform.remote.project.RemoteProjectManager;
+import salomon.engine.platform.remote.solution.IRemoteSolutionManager;
+import salomon.engine.platform.remote.solution.RemoteSolutionManager;
 import salomon.engine.platform.remote.task.IRemoteTaskManager;
 import salomon.engine.platform.remote.task.RemoteTaskManager;
 
@@ -40,13 +42,13 @@ import salomon.engine.platform.remote.task.RemoteTaskManager;
 public final class RemoteManagerEngine extends UnicastRemoteObject
 		implements IRemoteManagerEngine
 {
-	private IManagerEngine _managerEngine;
-
 	private IRemotePluginManager _remotePluginManager;
 
 	private IRemoteProjectManager _remoteProjectManager;
 
 	private IRemoteTaskManager _remoteTaskManager;
+    
+    private IRemoteSolutionManager _remoteSolutionManager;
 
 	/**
 	 * @throws RemoteException
@@ -62,6 +64,7 @@ public final class RemoteManagerEngine extends UnicastRemoteObject
 				managerEngine.getProjectManager());
 		_remoteTaskManager = new RemoteTaskManager(
 				managerEngine.getTasksManager());
+        _remoteSolutionManager = new RemoteSolutionManager(managerEngine.getSolutionManager());
 	}
 
 	/**
@@ -87,4 +90,13 @@ public final class RemoteManagerEngine extends UnicastRemoteObject
 	{
 		return _remoteTaskManager;
 	}
+
+	/**
+	 * @see IRemoteManagerEngine#getSolutionManager()
+	 */
+	public IRemoteSolutionManager getSolutionManager() throws RemoteException
+	{
+		return _remoteSolutionManager;
+	}
+    
 }

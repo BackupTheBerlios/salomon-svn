@@ -23,12 +23,13 @@ package salomon.engine.platform.remote.project;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.HashMap;
+import java.util.Map;
 
 import salomon.engine.project.IProject;
 import salomon.engine.project.IProjectManager;
 
 import salomon.platform.exception.PlatformException;
-
 
 /**
  * Class representing remote instance of IProjectManager.
@@ -37,6 +38,8 @@ public final class RemoteProjectManager extends UnicastRemoteObject
 		implements IRemoteProjectManager
 {
 	private IProjectManager _projectManager;
+
+	private Map<IProject, IRemoteProject> _proxies = new HashMap<IProject, IRemoteProject>();
 
 	/**
 	 * @throws RemoteException
@@ -48,37 +51,53 @@ public final class RemoteProjectManager extends UnicastRemoteObject
 	}
 
 	/**
-	 * @see IRemoteProjectManager#addProject(IProject)
+	 * @see IRemoteProjectManager#addProject(IRemoteProject)
 	 */
-	public void addProject(IProject project) throws PlatformException, RemoteException
+	public void addProject(IRemoteProject project) throws PlatformException,
+			RemoteException
 	{
-		throw new UnsupportedOperationException("Method addProject() not implemented yet!");
+		RemoteProject remoteProject = (RemoteProject) project;
+
+		_projectManager.addProject(remoteProject.getProject());
 	}
 
 	/**
 	 * @throws PlatformException
 	 * @see IRemoteProjectManager#createProject()
 	 */
-	public IProject createProject() throws RemoteException, PlatformException
+	public IRemoteProject createProject() throws RemoteException,
+			PlatformException
 	{
-		return _projectManager.ceateProject();
+		IProject newProject = _projectManager.ceateProject();
+
+		return getRemoteProject(newProject);
 	}
 
 	/**
 	 * @see IRemoteProjectManager#getProject(int)
 	 */
-	public IProject getProject(int projectID) throws PlatformException
+	public IRemoteProject getProject(int projectID) throws PlatformException,
+			RemoteException
 	{
-		return _projectManager.getProject(projectID);
+		IProject project = _projectManager.getProject(projectID);
+
+		return getRemoteProject(project);
 	}
 
 	/**
 	 * @see IRemoteProjectManager#getProjects()
 	 */
-	public IProject[] getProjects() throws RemoteException,
+	public IRemoteProject[] getProjects() throws RemoteException,
 			PlatformException
 	{
-		return _projectManager.getProjects();
+		IProject[] projects = _projectManager.getProjects();
+		IRemoteProject[] remoteProjects = new IRemoteProject[projects.length];
+
+		for (int i = 0; i < projects.length; i++) {
+			remoteProjects[i] = getRemoteProject(projects[i]);
+		}
+
+		return remoteProjects;
 	}
 
 	/**
@@ -87,5 +106,19 @@ public final class RemoteProjectManager extends UnicastRemoteObject
 	public void saveProject() throws PlatformException, RemoteException
 	{
 		_projectManager.saveProject();
+	}
+
+	private IRemoteProject getRemoteProject(IProject project)
+			throws RemoteException
+	{
+		IRemoteProject remoteProject = null;
+		if (_proxies.containsKey(project)) {
+			remoteProject = _proxies.get(project);
+		} else {
+			remoteProject = new RemoteProject(project);
+			_proxies.put(project, remoteProject);
+		}
+
+		return remoteProject;
 	}
 }

@@ -23,29 +23,48 @@ package salomon.engine.platform;
 
 import salomon.engine.plugin.IPluginManager;
 import salomon.engine.project.IProjectManager;
+import salomon.engine.solution.ISolutionManager;
 import salomon.engine.task.ITaskManager;
-
 
 /**
  * Interface used to pass ManagerEngine to plugins. 
  */
 public interface IManagerEngine
 {
-    /**
-     * Returns the TaskManager.
-     * @return The TaskManager
-     */
-	ITaskManager getTasksManager();
 
 	/**
-     * Returns the PluginManager.
+	 * Returns the PluginManager.
 	 * @return The PluginManager.
+	 * 
+	 * @pre $none
+	 * @post $result != null
 	 */
 	IPluginManager getPluginManager();
 
 	/**
-     * Return the ProjectManager.
-	 * @return The projectManager.
+	 * Returns the ProjectManager.
+	 * @return The ProjectManager.
+	 * 
+	 * @pre $none
+	 * @post $result != null
 	 */
 	IProjectManager getProjectManager();
+
+	/**
+	 * Returns the SolutionManager.
+	 * @return The SolutionManager
+	 * 
+	 * @pre $none
+	 * @post $result != null
+	 */
+	ISolutionManager getSolutionManager();
+
+	/**
+	 * Returns the TaskManager.
+	 * @return The TaskManager
+	 * 
+	 * @pre $none
+	 * @post $result != null
+	 */
+	ITaskManager getTasksManager();
 }
