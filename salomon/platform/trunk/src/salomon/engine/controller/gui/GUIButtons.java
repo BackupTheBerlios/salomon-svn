@@ -30,8 +30,9 @@ import javax.swing.JButton;
 
 import org.apache.log4j.Logger;
 
-import salomon.engine.platform.Config;
-import salomon.engine.platform.Resources;
+import salomon.engine.Config;
+import salomon.engine.Resources;
+
 
 /**
  * Class agregates all buttons used in GUIController.

@@ -31,7 +31,8 @@ import java.rmi.registry.Registry;
 
 import org.apache.log4j.Logger;
 
-import salomon.engine.platform.Config;
+import salomon.engine.Config;
+
 import salomon.engine.platform.IManagerEngine;
 import salomon.engine.platform.remote.ICentralController;
 import salomon.engine.platform.remote.IRemoteController;

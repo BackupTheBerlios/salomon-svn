@@ -38,7 +38,8 @@ import javax.swing.event.ListSelectionListener;
 
 import org.apache.log4j.Logger;
 
-import salomon.engine.platform.Messages;
+import salomon.engine.Messages;
+
 import salomon.engine.platform.holder.ManagerEngineHolder;
 
 /**

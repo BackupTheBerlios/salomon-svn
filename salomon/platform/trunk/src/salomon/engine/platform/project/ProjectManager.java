@@ -30,7 +30,8 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import salomon.engine.platform.DBManager;
+import salomon.engine.DBManager;
+
 import salomon.engine.platform.IManagerEngine;
 import salomon.engine.platform.data.common.SQLSelect;
 import salomon.engine.platform.data.common.SQLUpdate;

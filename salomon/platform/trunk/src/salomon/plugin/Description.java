@@ -28,8 +28,9 @@ import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import salomon.engine.platform.DBManager;
-import salomon.engine.platform.IDBSupporting;
+import salomon.engine.DBManager;
+import salomon.engine.IDBSupporting;
+
 import salomon.engine.platform.data.common.SQLDelete;
 import salomon.engine.platform.data.common.SQLUpdate;
 

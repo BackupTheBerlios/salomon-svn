@@ -47,9 +47,9 @@ import javax.swing.JTextField;
 
 import org.apache.log4j.Logger;
 
+import salomon.engine.Messages;
 import salomon.engine.controller.gui.action.ActionManager;
 import salomon.engine.platform.IManagerEngine;
-import salomon.engine.platform.Messages;
 import salomon.engine.platform.plugin.PluginLoader;
 import salomon.plugin.Description;
 import salomon.plugin.IPlugin;

@@ -35,7 +35,8 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 
-import salomon.engine.platform.Config;
+import salomon.engine.Config;
+
 
 import salomon.plugin.IPlugin;
 

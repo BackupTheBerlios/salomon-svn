@@ -19,7 +19,7 @@
  * 
  */
 
-package salomon.engine.platform;
+package salomon.engine;
 
 import java.sql.SQLException;
 

@@ -19,7 +19,7 @@
  * 
  */
 
-package salomon.engine.platform;
+package salomon.engine;
 
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
@@ -27,23 +27,16 @@ import java.util.ResourceBundle;
 import org.apache.log4j.Logger;
 
 /**
- * Class is responsible for managing resources used in application. It holds
- * resource bundle for resources.properties file.
+ * Class is responsible for managing all texts in application. It holds resource
+ * bundle for messages.properties file.
  */
-public final class Resources
+public final class Messages
 {
-
-	/**
-	 * 
-	 */
-	private Resources()
+	private Messages()
 	{
 		// prevent creating an instance
 	}
 
-	/**
-	 * @param key
-	 */
 	public static String getString(String key)
 	{
 		try {
@@ -54,12 +47,12 @@ public final class Resources
 		}
 	}
 
-	private static final String BUNDLE_NAME = "resources";//$NON-NLS-1$
+	private static final String BUNDLE_NAME = "messages";//$NON-NLS-1$
 
-	private static final Logger LOGGER = Logger.getLogger(Resources.class);
+	private static final Logger LOGGER = Logger.getLogger(Messages.class);
 
-	private static ResourceBundle RESOURCE_BUNDLE = null;
-
+	private static ResourceBundle RESOURCE_BUNDLE;
+    
 	static {
 		try {
 			RESOURCE_BUNDLE = ResourceBundle.getBundle(BUNDLE_NAME);
@@ -67,5 +60,4 @@ public final class Resources
 			LOGGER.fatal("", e);
 		}
 	}
-
 }

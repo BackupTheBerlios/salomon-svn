@@ -30,7 +30,6 @@ import salomon.engine.controller.ServantController;
 import salomon.engine.controller.IController;
 import salomon.engine.controller.LocalController;
 import salomon.engine.controller.MasterController;
-import salomon.engine.platform.Config;
 import salomon.engine.platform.IManagerEngine;
 import salomon.engine.platform.ManagerEngine;
 import salomon.engine.platform.project.ProjectManager;

@@ -35,9 +35,10 @@ import javax.swing.SwingUtilities;
 
 import org.apache.log4j.Logger;
 
-import salomon.engine.platform.Config;
-import salomon.engine.platform.Messages;
-import salomon.engine.platform.Resources;
+import salomon.engine.Config;
+import salomon.engine.Messages;
+import salomon.engine.Resources;
+
 
 /**
  * Class represents splash screen.

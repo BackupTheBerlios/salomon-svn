@@ -20,7 +20,7 @@
  * 
  */
 
-package salomon.engine.platform;
+package salomon.engine;
 
 import java.net.MalformedURLException;
 import java.sql.ResultSet;

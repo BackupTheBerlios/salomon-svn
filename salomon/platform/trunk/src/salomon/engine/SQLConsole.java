@@ -19,7 +19,7 @@
  * 
  */
 
-package salomon.engine.platform;
+package salomon.engine;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -49,6 +49,7 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
 import salomon.util.gui.Utils;
+
 
 /**
  * Class represents simple SQL console. It is used to debug application. Allows
