@@ -3,23 +3,24 @@
  *  Generated with <A HREF="http://jakarta.apache.org/velocity/">velocity</A> template engine.
  */
 
-package ks.manager;
+package ks.controller;
 
 import java.util.Iterator;
 import java.util.List;
-import org.apache.log4j.Logger;
 
 import ks.core.ManagerEngine;
 import ks.core.event.TaskEvent;
 import ks.core.event.TaskListener;
 import ks.core.task.Task;
 import ks.core.task.TaskManager;
-import ks.manager.gui.*;
+import ks.manager.gui.ManagerGUI;
+
+import org.apache.log4j.Logger;
 
 /**
  *  
  */
-public class LocalController implements IController
+public final class LocalController implements IController
 {
 	private ManagerEngine _managerEngine = null;
 

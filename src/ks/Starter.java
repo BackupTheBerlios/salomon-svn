@@ -10,15 +10,15 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 import ks.core.ManagerEngine;
 import ks.core.data.DBManager;
-import ks.manager.IManager;
-import ks.manager.StandAloneManager;
+import ks.controller.IController;
+import ks.controller.LocalController;
 
 /**
  *  
  */
 public final class Starter
 {
-	private IManager _manager;
+	private IController _manager;
 
 	private ManagerEngine _managerEngine;
 
@@ -34,7 +34,7 @@ public final class Starter
 
 	private void initManagers()
 	{
-		_manager = new StandAloneManager();
+		_manager = new LocalController();
 		_managerEngine = new ManagerEngine();
 		try {
 			_dbConnector = DBManager.getInstance();

@@ -3,14 +3,14 @@
  *  Generated with <A HREF="http://jakarta.apache.org/velocity/">velocity</A> template engine.
  */
 
-package ks.manager;
+package ks.controller;
 
 import ks.core.ManagerEngine;
 
 /**
  *  
  */
-public interface IManager
+public interface IController
 {
 	///////////////////////////////////////
 	// associations
