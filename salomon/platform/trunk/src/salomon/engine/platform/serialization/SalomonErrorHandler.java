@@ -13,16 +13,17 @@ import org.xml.sax.helpers.DefaultHandler;
 /**
  * 
  * TODO: add comment.
+ * 
  * @author kuba
  * 
  */
 public class SalomonErrorHandler extends DefaultHandler
 {
- /**
- * @see org.xml.sax.helpers.DefaultHandler#error(org.xml.sax.SAXParseException)
- */
-public void error(SAXParseException e) throws SAXException
-{
-    throw e;
-}
+	/**
+	 * @see org.xml.sax.helpers.DefaultHandler#error(org.xml.sax.SAXParseException)
+	 */
+	public void error(SAXParseException e) throws SAXException
+	{
+		throw e;
+	}
 }

@@ -55,13 +55,47 @@
       <type>jar</type>
       <url>http://firebird.sourceforge.net/</url>
     </dependency-->
+    <dependency>
+      <groupId>xalan</groupId>
+      <artifactId>xalan</artifactId>
+      <version>2.4.1</version>
+      <type>jar</type>
+      <url>http://xml.apache.org/xalan-j/</url>
+    </dependency>
+    <dependency>
+      <groupId>xml-apis</groupId>
+      <artifactId>xml-apis</artifactId>
+      <version>1.0.b2</version>
+      <type>jar</type>
+      <url>http://xml.apache.org/commons/</url>
+    </dependency>
   </dependencies>
   <build>
     <nagEmailAddress>qoooba@student.uci.agh.edu.pl</nagEmailAddress>
     <sourceDirectory>${basedir}/src</sourceDirectory>
+    <unitTestSourceDirectory>${basedir}/test/junit/src</unitTestSourceDirectory>
+    <unitTest>
+      <includes>
+        <include>**/*Test.java</include>
+      </includes>
+    </unitTest>
+    
+	<resources>
+		<resource>
+			<directory>${basedir}/src</directory>
+		<includes>
+			<include>*.properties</include>
+		</includes>
+		</resource>
+	</resources>
   </build>
   <reports>
     <report>maven-junit-report-plugin</report>
+    <!--report>maven-jcoverage-plugin</report>
+    <report>maven-dashboard-plugin</report>
+    <report>maven-jdepend-plugin</report>
+    <report>maven-faq-plugin</report>
+    <report>maven-license-plugin</report-->
   </reports>
 </project>
 

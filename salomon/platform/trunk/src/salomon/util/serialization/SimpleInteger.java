@@ -68,7 +68,6 @@ public class SimpleInteger implements IInteger
 	 */
 	public IObject.Types getType()
 	{
-		// TODO Auto-generated method stub
 		return IObject.Types.INT;
 	}
 

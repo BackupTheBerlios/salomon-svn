@@ -46,59 +46,62 @@ import salomon.util.serialization.SimpleStruct;
  */
 public final class XMLSerializer
 {
-private static final Logger LOGGER = Logger.getLogger(XMLSerializer.class);
 
 	/**
-	 * reads data from the given stream and creates SimpleStruct,
-     * can be called recurrently
+	 * reads data from the given stream and creates SimpleStruct, can be called
+	 * recurrently
+	 * 
 	 * @param is
 	 * @return SimpleStruct
 	 */
 	public static SimpleStruct deserialize(InputStream is)
 	{
-        Document document = null;
-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        factory.setValidating(true);
-        SimpleStruct result = null;
-        try {
-            DocumentBuilder builder =  factory.newDocumentBuilder();
-            builder.setErrorHandler(new SalomonErrorHandler());
-            document = builder.parse(is);
-            Node root = document.getChildNodes().item(1);
-            result = StructDeserializer.deserialize(root);
-        } catch (Exception e) {
-        	LOGGER.error("", e);
-        }
-        
-        return result;
+		Document document = null;
+		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+		factory.setValidating(true);
+		SimpleStruct result = null;
+		try {
+			DocumentBuilder builder = factory.newDocumentBuilder();
+			builder.setErrorHandler(new SalomonErrorHandler());
+			document = builder.parse(is);
+			// because node no. 0 is <!doctype....>
+			Node root = document.getChildNodes().item(1);
+			result = StructDeserializer.deserialize(root);
+		} catch (Exception e) {
+			LOGGER.error("", e);
+		}
+
+		return result;
 	}
 
-    
-    
 	/**
 	 * creates XML out of the given struct
+	 * 
 	 * @param value
 	 * @param os
 	 * 
-     */
+	 */
 	public static void serialize(SimpleStruct value, OutputStream os)
 	{
-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        Document document = null;
-        try {
-			DocumentBuilder builder =  factory.newDocumentBuilder();
-            document=  builder.newDocument();
+		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+		Document document = null;
+		try {
+			DocumentBuilder builder = factory.newDocumentBuilder();
+			document = builder.newDocument();
 		} catch (ParserConfigurationException e) {
-            LOGGER.error("", e);
+			LOGGER.error("", e);
 		}
-        document.appendChild(StructSerializer.serialize(document, value, null));
-        try {
-            Result result = new StreamResult(os);
-            Source source = new DOMSource(document);
-			Transformer  writer = TransformerFactory.newInstance().newTransformer();
-            writer.transform(source, result);
+		document.appendChild(StructSerializer.serialize(document, value, null));
+		try {
+			Result result = new StreamResult(os);
+			Source source = new DOMSource(document);
+			Transformer writer = TransformerFactory.newInstance()
+					.newTransformer();
+			writer.transform(source, result);
 		} catch (Exception e) {
-            LOGGER.error("", e);
+			LOGGER.error("", e);
 		}
 	}
+
+	private static final Logger LOGGER = Logger.getLogger(XMLSerializer.class);
 }

@@ -6,17 +6,18 @@
 
 package salomon.engine.serialization;
 
+import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+
+import junit.framework.TestCase;
 
 import org.apache.log4j.PropertyConfigurator;
 
 import salomon.engine.platform.serialization.XMLSerializer;
-import salomon.platform.serialization.IObject;
 import salomon.util.serialization.SimpleInteger;
 import salomon.util.serialization.SimpleString;
 import salomon.util.serialization.SimpleStruct;
-import junit.framework.TestCase;
 
 /**
  * 
@@ -44,11 +45,10 @@ private static final String TEST_FILE_NAME = "test/junit/res/struct.xml";
 	 */
 	public void testDeserialize()
     {
-        XMLSerializer serializer = new XMLSerializer();
         SimpleStruct struct = null;
         try {
 			FileInputStream is = new FileInputStream(TEST_FILE_NAME);
-             struct= serializer.deserialize(is);
+             struct= XMLSerializer.deserialize(is);
 		} catch (FileNotFoundException e) {
             assertTrue("File not found", false);
 		}
@@ -64,20 +64,33 @@ private static final String TEST_FILE_NAME = "test/junit/res/struct.xml";
             
     }
 
+    /**
+     * tests if the element is serialized properly
+     */
     public void testSerialize() {
-        XMLSerializer serializer = new XMLSerializer();
     	SimpleStruct object = null;
         try {
             FileInputStream is = new FileInputStream(TEST_FILE_NAME);
-            object= serializer.deserialize(is);
+            object= XMLSerializer.deserialize(is);
         } catch (FileNotFoundException e) {
             assertTrue("File not found", false);
         }
-        serializer.serialize(object, System.out);
+        assertNotNull(object);
+
+        ByteArrayOutputStream os = new ByteArrayOutputStream();
+        XMLSerializer.serialize(object, os);
+        assertNotNull(os.toByteArray());
+        assertTrue(os.toByteArray().length > 0);
+        //TODO: add more exact test
+    }
+
+    /**
+     * test serialization/deserializtion
+     */
+    public void testSymetric() {
+    	//TODO: add test which checks serialization/deserialization
     }
     
-    public static void main(String[] args)
-	{
-		new SerializerTest().testSerialize();
-	}
+    
+    
 }

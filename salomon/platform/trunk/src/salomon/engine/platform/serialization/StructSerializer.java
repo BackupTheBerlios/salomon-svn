@@ -24,6 +24,7 @@ import salomon.util.serialization.SimpleStruct;
  */
 class StructSerializer implements INodeNames
 {
+
 	/**
 	 * creates xml representation of the node
 	 * 
@@ -42,6 +43,7 @@ class StructSerializer implements INodeNames
 		String[] names = struct.getFieldNames();
 		for (String name : names) {
 			IObject object = struct.getField(name);
+
 			if (object.getType() == IObject.Types.INT) {
 				result.appendChild(getIntNode((SimpleInteger) object, document,
 						name));

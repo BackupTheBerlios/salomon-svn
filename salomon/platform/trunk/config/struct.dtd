@@ -11,5 +11,5 @@
 	name NMTOKEN #REQUIRED
 	value NMTOKEN #REQUIRED
 >
-<!ELEMENT struct (string|int|struct)*>
+<!ELEMENT struct (string*|int*|struct*)*>
 <!ATTLIST struct name NMTOKEN #REQUIRED>
