@@ -55,7 +55,9 @@
 	</target>
 
 	<target name="build_salomon_jar" depends="build_rmi_stubs">
-		<jar destfile="salomon.jar" basedir="${bin_dir}" includes="salomon/** *.properties">
+		<copy file="all.policy" todir="${bin_dir}" />
+		<copy file="log.conf" todir="${bin_dir}" />
+		<jar destfile="salomon.jar" basedir="${bin_dir}" includes="salomon/** *.properties log.conf all.policy">
 			<manifest>
 				<attribute name="Main-Class" value="salomon.engine.Starter" />
 				<attribute name="Class-Path" value="${lib_dir}/firebirdsql.jar ${lib_dir}/log4j-1.2.8.jar ${lib_dir}/mini-j2ee.jar ." />
@@ -119,7 +121,7 @@
 
 	<target name="copy_run_files">
 		<copy file="${run_script}" todir="${release_dir}" />
-		<copy file="all.policy" todir="${release_dir}" />
+		<!-- goes to jar: copy file="all.policy" todir="${release_dir}" /-->
 	</target>
 
 	<target name="copy_salomon" depends="build_salomon_jar">
