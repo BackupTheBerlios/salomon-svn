@@ -1,5 +1,5 @@
 
-package salomon.platform.remote;
+package salomon.engine.platform.remote;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;

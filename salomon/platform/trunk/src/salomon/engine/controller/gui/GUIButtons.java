@@ -3,7 +3,7 @@
  *
  */
 
-package salomon.controller.gui;
+package salomon.engine.controller.gui;
 
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -14,8 +14,8 @@ import javax.swing.JButton;
 
 import org.apache.log4j.Logger;
 
-import salomon.platform.Config;
-import salomon.platform.Resources;
+import salomon.engine.platform.Config;
+import salomon.engine.platform.Resources;
 
 /**
  * Class agregates all buttons used in GUIController.

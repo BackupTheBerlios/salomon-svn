@@ -1,4 +1,4 @@
-package salomon.controller;
+package salomon.engine.controller;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -10,11 +10,11 @@ import java.rmi.registry.Registry;
 
 import org.apache.log4j.Logger;
 
-import salomon.platform.Config;
-import salomon.platform.IManagerEngine;
-import salomon.platform.remote.ICentralController;
-import salomon.platform.remote.IRemoteController;
-import salomon.platform.remote.RemoteController;
+import salomon.engine.platform.Config;
+import salomon.engine.platform.IManagerEngine;
+import salomon.engine.platform.remote.ICentralController;
+import salomon.engine.platform.remote.IRemoteController;
+import salomon.engine.platform.remote.RemoteController;
 
 /**
  * Class is a client implementation of IController interface.

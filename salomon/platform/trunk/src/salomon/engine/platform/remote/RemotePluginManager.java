@@ -1,11 +1,11 @@
 
-package salomon.platform.remote;
+package salomon.engine.platform.remote;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.Collection;
 
-import salomon.platform.plugin.IPluginManager;
+import salomon.engine.platform.plugin.IPluginManager;
 import salomon.plugin.Description;
 
 /**
@@ -30,7 +30,7 @@ public final class RemotePluginManager extends UnicastRemoteObject
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see salomon.platform.IRemotePluginManager#getAvailablePlugins()
+	 * @see salomon.engine.platform.IRemotePluginManager#getAvailablePlugins()
 	 */
 	public Collection getAvailablePlugins() throws RemoteException
 	{
@@ -38,7 +38,7 @@ public final class RemotePluginManager extends UnicastRemoteObject
 	}
 
 	/* (non-Javadoc)
-	 * @see salomon.platform.remote.IRemotePluginManager#addPlugin(salomon.plugin.Description)
+	 * @see salomon.engine.platform.remote.IRemotePluginManager#addPlugin(salomon.plugin.Description)
 	 */
 	public boolean savePlugin(Description description) throws RemoteException
 	{
@@ -46,7 +46,7 @@ public final class RemotePluginManager extends UnicastRemoteObject
 	}
 
 	/* (non-Javadoc)
-	 * @see salomon.platform.remote.IRemotePluginManager#removePlugin(salomon.plugin.Description)
+	 * @see salomon.engine.platform.remote.IRemotePluginManager#removePlugin(salomon.plugin.Description)
 	 */
 	public boolean removePlugin(Description description) throws RemoteException
 	{		
@@ -54,7 +54,7 @@ public final class RemotePluginManager extends UnicastRemoteObject
 	}
 
 	//	/* (non-Javadoc)
-	//	 * @see salomon.platform.remote.IRemotePluginManager#getPlugin(java.net.URL)
+	//	 * @see salomon.engine.platform.remote.IRemotePluginManager#getPlugin(java.net.URL)
 	//	 */
 	//	public IRemotePlugin getPlugin(URL url) throws RemoteException
 	//	{

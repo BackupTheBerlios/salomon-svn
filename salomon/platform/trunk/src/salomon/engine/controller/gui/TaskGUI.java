@@ -1,7 +1,7 @@
 
-package salomon.controller.gui;
+package salomon.engine.controller.gui;
 
-import salomon.platform.task.ITask;
+import salomon.engine.platform.task.ITask;
 import salomon.plugin.IPlugin;
 import salomon.plugin.IResult;
 import salomon.plugin.ISettings;

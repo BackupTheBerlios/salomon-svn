@@ -3,7 +3,7 @@
  *
  */
 
-package salomon.controller.gui;
+package salomon.engine.controller.gui;
 
 import java.awt.Component;
 import java.awt.Dimension;
@@ -33,11 +33,11 @@ import javax.swing.JTextField;
 
 import org.apache.log4j.Logger;
 
-import salomon.controller.gui.action.ActionManager;
-import salomon.platform.IManagerEngine;
-import salomon.platform.Messages;
-import salomon.platform.plugin.PluginLoader;
-import salomon.platform.task.ITask;
+import salomon.engine.controller.gui.action.ActionManager;
+import salomon.engine.platform.IManagerEngine;
+import salomon.engine.platform.Messages;
+import salomon.engine.platform.plugin.PluginLoader;
+import salomon.engine.platform.task.ITask;
 import salomon.plugin.Description;
 import salomon.plugin.IPlugin;
 import salomon.plugin.IResultComponent;

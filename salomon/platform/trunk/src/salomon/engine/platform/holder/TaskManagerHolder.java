@@ -1,9 +1,9 @@
 
-package salomon.platform.holder;
+package salomon.engine.platform.holder;
 
 
-import salomon.platform.task.ITask;
-import salomon.platform.task.ITaskManager;
+import salomon.engine.platform.task.ITask;
+import salomon.engine.platform.task.ITaskManager;
 
 /**
  * Holds taskManager of current client.
@@ -25,7 +25,7 @@ final class TaskManagerHolder implements ITaskManager
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see salomon.platform.task.ITaskManager#clearTaskList()
+	 * @see salomon.engine.platform.task.ITaskManager#clearTaskList()
 	 */
 	public void clearTaskList()
 	{
@@ -35,7 +35,7 @@ final class TaskManagerHolder implements ITaskManager
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see salomon.platform.task.ITaskManager#getCurrentTask()
+	 * @see salomon.engine.platform.task.ITaskManager#getCurrentTask()
 	 */
 	public ITask getCurrentTask()
 	{
@@ -45,7 +45,7 @@ final class TaskManagerHolder implements ITaskManager
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see salomon.platform.task.ITaskManager#getTasks()
+	 * @see salomon.engine.platform.task.ITaskManager#getTasks()
 	 */
 	public ITask[] getTasks()
 	{
@@ -55,7 +55,7 @@ final class TaskManagerHolder implements ITaskManager
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see salomon.platform.task.ITaskManager#start()
+	 * @see salomon.engine.platform.task.ITaskManager#start()
 	 */
 	public void start()
 	{
@@ -70,7 +70,7 @@ final class TaskManagerHolder implements ITaskManager
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see salomon.platform.task.ITaskManager#createTask()
+	 * @see salomon.engine.platform.task.ITaskManager#createTask()
 	 */
 	public ITask createTask()
 	{

@@ -1,5 +1,5 @@
 
-package salomon.controller;
+package salomon.engine.controller;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -22,20 +22,20 @@ import javax.swing.JToolBar;
 
 import org.apache.log4j.Logger;
 
-import salomon.Starter;
-import salomon.controller.gui.ControllerFrame;
-import salomon.controller.gui.ControllerPanel;
-import salomon.controller.gui.ProjectEditionManager;
-import salomon.controller.gui.SplashScreen;
-import salomon.controller.gui.TaskEditionManager;
-import salomon.controller.gui.Utils;
-import salomon.controller.gui.action.ActionManager;
-import salomon.platform.Config;
-import salomon.platform.IManagerEngine;
-import salomon.platform.Messages;
-import salomon.platform.Resources;
-import salomon.platform.SQLConsole;
-import salomon.platform.data.DBManager;
+import salomon.engine.Starter;
+import salomon.engine.controller.gui.ControllerFrame;
+import salomon.engine.controller.gui.ControllerPanel;
+import salomon.engine.controller.gui.ProjectEditionManager;
+import salomon.engine.controller.gui.SplashScreen;
+import salomon.engine.controller.gui.TaskEditionManager;
+import salomon.engine.controller.gui.Utils;
+import salomon.engine.controller.gui.action.ActionManager;
+import salomon.engine.platform.Config;
+import salomon.engine.platform.IManagerEngine;
+import salomon.engine.platform.Messages;
+import salomon.engine.platform.Resources;
+import salomon.engine.platform.SQLConsole;
+import salomon.engine.platform.data.DBManager;
 
 /**
  * Local implementation of IController interface.
@@ -63,7 +63,7 @@ public final class LocalController implements IController
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see salomon.controller.IController#start(salomon.platform.IProjectManager)
+	 * @see salomon.engine.controller.IController#start(salomon.engine.platform.IProjectManager)
 	 */
 	public void start(IManagerEngine managerEngine)
 	{
@@ -409,7 +409,7 @@ public final class LocalController implements IController
 	private static Logger _logger = Logger.getLogger(LocalController.class);
 
 	/* (non-Javadoc)
-	 * @see salomon.controller.IController#exit()
+	 * @see salomon.engine.controller.IController#exit()
 	 */
 	public void exit()
 	{

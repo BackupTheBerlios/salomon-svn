@@ -1,5 +1,5 @@
 
-package salomon.platform.remote;
+package salomon.engine.platform.remote;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -13,8 +13,8 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 
-import salomon.platform.task.ITask;
-import salomon.platform.task.ITaskManager;
+import salomon.engine.platform.task.ITask;
+import salomon.engine.platform.task.ITaskManager;
 
 /**
  * Class representing remote instance of ITaskManager.
@@ -38,7 +38,7 @@ public final class RemoteTaskManager extends UnicastRemoteObject
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see salomon.platform.IRemoteTaskManager#clearTaskList()
+	 * @see salomon.engine.platform.IRemoteTaskManager#clearTaskList()
 	 */
 	public void clearTaskList() throws RemoteException
 	{
@@ -48,7 +48,7 @@ public final class RemoteTaskManager extends UnicastRemoteObject
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see salomon.platform.remote.IRemoteTaskManager#createTask()
+	 * @see salomon.engine.platform.remote.IRemoteTaskManager#createTask()
 	 */
 	public IRemoteTask createTask() throws RemoteException
 	{
@@ -58,7 +58,7 @@ public final class RemoteTaskManager extends UnicastRemoteObject
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see salomon.platform.IRemoteTaskManager#getCurrentTask()
+	 * @see salomon.engine.platform.IRemoteTaskManager#getCurrentTask()
 	 */
 	public IRemoteTask getCurrentTask() throws RemoteException
 	{
@@ -68,7 +68,7 @@ public final class RemoteTaskManager extends UnicastRemoteObject
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see salomon.platform.IRemoteTaskManager#getTasks()
+	 * @see salomon.engine.platform.IRemoteTaskManager#getTasks()
 	 */
 	public IRemoteTask[] getTasks() throws RemoteException
 	{
@@ -83,7 +83,7 @@ public final class RemoteTaskManager extends UnicastRemoteObject
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see salomon.platform.IRemoteTaskManager#start()
+	 * @see salomon.engine.platform.IRemoteTaskManager#start()
 	 */
 	public void start() throws RemoteException
 	{

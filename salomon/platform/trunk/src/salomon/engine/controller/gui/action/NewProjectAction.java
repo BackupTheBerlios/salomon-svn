@@ -1,9 +1,9 @@
 
-package salomon.controller.gui.action;
+package salomon.engine.controller.gui.action;
 
 import java.awt.event.ActionEvent;
 
-import salomon.controller.gui.ProjectEditionManager;
+import salomon.engine.controller.gui.ProjectEditionManager;
 
 /**
  * Class represents action fired while creating a new project.

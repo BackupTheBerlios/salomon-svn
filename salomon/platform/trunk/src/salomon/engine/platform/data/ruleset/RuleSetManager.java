@@ -1,6 +1,6 @@
 
 
-package salomon.platform.data.ruleset;
+package salomon.engine.platform.data.ruleset;
 
 /**
  *  Not used yet.

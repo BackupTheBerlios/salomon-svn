@@ -1,5 +1,5 @@
 
-package salomon.controller.gui;
+package salomon.engine.controller.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -16,9 +16,9 @@ import javax.swing.border.TitledBorder;
 
 import org.apache.log4j.Logger;
 
-import salomon.controller.gui.action.ActionManager;
-import salomon.platform.Config;
-import salomon.platform.Messages;
+import salomon.engine.controller.gui.action.ActionManager;
+import salomon.engine.platform.Config;
+import salomon.engine.platform.Messages;
 
 /**
  * Class represents main panel - list of tasks and available plugins, buttons to

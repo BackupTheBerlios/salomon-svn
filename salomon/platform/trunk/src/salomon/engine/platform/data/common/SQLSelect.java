@@ -1,5 +1,5 @@
 
-package salomon.platform.data.common;
+package salomon.engine.platform.data.common;
 
 import java.util.Collection;
 import java.util.Iterator;

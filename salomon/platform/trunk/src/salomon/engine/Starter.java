@@ -1,20 +1,19 @@
-
-package salomon;
+package salomon.engine;
 
 import java.util.MissingResourceException;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
-import salomon.controller.ServantController;
-import salomon.controller.IController;
-import salomon.controller.LocalController;
-import salomon.controller.MasterController;
-import salomon.platform.Config;
-import salomon.platform.IManagerEngine;
-import salomon.platform.ManagerEngine;
-import salomon.platform.project.ProjectManager;
-import salomon.platform.task.TaskManager;
+import salomon.engine.controller.ServantController;
+import salomon.engine.controller.IController;
+import salomon.engine.controller.LocalController;
+import salomon.engine.controller.MasterController;
+import salomon.engine.platform.Config;
+import salomon.engine.platform.IManagerEngine;
+import salomon.engine.platform.ManagerEngine;
+import salomon.engine.platform.project.ProjectManager;
+import salomon.engine.platform.task.TaskManager;
 
 /**
  * Class starts application execution.

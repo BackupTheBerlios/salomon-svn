@@ -3,7 +3,7 @@
  *
  */
 
-package salomon.platform;
+package salomon.engine.platform;
 
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;

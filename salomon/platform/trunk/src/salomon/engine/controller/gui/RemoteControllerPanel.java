@@ -1,5 +1,5 @@
 
-package salomon.controller.gui;
+package salomon.engine.controller.gui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,8 +18,8 @@ import javax.swing.event.ListSelectionListener;
 
 import org.apache.log4j.Logger;
 
-import salomon.platform.Messages;
-import salomon.platform.holder.ManagerEngineHolder;
+import salomon.engine.platform.Messages;
+import salomon.engine.platform.holder.ManagerEngineHolder;
 
 /**
  * Panel displaying list of connected clients. 

@@ -1,13 +1,13 @@
 
-package salomon.platform.remote;
+package salomon.engine.platform.remote;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.sql.SQLException;
 import java.util.Collection;
 
-import salomon.platform.project.IProject;
-import salomon.platform.project.IProjectManager;
+import salomon.engine.platform.project.IProject;
+import salomon.engine.platform.project.IProjectManager;
 
 /**
  * Class representing remote instance of IProjectManager.
@@ -34,7 +34,7 @@ public final class RemoteProjectManager extends UnicastRemoteObject
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see salomon.platform.IRemoteProjectManager#newProject()
+	 * @see salomon.engine.platform.IRemoteProjectManager#newProject()
 	 */
 	public void newProject() throws RemoteException
 	{
@@ -44,7 +44,7 @@ public final class RemoteProjectManager extends UnicastRemoteObject
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see salomon.platform.IRemoteProjectManager#loadProject(int)
+	 * @see salomon.engine.platform.IRemoteProjectManager#loadProject(int)
 	 */
 	public void loadProject(int projectID) throws Exception, RemoteException
 	{
@@ -54,7 +54,7 @@ public final class RemoteProjectManager extends UnicastRemoteObject
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see salomon.platform.IRemoteProjectManager#saveProject(salomon.platform.Project)
+	 * @see salomon.engine.platform.IRemoteProjectManager#saveProject(salomon.engine.platform.Project)
 	 */
 	public void saveProject() throws Exception, RemoteException,
 			ClassNotFoundException
@@ -65,7 +65,7 @@ public final class RemoteProjectManager extends UnicastRemoteObject
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see salomon.platform.IRemoteProjectManager#getCurrentProject()
+	 * @see salomon.engine.platform.IRemoteProjectManager#getCurrentProject()
 	 */
 	public IRemoteProject getCurrentProject() throws RemoteException
 	{
@@ -81,7 +81,7 @@ public final class RemoteProjectManager extends UnicastRemoteObject
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see salomon.platform.remote.IRemoteProjectManager#getAvailableProjects()
+	 * @see salomon.engine.platform.remote.IRemoteProjectManager#getAvailableProjects()
 	 */
 	public Collection getAvailableProjects() throws RemoteException,
 			SQLException, ClassNotFoundException

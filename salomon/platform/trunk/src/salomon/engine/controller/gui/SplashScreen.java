@@ -1,5 +1,5 @@
 
-package salomon.controller.gui;
+package salomon.engine.controller.gui;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -15,9 +15,9 @@ import javax.swing.SwingUtilities;
 
 import org.apache.log4j.Logger;
 
-import salomon.platform.Config;
-import salomon.platform.Messages;
-import salomon.platform.Resources;
+import salomon.engine.platform.Config;
+import salomon.engine.platform.Messages;
+import salomon.engine.platform.Resources;
 
 /**
  * Class represents splash screen.

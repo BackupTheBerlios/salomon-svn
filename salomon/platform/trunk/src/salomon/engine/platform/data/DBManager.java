@@ -3,7 +3,7 @@
  *
  */
 
-package salomon.platform.data;
+package salomon.engine.platform.data;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -13,12 +13,12 @@ import java.sql.Statement;
 
 import org.apache.log4j.Logger;
 
-import salomon.controller.gui.Utils;
-import salomon.platform.Config;
-import salomon.platform.data.common.SQLDelete;
-import salomon.platform.data.common.SQLInsert;
-import salomon.platform.data.common.SQLSelect;
-import salomon.platform.data.common.SQLUpdate;
+import salomon.engine.controller.gui.Utils;
+import salomon.engine.platform.Config;
+import salomon.engine.platform.data.common.SQLDelete;
+import salomon.engine.platform.data.common.SQLInsert;
+import salomon.engine.platform.data.common.SQLSelect;
+import salomon.engine.platform.data.common.SQLUpdate;
 
 /**
  * Class is responsible for data base operations. It enables executing SQL

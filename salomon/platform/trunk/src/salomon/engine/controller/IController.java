@@ -1,7 +1,7 @@
 
-package salomon.controller;
+package salomon.engine.controller;
 
-import salomon.platform.IManagerEngine;
+import salomon.engine.platform.IManagerEngine;
 
 /**
  * An interface implemented by all controllers. 

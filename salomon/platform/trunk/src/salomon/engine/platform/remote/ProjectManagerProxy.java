@@ -1,5 +1,5 @@
 
-package salomon.platform.remote;
+package salomon.engine.platform.remote;
 
 import java.rmi.RemoteException;
 import java.sql.SQLException;
@@ -7,8 +7,8 @@ import java.util.Collection;
 
 import org.apache.log4j.Logger;
 
-import salomon.platform.project.IProject;
-import salomon.platform.project.IProjectManager;
+import salomon.engine.platform.project.IProject;
+import salomon.engine.platform.project.IProjectManager;
 
 /**
  * Class is a sever side wrapper of IRemoteProjectManager object. It implements
@@ -36,7 +36,7 @@ public final class ProjectManagerProxy implements IProjectManager
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see salomon.platform.IProjectManager#getCurrentProject()
+	 * @see salomon.engine.platform.IProjectManager#getCurrentProject()
 	 */
 	public IProject getCurrentProject()
 	{
@@ -55,7 +55,7 @@ public final class ProjectManagerProxy implements IProjectManager
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see salomon.platform.IProjectManager#loadProject(int)
+	 * @see salomon.engine.platform.IProjectManager#loadProject(int)
 	 */
 	public void loadProject(int projectID) throws Exception
 	{
@@ -70,7 +70,7 @@ public final class ProjectManagerProxy implements IProjectManager
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see salomon.platform.IProjectManager#newProject()
+	 * @see salomon.engine.platform.IProjectManager#newProject()
 	 */
 	public void newProject()
 	{
@@ -85,7 +85,7 @@ public final class ProjectManagerProxy implements IProjectManager
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see salomon.platform.IProjectManager#saveProject(salomon.platform.Project)
+	 * @see salomon.engine.platform.IProjectManager#saveProject(salomon.engine.platform.Project)
 	 */
 	public void saveProject() throws Exception, ClassNotFoundException
 	{
@@ -99,7 +99,7 @@ public final class ProjectManagerProxy implements IProjectManager
 	private static Logger _logger = Logger.getLogger(ProjectManagerProxy.class);
 
 	/* (non-Javadoc)
-	 * @see salomon.platform.project.IProjectManager#getAvailableProjects()
+	 * @see salomon.engine.platform.project.IProjectManager#getAvailableProjects()
 	 */
 	public Collection getAvailableProjects() throws ClassNotFoundException, SQLException 
 	{

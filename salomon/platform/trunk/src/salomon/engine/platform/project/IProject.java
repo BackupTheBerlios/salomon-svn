@@ -1,5 +1,5 @@
 
-package salomon.platform.project;
+package salomon.engine.platform.project;
 
 /**
  * An interface for projects.

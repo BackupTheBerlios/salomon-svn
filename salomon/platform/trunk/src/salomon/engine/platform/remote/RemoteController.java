@@ -1,13 +1,13 @@
 
-package salomon.platform.remote;
+package salomon.engine.platform.remote;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
 import org.apache.log4j.Logger;
 
-import salomon.Starter;
-import salomon.platform.IManagerEngine;
+import salomon.engine.Starter;
+import salomon.engine.platform.IManagerEngine;
 
 /**
  * An implementation of IRemoteController interface.
@@ -39,7 +39,7 @@ public final class RemoteController extends UnicastRemoteObject
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see salomon.platform.IRemoteController#getDescription()
+	 * @see salomon.engine.platform.IRemoteController#getDescription()
 	 */
 	public String getDescription() throws RemoteException
 	{
@@ -50,7 +50,7 @@ public final class RemoteController extends UnicastRemoteObject
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see salomon.platform.IRemoteController#getManagerEngine()
+	 * @see salomon.engine.platform.IRemoteController#getManagerEngine()
 	 */
 	public IRemoteManagerEngine getManagerEngine() throws RemoteException
 	{
@@ -60,7 +60,7 @@ public final class RemoteController extends UnicastRemoteObject
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see salomon.platform.IRemoteController#getName()
+	 * @see salomon.engine.platform.IRemoteController#getName()
 	 */
 	public String getName() throws RemoteException
 	{
@@ -68,7 +68,7 @@ public final class RemoteController extends UnicastRemoteObject
 	}
 
 	/* (non-Javadoc)
-	 * @see salomon.platform.remote.IRemoteController#exit(int)
+	 * @see salomon.engine.platform.remote.IRemoteController#exit(int)
 	 */
 	public void exit() throws RemoteException
 	{

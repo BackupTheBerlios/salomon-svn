@@ -1,9 +1,9 @@
 
-package salomon.controller.gui.action;
+package salomon.engine.controller.gui.action;
 
 import javax.swing.AbstractAction;
 
-import salomon.controller.gui.TaskEditionManager;
+import salomon.engine.controller.gui.TaskEditionManager;
 
 /**
  * Represents abstract action caused while editing plugins.

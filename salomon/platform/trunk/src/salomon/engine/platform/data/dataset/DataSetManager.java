@@ -1,13 +1,13 @@
 
-package salomon.platform.data.dataset;
+package salomon.engine.platform.data.dataset;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collection;
 import java.util.HashSet;
 
-import salomon.platform.data.DBManager;
-import salomon.platform.data.common.SQLSelect;
+import salomon.engine.platform.data.DBManager;
+import salomon.engine.platform.data.common.SQLSelect;
 
 /**
  * Class manages with datasets.

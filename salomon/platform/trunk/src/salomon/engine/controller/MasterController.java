@@ -1,4 +1,4 @@
-package salomon.controller;
+package salomon.engine.controller;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -26,25 +26,25 @@ import javax.swing.JToolBar;
 
 import org.apache.log4j.Logger;
 
-import salomon.controller.gui.ControllerFrame;
-import salomon.controller.gui.ControllerPanel;
-import salomon.controller.gui.ProjectEditionManager;
-import salomon.controller.gui.RemoteControllerGUI;
-import salomon.controller.gui.RemoteControllerPanel;
-import salomon.controller.gui.SplashScreen;
-import salomon.controller.gui.TaskEditionManager;
-import salomon.controller.gui.Utils;
-import salomon.controller.gui.action.ActionManager;
-import salomon.platform.Config;
-import salomon.platform.IManagerEngine;
-import salomon.platform.Messages;
-import salomon.platform.Resources;
-import salomon.platform.SQLConsole;
-import salomon.platform.data.DBManager;
-import salomon.platform.holder.ManagerEngineHolder;
-import salomon.platform.remote.CentralController;
-import salomon.platform.remote.event.IMasterControllerListener;
-import salomon.platform.remote.event.RemoteControllerEvent;
+import salomon.engine.controller.gui.ControllerFrame;
+import salomon.engine.controller.gui.ControllerPanel;
+import salomon.engine.controller.gui.ProjectEditionManager;
+import salomon.engine.controller.gui.RemoteControllerGUI;
+import salomon.engine.controller.gui.RemoteControllerPanel;
+import salomon.engine.controller.gui.SplashScreen;
+import salomon.engine.controller.gui.TaskEditionManager;
+import salomon.engine.controller.gui.Utils;
+import salomon.engine.controller.gui.action.ActionManager;
+import salomon.engine.platform.Config;
+import salomon.engine.platform.IManagerEngine;
+import salomon.engine.platform.Messages;
+import salomon.engine.platform.Resources;
+import salomon.engine.platform.SQLConsole;
+import salomon.engine.platform.data.DBManager;
+import salomon.engine.platform.holder.ManagerEngineHolder;
+import salomon.engine.platform.remote.CentralController;
+import salomon.engine.platform.remote.event.IMasterControllerListener;
+import salomon.engine.platform.remote.event.RemoteControllerEvent;
 
 /**
  * Server side implementation of IController interface.
@@ -82,7 +82,7 @@ public final class MasterController implements IController
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see salomon.controller.IController#exit()
+	 * @see salomon.engine.controller.IController#exit()
 	 */
 	public void exit()
 	{
@@ -218,7 +218,7 @@ public final class MasterController implements IController
 		/*
 		 * (non-Javadoc)
 		 * 
-		 * @see salomon.platform.remote.event.IMasterControllerListener#controllerAdded(salomon.platform.remote.event.RemoteControllerEvent)
+		 * @see salomon.engine.platform.remote.event.IMasterControllerListener#controllerAdded(salomon.engine.platform.remote.event.RemoteControllerEvent)
 		 */
 		public void controllerAdded(RemoteControllerEvent event)
 		{
@@ -230,7 +230,7 @@ public final class MasterController implements IController
 		/*
 		 * (non-Javadoc)
 		 * 
-		 * @see salomon.platform.remote.event.IMasterControllerListener#controllerRemoved(salomon.platform.remote.event.RemoteControllerEvent)
+		 * @see salomon.engine.platform.remote.event.IMasterControllerListener#controllerRemoved(salomon.engine.platform.remote.event.RemoteControllerEvent)
 		 */
 		public void controllerRemoved(RemoteControllerEvent event)
 		{

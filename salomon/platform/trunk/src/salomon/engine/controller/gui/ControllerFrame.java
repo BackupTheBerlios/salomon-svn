@@ -1,5 +1,5 @@
 
-package salomon.controller.gui;
+package salomon.engine.controller.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Point;
@@ -13,9 +13,9 @@ import javax.swing.JToolBar;
 
 import org.apache.log4j.Logger;
 
-import salomon.Starter;
-import salomon.platform.Config;
-import salomon.platform.Messages;
+import salomon.engine.Starter;
+import salomon.engine.platform.Config;
+import salomon.engine.platform.Messages;
 
 /**
  * Class represents main program frame. All components are put on its content

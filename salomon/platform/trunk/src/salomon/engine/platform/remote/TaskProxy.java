@@ -1,13 +1,13 @@
 
-package salomon.platform.remote;
+package salomon.engine.platform.remote;
 
 import java.net.URL;
 import java.rmi.RemoteException;
 
 import org.apache.log4j.Logger;
 
-import salomon.platform.plugin.PluginLoader;
-import salomon.platform.task.ITask;
+import salomon.engine.platform.plugin.PluginLoader;
+import salomon.engine.platform.task.ITask;
 import salomon.plugin.IPlugin;
 import salomon.plugin.IResult;
 import salomon.plugin.ISettings;
@@ -34,7 +34,7 @@ public final class TaskProxy implements ITask
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see salomon.platform.task.ITask#getName()
+	 * @see salomon.engine.platform.task.ITask#getName()
 	 */
 	public String getName()
 	{
@@ -50,7 +50,7 @@ public final class TaskProxy implements ITask
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see salomon.platform.task.ITask#getPlugin()
+	 * @see salomon.engine.platform.task.ITask#getPlugin()
 	 */
 	public IPlugin getPlugin()
 	{
@@ -71,7 +71,7 @@ public final class TaskProxy implements ITask
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see salomon.platform.task.ITask#getResult()
+	 * @see salomon.engine.platform.task.ITask#getResult()
 	 */
 	public IResult getResult()
 	{
@@ -87,7 +87,7 @@ public final class TaskProxy implements ITask
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see salomon.platform.task.ITask#getSettings()
+	 * @see salomon.engine.platform.task.ITask#getSettings()
 	 */
 	public ISettings getSettings()
 	{
@@ -103,7 +103,7 @@ public final class TaskProxy implements ITask
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see salomon.platform.task.ITask#getStatus()
+	 * @see salomon.engine.platform.task.ITask#getStatus()
 	 */
 	public String getStatus()
 	{
@@ -119,7 +119,7 @@ public final class TaskProxy implements ITask
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see salomon.platform.task.ITask#getTaskId()
+	 * @see salomon.engine.platform.task.ITask#getTaskId()
 	 */
 	public int getTaskId()
 	{
@@ -135,7 +135,7 @@ public final class TaskProxy implements ITask
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see salomon.platform.task.ITask#setName(java.lang.String)
+	 * @see salomon.engine.platform.task.ITask#setName(java.lang.String)
 	 */
 	public void setName(String name)
 	{
@@ -149,7 +149,7 @@ public final class TaskProxy implements ITask
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see salomon.platform.task.ITask#setPlugin(salomon.plugin.IPlugin)
+	 * @see salomon.engine.platform.task.ITask#setPlugin(salomon.plugin.IPlugin)
 	 */
 	public void setPlugin(IPlugin plugin)
 	{
@@ -163,7 +163,7 @@ public final class TaskProxy implements ITask
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see salomon.platform.task.ITask#setResult(salomon.plugin.IResult)
+	 * @see salomon.engine.platform.task.ITask#setResult(salomon.plugin.IResult)
 	 */
 	public void setResult(IResult result)
 	{
@@ -177,7 +177,7 @@ public final class TaskProxy implements ITask
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see salomon.platform.task.ITask#setSettings(salomon.plugin.ISettings)
+	 * @see salomon.engine.platform.task.ITask#setSettings(salomon.plugin.ISettings)
 	 */
 	public void setSettings(ISettings settings)
 	{
@@ -191,7 +191,7 @@ public final class TaskProxy implements ITask
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see salomon.platform.task.ITask#setStatus(java.lang.String)
+	 * @see salomon.engine.platform.task.ITask#setStatus(java.lang.String)
 	 */
 	public void setStatus(String status)
 	{
@@ -206,7 +206,7 @@ public final class TaskProxy implements ITask
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see salomon.platform.task.ITask#setTaskId(int)
+	 * @see salomon.engine.platform.task.ITask#setTaskId(int)
 	 */
 	public void setTaskId(int taskId)
 	{

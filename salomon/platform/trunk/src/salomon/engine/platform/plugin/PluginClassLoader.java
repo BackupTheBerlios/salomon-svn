@@ -1,5 +1,5 @@
 
-package salomon.platform.plugin;
+package salomon.engine.platform.plugin;
 
 import java.io.File;
 import java.io.IOException;

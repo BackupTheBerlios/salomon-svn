@@ -1,5 +1,5 @@
 
-package salomon.platform.remote.event;
+package salomon.engine.platform.remote.event;
 
 /**
  * An interface used to manage with connection and disconnection from server.

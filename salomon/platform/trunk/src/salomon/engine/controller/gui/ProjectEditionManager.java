@@ -1,5 +1,5 @@
 
-package salomon.controller.gui;
+package salomon.engine.controller.gui;
 
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -17,11 +17,11 @@ import javax.swing.JTextField;
 
 import org.apache.log4j.Logger;
 
-import salomon.platform.IManagerEngine;
-import salomon.platform.data.DBManager;
-import salomon.platform.project.IProject;
-import salomon.platform.project.IProjectManager;
-import salomon.platform.task.ITaskManager;
+import salomon.engine.platform.IManagerEngine;
+import salomon.engine.platform.data.DBManager;
+import salomon.engine.platform.project.IProject;
+import salomon.engine.platform.project.IProjectManager;
+import salomon.engine.platform.task.ITaskManager;
 import salomon.plugin.ISettings;
 
 /**

@@ -1,6 +1,6 @@
 
 
-package salomon.platform.data;
+package salomon.engine.platform.data;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -1,8 +1,8 @@
 
-package salomon.controller.gui.action;
+package salomon.engine.controller.gui.action;
 
-import salomon.controller.gui.ProjectEditionManager;
-import salomon.controller.gui.TaskEditionManager;
+import salomon.engine.controller.gui.ProjectEditionManager;
+import salomon.engine.controller.gui.TaskEditionManager;
 
 /**
  * Class manages with actions. It creates and holds actions used to create most

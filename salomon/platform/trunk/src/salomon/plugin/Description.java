@@ -8,10 +8,10 @@ import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import salomon.platform.data.DBManager;
-import salomon.platform.data.IDBSupporting;
-import salomon.platform.data.common.SQLDelete;
-import salomon.platform.data.common.SQLUpdate;
+import salomon.engine.platform.data.DBManager;
+import salomon.engine.platform.data.IDBSupporting;
+import salomon.engine.platform.data.common.SQLDelete;
+import salomon.engine.platform.data.common.SQLUpdate;
 
 /**
  * Class represents plugin description.

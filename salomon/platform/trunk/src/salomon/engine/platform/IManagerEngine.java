@@ -1,9 +1,9 @@
 
-package salomon.platform;
+package salomon.engine.platform;
 
-import salomon.platform.plugin.IPluginManager;
-import salomon.platform.project.IProjectManager;
-import salomon.platform.task.ITaskManager;
+import salomon.engine.platform.plugin.IPluginManager;
+import salomon.engine.platform.project.IProjectManager;
+import salomon.engine.platform.task.ITaskManager;
 
 /**
  * Interface used to pass ManagerEngine to plugins. 

@@ -1,10 +1,10 @@
 
-package salomon.platform.remote;
+package salomon.engine.platform.remote;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
-import salomon.platform.IManagerEngine;
+import salomon.engine.platform.IManagerEngine;
 
 /**
  * Class representing remote instance of IManagerEngine.
@@ -40,7 +40,7 @@ public final class RemoteManagerEngine extends UnicastRemoteObject
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see salomon.platform.IRemoteManagerEngine#getPluginManager()
+	 * @see salomon.engine.platform.IRemoteManagerEngine#getPluginManager()
 	 */
 	public IRemotePluginManager getPluginManager() throws RemoteException
 	{
@@ -50,7 +50,7 @@ public final class RemoteManagerEngine extends UnicastRemoteObject
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see salomon.platform.IRemoteManagerEngine#getProjectManager()
+	 * @see salomon.engine.platform.IRemoteManagerEngine#getProjectManager()
 	 */
 	public IRemoteProjectManager getProjectManager() throws RemoteException
 	{
@@ -60,7 +60,7 @@ public final class RemoteManagerEngine extends UnicastRemoteObject
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see salomon.platform.IRemoteManagerEngine#getTasksManager()
+	 * @see salomon.engine.platform.IRemoteManagerEngine#getTasksManager()
 	 */
 	public IRemoteTaskManager getTasksManager() throws RemoteException
 	{

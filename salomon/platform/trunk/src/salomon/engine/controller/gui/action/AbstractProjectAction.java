@@ -1,9 +1,9 @@
 
-package salomon.controller.gui.action;
+package salomon.engine.controller.gui.action;
 
 import javax.swing.AbstractAction;
 
-import salomon.controller.gui.ProjectEditionManager;
+import salomon.engine.controller.gui.ProjectEditionManager;
 
 /**
  * Represents abstract action caused while editing projects.

@@ -1,9 +1,9 @@
 
-package salomon.platform.holder;
+package salomon.engine.platform.holder;
 
 import java.util.Collection;
 
-import salomon.platform.plugin.IPluginManager;
+import salomon.engine.platform.plugin.IPluginManager;
 import salomon.plugin.Description;
 
 /**
@@ -23,7 +23,7 @@ final class PluginManagerHolder implements IPluginManager
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see salomon.platform.plugin.IPluginManager#getAvailablePlugins()
+	 * @see salomon.engine.platform.plugin.IPluginManager#getAvailablePlugins()
 	 */
 	public Collection getAvailablePlugins()
 	{
@@ -36,7 +36,7 @@ final class PluginManagerHolder implements IPluginManager
 	}
 
 	/* (non-Javadoc)
-	 * @see salomon.platform.plugin.IPluginManager#addPlugin(salomon.plugin.Description)
+	 * @see salomon.engine.platform.plugin.IPluginManager#addPlugin(salomon.plugin.Description)
 	 */
 	public boolean savePlugin(Description description)
 	{
@@ -44,7 +44,7 @@ final class PluginManagerHolder implements IPluginManager
 	}
 
 	/* (non-Javadoc)
-	 * @see salomon.platform.plugin.IPluginManager#removePlugin(salomon.plugin.Description)
+	 * @see salomon.engine.platform.plugin.IPluginManager#removePlugin(salomon.plugin.Description)
 	 */
 	public boolean removePlugin(Description description)
 	{
@@ -52,7 +52,7 @@ final class PluginManagerHolder implements IPluginManager
 	}
 
 	//	/* (non-Javadoc)
-	//	 * @see salomon.platform.plugin.IPluginManager#getPlugin(java.net.URL)
+	//	 * @see salomon.engine.platform.plugin.IPluginManager#getPlugin(java.net.URL)
 	//	 */
 	//	public IPlugin getPlugin(URL url)
 	//	{
