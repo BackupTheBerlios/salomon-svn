@@ -11,10 +11,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.jar.JarFile;
-
 import org.apache.log4j.Logger;
-
-import salomon.core.Config;
 import salomon.plugin.IPlugin;
 
 /**
@@ -34,6 +31,7 @@ public class PluginLoader
 				pluginFile);
 		// loading appropriate plugin (it has to be in *.jar file
 		plugin = (IPlugin) classLoader.findMainClass().newInstance();
+		plugin.getDescription().setLocation(pluginFile);
 		return plugin;
 	}
 	
