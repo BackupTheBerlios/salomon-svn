@@ -19,8 +19,9 @@ public final class ProjectProxy implements IProject
 	private IRemoteProject _remoteProject;
 
 	/**
-	 *  
-	 */
+     * @pre $none
+     * @post $none
+     */
 	public ProjectProxy(IRemoteProject remoteProject)
 	{
 		_remoteProject = remoteProject;
