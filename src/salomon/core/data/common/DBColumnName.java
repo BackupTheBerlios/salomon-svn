@@ -1,16 +1,9 @@
-/*
- * Created on 2004-05-04
- *
- * To change the template for this generated file go to
- * Window - Preferences - Java - Code Generation - Code and Comments
- */
 
 package salomon.core.data.common;
 
 /**
  * Class represents data base table column in SQL queries.
- * 
- * @author nico
+ *
  */
 public class DBColumnName
 {

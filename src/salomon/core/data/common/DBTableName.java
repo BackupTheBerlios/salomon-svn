@@ -1,12 +1,6 @@
-/*
- * Created on 2004-05-04
- *
- */
-
 package salomon.core.data.common;
 
 /**
- * @author nico
  * 
  * Class represents table in SQL queries
  */

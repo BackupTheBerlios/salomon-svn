@@ -1,16 +1,10 @@
-/*
- * Created on 2004-05-28
- *
- */
-
 package salomon.core.data.common;
 
 import org.apache.log4j.Logger;
 
 /**
  * Class represents column value
- * 
- * @author nico
+ *
  */
 public class DBValue
 {

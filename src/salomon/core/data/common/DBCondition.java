@@ -1,16 +1,10 @@
-/*
- * Created on 2004-05-04
- *
- */
-
 package salomon.core.data.common;
 
 import org.apache.log4j.Logger;
 
 /**
  * Class represents condition used in SQL queries
- * 
- * @author nico
+ *
  */
 public class DBCondition
 {
