@@ -69,7 +69,7 @@ public class SimpleSQLConsole implements IPlugin
 	{
 		_logger.warn("###   doJob()   ###");
 		SCSettings scSettings = (SCSettings) settings;
-		String query = scSettings.query.trim().toLowerCase();
+		String query = scSettings.getQuery().trim().toLowerCase();
 		SCResult scResult = new SCResult();
 		if (query.length() > 0 && query.indexOf("select") != -1) {
 			ResultSet resultSet = null;
@@ -136,17 +136,18 @@ public class SimpleSQLConsole implements IPlugin
 				//
 				// creating result object
 				//
-				scResult.resultType = SCResult.SC_OK;
-				scResult.columnNames = columnNames;
-				scResult.data = data;
+				scResult.setResultType(SCResult.SC_OK);
+				scResult.setData(columnNames, data);
+				scResult.setSuccessful(true);
 			} catch (Exception e) {
 				_logger.fatal("", e);
-				scResult.resultType = SCResult.SC_QUERY_ERROR;
-				scResult.errMessage = e.getLocalizedMessage();
+				scResult.setResultType(SCResult.SC_QUERY_ERROR);
+				scResult.setErrorMessage(e.getLocalizedMessage());
 			}
 			// if query doesn't have "select" phrase
 		} else {
-			scResult.resultType = SCResult.SC_UNSUPPORTED_QUERY;
+			scResult.setResultType(SCResult.SC_UNSUPPORTED_QUERY);
+			scResult.setErrorMessage("Unsupported query type: " + query);
 		}
 		_logger.warn("###   doJob() - finished  ###");
 		return scResult;

@@ -23,20 +23,20 @@ public class SCResultComponent implements IResultComponent
 	{
 		SCResult scResult = (SCResult) result;
 		Component resultComonent = null;
-		switch (scResult.resultType) {
+		switch (scResult.getResultType()) {
 			case SCResult.SC_UNSUPPORTED_QUERY :
 				resultComonent = getMsgArea("Unsupported query.\nOnly selection queries are supproted");
 				break;
 			case SCResult.SC_QUERY_ERROR :
-				resultComonent = getMsgArea(scResult.errMessage);
+				resultComonent = getMsgArea(scResult.getErrorMessage());
 				break;
 			case SCResult.SC_OK :
-				resultComonent = getScrlResult(scResult.columnNames,
-						scResult.data);
+				resultComonent = getScrlResult(scResult.getColumnNames(),
+						scResult.getData());
 				break;
 			default :
 				resultComonent = getMsgArea("Internal error.\nUnsopported type: "
-						+ scResult.resultType);
+						+ scResult.getResultType());
 		}
 		return resultComonent;
 	}

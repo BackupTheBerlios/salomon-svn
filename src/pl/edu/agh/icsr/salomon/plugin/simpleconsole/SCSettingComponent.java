@@ -27,7 +27,7 @@ public class SCSettingComponent implements ISettingComponent
 	public ISettings getSettings()
 	{
 		SCSettings settings = new SCSettings();
-		settings.query = getQueryEditor().getText();
+		settings.setQuery(getQueryEditor().getText());
 		return settings;
 	}
 
@@ -47,7 +47,7 @@ public class SCSettingComponent implements ISettingComponent
 	public Component getComponent(ISettings settings)
 	{
 		SCSettings scSettings = (SCSettings) settings;		
-		_txtQueryEditor.setText(scSettings.query);
+		_txtQueryEditor.setText(scSettings.getQuery());
 		return getComponent();
 	}
 
@@ -57,5 +57,10 @@ public class SCSettingComponent implements ISettingComponent
 			_txtQueryEditor = new JTextArea(5, 10);
 		}
 		return _txtQueryEditor;
+	}
+
+	public ISettings getDefaultSettings()
+	{		
+		return new SCSettings();
 	}
 }
