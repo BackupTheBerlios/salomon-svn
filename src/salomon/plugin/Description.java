@@ -12,7 +12,6 @@ import java.io.File;
  */
 public class Description
 {
-
 	private String _info;
 
 	private String _input;
@@ -22,9 +21,9 @@ public class Description
 	private String _output;
 
 	private String _version;
-	
+
 	private int _pluginID;
-	
+
 	private File _location;
 
 	public Description()
@@ -125,6 +124,7 @@ public class Description
 	{
 		_version = version;
 	}
+
 	/**
 	 * @return Returns the location.
 	 */
@@ -132,13 +132,16 @@ public class Description
 	{
 		return _location;
 	}
+
 	/**
-	 * @param location The location to set.
+	 * @param location
+	 *            The location to set.
 	 */
 	public void setLocation(File location)
 	{
 		_location = location;
 	}
+
 	/**
 	 * @return Returns the pluginID.
 	 */
@@ -146,8 +149,10 @@ public class Description
 	{
 		return _pluginID;
 	}
+
 	/**
-	 * @param pluginID The pluginID to set.
+	 * @param pluginID
+	 *            The pluginID to set.
 	 */
 	public void setPluginID(int pluginID)
 	{

@@ -12,7 +12,7 @@ package salomon.plugin;
 public interface ISettings
 {
 	/** 
-	 *  Method parses settings from string their string representation.
+	 *  Method parses settings from their string representation.
 	 * 
 	 * @param stringSettings
 	 */
@@ -20,7 +20,8 @@ public interface ISettings
 	
 	/**
 	 * 
-	 * @return string representation of settings 
+	 * @return String representation of settings 
 	 */
-	String getSettings();
+	String settingsToString();
+	
 }
