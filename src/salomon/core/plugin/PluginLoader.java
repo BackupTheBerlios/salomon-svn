@@ -23,9 +23,9 @@ import salomon.core.Config;
 import salomon.plugin.IPlugin;
 
 /**
- * @author nico
- * 
- * Class is responsible for dynamic plugin loading.
+ * Class is responsible for dynamic plugin loading. It loads plugin from remote
+ * location using PluginClassLoader.
+ *  
  */
 public final class PluginLoader
 {
@@ -35,6 +35,14 @@ public final class PluginLoader
 		return (URL) _pluginsLoaded.get(plugin);
 	}
 
+	/**
+	 * Loads plugin from remote location. If plugin exists in cache, then it is
+	 * not downloaded, but local instance is returned.
+	 * 
+	 * @param url plugin location
+	 * @return an instance of given plugin
+	 * @throws Exception
+	 */
 	public static IPlugin loadPlugin(URL url) throws Exception
 	{
 		IPlugin plugin = null;
@@ -76,6 +84,12 @@ public final class PluginLoader
 		return pluginFile;
 	}
 
+	/**
+	 * Checks if given plugin exists in local cache.
+	 * 
+	 * @param url plugin location
+	 * @return
+	 */
 	private static File getFromCache(URL url)
 	{
 		File pluginFile = null;
@@ -95,6 +109,10 @@ public final class PluginLoader
 		return pluginFile;
 	}
 
+	/**
+	 * File filter used to find plugins.
+	 *  
+	 */
 	class PluginFileFilter implements FileFilter
 	{
 
@@ -127,7 +145,12 @@ public final class PluginLoader
 			return false;
 		}
 
-		/** @return rozszerzenie pliku (lub null gdy go nie ma) */
+		/**
+		 * Returns an extention of given file.
+		 * 
+		 * @param file
+		 * @return file extension (or null if there is no extenstion)
+		 */
 		private String getExtension(File f)
 		{
 			if (f != null) {

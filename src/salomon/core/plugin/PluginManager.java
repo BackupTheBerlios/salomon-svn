@@ -20,7 +20,7 @@ import salomon.core.data.common.DBTableName;
 import salomon.plugin.Description;
 
 /**
- * @author nico Class manager available plugins.
+ * Class manager available plugins.
  */
 public final class PluginManager implements IPluginManager
 {

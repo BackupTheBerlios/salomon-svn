@@ -11,6 +11,12 @@ import java.util.jar.JarFile;
 
 import org.apache.log4j.Logger;
 
+/**
+ * Class represents class loader used by application to load plugins. It has to
+ * be used to download plugins from remote locations and create an instance of
+ * given plugin. This intstance will be used to execute task.
+ *  
+ */
 final class PluginClassLoader extends URLClassLoader
 {
 	PluginClassLoader() throws MalformedURLException

@@ -7,11 +7,13 @@ import java.rmi.server.RMIClassLoaderSpi;
 
 import org.apache.log4j.Logger;
 
+/**
+ *  Class required by RMI, whem application uses its own class loader. 
+ * 
+ */
 public final class PluginRMIClassLoaderSpi extends RMIClassLoaderSpi
 {
-	/**
-	 *  
-	 */
+	
 	public PluginRMIClassLoaderSpi()
 	{
 		_logger.debug("Creating PluginRMIClassLoaderSpi");
