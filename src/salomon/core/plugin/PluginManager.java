@@ -8,11 +8,8 @@ package salomon.core.plugin;
 import java.io.File;
 import java.io.FileFilter;
 import java.util.Arrays;
-
 import org.apache.log4j.Logger;
-
 import salomon.core.Config;
-import salomon.plugin.IPlugin;
 
 /**
  * @author nico Class manager available plugins.
