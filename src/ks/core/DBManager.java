@@ -25,8 +25,18 @@ public class DBManager
 
 	private static Logger _logger = Logger.getLogger(DBManager.class);
 	
-	private DBManager()
+	private String _hostName = null;
+	private String _dataBasePath = null;
+	private String _user = null;
+	private String _passwd = null;
+	
+	private DBManager()	
 	{
+		_hostName = Config.getString("HOSTNAME"); //$NON-NLS-1$
+		_dataBasePath = Config.getString("DB_PATH"); //$NON-NLS-1$
+		_user = Config.getString("USER"); //$NON-NLS-1$
+		_passwd = Config.getString("PASSWD"); //$NON-NLS-1$
+		
 	}
 
 	public static DBManager getInstance() throws SQLException, ClassNotFoundException 
@@ -45,10 +55,10 @@ public class DBManager
 
 	private void connect() throws SQLException, ClassNotFoundException
 	{
-		Class.forName("org.firebirdsql.jdbc.FBDriver");
+		Class.forName("org.firebirdsql.jdbc.FBDriver"); //$NON-NLS-1$
 		_connection = DriverManager.getConnection(
-				"jdbc:firebirdsql://127.0.0.1/c:/database/testbase.gdb",
-				"SYSDBA", "masterkey");
+				"jdbc:firebirdsql://" + _hostName +  "/" + _dataBasePath, //$NON-NLS-1$ //$NON-NLS-2$
+				_user, _passwd);
 		_connection.setAutoCommit(false);
 		_statement = _connection.createStatement();
 	}
@@ -72,33 +82,33 @@ public class DBManager
 			DBTableName[] tableNames, DBCondition[] conditions) throws SQLException
 	{
 		//TODO: synchronizacja aliasow
-		String query = "SELECT ";
+		String query = "SELECT "; //$NON-NLS-1$
 		if (columnNames == null) {
-			query += "*";
+			query += "*"; //$NON-NLS-1$
 		} else {
 			for (int i = 0; i < columnNames.length - 1; i++) {
-				query += columnNames[i] + ", ";
+				query += columnNames[i] + ", "; //$NON-NLS-1$
 			}
 			query += columnNames[columnNames.length - 1];
 		}
-		_logger.debug("query = " + query);
+		_logger.debug("query = " + query); //$NON-NLS-1$
 		
-		query += " FROM ";
+		query += " FROM "; //$NON-NLS-1$
 		for (int i = 0; i < tableNames.length - 1; i++) {
-			query += tableNames[i].getFromQuery() + ", ";
+			query += tableNames[i].getFromQuery() + ", "; //$NON-NLS-1$
 		}
 		query += tableNames[tableNames.length - 1].getFromQuery();
 		
-		_logger.debug("query = " + query);
+		_logger.debug("query = " + query); //$NON-NLS-1$
 		
 		if (conditions != null) {
-			query += " WHERE ";
+			query += " WHERE "; //$NON-NLS-1$
 			for (int i = 0; i < conditions.length - 1; i++) {
-				query += conditions[i] + " AND ";
+				query += conditions[i] + " AND "; //$NON-NLS-1$
 			}
 			query += conditions[conditions.length - 1];
 		}
-		_logger.info("query = " + query);
+		_logger.info("query = " + query); //$NON-NLS-1$
 		
 		return _statement.executeQuery(query);
 	}
