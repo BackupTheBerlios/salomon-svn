@@ -95,10 +95,9 @@
 
 	<target name="copy_libs">
 		<mkdir dir="${release_dir}/${lib_dir}"/>	
-		<copy file="${run_script}"
-			todir="${release_dir}"/>
-		<copy file="all.policy"
-			todir="${release_dir}"/>
+		<copy 	todir="${release_dir}/${lib_dir}">
+			<fileset file="${lib_dir}/*.jar"/>			
+		</copy>
 	</target>	
 	
 	<target name="copy_drivers">
@@ -109,10 +108,10 @@
 	</target>	
 	
 	<target name="copy_run_files">
-		<mkdir dir="${release_dir}"/>	
-		<copy todir="${release_dir}">
-			<fileset file="*.conf" />
-		</copy>	
+		<copy file="${run_script}"
+			todir="${release_dir}"/>
+		<copy file="all.policy"
+			todir="${release_dir}"/>
 	</target>	
 	
 	<target name="copy_salomon" depends="build_salomon_jar">
