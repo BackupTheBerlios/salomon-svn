@@ -13,4 +13,6 @@ import java.awt.Component;
 public interface IResultComponent
 {
 	Component getComponent(IResult result);
+	
+	IResult getDefaultResult();
 }
