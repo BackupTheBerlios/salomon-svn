@@ -1,5 +1,9 @@
 <project name="salomon" default="all" basedir=".">
 
+	<!-- Allows us to use the IzPack Ant task -->
+	<taskdef name="izpack" classpath="${basedir}/lib/compiler.jar"
+		classname="com.izforge.izpack.ant.IzPackTask"/>
+
 	<property name="src_dir" value="src"/>
 
 	
@@ -147,4 +151,12 @@
 		<delete dir="${bin_dir}" />		
 	</target>	
 	
+	<!-- creating installtor file -->
+	<target name="installator" depends="all">
+		<izpack input="${basedir}/install/install.xml"
+			output="${basedir}/install.jar"
+			installerType="standard"
+			basedir="${basedir}/install"
+			izPackDir="${izpackdir}/"/>
+	</target>
 </project>
