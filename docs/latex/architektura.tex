@@ -18,6 +18,10 @@ pozosta³e nie s¹ dostêpne dla pluginów. Plugin, zale¿nie od
 potrzeb, pobiera sobie z niego potrzebny mu manager i za jego
 poœrednictwem wykonuje operacje na bazie danych.
 
+\subsubsection{IManagerEngine}
+Klasa zarz¹dza pozosta³ymi managerami. Utrzymuje jedn¹ instancjê ka¿dego z nich 
+i udostêpnia je pozosta³ym klasom z platformy.
+
 \subsubsection{DBManager}
 Odpowiada za po³¹czenie z baz¹ danych. Dostarcza metod
 zapewniaj¹cych dostêp do danych przechowywanych w bazie. Swoj¹
@@ -29,7 +33,7 @@ podstawie zawartych w bazie informacji oraz umo¿liwia operowanie
 na nich.
 
 \subsubsection{RuleSetManager}
- Zarz¹dza regu³ami. Pozwala tworzyæ nowe regu³y oraz
+Zarz¹dza regu³ami. Pozwala tworzyæ nowe regu³y oraz
 zarz¹dza dostêpem do ju¿ istniej¹cych.
 
 \subsubsection{ProjectManager}
