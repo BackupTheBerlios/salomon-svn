@@ -160,4 +160,12 @@ public final class RemoteTask extends UnicastRemoteObject
 	}
 
 	private static final Logger LOGGER = Logger.getLogger(RemoteTask.class);
+
+	/**
+	 * @see salomon.engine.remote.task.IRemoteTask#setSettings(java.lang.String)
+	 */
+	public void setSettings(String settings) throws RemoteException, PlatformException
+	{
+		_task.setSettings(settings);
+	}
 }

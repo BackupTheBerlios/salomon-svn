@@ -23,6 +23,8 @@ package salomon.engine.task;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.io.StringBufferInputStream;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -37,6 +39,8 @@ import salomon.plugin.IPlugin;
 import salomon.plugin.IResult;
 import salomon.plugin.ISettings;
 import salomon.util.serialization.SimpleStruct;
+
+import salomon.platform.exception.PlatformException;
 
 /**
  * Represents task which may be executed. It is an implementation of ITask
@@ -251,6 +255,8 @@ public final class Task implements ITask, IDBSupporting
 	{
 		_settings = settings;
 	}
+	
+	
 
 	/**
 	 * @param status The status to set.
@@ -289,4 +295,13 @@ public final class Task implements ITask, IDBSupporting
 	public static final String TABLE_NAME = "tasks";
 
 	private static final String GEN_NAME = "gen_task_id";
+
+	/**
+	 * @see salomon.engine.task.ITask#setSettings(java.lang.String)
+	 */
+	public void setSettings(String settings) throws PlatformException
+	{
+		InputStream stream = new StringBufferInputStream(settings);
+		_settings = (ISettings) XMLSerializer.deserialize(stream);
+	}
 } // end Task

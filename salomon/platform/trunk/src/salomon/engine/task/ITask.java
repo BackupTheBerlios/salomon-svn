@@ -81,7 +81,12 @@ public interface ITask
 	 *            The settings to set.
 	 */
 	void setSettings(ISettings settings) throws PlatformException;
-
+	/**
+	 * @param settings
+	 * @throws PlatformException
+	 */
+	void setSettings(String settings) throws PlatformException;
+	
 	/**
 	 * @param status
 	 *            The status to set.
