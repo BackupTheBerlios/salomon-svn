@@ -63,7 +63,7 @@
 		</jar>
 	</target>
 
-	<target name="build_plugin_jars">
+	<target name="build_plugin_jars" depends="compile_salomon">
 		<jar destfile="${plugin_dir}/platform.jar" basedir="${bin_dir}" includes="salomon/platform/**"/>
 		<jar destfile="${plugin_dir}/plugin.jar" basedir="${bin_dir}" includes="salomon/plugin/**"/>
 		<jar destfile="${plugin_dir}/util.jar" basedir="${bin_dir}" includes="salomon/util/**"/>
