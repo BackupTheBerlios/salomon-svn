@@ -1,10 +1,12 @@
 
 package salomon.engine.platform.data.rule;
 
+import salomon.platform.data.rule.IRule;
+
 /**
  *  Not used yet.
  */
-public class Rule
+public class Rule implements IRule
 {
 	///////////////////////////////////////
 	// associations

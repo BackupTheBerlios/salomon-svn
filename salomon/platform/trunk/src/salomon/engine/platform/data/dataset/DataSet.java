@@ -10,7 +10,7 @@ import org.apache.log4j.Logger;
 
 import salomon.engine.platform.data.DBManager;
 import salomon.engine.platform.data.common.SQLSelect;
-import salomon.platform.data.data.IDataSet;
+import salomon.platform.data.dataset.IDataSet;
 
 /**
  * Class represents data set. Data set is a subset of data stored in tables, its

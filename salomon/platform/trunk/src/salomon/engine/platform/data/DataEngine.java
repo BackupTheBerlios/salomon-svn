@@ -7,11 +7,12 @@ import java.sql.SQLException;
 import salomon.engine.platform.data.attribute.AttributeManager;
 import salomon.engine.platform.data.dataset.DataSetManager;
 import salomon.engine.platform.data.rule.RuleSetManager;
+import salomon.platform.data.IDataEngine;
 
 /**
  *  Class holds  DataSetManager, RuleSetManager and AttributeManager instances.  
  */
-public class DataEngine
+public class DataEngine implements IDataEngine
 {
 	private AttributeManager _attributeManager;
 
@@ -24,17 +25,12 @@ public class DataEngine
 		_dataSetManager = new DataSetManager();
 	}
 
-	public DataSetManager getTrainingDataSetManager()
-	{
-		return _dataSetManager;
-	}
-
 	/**
 	 * Does ...
 	 * 
 	 * @return
 	 */
-	public DataSetManager getTestingDataSetManager()
+	public DataSetManager getDataSetManager()
 	{
 		return _dataSetManager;
 	} 
@@ -64,15 +60,5 @@ public class DataEngine
 	public DBManager getDbManager() throws SQLException, ClassNotFoundException
 	{
 		return DBManager.getInstance();
-	}
-
-	/**
-	 * TODO: add comment.
-	 * 
-	 */
-	public DataSetManager getDataSetManager()
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
+	}	
 } 

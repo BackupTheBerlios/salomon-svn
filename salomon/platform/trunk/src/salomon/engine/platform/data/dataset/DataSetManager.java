@@ -8,7 +8,7 @@ import java.util.HashSet;
 
 import salomon.engine.platform.data.DBManager;
 import salomon.engine.platform.data.common.SQLSelect;
-import salomon.platform.data.data.IDataSetManager;
+import salomon.platform.data.dataset.IDataSetManager;
 
 /**
  * Class manages with datasets.

@@ -5,10 +5,12 @@ package salomon.engine.platform.data;
 import java.util.HashMap;
 import java.util.Map;
 
+import salomon.platform.data.IEnvironment;
+
 /**
  *  Class represents environment of task execution.
  */
-public class Environment
+public class Environment implements IEnvironment
 {
 	Map _environment = new HashMap();
 

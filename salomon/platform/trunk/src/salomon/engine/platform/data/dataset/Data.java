@@ -1,6 +1,6 @@
 package salomon.engine.platform.data.dataset;
 
-import salomon.platform.data.data.IData;
+import salomon.platform.data.dataset.IData;
 
 /**
  *  Not used.
