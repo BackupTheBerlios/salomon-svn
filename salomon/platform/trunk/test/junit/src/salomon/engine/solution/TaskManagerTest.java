@@ -32,7 +32,6 @@ import salomon.engine.platform.ManagerEngine;
 import salomon.engine.project.Project;
 import salomon.engine.project.ProjectManager;
 import salomon.engine.task.ITask;
-import salomon.engine.task.Task;
 import salomon.engine.task.TaskManager;
 import salomon.platform.exception.PlatformException;
 
@@ -54,26 +53,43 @@ public class TaskManagerTest extends TestCase {
     }
 
     public void testCreateTask() {
-        ITask task = _TaskManager.createTask() ;
-        assertNotNull(task) ;
+        ITask task ;
+        try {
+            task = _TaskManager.createTask();
+            assertNotNull(task) ;
+            
+        } catch (PlatformException e) {
+            LOGGER.error(e,e);
+            assertFalse(true);
+            e.printStackTrace();
+       }  
     }
     
     public void testAddTask() {
-        ITask task = _TaskManager.createTask() ;
-        assertNotNull(task) ;
-        
-        _TaskManager.addTask(task);
-        
-        //TODO i think addAllTask should take collection<ITask> not Collection<Task>, this cast here could be possibly wrong
-        Collection<Task> tasklist = new ArrayList<Task>() ;
-        tasklist.add((Task)_TaskManager.createTask());
-        tasklist.add((Task)_TaskManager.createTask());
-        tasklist.add((Task)_TaskManager.createTask());
-      
-        _TaskManager.addAllTasks(tasklist);
-        
-        ITask tasks[] = _TaskManager.getTasks() ;
-        assertNotNull(tasks) ;
+        ITask task ;
+        try {
+            task = _TaskManager.createTask();
+            assertNotNull(task) ;
+            
+            _TaskManager.addTask(task);
+            
+            //TODO i think addAllTask should take collection<ITask> not Collection<Task>, this cast here could be possibly wrong
+            Collection<ITask> tasklist = new ArrayList<ITask>() ;
+            tasklist.add(_TaskManager.createTask());
+            tasklist.add(_TaskManager.createTask());
+            tasklist.add(_TaskManager.createTask());
+          
+            _TaskManager.addAllTasks(tasklist);
+            
+            ITask tasks[] = _TaskManager.getTasks() ;
+            assertNotNull(tasks) ;
+            
+        } catch (PlatformException e) {
+            e.printStackTrace();
+            LOGGER.error(e,e);
+            assertFalse(true);
+        }
+
     }
     
     public void testClearTasks() {
@@ -99,7 +115,7 @@ public class TaskManagerTest extends TestCase {
         ProjectManager projectManager = new ProjectManager(new ManagerEngine()) ;
         Project project = new Project() ;
         try {
-            projectManager.addProject(projectManager.createProject()) ;
+            projectManager.addProject(projectManager.ceateProject()) ;
         } catch (PlatformException e) {
             e.printStackTrace();
             LOGGER.error("PlatformError", e) ;
