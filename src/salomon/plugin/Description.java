@@ -1,14 +1,15 @@
 
 package salomon.plugin;
 
+import java.io.Serializable;
 import java.net.URL;
 
 /**
  * Class represents plugin description.
  * 
- * @author nico   
+ * @author nico
  */
-public class Description
+public class Description implements Serializable
 {
 	private String _info;
 
@@ -79,8 +80,7 @@ public class Description
 	}
 
 	/**
-	 * @param info
-	 *            The info to set.
+	 * @param info The info to set.
 	 */
 	public void setInfo(String info)
 	{
@@ -88,8 +88,7 @@ public class Description
 	}
 
 	/**
-	 * @param input
-	 *            The input to set.
+	 * @param input The input to set.
 	 */
 	public void setInput(String input)
 	{
@@ -97,8 +96,7 @@ public class Description
 	}
 
 	/**
-	 * @param name
-	 *            The name to set.
+	 * @param name The name to set.
 	 */
 	public void setName(String name)
 	{
@@ -106,8 +104,7 @@ public class Description
 	}
 
 	/**
-	 * @param output
-	 *            The output to set.
+	 * @param output The output to set.
 	 */
 	public void setOutput(String output)
 	{
@@ -115,8 +112,7 @@ public class Description
 	}
 
 	/**
-	 * @param version
-	 *            The version to set.
+	 * @param version The version to set.
 	 */
 	public void setVersion(String version)
 	{
@@ -132,8 +128,7 @@ public class Description
 	}
 
 	/**
-	 * @param location
-	 *            The location to set.
+	 * @param location The location to set.
 	 */
 	public void setLocation(URL location)
 	{
@@ -149,11 +144,15 @@ public class Description
 	}
 
 	/**
-	 * @param pluginID
-	 *            The pluginID to set.
+	 * @param pluginID The pluginID to set.
 	 */
 	public void setPluginID(int pluginID)
 	{
 		this._pluginID = pluginID;
+	}
+
+	public String toString()
+	{
+		return "" + _name + "," + _location + "," + _pluginID;
 	}
 } // end Description
