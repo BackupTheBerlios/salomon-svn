@@ -33,6 +33,5 @@ public final class USettings extends SimpleStruct implements ISettings
 {
     public static final String FIRST_DATA_SET = "firstDataSet";
     public static final String SECOND_DATA_SET = "secondDataSet";
-    public static final String RESULT_DATA_SET = "resultDataSet";
-    
+    public static final String RESULT_DATA_SET = "resultDataSet";    
 }

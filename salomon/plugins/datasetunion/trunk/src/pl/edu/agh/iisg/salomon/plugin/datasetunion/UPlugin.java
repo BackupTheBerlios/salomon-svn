@@ -34,14 +34,14 @@ import salomon.plugin.ISettingComponent;
 import salomon.plugin.ISettings;
 
 /**
- *  
+ * 
  */
 public final class UPlugin implements IPlugin
 {
 	private Description _description;
 
 	/**
-	 *  
+	 * 
 	 */
 	public UPlugin()
 	{
@@ -57,7 +57,8 @@ public final class UPlugin implements IPlugin
 	}
 
 	/**
-	 * @see salomon.plugin.IDataPlugin#doJob(salomon.platform.IDataEngine, salomon.platform.IEnvironment, salomon.plugin.ISettings)
+	 * @see salomon.plugin.IDataPlugin#doJob(salomon.platform.IDataEngine,
+	 *      salomon.platform.IEnvironment, salomon.plugin.ISettings)
 	 */
 	public IResult doJob(IDataEngine engine, IEnvironment environment,
 			ISettings settings)
@@ -67,14 +68,17 @@ public final class UPlugin implements IPlugin
 		UResult uResult = new UResult();
 		IDataSet firstDataSet;
 		try {
-//			firstDataSet = dataSetManager.getDataSet(uSettings.getFirstDataSet());
-//			IDataSet secondDataSet = dataSetManager.getDataSet(uSettings.getSecondDataSet());
-//			IDataSet result = dataSetManager.union(firstDataSet, secondDataSet);
-//			result.setName(uSettings.getResultDataSet());
-//			dataSetManager.add(result);
-			//TODO: implement
-            
-            uResult.setSuccessfull(true);
+			// firstDataSet =
+			// dataSetManager.getDataSet(uSettings.getFirstDataSet());
+			// IDataSet secondDataSet =
+			// dataSetManager.getDataSet(uSettings.getSecondDataSet());
+			// IDataSet result = dataSetManager.union(firstDataSet,
+			// secondDataSet);
+			// result.setName(uSettings.getResultDataSet());
+			// dataSetManager.add(result);
+			// TODO: implement
+
+			uResult.setSuccessfull(true);
 		} catch (Exception e) {
 			uResult.setSuccessfull(false);
 		}
@@ -114,15 +118,14 @@ public final class UPlugin implements IPlugin
 	{
 	}
 
-	private static final String DESCRIPTION = "Creates dataset which is a union of two other datasets";
-
 	/**
 	 * @see salomon.plugin.IPlugin#setDescription(salomon.plugin.Description)
 	 */
 	public void setDescription(Description description)
 	{
 		_description = description;
-		
+
 	}
 
+	private static final String DESCRIPTION = "Creates dataset which is a union of two other datasets";
 }

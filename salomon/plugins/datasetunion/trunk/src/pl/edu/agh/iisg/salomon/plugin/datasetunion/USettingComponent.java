@@ -77,6 +77,8 @@ public final class USettingComponent implements ISettingComponent
 			_settingPanel.add(new JLabel("Result data set"));
 			_settingPanel.add(_txtResultDataSet);
 		}
+		//FIXME
+		/*
 		IDataSetManager dataSetManager = dataEngine.getDataSetManager();
 		IDataSet[] dataSets = null;
 
@@ -85,12 +87,18 @@ public final class USettingComponent implements ISettingComponent
 		} catch (PlatformException e) {
 			// TODO:
 		}
-
+		*/
+		String[] strDataSets = {"first", "seconf", "third"};
 		_cmbFirstDataSet.removeAllItems();
 		_cmbSecondDataSet.removeAllItems();
-		for (int i = 0; i < dataSets.length; i++) {
-			_cmbFirstDataSet.addItem(dataSets[i].getName());
-			_cmbSecondDataSet.addItem(dataSets[i].getName());
+		
+//		for (int i = 0; i < dataSets.length; i++) {
+//			_cmbFirstDataSet.addItem(dataSets[i].getName());
+//			_cmbSecondDataSet.addItem(dataSets[i].getName());
+//		}
+		for(String name : strDataSets) {
+			_cmbFirstDataSet.addItem(strDataSets);
+			_cmbSecondDataSet.addItem(strDataSets);
 		}
 
 		USettings uSettings = (USettings) settings;

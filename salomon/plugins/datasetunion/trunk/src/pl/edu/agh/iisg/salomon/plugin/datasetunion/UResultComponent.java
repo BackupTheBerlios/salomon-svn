@@ -31,9 +31,9 @@ public class UResultComponent implements IResultComponent
 	public Component getComponent(IResult result)
 	{
         JPanel resultPanel = new JPanel(new BorderLayout());
-        resultPanel.add(new JLabel("Age Counter result"), BorderLayout.NORTH);
+        resultPanel.add(new JLabel("New DataSet"), BorderLayout.NORTH);
         //TODO add proper values
-        String text = ((UResult) result).toString();
+        String text = "new_data_set";//((UResult) result).toString();
         resultPanel.add(new JTextField(text), BorderLayout.CENTER);
         resultPanel.setSize(70, 70);
         return resultPanel;
