@@ -1,3 +1,4 @@
+
 package salomon.core;
 
 import java.awt.BorderLayout;
@@ -24,16 +25,19 @@ import javax.swing.JTextPane;
 import javax.swing.JToolBar;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
-
 import pl.edu.agh.icsr.salomon.plugin.averageprice.AveragePrice;
-import salomon.controller.gui.Messages;
 import salomon.core.data.DBManager;
 import salomon.core.data.DataEngine;
-import salomon.core.data.common.*;
-import salomon.core.data.dataset.*;
+import salomon.core.data.common.DBColumnName;
+import salomon.core.data.common.DBCondition;
+import salomon.core.data.common.DBTableName;
+import salomon.core.data.dataset.DataSet;
+import salomon.core.data.dataset.DataSetManager;
 
 public class SQLConsole extends JFrame
 {
+	private static Logger _logger = Logger.getLogger(SQLConsole.class);
+
 	private JButton _btnCommit = null;
 
 	private JButton _btnExecute = null;
@@ -44,12 +48,25 @@ public class SQLConsole extends JFrame
 
 	private JButton _btnRollback = null;
 
-	/**	 Class represents connection to data base */
+	/** Class represents connection to data base */
 	private DBManager _connector = null;
 
 	private JPanel _contentPane = null;
 
 	private JTextPane _edtSQLQuery = null;
+
+	private CommandHistory _history = null;
+
+	/**
+	 * If true it means than it is run standalone, and on exit close connection
+	 * to database and calls System.exit();
+	 */
+	private boolean _isStandAlone = false;
+
+	/**
+	 * Text area which shows results of SQL query and error messages
+	 */
+	private JTextArea _msgArea;
 
 	private JPanel _pnlMain = null;
 
@@ -57,25 +74,10 @@ public class SQLConsole extends JFrame
 
 	private JSplitPane _sptConsolePane = null;
 
-	/**	 Table which represents results of SQL query */
+	/** Table which represents results of SQL query */
 	private JTable _tblResult = null;
 
 	private JToolBar _toolCommands = null;
-
-	private CommandHistory _history = null;
-
-	/**
-	 * Text area which shows results of SQL query and error messages
-	 */
-	private JTextArea _msgArea;
-
-	private static Logger _logger = Logger.getLogger(SQLConsole.class);
-
-	/**
-	 * If true it means than it is run standalone, and on exit close connection
-	 * to database and calls System.exit();
-	 */
-	private boolean _isStandAlone = false;
 
 	/**
 	 * This is the default constructor
@@ -97,30 +99,6 @@ public class SQLConsole extends JFrame
 		_msgArea = getMessageArea();
 		_history = new CommandHistory(100);
 		initialize();
-	}
-
-	private JTextArea getMessageArea()
-	{
-		JTextArea txtArea = new JTextArea();
-		((JTextArea) txtArea).setEditable(false);
-		txtArea.setBackground(Color.WHITE);
-		return txtArea;
-	}
-
-	public static void main(String[] args)
-	{
-		new SQLConsole(true);
-	}
-
-	private void commit()
-	{
-		try {
-			_connector.commit();
-			showMessage(Messages.getString("TXT_COMMIT_COMPLETE")); //$NON-NLS-1$
-		} catch (SQLException e) {
-			_logger.fatal("", e); //$NON-NLS-1$
-			showMessage(e.getLocalizedMessage());
-		}
 	}
 
 	public static JTable createResultTable(ResultSet resultSet)
@@ -166,6 +144,11 @@ public class SQLConsole extends JFrame
 		return new JTable(data, columnNames);
 	}
 
+	public static void main(String[] args)
+	{
+		new SQLConsole(true);
+	}
+
 	public static void printResultSet(ResultSet resultSet) throws SQLException
 	{
 		if (resultSet == null) {
@@ -209,6 +192,17 @@ public class SQLConsole extends JFrame
 			buffer.append("\n"); //$NON-NLS-1$
 		}
 		_logger.fatal(buffer);
+	}
+
+	private void commit()
+	{
+		try {
+			_connector.commit();
+			showMessage(Messages.getString("TXT_COMMIT_COMPLETE")); //$NON-NLS-1$
+		} catch (SQLException e) {
+			_logger.fatal("", e); //$NON-NLS-1$
+			showMessage(e.getLocalizedMessage());
+		}
 	}
 
 	/**
@@ -368,6 +362,14 @@ public class SQLConsole extends JFrame
 		return _contentPane;
 	}
 
+	private JTextArea getMessageArea()
+	{
+		JTextArea txtArea = new JTextArea();
+		((JTextArea) txtArea).setEditable(false);
+		txtArea.setBackground(Color.WHITE);
+		return txtArea;
+	}
+
 	/**
 	 * This method initializes pnlMain
 	 * 
@@ -485,6 +487,11 @@ public class SQLConsole extends JFrame
 		}
 	}
 
+	private void pluginTest()
+	{
+		new AveragePrice().doJob(new DataEngine(), null, null);
+	}
+
 	/**
 	 *  
 	 */
@@ -494,6 +501,35 @@ public class SQLConsole extends JFrame
 		String command = _history.getPreviousCommand();
 		if (command != null) {
 			_edtSQLQuery.setText(command);
+		}
+	}
+
+	private void queryTest()
+	{
+		DataSet dataSet = null;
+		try {
+			dataSet = new DataSetManager().getDataSetForName("test1"); //$NON-NLS-1$
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			_logger.fatal("", e); //$NON-NLS-1$
+		} catch (SQLException e) {
+			_logger.fatal("", e); //$NON-NLS-1$
+		}
+		_logger.debug("dataSet: " + dataSet); //$NON-NLS-1$
+		DBTableName[] tableNames = {new DBTableName("cars", "c")}; //$NON-NLS-1$ //$NON-NLS-2$
+		DBColumnName[] columnNames = {
+				new DBColumnName(tableNames[0], "car_id", "id"), //$NON-NLS-1$ //$NON-NLS-2$
+				new DBColumnName(tableNames[0], "brand", "marka"), //$NON-NLS-1$ //$NON-NLS-2$
+				new DBColumnName(tableNames[0], "name", "model"),}; //$NON-NLS-1$ //$NON-NLS-2$
+		DBCondition[] conditions = {new DBCondition(new DBColumnName(
+				tableNames[0], "car_id"), DBCondition.REL_M, new Integer(1), //$NON-NLS-1$
+				DBCondition.NUMBERIC)};
+		try {
+			dataSet.selectData(columnNames, tableNames, conditions);
+		} catch (SQLException e) {
+			_logger.fatal("", e); //$NON-NLS-1$
+		} catch (ClassNotFoundException e) {
+			_logger.fatal("", e); //$NON-NLS-1$
 		}
 	}
 
@@ -531,16 +567,15 @@ public class SQLConsole extends JFrame
 		}
 
 		/**
-		 * @return command or null if there is no previous command
+		 * Method adds command at the end of command history.
+		 * 
+		 * @param command
+		 *            command to add
 		 */
-		public String getPreviousCommand()
+		public void addCommand(String command)
 		{
-			String command = null;
-			if (_commandHistory.size() > 1 && _currentPosition > 0) {
-				_currentPosition--;
-				command = (String) _commandHistory.get(_currentPosition);
-			}
-			return command;
+			_currentPosition = _commandHistory.size();
+			_commandHistory.add(command);
 		}
 
 		/**
@@ -557,49 +592,16 @@ public class SQLConsole extends JFrame
 		}
 
 		/**
-		 * Method adds command at the end of command history.
-		 * 
-		 * @param command
-		 *            command to add
+		 * @return command or null if there is no previous command
 		 */
-		public void addCommand(String command)
+		public String getPreviousCommand()
 		{
-			_currentPosition = _commandHistory.size();
-			_commandHistory.add(command);
+			String command = null;
+			if (_commandHistory.size() > 1 && _currentPosition > 0) {
+				_currentPosition--;
+				command = (String) _commandHistory.get(_currentPosition);
+			}
+			return command;
 		}
-	}
-
-	private void queryTest()
-	{
-		DataSet dataSet = null;
-		try {
-			dataSet = new DataSetManager().getDataSetForName("test1"); //$NON-NLS-1$
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			_logger.fatal("", e); //$NON-NLS-1$
-		} catch (SQLException e) {
-			_logger.fatal("", e); //$NON-NLS-1$
-		}
-		_logger.debug("dataSet: " + dataSet); //$NON-NLS-1$
-		DBTableName[] tableNames = {new DBTableName("cars", "c")}; //$NON-NLS-1$ //$NON-NLS-2$
-		DBColumnName[] columnNames = {
-				new DBColumnName(tableNames[0], "car_id", "id"), //$NON-NLS-1$ //$NON-NLS-2$
-				new DBColumnName(tableNames[0], "brand", "marka"), //$NON-NLS-1$ //$NON-NLS-2$
-				new DBColumnName(tableNames[0], "name", "model"),}; //$NON-NLS-1$ //$NON-NLS-2$
-		DBCondition[] conditions = {new DBCondition(new DBColumnName(
-				tableNames[0], "car_id"), DBCondition.REL_M, new Integer(1), //$NON-NLS-1$
-				DBCondition.NUMBERIC)};
-		try {
-			dataSet.selectData(columnNames, tableNames, conditions);
-		} catch (SQLException e) {
-			_logger.fatal("", e); //$NON-NLS-1$
-		} catch (ClassNotFoundException e) {
-			_logger.fatal("", e); //$NON-NLS-1$
-		}
-	}
-
-	private void pluginTest()
-	{
-		new AveragePrice().doJob(new DataEngine(), null, null);
 	}
 }
