@@ -80,20 +80,19 @@ public final class ProjectManager implements IProjectManager
 		throw new UnsupportedOperationException("Method addProject() not implemented yet!");
 	}
 
-	public void ceateProject() throws PlatformException
+    /**
+     * @see salomon.engine.project.IProjectManager#ceateProject()
+     */
+	public IProject ceateProject() throws PlatformException
 	{
+        //FIXME
 		_currentProject = new Project();
 		// clearing old tasks
 		_managerEngine.getTasksManager().clearTaskList();
+        
+        return _currentProject;
 	}
 
-	/**
-	 * @see salomon.engine.project.IProjectManager#createProject()
-	 */
-	public IProject createProject()
-	{
-		throw new UnsupportedOperationException("Method createProject() not implemented yet!");
-	}
 
 	/**
 	 * @return Returns the currentProject.
@@ -103,10 +102,8 @@ public final class ProjectManager implements IProjectManager
 		return _currentProject;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see salomon.engine.platform.project.IProjectManager#getAvailableProjects()
+	/**
+     * @see IProjectManager#getProjects()
 	 */
 	public IProject[] getProjects() throws PlatformException
 	{
@@ -134,11 +131,13 @@ public final class ProjectManager implements IProjectManager
 	/**
 	 * Method loads project from data base.
 	 * 
+     * @see IProjectManager#getProject(int)
+     * 
 	 * @param projectID
 	 * @return loaded project
-	 * @throws Exception
+	 * @throws PlatformException
 	 */
-	public IProject loadProject(int projectID) throws PlatformException
+	public IProject getProject(int projectID) throws PlatformException
 	{
         //FIXME:
         throw new UnsupportedOperationException(
@@ -181,6 +180,8 @@ public final class ProjectManager implements IProjectManager
 	 * Method saves project in data base - project header, plugins and tasks are
 	 * saved.
 	 * 
+     * @see IProjectManager#saveProject()
+     * 
 	 * @param project
 	 * @throws ClassNotFoundException
 	 * @throws Exception

@@ -19,7 +19,7 @@
  * 
  */
 
-package salomon.engine.platform.remote;
+package salomon.engine.platform.remote.project;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
@@ -32,15 +32,24 @@ import salomon.platform.exception.PlatformException;
  * Remote version of IProjectManager interface. It has all methods from
  * IProjectManager interface, but adds throwing RemoteException declaration to
  * each of methods.
- *  
+ * 
+ * @see salomon.engine.project.IProjectManager
  */
 public interface IRemoteProjectManager extends Remote
 {
-	void createProject() throws PlatformException, RemoteException;
 
-
-	IProject[] getProjects() throws RemoteException,
-			PlatformException;
+	/**
+	 * TODO: add comment.
+	 * @param project
+	 */
+	void addProject(IProject project) throws PlatformException, RemoteException;
+	/**
+	 * @see salomon.engine.project.IProjectManager#ceateProject()
+	 * 
+	 * @throws PlatformException
+	 * @throws RemoteException
+	 */
+	IProject createProject() throws PlatformException, RemoteException;
 
 	/**
 	 * Method loads project from data base.
@@ -50,7 +59,13 @@ public interface IRemoteProjectManager extends Remote
 	 * @pre $none
 	 * @post $none
 	 */
-	IProject loadProject(int projectID) throws PlatformException, RemoteException;
+	IProject getProject(int projectID) throws PlatformException,
+			RemoteException;
+
+	/**
+	 * @see salomon.engine.project.IProjectManager#getProjects()
+	 */
+	IProject[] getProjects() throws RemoteException, PlatformException;
 
 	/**
 	 * Method saves project in data base - project header, plugins and tasks are

@@ -24,17 +24,23 @@ package salomon.engine.platform.remote;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
+import salomon.engine.platform.remote.plugin.IRemotePluginManager;
+import salomon.engine.platform.remote.project.IRemoteProjectManager;
+import salomon.engine.platform.remote.task.IRemoteTaskManager;
+
 /**
  * Remote version of IManagerEngine interface. It has all methods from
  * IManagerEngine interface, but adds throwing RemoteException declaration to
  * each of methods.
  *  
+ * @see salomon.engine.platform.IManagerEngine
  */
 public interface IRemoteManagerEngine extends Remote
 {
-	IRemoteTaskManager getTasksManager() throws RemoteException;
 
 	/**
+	 * @see salomon.engine.platform.IManagerEngine#getPluginManager()
+	 * 
 	 * @return Returns the pluginManager.
 	 * @pre $none
 	 * @post $result != null
@@ -42,9 +48,16 @@ public interface IRemoteManagerEngine extends Remote
 	IRemotePluginManager getPluginManager() throws RemoteException;
 
 	/**
+	 * @see salomon.engine.platform.IManagerEngine#getProjectManager()
+	 * 
 	 * @return Returns the projectManager.
 	 * @pre $none
 	 * @post $result != null
 	 */
 	IRemoteProjectManager getProjectManager() throws RemoteException;
+
+	/**
+	 * @see salomon.engine.platform.IManagerEngine#getTasksManager()
+	 */
+	IRemoteTaskManager getTasksManager() throws RemoteException;
 }

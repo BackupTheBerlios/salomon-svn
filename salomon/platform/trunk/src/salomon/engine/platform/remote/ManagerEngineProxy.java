@@ -30,11 +30,16 @@ import salomon.engine.project.IProjectManager;
 import salomon.engine.task.ITaskManager;
 
 import salomon.engine.platform.IManagerEngine;
+import salomon.engine.platform.remote.plugin.PluginManagerProxy;
+import salomon.engine.platform.remote.project.ProjectManagerProxy;
+import salomon.engine.platform.remote.task.TaskManagerProxy;
 
 /**
  * Class is a sever side wrapper of IRemoteManagerEngine object. It implements
  * IManagerEngine interface and delegates methods execution to remote object
  * catching all RemoteExceptions.
+ * 
+ * @see salomon.engine.platform.remote.IRemoteManagerEngine
  */
 public final class ManagerEngineProxy implements IManagerEngine
 {

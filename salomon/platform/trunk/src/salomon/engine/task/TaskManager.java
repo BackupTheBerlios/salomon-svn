@@ -139,7 +139,14 @@ public final class TaskManager implements ITaskManager
 			 * task.getPlugin(); Settings settings = task.getSettings();
 			 * plugin.doJob(_dataEngine, _environment, settings);
 			 */
-			int projectId = _projectManger.getCurrentProject().getProjectID();
+			int projectId = -1;
+            try {
+            	_projectManger.getCurrentProject().getProjectID();
+            } catch (PlatformException e) {
+                LOGGER.fatal("", e);
+                //TODO: Create an exception
+            	return;
+            }
 			for (Iterator iter = _tasks.iterator(); iter.hasNext();) {
 				Task task = (Task) iter.next();
 				ISettings settings = task.getSettings();

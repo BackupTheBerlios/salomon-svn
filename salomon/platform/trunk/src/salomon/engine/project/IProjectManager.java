@@ -25,7 +25,6 @@ import salomon.platform.exception.PlatformException;
 
 /**
  * Interface implemented by ProjectManager, which manages with projects.
- * 
  */
 public interface IProjectManager
 {
@@ -39,7 +38,7 @@ public interface IProjectManager
 	/**
 	 * Creates new, empty project
 	 */
-	void ceateProject() throws PlatformException;
+	IProject ceateProject() throws PlatformException;
 
 	/**
 	 * Returns collection of available projects.
@@ -59,7 +58,7 @@ public interface IProjectManager
 	 * @param projectID
 	 * @throws PlatformException
 	 */
-	IProject loadProject(int projectID) throws PlatformException;
+	IProject getProject(int projectID) throws PlatformException;
 
 	/**
 	 * Method saves project in data base - project header, plugins and tasks are

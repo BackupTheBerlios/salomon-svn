@@ -21,7 +21,11 @@
 
 package salomon.engine.controller.gui;
 
+import org.apache.log4j.Logger;
+
 import salomon.engine.task.ITask;
+
+import salomon.platform.exception.PlatformException;
 
 import salomon.plugin.IPlugin;
 import salomon.plugin.IResult;
@@ -56,12 +60,16 @@ public final class TaskGUI
 	public TaskGUI(ITask task)
 	{
 		_task = task;
-		_name = _task.getName();
-		_plugin = _task.getPlugin();
-		_result = _task.getResult();
-		_settings = _task.getSettings();
-		_status = _task.getStatus();
-		_taskId = _task.getTaskId();
+		try {
+			_name = _task.getName();
+			_plugin = _task.getPlugin();
+			_result = _task.getResult();
+			_settings = _task.getSettings();
+			_status = _task.getStatus();
+			_taskId = _task.getTaskId();
+		} catch (PlatformException e) {
+			LOGGER.fatal("", e);
+		}
 	}
 
 	/**
@@ -77,11 +85,19 @@ public final class TaskGUI
 	 */
 	public IPlugin getPlugin()
 	{
+		IPlugin plugin = null;
 		if (isInitialized()) {
-			return _task.getPlugin();
+			try {
+				plugin = _task.getPlugin();
+			} catch (PlatformException e) {
+				LOGGER.error("", e);
+				//FIXME
+			}
 		} else {
-			return _plugin;
+			plugin = _plugin;
 		}
+
+		return plugin;
 	}
 
 	/**
@@ -89,11 +105,19 @@ public final class TaskGUI
 	 */
 	public IResult getResult()
 	{
+		IResult result = null;
 		if (isInitialized()) {
-			return _task.getResult();
+			try {
+				result = _task.getResult();
+			} catch (PlatformException e) {
+				LOGGER.error("", e);
+				//FIXME
+			}
 		} else {
-			return _result;
+			result = _result;
 		}
+
+		return result;
 	}
 
 	/**
@@ -101,11 +125,19 @@ public final class TaskGUI
 	 */
 	public ISettings getSettings()
 	{
+		ISettings settings = null;
 		if (isInitialized()) {
-			return _task.getSettings();
+			try {
+				settings = _task.getSettings();
+			} catch (PlatformException e) {
+				LOGGER.error("", e);
+				//FIXME
+			}
 		} else {
-			return _settings;
+			settings = _settings;
 		}
+
+		return settings;
 	}
 
 	/**
@@ -113,11 +145,19 @@ public final class TaskGUI
 	 */
 	public String getStatus()
 	{
+		String status = null;
 		if (isInitialized()) {
-			return _task.getStatus();
+			try {
+				status = _task.getStatus();
+			} catch (PlatformException e) {
+				LOGGER.error("", e);
+				//FIXME
+			}
 		} else {
-			return _status;
+			status = _status;
 		}
+
+		return status;
 	}
 
 	/**
@@ -125,11 +165,19 @@ public final class TaskGUI
 	 */
 	public int getTaskId()
 	{
+		int taskId = -1;
 		if (isInitialized()) {
-			return _task.getTaskId();
+			try {
+				taskId = _task.getTaskId();
+			} catch (PlatformException e) {
+				LOGGER.error("", e);
+				//FIXME
+			}
 		} else {
-			return _taskId;
+			taskId = _taskId;
 		}
+
+		return taskId;
 	}
 
 	public boolean isInitialized()
@@ -146,10 +194,15 @@ public final class TaskGUI
 	{
 		_task = task;
 		// important: set first plugin
-		_task.setPlugin(_plugin);
+		try {
+			_task.setPlugin(_plugin);
 
-		_task.setSettings(_settings);
-		_task.setName(_name);
+			_task.setSettings(_settings);
+			_task.setName(_name);
+		} catch (PlatformException e) {
+			LOGGER.error("", e);
+			//FIXME
+		}
 	}
 
 	/**
@@ -217,4 +270,6 @@ public final class TaskGUI
 	{
 		return _name + " [" + _plugin + "]";
 	}
+
+	private static final Logger LOGGER = Logger.getLogger(TaskGUI.class);
 }

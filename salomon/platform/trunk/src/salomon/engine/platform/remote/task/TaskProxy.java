@@ -19,7 +19,7 @@
  * 
  */
 
-package salomon.engine.platform.remote;
+package salomon.engine.platform.remote.task;
 
 import java.net.URL;
 import java.rmi.RemoteException;
@@ -29,6 +29,8 @@ import org.apache.log4j.Logger;
 import salomon.engine.plugin.PluginLoader;
 import salomon.engine.task.ITask;
 
+import salomon.platform.exception.PlatformException;
+
 import salomon.plugin.IPlugin;
 import salomon.plugin.IResult;
 import salomon.plugin.ISettings;
@@ -37,6 +39,8 @@ import salomon.plugin.ISettings;
  * Class is a sever side wrapper of IRemoteTask object. It implements ITask
  * interface and delegates methods execution to remote object catching all
  * RemoteExceptions.
+ * 
+ * @see salomon.engine.platform.remote.task.IRemoteTask
  */
 public final class TaskProxy implements ITask
 {
@@ -52,23 +56,25 @@ public final class TaskProxy implements ITask
 	}
 
 	/**
-	 * @see salomon.engine.platform.task.ITask#getName()
+	 * @see ITask#getName()
 	 */
-	public String getName()
+	public String getName() throws PlatformException
 	{
 		String name = null;
 		try {
 			name = _remoteTask.getName();
 		} catch (RemoteException e) {
-			LOGGER.fatal("", e);
+			LOGGER.fatal("Remote error!", e);
+			throw new PlatformException(e.getLocalizedMessage());
 		}
+
 		return name;
 	}
 
 	/**
-	 * @see salomon.engine.platform.task.ITask#getPlugin()
+	 * @see ITask#getPlugin()
 	 */
-	public IPlugin getPlugin()
+	public IPlugin getPlugin() throws PlatformException
 	{
 		IPlugin plugin = null;
 		try {
@@ -76,141 +82,168 @@ public final class TaskProxy implements ITask
 			try {
 				plugin = PluginLoader.loadPlugin(pluginLocation);
 			} catch (Exception e1) {
-				LOGGER.fatal("", e1);
+				LOGGER.error("Remote error!", e1);
 			}
 		} catch (RemoteException e) {
-			LOGGER.fatal("", e);
+			LOGGER.fatal("Remote error!", e);
+			throw new PlatformException(e.getLocalizedMessage());
 		}
+
 		return plugin;
 	}
 
 	/**
-	 * @see salomon.engine.platform.task.ITask#getResult()
+	 * @see ITask#getResult()
 	 */
-	public IResult getResult()
+	public IResult getResult() throws PlatformException
 	{
 		IResult result = null;
 		try {
 			result = _remoteTask.getResult();
 		} catch (RemoteException e) {
-			LOGGER.fatal("", e);
+			LOGGER.fatal("Remote error!", e);
+			throw new PlatformException(e.getLocalizedMessage());
 		}
+
 		return result;
 	}
 
 	/**
-	 * @see salomon.engine.platform.task.ITask#getSettings()
+	 * @see ITask#getSettings()
 	 */
-	public ISettings getSettings()
+	public ISettings getSettings() throws PlatformException
 	{
 		ISettings settings = null;
 		try {
 			settings = _remoteTask.getSettings();
 		} catch (RemoteException e) {
-			LOGGER.fatal("", e);
+			LOGGER.fatal("Remote error!", e);
+			throw new PlatformException(e.getLocalizedMessage());
 		}
+
 		return settings;
 	}
 
 	/**
-	 * @see salomon.engine.platform.task.ITask#getStatus()
+	 * @see ITask#getStatus()
 	 */
-	public String getStatus()
+	public String getStatus() throws PlatformException
 	{
 		String status = null;
 		try {
 			status = _remoteTask.getStatus();
 		} catch (RemoteException e) {
-			LOGGER.fatal("", e);
+			LOGGER.fatal("Remote error!", e);
+			throw new PlatformException(e.getLocalizedMessage());
 		}
+
 		return status;
 	}
 
 	/**
-	 * @see salomon.engine.platform.task.ITask#getTaskId()
+	 * @see ITask#getTaskId()
 	 */
-	public int getTaskId()
+	public int getTaskId() throws PlatformException
 	{
 		int id = -1;
 		try {
 			id = _remoteTask.getTaskId();
 		} catch (RemoteException e) {
-			LOGGER.fatal("", e);
+			LOGGER.fatal("Remote error!", e);
+			throw new PlatformException(e.getLocalizedMessage());
 		}
+
 		return id;
 	}
 
 	/**
-	 * @see salomon.engine.platform.task.ITask#setName(java.lang.String)
+	 * @see ITask#setName(java.lang.String)
 	 */
-	public void setName(String name)
+	public void setName(String name) throws PlatformException
 	{
 		try {
 			_remoteTask.setName(name);
 		} catch (RemoteException e) {
-			LOGGER.fatal("", e);
+			LOGGER.fatal("Remote error!", e);
+			throw new PlatformException(e.getLocalizedMessage());
 		}
 	}
 
 	/**
-	 * @see salomon.engine.platform.task.ITask#setPlugin(salomon.plugin.IPlugin)
+	 * @see ITask#setPlugin(salomon.plugin.IPlugin)
 	 */
-	public void setPlugin(IPlugin plugin)
+	public void setPlugin(IPlugin plugin) throws PlatformException
 	{
 		try {
 			_remoteTask.setPlugin(PluginLoader.getPluginLocation(plugin));
 		} catch (RemoteException e) {
-			LOGGER.fatal("", e);
+			LOGGER.fatal("Remote error!", e);
+			throw new PlatformException(e.getLocalizedMessage());
 		}
 	}
 
 	/**
-	 * @see salomon.engine.platform.task.ITask#setResult(salomon.plugin.IResult)
+	 * @see ITask#setResult(salomon.plugin.IResult)
 	 */
-	public void setResult(IResult result)
+	public void setResult(IResult result) throws PlatformException
 	{
 		try {
 			_remoteTask.setResult(result);
 		} catch (RemoteException e) {
-			LOGGER.fatal("", e);
+			LOGGER.fatal("Remote error!", e);
+			throw new PlatformException(e.getLocalizedMessage());
 		}
 	}
 
 	/**
-	 * @see salomon.engine.platform.task.ITask#setSettings(salomon.plugin.ISettings)
+	 * @see ITask#setSettings(salomon.plugin.ISettings)
 	 */
-	public void setSettings(ISettings settings)
+	public void setSettings(ISettings settings) throws PlatformException
 	{
 		try {
 			_remoteTask.setSettings(settings);
 		} catch (RemoteException e) {
-			LOGGER.fatal("", e);
+			LOGGER.fatal("Remote error!", e);
+			throw new PlatformException(e.getLocalizedMessage());
 		}
 	}
 
 	/**
-	 * @see salomon.engine.platform.task.ITask#setStatus(java.lang.String)
+	 * @see ITask#setStatus(java.lang.String)
 	 */
-	public void setStatus(String status)
+	public void setStatus(String status) throws PlatformException
 	{
 		try {
 			_remoteTask.setStatus(status);
 		} catch (RemoteException e) {
-			LOGGER.fatal("", e);
+			LOGGER.fatal("Remote error!", e);
+			throw new PlatformException(e.getLocalizedMessage());
 		}
-
 	}
 
 	/**
-	 * @see salomon.engine.platform.task.ITask#setTaskId(int)
+	 * @see ITask#setTaskId(int)
 	 */
-	public void setTaskId(int taskId)
+	public void setTaskId(int taskId) throws PlatformException
 	{
 		try {
 			_remoteTask.setTaskId(taskId);
 		} catch (RemoteException e) {
-			LOGGER.fatal("", e);
+			LOGGER.fatal("Remote error!", e);
+			throw new PlatformException(e.getLocalizedMessage());
 		}
+	}
+
+    /**
+     * Gets the RemoteTask.
+     * @return The RemoteTask
+     * 
+     * @pre $none
+     * @post $result != null
+     */
+	IRemoteTask getRemoteTask()
+	{
+		return _remoteTask;
 	}
 
 	private static final Logger LOGGER = Logger.getLogger(TaskProxy.class);

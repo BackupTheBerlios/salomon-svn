@@ -19,7 +19,7 @@
  * 
  */
 
-package salomon.engine.platform.remote;
+package salomon.engine.platform.remote.project;
 
 import java.rmi.RemoteException;
 
@@ -27,11 +27,16 @@ import org.apache.log4j.Logger;
 
 import salomon.engine.project.IProject;
 
+import salomon.platform.exception.PlatformException;
+
+
 
 /**
  * Class is a sever side wrapper of IRemoteProject object. It implements
  * IProject interface and delegates methods execution to remote object catching
  * all RemoteExceptions.
+ * 
+ * @see salomon.engine.platform.remote.project.IRemoteProject
  */
 public final class ProjectProxy implements IProject
 {
@@ -47,80 +52,89 @@ public final class ProjectProxy implements IProject
 	}
 
 	/**
-	 * @see salomon.engine.platform.project.IProject#getInfo()
+	 * @see IProject#getInfo()
 	 */
-	public String getInfo()
+	public String getInfo() throws PlatformException
 	{
 		String info = null;
 		try {
 			info = _remoteProject.getInfo();
 		} catch (RemoteException e) {
-			LOGGER.fatal("", e);
+			LOGGER.fatal("Remote error!", e);
+            throw new PlatformException(e.getLocalizedMessage());
 		}
+        
 		return info;
 	}
 
 	/**
-	 * @see salomon.engine.platform.project.IProject#getName()
+	 * @see IProject#getName()
 	 */
-	public String getName()
+	public String getName() throws PlatformException
 	{
 		String name = null;
 		try {
 			name = _remoteProject.getName();
 		} catch (RemoteException e) {
-			LOGGER.fatal("", e);
+            LOGGER.fatal("Remote error!", e);
+            throw new PlatformException(e.getLocalizedMessage());
 		}
+        
 		return name;
 	}
 
 	/**
-	 * @see salomon.engine.platform.project.IProject#getProjectID()
+	 * @see IProject#getProjectID()
 	 */
-	public int getProjectID()
+	public int getProjectID() throws PlatformException
 	{
 		int id = -1;
 		try {
 			id = _remoteProject.getProjectID();
 		} catch (RemoteException e) {
-			LOGGER.fatal("", e);
+            LOGGER.fatal("Remote error!", e);
+            throw new PlatformException(e.getLocalizedMessage());
 		}
+        
 		return id;
 	}
 
 	/**
-	 * @see salomon.engine.platform.project.IProject#setInfo(java.lang.String)
+	 * @see IProject#setInfo(java.lang.String)
 	 */
-	public void setInfo(String info)
+	public void setInfo(String info) throws PlatformException
 	{
 		try {
 			_remoteProject.setInfo(info);
 		} catch (RemoteException e) {
-			LOGGER.fatal("", e);
+            LOGGER.fatal("Remote error!", e);
+            throw new PlatformException(e.getLocalizedMessage());
 		}
 	}
 
 	/**
-	 * @see salomon.engine.platform.project.IProject#setName(java.lang.String)
+	 * @see IProject#setName(java.lang.String)
 	 */
-	public void setName(String name)
+	public void setName(String name) throws PlatformException
 	{
 		try {
 			_remoteProject.setName(name);
 		} catch (RemoteException e) {
-			LOGGER.fatal("", e);
+            LOGGER.fatal("Remote error!", e);
+            throw new PlatformException(e.getLocalizedMessage());
 		}
 	}
 
 	/**
-	 * @see salomon.engine.platform.project.IProject#setProjectID(int)
+	 * @see IProject#setProjectID(int)
 	 */
-	public void setProjectID(int projectId)
+	public void setProjectID(int projectId) throws PlatformException
 	{
 		try {
 			_remoteProject.setProjectID(projectId);
 		} catch (RemoteException e) {
-			LOGGER.fatal("", e);
+            LOGGER.fatal("Remote error!", e);
+            throw new PlatformException(e.getLocalizedMessage());
 		}
 
 	}

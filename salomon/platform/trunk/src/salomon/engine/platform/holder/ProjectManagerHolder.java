@@ -44,7 +44,7 @@ final class ProjectManagerHolder implements IProjectManager
 	}
 
 	/**
-	 * @see salomon.engine.project.IProjectManager#addProject(salomon.platform.project.IProject)
+	 * @see IProjectManager#addProject(IProject)
 	 */
 	public void addProject(IProject project) throws PlatformException
 	{
@@ -52,44 +52,52 @@ final class ProjectManagerHolder implements IProjectManager
 	}
 
 	/**
-	 * @see salomon.engine.project.IProjectManager#ceateProject()
+	 * @see IProjectManager#ceateProject()
 	 */
-	public void ceateProject()
+	public IProject ceateProject() throws PlatformException
 	{
-		throw new UnsupportedOperationException("Method ceateProject() not implemented yet!");
+        return _currentProjectManager.ceateProject();
 	}
 
 	/**
-	 * @see salomon.engine.project.IProjectManager#createProject()
+	 * @see IProjectManager#ceateProject()
 	 */
-	public IProject createProject()
+	public IProject createProject() throws PlatformException
 	{
-		throw new UnsupportedOperationException("Method createProject() not implemented yet!");
+        return _currentProjectManager.ceateProject();
 	}
 
 	/**
-	 * @see salomon.engine.project.IProjectManager#getProjects()
+	 * @see IProjectManager#getProject(int)
+	 */
+	public IProject getProject(int projectID) throws PlatformException
+	{
+		return _currentProjectManager.getProject(projectID);
+	}
+
+	/**
+	 * @see IProjectManager#getProjects()
 	 */
 	public IProject[] getProjects() throws PlatformException
 	{
-		throw new UnsupportedOperationException("Method getProjects() not implemented yet!");
+        return _currentProjectManager.getProjects();
 	}
 
 	/**
-	 * @see salomon.engine.project.IProjectManager#loadProject(int)
-	 */
-	public IProject loadProject(int projectID) throws PlatformException
-	{
-		throw new UnsupportedOperationException("Method loadProject() not implemented yet!");
-	}
-
-	/**
-	 * @see salomon.engine.project.IProjectManager#saveProject()
+	 * @see IProjectManager#saveProject()
 	 */
 	public void saveProject() throws PlatformException
 	{
-		throw new UnsupportedOperationException("Method saveProject() not implemented yet!");
+        _currentProjectManager.saveProject();
 	}
-
+    
+    /**
+     * @pre currentProjectManager != null
+     * @post $none
+     */
+    void setCurrent(IProjectManager currentProjectManager)
+    {
+    	_currentProjectManager = currentProjectManager;
+    }
 
 }

@@ -19,17 +19,33 @@
  * 
  */
 
-package salomon.engine.task;
+package salomon.engine.platform.remote.plugin;
 
-import salomon.platform.exception.PlatformException;
+import java.rmi.Remote;
+import java.rmi.RemoteException;
+
+import salomon.platform.IDataEngine;
+import salomon.platform.IEnvironment;
+
+import salomon.plugin.IResult;
+import salomon.plugin.ISettings;
 
 /**
+ * Remote version of IDataPlugin interface. It has all methods from IDataPlugin
+ * interface, but adds throwing RemoteException declaration to each of methods.
  * 
+ * @see salomon.plugin.IDataPlugin
  */
-public interface ITaskRunner
+public interface IRemotePlugin extends Remote
 {
-	void start() throws PlatformException;
-    void stop() throws PlatformException;
-    void pause() throws PlatformException;
-    void resume() throws PlatformException;
+    /**
+     * @see salomon.plugin.IDataPlugin#doJob(IDataEngine, IEnvironment, ISettings)
+     * @param engine
+     * @param environment
+     * @param settings
+     * @return The task exect
+     * @throws RemoteException
+     */
+	IResult doJob(IDataEngine engine, IEnvironment environment, ISettings settings)
+			throws RemoteException;
 }

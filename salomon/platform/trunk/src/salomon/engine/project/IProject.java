@@ -21,6 +21,8 @@
 
 package salomon.engine.project;
 
+import salomon.platform.exception.PlatformException;
+
 /**
  * An interface for projects.
  */
@@ -29,30 +31,30 @@ public interface IProject
 	/**
 	 * @return Returns the info.
 	 */
-	String getInfo();
+	String getInfo() throws PlatformException;
 
 	/**
 	 * @return Returns the name.
 	 */
-	String getName();
+	String getName() throws PlatformException;
 
 	/**
 	 * @return Returns the projectID.
 	 */
-	int getProjectID();
+	int getProjectID() throws PlatformException;
 
 	/**
 	 * @param info The info to set.
 	 */
-	void setInfo(String info);
+	void setInfo(String info) throws PlatformException;
 
 	/**
 	 * @param name The name to set.
 	 */
-	void setName(String name);
+	void setName(String name) throws PlatformException;
 
 	/**
 	 * @param projectId The projectID to set.
 	 */
-	void setProjectID(int projectId); 
+	void setProjectID(int projectId) throws PlatformException; 
 }

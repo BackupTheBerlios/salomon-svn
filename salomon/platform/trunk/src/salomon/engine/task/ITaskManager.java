@@ -24,16 +24,14 @@ package salomon.engine.task;
 import salomon.platform.exception.PlatformException;
 
 /**
- * Interface implemented by TaskManager, which manages with tasks.
+ * Interface implemented by <code>TaskManager</code>, which manages with tasks.
  */
 public interface ITaskManager
 {
-
 	void addTask(ITask task) throws PlatformException;
 
 	/**
 	 * Clear list of created tasks.
-	 * 
 	 */
 	void clearTaskList() throws PlatformException;
 
@@ -51,6 +49,12 @@ public interface ITaskManager
 	 */
 	ITask getCurrentTask() throws PlatformException;
 
+    /**
+     * 
+     * TODO: add comment.
+     * @return
+     * @throws PlatformException
+     */
 	ITaskRunner getRunner() throws PlatformException;
 
 	/**

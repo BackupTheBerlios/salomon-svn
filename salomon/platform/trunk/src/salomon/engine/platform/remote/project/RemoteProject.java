@@ -19,16 +19,19 @@
  * 
  */
 
-package salomon.engine.platform.remote;
+package salomon.engine.platform.remote.project;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
 import salomon.engine.project.IProject;
 
+import salomon.platform.exception.PlatformException;
 
 /** 
- * Class representing remote instance of IProject.  
+ * Class representing remote instance of IProject.
+ * 
+ * @see salomon.engine.project.IProject
  */
 public final class RemoteProject extends UnicastRemoteObject
 		implements IRemoteProject
@@ -36,58 +39,58 @@ public final class RemoteProject extends UnicastRemoteObject
 	private IProject _project;
 
 	/**
-     * @pre project != null
-     * @post $none
-     */
+	 * @pre project != null
+	 * @post $none
+	 */
 	public RemoteProject(IProject project) throws RemoteException
 	{
 		_project = project;
 	}
 
 	/**
-	 * @see salomon.engine.platform.remote.IRemoteProject#getInfo()
+	 * @see IRemoteProject#getInfo()
 	 */
-	public String getInfo() throws RemoteException
+	public String getInfo() throws RemoteException, PlatformException
 	{
 		return _project.getInfo();
 	}
 
 	/**
-	 * @see salomon.engine.platform.remote.IRemoteProject#getName()
+	 * @see IRemoteProject#getName()
 	 */
-	public String getName() throws RemoteException
+	public String getName() throws RemoteException, PlatformException
 	{
 		return _project.getName();
 	}
 
 	/**
-	 * @see salomon.engine.platform.remote.IRemoteProject#getProjectID()
+	 * @see IRemoteProject#getProjectID()
 	 */
-	public int getProjectID() throws RemoteException
+	public int getProjectID() throws RemoteException, PlatformException
 	{
 		return _project.getProjectID();
 	}
 
 	/**
-	 * @see salomon.engine.platform.remote.IRemoteProject#setInfo(java.lang.String)
+	 * @see IRemoteProject#setInfo(java.lang.String)
 	 */
-	public void setInfo(String info) throws RemoteException
+	public void setInfo(String info) throws RemoteException, PlatformException
 	{
 		_project.setInfo(info);
 	}
 
 	/**
-	 * @see salomon.engine.platform.remote.IRemoteProject#setName(java.lang.String)
+	 * @see IRemoteProject#setName(java.lang.String)
 	 */
-	public void setName(String name) throws RemoteException
+	public void setName(String name) throws RemoteException, PlatformException
 	{
 		_project.setName(name);
 	}
 
 	/**
-	 * @see salomon.engine.platform.remote.IRemoteProject#setProjectID(int)
+	 * @see IRemoteProject#setProjectID(int)
 	 */
-	public void setProjectID(int projectId) throws RemoteException
+	public void setProjectID(int projectId) throws RemoteException, PlatformException
 	{
 		_project.setProjectID(projectId);
 	}

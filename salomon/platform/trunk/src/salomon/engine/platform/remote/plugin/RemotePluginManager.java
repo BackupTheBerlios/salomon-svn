@@ -19,19 +19,21 @@
  * 
  */
 
-package salomon.engine.platform.remote;
+package salomon.engine.platform.remote.plugin;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
 import salomon.engine.plugin.IPluginManager;
 
+import salomon.platform.exception.PlatformException;
 
 import salomon.plugin.Description;
 import salomon.plugin.IPlugin;
 
 /**
  * Class representing remote instance of IPluginManager.
+ * @see salomon.engine.plugin.IPluginManager
  */
 public final class RemotePluginManager extends UnicastRemoteObject
 		implements IRemotePluginManager
@@ -39,46 +41,40 @@ public final class RemotePluginManager extends UnicastRemoteObject
 	private IPluginManager _pluginManager;
 
 	/**
-     * @pre pluginManager != null
-     * @post $none
-     */
+	 * @pre pluginManager != null
+	 * @post $none
+	 */
 	public RemotePluginManager(IPluginManager pluginManager)
 			throws RemoteException
 	{
 		_pluginManager = pluginManager;
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
-	 * @see salomon.engine.platform.IRemotePluginManager#getAvailablePlugins()
+	 * @see IRemotePluginManager#getPlugins()
 	 */
-	public IPlugin[] getPlugins() throws RemoteException
+	public IPlugin[] getPlugins() throws RemoteException, PlatformException
 	{
 		return _pluginManager.getPlugins();
 	}
 
 	/**
-	 * @see salomon.engine.platform.remote.IRemotePluginManager#addPlugin(salomon.plugin.Description)
+	 * @see IRemotePluginManager#removePlugin(salomon.plugin.Description)
 	 */
-	public boolean savePlugin(Description description) throws RemoteException
+	public boolean removePlugin(Description description)
+			throws RemoteException, PlatformException
 	{
-		return _pluginManager.savePlugin(description);		
-	}
-
-	/**
-	 * @see salomon.engine.platform.remote.IRemotePluginManager#removePlugin(salomon.plugin.Description)
-	 */
-	public boolean removePlugin(Description description) throws RemoteException
-	{		
 		return _pluginManager.removePlugin(description);
 	}
 
-	//	/* (non-Javadoc)
-	//	 * @see salomon.engine.platform.remote.IRemotePluginManager#getPlugin(java.net.URL)
-	//	 */
-	//	public IRemotePlugin getPlugin(URL url) throws RemoteException
-	//	{
-	//		return _pluginManager.get;
-	//	}
-
+	/**
+	 * @throws PlatformException
+	 * @see IRemotePluginManager#savePlugin(Description)
+	 */
+	public boolean savePlugin(Description description) throws RemoteException,
+			PlatformException
+	{
+		return _pluginManager.savePlugin(description);
+	}
+    
 }

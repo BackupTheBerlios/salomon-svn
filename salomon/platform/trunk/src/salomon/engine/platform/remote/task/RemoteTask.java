@@ -19,7 +19,7 @@
  * 
  */
 
-package salomon.engine.platform.remote;
+package salomon.engine.platform.remote.task;
 
 import java.net.URL;
 import java.rmi.RemoteException;
@@ -30,11 +30,14 @@ import org.apache.log4j.Logger;
 import salomon.engine.plugin.PluginLoader;
 import salomon.engine.task.ITask;
 
+import salomon.platform.exception.PlatformException;
+
 import salomon.plugin.IResult;
 import salomon.plugin.ISettings;
 
 /** 
- * Class representing remote instance of ITask.  
+ * Class representing remote instance of ITask.
+ * @see salomon.engine.task.ITask
  */
 public final class RemoteTask extends UnicastRemoteObject
 		implements IRemoteTask
@@ -42,114 +45,121 @@ public final class RemoteTask extends UnicastRemoteObject
 	private ITask _task;
 
 	/**
-     * @pre task != null
-     * @post $none
-     */
-	public RemoteTask(ITask task) throws RemoteException
+	 * @pre task != null
+	 * @post $none
+	 */
+	public RemoteTask(ITask task) throws RemoteException, PlatformException
 	{
 		_task = task;
 	}
 
 	/**
-	 * @see salomon.engine.platform.remote.IRemoteTask#getName()
+	 * @see IRemoteTask#getName()
 	 */
-	public String getName() throws RemoteException
+	public String getName() throws RemoteException, PlatformException
 	{
 		return _task.getName();
 	}
 
 	/**
-	 * @see salomon.engine.platform.remote.IRemoteTask#getPlugin()
+	 * @see IRemoteTask#getPlugin()
 	 */
-	public URL getPlugin() throws RemoteException
+	public URL getPlugin() throws RemoteException, PlatformException
 	{
 		return PluginLoader.getPluginLocation(_task.getPlugin());
 	}
 
 	/**
-	 * @see salomon.engine.platform.remote.IRemoteTask#getResult()
+	 * @see IRemoteTask#getResult()
 	 */
-	public IResult getResult() throws RemoteException
+	public IResult getResult() throws RemoteException, PlatformException
 	{
 		return _task.getResult();
 	}
 
 	/**
-	 * @see salomon.engine.platform.remote.IRemoteTask#getSettings()
+	 * @see IRemoteTask#getSettings()
 	 */
-	public ISettings getSettings() throws RemoteException
+	public ISettings getSettings() throws RemoteException, PlatformException
 	{
 		return _task.getSettings();
 	}
 
 	/**
-	 * @see salomon.engine.platform.remote.IRemoteTask#getStatus()
+	 * @see IRemoteTask#getStatus()
 	 */
-	public String getStatus() throws RemoteException
+	public String getStatus() throws RemoteException, PlatformException
 	{
 		return _task.getStatus();
 	}
 
 	/**
-	 * @see salomon.engine.platform.remote.IRemoteTask#getTaksId()
+	 * @see IRemoteTask#getTaskId()
 	 */
-	public int getTaskId() throws RemoteException
+	public int getTaskId() throws RemoteException, PlatformException
 	{
 		return _task.getTaskId();
 	}
 
 	/**
-	 * @see salomon.engine.platform.remote.IRemoteTask#setName(java.lang.String)
+	 * @see IRemoteTask#setName(java.lang.String)
 	 */
-	public void setName(String name) throws RemoteException
+	public void setName(String name) throws RemoteException, PlatformException
 	{
 		_task.setName(name);
 	}
 
 	/**
-	 * @see salomon.engine.platform.remote.IRemoteTask#setPlugin(salomon.plugin.IPlugin)
+	 * @see IRemoteTask#setPlugin(salomon.plugin.IPlugin)
 	 */
-	public void setPlugin(URL plugin) throws RemoteException
+	public void setPlugin(URL plugin) throws RemoteException, PlatformException
 	{
 		try {
 			_task.setPlugin(PluginLoader.loadPlugin(plugin));
 		} catch (Exception e) {
 			LOGGER.fatal("", e);
+            throw new PlatformException(e.getLocalizedMessage());
 		}
 	}
 
 	/**
-	 * @see salomon.engine.platform.remote.IRemoteTask#setResult(salomon.plugin.IResult)
+	 * @see salomon.engine.platform.remote.task.IRemoteTask#setResult(salomon.plugin.IResult)
+	 * 
+	 * @see IRemoteTask#setResult(IResult)
 	 */
-	public void setResult(IResult result) throws RemoteException
+	public void setResult(IResult result) throws RemoteException, PlatformException
 	{
 		_task.setResult(result);
 	}
 
 	/**
-	 * @see salomon.engine.platform.remote.IRemoteTask#setSettings(salomon.plugin.ISettings)
+	 * @see IRemoteTask#setSettings(salomon.plugin.ISettings)
 	 */
-	public void setSettings(ISettings settings) throws RemoteException
+	public void setSettings(ISettings settings) throws RemoteException, PlatformException
 	{
 		_task.setSettings(settings);
 	}
 
 	/**
-	 * @see salomon.engine.platform.remote.IRemoteTask#setStatus(java.lang.String)
+	 * @see IRemoteTask#setStatus(java.lang.String)
 	 */
-	public void setStatus(String status) throws RemoteException
+	public void setStatus(String status) throws RemoteException, PlatformException
 	{
 		_task.setStatus(status);
 	}
 
 	/**
-	 * @see salomon.engine.platform.remote.IRemoteTask#setTaksId(int)
+	 * @see IRemoteTask#setTaskId(int)
 	 */
-	public void setTaskId(int taskId) throws RemoteException
+	public void setTaskId(int taskId) throws RemoteException, PlatformException
 	{
 		_task.setTaskId(taskId);
 	}
 
-	private static final Logger LOGGER = Logger.getLogger(RemoteTask.class);
+	ITask getTask()
+	{
+		return _task;
+	}
 
+	private static final Logger LOGGER = Logger.getLogger(RemoteTask.class);
 }

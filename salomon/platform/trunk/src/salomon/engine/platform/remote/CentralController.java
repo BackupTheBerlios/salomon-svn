@@ -40,7 +40,7 @@ import salomon.engine.platform.remote.event.RemoteControllerEvent;
 public final class CentralController extends UnicastRemoteObject
 		implements ICentralController
 {
-	private List _listeners = new LinkedList();
+	private List<IMasterControllerListener> _listeners = new LinkedList<IMasterControllerListener>();
 
 	private Set _remoteControllers = new HashSet();
 
@@ -51,6 +51,7 @@ public final class CentralController extends UnicastRemoteObject
 	 */
 	public CentralController() throws RemoteException
 	{
+		// empty body
 	}
 
 	public void addMasterControllerListener(IMasterControllerListener listener)
@@ -59,7 +60,7 @@ public final class CentralController extends UnicastRemoteObject
 	}
 
 	/**
-	 * @see salomon.engine.platform.ICentralController#register()
+	 * @see ICentralController#register(IRemoteController)
 	 */
 	public void register(IRemoteController remoteController)
 			throws RemoteException
@@ -75,9 +76,7 @@ public final class CentralController extends UnicastRemoteObject
 	}
 
 	/**
-	 * (non-Javadoc)
-	 * 
-	 * @see salomon.engine.platform.ICentralController#unregister()
+	 * @see ICentralController#unregister(IRemoteController)
 	 */
 	public void unregister(IRemoteController remoteController)
 			throws RemoteException

@@ -59,6 +59,8 @@ import salomon.plugin.ISettingComponent;
 import salomon.plugin.ISettings;
 import salomon.util.gui.Utils;
 
+import salomon.platform.exception.PlatformException;
+
 /**
  * Class used to manage with tasks editing. It enables creating and configuring
  * tasks and a queue of tasks.
@@ -134,7 +136,14 @@ public final class TaskEditionManager
 			desc.setName(_txtPluginName.getText());
 			desc.setLocation(url);
 			desc.setInfo(_txtPluginInfo.getText());
-			if (_managerEngine.getPluginManager().savePlugin(desc)) {
+            boolean wasOk = false;
+            try {
+            	wasOk = _managerEngine.getPluginManager().savePlugin(desc);
+            } catch (PlatformException e) {
+                LOGGER.error("", e);
+                //FIXME
+            }
+			if (wasOk) {
 				refresh();
 			} else {
 				Utils.showErrorMessage(Messages.getString("ERR_CANNOT_SAVE_PLUGIN"));
@@ -254,7 +263,16 @@ public final class TaskEditionManager
 		if (Utils.showQuestionMessage(Messages.getString("TIT_WARN"),
 				Messages.getString("TXT_REMOVE_PLUGIN_QUESTION"))) {
 			Description desc = ((LocalPlugin) _pluginListModel.get(_selectedItem)).getPluginDescription();
-			if (_managerEngine.getPluginManager().removePlugin(desc)) {
+            
+            boolean wasOk = false;
+            try {
+            	wasOk = _managerEngine.getPluginManager().removePlugin(desc);                
+            } catch (PlatformException e) {
+                LOGGER.error("", e);
+                //FIXME   
+            }
+            
+			if (wasOk) {
 				_pluginListModel.remove(_selectedItem);
 			} else {
 				Utils.showErrorMessage(Messages.getString("ERR_CANNOT_SAVE_PLUGIN"));
@@ -311,7 +329,16 @@ public final class TaskEditionManager
 			desc.setName(_txtPluginName.getText());
 			desc.setLocation(url);
 			desc.setInfo(_txtPluginInfo.getText());
-			if (_managerEngine.getPluginManager().savePlugin(desc)) {
+            
+            boolean wasOk = false;
+            try {
+            	wasOk = _managerEngine.getPluginManager().savePlugin(desc);
+            } catch (PlatformException e) {
+                LOGGER.error("", e);
+                //FIXME
+            }
+            
+			if (wasOk) {
 				//refresh();
 			} else {
 				Utils.showErrorMessage(Messages.getString("ERR_CANNOT_SAVE_PLUGIN"));

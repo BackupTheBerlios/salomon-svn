@@ -22,6 +22,8 @@
 package salomon.engine.plugin;
 
 
+import salomon.platform.exception.PlatformException;
+
 import salomon.plugin.Description;
 import salomon.plugin.IPlugin;
 
@@ -35,14 +37,7 @@ public interface IPluginManager
 	 * 
 	 * @return plugin descriptions
 	 */
-	IPlugin[] getPlugins();
-
-	/**
-	 * Saves plugin description.
-	 * 
-	 * @return true if successfully saved, false otherwise
-	 */
-	boolean savePlugin(Description description);
+	IPlugin[] getPlugins() throws PlatformException;
 
 	/**
 	 * Removes plugin corresponding to given plugin description.
@@ -50,6 +45,12 @@ public interface IPluginManager
 	 * @param description description of plugin to be removed
 	 * @return true if successfully removed, false otherwise
 	 */
-	boolean removePlugin(Description description);
-	//    public IPlugin getPlugin(URL url);
+	boolean removePlugin(Description description) throws PlatformException;
+
+	/**
+	 * Saves plugin description.
+	 * 
+	 * @return true if successfully saved, false otherwise
+	 */
+	boolean savePlugin(Description description) throws PlatformException;
 }

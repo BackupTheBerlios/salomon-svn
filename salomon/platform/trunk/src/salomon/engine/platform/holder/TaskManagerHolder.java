@@ -45,7 +45,15 @@ final class TaskManagerHolder implements ITaskManager
 	}
 
 	/**
-	 * @see salomon.engine.platform.task.ITaskManager#clearTaskList()
+	 * @see ITaskManager#addTask(ITask)
+	 */
+	public void addTask(ITask task) throws PlatformException
+	{
+        _currentTaskManager.addTask(task);
+	}
+
+	/**
+	 * @see ITaskManager#clearTaskList()
 	 */
 	public void clearTaskList() throws PlatformException
 	{
@@ -53,7 +61,15 @@ final class TaskManagerHolder implements ITaskManager
 	}
 
 	/**
-	 * @see salomon.engine.platform.task.ITaskManager#getCurrentTask()
+	 * @see ITaskManager#createTask()
+	 */
+	public ITask createTask() throws PlatformException
+	{
+		return _currentTaskManager.createTask();
+	}
+
+	/**
+	 * @see ITaskManager#getCurrentTask()
 	 */
 	public ITask getCurrentTask() throws PlatformException
 	{
@@ -61,7 +77,15 @@ final class TaskManagerHolder implements ITaskManager
 	}
 
 	/**
-	 * @see salomon.engine.platform.task.ITaskManager#getTasks()
+	 * @see salomon.engine.task.ITaskManager#getRunner()
+	 */
+	public ITaskRunner getRunner() throws PlatformException
+	{
+		return _currentTaskManager.getRunner();
+	}
+
+	/**
+	 * @see ITaskManager#getTasks()
 	 */
 	public ITask[] getTasks() throws PlatformException
 	{
@@ -69,7 +93,7 @@ final class TaskManagerHolder implements ITaskManager
 	}
 
 	/**
-	 * @see salomon.engine.platform.task.ITaskManager#start()
+	 * @see ITaskManager#start()
 	 */
 	public void start() throws PlatformException
 	{
@@ -79,37 +103,5 @@ final class TaskManagerHolder implements ITaskManager
 	void setCurrent(ITaskManager taskManager)
 	{
 		_currentTaskManager = taskManager;
-	}
-
-	/**
-	 * @see salomon.engine.platform.task.ITaskManager#createTask()
-	 */
-	public ITask createTask() throws PlatformException
-	{
-		return _currentTaskManager.createTask();
-	}
-
-	/**
-	 * @see salomon.engine.task.ITaskManager#addTask()
-	 */
-	public void addTask()
-	{
-		throw new UnsupportedOperationException("Method addTask() not implemented yet!");
-	}
-
-	/**
-	 * @see salomon.engine.task.ITaskManager#addTask(salomon.platform.task.ITask)
-	 */
-	public void addTask(ITask task) throws PlatformException
-	{
-		throw new UnsupportedOperationException("Method addTask() not implemented yet!");
-	}
-
-	/**
-	 * @see salomon.engine.task.ITaskManager#getRunner()
-	 */
-	public ITaskRunner getRunner() throws PlatformException
-	{
-		throw new UnsupportedOperationException("Method getRunner() not implemented yet!");
 	}
 }

@@ -19,11 +19,12 @@
  * 
  */
 
-package salomon.engine.platform.remote;
+package salomon.engine.platform.remote.plugin;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
-import java.util.Collection;
+
+import salomon.platform.exception.PlatformException;
 
 import salomon.plugin.Description;
 import salomon.plugin.IPlugin;
@@ -32,20 +33,27 @@ import salomon.plugin.IPlugin;
  * Remote version of IPluginManager interface. It has all methods from
  * IPluginManager interface, but adds throwing RemoteException declaration to
  * each of methods.
- *  
+ * 
+ * @see salomon.engine.plugin.IPluginManager
  */
 public interface IRemotePluginManager extends Remote
 {
     /**
+     * @see salomon.engine.plugin.IPluginManager#getPlugins()
      * FIXME
      * TODO: Return array of remote plugin representation.
      * @return The array of plugins
      * @throws RemoteException
      */
-	IPlugin[] getPlugins() throws RemoteException;
+	IPlugin[] getPlugins() throws RemoteException, PlatformException;
 
-	boolean savePlugin(Description description) throws RemoteException;
+    /**
+     * @see salomon.engine.plugin.IPluginManager#removePlugin(Description)
+     */
+	boolean removePlugin(Description description) throws RemoteException, PlatformException;
 
-	boolean removePlugin(Description description) throws RemoteException;
-	//    public IRemotePlugin getPlugin(URL url) throws RemoteException;
+    /**
+     * @see salomon.engine.plugin.IPluginManager#savePlugin(Description)
+     */
+	boolean savePlugin(Description description) throws RemoteException, PlatformException;
 }

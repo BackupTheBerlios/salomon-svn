@@ -24,6 +24,8 @@ package salomon.engine.platform.holder;
 
 import salomon.engine.plugin.IPluginManager;
 
+import salomon.platform.exception.PlatformException;
+
 import salomon.plugin.Description;
 import salomon.plugin.IPlugin;
 
@@ -40,35 +42,37 @@ final class PluginManagerHolder implements IPluginManager
 		_currentPluginManager = pluginManager;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see salomon.engine.platform.plugin.IPluginManager#getAvailablePlugins()
+	/**
+	 * @see IPluginManager#getPlugins()
 	 */
-	public IPlugin[] getPlugins()
+	public IPlugin[] getPlugins() throws PlatformException
 	{
 		return _currentPluginManager.getPlugins();
 	}
 
-	void setCurrent(IPluginManager pluginManager)
+	/**
+	 * @see IPluginManager#removePlugin(salomon.plugin.Description)
+	 */
+	public boolean removePlugin(Description description) throws PlatformException
 	{
-		_currentPluginManager = pluginManager;
+		return _currentPluginManager.removePlugin(description);
 	}
 
-	/* (non-Javadoc)
-	 * @see salomon.engine.platform.plugin.IPluginManager#addPlugin(salomon.plugin.Description)
+	/**
+	 * @see IPluginManager#savePlugin(Description)
 	 */
-	public boolean savePlugin(Description description)
+	public boolean savePlugin(Description description) throws PlatformException
 	{
         return _currentPluginManager.savePlugin(description);
 	}
 
-	/* (non-Javadoc)
-	 * @see salomon.engine.platform.plugin.IPluginManager#removePlugin(salomon.plugin.Description)
-	 */
-	public boolean removePlugin(Description description)
+    /**
+     * @pre pluginManager != null
+     * @post $none
+     */
+	void setCurrent(IPluginManager pluginManager)
 	{
-		return _currentPluginManager.removePlugin(description);
+		_currentPluginManager = pluginManager;
 	}
 
 	//	/* (non-Javadoc)

@@ -45,6 +45,8 @@ import salomon.engine.platform.IManagerEngine;
 import salomon.plugin.ISettings;
 import salomon.util.gui.Utils;
 
+import salomon.platform.exception.PlatformException;
+
 /**
  * Class used to manage with projects editing.  
  *  
@@ -73,14 +75,14 @@ public final class ProjectEditionManager
 
 	public void newProject()
 	{
-        //FIXME
-        throw new UnsupportedOperationException(
+		//FIXME
+		throw new UnsupportedOperationException(
 				"Method newProject() not implemented yet!");
-//		IProjectManager projectManager = _managerEngine.getProjectManager();
-//		projectManager.ceateProject();
+		//		IProjectManager projectManager = _managerEngine.getProjectManager();
+		//		projectManager.ceateProject();
 		//IProject project = projectManager.getCurrentProject();
-//		setProjectProperties(project);
-//		_parent.refreshGui();
+		//		setProjectProperties(project);
+		//		_parent.refreshGui();
 	}
 
 	public void openProject()
@@ -88,7 +90,7 @@ public final class ProjectEditionManager
 		try {
 			int projectId = chooseProject();
 			if (projectId > 0) {
-				_managerEngine.getProjectManager().loadProject(projectId);
+				_managerEngine.getProjectManager().getProject(projectId);
 				_parent.refreshGui();
 			}
 		} catch (Exception e) {
@@ -99,12 +101,12 @@ public final class ProjectEditionManager
 
 	public void saveProject()
 	{
-        //FIXME
-//		IProject project = _managerEngine.getProjectManager().getCurrentProject();
-//		if (project.getName() == null) {
-//			setProjectProperties(project);
-//		}
-//		saveTaskList(_taskEditionManager.getTasks());
+		//FIXME
+		//		IProject project = _managerEngine.getProjectManager().getCurrentProject();
+		//		if (project.getName() == null) {
+		//			setProjectProperties(project);
+		//		}
+		//		saveTaskList(_taskEditionManager.getTasks());
 	}
 
 	/**
@@ -132,15 +134,20 @@ public final class ProjectEditionManager
 			_pnlProjectProperties.add(new JLabel("Project info"));
 			_pnlProjectProperties.add(_txtProjectInfo);
 		}
-		String name = project.getName();
-		String info = project.getInfo();
-		_txtProjectName.setText(name == null ? "" : name);
-		_txtProjectInfo.setText(info == null ? "" : info);
-		//TODO:
-		JOptionPane.showMessageDialog(_parent, _pnlProjectProperties,
-				"Enter project properties", JOptionPane.INFORMATION_MESSAGE);
-		project.setName(_txtProjectName.getText());
-		project.setInfo(_txtProjectInfo.getText());
+		try {
+			String name = project.getName();
+			String info = project.getInfo();
+			_txtProjectName.setText(name == null ? "" : name);
+			_txtProjectInfo.setText(info == null ? "" : info);
+			//TODO:
+			JOptionPane.showMessageDialog(_parent, _pnlProjectProperties,
+					"Enter project properties", JOptionPane.INFORMATION_MESSAGE);
+			project.setName(_txtProjectName.getText());
+			project.setInfo(_txtProjectInfo.getText());
+		} catch (PlatformException e) {
+			LOGGER.error("", e);
+			//FIXME   
+		}
 	}
 
 	public void setTaskEditionManager(TaskEditionManager taskEditionManager)
@@ -150,22 +157,22 @@ public final class ProjectEditionManager
 
 	private int chooseProject()
 	{
-        //FIXME
-        throw new UnsupportedOperationException(
+		//FIXME
+		throw new UnsupportedOperationException(
 				"Method chooseProject() not implemented yet!");
-//		int projectID = 0;
-//		
-//		try {
-//			Collection projects = _managerEngine.getProjectManager().getProjects();
-//			JTable projectTable = null;
-//			projectTable = Utils.createResultTable(projects);
-//			projectID = showProjectList(projectTable);
-//		} catch (Exception e) {
-//			LOGGER.fatal("", e);
-//			Utils.showErrorMessage("Cannot load project list.");
-//		}
-//
-//		return projectID;
+		//		int projectID = 0;
+		//		
+		//		try {
+		//			Collection projects = _managerEngine.getProjectManager().getProjects();
+		//			JTable projectTable = null;
+		//			projectTable = Utils.createResultTable(projects);
+		//			projectID = showProjectList(projectTable);
+		//		} catch (Exception e) {
+		//			LOGGER.fatal("", e);
+		//			Utils.showErrorMessage("Cannot load project list.");
+		//		}
+		//
+		//		return projectID;
 	}
 
 	private void saveTaskList(List taskList)

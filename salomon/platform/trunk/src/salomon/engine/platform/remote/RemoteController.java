@@ -31,8 +31,9 @@ import salomon.engine.platform.IManagerEngine;
 
 /**
  * An implementation of IRemoteController interface.
- * Its represents remote IController instance.    
- *  
+ * Its represents remote IController instance.
+ * 
+ * @see salomon.engine.controller.IController
  */
 public final class RemoteController extends UnicastRemoteObject
 		implements IRemoteController
@@ -44,10 +45,10 @@ public final class RemoteController extends UnicastRemoteObject
 	private IRemoteManagerEngine _remoteManagerEngine;
 
 	/**
-     * @throws RemoteException
-     * @pre $none
-     * @post $none
-     */
+	 * @throws RemoteException
+	 * @pre $none
+	 * @post $none
+	 */
 	public RemoteController(IManagerEngine managerEngine, String name)
 			throws RemoteException
 	{
@@ -56,7 +57,16 @@ public final class RemoteController extends UnicastRemoteObject
 	}
 
 	/**
-	 * @see salomon.engine.platform.IRemoteController#getDescription()
+	 * @see IRemoteController#exit()
+	 */
+	public void exit() throws RemoteException
+	{
+		LOGGER.debug("RemoteController.exit()");
+		Starter.exit();
+	}
+
+	/**
+	 * @see IRemoteController#getDescription()
 	 */
 	public String getDescription() throws RemoteException
 	{
@@ -65,7 +75,7 @@ public final class RemoteController extends UnicastRemoteObject
 	}
 
 	/**
-	 * @see salomon.engine.platform.IRemoteController#getManagerEngine()
+	 * @see IRemoteController#getManagerEngine()
 	 */
 	public IRemoteManagerEngine getManagerEngine() throws RemoteException
 	{
@@ -73,21 +83,12 @@ public final class RemoteController extends UnicastRemoteObject
 	}
 
 	/**
-	 * @see salomon.engine.platform.IRemoteController#getName()
+	 * @see IRemoteController#getName()
 	 */
 	public String getName() throws RemoteException
 	{
 		return _name;
 	}
 
-	/**
-	 * @see salomon.engine.platform.remote.IRemoteController#exit(int)
-	 */
-	public void exit() throws RemoteException
-	{
-		LOGGER.debug("RemoteController.exit()");
-		Starter.exit();
-    }
-    
-    private static final Logger LOGGER = Logger.getLogger(RemoteController.class);
+	private static final Logger LOGGER = Logger.getLogger(RemoteController.class);
 }

@@ -19,7 +19,7 @@
  * 
  */
 
-package salomon.engine.platform.remote;
+package salomon.engine.platform.remote.project;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -29,6 +29,7 @@ import salomon.engine.project.IProjectManager;
 
 import salomon.platform.exception.PlatformException;
 
+
 /**
  * Class representing remote instance of IProjectManager.
  */
@@ -37,46 +38,42 @@ public final class RemoteProjectManager extends UnicastRemoteObject
 {
 	private IProjectManager _projectManager;
 
-	private IRemoteProject _currentRemoteProject;
-
-	private IProject _currentProject;
-
 	/**
 	 * @throws RemoteException
 	 */
-	protected RemoteProjectManager(IProjectManager projectManager)
+	public RemoteProjectManager(IProjectManager projectManager)
 			throws RemoteException
 	{
 		_projectManager = projectManager;
 	}
 
 	/**
+	 * @see IRemoteProjectManager#addProject(IProject)
+	 */
+	public void addProject(IProject project) throws PlatformException, RemoteException
+	{
+		throw new UnsupportedOperationException("Method addProject() not implemented yet!");
+	}
+
+	/**
 	 * @throws PlatformException
-	 * @see salomon.engine.platform.IRemoteProjectManager#newProject()
+	 * @see IRemoteProjectManager#createProject()
 	 */
-	public void createProject() throws RemoteException, PlatformException
+	public IProject createProject() throws RemoteException, PlatformException
 	{
-		_projectManager.ceateProject();
+		return _projectManager.ceateProject();
 	}
 
 	/**
-	 * @see salomon.engine.platform.IRemoteProjectManager#loadProject(int)
+	 * @see IRemoteProjectManager#getProject(int)
 	 */
-	public IProject loadProject(int projectID) throws PlatformException
+	public IProject getProject(int projectID) throws PlatformException
 	{
-		return _projectManager.loadProject(projectID);
+		return _projectManager.getProject(projectID);
 	}
 
 	/**
-	 * @see salomon.engine.platform.IRemoteProjectManager#saveProject(salomon.engine.platform.Project)
-	 */
-	public void saveProject() throws PlatformException, RemoteException
-	{
-		_projectManager.saveProject();
-	}
-
-	/**
-	 * @see salomon.engine.platform.remote.IRemoteProjectManager#getAvailableProjects()
+	 * @see IRemoteProjectManager#getProjects()
 	 */
 	public IProject[] getProjects() throws RemoteException,
 			PlatformException
@@ -84,4 +81,11 @@ public final class RemoteProjectManager extends UnicastRemoteObject
 		return _projectManager.getProjects();
 	}
 
+	/**
+	 * @see IRemoteProjectManager#saveProject()
+	 */
+	public void saveProject() throws PlatformException, RemoteException
+	{
+		_projectManager.saveProject();
+	}
 }

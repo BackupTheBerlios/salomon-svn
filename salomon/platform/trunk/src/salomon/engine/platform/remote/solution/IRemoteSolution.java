@@ -19,23 +19,23 @@
  * 
  */
 
-package salomon.engine.platform.remote;
+package salomon.engine.platform.remote.solution;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
+import salomon.platform.exception.PlatformException;
 
-import salomon.engine.platform.DataEngine;
-import salomon.engine.platform.Environment;
-import salomon.plugin.IResult;
-import salomon.plugin.ISettings;
+import salomon.engine.platform.remote.project.IRemoteProjectManager;
 
 /**
- * Remote version of IDataPlugin interface. It has all methods from IDataPlugin
- * interface, but adds throwing RemoteException declaration to each of methods.
+ * @see salomon.engine.solution.ISolution
  */
-public interface IRemotePlugin extends Remote
+public interface IRemoteSolution extends Remote
 {
-	IResult doJob(DataEngine engine, Environment environment, ISettings settings)
-			throws RemoteException;
+    /**
+     * @see salomon.engine.solution.ISolution#getProjectManager() 
+     */
+    IRemoteProjectManager getProjectManager() throws PlatformException, RemoteException;
+
 }

@@ -29,11 +29,12 @@ import java.rmi.RemoteException;
  */
 public interface IRemoteController extends Remote
 {
+
+	void exit() throws RemoteException;
+
+	String getDescription() throws RemoteException;
+
 	IRemoteManagerEngine getManagerEngine() throws RemoteException;
 
 	String getName() throws RemoteException;
-
-	String getDescription() throws RemoteException;
-       
-    void exit() throws RemoteException;
 }

@@ -19,7 +19,7 @@
  * 
  */
 
-package salomon.engine.platform.remote;
+package salomon.engine.platform.remote.project;
 
 import java.rmi.RemoteException;
 
@@ -30,18 +30,17 @@ import salomon.engine.project.IProjectManager;
 
 import salomon.platform.exception.PlatformException;
 
+
 /**
  * Class is a sever side wrapper of IRemoteProjectManager object. It implements
  * IProjectManager interface and delegates methods execution to remote object
  * catching all RemoteExceptions.
  * 
+ * @see salomon.engine.platform.remote.project.IRemoteProjectManager
+ * 
  */
 public final class ProjectManagerProxy implements IProjectManager
 {
-	private IProject _currentProject;
-
-	private IRemoteProject _currentRemoteProject;
-
 	private IRemoteProjectManager _remoteProjectManager;
 
 	/**
@@ -54,64 +53,30 @@ public final class ProjectManagerProxy implements IProjectManager
 	}
 
 	/**
-	 * @see salomon.engine.project.IProjectManager#addProject(salomon.platform.project.IProject)
+	 * @see salomon.engine.project.IProjectManager#addProject(IProject)
 	 */
-	public void addProject(IProject project)
+	public void addProject(IProject project) throws PlatformException
 	{
+        try {
+        	_remoteProjectManager.addProject(project);
+        } catch (RemoteException e) {
+            LOGGER.fatal("Remote error!", e);
+            throw new PlatformException(e.getLocalizedMessage());        	
+        }
 		throw new UnsupportedOperationException(
 				"Method addProject() not implemented yet!");
 	}
 
 	/**
-	 * (non-Javadoc)
-	 * 
-	 * @see salomon.engine.platform.IProjectManager#newProject()
+	 * @see salomon.engine.project.IProjectManager#ceateProject()
 	 */
-	public void ceateProject() throws PlatformException
-	{
-		try {
-			_remoteProjectManager.createProject();
-		} catch (RemoteException e) {
-			LOGGER.fatal("", e);
-			throw new PlatformException(e.getLocalizedMessage());
-		}
-	}
-
-	/**
-	 * @see salomon.engine.project.IProjectManager#createProject()
-	 */
-	public IProject createProject()
-	{
-		throw new UnsupportedOperationException(
-				"Method createProject() not implemented yet!");
-	}
-
-	/**
-	 * @see salomon.engine.platform.project.IProjectManager#getAvailableProjects()
-	 */
-	public IProject[] getProjects() throws PlatformException
-	{
-		IProject[] projects = null;
-		try {
-			projects = _remoteProjectManager.getProjects();
-		} catch (RemoteException e) {
-			LOGGER.fatal("", e);
-			throw new PlatformException(e.getLocalizedMessage());
-		}
-
-		return projects;
-	}
-
-	/**
-	 * @see salomon.engine.platform.IProjectManager#loadProject(int)
-	 */
-	public IProject loadProject(int projectID) throws PlatformException
+	public IProject ceateProject() throws PlatformException
 	{
         IProject project = null;
 		try {
-			project = _remoteProjectManager.loadProject(projectID);
+			project = _remoteProjectManager.createProject();
 		} catch (RemoteException e) {
-			LOGGER.fatal("", e);
+			LOGGER.fatal("Remote error!", e);
 			throw new PlatformException(e.getLocalizedMessage());
 		}
         
@@ -119,14 +84,46 @@ public final class ProjectManagerProxy implements IProjectManager
 	}
 
 	/**
-	 * @see salomon.engine.platform.IProjectManager#saveProject(salomon.engine.platform.Project)
+	 * @see IProjectManager#getProject(int)
+	 */
+	public IProject getProject(int projectID) throws PlatformException
+	{
+        IProject project = null;
+		try {
+			project = _remoteProjectManager.getProject(projectID);
+		} catch (RemoteException e) {
+			LOGGER.fatal("Remote error!", e);
+			throw new PlatformException(e.getLocalizedMessage());
+		}
+        
+        return project;
+	}
+
+	/**
+	 * @see IProjectManager#getProjects()
+	 */
+	public IProject[] getProjects() throws PlatformException
+	{
+		IProject[] projects = null;
+		try {
+			projects = _remoteProjectManager.getProjects();
+		} catch (RemoteException e) {
+			LOGGER.fatal("Remote error!", e);
+			throw new PlatformException(e.getLocalizedMessage());
+		}
+
+		return projects;
+	}
+
+	/**
+	 * @see IProjectManager#saveProject()
 	 */
 	public void saveProject() throws PlatformException
 	{
 		try {
 			_remoteProjectManager.saveProject();
 		} catch (RemoteException e) {
-			LOGGER.fatal("", e);
+			LOGGER.fatal("Remote error", e);
 			throw new PlatformException(e.getLocalizedMessage());
 		}
 	}

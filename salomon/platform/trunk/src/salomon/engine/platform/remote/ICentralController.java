@@ -26,7 +26,6 @@ import java.rmi.RemoteException;
 
 /**
  * An interface including methods to establish remote connction.  
- *  
  */
 public interface ICentralController extends Remote
 {

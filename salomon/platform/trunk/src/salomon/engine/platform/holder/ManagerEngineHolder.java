@@ -42,7 +42,7 @@ public final class ManagerEngineHolder implements IManagerEngine
 	private TaskManagerHolder _taskManagerHolder;
 
 	/**
-	 * @param currentManagerEngine
+     * 
 	 */
 	public ManagerEngineHolder(IManagerEngine managerEngine)
 	{
@@ -86,12 +86,9 @@ public final class ManagerEngineHolder implements IManagerEngine
      */
 	public void setCurrentManager(IManagerEngine managerEngine)
 	{
-        //FIXME
-        throw new UnsupportedOperationException(
-				"Method setCurrentManager() not implemented yet!");
-//		_currentManagerEngine = managerEngine;
-//		_pluginManagerHolder.setCurrent(_currentManagerEngine.getPluginManager());
-//		_projectManagerHolder.setCurrent(_currentManagerEngine.getProjectManager());
-//		_taskManagerHolder.setCurrent(_currentManagerEngine.getTasksManager());
+		_currentManagerEngine = managerEngine;
+		_pluginManagerHolder.setCurrent(_currentManagerEngine.getPluginManager());
+		_projectManagerHolder.setCurrent(_currentManagerEngine.getProjectManager());
+		_taskManagerHolder.setCurrent(_currentManagerEngine.getTasksManager());
 	}
 }

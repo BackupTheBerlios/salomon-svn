@@ -19,7 +19,7 @@
  * 
  */
 
-package salomon.engine.platform.remote;
+package salomon.engine.platform.remote.plugin;
 
 import java.rmi.RemoteException;
 
@@ -27,6 +27,7 @@ import org.apache.log4j.Logger;
 
 import salomon.engine.plugin.IPluginManager;
 
+import salomon.platform.exception.PlatformException;
 
 import salomon.plugin.Description;
 import salomon.plugin.IPlugin;
@@ -35,6 +36,8 @@ import salomon.plugin.IPlugin;
  * Class is a sever side wrapper of IRemotePluginManager object. It implements
  * IPluginManager interface and delegates methods execution to remote object
  * catching all RemoteExceptions.
+ * 
+ * @see salomon.engine.platform.remote.plugin.IRemotePluginManager
  *  
  */
 public final class PluginManagerProxy implements IPluginManager
@@ -51,63 +54,54 @@ public final class PluginManagerProxy implements IPluginManager
 	}
 
 	/**
-	 * (non-Javadoc)
-	 * 
-	 * @see salomon.engine.platform.plugin.IPluginManager#getPlugins()
+	 * @see IPluginManager#getPlugins()
 	 */
-	public IPlugin[] getPlugins()
+	public IPlugin[] getPlugins() throws PlatformException
 	{
 		IPlugin[] result = null;
 		try {
 			result = _remotePluginManager.getPlugins();
 		} catch (RemoteException e) {
-			LOGGER.fatal("", e);
+            LOGGER.fatal("Remote error!", e);
+            throw new PlatformException(e.getLocalizedMessage());
 		}
-        
-		return result;
-	}
 
-	private static final Logger LOGGER = Logger.getLogger(PluginManagerProxy.class);
-
-	/**
-	 * (non-Javadoc)
-	 * 
-	 * @see salomon.engine.platform.plugin.IPluginManager#addPlugin(salomon.plugin.Description)
-	 */
-	public boolean savePlugin(Description description)
-	{
-		boolean result = false;
-		try {
-			result = _remotePluginManager.savePlugin(description);
-		} catch (RemoteException e) {
-			LOGGER.fatal("", e);
-		}
 		return result;
 	}
 
 	/**
-	 * (non-Javadoc)
-	 * 
-	 * @see salomon.engine.platform.plugin.IPluginManager#removePlugin(salomon.plugin.Description)
+     * @see IPluginManager#removePlugin(Description)
 	 */
-	public boolean removePlugin(Description description)
+	public boolean removePlugin(Description description) throws PlatformException
 	{
 
 		boolean result = false;
 		try {
 			result = _remotePluginManager.removePlugin(description);
 		} catch (RemoteException e) {
-			LOGGER.fatal("", e);
+			LOGGER.fatal("Remote error!", e);
+            throw new PlatformException(e.getLocalizedMessage());
 		}
+        
 		return result;
 	}
 
-	//	/* (non-Javadoc)
-	//	 * @see salomon.engine.platform.plugin.IPluginManager#getPlugin(java.net.URL)
-	//	 */
-	//	public IPlugin getPlugin(URL url)
-	//	{
-	//		return PluginLoader.loadPlugin(_remotePluginManager.getPlugin();
-	//	}
+	/**
+	 * @see IPluginManager#savePlugin(Description)
+	 */
+	public boolean savePlugin(Description description) throws PlatformException
+	{
+		boolean result = false;
+		try {
+			result = _remotePluginManager.savePlugin(description);
+		} catch (RemoteException e) {
+            LOGGER.fatal("Remote error!", e);
+            throw new PlatformException(e.getLocalizedMessage());
+		}
+        
+		return result;
+	}
+
+	private static final Logger LOGGER = Logger.getLogger(PluginManagerProxy.class);
 
 }
