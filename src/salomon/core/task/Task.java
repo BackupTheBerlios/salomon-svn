@@ -6,7 +6,8 @@ import salomon.plugin.IResult;
 import salomon.plugin.ISettings;
 
 /**
- *  
+ * Represents task which may be executed by plugins, it is an implementation of
+ * ITask interface.
  */
 public final class Task implements ITask
 {
@@ -83,8 +84,7 @@ public final class Task implements ITask
 	}
 
 	/**
-	 * @param name
-	 *            The name to set.
+	 * @param name The name to set.
 	 */
 	public void setName(String name)
 	{
@@ -92,8 +92,7 @@ public final class Task implements ITask
 	}
 
 	/**
-	 * @param _plugin
-	 *            The _plugin to set.
+	 * @param _plugin The _plugin to set.
 	 */
 	public void setPlugin(IPlugin plugin)
 	{
@@ -101,8 +100,7 @@ public final class Task implements ITask
 	}
 
 	/**
-	 * @param _result
-	 *            The _result to set.
+	 * @param _result The _result to set.
 	 */
 	public void setResult(IResult result)
 	{
@@ -115,8 +113,7 @@ public final class Task implements ITask
 	}
 
 	/**
-	 * @param _settings
-	 *            The _settings to set.
+	 * @param _settings The _settings to set.
 	 */
 	public void setSettings(ISettings settings)
 	{
@@ -124,8 +121,7 @@ public final class Task implements ITask
 	}
 
 	/**
-	 * @param status
-	 *            The status to set.
+	 * @param status The status to set.
 	 */
 	public void setStatus(String status)
 	{
@@ -151,8 +147,7 @@ public final class Task implements ITask
 	}
 
 	/**
-	 * @param taksId
-	 *            The taksId to set.
+	 * @param taksId The taksId to set.
 	 */
 	public void setTaskId(int taskId)
 	{

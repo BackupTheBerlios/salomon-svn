@@ -8,9 +8,7 @@ import salomon.plugin.ISettings;
 /**
  * 
  * Interface for tasks.
- * 
- * @author krzychu
- *  
+ *
  */
 public interface ITask
 {

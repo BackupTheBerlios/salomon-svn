@@ -29,7 +29,8 @@ import salomon.plugin.IPlugin;
 import salomon.plugin.ISettings;
 
 /**
- *  
+ * An implemetation of IProjectManager interface. Class manages with projects
+ * editing.
  */
 public final class ProjectManager implements IProjectManager
 {
@@ -412,7 +413,8 @@ public final class ProjectManager implements IProjectManager
 	 * 
 	 * @see salomon.core.project.IProjectManager#getAvailableProjects()
 	 */
-	public Collection getAvailableProjects() throws SQLException, ClassNotFoundException
+	public Collection getAvailableProjects() throws SQLException,
+			ClassNotFoundException
 	{
 		Collection projects = null;
 		DBTableName[] tableNames = {new DBTableName("projects")};

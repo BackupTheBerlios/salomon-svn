@@ -2,10 +2,7 @@
 package salomon.core.project;
 
 /**
- * 
- * TODO: add comment.
- * 
- * @author krzychu
+ * An interface for projects.
  *  
  */
 public interface IProject

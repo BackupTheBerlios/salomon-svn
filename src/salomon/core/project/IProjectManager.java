@@ -5,10 +5,7 @@ import java.sql.SQLException;
 import java.util.Collection;
 
 /**
- * 
- * TODO: add comment.
- * 
- * @author krzychu
+ * Interface implemented by ProjectManager, which manages with projects.
  *  
  */
 public interface IProjectManager

@@ -2,6 +2,7 @@
 package salomon.core.project;
 
 /**
+ * Represents a project, it is an implementation of IProject interface.
  *  
  */
 final class Project implements IProject
@@ -41,8 +42,7 @@ final class Project implements IProject
 	}
 
 	/**
-	 * @param info
-	 *            The info to set.
+	 * @param info The info to set.
 	 */
 	public void setInfo(String info)
 	{
@@ -50,8 +50,7 @@ final class Project implements IProject
 	}
 
 	/**
-	 * @param name
-	 *            The name to set.
+	 * @param name The name to set.
 	 */
 	public void setName(String name)
 	{
@@ -59,8 +58,7 @@ final class Project implements IProject
 	}
 
 	/**
-	 * @param projectId
-	 *            The projectID to set.
+	 * @param projectId The projectID to set.
 	 */
 	public void setProjectID(int projectId)
 	{

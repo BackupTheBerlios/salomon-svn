@@ -17,11 +17,9 @@ import salomon.plugin.IResult;
 import salomon.plugin.ISettings;
 
 /**
- * 
- * TODO: add comment.
- * 
- * @author krzychu
- *  
+ * An implemetation of ITaskManager interface.
+ * Class manages with tasks editing and executing.
+ *   
  */
 public final class TaskManager implements ITaskManager
 {
