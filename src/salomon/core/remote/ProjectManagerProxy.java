@@ -24,8 +24,9 @@ public final class ProjectManagerProxy implements IProjectManager
 	private IProject _currentProject;
 
 	/**
-	 *  
-	 */
+     * @pre $none
+     * @post $none
+     */
 	public ProjectManagerProxy(IRemoteProjectManager remoteProjectManager)
 	{
 		_remoteProjectManager = remoteProjectManager;
