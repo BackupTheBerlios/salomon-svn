@@ -28,13 +28,15 @@ public class APSettingComponent implements ISettingComponent
 
 	private JTextField _txtSurname = null;
 
+	
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see salomon.plugin.ISettingComponent#getComponent()
+	 * @see salomon.plugin.ISettingComponent#getComponent(salomon.plugin.ISettings)
 	 */
-	public Component getComponent()
+	public Component getComponent(ISettings settings)
 	{
+		APSettings apSettings = (APSettings) settings;
 		if (_settingsPanel == null) {
 			_settingsPanel = new JPanel();
 			_settingsPanel.setLayout(new BorderLayout());
@@ -43,34 +45,11 @@ public class APSettingComponent implements ISettingComponent
 			_settingsPanel.add(getPnlAttributes(), BorderLayout.CENTER);
 			_settingsPanel.setSize(80, 70);
 		}
+		_txtName.setText(apSettings.getName());
+		_txtSurname.setText(apSettings.getSurname());
+		_txtNick.setText(apSettings.getNick());
+		_txtEmail.setText(apSettings.getEmail());
 		return _settingsPanel;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see salomon.plugin.ISettingComponent#getComponent(salomon.plugin.ISettings)
-	 */
-	public Component getComponent(ISettings settings)
-	{
-		// If settings are not null, then filling appropriate fields
-		if (settings != null) {
-			// to avoid casting
-			APSettings apSettings = (APSettings) settings;
-			if (apSettings.getName() != null) {
-				_txtName.setText(apSettings.getName());
-			}
-			if (apSettings.getSurname() != null) {
-				_txtName.setText(apSettings.getSurname());
-			}
-			if (apSettings.getNick() != null) {
-				_txtName.setText(apSettings.getNick());
-			}
-			if (apSettings.getEmail() != null) {
-				_txtName.setText(apSettings.getEmail());
-			}
-		}
-		return getComponent();
 	}
 
 	/*
