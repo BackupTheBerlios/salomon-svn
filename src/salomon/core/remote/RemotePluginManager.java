@@ -1,8 +1,6 @@
 
 package salomon.core.remote;
 
-import java.io.File;
-import java.net.URL;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.Collection;

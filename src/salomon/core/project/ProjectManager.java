@@ -188,8 +188,9 @@ public final class ProjectManager implements IProjectManager
 				ITask task = _managerEngine.getTasksManager().createTask();
 				task.setName(taskName);
 				task.setTaskId(taskId);
-				IPlugin plugin = PluginLoader.loadPlugin(new URL(location));
-				plugin.getDescription().setLocation(new File(location));
+                URL url = new URL(location);
+				IPlugin plugin = PluginLoader.loadPlugin(url);
+				plugin.getDescription().setLocation(url);
 				plugin.getDescription().setName(pluginName);
 				plugin.getDescription().setInfo(pluginInfo);
 				plugin.getDescription().setPluginID(pluginId);

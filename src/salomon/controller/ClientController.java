@@ -4,13 +4,13 @@ package salomon.controller;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.rmi.NotBoundException;
-import java.rmi.RMISecurityManager;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
 import org.apache.log4j.Logger;
 
+import salomon.core.Config;
 import salomon.core.IManagerEngine;
 import salomon.core.remote.IMasterController;
 import salomon.core.remote.IRemoteController;
@@ -36,8 +36,8 @@ public final class ClientController implements IController
 	public void start(IManagerEngine managerEngine)
 	{
 		_managerEngine = managerEngine;
-		_serverHost = "localhost";
-		_serverPort = 4321;
+		_serverHost = Config.getString("SERVER_HOST");
+		_serverPort = Integer.parseInt(Config.getString("SERVER_PORT"));
 		initRMI();
 	}
 

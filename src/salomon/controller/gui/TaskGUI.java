@@ -2,7 +2,6 @@
 package salomon.controller.gui;
 
 import salomon.core.task.ITask;
-import salomon.core.task.Task;
 import salomon.plugin.IPlugin;
 import salomon.plugin.IResult;
 import salomon.plugin.ISettings;

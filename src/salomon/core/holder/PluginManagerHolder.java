@@ -1,11 +1,9 @@
 
 package salomon.core.holder;
 
-import java.net.URL;
 import java.util.Collection;
 
 import salomon.core.plugin.IPluginManager;
-import salomon.plugin.IPlugin;
 
 /**
  * 

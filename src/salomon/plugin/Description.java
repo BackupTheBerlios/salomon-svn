@@ -6,6 +6,7 @@
 package salomon.plugin;
 
 import java.io.File;
+import java.net.URL;
 
 /**
  *  
@@ -24,7 +25,7 @@ public class Description
 
 	private int _pluginID;
 
-	private File _location;
+	private URL _location;
 
 	public Description()
 	{
@@ -128,7 +129,7 @@ public class Description
 	/**
 	 * @return Returns the location.
 	 */
-	public File getLocation()
+	public URL getLocation()
 	{
 		return _location;
 	}
@@ -137,7 +138,7 @@ public class Description
 	 * @param location
 	 *            The location to set.
 	 */
-	public void setLocation(File location)
+	public void setLocation(URL location)
 	{
 		_location = location;
 	}

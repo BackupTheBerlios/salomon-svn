@@ -5,7 +5,6 @@ import java.net.URL;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
-import salomon.plugin.IPlugin;
 import salomon.plugin.IResult;
 import salomon.plugin.ISettings;
 

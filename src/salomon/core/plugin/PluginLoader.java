@@ -12,7 +12,6 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.jar.JarFile;
 
 import org.apache.log4j.Logger;
 
@@ -37,7 +36,7 @@ public final class PluginLoader
 		// loading appropriate plugin (it has to be in *.jar file		
         plugin = (IPlugin) classLoader.findMainClass().newInstance();
         //TODO:
-		plugin.getDescription().setLocation(new File(""));
+		plugin.getDescription().setLocation(url);
         _pluginsLoaded.put(plugin, url);
 		return plugin;
 	}
