@@ -19,9 +19,11 @@
  * 
  */
 
-package salomon.engine;
+package salomon.engine.platform;
 
 import java.sql.SQLException;
+
+import salomon.engine.DBManager;
 
 import salomon.engine.platform.data.attribute.AttributeManager;
 import salomon.engine.platform.data.dataset.DataSetManager;

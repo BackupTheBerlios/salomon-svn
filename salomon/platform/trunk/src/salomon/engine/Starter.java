@@ -132,7 +132,7 @@ public final class Starter
 			}
 		}
 	}
-
+	
 	private static Starter getInstance()
 	{
 		if (_instance == null) {
