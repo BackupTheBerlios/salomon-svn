@@ -133,16 +133,19 @@
 		<rmic classname="salomon.engine.platform.remote.CentralController" base="${bin_dir}" />
 		<rmic classname="salomon.engine.platform.remote.RemoteController" base="${bin_dir}" />
 		<rmic classname="salomon.engine.platform.remote.RemoteManagerEngine" base="${bin_dir}" />
-		<rmic classname="salomon.engine.platform.remote.RemotePluginManager" base="${bin_dir}" />
-		<rmic classname="salomon.engine.platform.remote.RemoteProjectManager" base="${bin_dir}" />
-		<rmic classname="salomon.engine.platform.remote.RemoteTaskManager" base="${bin_dir}" />
-		<rmic classname="salomon.engine.platform.remote.RemoteTask" base="${bin_dir}" />
-		<rmic classname="salomon.engine.platform.remote.RemoteProject" base="${bin_dir}" />
+		<rmic classname="salomon.engine.platform.remote.plugin.RemotePluginManager" base="${bin_dir}" />
+		<rmic classname="salomon.engine.platform.remote.project.RemoteProjectManager" base="${bin_dir}" />
+		<rmic classname="salomon.engine.platform.remote.project.RemoteProject" base="${bin_dir}" />
+		<rmic classname="salomon.engine.platform.remote.task.RemoteTaskManager" base="${bin_dir}" />
+		<rmic classname="salomon.engine.platform.remote.task.RemoteTask" base="${bin_dir}" />
+		<rmic classname="salomon.engine.platform.remote.task.RemoteTaskRunner" base="${bin_dir}" />
+		<rmic classname="salomon.engine.platform.remote.solution.RemoteSolutionManager" base="${bin_dir}" />
+		<rmic classname="salomon.engine.platform.remote.solution.RemoteSolution" base="${bin_dir}" />
 	</target>
 
 	<target name="all" depends="copy_salomon, copy_plugins, 
-								copy_libs, copy_drivers, copy_data_base, copy_init_db, 
-								copy_res, copy_config, copy_run_files, get_version" />
+		copy_libs, copy_drivers, copy_data_base, copy_init_db,
+		copy_res, copy_config, copy_run_files, get_version" />
 
 	<target name="compress" depends="all">
 		<zip destfile="salomon.zip" basedir="${release_dir}" />
