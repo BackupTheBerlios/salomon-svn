@@ -11,6 +11,8 @@
 
 \beamertemplateballitem
 \beamertemplatenumberedballsectiontoc
+\setbeamertemplate{footline}[frame number]
+%\setbeamertemplate{background canvas}[vertical shading][top=blue!10,bottom=white]
 
 \hypersetup{%
   pdftitle={Wprowadzenie do Salomona},%
@@ -21,7 +23,7 @@
 \author{Salomon Team}
 
 \institute{
-  AGH}\date{kwiecieñ 2004}
+  AGH}\date{\today}
 
 \newcounter{minisection}
 \newcommand{\minisectionframe}[1]{
@@ -32,6 +34,15 @@
 }}
 
 \newcommand{\smallhref}[1]{{\footnotesize\href{#1}{\url{#1}}}}
+
+Wstawia przed kazdym poczatkiej subsection toc z zaznaczonym miejsce :-)
+%\AtBeginSubsection[]
+%{
+%  \begin{frame}<beamer>
+%    \frametitle{Outline}
+%    \tableofcontents[currentsection,currentsubsection]
+%  \end{frame}
+%}
 
 \begin{document}
 
