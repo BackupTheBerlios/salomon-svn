@@ -65,14 +65,14 @@
       <type>jar</type>
       <url>http://jakarta.apache.org/log4j/</url>
     </dependency>
-    <!--dependency>
+    <dependency>
       <groupId>firebirdsql</groupId>
       <artifactId>firebirdsql</artifactId>
       <version>1.5.2</version>
-      <jar>firebirdsql.jar</jar>
+      <jar>lib\firebirdsql.jar</jar>
       <type>jar</type>
       <url>http://firebird.sourceforge.net/</url>
-    </dependency-->
+    </dependency>
     <dependency>
       <groupId>xalan</groupId>
       <artifactId>xalan</artifactId>
@@ -86,6 +86,13 @@
       <version>1.0.b2</version>
       <type>jar</type>
       <url>http://xml.apache.org/commons/</url>
+    </dependency>
+    <dependency>
+      <groupId>jdom</groupId>
+      <artifactId>jdom</artifactId>
+      <version>1.0</version>
+      <type>jar</type>
+      <url>http://http://www.jdom.org</url>
     </dependency>
   </dependencies>
   <build>
@@ -108,18 +115,18 @@
     </resources>
   </build>
   <reports>
-    <report>maven-changes-plugin</report>
+    <report>maven-junit-report-plugin</report>
+    <!--report>maven-changes-plugin</report>
+    <report>maven-jdepend-plugin</report>
     <report>maven-file-activity-plugin</report>
     <report>maven-file-activity-plugin</report>
     <report>maven-changelog-plugin</report>
-    <report>maven-jdepend-plugin</report>
-    <report>maven-junit-report-plugin</report>
     <report>maven-pmd-plugin</report>
     <report>maven-javadoc-plugin</report>
     <report>maven-jxr-plugin</report>
     <report>maven-license-plugin</report>
     <report>maven-developer-activity-plugin</report>
-    <report>maven-faq-plugin</report>
+    <report>maven-faq-plugin</report-->
     <!--report>maven-dashboard-plugin</report-->
     <!--report>maven-jcoverage-plugin</report-->
   </reports>
