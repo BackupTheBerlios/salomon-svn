@@ -10,7 +10,7 @@ import java.util.List;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import ks.data.Condition;
+import ks.data.DBCondition;
 import ks.data.DBColumnName;
 import ks.data.DBTableName;
 import ks.data.DataEngine;
@@ -252,13 +252,13 @@ public class AveragePrice extends  AbstractPlugin
 				new DBColumnName(tableNames[1], "name", "model"),
 				new DBColumnName(tableNames[1], "price", "cena")};
 		DBColumnName carPrice = new DBColumnName(tableNames[1], "price");
-		Condition[] conditions = {
-				new Condition(new DBColumnName(tableNames[2], "user_id"),
-						Condition.REL_EQ, new DBColumnName(tableNames[0],
-								"user_id"), Condition.JOIN),
-				new Condition(new DBColumnName(tableNames[1], "car_id"),
-						Condition.REL_EQ, new DBColumnName(tableNames[2],
-								"car_id"), Condition.JOIN)};
+		DBCondition[] conditions = {
+				new DBCondition(new DBColumnName(tableNames[2], "user_id"),
+						DBCondition.REL_EQ, new DBColumnName(tableNames[0],
+								"user_id"), DBCondition.JOIN),
+				new DBCondition(new DBColumnName(tableNames[1], "car_id"),
+						DBCondition.REL_EQ, new DBColumnName(tableNames[2],
+								"car_id"), DBCondition.JOIN)};
 		//		TODO: wykorzystac je :-)
 		_logger.info("settings = " + settings);
 		// getting additional conditions (from settings)
@@ -266,38 +266,38 @@ public class AveragePrice extends  AbstractPlugin
 		Object value = null;
 		value = settings.get("name");
 		if (value != null) {
-			additionalConditions.add(new Condition(new DBColumnName(
-					tableNames[0], "name"), Condition.REL_LIKE, value
-					.toString(), Condition.TEXT));
+			additionalConditions.add(new DBCondition(new DBColumnName(
+					tableNames[0], "name"), DBCondition.REL_LIKE, value
+					.toString(), DBCondition.TEXT));
 		}
 		value = settings.get("surname");
 		if (value != null) {
-			additionalConditions.add(new Condition(new DBColumnName(
-					tableNames[0], "surname"), Condition.REL_LIKE, value
-					.toString(), Condition.TEXT));
+			additionalConditions.add(new DBCondition(new DBColumnName(
+					tableNames[0], "surname"), DBCondition.REL_LIKE, value
+					.toString(), DBCondition.TEXT));
 		}
 		value = settings.get("nick");
 		if (value != null) {
-			additionalConditions.add(new Condition(new DBColumnName(
-					tableNames[0], "nick"), Condition.REL_LIKE, value
-					.toString(), Condition.TEXT));
+			additionalConditions.add(new DBCondition(new DBColumnName(
+					tableNames[0], "nick"), DBCondition.REL_LIKE, value
+					.toString(), DBCondition.TEXT));
 		}
 		value = settings.get("email");
 		if (value != null) {
-			additionalConditions.add(new Condition(new DBColumnName(
-					tableNames[0], "email"), Condition.REL_LIKE, value
-					.toString(), Condition.TEXT));
+			additionalConditions.add(new DBCondition(new DBColumnName(
+					tableNames[0], "email"), DBCondition.REL_LIKE, value
+					.toString(), DBCondition.TEXT));
 		}
 		// concatenating with old conditons
-		Condition[] queryConditions = null;
+		DBCondition[] queryConditions = null;
 		_logger.info("AveragePrice.doJob() additionalConditions: "
 				+ additionalConditions);
 		if (additionalConditions.size() > 0) {
 			//adding conditions determinating data set
-			queryConditions = new Condition[additionalConditions.size()
+			queryConditions = new DBCondition[additionalConditions.size()
 					+ conditions.length];
 			additionalConditions.addAll(Arrays.asList(conditions));
-			queryConditions = (Condition[]) additionalConditions
+			queryConditions = (DBCondition[]) additionalConditions
 					.toArray(queryConditions);
 		} else {
 			queryConditions = conditions;
