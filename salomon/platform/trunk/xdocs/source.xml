@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+
+
+<document>
+  <body>
+		<p>
+		The Salomon project uses the
+		<a href="http://subversion.tigris.org/">Subversion</a> version control
+		system.  If you're new to Subversion, you can check out the
+		<a href="http://svnbook.red-bean.com/">online book</a> about Subversion.
+		Note that we are currently using Subversion 1.1.x (there are separate
+		versions of the book covering 1.0 and 1.1).
+		</p>
+		
+		<section name="Web Access to Subversion">
+			<p>
+			If you just want to browse the source code, you can use the
+			<a href="http://salomon.iisg.agh.edu.pl/websvn">SVN View
+			web interface</a> to Subversion.  This is current at all times.
+			</p>
+		</section>
+		<section name="Normal Subversion Access">
+			<p>TODO</p>
+			<subsection name="Check out from Subversion">
+				<p>TODO</p>
+			</subsection>
+			<subsection name="Commit Changes to Subversion">
+				<p>TODO</p>
+			</subsection>
+		</section>
+		<section name="Building Salomon from Source">
+			<p>Refer to the 
+			<a href="http://salomon.iisg.agh.edu.pl/twiki/bin/view.cgi/Main/Procedures#Build_Procedure">
+			Wiki page</a> for the build procedure.</p>
+		</section>
+  </body>
+</document>

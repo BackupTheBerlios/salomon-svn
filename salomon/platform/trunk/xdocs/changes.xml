@@ -1,0 +1,31 @@
+<document>
+  <properties>
+    <title>Release History</title>
+    <author email="qoooba@student.uci.agh.edu.pl">Salomon Team</author>
+  </properties>
+
+  <head>
+    <meta name="keywords" content="java,knowledge mining,salomon"/>
+    <meta name="description" content="Salomon is a tool for a distributed knowledge mining"/>
+    <meta name="Robots" content="index,follow" />
+  </head>
+
+  <body>
+
+    <release version="0.9.4" date="2005-01-1" description="Pre-1.0-Release">
+      <action type="update">New Year's release ;D</action>
+    </release>
+
+    <release version="0.9.3" date="2004-01-09" description="Pre-1.0-Release">
+      <action type="add">
+        TODO
+      </action>
+      <action type="update">
+      	TODO
+	  </action>
+    </release>
+
+  </body>
+
+</document>
+

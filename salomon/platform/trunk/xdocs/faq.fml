@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<faqs title="Frequently Asked Questions">
+
+  <part id="general">
+    <title>General</title>
+   
+    <faq id="maven-definition">
+      <question>What is Salomon?</question>
+      <answer><p>
+      Salomon is a tool for a distributed Knowledge Mining.
+      </p></answer>
+    </faq>
+
+  </part>
+  
+  <part id="using">
+    <title>Using Salomon</title>
+    <faq id="using-entities">
+      <question>What is required to run Salomon?</question>
+      <answer>
+        <p>
+        Basically, the only thing you should do is to download the latest version
+        of Salomon(also available via installer), built it(if you don't use installer),
+        and run.Having FirebirdSQL is advisable.
+        </p>
+      </answer>
+    </faq>
+
+    <faq id="masters-of-the-inheritence">
+      <question>How to build Salomon?</question>
+      <answer>
+        <p>
+        	Download the latest source and run:
+<source><![CDATA[
+ant all
+]]></source>
+        </p>
+      </answer>
+    </faq>
+    
+  </part>
+    
+</faqs>
+   
