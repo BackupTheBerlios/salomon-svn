@@ -1,12 +1,10 @@
 
 package pl.edu.agh.icsr.salomon.plugin.datasetunion;
 
-import java.sql.SQLException;
-
-import salomon.core.data.DataEngine;
-import salomon.core.data.Environment;
-import salomon.core.data.dataset.DataSet;
-import salomon.core.data.dataset.DataSetManager;
+import salomon.platform.IDataEngine;
+import salomon.platform.IEnvironment;
+import salomon.platform.data.dataset.IDataSet;
+import salomon.platform.data.dataset.IDataSetManager;
 import salomon.plugin.Description;
 import salomon.plugin.IPlugin;
 import salomon.plugin.IResult;
@@ -25,8 +23,6 @@ public class UPlugin implements IPlugin
 {
 
 	private Description _description;
-
-	private DataEngine _dataEngine;
 
 	/**
 	 *  
@@ -49,20 +45,20 @@ public class UPlugin implements IPlugin
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see salomon.plugin.IDataPlugin#doJob(salomon.core.data.DataEngine,
-	 *      salomon.core.data.Environment, salomon.plugin.ISettings)
+	 * @see salomon.plugin.IDataPlugin#doJob(salomon.engine.platform.data.DataEngine,
+	 *      salomon.engine.platform.data.Environment, salomon.plugin.ISettings)
 	 */
-	public IResult doJob(DataEngine engine, Environment environment,
+	public IResult doJob(IDataEngine engine, IEnvironment environment,
 			ISettings settings)
 	{
-		DataSetManager dataSetManager = engine.getDataSetManager();
+		IDataSetManager dataSetManager = engine.getDataSetManager();
 		USettings uSettings = (USettings) settings;
         UResult uResult = new UResult();
-		DataSet firstDataSet;
+		IDataSet firstDataSet;
 		try {
-			firstDataSet = dataSetManager.getDataSetForName(uSettings.getFirstDataSet());
-			DataSet secondDataSet = dataSetManager.getDataSetForName(uSettings.getSecondDataSet());
-			DataSet result = dataSetManager.union(firstDataSet, secondDataSet);
+			firstDataSet = dataSetManager.getDataSet(uSettings.getFirstDataSet());
+			IDataSet secondDataSet = dataSetManager.getDataSet(uSettings.getSecondDataSet());
+			IDataSet result = dataSetManager.union(firstDataSet, secondDataSet);
 			result.setName(uSettings.getResultDataSet());
 			dataSetManager.add(result);
 			uResult.setSuccessfull(true);    
@@ -106,7 +102,7 @@ public class UPlugin implements IPlugin
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see salomon.plugin.IPlugin#initizalize(salomon.core.data.DataEngine)
+	 * @see salomon.plugin.IPlugin#initizalize(salomon.engine.platform.data.DataEngine)
 	 */
 	public void initizalize()
 	{
