@@ -41,18 +41,28 @@ public class DBColumnName
 		_tableName = tableName;
 		_columnName = columnName;
 	}
-	
-	/* (non-Javadoc)
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	public String toString()
 	{
-		String name =  _tableName + ".\"" + _columnName + "\"";
+		String name = _tableName + ".\"" + _columnName + "\"";
 		if (_columnAlias != null) {
 			name += " " + _columnAlias;
 		}
 		return name;
 	}
+
+	// returns e.g. "user_id".
+	// Some statements don't accept table name as a prefix
+	public String getForUpdate()
+	{
+		return "\"" + _columnName + "\"";
+	}
+
 	/**
 	 * @return Returns the _tableName.
 	 */
