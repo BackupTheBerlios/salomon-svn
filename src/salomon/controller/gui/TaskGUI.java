@@ -113,6 +113,11 @@ public final class TaskGUI
 		}
 	}
 
+	public boolean isInitialized()
+	{
+		return _task != null;
+	}
+
 	public void save()
 	{
 		save(_task);
@@ -121,19 +126,15 @@ public final class TaskGUI
 	public void save(ITask task)
 	{
 		_task = task;
+		// important: set first plugin
 		_task.setPlugin(_plugin);
-		_task.setName(_name);
-		_task.setSettings(_settings);
-	}
 
-	public boolean isInitialized()
-	{
-		return _task != null;
+		_task.setSettings(_settings);
+		_task.setName(_name);
 	}
 
 	/**
-	 * @param name
-	 *            The name to set.
+	 * @param name The name to set.
 	 */
 	public void setName(String name)
 	{
@@ -141,8 +142,7 @@ public final class TaskGUI
 	}
 
 	/**
-	 * @param _plugin
-	 *            The _plugin to set.
+	 * @param _plugin The _plugin to set.
 	 */
 	public void setPlugin(IPlugin plugin)
 	{
@@ -164,8 +164,7 @@ public final class TaskGUI
 	//    }
 
 	/**
-	 * @param _settings
-	 *            The _settings to set.
+	 * @param _settings The _settings to set.
 	 */
 	public void setSettings(ISettings settings)
 	{
