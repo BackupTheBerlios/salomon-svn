@@ -16,7 +16,6 @@ import org.apache.log4j.Logger;
 
 import salomon.core.Config;
 import salomon.core.Messages;
-import salomon.core.project.Project;
 
 /*
  * Created on 2004-05-03
@@ -43,10 +42,9 @@ public final class ControllerFrame extends JFrame
 	 * 
 	 * @param project
 	 */
-	public void refreshGui(Project project)
+	public void refreshGui()
 	{
-		//TODO:
-		//_taskEditionManager.reloadTasks(project.getManagerEngine().getTasksManager().getTasks());
+        super.validate();        
 	}
 
 	public void setMainPanel(JPanel panel)
