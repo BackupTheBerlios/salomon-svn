@@ -223,12 +223,11 @@ public final class TaskEditionManager
 		}
 		_logger.debug("reloading tasks");
 		_taskListModel.removeAllElements();
-		Collection tasks = _managerEngine.getTasksManager().getTasks();
-		for (Iterator iter = tasks.iterator(); iter.hasNext();) {
-			_logger.debug("adding task");
-			_taskListModel.addElement(new TaskGUI((ITask) iter.next()));
-		}
-
+		ITask[] tasks = _managerEngine.getTasksManager().getTasks();
+        for (ITask task : tasks) {
+            _logger.debug("adding task");
+            _taskListModel.addElement(new TaskGUI(task));   
+        }
 	}
 
 	public void removePlugin()

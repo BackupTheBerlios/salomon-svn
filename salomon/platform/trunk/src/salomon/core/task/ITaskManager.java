@@ -1,7 +1,6 @@
 
 package salomon.core.task;
 
-import java.util.Collection;
 
 /**
  * Interface implemented by TaskManager, which manages with tasks.
@@ -33,7 +32,7 @@ public interface ITaskManager
 	 * 
 	 * @return collection of tasks
 	 */
-	public Collection getTasks();
+	public ITask[] getTasks();
 
 	/**
      * Starts tasks execution. 

@@ -183,10 +183,11 @@ public final class ProjectManager implements IProjectManager
 	private void saveTasks() throws Exception
 	{		
 		// saving tasks		
-		Collection<Task> tasks = _managerEngine.getTasksManager().getTasks();
-        for (Task task : tasks) {
-            task.setProjectID(_currentProject.getProjectID());
-        	task.save();
+		ITask[] tasks = _managerEngine.getTasksManager().getTasks();
+        for (ITask task : tasks) {
+            // TODO: is it neccessary?
+            ((Task)task).setProjectID(_currentProject.getProjectID());
+        	((Task)task).save();
         }
 	}
 

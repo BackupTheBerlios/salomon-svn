@@ -1,7 +1,6 @@
 
 package salomon.core.holder;
 
-import java.util.Collection;
 
 import salomon.core.task.ITask;
 import salomon.core.task.ITaskManager;
@@ -48,7 +47,7 @@ final class TaskManagerHolder implements ITaskManager
 	 * 
 	 * @see salomon.core.task.ITaskManager#getTasks()
 	 */
-	public Collection getTasks()
+	public ITask[] getTasks()
 	{
 		return _currentTaskManager.getTasks();
 	}

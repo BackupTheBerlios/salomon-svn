@@ -3,6 +3,7 @@ package salomon.core.task;
 
 import java.sql.SQLException;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
 
@@ -71,9 +72,9 @@ public final class TaskManager implements ITaskManager
 		//if (_tasks.)
 	} // end getCurrentTask
 
-	public Collection<ITask> getTasks()
-	{
-		return _tasks;
+	public ITask[] getTasks()
+	{        
+		return _tasks.toArray(new ITask[_tasks.size()]);
 	}
 
 	public void start()

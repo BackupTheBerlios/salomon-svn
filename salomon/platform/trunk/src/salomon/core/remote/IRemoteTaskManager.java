@@ -3,7 +3,7 @@ package salomon.core.remote;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
-import java.util.Collection;
+
 
 /**
  * Remote version of ITaskManager interface. It has all methods from
@@ -17,7 +17,7 @@ public interface IRemoteTaskManager extends Remote
 
 	IRemoteTask getCurrentTask() throws RemoteException;
 
-	Collection getTasks() throws RemoteException;
+	IRemoteTask[] getTasks() throws RemoteException;
 
 	void start() throws RemoteException;
 

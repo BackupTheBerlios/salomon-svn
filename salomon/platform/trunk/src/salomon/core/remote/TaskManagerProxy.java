@@ -87,20 +87,20 @@ public final class TaskManagerProxy implements ITaskManager
 	 * 
 	 * @see salomon.core.task.ITaskManager#getTasks()
 	 */
-	public Collection getTasks()
+	public ITask[] getTasks()
 	{
-		List tasks = new ArrayList();
+		ITask[] tasks = null;
 		try {
-			Collection remoteTasks = _remoteTaskManager.getTasks();
-			for (Iterator iter = remoteTasks.iterator(); iter.hasNext();) {
-				IRemoteTask remoteTask = (IRemoteTask) iter.next();
-				tasks.add(getTaskProxy(remoteTask));
+			IRemoteTask[] remoteTasks = _remoteTaskManager.getTasks();
+			tasks = new ITask[remoteTasks.length];
+			for (int i = 0; i < remoteTasks.length; i++) {
+				tasks[i] = getTaskProxy(remoteTasks[i]);
 			}
 		} catch (RemoteException e) {
 			_logger.error(e);
 		}
 
-		return Collections.unmodifiableCollection(tasks);
+		return tasks;
 	}
 
 	/*
