@@ -13,13 +13,9 @@ import java.io.File;
 import java.io.FileFilter;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URISyntaxException;
 import java.net.URL;
-import java.net.URLClassLoader;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.jar.JarFile;
 
 import org.apache.log4j.Logger;
 
@@ -47,13 +43,14 @@ public final class PluginLoader
 			pluginFile = downloadFile(url);
 		}
 		// creating class loader
-		PluginClassLoader classLoader = new PluginLoader().new PluginClassLoader(
-				pluginFile);
+		PluginClassLoader classLoader = PluginClassLoader.getInstance();
+        classLoader.addUrl(url);
 		// loading appropriate plugin (it has to be in *.jar file
-		plugin = (IPlugin) classLoader.findMainClass().newInstance();
+		plugin = (IPlugin) classLoader.findMainClass(pluginFile).newInstance();
 
 		plugin.getDescription().setLocation(url);
 		_pluginsLoaded.put(plugin, url);
+        
 		return plugin;
 	}
 
@@ -96,34 +93,6 @@ public final class PluginLoader
 			}
 		}
 		return pluginFile;
-	}
-
-	final class PluginClassLoader extends URLClassLoader
-	{
-		private File _file = null;
-
-		PluginClassLoader(File file) throws MalformedURLException
-		{
-			super(new URL[]{file.toURL()});
-			_file = file;
-		}
-
-		//work around
-		public Class findMainClass() throws ClassNotFoundException,
-				IOException, URISyntaxException
-		{
-			Class foundClass = null;
-			_logger.debug("file: " + _file);
-			JarFile jarFile = new JarFile(_file);
-			_logger.debug("jarFile: " + jarFile);
-			// reading manifest to find main class
-			String className = jarFile.getManifest().getMainAttributes().getValue(
-					"Main-Class");
-			_logger.info("Looking for class: " + className);
-			foundClass = super.findClass(className);
-			_logger.info("Found class: " + foundClass);
-			return foundClass;
-		}
 	}
 
 	class PluginFileFilter implements FileFilter
