@@ -1,0 +1,255 @@
+<project name="salomon" default="all" basedir=".">
+
+	<property name="src_dir" value="src"/>
+
+	
+	<property name="bin_dir" value="bin"/>
+	<property name="lib_dir" value="lib"/>
+	<property name="res_dir" value="res"/>
+	<property name="db_dir" value="db"/>
+	<property name="db_file" value="salomon.gdb"/>
+
+	<property name="release_dir" value="_release" />
+
+
+	<!--	<target name="init">
+		<mkdir dir="${bin_dir}" />
+		<mkdir dir="${dist}" />
+		<mkdir dir="${build_modules}" />
+		<mkdir dir="${build_didactic}" />
+		<mkdir dir="${build_forum}" />
+
+	</target>
+
+	<target name="init_common" depends="init" >
+		<mkdir dir="${build_common}" />
+	</target>
+
+	<target name="compile_core" depends="init" >
+		<echo message="Build salomon core"/>
+		<javac srcdir="${src}/" 
+					destdir="${bin_dir}" />
+	</target>
+
+	<target name="build_common_module" depends="prepare_common">
+		<echo message="Build distributable common module application"/>
+		<jar jarfile="${build_modules}/${build_common_module}" >
+			<fileset dir="${build_common}" />
+		</jar>
+
+	</target>
+
+	<target name="init_didactic_ejb" depends="init" >
+		<mkdir dir="${build_didactic_ejb}" />
+		<mkdir dir="${build_didactic_ejb}/META-INF" /> 
+	</target>
+
+	<target name="prepare_didactic_ejb" depends="init_didactic_ejb" >
+		<copy todir="${build_didactic_ejb}/META-INF" >
+			<fileset dir="${src}/dds/ejb/didactic" excludes="**/*.dbschema" />
+		</copy>
+
+		<filter filtersfile="build.properties"/>
+		<copy todir="${build_didactic_ejb}" filtering="true">
+				<fileset dir="${src}/dds/ejb/didactic" excludes="**/*.xml" />
+			</copy>			
+
+		
+		<javac srcdir="${src}/jsrc" 
+					destdir="${build_didactic_ejb}" 
+					includes="com/dsrg/portalki/didactic/**"/>
+	</target>
+
+	<target name="build_didactic_ejb_module" depends="prepare_didactic_ejb">
+		<echo message="Build distributable didactic ejb module application"/>
+		<jar jarfile="${build_modules}/${build_didactic_ejb_module}" >
+			<fileset dir="${build_didactic_ejb}" />
+		</jar>
+
+	</target>
+
+	<target name="init_forum_ejb" depends="init,build_common_module" >
+		<mkdir dir="${build_forum_ejb}" />
+		<mkdir dir="${build_forum_ejb}/META-INF" /> 
+	</target>
+
+	<target name="prepare_forum_ejb" depends="init_forum_ejb" >
+		<copy todir="${build_forum_ejb}/META-INF" >
+			<fileset dir="${src}/dds/ejb/forum" excludes="**/*.dbschema" />
+		</copy>
+		
+		<javac srcdir="${src}/jsrc" 
+					destdir="${build_forum_ejb}" 
+					includes="com/dsrg/portalki/forum/**" />
+	</target>
+
+	<target name="build_forum_ejb_module" depends="prepare_forum_ejb">
+		<echo message="Build distributable forum ejb module application"/>
+		<jar jarfile="${build_modules}/${build_forum_ejb_module}" >
+			<fileset dir="${build_forum_ejb}" />
+			<fileset dir="${src}/dds/ejb/forum" excludes="**/*.xml" />
+		</jar>
+	</target>
+
+	<target name="init_portalki_web" depends="init" >
+		<mkdir dir="${build_web}" />
+		<mkdir dir="${build_web}/css" />
+		<mkdir dir="${build_web}/images" />
+		<mkdir dir="${build_web}/scripts" />
+		<mkdir dir="${build_web}/WEB-INF/lib" />
+		<mkdir dir="${build_web}/WEB-INF/classes" />
+		<mkdir dir="${build_web}/WEB-INF/tlds" />
+		<mkdir dir="${build_web}/WEB-INF/cfg" />
+		<mkdir dir="${build_web}/META-INF" />
+	</target>
+	
+	<target name="prepare_portalki_web" depends="init_portalki_web">
+		<copy todir="${build_web}/WEB-INF">
+			<fileset dir="${src}/dds/web" />
+		</copy>
+
+		<copy todir="${build_web}/WEB-INF/tlds">
+			<fileset dir="${src}/web/tlds" />
+		</copy>
+
+		<copy todir="${build_web}/WEB-INF/lib">
+			<fileset dir="${src}/lib" />
+		</copy>
+
+ 		<copy todir="${build_web}/WEB-INF/cfg">
+			<fileset dir="${src}/cfg" />
+		</copy>
+
+		<copy todir="${build_web}/css">
+			<fileset dir="${src}/web/css" />
+		</copy>
+		<copy todir="${build_web}/images">
+			<fileset dir="${src}/web/images" />
+		</copy>
+		<copy todir="${build_web}">
+			<fileset dir="${src}/web/jsp" />
+		</copy>
+
+		<copy todir="${build_web}/scripts">
+			<fileset dir="${src}/web/scripts" />
+		</copy>
+		
+		<copy todir="${build_web}/WEB-INF" >
+			<fileset dir="${src}/web/struts" />
+		</copy>
+
+
+		<copy todir="${build_web}/WEB-INF/classes" >
+			<fileset dir="${src}/web/properties" />
+		</copy>
+
+	</target>
+
+	<target name="build_web_module" depends="prepare_portalki_web">
+		<echo message="Build distributable web application"/>
+		<javac destdir="${build_web}/WEB-INF/classes" >
+			<src path="${src}/jsrc" />
+		</javac>
+		<jar jarfile="${build_modules}/${build_web_module}" 
+				 basedir="${build_web}"/>
+	</target>
+
+
+	<target name="portalki_app_descriptors_lib"  >
+		<mkdir dir="${build_modules}/META-INF" />
+		<copy todir="${build_modules}/META-INF" >
+			<fileset dir="${src}/dds/app" />
+		</copy>
+	</target>
+
+	<target name="dist">
+		<antcall target="portalki_app_descriptors_lib" />
+		<antcall target="build_web_module" />
+		<antcall target="build_didactic_ejb_module" />
+		
+		<jar jarfile="${dist}/${build_app_module}" >
+			<fileset dir="${build_modules}" />
+		</jar>
+	</target> 
+	<target name="build_salomon_jar" >
+		
+	</target>
+	-->
+
+	<target name="compile_salomon" >
+		<echo message="Build salomon core"/>
+		<javac srcdir="${src_dir}/" 
+		       includes="salomon/**"
+		classpath="${lib_dir}/log4j-1.2.8.jar"		
+		       destdir="${bin_dir}" />
+	</target>
+	
+	<target name="build_averageprice_jar" >
+		<jar destfile="averageprice.jar" basedir="${bin_dir}"	   
+			includes="pl/**/averageprice/**">	
+			<manifest>				
+			<attribute name="Main-Class" value="pl.edu.agh.icsr.salomon.plugin.averageprice.AveragePrice"/>      	
+		</manifest>
+		</jar>		
+		
+	</target>
+
+	<target name="build_simpleconsole_jar" >
+		<jar destfile="simpleconsole.jar" basedir="${bin_dir}"	   
+			includes="pl/**/simpleconsole/**">	
+			<manifest>				
+			<attribute name="Main-Class" value="pl.edu.agh.icsr.salomon.plugin.simpleconsole.SimpleConsole"/>      	
+		</manifest>
+		</jar>		
+		
+	</target>
+
+
+	<target name="build_salomon_jar" >
+		<jar destfile="salomon.jar" basedir="${bin_dir}"	   
+			includes="salomon/**">	
+			<manifest>				
+			<attribute name="Main-Class" value="salomon.Starter"/>      	
+			<attribute name="Class-Path" value="${lib_dir}/firebirdsql.jar ${lib_dir}/log4j-1.2.8.jar ${lib_dir}/mini-j2ee.jar"/>      			   
+		</manifest>
+		</jar>		
+	</target>
+
+	<target name="copy_data_base">
+		<mkdir dir="${release_dir}/"/>	
+		<copy todir="${release_dir}/">
+			<fileset dir="${basedir}/" />
+		</copy>	
+	</target>
+
+	
+	<target name="build_plugin_jars" depends="build_simpleconsole_jar, build_averageprice_jar">
+		
+	</target>
+	
+
+	<target name="build_jars" depends="build_plugin_jars, build_salomon_jar">
+
+	</target>
+
+	
+	
+	<target name="build_rmi_stubs" >
+		<rmic classname="salomon.core.remote.MasterController" base="${bin_dir}"/>
+		<rmic classname="salomon.core.remote.RemoteController" base="${bin_dir}"/>
+		<rmic classname="salomon.core.remote.RemoteManagerEngine" base="${bin_dir}"/>
+		<rmic classname="salomon.core.remote.RemotePluginManager" base="${bin_dir}"/>
+		<rmic classname="salomon.core.remote.RemoteProjectManager" base="${bin_dir}"/>
+		<rmic classname="salomon.core.remote.RemoteTaskManager" base="${bin_dir}"/>
+		<rmic classname="salomon.core.remote.RemoteTask" base="${bin_dir}"/>
+		<rmic classname="salomon.core.remote.RemoteProject" base="${bin_dir}"/>
+	</target>
+
+	
+	<target name="clean">
+		<delete dir="${bin_dir}" />		
+	</target>
+
+	
+	
+</project>
