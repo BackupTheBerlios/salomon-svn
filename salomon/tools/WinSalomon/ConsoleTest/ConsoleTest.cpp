@@ -6,6 +6,7 @@
 #include <salomon.h>
 
 #include "LibraryController.h"
+#include "ManagerEngine.h"
 //__declspec(dllimport) void __stdcall void myfoo();
 
 //extern void myfoo();
@@ -25,7 +26,9 @@ int main()
 		std::cout << "failure" << std::endl;
 	}
 
-	if (libraryController->getManagerEngine() != 0)
+	ManagerEngine* managerEngine = libraryController->getManagerEngine();
+
+	if (managerEngine->getTasksManager() != 0)
 	{
 		std::cout << "HURRA!!!" << std::endl;
 	}

@@ -27,6 +27,7 @@
 #include "JavaObject.h"
 #include "SolutionManager.h"
 #include "PluginManager.h"
+#include "TaskManager.h"
 
 
 DLL_SHARE class ManagerEngine : public JavaObject
@@ -46,4 +47,6 @@ public:
 
 	DLL_SHARE SolutionManager* getSolutionManager();
 	DLL_SHARE PluginManager* getPluginManager();
+    DLL_SHARE TaskManager* getTasksManager();
+
 };

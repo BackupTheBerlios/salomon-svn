@@ -23,6 +23,29 @@
 
 const char* ManagerEngine::CLASS_NAME = "salomon/engine/platform/IManagerEngine";
 
+DLL_SHARE TaskManager* ManagerEngine::getTasksManager()
+{
+	std::cout << "Getting TaskManager...";
+
+	jmethodID getTaskManagerMethod = this->findMethod("getTasksManager", "()Lsalomon/engine/task/ITaskManager;");
+
+	jobject taskManager = this->getEnv()->CallObjectMethod(this->getObject(), getTaskManagerMethod);
+
+	TaskManager* result = new TaskManager(getEnv(), taskManager);
+
+	if (result != 0)
+	{
+		std::cout << "success" << std::endl;
+	}
+	else
+	{
+		std::cout << "failure" << std::endl;
+	}
+
+	return result;
+
+}
+
 
 //ManagerEngine::ManagerEngine(void)
 //{
