@@ -2,7 +2,7 @@
 package salomon.plugin;
 
 /**
- * Interface implemented by all plugins.  
+ * Interface implemented by all plugins.
  */
 public interface IPlugin extends IDataPlugin, IGraphicPlugin
 {
@@ -13,4 +13,4 @@ public interface IPlugin extends IDataPlugin, IGraphicPlugin
 	void destroy();
 
 	Description getDescription();
-} 
+}

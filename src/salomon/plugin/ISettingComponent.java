@@ -25,7 +25,6 @@ public interface ISettingComponent
 	 * @return default settings for plugin
 	 */
 	ISettings getDefaultSettings();
-	
 
 	/** Fills settings component basing on settings */
 	Component getComponent(ISettings settings);
