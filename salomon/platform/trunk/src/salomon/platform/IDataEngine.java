@@ -1,8 +1,8 @@
 package salomon.platform;
 
-import salomon.engine.platform.data.attribute.AttributeManager;
-import salomon.engine.platform.data.dataset.DataSetManager;
-import salomon.engine.platform.data.rule.RuleSetManager;
+import salomon.platform.data.attribute.IAttributeManager;
+import salomon.platform.data.dataset.IDataSetManager;
+import salomon.platform.data.rule.IRuleSetManager;
 
 /**
  * 
@@ -17,19 +17,19 @@ public interface IDataEngine
 	 * 
 	 * @return
 	 */
-	public abstract DataSetManager getDataSetManager();
+	public abstract IDataSetManager getDataSetManager();
 
 	/**
 	 * Does ...
 	 * 
 	 * @return
 	 */
-	public abstract RuleSetManager getRuleSetManager();
+	public abstract IRuleSetManager getRuleSetManager();
 
 	/**
 	 * Does ...
 	 * 
 	 * @return
 	 */
-	public abstract AttributeManager getAttributeManager();
+	public abstract IAttributeManager getAttributeManager();
 }
