@@ -14,13 +14,13 @@ import java.util.Collection;
  */
 public interface IRemoteTaskManager extends Remote
 {
-	public void clearTaskList() throws RemoteException;
+	void clearTaskList() throws RemoteException;
 
-	public IRemoteTask getCurrentTask() throws RemoteException;
+	IRemoteTask getCurrentTask() throws RemoteException;
 
-	public Collection getTasks() throws RemoteException;
+	Collection getTasks() throws RemoteException;
 
-	public void start() throws RemoteException;
+	void start() throws RemoteException;
 
-	public IRemoteTask createTask() throws RemoteException;
+	IRemoteTask createTask() throws RemoteException;
 }
