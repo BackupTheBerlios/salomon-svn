@@ -5,18 +5,44 @@
 
 package ks.core;
 
+import java.util.Iterator;
+import java.util.List;
+import org.apache.log4j.Logger;
+import ks.event.TaskEvent;
+import ks.event.TaskListener;
+
 /**
  *  
  */
 public class StandAloneManager implements IManager
 {
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see ks.core.IManager#start(ks.core.ManagerEngine)
-	 */
+	private ManagerEngine _managerEngine = null;
+
+	private static Logger _logger = Logger.getLogger(StandAloneManager.class);
+
 	public void start(ManagerEngine engine)
 	{
-		// TODO Auto-generated method stub
+		_managerEngine = engine;
+		ManagerGUI managerGUI = new ManagerGUI();
+		managerGUI.addTaskListener(new SAMTaskListener());
+		managerGUI.setVisible(true);
 	}
-} // end StandAloneManager
+
+	private class SAMTaskListener implements TaskListener
+	{
+		public void runTasks(TaskEvent e)
+		{
+			_managerEngine.getTasksManager().start();
+		}
+
+		public void applyTasks(TaskEvent e)
+		{
+			List taskList = e.getTaskList();
+			_logger.info("taskList" + taskList);
+			TaskManager taskManager = _managerEngine.getTasksManager();
+			for (Iterator iter = taskList.iterator(); iter.hasNext();) {
+				taskManager.addTask((Task) iter.next());
+			}
+		}
+	}
+}
