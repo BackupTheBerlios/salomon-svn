@@ -307,8 +307,10 @@ public class GUIMenu
 				_controllerGui.fireNewProject(new ProjectEvent());
 			} else if (object == _btnOpen || object == _itmOpen) {
 				_logger.debug("Open"); //$NON-NLS-1$
+				_controllerGui.fireLoadProject(new ProjectEvent());
 			} else if (object == _btnSave || object == _itmSave) {
 				_logger.debug("Save"); //$NON-NLS-1$
+				_controllerGui.fireSaveProject(new ProjectEvent());
 			} else {
 				_logger.error("Not supported button: " + object); //$NON-NLS-1$
 			}
