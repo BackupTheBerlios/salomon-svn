@@ -16,6 +16,7 @@ import javax.swing.JTextArea;
 
 import org.apache.log4j.Logger;
 
+import salomon.core.data.DBManager;
 import salomon.core.data.DataEngine;
 import salomon.core.data.Environment;
 import salomon.core.data.dataset.DataSet;
@@ -42,7 +43,7 @@ public class SimpleSQLConsole implements IPlugin
 	private JPanel _settingsPanel = null;
 
 	private JTextArea _txtMsgArea = null;
-
+	
 	private JTextArea _txtQueryEditor = null;
 
 	private JTable _resultTable = null;
@@ -72,8 +73,11 @@ public class SimpleSQLConsole implements IPlugin
 	{
 		_logger.warn("###   doJob()   ###");
 		SCSettings scSettings = (SCSettings) settings;
-		String query = scSettings.getQuery().trim().toLowerCase();
-		SCResult scResult = new SCResult();
+        // removing all ('') with (').
+        // ('') Was neccessery to save query in database, but it is invalid
+		String query = scSettings.getQuery().trim().toLowerCase().replaceAll("''", "'");
+        _logger.info("query = " + query);
+		SCResult scResult = new SCResult();        
 		if (query.length() > 0 && query.indexOf("select") != -1) {
 			ResultSet resultSet = null;
 			try {
@@ -142,14 +146,26 @@ public class SimpleSQLConsole implements IPlugin
 				scResult.setData(columnNames, data);
 				scResult.setSuccessful(true);
 			} catch (Exception e) {
-				_logger.fatal("", e);
+				_logger.fatal("", e);                
 				scResult.setResultType(SCResult.SC_QUERY_ERROR);
 				scResult.setErrorMessage(e.getLocalizedMessage());
 			}
-			// if query doesn't have "select" phrase
+			// if query doesn't have "select" phrase            
 		} else {
-			scResult.setResultType(SCResult.SC_UNSUPPORTED_QUERY);
-			scResult.setErrorMessage("Unsupported query type: " + query);
+            DBManager manager;
+			try {
+				manager = engine.getDbManager();
+                manager.executeQuery(query);
+                int updateCount = manager.getUpdateCount();
+                scResult.setResultType(SCResult.SC_UPDATE);
+                scResult.setSuccessful(true);
+                scResult.setErrorMessage("Rows updated: " + updateCount);
+                _logger.info("Rows updated: " + updateCount);
+			} catch (Exception e) {
+				_logger.fatal("", e);
+                scResult.setResultType(SCResult.SC_QUERY_ERROR);
+                scResult.setErrorMessage(e.getLocalizedMessage());
+			}
 		}
 		_logger.warn("###   doJob() - finished  ###");
 		return scResult;

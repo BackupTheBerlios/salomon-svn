@@ -31,9 +31,13 @@ public class SCResultComponent implements IResultComponent
 		Component resultComonent = null;
 		switch (scResult.getResultType()) {
 			case SCResult.SC_UNSUPPORTED_QUERY :
+				// its not required now
 				resultComonent = getMsgArea("Unsupported query.\nOnly selection queries are supproted");
 				break;
 			case SCResult.SC_QUERY_ERROR :
+				resultComonent = getMsgArea(scResult.getErrorMessage());
+				break;
+			case SCResult.SC_UPDATE :
 				resultComonent = getMsgArea(scResult.getErrorMessage());
 				break;
 			case SCResult.SC_OK :
@@ -41,10 +45,19 @@ public class SCResultComponent implements IResultComponent
 						scResult.getData());
 				break;
 			default :
-				resultComonent = getMsgArea("Internal error.\nUnsopported type: "
+				resultComonent = getMsgArea("Internal error.\nUnsupported type: "
 						+ scResult.getResultType());
 		}
 		return resultComonent;
+	}
+
+	public IResult getDefaultResult()
+	{
+		SCResult result = new SCResult();
+		result.setErrorMessage("Default result");
+		result.setResultType(SCResult.SC_OK);
+		result.setSuccessful(true);
+		return result;
 	}
 
 	private JTextArea getMsgArea(String msg)
@@ -64,14 +77,5 @@ public class SCResultComponent implements IResultComponent
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		scrlResult.setViewportView(table);
 		return scrlResult;
-	}
-
-	public IResult getDefaultResult()
-	{
-		SCResult result = new SCResult();
-		result.setErrorMessage("Default result");
-		result.setResultType(SCResult.SC_OK);
-		result.setSuccessful(true);
-		return result;
 	}
 }

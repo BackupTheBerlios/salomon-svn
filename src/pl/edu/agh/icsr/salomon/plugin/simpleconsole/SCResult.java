@@ -20,6 +20,8 @@ public final class SCResult implements IResult, Serializable
 	public static final int SC_UNSUPPORTED_QUERY = 1;
 
 	public static final int SC_QUERY_ERROR = 2;
+    
+    public static final int SC_UPDATE = 3;
 
 	private String[] _columnNames = null;
 
@@ -47,7 +49,7 @@ public final class SCResult implements IResult, Serializable
 
 	public void setSuccessful(boolean isSuccessful)
 	{
-		_isSuccessful = isSuccessful();
+		_isSuccessful = isSuccessful;
 	}
 
 	/**
