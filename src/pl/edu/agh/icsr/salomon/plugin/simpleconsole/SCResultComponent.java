@@ -53,8 +53,10 @@ public class SCResultComponent implements IResultComponent
 	private JScrollPane getScrlResult(String[] columnNames, Object[][] data)
 	{
 		JScrollPane scrlResult = new JScrollPane();
-		scrlResult.setSize(200, 100);
-		scrlResult.setViewportView(new JTable(data, columnNames));
+		scrlResult.setPreferredSize(new Dimension(300, 200));
+		JTable table = new JTable(data, columnNames);
+		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		scrlResult.setViewportView(table);
 		return scrlResult;
 	}
 }
