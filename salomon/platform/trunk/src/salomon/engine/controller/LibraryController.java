@@ -62,7 +62,7 @@ public final class LibraryController implements IController
 	 */
 	public void start(IManagerEngine managerEngine)
 	{
-		// empty body
+		_managerEngine = managerEngine;
 	}
 
 	private void initManagers()
