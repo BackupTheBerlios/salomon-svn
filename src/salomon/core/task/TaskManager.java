@@ -7,9 +7,7 @@ package salomon.core.task;
 
 import java.util.Iterator;
 import java.util.LinkedList;
-
 import org.apache.log4j.Logger;
-
 import salomon.core.data.DataEngine;
 import salomon.core.data.Environment;
 import salomon.plugin.IResult;
@@ -35,6 +33,10 @@ public final class TaskManager
 		_tasks = new LinkedList();
 		_dataEngine = new DataEngine();
 		_taskEngine = new TaskEngine();
+		//TODO: where it should be created?
+		_environment = new Environment();
+		//TODO: temporary		
+		_environment.put("CURRENT_DATA_SET", "all_data");		
 	}
 
 	public void start()
@@ -42,7 +44,11 @@ public final class TaskManager
 		//_taskEngine.start();
 		new TaskEngine().start();		
 	}
-
+	
+	public void clearTaskList() {
+		_tasks.clear();
+	}
+	
 	public void addTask(Task task)
 	{
 		//		synchronized (_tasks) {
