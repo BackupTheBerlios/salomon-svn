@@ -107,15 +107,16 @@ public class AveragePrice implements IPlugin
 	{
 		_logger.warn("###    doJob()   ###");
 		DataSetManager dataSetManager = engine.getTestingDataSetManager();
+		APResult apResult = new APResult(); 
 		DataSet dataSet = null;
 		try {
 			dataSet = dataSetManager.getDataSetForName("test1");
 		} catch (SQLException e1) {
 			_logger.fatal("", e1);
-			return null;
+			return apResult;
 		} catch (ClassNotFoundException e1) {
 			_logger.fatal("", e1);
-			return null;
+			return apResult;
 		}
 		//
 		// bulding query (getting all sold cars)
@@ -142,26 +143,26 @@ public class AveragePrice implements IPlugin
 		List additionalConditions = new LinkedList();
 		Object value = null;
 		APSettings apSettings = (APSettings) settings;
-		value = apSettings.name;
-		if (value != null) {
+		value = apSettings.getName();
+		if (! value.equals("")) {
 			additionalConditions.add(new DBCondition(new DBColumnName(
 					tableNames[0], "name"), DBCondition.REL_LIKE, value
 					.toString(), DBCondition.TEXT));
 		}
-		value = apSettings.surname;
-		if (value != null) {
+		value = apSettings.getSurname();
+		if (! value.equals("")) {
 			additionalConditions.add(new DBCondition(new DBColumnName(
 					tableNames[0], "surname"), DBCondition.REL_LIKE, value
 					.toString(), DBCondition.TEXT));
 		}
-		value = apSettings.nick;
-		if (value != null) {
+		value = apSettings.getNick();
+		if (! value.equals("")) {
 			additionalConditions.add(new DBCondition(new DBColumnName(
 					tableNames[0], "nick"), DBCondition.REL_LIKE, value
 					.toString(), DBCondition.TEXT));
 		}
-		value = apSettings.email;
-		if (value != null) {
+		value = apSettings.getEmail();
+		if (! value.equals("")) {
 			additionalConditions.add(new DBCondition(new DBColumnName(
 					tableNames[0], "email"), DBCondition.REL_LIKE, value
 					.toString(), DBCondition.TEXT));
@@ -191,10 +192,10 @@ public class AveragePrice implements IPlugin
 					queryConditions);
 		} catch (SQLException e) {
 			_logger.fatal("", e);
-			return null;
+			return apResult;
 		} catch (ClassNotFoundException e) {
 			_logger.fatal("", e);
-			return null;
+			return apResult;
 		}
 		//
 		// Getting result
@@ -216,14 +217,14 @@ public class AveragePrice implements IPlugin
 			}
 		} catch (SQLException e) {
 			_logger.fatal("", e);
-			return null;
+			return apResult;
 		}
 		//
 		// returning result
 		//
-		double result = (size > 0) ? ((double) priceSum / (double) size) : 0;
-		APResult apResult = new APResult();
-		apResult.averagePrice = result;
+		double result = (size > 0) ? ((double) priceSum / (double) size) : 0;		
+		apResult.setAveragePrice(result);
+		apResult.setSuccessful(true);
 		return apResult;
 	}
 

@@ -25,7 +25,7 @@ public class APResultComponent implements IResultComponent
 	{
 		JPanel resultPanel = new JPanel(new BorderLayout());
 		resultPanel.add(new JLabel("Age Counter result"), BorderLayout.NORTH);
-		String text = Double.toString(((APResult) result).averagePrice);
+		String text = Double.toString(((APResult) result).getAveragePrice());
 		resultPanel.add(new JTextField(text), BorderLayout.CENTER);
 		resultPanel.setSize(70, 70);
 		return resultPanel;

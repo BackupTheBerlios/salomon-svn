@@ -57,17 +57,17 @@ public class APSettingComponent implements ISettingComponent
 		if (settings != null) {
 			// to avoid casting
 			APSettings apSettings = (APSettings) settings;
-			if (apSettings.name != null) {
-				_txtName.setText(apSettings.name);
+			if (apSettings.getName() != null) {
+				_txtName.setText(apSettings.getName());
 			}
-			if (apSettings.surname != null) {
-				_txtName.setText(apSettings.surname);
+			if (apSettings.getSurname() != null) {
+				_txtName.setText(apSettings.getSurname());
 			}
-			if (apSettings.nick != null) {
-				_txtName.setText(apSettings.nick);
+			if (apSettings.getNick() != null) {
+				_txtName.setText(apSettings.getNick());
 			}
-			if (apSettings.email != null) {
-				_txtName.setText(apSettings.email);
+			if (apSettings.getEmail() != null) {
+				_txtName.setText(apSettings.getEmail());
 			}
 		}
 		return getComponent();
@@ -81,22 +81,23 @@ public class APSettingComponent implements ISettingComponent
 	public ISettings getSettings()
 	{
 		APSettings settings = new APSettings();
-		settings.name = getValue(getTxtName());
-		settings.surname = getValue(getTxtSurname());
-		settings.nick = getValue(getTxtNick());
-		settings.email = getValue(getTxtEmail());
+		settings.setName(getValue(getTxtName()));
+		settings.setSurname(getValue(getTxtSurname()));
+		settings.setNick(getValue(getTxtNick()));
+		settings.setEmail(getValue(getTxtEmail()));
 		return settings;
 	}
-	/** Method return value from specified text field.
-	 * If no value is entered, null is returned	*/
-	private String getValue(JTextField txtField) {
+
+	/**
+	 * Method return value from specified text field. If no value is entered,
+	 * null is returned
+	 */
+	private String getValue(JTextField txtField)
+	{
 		String value = txtField.getText().trim();
-		if (value.length() == 0) {
-			value = null;
-		}
 		return value;
 	}
-	
+
 	private JPanel getPnlAttributes()
 	{
 		if (_pnlAttributes == null) {
@@ -143,5 +144,15 @@ public class APSettingComponent implements ISettingComponent
 			_txtSurname = new JTextField();
 		}
 		return _txtSurname;
+	}
+
+	public ISettings getDefaultSettings()
+	{
+		APSettings apSettings = new APSettings();
+		apSettings.setName("");
+		apSettings.setSurname("");
+		apSettings.setNick("");
+		apSettings.setEmail("");
+		return apSettings;
 	}
 }
