@@ -50,8 +50,8 @@ public final class ClientController implements IController
 
 			try {
 				hostName = InetAddress.getLocalHost().getHostName();
-			} catch (UnknownHostException e2) {
-				_logger.fatal("", e2);
+			} catch (UnknownHostException e) {
+				_logger.fatal("", e);
 			}
 
 			_remoteController = new RemoteController(_managerEngine, hostName);
@@ -62,12 +62,12 @@ public final class ClientController implements IController
 			try {
 				_masterController = (IMasterController) registry.lookup("MasterController");
 				_masterController.register(_remoteController);
-			} catch (NotBoundException e1) {
-				_logger.error(e1);
+			} catch (NotBoundException e) {
+				_logger.fatal("", e);
 			}
 
 		} catch (RemoteException e) {
-			_logger.error(e);
+			_logger.fatal("", e);
 		}
 	}
 } // end ClientManager
