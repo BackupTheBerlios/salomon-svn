@@ -13,16 +13,20 @@ import java.rmi.RemoteException;
  */
 public interface IRemoteManagerEngine extends Remote
 {
-	public IRemoteTaskManager getTasksManager() throws RemoteException;
+	IRemoteTaskManager getTasksManager() throws RemoteException;
 
 	/**
-	 * @return Returns the pluginManager.
-	 */
-	public IRemotePluginManager getPluginManager() throws RemoteException;
+     * @return Returns the pluginManager.
+     * @pre $none
+     * @post $result != null
+     */
+	IRemotePluginManager getPluginManager() throws RemoteException;
 
 	/**
-	 * @return Returns the projectManager.
-	 */
-	public IRemoteProjectManager getProjectManager() throws RemoteException;
+     * @return Returns the projectManager.
+     * @pre $none
+     * @post $result != null
+     */
+	IRemoteProjectManager getProjectManager() throws RemoteException;
 
 }
