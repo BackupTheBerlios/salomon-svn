@@ -7,10 +7,12 @@ package pl.edu.agh.icsr.salomon.plugin.simpleconsole;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+
 import salomon.plugin.ISettingComponent;
 import salomon.plugin.ISettings;
 
@@ -55,7 +57,7 @@ public class SCSettingComponent implements ISettingComponent
 	}
 
 	public ISettings getDefaultSettings()
-	{		
+	{
 		return new SCSettings();
 	}
 }

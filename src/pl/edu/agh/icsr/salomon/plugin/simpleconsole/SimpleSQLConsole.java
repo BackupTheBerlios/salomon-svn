@@ -8,11 +8,14 @@ package pl.edu.agh.icsr.salomon.plugin.simpleconsole;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.util.LinkedList;
+
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
+
 import org.apache.log4j.Logger;
+
 import salomon.core.data.DataEngine;
 import salomon.core.data.Environment;
 import salomon.core.data.dataset.DataSet;
@@ -43,24 +46,24 @@ public class SimpleSQLConsole implements IPlugin
 	private JTextArea _txtQueryEditor = null;
 
 	private JTable _resultTable = null;
-	
+
 	private Description _description = null;
 
 	public void destroy()
 	{
 		// TODO Auto-generated method stub
 	}
-	
 
 	/**
-	 * 
+	 *  
 	 */
 	public SimpleSQLConsole()
 	{
 		initizalize();
 		String info = "Simple SQL Console.\nOperates on current data set.";
-		_description = new Description("SimpleSQLConsole", info); 
+		_description = new Description("SimpleSQLConsole", info);
 	}
+
 	/**
 	 * Doesn't support queries other than SELECT
 	 */
@@ -79,8 +82,8 @@ public class SimpleSQLConsole implements IPlugin
 				//
 				String curDataSetName = environment.get("CURRENT_DATA_SET");
 				_logger.info("current data set name: " + curDataSetName);
-				DataSet curDataSet = engine.getTestingDataSetManager()
-						.getDataSetForName(curDataSetName);
+				DataSet curDataSet = engine.getTestingDataSetManager().getDataSetForName(
+						curDataSetName);
 				//
 				// selecting data
 				//
@@ -124,8 +127,7 @@ public class SimpleSQLConsole implements IPlugin
 				for (int i = 0; i < columnCount; i++) {
 					buffer.append(columnNames[i] + " ");
 				}
-				buffer
-						.append("\n=============================================\n");
+				buffer.append("\n=============================================\n");
 				for (int i = 0; i < size; i++) {
 					for (int j = 0; j < columnCount; j++) {
 						buffer.append(data[i][j] + " | ");
@@ -152,7 +154,6 @@ public class SimpleSQLConsole implements IPlugin
 		_logger.warn("###   doJob() - finished  ###");
 		return scResult;
 	}
-
 
 	public void initizalize()
 	{

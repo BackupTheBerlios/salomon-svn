@@ -5,8 +5,14 @@
 
 package pl.edu.agh.icsr.salomon.plugin.averageprice;
 
-import java.awt.*;
-import javax.swing.*;
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.GridLayout;
+
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
 import salomon.plugin.ISettingComponent;
 import salomon.plugin.ISettings;
 
@@ -28,7 +34,6 @@ public class APSettingComponent implements ISettingComponent
 
 	private JTextField _txtSurname = null;
 
-	
 	/*
 	 * (non-Javadoc)
 	 * 

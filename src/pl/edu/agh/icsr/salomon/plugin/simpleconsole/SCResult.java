@@ -34,7 +34,7 @@ public class SCResult implements IResult
 	}
 
 	public String resultToString()
-	{		
+	{
 		return (_errMessage == null) ? "Some rows selected" : _errMessage;
 	}
 
@@ -47,6 +47,7 @@ public class SCResult implements IResult
 	{
 		_isSuccessful = isSuccessful();
 	}
+
 	/**
 	 * @return Returns the columnNames.
 	 */
@@ -54,6 +55,7 @@ public class SCResult implements IResult
 	{
 		return _columnNames;
 	}
+
 	/**
 	 * @return Returns the data.
 	 */
@@ -61,6 +63,7 @@ public class SCResult implements IResult
 	{
 		return _data;
 	}
+
 	/**
 	 * @return Returns the errorMessage.
 	 */
@@ -68,23 +71,28 @@ public class SCResult implements IResult
 	{
 		return _errMessage;
 	}
+
 	/**
 	 * 
-	 * @param errMsg errMsg to set
+	 * @param errMsg
+	 *            errMsg to set
 	 */
 	public void setErrorMessage(String errMsg)
 	{
 		_errMessage = errMsg;
 	}
+
 	/**
 	 * 
-	 * @param columnNames 
+	 * @param columnNames
 	 * @param data
 	 */
-	public void setData(String[] columnNames, Object[][] data) {
+	public void setData(String[] columnNames, Object[][] data)
+	{
 		_columnNames = columnNames;
 		_data = data;
 	}
+
 	/**
 	 * @return Returns the resultType.
 	 */
@@ -92,8 +100,10 @@ public class SCResult implements IResult
 	{
 		return _resultType;
 	}
+
 	/**
-	 * @param resultType The resultType to set.
+	 * @param resultType
+	 *            The resultType to set.
 	 */
 	public void setResultType(int resultType)
 	{

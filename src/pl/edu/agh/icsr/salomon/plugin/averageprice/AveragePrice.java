@@ -107,7 +107,7 @@ public class AveragePrice implements IPlugin
 	{
 		_logger.warn("###    doJob()   ###");
 		DataSetManager dataSetManager = engine.getTestingDataSetManager();
-		APResult apResult = new APResult(); 
+		APResult apResult = new APResult();
 		DataSet dataSet = null;
 		try {
 			dataSet = dataSetManager.getDataSetForName("test1");
@@ -128,7 +128,6 @@ public class AveragePrice implements IPlugin
 				new DBColumnName(tableNames[1], "brand", "marka"),
 				new DBColumnName(tableNames[1], "name", "model"),
 				new DBColumnName(tableNames[1], "price", "cena")};
-		DBColumnName carPrice = new DBColumnName(tableNames[1], "price");
 		DBCondition[] conditions = {
 				new DBCondition(new DBColumnName(tableNames[2], "user_id"),
 						DBCondition.REL_EQ, new DBColumnName(tableNames[0],
@@ -146,26 +145,26 @@ public class AveragePrice implements IPlugin
 		value = apSettings.getName();
 		if (value != null) {
 			additionalConditions.add(new DBCondition(new DBColumnName(
-					tableNames[0], "name"), DBCondition.REL_LIKE, value
-					.toString(), DBCondition.TEXT));
+					tableNames[0], "name"), DBCondition.REL_LIKE,
+					value.toString(), DBCondition.TEXT));
 		}
 		value = apSettings.getSurname();
 		if (value != null) {
 			additionalConditions.add(new DBCondition(new DBColumnName(
-					tableNames[0], "surname"), DBCondition.REL_LIKE, value
-					.toString(), DBCondition.TEXT));
+					tableNames[0], "surname"), DBCondition.REL_LIKE,
+					value.toString(), DBCondition.TEXT));
 		}
 		value = apSettings.getNick();
 		if (value != null) {
 			additionalConditions.add(new DBCondition(new DBColumnName(
-					tableNames[0], "nick"), DBCondition.REL_LIKE, value
-					.toString(), DBCondition.TEXT));
+					tableNames[0], "nick"), DBCondition.REL_LIKE,
+					value.toString(), DBCondition.TEXT));
 		}
 		value = apSettings.getEmail();
 		if (value != null) {
 			additionalConditions.add(new DBCondition(new DBColumnName(
-					tableNames[0], "email"), DBCondition.REL_LIKE, value
-					.toString(), DBCondition.TEXT));
+					tableNames[0], "email"), DBCondition.REL_LIKE,
+					value.toString(), DBCondition.TEXT));
 		}
 		//
 		// concatenating with old conditons
@@ -178,8 +177,7 @@ public class AveragePrice implements IPlugin
 			queryConditions = new DBCondition[additionalConditions.size()
 					+ conditions.length];
 			additionalConditions.addAll(Arrays.asList(conditions));
-			queryConditions = (DBCondition[]) additionalConditions
-					.toArray(queryConditions);
+			queryConditions = (DBCondition[]) additionalConditions.toArray(queryConditions);
 		} else {
 			queryConditions = conditions;
 		}
@@ -200,7 +198,6 @@ public class AveragePrice implements IPlugin
 		//
 		// Getting result
 		//
-		LinkedList rows = new LinkedList();
 		int size = 0;
 		int priceSum = 0;
 		try {
@@ -222,7 +219,7 @@ public class AveragePrice implements IPlugin
 		//
 		// returning result
 		//
-		double result = (size > 0) ? ((double) priceSum / (double) size) : 0;		
+		double result = (size > 0) ? ((double) priceSum / (double) size) : 0;
 		apResult.setAveragePrice(result);
 		apResult.setSuccessful(true);
 		return apResult;

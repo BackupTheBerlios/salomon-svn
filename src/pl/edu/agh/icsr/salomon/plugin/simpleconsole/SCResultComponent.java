@@ -5,8 +5,14 @@
 
 package pl.edu.agh.icsr.salomon.plugin.simpleconsole;
 
-import java.awt.*;
-import javax.swing.*;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextArea;
+
 import salomon.plugin.IResult;
 import salomon.plugin.IResultComponent;
 

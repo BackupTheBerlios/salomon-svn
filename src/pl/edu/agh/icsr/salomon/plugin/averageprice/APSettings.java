@@ -7,6 +7,7 @@ package pl.edu.agh.icsr.salomon.plugin.averageprice;
 
 import java.util.NoSuchElementException;
 import java.util.StringTokenizer;
+
 import salomon.plugin.ISettings;
 
 /**

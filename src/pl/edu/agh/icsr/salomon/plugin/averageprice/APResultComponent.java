@@ -5,8 +5,13 @@
 
 package pl.edu.agh.icsr.salomon.plugin.averageprice;
 
-import java.awt.*;
-import javax.swing.*;
+import java.awt.BorderLayout;
+import java.awt.Component;
+
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
 import salomon.plugin.IResult;
 import salomon.plugin.IResultComponent;
 
@@ -32,7 +37,7 @@ public class APResultComponent implements IResultComponent
 	}
 
 	public IResult getDefaultResult()
-	{		
+	{
 		APResult result = new APResult();
 		result.setAveragePrice(0);
 		result.setSuccessful(true);
