@@ -1,8 +1,9 @@
 \section{Opis bazy danych}
 
-Do przechowywania danych wykorzystywanych przez system
-wykorzystana zosta³a baza danych. Dane zosta³y zorganizowane w
-nastêpuj¹cych tabelach:
+
+W systemie bardzo wa¿n¹ rolê odgrywaj¹ baza danych
+w której przechowywane s¹ ustawienia, projekty, regu³y itp.
+Dane zosta³y zorganizowane w nastêpuj¹cych tabelach:
 
 \paragraph{Projects}
 
@@ -27,21 +28,21 @@ mog¹ byæ pobrane.
 \end{itemize}
 
 \paragraph{Tasks}
- Tabela zawiera zapis wykonania poszczególnych tasków . Dla ka¿dego
-zadania przechowywane s¹ dane o pluginie, który zosta³
-wykorzystany do wykonania zadania, projekcie, w ramach którego
-zadanie zosta³o zapisane, ustawienia, z jakimi zosta³o wykonane,
-rezultat zadania oraz status, w jakim pozostaje po wykonaniu.
+Tabela zawiera zapis wykonania poszczególnych zadañ. Dla ka¿dego z nich
+przechowywane s¹ informacje o pluginie, który zosta³
+wykorzystany do wykonania zadania; projekcie, w ramach którego
+zadanie zosta³o zapisane; ustawieniach, z jakimi zosta³o wykonane;
+rezultacie zadania oraz statusie, w jakim pozostaje po wykonaniu.
 
 \begin{itemize}
-    \item \emph{task\_id} - identyfikator taska
-    \item \emph{project\_id} - identyfikator projektu, do którego nale¿y task
-    \item \emph{plugin\_id} - identyfikator pluginu, który wykonywany jest w ramach tego taska
+    \item \emph{task\_id} - identyfikator zadania
+    \item \emph{project\_id} - identyfikator projektu, do którego nale¿y zadanie
+    \item \emph{plugin\_id} - identyfikator pluginu, który wykonywany jest w ramach tego zadania
     \item \emph{name} - nazwa
     \item \emph{info} - dodatkowy opis
     \item \emph{plugin\_settings} - ustawienia pocz¹tkowe pluginu
     \item \emph{plugin\_result} - rezultat dzia³ania pluginu
-    \item \emph{status} - status wykonania taska
+    \item \emph{status} - status wykonania zadania
 \end{itemize}
 
 \paragraph{Datasets}
@@ -54,14 +55,15 @@ Zawiera nag³ówki zbiorów zadañ.
 
 \paragraph{Dataset\_items}
 Zawiera definicje zbiorów zadañ. Zbiór danych definiowany jest
-przez nazwê tabeli oraz warunki, jaki ograniczaj¹ rekordy w tej
+przez nazwê tabeli oraz warunki, jakie ograniczaj¹ rekordy w tej
 tabeli.
 \begin{itemize}
     \item \emph{dataset\_item\_id} - identyfikator elementu zbioru danych
-    \item \emph{dataset\_id} - identyfikator zbioru danych do którego nale¿y
+    \item \emph{dataset\_id} - identyfikator zbioru danych, do którego nale¿y
 element
     \item \emph{table\_name} - nazwa tabeli
     \item \emph{condition} - warunek ograniczaj¹cy zakres danych
 \end{itemize}
-    Relacje miêdzy nimi zobrazowane s¹ na
-poni¿szym rysunku:
+%    Relacje miêdzy nimi zobrazowane s¹ na
+%poni¿szym rysunku:
+%TODO: Wstawic obrazek
