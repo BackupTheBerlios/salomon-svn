@@ -37,8 +37,6 @@ import salomon.plugin.IResultComponent;
 import salomon.plugin.ISettingComponent;
 import salomon.plugin.ISettings;
 
-import com.sun.jmx.snmp.tasks.Task;
-
 /**
  * @author nico
  *  
