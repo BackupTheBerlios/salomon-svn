@@ -5,6 +5,7 @@ import salomon.core.data.DBManager;
 import salomon.core.data.common.*;
 import salomon.core.plugin.PluginLoader;
 import salomon.core.task.Task;
+import salomon.core.task.TaskManager;
 import salomon.plugin.Description;
 import salomon.plugin.IPlugin;
 import salomon.plugin.ISettings;
@@ -45,6 +46,8 @@ public class ProjectManager
 	public Project newProject()
 	{
 		_currentProject = new Project(_managerEngine);
+		// clearing old tasks
+		_currentProject.getManagerEngine().getTasksManager().clearTaskList();
 		return _currentProject;
 	}
 
@@ -90,7 +93,12 @@ public class ProjectManager
 		//		
 		List tasks = getTasksForProject(projectID);
 		_logger.info("Project successfully loaded.");
-		project.getManagerEngine().getTasksManager().addAllTasks(tasks);
+		// clearing old tasks
+		TaskManager taskManeger =project.getManagerEngine().getTasksManager(); 
+		taskManeger.clearTaskList();
+		taskManeger.addAllTasks(tasks);
+		_logger.debug("project: " + project);
+		_logger.debug("tasks: " + taskManeger.getTasks());
 		//
 		// setting current project
 		//
@@ -177,6 +185,7 @@ public class ProjectManager
 				pluginSettings.parseSettings(settings);
 				task.setSettings(pluginSettings);
 				task.setPlugin(plugin);
+				tasks.add(task);
 			}
 		} catch (Exception e) {
 			_logger.fatal("", e);
