@@ -3,74 +3,48 @@
  *  Generated with <A HREF="http://jakarta.apache.org/velocity/">velocity</A> template engine.
  */
 
-package ks.core.task;
+package salomon.core.task;
 
-import ks.core.data.Environment;
-import ks.core.plugin.AbstractPlugin;
-import ks.core.plugin.Settings;
+import salomon.plugin.IPlugin;
+import salomon.plugin.IResult;
+import salomon.plugin.ISettings;
 
 /**
  *  
  */
 public class Task
 {
-	///////////////////////////////////////
-	// attributes
-	/**
-	 * Represents ...
-	 */
-	private Environment _environment;
+	private IPlugin _plugin;
 
-	/**
-	 * Represents ...
-	 */
-	private AbstractPlugin _plugin;
+	private ISettings _settings;
 
-	/**
-	 * Represents ...
-	 */
-	private Settings _settings;
-
+	private IResult _result;
 	
-	/**
-	 * @return Returns the _environment.
-	 */
-	public Environment getEnvironment()
-	{
-		return _environment;
-	}
-	/**
-	 * @param _environment The _environment to set.
-	 */
-	public void setEnvironment(Environment environment)
-	{
-		_environment = environment;
-	}
 	/**
 	 * @return Returns the _plugin.
 	 */
-	public AbstractPlugin getPlugin()
+	public IPlugin getPlugin()
 	{
 		return _plugin;
 	}
 	/**
 	 * @param _plugin The _plugin to set.
 	 */
-	public void setPlugin(AbstractPlugin plugin)
+	public void setPlugin(IPlugin plugin)
 	{
 		_plugin = plugin;
 	}
 	/**
 	 * @return Returns the _settings.
 	 */
-	public Settings getSettings()
+	public ISettings getSettings()
 	{
 		return _settings;
 	}
 	/**
 	 * @param _settings The _settings to set.
 	 */
-	public void setSettings(Settings settings)
+	public void setSettings(ISettings settings)
 	{
 		_settings = settings;
 	}
@@ -80,5 +54,19 @@ public class Task
 	public String toString()
 	{		
 		return super.toString() + "[" + _plugin + "]";
+	}
+	/**
+	 * @return Returns the _result.
+	 */
+	public IResult getResult()
+	{
+		return _result;
+	}
+	/**
+	 * @param _result The _result to set.
+	 */
+	public void setResult(IResult result)
+	{
+		_result = result;
 	}
 } // end Task

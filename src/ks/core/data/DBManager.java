@@ -3,11 +3,11 @@
  *
  */
 
-package ks.core.data;
+package salomon.core.data;
 
 import java.sql.*;
-import ks.core.Config;
-import ks.core.data.common.*;
+import salomon.core.Config;
+import salomon.core.data.common.*;
 import org.apache.log4j.Logger;
 
 /**
@@ -40,7 +40,7 @@ public class DBManager
 		_dataBasePath = Config.getString("DB_PATH"); //$NON-NLS-1$
 		_user = Config.getString("USER"); //$NON-NLS-1$
 		_passwd = Config.getString("PASSWD"); //$NON-NLS-1$
-		_isEmbedded = Config.getString("EMBEDDED").equalsIgnoreCase("T");
+		_isEmbedded = Config.getString("EMBEDDED").equalsIgnoreCase("Y");
 	}
 
 	public static DBManager getInstance() throws SQLException,
@@ -63,14 +63,14 @@ public class DBManager
 		Class.forName("org.firebirdsql.jdbc.FBDriver"); //$NON-NLS-1$
 		String connectString = "jdbc:firebirdsql:";
 		if (_isEmbedded) {
-			connectString += "embedded://localhost/";
+			connectString += "embedded:";
 		} else {
-			connectString += "//" + _hostName + "/";
+			connectString += _hostName + ":";
 		}
 		connectString += _dataBasePath;
 		_logger.info("connectString: " + connectString);
 		_connection = DriverManager
-				.getConnection(connectString, _user, _passwd);
+				.getConnection(connectString, _user, _passwd);		
 		_connection.setAutoCommit(false);
 		_statement = _connection.createStatement();
 	}

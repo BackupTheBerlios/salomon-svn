@@ -3,7 +3,7 @@
  *  Generated with <A HREF="http://jakarta.apache.org/velocity/">velocity</A> template engine.
  */
 
-package ks.core.data.attribute;
+package salomon.core.data.attribute;
 
 /**
  *  

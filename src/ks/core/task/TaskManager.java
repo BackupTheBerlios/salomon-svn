@@ -3,16 +3,17 @@
  *  Generated with <A HREF="http://jakarta.apache.org/velocity/">velocity</A> template engine.
  */
 
-package ks.core.task;
+package salomon.core.task;
 
 import java.util.Iterator;
 import java.util.LinkedList;
 
-import ks.core.data.DataEngine;
-import ks.core.data.Environment;
-import ks.core.plugin.Settings;
-
 import org.apache.log4j.Logger;
+
+import salomon.core.data.DataEngine;
+import salomon.core.data.Environment;
+import salomon.plugin.IResult;
+import salomon.plugin.ISettings;
 
 /**
  *  
@@ -91,14 +92,14 @@ public final class TaskManager
 			 */
 			for (Iterator iter = _tasks.iterator(); iter.hasNext();) {
 				Task task = (Task) iter.next();
-				Settings settings = task.getSettings();
+				ISettings settings = task.getSettings();
 				//TODO:
 				if (settings == null) {
 					_logger.error("settings for task: " + task + " are NULL ");
-					_logger.error("creating empty settings");
-					settings = new Settings();
+					_logger.error("creating empty settings");					
 				}				
-				task.getPlugin().doJob(_dataEngine, _environment, settings);
+				IResult result = task.getPlugin().doJob(_dataEngine, _environment, settings);
+				task.setResult(result);
 				// removing task after execution?				
 			}
 			//_tasks.clear();

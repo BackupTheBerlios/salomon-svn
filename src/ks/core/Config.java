@@ -5,7 +5,7 @@
  * Window - Preferences - Java - Code Generation - Code and Comments
  */
 
-package ks.core;
+package salomon.core;
 
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;

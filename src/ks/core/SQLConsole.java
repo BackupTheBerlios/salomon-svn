@@ -1,4 +1,4 @@
-package ks.core;
+package salomon.core;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -24,11 +24,12 @@ import javax.swing.JTextPane;
 import javax.swing.JToolBar;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
-import ks.core.data.DBManager;
-import ks.core.data.DataEngine;
-import ks.core.data.common.*;
-import ks.core.data.dataset.*;
-import ks.plugins.AveragePrice;
+
+import pl.edu.agh.icsr.salomon.plugin.averageprice.AveragePrice;
+import salomon.core.data.DBManager;
+import salomon.core.data.DataEngine;
+import salomon.core.data.common.*;
+import salomon.core.data.dataset.*;
 
 public class SQLConsole extends JFrame
 {
@@ -42,7 +43,7 @@ public class SQLConsole extends JFrame
 
 	private JButton _btnRollback = null;
 
-	// klasa odpowiedzialna za polaczenie z baza danych
+	/**	 Class represents connection to data base */
 	private DBManager _connector = null;
 
 	private JPanel _contentPane = null;
@@ -55,9 +56,7 @@ public class SQLConsole extends JFrame
 
 	private JSplitPane _sptConsolePane = null;
 
-	/**
-	 * Table which represents results of SQL query
-	 */
+	/**	 Table which represents results of SQL query */
 	private JTable _tblResult = null;
 
 	private JToolBar _toolCommands = null;

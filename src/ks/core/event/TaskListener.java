@@ -1,7 +1,7 @@
 /*
  * Created on 2004-05-07 
  */
-package ks.core.event;
+package salomon.core.event;
 
 /**
  * @author nico

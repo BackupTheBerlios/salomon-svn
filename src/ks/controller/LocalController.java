@@ -3,17 +3,17 @@
  *  Generated with <A HREF="http://jakarta.apache.org/velocity/">velocity</A> template engine.
  */
 
-package ks.controller;
+package salomon.controller;
 
 import java.util.Iterator;
 import java.util.List;
 
-import ks.controller.gui.ControllerGUI;
-import ks.core.ManagerEngine;
-import ks.core.event.TaskEvent;
-import ks.core.event.TaskListener;
-import ks.core.task.Task;
-import ks.core.task.TaskManager;
+import salomon.controller.gui.ControllerGUI;
+import salomon.core.ManagerEngine;
+import salomon.core.event.TaskEvent;
+import salomon.core.event.TaskListener;
+import salomon.core.task.Task;
+import salomon.core.task.TaskManager;
 
 import org.apache.log4j.Logger;
 

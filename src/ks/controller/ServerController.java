@@ -3,9 +3,9 @@
  *  Generated with <A HREF="http://jakarta.apache.org/velocity/">velocity</A> template engine.
  */
 
-package ks.controller;
+package salomon.controller;
 
-import ks.core.ManagerEngine;
+import salomon.core.ManagerEngine;
 
 /**
  *  
@@ -15,7 +15,7 @@ public final class ServerController implements IController
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see ks.core.IManager#start(ks.core.ManagerEngine)
+	 * @see salomon.core.IManager#start(salomon.core.ManagerEngine)
 	 */
 	public void start(ManagerEngine engine)
 	{

@@ -3,10 +3,10 @@
  *  Generated with <A HREF="http://jakarta.apache.org/velocity/">velocity</A> template engine.
  */
 
-package ks.core.data;
+package salomon.core.data;
 
-import ks.core.data.dataset.*;
-import ks.core.data.ruleset.*;
+import salomon.core.data.dataset.*;
+import salomon.core.data.ruleset.*;
 
 /**
  *  

@@ -3,9 +3,9 @@
  *  Generated with <A HREF="http://jakarta.apache.org/velocity/">velocity</A> template engine.
  */
 
-package ks.controller;
+package salomon.controller;
 
-import ks.core.ManagerEngine;
+import salomon.core.ManagerEngine;
 
 /**
  *  

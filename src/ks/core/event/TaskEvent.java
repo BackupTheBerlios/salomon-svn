@@ -5,7 +5,7 @@
  * Window - Preferences - Java - Code Generation - Code and Comments
  */
 
-package ks.core.event;
+package salomon.core.event;
 
 import java.util.EventObject;
 import java.util.List;

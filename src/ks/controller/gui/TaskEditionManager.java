@@ -3,7 +3,7 @@
  *
  */
 
-package ks.controller.gui;
+package salomon.controller.gui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,13 +19,14 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 
-import ks.core.plugin.AbstractPlugin;
-import ks.core.plugin.Settings;
-import ks.core.task.Task;
-import ks.plugins.AveragePrice;
-import ks.plugins.SimpleSQLConsole;
-
 import org.apache.log4j.Logger;
+
+import pl.edu.agh.icsr.salomon.plugin.averageprice.AveragePrice;
+import salomon.core.task.Task;
+import salomon.plugin.IPlugin;
+import salomon.plugin.IResultComponent;
+import salomon.plugin.ISettingComponent;
+import salomon.plugin.ISettings;
 
 /**
  * @author nico
@@ -50,12 +51,12 @@ class TaskEditionManager
 	private MouseListener _popupListener = null;
 
 	private static Logger _logger = Logger.getLogger(TaskEditionManager.class);
-	
+
 	public TaskEditionManager()
 	{
 		_taskListModel = new DefaultListModel();
 		_pluginListModel = new DefaultListModel();
-		_taskList = new JList(_taskListModel);		
+		_taskList = new JList(_taskListModel);
 		_pluginList = new JList(_pluginListModel);
 		// adding listener
 		_popupListener = new PopupListener();
@@ -63,7 +64,7 @@ class TaskEditionManager
 		_pluginList.addMouseListener(_popupListener);
 		// sample - TODO: add here PluginLoadera
 		_pluginListModel.addElement(new AveragePrice());
-		_pluginListModel.addElement(new SimpleSQLConsole());
+		//_pluginListModel.addElement(new SimpleSQLConsole());
 	}
 
 	/**
@@ -75,11 +76,9 @@ class TaskEditionManager
 	{
 		int index = _pluginList.getSelectedIndex();
 		if (index >= 0) {
-			AbstractPlugin plugin = (AbstractPlugin) _pluginListModel.get(index);		
-			AbstractPlugin pluginCopy = (AbstractPlugin) plugin.clone();
-			_logger.debug("plugin = " + pluginCopy);
+			IPlugin plugin = (IPlugin) _pluginListModel.get(index);
 			Task task = new Task();
-			task.setPlugin(pluginCopy);
+			task.setPlugin(plugin);
 			_taskListModel.addElement(task);
 		} else {
 			_logger.warn("Invalid index. Wrong list selected?");
@@ -106,7 +105,7 @@ class TaskEditionManager
 	 *  
 	 */
 	public void moveDown()
-	{		
+	{
 		if (_taskListModel.size() > 1) {
 			int index = _taskList.getSelectedIndex();
 			if (index >= 0 && index < _taskListModel.getSize() - 1) {
@@ -182,12 +181,14 @@ class TaskEditionManager
 				{
 					// TODO:
 					Task currentTask = (Task) _taskListModel.get(_selectedItem);
-					AbstractPlugin plugin = currentTask.getPlugin();
-					int result = JOptionPane.showConfirmDialog(null, plugin
-							.getSettingsPanel(), "Plugin settings",
+					IPlugin plugin = currentTask.getPlugin();
+					ISettingComponent settingComponent = plugin
+							.getSettingComponent();
+					int result = JOptionPane.showConfirmDialog(null,
+							settingComponent.getComponent(), "Plugin settings",
 							JOptionPane.OK_CANCEL_OPTION);
 					if (result == JOptionPane.OK_OPTION) {
-						Settings settings = plugin.getSettings();
+						ISettings settings = settingComponent.getSettings();
 						_logger.info("settings: " + settings);
 						currentTask.setSettings(settings);
 					}
@@ -199,11 +200,11 @@ class TaskEditionManager
 				{
 					// TODO:
 					Task currentTask = (Task) _taskListModel.get(_selectedItem);
-					AbstractPlugin plugin = currentTask.getPlugin();
-					JOptionPane.showMessageDialog(null, plugin
-							.getResultPanel(), "Plugin result",
+					IPlugin plugin = currentTask.getPlugin();
+					IResultComponent resultComponent = plugin.getResultComponent();
+					JOptionPane.showMessageDialog(null,
+							resultComponent.getComponent(currentTask.getResult()), "Plugin result",
 							JOptionPane.INFORMATION_MESSAGE);
-					
 				}
 			});
 			_taskPopup.add(itmSettings);

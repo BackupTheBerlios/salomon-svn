@@ -1,4 +1,4 @@
-package ks.controller.gui;
+package salomon.controller.gui;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -7,13 +7,9 @@ import java.util.LinkedList;
 import java.util.List;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
-
-import ks.core.SQLConsole;
-import ks.core.event.*;
-
+import salomon.core.SQLConsole;
+import salomon.core.event.*;
 import org.apache.log4j.Logger;
-
-
 
 /*
  * Created on 2004-05-03
@@ -46,14 +42,34 @@ public class ControllerGUI extends JFrame
 	private JButton _btnRun = null;
 
 	private JButton _btnUp = null;
+	
+	private JButton _btnNew = null;
 
+	private JButton _btnOpen = null;
+	
+	private JButton _btnSave = null;
+	
 	private JPanel _contentPane = null;
+
+	private JMenuItem _itmAbout = null;
+
+	private JMenuItem _itmExit = null;
+
+	private JMenuItem _itmNew = null;
+
+	private JMenuItem _itmOpen = null;
+
+	private JMenuItem _itmSave = null;
+
+	private JMenuItem _itmSQLConsole;
 
 	private JList _lstPlugins = null;
 
 	private JList _lstTasks = null;
 
 	private ManipulationListener _manipulationListener = null;
+	
+	private ProjectListener _projectListener = null;
 
 	private JMenuBar _menuBar = null;
 
@@ -77,14 +93,14 @@ public class ControllerGUI extends JFrame
 
 	private List _taskListeners = null;
 
-	/**
-	 * This is the default constructor
-	 */
+	private JToolBar _toolBar = null;
+
 	public ControllerGUI()
 	{
 		super();
 		_taskEditionManager = new TaskEditionManager();
 		_manipulationListener = new ManipulationListener();
+		_projectListener = new ProjectListener();
 		_taskListeners = new LinkedList();
 		initialize();
 	}
@@ -99,7 +115,7 @@ public class ControllerGUI extends JFrame
 		_taskListeners.add(listener);
 	}
 
-	public void exit()
+	private void exit()
 	{
 		//TODO: change it
 		_logger.fatal("###  Application exited  ###");
@@ -116,79 +132,19 @@ public class ControllerGUI extends JFrame
 		if (_menuBar == null) {
 			_menuBar = new JMenuBar();
 			JMenu project = new JMenu("Project");
-			JMenuItem itmNew = new JMenuItem();
-			itmNew.setText("New");
-			itmNew.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e)
-				{
-					System.out.println("actionPerformed()");
-				}
-			});
-			JMenuItem itmOpen = new JMenuItem();
-			itmOpen.setText("Open");
-			itmOpen.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e)
-				{
-					System.out.println("actionPerformed()");
-				}
-			});
-			JMenuItem itmSave = new JMenuItem();
-			itmSave.setText("Save");
-			itmSave.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e)
-				{
-					System.out.println("actionPerformed()");
-				}
-			});
-			JMenuItem itmExit = new JMenuItem();
-			itmExit.setText("Exit");
-			itmExit.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e)
-				{
-					System.out.println("actionPerformed()");
-				}
-			});
-			project.add(itmNew);
-			project.add(itmOpen);
-			project.add(itmSave);
-			project.add(itmExit);
-			
+			project.add(getItmNew());
+			project.add(getItmOpen());
+			project.add(getItmSave());
+			project.add(getItmExit());
 			JMenu tools = new JMenu("Tools");
-			JMenuItem itmSQLConsole = new JMenuItem();
-			itmSQLConsole.setText("SQL Console");
-			itmSQLConsole.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e)
-				{
-					showSQLConsole();
-				}
-			});
-			
-			tools.add(itmSQLConsole);
-			
+			tools.add(getItmSQLConsole());
 			JMenu help = new JMenu("Help");
-			JMenuItem itmAbout = new JMenuItem();
-			itmAbout.setText("Help");
-			itmAbout.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e)
-				{
-					System.out.println("actionPerformed()");
-				}
-			});
-			help.add(itmAbout);
-			
+			help.add(getItmAbout());
 			_menuBar.add(project);
 			_menuBar.add(tools);
 			_menuBar.add(help);
 		}
 		return _menuBar;
-	}
-
-	/**
-	 * 
-	 */
-	private void showSQLConsole()
-	{
-		new SQLConsole(false);
 	}
 
 	public void removeTaskListener(TaskListener listener)
@@ -214,7 +170,15 @@ public class ControllerGUI extends JFrame
 		button.setMaximumSize(dim);
 		return button;
 	}
-
+	
+	private JButton createProjectButton(String text) {
+		JButton button = new JButton();
+		button.setText(text);
+		button.addActionListener(_projectListener);
+		button.setFont(new Font("Dialog", Font.BOLD, 10));
+		return button;
+	}
+	
 	private void fireApplyTasks(TaskEvent event)
 	{
 		for (Iterator iter = _taskListeners.iterator(); iter.hasNext();) {
@@ -244,6 +208,30 @@ public class ControllerGUI extends JFrame
 		return _btnAdd;
 	}
 
+	private JButton getBtnNew()
+	{
+		if (_btnNew == null) {
+			_btnNew = createProjectButton("New");
+		}
+		return _btnNew;
+	}
+
+	private JButton getBtnOpen()
+	{
+		if (_btnOpen == null) {
+			_btnOpen = createProjectButton("Open");
+		}
+		return _btnOpen;
+	}
+	
+	private JButton getBtnSave()
+	{
+		if (_btnSave == null) {
+			_btnSave = createProjectButton("Save");
+		}
+		return _btnSave;
+	}
+	
 	/**
 	 * This method initializes _btnAddAll
 	 * 
@@ -379,6 +367,81 @@ public class ControllerGUI extends JFrame
 		return _btnUp;
 	}
 
+	private JMenuItem getItmAbout()
+	{
+		if (_itmAbout == null) {
+			_itmAbout = new JMenuItem();
+			_itmAbout.setText("About");
+			_itmAbout.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e)
+				{
+					System.out.println("actionPerformed()");
+				}
+			});
+		}
+		return _itmAbout;
+	}
+
+	private JMenuItem getItmExit()
+	{
+		if (_itmExit == null) {
+			_itmExit = new JMenuItem();
+			_itmExit.setText("Exit");
+			_itmExit.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e)
+				{
+					System.out.println("actionPerformed()");
+				}
+			});
+		}
+		return _itmExit;
+	}
+
+	private JMenuItem getItmNew()
+	{
+		if (_itmNew == null) {
+			_itmNew = new JMenuItem();
+			_itmNew.setText("New");
+			_itmNew.addActionListener(_projectListener);
+		}
+		return _itmNew;
+	}
+
+	private JMenuItem getItmOpen()
+	{
+		if (_itmOpen == null) {
+			_itmOpen = new JMenuItem();
+			_itmOpen.setText("Open");
+			_itmOpen.addActionListener(_projectListener);
+		}
+		return _itmOpen;
+	}
+
+	private JMenuItem getItmSave()
+	{
+		if (_itmSave == null) {
+			_itmSave = new JMenuItem();
+			_itmSave.setText("Save");
+			_itmSave.addActionListener(_projectListener);
+		}
+		return _itmSave;
+	}
+
+	private JMenuItem getItmSQLConsole()
+	{
+		if (_itmSQLConsole == null) {
+			_itmSQLConsole = new JMenuItem();
+			_itmSQLConsole.setText("SQLConsole");
+			_itmSQLConsole.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e)
+				{
+					showSQLConsole();
+				}
+			});
+		}
+		return _itmSQLConsole;
+	}
+
 	/**
 	 * This method initializes _contentPane
 	 * 
@@ -389,6 +452,7 @@ public class ControllerGUI extends JFrame
 		if (_contentPane == null) {
 			_contentPane = new JPanel();
 			_contentPane.setLayout(new BorderLayout());
+			_contentPane.add(getToolBar(), BorderLayout.NORTH);
 			_contentPane.add(getPnlManagerButtons(), BorderLayout.SOUTH);
 			_contentPane.add(getPnlInit(), BorderLayout.CENTER);
 		}
@@ -466,7 +530,7 @@ public class ControllerGUI extends JFrame
 		if (_pnlPluginButtons == null) {
 			_pnlPluginButtons = new JPanel();
 			_pnlPluginButtons.setLayout(new BoxLayout(_pnlPluginButtons,
-					BoxLayout.Y_AXIS));			
+					BoxLayout.Y_AXIS));
 			_pnlPluginButtons.add(Box.createVerticalGlue());
 			_pnlPluginButtons.add(getBtnAddAll());
 			_pnlPluginButtons.add(Box.createVerticalStrut(_strutHeight));
@@ -542,6 +606,20 @@ public class ControllerGUI extends JFrame
 	}
 
 	/**
+	 * This is the default constructor
+	 */
+	private JToolBar getToolBar()
+	{
+		if (_toolBar == null) {
+			_toolBar = new JToolBar();
+			_toolBar.add(getBtnNew());
+			_toolBar.add(getBtnOpen());
+			_toolBar.add(getBtnSave());
+		}
+		return _toolBar;
+	}
+		
+	/**
 	 * This method initializes this
 	 * 
 	 * @return void
@@ -560,13 +638,21 @@ public class ControllerGUI extends JFrame
 		});
 	}
 
+	/**
+	 *  Method show SQLConsole.
+	 */
+	private void showSQLConsole()
+	{
+		new SQLConsole(false);
+	}
+	/**
+	 * 
+	 * @author nico
+	 *
+	 * Class handles events from buttons, which are used to manage tasks.
+	 */
 	private class ManipulationListener implements ActionListener
 	{
-		/*
-		 * (non-Javadoc)
-		 * 
-		 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-		 */
 		public void actionPerformed(ActionEvent e)
 		{
 			Object object = e.getSource();
@@ -586,6 +672,30 @@ public class ControllerGUI extends JFrame
 				//TODO:
 			} else if (object == _btnLast) {
 				//TODO:
+			} else {
+				_logger.error("Not supported button: " + object);
+			}
+		}
+	}
+	
+	/**
+	 * 
+	 * @author nico
+	 *
+	 * Class handles events from buttons and menu items, 
+	 * which are used to manage projects.
+	 */
+	private class ProjectListener implements ActionListener
+	{
+		public void actionPerformed(ActionEvent e)
+		{
+			Object object = e.getSource();
+			if (object == _btnNew || object == _itmNew) {
+				_logger.debug("New");
+			} else if (object == _btnOpen || object == _itmOpen) {
+				_logger.debug("Open");
+			} else if (object == _btnSave || object == _itmSave) {
+				_logger.debug("Save");
 			} else {
 				_logger.error("Not supported button: " + object);
 			}

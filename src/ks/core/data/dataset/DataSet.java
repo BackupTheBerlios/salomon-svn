@@ -3,7 +3,7 @@
  *  Generated with <A HREF="http://jakarta.apache.org/velocity/">velocity</A> template engine.
  */
 
-package ks.core.data.dataset;
+package salomon.core.data.dataset;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,10 +11,10 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
-import ks.core.data.DBManager;
-import ks.core.data.common.DBColumnName;
-import ks.core.data.common.DBCondition;
-import ks.core.data.common.DBTableName;
+import salomon.core.data.DBManager;
+import salomon.core.data.common.DBColumnName;
+import salomon.core.data.common.DBCondition;
+import salomon.core.data.common.DBTableName;
 
 import org.apache.log4j.Logger;
 
