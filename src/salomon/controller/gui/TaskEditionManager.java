@@ -12,6 +12,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.JComponent;
@@ -70,6 +71,20 @@ class TaskEditionManager
 		File[] files = new PluginManager().getAvailablePlugins();
 		for (int i = 0; i < files.length; i++) {
 			_pluginListModel.addElement(new LocalPlugin(files[i]));
+		}
+	}
+	/**
+	 *  Loads tasks to task list.
+	 * 
+	 * @param tasks
+	 */
+	public void reloadTasks(List tasks)
+	{
+		_logger.debug("reloading tasks");
+		_taskListModel.removeAllElements();
+		for (Iterator iter = tasks.iterator(); iter.hasNext();) {
+			_logger.debug("adding task");
+			_taskListModel.addElement(iter.next());
 		}
 	}
 
@@ -281,7 +296,7 @@ class TaskEditionManager
 
 		public LocalPlugin(File pluginFile)
 		{
-			_pluginLocation = pluginFile;						
+			_pluginLocation = pluginFile;
 		}
 
 		/**
@@ -294,7 +309,7 @@ class TaskEditionManager
 		{
 			if (_plugin == null) {
 				_logger.debug("trying to load plugin"); //$NON-NLS-1$
-				_plugin = PluginLoader.loadPlugin(_pluginLocation);				
+				_plugin = PluginLoader.loadPlugin(_pluginLocation);
 			}
 			return _plugin;
 		}
