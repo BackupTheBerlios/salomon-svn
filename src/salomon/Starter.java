@@ -7,7 +7,6 @@ import java.util.MissingResourceException;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
-import pl.edu.agh.icsr.salomon.plugin.averageprice2.APSettings;
 import salomon.controller.ClientController;
 import salomon.controller.IController;
 import salomon.controller.LocalController;
@@ -17,7 +16,6 @@ import salomon.core.IManagerEngine;
 import salomon.core.ManagerEngine;
 import salomon.core.data.DBManager;
 import salomon.core.data.common.DBColumnName;
-import salomon.core.data.common.DBCondition;
 import salomon.core.data.common.DBTableName;
 import salomon.core.data.common.DBValue;
 import salomon.core.project.ProjectManager;
@@ -51,18 +49,6 @@ public final class Starter
 	{
 		initManagers();
 		_contoroller.start(_managerEngine);
-
-		//		try {
-		//			new ProjectManager().loadProject(1);
-		//		} catch (Exception e) {
-		//			_logger.fatal("", e);
-		//		}
-		//testSettings();
-		//testInsert();
-
-		//testAutoInsert();
-		//testDelete();
-		//testUpdate();
 	}
 
 	private void startClient()
