@@ -46,11 +46,17 @@ public:
 	{
 	}
 
-	std::string getInfo();
+	DLL_SHARE std::string getInfo();
 
 	DLL_SHARE std::string getName();
 
 	DLL_SHARE int getProjectID();
+
+	DLL_SHARE void setInfo(std::string& info);
+
+	DLL_SHARE void setName(std::string& name);
+
+	DLL_SHARE void setProjectID(int projectId);
 
 	DLL_SHARE TaskManager* getTaskManager();
 };

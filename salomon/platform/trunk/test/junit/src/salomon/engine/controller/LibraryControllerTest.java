@@ -107,6 +107,7 @@ public class LibraryControllerTest extends TestCase
 		taskManager.addTask(task, pluginUrl, builder.toString());
 		projectManager.saveProject();
 		taskManager.start();
+		LOGGER.debug("task result:" + task.getResult());
 	}
 
 	/**

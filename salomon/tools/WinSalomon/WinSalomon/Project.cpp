@@ -21,13 +21,69 @@
 
 
 #include "project.h"
+#include "stringhelper.h"
 
 const char* Project::CLASS_NAME = "salomon/engine/project/IProject";
 
-//Project::Project(void)
-//{
-//}
-//
-//Project::~Project(void)
-//{
-//}
+DLL_SHARE std::string Project::getInfo()
+{
+	return NULL;
+}
+
+DLL_SHARE std::string Project::getName()
+{
+	return NULL;
+}
+
+DLL_SHARE int Project::getProjectID()
+{
+	return NULL;
+}
+
+DLL_SHARE void Project::setInfo(std::string& info)
+{
+	std::cout << "setInfo...";
+
+	jmethodID setInfoMethod = this->findMethod("setInfo", "(Ljava/lang/String;)V");	
+
+	jstring strInfo = StringHelper::getString(getEnv(), info.c_str());
+	
+	this->getEnv()->CallVoidMethod(this->getObject(), setInfoMethod, strInfo);
+}
+
+DLL_SHARE void Project::setName(std::string& name)
+{
+	std::cout << "setName...";
+
+	jmethodID setNameMethod = this->findMethod("setName", "(Ljava/lang/String;)V");	
+
+	jstring strName = StringHelper::getString(getEnv(), name.c_str());
+	
+	this->getEnv()->CallVoidMethod(this->getObject(), setNameMethod, strName);
+}
+
+DLL_SHARE void Project::setProjectID(int projectId)
+{
+}
+
+DLL_SHARE TaskManager* Project::getTaskManager()
+{
+	std::cout << "Getting TaskManager...";
+
+	jmethodID getTaskManagerMethod = this->findMethod("getTasksManager", "()Lsalomon/engine/task/ITaskManager;");
+
+	jobject taskManager = this->getEnv()->CallObjectMethod(this->getObject(), getTaskManagerMethod);
+
+	TaskManager* result = new TaskManager(getEnv(), taskManager);
+
+	if (result != 0)
+	{
+		std::cout << "success" << std::endl;
+	}
+	else
+	{
+		std::cout << "failure" << std::endl;
+	}
+
+	return result;
+}

@@ -14,9 +14,9 @@
 
 int main()
 {
-	Salomon a;
+	Salomon salomon;
 	std::cout << "Test start!" << std::endl;
-	LibraryController* libraryController = a.getLibraryController();
+	LibraryController* libraryController = salomon.getLibraryController();
 	std::cout << "Test...";
 	if (libraryController != 0)
 	{
@@ -25,52 +25,68 @@ int main()
 	else
 	{
 		std::cout << "failure" << std::endl;
-	}
-
-	ManagerEngine* managerEngine = libraryController->getManagerEngine();
-
-	if (managerEngine->getSolutionManager() != 0)
-	{		
+		return -1;
 	}
 	
+	// getting ManagerEngine
+	ManagerEngine* managerEngine = libraryController->getManagerEngine();
+
+	if (managerEngine->getSolutionManager() == 0)
+	{		
+		std::cout << "failure" << std::endl;
+		return -1;
+	}
+	
+	// getting ProjectManager
 	ProjectManager* projectManager = managerEngine->getProjectManger();
 	if (projectManager != 0)
 	{
+		// creating project
 		Project* project = projectManager->ceateProject();
+		std::string projectName = "DLL test project";
+		project->setName(projectName);
+	} else {
+		std::cout << "failure" << std::endl;
+		return -1;
 	}
 
+	// getting TaskManager
 	TaskManager* taskManager = managerEngine->getTaskManager();
 	if ( taskManager != 0)
 	{	
+		// creating task
 		Task* task = taskManager->createTask();
 		if ( task != 0)
 		{		
 			std::cout << "Task created" << std::endl;
+		} else {
+			std::cout << "failure" << std::endl;
+			return -1;
 		}
-		task->setName("DLLTask");
+		
+		// setting task name
+		std::string name = "DLLTask";
+		task->setName(name);
 	
-		//taskManager->addTask(task);
+		// setting plugin URL
 		std::string url = "http://location.org/datasetunion.jar";
 		
+		// sample settings
 		std::string settings = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";							   
 		settings += "<!DOCTYPE struct SYSTEM \"config/struct.dtd\">";
 		settings += "<struct><string name=\"resultDataSet\" value=\"ResultDataSet\"/>";
 		settings += "<string name=\"firstDataSet\" value=\"second\"/>";
 		settings += "<string name=\"secondDataSet\" value=\"third\"/></struct>";		
-
+		
+		// adding task
 		taskManager->addTask(task, url, settings);
-		projectManager->saveProject();
 
+		// saving project
+		projectManager->saveProject();
+		
+		// running task
 		taskManager->start();
 	}
-
-	
-
-
-	//if (managerEngine->getPluginManager() != 0)
-	//{
-	//	std::cout << "HURRA!!!" << std::endl;
-	//}
 
 	return 0;
 }
