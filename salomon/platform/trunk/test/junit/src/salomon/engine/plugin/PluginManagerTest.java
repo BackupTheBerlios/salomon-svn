@@ -29,6 +29,8 @@ import junit.framework.TestCase;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
+import salomon.platform.exception.PlatformException;
+
 import salomon.plugin.Description;
 import salomon.plugin.IPlugin;
 
@@ -40,19 +42,27 @@ public class PluginManagerTest extends TestCase
 	{
 		LOGGER.info("PluginManagerTest.testGetPlugins()");
 
-		IPlugin[] plugins = pluginManager.getPlugins();
-		assertFalse(plugins.length == 0);
+		IPlugin[] plugins = null;
+		try {
+			plugins = pluginManager.getPlugins();
+			assertFalse(plugins.length == 0);
 		for (int i = 0; i < plugins.length; i++) {
 			LOGGER.debug(plugins[i].getDescription());
 		}
+		} catch (PlatformException e) {
+			LOGGER.fatal("", e);			
+		}
+		assertFalse(plugins == null);
 	}
 
 	public void testRemovePlugin()
 	{
 		LOGGER.debug("PluginManagerTest.testRemovePlugin()");
+		LocalPlugin plugin = new LocalPlugin();
 		Description desc = new Description();
 		desc.setPluginID(35);
-		assertTrue(pluginManager.removePlugin(desc));
+		plugin.setDescription(desc);
+		assertTrue(pluginManager.removePlugin(plugin));
 	}
 
 	public void testSavePlugin1()
@@ -60,6 +70,7 @@ public class PluginManagerTest extends TestCase
 		LOGGER.debug("PluginManagerTest.testSavePlugin1()");
 		boolean success = false;
 		// adds new plugin
+		LocalPlugin plugin = new LocalPlugin();
 		Description desc = new Description("new plugin", "added");
 		try {
 			desc.setLocation(new URL("http://www.jakas.lokalizacja.com"));
@@ -67,8 +78,9 @@ public class PluginManagerTest extends TestCase
 		} catch (MalformedURLException e) {
 			LOGGER.fatal("", e);
 		}
+		plugin.setDescription(desc);
 		assertTrue(success);
-		assertTrue(pluginManager.savePlugin(desc));
+		assertTrue(pluginManager.savePlugin(plugin));
 	}
 
 	public void testSavePlugin2()
@@ -76,16 +88,18 @@ public class PluginManagerTest extends TestCase
 		LOGGER.debug("PluginManagerTest.testSavePlugin2()");
 		boolean success = false;
 		// updates the existing one
+		LocalPlugin plugin = new LocalPlugin();		
 		Description desc = new Description("plugin updated", "updated");
-		desc.setPluginID(20);
+		desc.setPluginID(20);		
 		try {
 			desc.setLocation(new URL("http://www.jakas.lokalizacja.com"));
 			success = true;
 		} catch (MalformedURLException e) {
 			LOGGER.fatal("", e);
 		}
+		plugin.setDescription(desc);
 		assertTrue(success);
-		assertTrue(pluginManager.savePlugin(desc));
+		assertTrue(pluginManager.savePlugin(plugin));
 	}
 
 	protected void setUp() throws Exception
