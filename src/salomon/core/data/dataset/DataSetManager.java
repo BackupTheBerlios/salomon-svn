@@ -67,6 +67,6 @@ public class DataSetManager
 						new DBColumnName(tableNames[0], "dataset_name"),
 						DBCondition.REL_EQ, dataSetName, DBCondition.TEXT)};
 		DBManager connector = DBManager.getInstance();
-		return connector.selectData(columnNames, tableNames, conditions);
+		return connector.select(columnNames, tableNames, conditions);
 	}
 }

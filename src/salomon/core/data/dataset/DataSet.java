@@ -56,7 +56,7 @@ public class DataSet
 			queryConditions = conditions;
 		}
 		DBManager connector = DBManager.getInstance();
-		return connector.selectData(columnNames, tableNames, queryConditions);
+		return connector.select(columnNames, tableNames, queryConditions);
 	}
 
 	/**
