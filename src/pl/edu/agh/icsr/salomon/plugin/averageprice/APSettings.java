@@ -67,36 +67,40 @@ public class APSettings implements ISettings
 	public void parseSettings(String stringSettings)
 			throws NoSuchElementException
 	{
-		String separator = ";";
-		StringTokenizer tokenizer = new StringTokenizer(stringSettings,
-				separator, true);
-		_name = tokenizer.nextToken();
-		if (_name.equals(separator)) {
-			_name = null;
+		if (stringSettings.trim().equals("")) {
+			_name = _surname = _email = _nick = null;
 		} else {
-			// missing separator
-			tokenizer.nextToken();
+			String separator = ";";
+			StringTokenizer tokenizer = new StringTokenizer(stringSettings,
+					separator, true);
+			_name = tokenizer.nextToken();
+			if (_name.equals(separator)) {
+				_name = null;
+			} else {
+				// missing separator
+				tokenizer.nextToken();
+			}
+			_surname = tokenizer.nextToken();
+			if (_surname.equals(separator)) {
+				_surname = null;
+			} else {
+				// missing separator
+				tokenizer.nextToken();
+			}
+			_nick = tokenizer.nextToken();
+			if (_nick.equals(separator)) {
+				_nick = null;
+			} else {
+				// missing separator
+				tokenizer.nextToken();
+			}
+			// last token treated in the special way
+			if (tokenizer.hasMoreTokens()) {
+				_email = tokenizer.nextToken();
+			} else {
+				_email = null;
+			}
 		}
-		_surname = tokenizer.nextToken();
-		if (_surname.equals(separator)) {
-			_surname = null;
-		} else {
-			// missing separator
-			tokenizer.nextToken();
-		}
-		_nick = tokenizer.nextToken();
-		if (_nick.equals(separator)) {
-			_nick = null;
-		} else {
-			// missing separator
-			tokenizer.nextToken();
-		}
-		// last token treated in the special way
-		if (tokenizer.hasMoreTokens()) {
-			_email = tokenizer.nextToken();
-		} else {
-			_email = null;
-		} 
 	}
 
 	/**
