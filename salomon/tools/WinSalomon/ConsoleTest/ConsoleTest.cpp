@@ -3,7 +3,7 @@
 
 //#include "stdafx.h"
 #include <iostream>
-#include <Salomon.h>
+#include <salomon.h>
 
 //__declspec(dllimport) void __stdcall void myfoo();
 

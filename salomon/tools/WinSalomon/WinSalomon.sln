@@ -1,6 +1,7 @@
 Microsoft Visual Studio Solution File, Format Version 8.00
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ConsoleTest", "ConsoleTest\ConsoleTest.vcproj", "{0FE323BD-A419-46B1-9471-ABCBE59719D5}"
 	ProjectSection(ProjectDependencies) = postProject
+		{7945F9A1-5D65-4FE5-9F23-D65E6DDDC045} = {7945F9A1-5D65-4FE5-9F23-D65E6DDDC045}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WinSalomon", "WinSalomon\WinSalomon.vcproj", "{7945F9A1-5D65-4FE5-9F23-D65E6DDDC045}"

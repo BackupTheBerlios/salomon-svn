@@ -19,27 +19,13 @@
  * 
  */
 
-#pragma once
 
-#include <jni.h>
-#include "winsalomon.h"
+#include "pluginmanager.h"
 
-DLL_SHARE class Salomon
+PluginManager::PluginManager(void)
 {
-private:
-	JNIEnv *env;
+}
 
-public:
-	DLL_SHARE explicit Salomon();
-	DLL_SHARE virtual ~Salomon(void);
-	DLL_SHARE void __stdcall void runTask();
-
-private:
-	jobjectArray
-	NewPlatformStringArray(JNIEnv *env, char **strv, int strc);
-
-	jstring
-	NewPlatformString(JNIEnv *env, char *s);
-};
-
-
+PluginManager::~PluginManager(void)
+{
+}

@@ -19,27 +19,13 @@
  * 
  */
 
-#pragma once
 
-#include <jni.h>
-#include "winsalomon.h"
+#include "solution.h"
 
-DLL_SHARE class Salomon
+Solution::Solution(void)
 {
-private:
-	JNIEnv *env;
+}
 
-public:
-	DLL_SHARE explicit Salomon();
-	DLL_SHARE virtual ~Salomon(void);
-	DLL_SHARE void __stdcall void runTask();
-
-private:
-	jobjectArray
-	NewPlatformStringArray(JNIEnv *env, char **strv, int strc);
-
-	jstring
-	NewPlatformString(JNIEnv *env, char *s);
-};
-
-
+Solution::~Solution(void)
+{
+}

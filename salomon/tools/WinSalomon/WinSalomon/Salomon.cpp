@@ -1,8 +1,29 @@
-#define SALOMON_DLL
+/*
+ * Copyright (C) 2005 Salomon Team
+ *
+ * This file is part of Salomon.
+ *
+ * Salomon is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * Salomon is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with Salomon; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * 
+ */
 
 #include <iostream>
 
 #include "salomon.h"
+
+
 
 #define NULL_CHECK0(e) if ((e) == 0) return 0 
 
@@ -19,51 +40,62 @@ Salomon::Salomon()
 	JavaVM *jvm;
 	JavaVMInitArgs vm_args;
 	long status;
-	jclass cls;
+	jclass starterClass;
 	jmethodID mid;
 	jint square;
 	jboolean not;
 
-	options[0].optionString = "-Djava.class.path=.;Sample.jar;Notepad.jar";
+//	options[0].optionString = "-Djava.class.path=.;Sample.jar;Notepad.jar";
+	options[0].optionString = "-Djava.class.path=.;Notepad.jar";
+	options[0].optionString = "-Djava.class.path=.;Salomon.jar;Notepad.jar";
 	memset(&vm_args, 0, sizeof(vm_args));
 	vm_args.version = JNI_VERSION_1_2;
 	vm_args.nOptions = 1;
 	vm_args.options = options;
 	status = JNI_CreateJavaVM(&jvm, (void**)&env, &vm_args);
 
+	jclass libraryControllerClass;
 	if (status != JNI_ERR)
 	{
 		//cls = env->FindClass("sample/Sample2");
-		cls = env->FindClass("Notepad");
-		if(cls !=0)
+		//libraryControllerClass = env->FindClass("salomon/engine/database/DBManager");
+		libraryControllerClass = env->FindClass("salomon/engine/controller/LibraryController");
+//		cls = env->FindClass("Notepad");
+		starterClass = env->FindClass("salomon/engine/Starter");
+		if (libraryControllerClass != 0)
+		{
+			std::cout << "Supcio :-)" << std::endl;
+		}
+		if(starterClass !=0)
 		{   
-			char * args[1];			
-			args[0] = "arg";			
-			jobjectArray mainArgs = NewPlatformStringArray(env, args, 1); 
-			mid = env->GetStaticMethodID(cls, "main",
-				       "([Ljava/lang/String;)V"); 
+			std::cout << "Class \"Starter\" was found!" << std::endl;
+			mid = env->GetStaticMethodID(starterClass, "createLibraryController",
+				       "()Lsalomon/engine/controller/LibraryController;"); 
+
+			//mid = env->GetStaticMethodID(starterClass, "main",
+			//	       "([Ljava/lang/String;)V");
+
 			if(mid !=0)
 			{	
-				env->CallStaticVoidMethod(cls, mid, mainArgs);				
+				std::cout << "Method \"createLibraryController\" was found!" << std::endl;
+
+				jobject libraryController = env->CallStaticObjectMethod(starterClass, mid);
+				if (libraryController != 0)
+				{
+					std::cout << "Super!!!" << std::endl;
+				}
+				else
+				{
+					std::cout << "I'am sad :-(" << std::endl;
+				}
+			}
+			else
+			{
+				std::cout << "Cannot find \"createLibraryController\" method!" << std::endl;
 			}
 			
-			/*
-			mid = env->GetStaticMethodID(cls, "intMethod", "(I)I");
-			if(mid !=0)
-			{	
-				square = env->CallStaticIntMethod(cls, mid, 5);
-				printf("Result of intMethod: %d\n", square);
-			}
-			/*
-			mid = env->GetStaticMethodID(cls, "booleanMethod", "(Z)Z");
-			if(mid !=0)
-			{					
-				not = env->CallStaticBooleanMethod(cls, mid, 1);
-				printf("Result of booleanMethod: %d\n", not);
-			}
-			*/
 		} else {
-			std::cout << "Class not found " << std::cout;
+			std::cout << "Class not found " << std::endl;
 		}
 
 		jvm->DestroyJavaVM();	

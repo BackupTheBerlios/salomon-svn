@@ -19,27 +19,32 @@
  * 
  */
 
+
 #pragma once
 
-#include <jni.h>
 #include "winsalomon.h"
 
-DLL_SHARE class Salomon
+#include "project.h"
+
+
+DLL_SHARE class ProjectManager
 {
 private:
 	JNIEnv *env;
 
 public:
-	DLL_SHARE explicit Salomon();
-	DLL_SHARE virtual ~Salomon(void);
-	DLL_SHARE void __stdcall void runTask();
+	ProjectManager(void);
+	~ProjectManager(void);
 
-private:
-	jobjectArray
-	NewPlatformStringArray(JNIEnv *env, char **strv, int strc);
+	DLL_SHARE void addProject(Project*);
 
-	jstring
-	NewPlatformString(JNIEnv *env, char *s);
+	DLL_SHARE Project* ceateProject();
+
+	DLL_SHARE Project* getProjects();
+
+	DLL_SHARE Project* getProject(int projectID);
+
+	DLL_SHARE void saveProject();
+     
+    DLL_SHARE Project* getCurrentProject();
 };
-
-
