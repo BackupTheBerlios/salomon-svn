@@ -378,11 +378,13 @@ public final class TaskEditionManager
 				// zapamietanie ktory komponent z listy wywoluje menu
 				JList list = (JList) e.getSource();
 				_selectedItem = list.locationToIndex(e.getPoint());
-				if (list == _pluginList) {
-					getPluginPopup().show(e.getComponent(), e.getX(), e.getY());
-				} else {
-					getTaskPopup().show(e.getComponent(), e.getX(), e.getY());
-				}
+                if (_selectedItem >= 0) {
+    				if (list == _pluginList) {
+    					getPluginPopup().show(e.getComponent(), e.getX(), e.getY());
+    				} else {
+    					getTaskPopup().show(e.getComponent(), e.getX(), e.getY());
+    				}
+                }
 			}
 		}
 	}
