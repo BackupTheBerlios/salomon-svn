@@ -34,7 +34,11 @@
 	</target>
 
 	<target name="dist" description="builds distribution jars" depends="compile">
-		<jar destfile="${dist_dir}/unionset.jar" basedir="${bin_dir}" includes="pl/edu/agh/iisg/salomon/plugin/datasetunion/**"/>
+		<jar destfile="${dist_dir}/unionset.jar" basedir="${bin_dir}" includes="pl/edu/agh/iisg/salomon/plugin/datasetunion/**">
+			<manifest>
+				<attribute name="Main-Class" value="pl.edu.agh.iisg.salomon.plugin.datasetunion.UPlugin" />
+			</manifest>
+		</jar>
 	</target>
 	
 	<target name="clean">
