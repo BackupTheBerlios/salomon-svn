@@ -5,13 +5,15 @@
 
 package pl.edu.agh.icsr.salomon.plugin.averageprice;
 
+import java.io.Serializable;
+
 import salomon.plugin.IResult;
 
 /**
  * @author nico
  *  
  */
-public class APResult implements IResult
+public final class APResult implements IResult, Serializable
 {
 	private double _averagePrice = 0.0;
 
