@@ -60,11 +60,6 @@ protected:
 	{
 	}
 
-	jobject getObject()
-	{
-		return _object;
-	}
-
 	JNIEnv *getEnv()
 	{
 		return _env;
@@ -85,4 +80,10 @@ protected:
 
 		return result;
 	}
+public:
+	jobject getObject()
+	{
+		return _object;
+	}
+
 };

@@ -22,6 +22,7 @@
  */
 
 #include <jni.h>
+#include <string>
 
 class StringHelper
 {
@@ -29,6 +30,6 @@ public:
 
 static jobjectArray getStringArray(JNIEnv *env, char **strv, int strc);
 
-static jstring	getString(JNIEnv *env, char *s);
+static jstring	getString(JNIEnv *env, const char *s);
 
 };

@@ -21,6 +21,7 @@
 
 
 #include "task.h"
+#include "stringhelper.h"
 
 const char* Task::CLASS_NAME = "salomon/engine/task/ITask";
 
@@ -44,7 +45,13 @@ DLL_SHARE int Task::getTaskId()
 
 DLL_SHARE void Task::setName(std::string name)
 {
-	std::cout << "Not imlemented yet" << std::endl;
+	std::cout << "setName...";
+
+	jmethodID setNameMethod = this->findMethod("setName", "(Ljava/lang/String;)V");	
+
+	jstring strName = StringHelper::getString(getEnv(), name.c_str());
+	
+	this->getEnv()->CallVoidMethod(this->getObject(), setNameMethod, strName);
 }
 
 DLL_SHARE void Task::setSettings(std::string settings)

@@ -61,7 +61,13 @@ DLL_SHARE Project* ProjectManager::getProject(int projectID)
 
 DLL_SHARE void ProjectManager::saveProject()
 {
-	std::cout << "Not imlemented yet" << std::endl;
+	std::cout << "saveProject...";
+
+	jmethodID saveProjectMethod = this->findMethod("saveProject", "()V");	
+	
+	this->getEnv()->CallVoidMethod(this->getObject(), saveProjectMethod);
+
+	std::cout << "success" << std::endl;
 }
     
 DLL_SHARE Project* ProjectManager::getCurrentProject()

@@ -30,7 +30,9 @@ DLL_SHARE void TaskManager::addTask(Task* task)
 
 	jmethodID addTaskMethod = this->findMethod("addTask", "(Lsalomon/engine/task/ITask;)V");	
 	
-	this->getEnv()->CallVoidMethod(this->getObject(), addTaskMethod, task);	
+	this->getEnv()->CallVoidMethod(this->getObject(), addTaskMethod, task->getObject());	
+
+	std::cout << "success" << std::endl;
 }
 
 DLL_SHARE void TaskManager::clearTaskList()

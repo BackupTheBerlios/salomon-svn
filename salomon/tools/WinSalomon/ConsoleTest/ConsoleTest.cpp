@@ -40,15 +40,22 @@ int main()
 
 	TaskManager* taskManager = managerEngine->getTaskManager();
 	if ( taskManager != 0)
-	{		
-		taskManager->start();		
+	{	
+		Task* task = taskManager->createTask();
+		if ( task != 0)
+		{		
+			std::cout << "Task created" << std::endl;
+		}
+		task->setName("DLLTask");
+	
+		taskManager->addTask(task);
+
+		projectManager->saveProject();
+
+		taskManager->start();
 	}
 
-	Task* task = taskManager->createTask();
-	if ( task != 0)
-	{		
-		std::cout << "Task created" << std::endl;
-	}
+	
 
 
 	//if (managerEngine->getPluginManager() != 0)

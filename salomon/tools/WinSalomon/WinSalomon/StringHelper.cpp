@@ -24,7 +24,7 @@
 
 #define NULL_CHECK0(e) if ((e) == 0) return 0 
 
-jstring	StringHelper::getString(JNIEnv *env, char *s)
+jstring	StringHelper::getString(JNIEnv *env, const char *s)
 {    
     int len = (int)strlen(s);
     jclass cls;
@@ -34,9 +34,8 @@ jstring	StringHelper::getString(JNIEnv *env, char *s)
 	if (s == NULL){
 		return 0;
 	}
-
     ary = env->NewByteArray(len);
-    if (ary != 0) {
+    if (ary != 0) {	
         jstring str = 0;
 		env->SetByteArrayRegion(ary, 0, len, (jbyte *)s);
 		if (!env->ExceptionOccurred()) {
