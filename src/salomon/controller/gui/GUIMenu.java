@@ -23,6 +23,7 @@ import org.apache.log4j.Logger;
 import salomon.core.Config;
 import salomon.core.Messages;
 import salomon.core.SQLConsole;
+import salomon.core.event.ProjectEvent;
 
 /**
  * @author nico
@@ -52,26 +53,21 @@ public class GUIMenu
 
 	private JPanel _pnlAbout = null;
 
-	private ProjectListener _projectListener = null;
-	
 	private JComponent _positionComponent = null;
-	
+
+	private ProjectListener _projectListener = null;
+
 	private String _resourcesDir = null;
 	
-	public GUIMenu()
+	private ControllerGUI _controllerGui = null; 
+
+	public GUIMenu(ControllerGUI controllerGUI)
 	{
+		_controllerGui = controllerGUI;
 		_resourcesDir = Config.getString("RESOURCES_DIR");
-		_projectListener = new ProjectListener();
+		_projectListener = new ProjectListener();		
 	}
 
-	private JButton createProjectButton(String text)
-	{
-		JButton button = new JButton();
-		button.setText(text);
-		button.addActionListener(_projectListener);
-		button.setFont(new Font("Dialog", Font.BOLD, 10)); //$NON-NLS-1$
-		return button;
-	}
 
 	JButton getBtnNew()
 	{
@@ -171,6 +167,24 @@ public class GUIMenu
 		}
 		return _itmSQLConsole;
 	}
+
+	JPanel getPnlAbout()
+	{
+		if (_pnlAbout == null) {
+			if (Config.getString("OFFICIAL").equalsIgnoreCase("Y")) {
+				_pnlAbout = getOfficialAbout();
+			} else {
+				_pnlAbout = getUnofficialAbout();
+			}
+		}
+		return _pnlAbout;
+	}
+
+	void setPositionComponent(JComponent component)
+	{
+		_positionComponent = component;
+	}
+
 	/**
 	 * Method show SQLConsole.
 	 */
@@ -178,6 +192,16 @@ public class GUIMenu
 	{
 		new SQLConsole(false);
 	}
+
+	private JButton createProjectButton(String text)
+	{
+		JButton button = new JButton();
+		button.setText(text);
+		button.addActionListener(_projectListener);
+		button.setFont(new Font("Dialog", Font.BOLD, 10)); //$NON-NLS-1$
+		return button;
+	}
+
 	private JPanel getOfficialAbout()
 	{
 		if (_pnlAbout == null) {
@@ -223,18 +247,6 @@ public class GUIMenu
 		return _pnlAbout;
 	}
 
-	JPanel getPnlAbout()
-	{
-		if (_pnlAbout == null) {
-			if (Config.getString("OFFICIAL").equalsIgnoreCase("Y")) {
-				_pnlAbout = getOfficialAbout();
-			} else {
-				_pnlAbout = getUnofficialAbout();
-			}
-		}
-		return _pnlAbout;
-	}
-
 	private JPanel getUnofficialAbout()
 	{
 		if (_pnlAbout == null) {
@@ -271,15 +283,11 @@ public class GUIMenu
 		return _pnlAbout;
 	}
 
-	void setPositionComponent(JComponent component) {
-		_positionComponent = component;
-	}
-	
 	/** Method shows about dialog. */
 	private void showAboutDialog()
 	{
-		JOptionPane.showMessageDialog(_positionComponent, getPnlAbout(), "About",
-				JOptionPane.PLAIN_MESSAGE);
+		JOptionPane.showMessageDialog(_positionComponent, getPnlAbout(),
+				"About", JOptionPane.PLAIN_MESSAGE);
 	}
 
 	/**
@@ -296,6 +304,7 @@ public class GUIMenu
 			Object object = e.getSource();
 			if (object == _btnNew || object == _itmNew) {
 				_logger.debug("New"); //$NON-NLS-1$
+				_controllerGui.fireNewProject(new ProjectEvent());
 			} else if (object == _btnOpen || object == _itmOpen) {
 				_logger.debug("Open"); //$NON-NLS-1$
 			} else if (object == _btnSave || object == _itmSave) {
