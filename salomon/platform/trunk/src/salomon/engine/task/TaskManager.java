@@ -134,6 +134,7 @@ public final class TaskManager implements ITaskManager
 	{
 		public void run()
 		{
+			LOGGER.info("Running tasks");
 			/*
 			 * while (true) { Task task = getTask(); IDataPlugin plugin =
 			 * task.getPlugin(); Settings settings = task.getSettings();
@@ -142,6 +143,7 @@ public final class TaskManager implements ITaskManager
 			
 			for (ITask task : _tasks) {
 				try {
+					LOGGER.info("task: " + task.getName());
 					ISettings settings = task.getSettings();
 					task.setStatus(Task.REALIZATION);
 					// changing status

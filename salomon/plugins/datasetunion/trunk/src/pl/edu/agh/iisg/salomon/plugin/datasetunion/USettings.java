@@ -21,10 +21,12 @@
 
 package pl.edu.agh.iisg.salomon.plugin.datasetunion;
 
-import java.util.StringTokenizer;
+import salomon.util.serialization.SimpleStruct;
+
+import salomon.platform.serialization.IObject;
+import salomon.platform.serialization.IStruct;
 
 import salomon.plugin.ISettings;
-import salomon.util.serialization.SimpleStruct;
 
 /**
  *  
@@ -33,5 +35,13 @@ public final class USettings extends SimpleStruct implements ISettings
 {
     public static final String FIRST_DATA_SET = "firstDataSet";
     public static final String SECOND_DATA_SET = "secondDataSet";
-    public static final String RESULT_DATA_SET = "resultDataSet";    
+    public static final String RESULT_DATA_SET = "resultDataSet";
+    
+    public void init(IObject o)
+    {
+    	IStruct struct = (IStruct) o;
+    	for (String field : struct.getFieldNames()) {
+    		this.setField(field, struct.getField(field));
+    	}
+    }
 }
