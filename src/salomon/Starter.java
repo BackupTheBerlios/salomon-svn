@@ -8,6 +8,7 @@ import pl.edu.agh.icsr.salomon.plugin.averageprice.APSettings;
 import salomon.controller.IController;
 import salomon.controller.LocalController;
 import salomon.core.ManagerEngine;
+import salomon.core.ProjectManager;
 import salomon.core.data.DBManager;
 import salomon.core.data.common.DBColumnName;
 import salomon.core.data.common.DBCondition;
@@ -24,6 +25,8 @@ public final class Starter
 	private ManagerEngine _managerEngine;
 
 	private static Logger _logger = Logger.getLogger(Starter.class);
+	
+	private ProjectManager _projectManager = null;
 
 	public Starter()
 	{
@@ -32,15 +35,19 @@ public final class Starter
 	}
 
 	private void initManagers()
-	{
-		_contoroller = new LocalController();
+	{		
 		_managerEngine = new ManagerEngine();
+		_projectManager = new ProjectManager(_managerEngine);
+		// oh shit - loop ;-(
+		_managerEngine.getTasksManager().setProjectManger(_projectManager);		
+		_contoroller = new LocalController();
 	}
 
 	public void start()
 	{
 		initManagers();
-		_contoroller.start(_managerEngine);
+		_contoroller.start(_projectManager);
+
 		//		try {
 		//			new ProjectManager().loadProject(1);
 		//		} catch (Exception e) {
@@ -63,12 +70,12 @@ public final class Starter
 		APSettings settings = new APSettings();
 		_logger.debug("test setting");
 		settings.setNick("nico");
-		_logger.debug(settings.getSettings());
+		_logger.debug(settings.settingsToString());
 		_logger.debug(settings.toString());
 		_logger.debug("test parsing");
 		settings = new APSettings();
 		settings.parseSettings(";;;");
-		_logger.debug(settings.getSettings());
+		_logger.debug(settings.settingsToString());
 		_logger.debug(settings.toString());
 	}
 
