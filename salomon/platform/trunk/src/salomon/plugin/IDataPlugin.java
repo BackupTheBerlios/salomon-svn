@@ -5,8 +5,8 @@
 
 package salomon.plugin;
 
-import salomon.engine.platform.data.DataEngine;
-import salomon.engine.platform.data.Environment;
+import salomon.engine.platform.DataEngine;
+import salomon.engine.platform.Environment;
 
 /** 
  * Main interface implemented by all plugins.   

@@ -1,11 +1,11 @@
 
 
-package salomon.engine.platform.data;
+package salomon.engine.platform;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import salomon.platform.data.IEnvironment;
+import salomon.platform.IEnvironment;
 
 /**
  *  Class represents environment of task execution.

@@ -1,7 +1,7 @@
 
 package salomon.plugin;
 
-import salomon.engine.platform.data.DataEngine;
+import salomon.engine.platform.DataEngine;
 
 /**
  * Interface implemented by all plugins.

@@ -4,8 +4,8 @@ package salomon.engine.platform.holder;
 import java.sql.SQLException;
 import java.util.Collection;
 
-import salomon.engine.platform.project.IProject;
-import salomon.engine.platform.project.IProjectManager;
+import salomon.platform.project.IProject;
+import salomon.platform.project.IProjectManager;
 
 /**
  * Holds projectManager of current client.

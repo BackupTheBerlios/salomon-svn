@@ -5,10 +5,11 @@ import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import salomon.engine.platform.data.DBManager;
-import salomon.engine.platform.data.IDBSupporting;
+import salomon.engine.platform.DBManager;
+import salomon.engine.platform.IDBSupporting;
 import salomon.engine.platform.data.common.SQLDelete;
 import salomon.engine.platform.data.common.SQLUpdate;
+import salomon.platform.task.ITask;
 import salomon.plugin.IPlugin;
 import salomon.plugin.IResult;
 import salomon.plugin.ISettings;

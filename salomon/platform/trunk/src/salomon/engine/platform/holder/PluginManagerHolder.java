@@ -3,7 +3,7 @@ package salomon.engine.platform.holder;
 
 import java.util.Collection;
 
-import salomon.engine.platform.plugin.IPluginManager;
+import salomon.platform.plugin.IPluginManager;
 import salomon.plugin.Description;
 
 /**

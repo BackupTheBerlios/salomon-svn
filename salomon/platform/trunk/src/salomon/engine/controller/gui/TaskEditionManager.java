@@ -37,7 +37,7 @@ import salomon.engine.controller.gui.action.ActionManager;
 import salomon.engine.platform.IManagerEngine;
 import salomon.engine.platform.Messages;
 import salomon.engine.platform.plugin.PluginLoader;
-import salomon.engine.platform.task.ITask;
+import salomon.platform.task.ITask;
 import salomon.plugin.Description;
 import salomon.plugin.IPlugin;
 import salomon.plugin.IResultComponent;

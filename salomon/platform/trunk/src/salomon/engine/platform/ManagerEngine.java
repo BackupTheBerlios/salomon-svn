@@ -1,12 +1,12 @@
 
 package salomon.engine.platform;
 
-import salomon.engine.platform.plugin.IPluginManager;
 import salomon.engine.platform.plugin.PluginManager;
-import salomon.engine.platform.project.IProjectManager;
 import salomon.engine.platform.project.ProjectManager;
-import salomon.engine.platform.task.ITaskManager;
 import salomon.engine.platform.task.TaskManager;
+import salomon.platform.plugin.IPluginManager;
+import salomon.platform.project.IProjectManager;
+import salomon.platform.task.ITaskManager;
 
 /**
  * Class creates and holds all managers used by plugins. They are created only

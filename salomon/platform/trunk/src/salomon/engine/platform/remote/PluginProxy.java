@@ -1,8 +1,8 @@
 
 package salomon.engine.platform.remote;
 
-import salomon.engine.platform.data.DataEngine;
-import salomon.engine.platform.data.Environment;
+import salomon.engine.platform.DataEngine;
+import salomon.engine.platform.Environment;
 import salomon.plugin.Description;
 import salomon.plugin.IPlugin;
 import salomon.plugin.IResult;

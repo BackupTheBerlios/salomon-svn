@@ -3,7 +3,7 @@
  *
  */
 
-package salomon.engine.platform.data;
+package salomon.engine.platform;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -14,7 +14,6 @@ import java.sql.Statement;
 import org.apache.log4j.Logger;
 
 import salomon.engine.controller.gui.Utils;
-import salomon.engine.platform.Config;
 import salomon.engine.platform.data.common.SQLDelete;
 import salomon.engine.platform.data.common.SQLInsert;
 import salomon.engine.platform.data.common.SQLSelect;

@@ -11,14 +11,16 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import salomon.engine.controller.gui.Utils;
+import salomon.engine.platform.DBManager;
 import salomon.engine.platform.IManagerEngine;
-import salomon.engine.platform.data.DBManager;
 import salomon.engine.platform.data.common.SQLSelect;
 import salomon.engine.platform.data.common.SQLUpdate;
 import salomon.engine.platform.plugin.PluginLoader;
-import salomon.engine.platform.task.ITask;
 import salomon.engine.platform.task.Task;
 import salomon.engine.platform.task.TaskManager;
+import salomon.platform.project.IProject;
+import salomon.platform.project.IProjectManager;
+import salomon.platform.task.ITask;
 import salomon.plugin.Description;
 import salomon.plugin.IPlugin;
 import salomon.plugin.ISettings;

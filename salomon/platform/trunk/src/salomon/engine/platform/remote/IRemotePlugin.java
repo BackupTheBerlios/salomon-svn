@@ -4,8 +4,8 @@ package salomon.engine.platform.remote;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
-import salomon.engine.platform.data.DataEngine;
-import salomon.engine.platform.data.Environment;
+import salomon.engine.platform.DataEngine;
+import salomon.engine.platform.Environment;
 import salomon.plugin.IResult;
 import salomon.plugin.ISettings;
 

@@ -12,8 +12,8 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 
-import salomon.engine.platform.task.ITask;
-import salomon.engine.platform.task.ITaskManager;
+import salomon.platform.task.ITask;
+import salomon.platform.task.ITaskManager;
 
 /**
  * Class is a sever side wrapper of IRemoteTaskManager object. It implements

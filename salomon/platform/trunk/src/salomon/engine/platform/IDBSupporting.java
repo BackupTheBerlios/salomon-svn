@@ -1,4 +1,4 @@
-package salomon.engine.platform.data;
+package salomon.engine.platform;
 
 import java.net.MalformedURLException;
 import java.sql.ResultSet;

@@ -9,10 +9,12 @@ import java.util.LinkedList;
 
 import org.apache.log4j.Logger;
 
-import salomon.engine.platform.data.DBManager;
-import salomon.engine.platform.data.DataEngine;
-import salomon.engine.platform.data.Environment;
+import salomon.engine.platform.DBManager;
+import salomon.engine.platform.DataEngine;
+import salomon.engine.platform.Environment;
 import salomon.engine.platform.project.ProjectManager;
+import salomon.platform.task.ITask;
+import salomon.platform.task.ITaskManager;
 import salomon.plugin.IPlugin;
 import salomon.plugin.IResult;
 import salomon.plugin.ISettings;

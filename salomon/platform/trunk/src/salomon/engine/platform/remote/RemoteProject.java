@@ -4,7 +4,7 @@ package salomon.engine.platform.remote;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
-import salomon.engine.platform.project.IProject;
+import salomon.platform.project.IProject;
 
 /** 
  * Class representing remote instance of IProject.  

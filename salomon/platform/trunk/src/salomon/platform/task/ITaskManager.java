@@ -1,5 +1,4 @@
-
-package salomon.engine.platform.task;
+package salomon.platform.task;
 
 
 /**

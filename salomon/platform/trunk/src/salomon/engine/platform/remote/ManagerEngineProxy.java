@@ -6,9 +6,9 @@ import java.rmi.RemoteException;
 import org.apache.log4j.Logger;
 
 import salomon.engine.platform.IManagerEngine;
-import salomon.engine.platform.plugin.IPluginManager;
-import salomon.engine.platform.project.IProjectManager;
-import salomon.engine.platform.task.ITaskManager;
+import salomon.platform.plugin.IPluginManager;
+import salomon.platform.project.IProjectManager;
+import salomon.platform.task.ITaskManager;
 
 /**
  * Class is a sever side wrapper of IRemoteManagerEngine object. It implements

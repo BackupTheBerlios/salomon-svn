@@ -6,7 +6,7 @@ import java.util.Collection;
 
 import org.apache.log4j.Logger;
 
-import salomon.engine.platform.plugin.IPluginManager;
+import salomon.platform.plugin.IPluginManager;
 import salomon.plugin.Description;
 
 /**

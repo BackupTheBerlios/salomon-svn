@@ -2,8 +2,8 @@
 package salomon.engine.platform.holder;
 
 
-import salomon.engine.platform.task.ITask;
-import salomon.engine.platform.task.ITaskManager;
+import salomon.platform.task.ITask;
+import salomon.platform.task.ITaskManager;
 
 /**
  * Holds taskManager of current client.

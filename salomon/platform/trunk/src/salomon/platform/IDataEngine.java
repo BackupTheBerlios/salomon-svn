@@ -1,4 +1,4 @@
-package salomon.platform.data;
+package salomon.platform;
 
 import salomon.engine.platform.data.attribute.AttributeManager;
 import salomon.engine.platform.data.dataset.DataSetManager;

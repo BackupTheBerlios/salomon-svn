@@ -1,4 +1,4 @@
-package salomon.platform.data;
+package salomon.platform;
 
 /**
  * 

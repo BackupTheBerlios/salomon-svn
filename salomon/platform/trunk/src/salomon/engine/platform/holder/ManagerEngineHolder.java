@@ -2,9 +2,9 @@
 package salomon.engine.platform.holder;
 
 import salomon.engine.platform.IManagerEngine;
-import salomon.engine.platform.plugin.IPluginManager;
-import salomon.engine.platform.project.IProjectManager;
-import salomon.engine.platform.task.ITaskManager;
+import salomon.platform.plugin.IPluginManager;
+import salomon.platform.project.IProjectManager;
+import salomon.platform.task.ITaskManager;
 
 /**
  * Holds all other holders.

@@ -13,9 +13,10 @@ import java.util.LinkedList;
 
 import org.apache.log4j.Logger;
 
-import salomon.engine.platform.data.DBManager;
+import salomon.engine.platform.DBManager;
 import salomon.engine.platform.data.common.SQLDelete;
 import salomon.engine.platform.data.common.SQLSelect;
+import salomon.platform.plugin.IPluginManager;
 import salomon.plugin.Description;
 
 /**

@@ -1,5 +1,5 @@
 
-package salomon.engine.platform.plugin;
+package salomon.platform.plugin;
 
 import java.util.Collection;
 
