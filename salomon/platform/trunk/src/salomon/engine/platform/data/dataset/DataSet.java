@@ -47,6 +47,8 @@ class DataSet implements IDataSet
 	private Collection<String> _conditions;
 
 	private Collection<String> _tableNames;
+	
+	private String _name;
 
 	/**
 	 * Method returns the conditions determinating data set.
@@ -57,16 +59,23 @@ class DataSet implements IDataSet
 	{
 		return _conditions;
 	}
-
+	
 	/**
 	 * @see salomon.platform.data.dataset.IDataSet#getName()
 	 */
 	public String getName()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return _name;
 	}
-
+	
+	/**
+	 * 
+	 */
+	DataSet(String name)
+	{
+		_name = name;
+	}
+	
 	/**
 	 * Method selects data basing on given parameters. It takes into account
 	 * conditions determinating data set - conditions passed as the arguments of
@@ -177,8 +186,7 @@ class DataSet implements IDataSet
 	 */
 	public void setName(String name)
 	{
-		// TODO Auto-generated method stub
-
+		_name = name;
 	}
 
 	/**

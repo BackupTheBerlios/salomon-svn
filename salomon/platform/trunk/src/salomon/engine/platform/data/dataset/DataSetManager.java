@@ -75,7 +75,7 @@ public final class DataSetManager implements IDataSetManager
 			LOGGER.fatal("", e);
 			throw new PlatformException(e.getLocalizedMessage());
 		}
-		dataSet = new DataSet();
+		dataSet = new DataSet(name);
 
 		dataSet.setTableNames(tableNames);
 		dataSet.setConditions(conditions);
