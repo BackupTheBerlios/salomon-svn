@@ -71,6 +71,6 @@ public final class ManagerEngineProxy implements IManagerEngine
 		return _taskManager;
 	}
 
-	private static Logger _logger = Logger.getLogger(ManagerEngineProxy.class);
+	private static final Logger _logger = Logger.getLogger(ManagerEngineProxy.class);
 
 }
