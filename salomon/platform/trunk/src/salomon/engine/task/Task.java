@@ -26,16 +26,20 @@ import java.io.ByteArrayOutputStream;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Time;
 
 import salomon.engine.database.DBManager;
 import salomon.engine.database.IDBSupporting;
 import salomon.engine.database.queries.SQLDelete;
 import salomon.engine.database.queries.SQLUpdate;
-import salomon.engine.platform.serialization.XMLSerializer;
+
+import salomon.util.serialization.SimpleStruct;
+
 import salomon.plugin.IPlugin;
 import salomon.plugin.IResult;
 import salomon.plugin.ISettings;
-import salomon.util.serialization.SimpleStruct;
+
+import salomon.engine.platform.serialization.XMLSerializer;
 
 /**
  * Represents task which may be executed. It is an implementation of ITask
@@ -164,7 +168,6 @@ public final class Task implements ITask, IDBSupporting
 		_settings = (ISettings) XMLSerializer.deserialize(bis);
 		// TODO: support result loading?
 		_status = resultSet.getString("status");
-		// TODO: add time support
 	}
 
 	/**
@@ -195,6 +198,12 @@ public final class Task implements ITask, IDBSupporting
 			update.addValue("plugin_result", _result.resultToString());
 		}
 		update.addValue("status", _status);
+		// updating start/stop time depanding on status
+		if (_status == REALIZATION) {
+			update.addValue("start_time", new Time(System.currentTimeMillis()));
+		} else if (_status == FINISHED || _status == ERROR) {
+			update.addValue("stop_time", new Time(System.currentTimeMillis()));
+		}
 		update.addValue("lm_date", new Date(System.currentTimeMillis()));
 		_taskID = DBManager.getInstance().insertOrUpdate(update, "task_id",
 				_taskID, GEN_NAME);

@@ -217,9 +217,12 @@ public final class TaskManagerGUI
 	 */
 	public void runTasks()
 	{
-		throw new UnsupportedOperationException(
-				"Method runTasks() not implemented yet!");
-		// FIXME _managerEngine.getTasksManager().start();
+		try {
+			_managerEngine.getTasksManager().start();
+		} catch (PlatformException e) {
+			LOGGER.fatal("", e);
+			Utils.showErrorMessage("ERR_CANNOT_RUN_TASKS");
+		}
 	}
 
 	public void setActionManager(ActionManager actionManager)

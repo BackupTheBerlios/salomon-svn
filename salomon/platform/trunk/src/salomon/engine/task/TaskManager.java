@@ -22,14 +22,12 @@
 package salomon.engine.task;
 
 import java.sql.SQLException;
-import java.sql.Time;
 import java.util.Collection;
 import java.util.LinkedList;
 
 import org.apache.log4j.Logger;
 
 import salomon.engine.database.DBManager;
-import salomon.engine.database.queries.SQLUpdate;
 import salomon.engine.project.ProjectManager;
 
 import salomon.platform.exception.PlatformException;
@@ -127,32 +125,7 @@ public final class TaskManager implements ITaskManager
 	{
 		// _taskEngine.start();
 		new TaskEngine().start();
-	}
-
-    /**
-     * Updates task connected to project. Method can change only status and
-     * result of task. Other columns will be unaffected. If one want change
-     * other settings, saveProject() method should be used. The Project object
-     * is not passed to this method, so method allows to save only one task and
-     * may be called after every task processing. 
-     * 
-     * @throws SQLException
-     */
-    
-    public void updateTask(ITask task) throws PlatformException
-    {
-        SQLUpdate update = new SQLUpdate(Task.TABLE_NAME);
-        update.addValue("plugin_result", task.getResult().resultToString());
-        update.addValue("status", task.getStatus());
-        update.addValue("stop_time", new Time(System.currentTimeMillis()));
-        update.addCondition("taks_id =", task.getTaskId());
-        try {
-        	DBManager.getInstance().update(update);
-        } catch (Exception e) {
-        	LOGGER.fatal("", e);
-            throw new PlatformException(e.getLocalizedMessage());
-        }
-    }
+	} 
     
 	private final class TaskEngine extends Thread
 	{
@@ -169,7 +142,7 @@ public final class TaskManager implements ITaskManager
 					ISettings settings = task.getSettings();
 					task.setStatus(Task.REALIZATION);
 					// changing status
-					updateTask(task);
+					((Task)task).save();
 					try {
 						DBManager.getInstance().commit();
 					} catch (ClassNotFoundException e1) {
@@ -189,7 +162,7 @@ public final class TaskManager implements ITaskManager
 					// saving result of its execution
 					//
 					task.setResult(result);
-                    
+					((Task)task).save();
 					try {
 						DBManager.getInstance().commit();
 					} catch (ClassNotFoundException e1) {
@@ -205,7 +178,7 @@ public final class TaskManager implements ITaskManager
 					LOGGER.fatal("TASK PROCESSING ERROR", e);					
 					try {
                         task.setStatus(Task.EXCEPTION);
-						updateTask(task);
+                        ((Task)task).save();
 					} catch (Exception e1) {
 						LOGGER.fatal("", e1);
 					}
