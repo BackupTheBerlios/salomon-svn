@@ -28,9 +28,10 @@ public final class MasterController extends UnicastRemoteObject
 	private Set _remoteControllers = new HashSet();
 
 	/**
-	 * @throws RemoteException
-	 *  
-	 */
+     * @throws RemoteException
+     * @pre $none
+     * @post $none
+     */
 	public MasterController() throws RemoteException
 	{
 	}
