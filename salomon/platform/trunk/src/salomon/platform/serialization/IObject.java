@@ -25,11 +25,26 @@ package salomon.platform.serialization;
  * 
  * 
  */
+/**
+ * 
+ * TODO: add comment.
+ * @author kuba
+ * 
+ */
 public interface IObject
 {
     enum Types {STRUCT, STRING, INT, ARRAY};
     
+    /**
+     * 
+     * @return the type of the object
+     */
     Types getType();
 
+    /**
+     * compares two objects
+     * @param object
+     * @return TRUE of objects are equal
+     */
     boolean equals(IObject object);
 }

@@ -37,8 +37,8 @@ import javax.xml.transform.stream.StreamResult;
 import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
-import org.xml.sax.helpers.DefaultHandler;
 
+import salomon.platform.serialization.IStruct;
 import salomon.util.serialization.SimpleStruct;
 
 /**
@@ -54,7 +54,7 @@ private static final Logger LOGGER = Logger.getLogger(XMLSerializer.class);
 	 * @param is
 	 * @return SimpleStruct
 	 */
-	public SimpleStruct deserialize(InputStream is)
+	public static SimpleStruct deserialize(InputStream is)
 	{
         Document document = null;
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -81,7 +81,7 @@ private static final Logger LOGGER = Logger.getLogger(XMLSerializer.class);
 	 * @param os
 	 * 
      */
-	public void serialize(SimpleStruct value, OutputStream os)
+	public static void serialize(SimpleStruct value, OutputStream os)
 	{
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         Document document = null;

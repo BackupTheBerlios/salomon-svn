@@ -23,26 +23,13 @@ package salomon.plugin;
 
 import java.io.Serializable;
 
+import salomon.platform.serialization.IStruct;
+
 /**
  * Represents plugin settings.
  *
  */
-public interface ISettings extends Serializable
+public interface ISettings extends Serializable, IStruct
 {
-	/**
-	 * Method parses settings from their string representation. Used to load
-	 * plugin settings from data base.
-	 * 
-	 * @param stringSettings
-	 */
-	void parseSettings(String stringSettings);
-
-	/**
-	 * Method returns String representation of settings. Used to write plugin
-	 * settings in data base.
-	 * 
-	 * @return String representation of settings
-	 */
-	String settingsToString();
 
 }

@@ -21,6 +21,8 @@
 
 package salomon.engine.task;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -29,10 +31,11 @@ import salomon.engine.database.DBManager;
 import salomon.engine.database.IDBSupporting;
 import salomon.engine.database.queries.SQLDelete;
 import salomon.engine.database.queries.SQLUpdate;
-
+import salomon.engine.platform.serialization.XMLSerializer;
 import salomon.plugin.IPlugin;
 import salomon.plugin.IResult;
 import salomon.plugin.ISettings;
+import salomon.util.serialization.SimpleStruct;
 
 /**
  * Represents task which may be executed. It is an implementation of ITask
@@ -40,6 +43,9 @@ import salomon.plugin.ISettings;
  */
 public final class Task implements ITask, IDBSupporting
 {
+
+	private String _info;
+
 	private String _name;
 
 	private IPlugin _plugin;
@@ -49,8 +55,6 @@ public final class Task implements ITask, IDBSupporting
 	private IResult _result;
 
 	private ISettings _settings;
-    
-    private String _info;
 
 	private String _status;
 
@@ -59,17 +63,18 @@ public final class Task implements ITask, IDBSupporting
 	public Task()
 	{
 		_taskID = 0;
-		_projectID = 0;		
+		_projectID = 0;
 		_status = ACTIVE;
 	}
 
 	/**
 	 * Removes itself from database. After successsful finish object should be
-	 * destroyed. This method deletes records only from 'tasks' table. It has some
-	 * constraints (some foreign keys), which should by taken into account by
-	 * TaskManager.
+	 * destroyed. This method deletes records only from 'tasks' table. It has
+	 * some constraints (some foreign keys), which should by taken into account
+	 * by TaskManager.
 	 * 
-	 * @return @throws ClassNotFoundException
+	 * @return
+	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
 	public boolean delete() throws SQLException, ClassNotFoundException
@@ -94,7 +99,7 @@ public final class Task implements ITask, IDBSupporting
 	{
 		return _plugin;
 	}
-    
+
 	/**
 	 * @return Returns the projectID.
 	 */
@@ -140,9 +145,9 @@ public final class Task implements ITask, IDBSupporting
 	}
 
 	/**
-	 * Initializes itself basing on given row from resultSet.
-	 * Before calling this method ISettings object must be set. 
-     * 
+	 * Initializes itself basing on given row from resultSet. Before calling
+	 * this method ISettings object must be set.
+	 * 
 	 * @param resultSet
 	 * @throws SQLException
 	 */
@@ -150,14 +155,16 @@ public final class Task implements ITask, IDBSupporting
 	{
 		_taskID = resultSet.getInt("task_id");
 		_projectID = resultSet.getInt("project_id");
-        // it is not neccessery to set plugin id        
+		// it is not neccessery to set plugin id
 		_name = resultSet.getString("task_name");
 		_info = resultSet.getString("task_info");
-        // setting has to be set
-        _settings.parseSettings(resultSet.getString("plugin_settings"));
-        //TODO: support result loading?
-        _status = resultSet.getString("status");
-        //TODO: add time support
+		// setting has to be set
+		String settings = resultSet.getString("plugin_settings");
+		ByteArrayInputStream bis = new ByteArrayInputStream(settings.getBytes());
+		_settings = (ISettings) XMLSerializer.deserialize(bis);
+		// TODO: support result loading?
+		_status = resultSet.getString("status");
+		// TODO: add time support
 	}
 
 	/**
@@ -172,23 +179,25 @@ public final class Task implements ITask, IDBSupporting
 	public int save() throws SQLException, ClassNotFoundException
 	{
 		SQLUpdate update = new SQLUpdate(TABLE_NAME);
-        update.addValue("project_id", _projectID);
-        update.addValue("plugin_id", _plugin.getDescription().getPluginID());
-        update.addValue("task_name", _name);        
+		update.addValue("project_id", _projectID);
+		update.addValue("plugin_id", _plugin.getDescription().getPluginID());
+		update.addValue("task_name", _name);
 		if (_info != null) {
 			update.addValue("task_info", _info);
 		}
-        // let it happen?
-        if (_settings != null) {
-        	update.addValue("plugin_settings", _settings.settingsToString());
-        }
-        if (_result != null) {
-        	update.addValue("plugin_result", _result.resultToString());
-        }
-        update.addValue("status", _status);
+		// let it happen?
+		if (_settings != null) {
+			ByteArrayOutputStream bos = new ByteArrayOutputStream();
+			XMLSerializer.serialize((SimpleStruct) _settings, bos);
+			update.addValue("plugin_settings", bos.toString());
+		}
+		if (_result != null) {
+			update.addValue("plugin_result", _result.resultToString());
+		}
+		update.addValue("status", _status);
 		update.addValue("lm_date", new Date(System.currentTimeMillis()));
-		_taskID = DBManager.getInstance().insertOrUpdate(update,
-				"task_id", _taskID, GEN_NAME);
+		_taskID = DBManager.getInstance().insertOrUpdate(update, "task_id",
+				_taskID, GEN_NAME);
 		return _taskID;
 	}
 
