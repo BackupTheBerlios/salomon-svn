@@ -59,4 +59,13 @@ public class SCResultComponent implements IResultComponent
 		scrlResult.setViewportView(table);
 		return scrlResult;
 	}
+
+	public IResult getDefaultResult()
+	{
+		SCResult result = new SCResult();
+		result.setErrorMessage("Default result");
+		result.setResultType(SCResult.SC_OK);
+		result.setSuccessful(true);
+		return result;
+	}
 }
