@@ -2,7 +2,7 @@
 %bez powyzszej linijki nie dzialaja polskie znaki (musi ona byc w pierwszej linii dokumentu
 %%&platex --translate-file=il2-pl % przeyestowac z tym
 \documentclass[a4paper,12pt]{article}
-\usepackage[english]{babel}
+\usepackage[polish]{babel}
 \usepackage[T1]{fontenc}
 \usepackage[dvips]{graphicx}
 %\usepackage{intendfirst}
@@ -31,14 +31,16 @@
     
 
 
-\title{Salomon - plan pracy}
+\title{Salomon - obs³uga drzew decyzyjnych}
 
 \author{Nikodem Jura \emph{(nico@icslab.agh.edu.pl)}
         \\
         Krzysztof Rajda \emph{(krzycho@student.uci.agh.edu.pl)}
         \\
-        Jakub Ga³kowski \emph{(avi@student.uci.agh.edu.pl)}}               
-
+        Jakub Ga³kowski \emph{(avi@student.uci.agh.edu.pl)}
+        \\
+        Leszek Grzanka \emph{(grzanka@student.uci.agh.edu.pl)}}               
+				
         
 
 \begin{document}
@@ -51,22 +53,57 @@
 \href{http://salomon.iisg.agh.edu.pl}{http://salomon.iisg.agh.edu.pl}
 \end{center}
 
+\begin{center}
+Prowadz¹cy: dr in¿. Marek Kisiel-Dorohinicki
+\end{center}
+
+
 \pagebreak
 \section{Charakterystyka problemu}
 Celem projektu ma byæ rozbudowa systemu Salomon, poprzez rozszerzenie jego mechanizmów o wsparcie dla nowego rodzaju wiedzy jakim s¹ drzewa decyzyjne.
 
-W ramach tego przedsiêwziêcia nale¿y zapewniæ efektywny sposób sk³adowania informacji o drzewach w bazie danych Salomona. Nale¿y te¿ zaprojektowaæ przejrzysty interfejs programistyczny umo¿liwiaj¹cy operacje na drzewach decyzyjnych oraz dostarczyæ graficzny interfejs u¿ytkownika umo¿liwiaj¹cy zarz¹dzanie zgromadzon¹ wiedz¹. Dodatkowo nale¿y zrealizowaæ przyk³adowe pluginy demonstruj¹ce poprawnoœæ implementacji.
+\section{Temat projektu}
+Zaimplementowanie obs³ugi drzew decyzyjnych w oparciu o platformê \emph{Salomon}.
 
-\section{Wymagania wobec cz³onków zespo³u}
+\section{Produkt}
+Nale¿y stworzyæ system prezentuj¹cy wykorzystanie algorytmów przetwarzaj¹cych wiedzê w oparciu o drzewa decyzyjne.
+System ma byæ oparty o platformê \emph{Salomon}. Nale¿y zaimplementowaæ podstawowe algorytmy w oparciu o mechanizmy dostarczane przez \emph{Salomona}. System ma tak¿e umo¿liwiaæ u¿ytkownikowi samodzielne konfigurowanie i uruchamianie obliczeñ opartych o zaimplementowane algorytmy poprzez dostarczenie odpowiedniego GUI. 
+
+Nale¿y tak¿e przygotowaæ kompletn¹ dokumentacjê techniczn¹ oraz podrêcznik u¿ytkowania oraz portal dotycz¹cy projektu, na którym mo¿na bêdzie sprawdziæ postêp prac i zapoznaæ siê z innymi informacjami dotycz¹cymi projektu.
+
+\subsection{Semestr pierwszy}
+Stworzenie sytemu obs³uguj¹cego drzewa decyzyjne w oparciu o Salomona.
+Przygotowanie dokumentacji technicznej i przygotowanie portalu o projekcie.
+
+Przedmiot bazowy: Algorytmy Ewolucyjne
+
+\subsection{Semestr drugi}
+Rozbudowanie systemu stworzonego w pierwszym semestrze o mo¿liwoœci prezentacjê jego mo¿liwoœci.
+Przygotowanie podrêcznika u¿ytkownika.
+
+Przedmiot bazowy: Technologie Komponentowe
+
+\section{Za³o¿enia dodatkowe}
+\subsection{Umiejêtnoœci realizatorów projektu}
 \begin{itemize}
 	\item programowanie w Javie
-	\item stosowanie siê do przyjêtych standardów (Salomon coding standards)
-	\item Znajomoœæ jêzyka angielskiego (chcielibyœmy, aby dokumenty na wiki by³y po angielsku w miarê mo¿liwoœci)
+	\item Znajomoœæ jêzyka angielskiego (chcielibyœmy, aby dokumenty na Wiki by³y po angielsku w miarê mo¿liwoœci)
 	\item Znajomoœæ ant, subversion, junit
 	\item Znajomoœæ SQL (Firebird)
 \end{itemize}
 
-\section{Grupy projektowe}
+\subsection{Przewidywane technologie i narzêdzia}
+\begin{itemize}
+	\item Eclipse
+	\item subversion (np Tortoise, plugin do Eclipse'a)
+	\item Firebird
+	\item Ant
+	\item JUnit
+	\item Abbot
+\end{itemize}
+
+\section{Informacje organizacyjne}
+\subsection{Przewidywana lista uczestników}
 
 \begin{enumerate}
 	\item Grupa I	
@@ -87,6 +124,11 @@ W ramach tego przedsiêwziêcia nale¿y zapewniæ efektywny sposób sk³adowania infor
 		\item Dominik Seweryn 
 	\end{itemize}
 \end{enumerate}
+
+Rozwa¿ane jest okresowe poszerzenie zespo³u o osoby, które bêd¹ mog³y w ramach swoich zajêæ zaimplementowaæ zdefiniowane przez nas funkcjonalnoœci oraz komponenty.
+
+\subsection{Prowadz¹cy projekt}
+Dr in¿. Marek Kisiel-Dorohinicki
 
 
 \end{document}
