@@ -11,7 +11,7 @@
   </head>
 
   <body>
-    <release version="0.9.5" date="2004-01-09" description="Pre-1.0-Release">
+    <release version="0.9" date="2005-01-09" description="Pre-1.0-Release">
     <action type="add">
         Example Plugin
     </action>
@@ -29,29 +29,28 @@
         GUI classes refactored
     </action>
     <action type="update">
-      	full separation between GUI and logic
+      	Full separation between GUI and logic
     </action>
     <action type="update">
       	Separation of the Controler classes from the rest of engine
     </action> 
     <action type="update">
         Plugin SDK library 
-        - all classes needed by plugins separated from engine
+        - All classes needed by plugins separated from engine
         - Infterfaces extracted from  clases needed by plugins 
     </action> 
     <action type="update">
-      	new serialization
+      	New serialization
     </action>
     <action type="fix">
-      	fixed bugs created by previous refactoring  
+      	Fixed bugs created by previous refactoring  
     </action>
     </release>
 
-    <release version="0.9.4" date="2005-01-1" description="Pre-1.0-Release">
-        <action type="update">New Year's release ;D</action>
-        <action type="update">Some Gui Tests created</action>
+    <release version="0.8" date="2004-11-05" description="Pre-1.0-Release">
+        <action type="update">Some Gui and Unit Tests created</action>
+        <action type="update">Minor Code refactoring</action>
     </release>
-
   </body>
 
 </document>
