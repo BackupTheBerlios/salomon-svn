@@ -22,7 +22,6 @@
 package salomon.engine.solution;
 
 import salomon.engine.project.IProjectManager;
-
 import salomon.platform.IDataEngine;
 import salomon.platform.exception.PlatformException;
 

@@ -31,9 +31,7 @@ import org.apache.log4j.Logger;
 import salomon.engine.database.DBManager;
 import salomon.engine.database.queries.SQLDelete;
 import salomon.engine.database.queries.SQLSelect;
-
 import salomon.platform.exception.PlatformException;
-
 import salomon.plugin.Description;
 import salomon.plugin.IPlugin;
 

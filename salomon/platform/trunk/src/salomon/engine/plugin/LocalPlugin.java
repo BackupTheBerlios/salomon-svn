@@ -5,10 +5,8 @@ import java.io.Serializable;
 
 import org.apache.log4j.Logger;
 
-
 import salomon.platform.IDataEngine;
 import salomon.platform.IEnvironment;
-
 import salomon.plugin.Description;
 import salomon.plugin.IPlugin;
 import salomon.plugin.IResult;

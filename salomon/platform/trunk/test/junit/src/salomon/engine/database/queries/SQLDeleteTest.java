@@ -29,7 +29,6 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
 import salomon.engine.database.DBManager;
-import salomon.engine.database.queries.SQLDelete;
 
 /**
  * 

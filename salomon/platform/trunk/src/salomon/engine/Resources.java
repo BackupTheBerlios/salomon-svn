@@ -43,6 +43,7 @@ public final class Resources
 
 	/**
 	 * @param key
+	 * @return String matching given key
 	 */
 	public static String getString(String key)
 	{

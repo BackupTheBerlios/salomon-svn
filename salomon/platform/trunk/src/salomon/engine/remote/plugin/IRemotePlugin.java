@@ -26,7 +26,6 @@ import java.rmi.RemoteException;
 
 import salomon.platform.IDataEngine;
 import salomon.platform.IEnvironment;
-
 import salomon.plugin.IResult;
 import salomon.plugin.ISettings;
 

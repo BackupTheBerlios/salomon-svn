@@ -27,7 +27,6 @@ import java.rmi.server.UnicastRemoteObject;
 import salomon.engine.project.IProject;
 import salomon.engine.remote.task.IRemoteTaskManager;
 import salomon.engine.remote.task.RemoteTaskManager;
-
 import salomon.platform.exception.PlatformException;
 
 

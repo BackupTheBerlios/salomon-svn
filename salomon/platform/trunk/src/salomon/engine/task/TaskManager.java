@@ -28,17 +28,14 @@ import java.util.LinkedList;
 import org.apache.log4j.Logger;
 
 import salomon.engine.database.DBManager;
+import salomon.engine.platform.Environment;
 import salomon.engine.project.ProjectManager;
 import salomon.engine.solution.Solution;
-
 import salomon.platform.IDataEngine;
 import salomon.platform.exception.PlatformException;
-
 import salomon.plugin.IPlugin;
 import salomon.plugin.IResult;
 import salomon.plugin.ISettings;
-
-import salomon.engine.platform.Environment;
 
 /**
  * An implemetation of ITaskManager interface. Class manages with tasks editing

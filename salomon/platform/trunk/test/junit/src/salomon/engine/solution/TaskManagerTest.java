@@ -27,10 +27,8 @@ import junit.framework.TestCase;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
-import org.omg.CORBA._PolicyStub;
 
 import salomon.engine.platform.ManagerEngine;
-import salomon.engine.project.IProjectManager;
 import salomon.engine.project.Project;
 import salomon.engine.project.ProjectManager;
 import salomon.engine.task.ITask;

@@ -36,6 +36,11 @@ public class Version
         // prevent creating an instance
     }
 
+	/**
+	 * reads specified property
+	 * @param key
+	 * @return String matching the given key
+	 */
     public static String getString(String key)
     {
         try {

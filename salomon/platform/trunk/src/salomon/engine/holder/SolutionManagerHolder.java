@@ -23,7 +23,6 @@ package salomon.engine.holder;
 
 import salomon.engine.solution.ISolution;
 import salomon.engine.solution.ISolutionManager;
-
 import salomon.platform.exception.PlatformException;
 
 /**

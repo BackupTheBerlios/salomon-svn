@@ -47,19 +47,21 @@ public final class ControllerFrame extends JFrame
 
 	private ControllerPanel _controllerPanel;
 
-	private String _resourcesDir;
+//	private String _resourcesDir;
 
+	/**
+	 * creates new ControllerFrame
+	 */
 	public ControllerFrame()
 	{
 		super();
-		_resourcesDir = Config.getString("RESOURCES_DIR");
+//		_resourcesDir = Config.getString("RESOURCES_DIR");
 		initialize();
 	}
 
 	/**
 	 * Called after project save/load/creation
 	 * 
-	 * @param project
 	 */
 	public void refreshGui()
 	{
@@ -67,16 +69,28 @@ public final class ControllerFrame extends JFrame
 		_controllerPanel.refresh();
 	}
 
+	/**
+	 * TODO: add comment.
+	 * @param controllerPanel
+	 */
 	public void setControllerPanel(ControllerPanel controllerPanel)
 	{
 		_controllerPanel = controllerPanel;
 	}
 
+	/**
+	 * TODO: add comment.
+	 * @param toolBar
+	 */
 	public void setJToolBar(JToolBar toolBar)
 	{
 		getContentPane().add(toolBar, BorderLayout.NORTH);
 	}
 
+	/**
+	 * TODO: add comment.
+	 * @param panel
+	 */
 	public void setMainPanel(JComponent panel)
 	{
 		//TODO: getContentPane().remove();

@@ -34,8 +34,6 @@ import salomon.engine.database.queries.SQLDelete;
 import salomon.engine.database.queries.SQLInsert;
 import salomon.engine.database.queries.SQLSelect;
 import salomon.engine.database.queries.SQLUpdate;
-
-
 import salomon.util.gui.Utils;
 
 /**

@@ -28,7 +28,6 @@ import salomon.engine.remote.plugin.IRemotePluginManager;
 import salomon.engine.remote.project.IRemoteProjectManager;
 import salomon.engine.remote.solution.IRemoteSolutionManager;
 import salomon.engine.remote.task.IRemoteTaskManager;
-
 import salomon.platform.exception.PlatformException;
 
 

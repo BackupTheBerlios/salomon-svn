@@ -34,6 +34,9 @@ public final class Config
 {
 
 	/**
+	 * reads specified property
+	 * @param key
+	 * @return String matching the given key
 	 */
 	public static String getString(String key)
 	{
@@ -45,8 +48,14 @@ public final class Config
 		}
 	}
 
+	/**
+	 * current working directory
+	 */
 	public static String CURR_DIR = null;
 
+	/**
+	 * system defined file separator
+	 */
 	public static String FILE_SEPARATOR = null;
 
 	private static final String BUNDLE_NAME = "config";//$NON-NLS-1$

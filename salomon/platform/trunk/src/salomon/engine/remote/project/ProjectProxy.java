@@ -28,7 +28,6 @@ import org.apache.log4j.Logger;
 import salomon.engine.project.IProject;
 import salomon.engine.remote.task.TaskManagerProxy;
 import salomon.engine.task.ITaskManager;
-
 import salomon.platform.exception.PlatformException;
 
 

@@ -22,7 +22,6 @@
 package salomon.engine.task;
 
 import salomon.platform.exception.PlatformException;
-
 import salomon.plugin.IPlugin;
 import salomon.plugin.IResult;
 import salomon.plugin.ISettings;

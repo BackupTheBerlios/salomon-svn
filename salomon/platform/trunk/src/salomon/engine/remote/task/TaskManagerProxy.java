@@ -30,7 +30,6 @@ import org.apache.log4j.Logger;
 import salomon.engine.task.ITask;
 import salomon.engine.task.ITaskManager;
 import salomon.engine.task.ITaskRunner;
-
 import salomon.platform.exception.PlatformException;
 
 /**

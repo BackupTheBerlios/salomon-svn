@@ -25,7 +25,6 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 
 import salomon.engine.solution.ISolution;
-
 import salomon.platform.exception.PlatformException;
 
 /**

@@ -21,8 +21,6 @@
 
 package salomon.engine.controller;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.rmi.NotBoundException;
 import java.rmi.RMISecurityManager;
 import java.rmi.RemoteException;
@@ -54,6 +52,9 @@ public final class ServantController implements IController
 
 	private int _serverPort;
 
+	/**
+	 * @see salomon.engine.controller.IController#exit()
+	 */
 	public void exit()
 	{
 		LOGGER.info("Exiting client...");
@@ -64,6 +65,9 @@ public final class ServantController implements IController
 		}
 	}
 
+	/**
+	 * @see salomon.engine.controller.IController#start(salomon.engine.platform.IManagerEngine)
+	 */
 	public void start(IManagerEngine managerEngine)
 	{
 		_managerEngine = managerEngine;

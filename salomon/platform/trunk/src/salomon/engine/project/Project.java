@@ -30,7 +30,6 @@ import salomon.engine.database.IDBSupporting;
 import salomon.engine.database.queries.SQLDelete;
 import salomon.engine.database.queries.SQLUpdate;
 import salomon.engine.task.ITaskManager;
-
 import salomon.platform.exception.PlatformException;
 
 

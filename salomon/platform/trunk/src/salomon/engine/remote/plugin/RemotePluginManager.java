@@ -25,9 +25,7 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
 import salomon.engine.plugin.IPluginManager;
-
 import salomon.platform.exception.PlatformException;
-
 import salomon.plugin.IPlugin;
 
 /**

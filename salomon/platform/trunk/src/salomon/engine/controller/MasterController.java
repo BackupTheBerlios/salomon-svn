@@ -26,14 +26,11 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.rmi.AccessException;
-import java.rmi.NotBoundException;
 import java.rmi.RMISecurityManager;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.sql.SQLException;
-import java.util.Iterator;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -65,14 +62,12 @@ import salomon.engine.controller.gui.TaskManagerGUI;
 import salomon.engine.controller.gui.action.ActionManager;
 import salomon.engine.database.DBManager;
 import salomon.engine.holder.ManagerEngineHolder;
+import salomon.engine.platform.IManagerEngine;
 import salomon.engine.remote.CentralController;
 import salomon.engine.remote.ICentralController;
 import salomon.engine.remote.event.IMasterControllerListener;
 import salomon.engine.remote.event.RemoteControllerEvent;
-
 import salomon.util.gui.Utils;
-
-import salomon.engine.platform.IManagerEngine;
 
 /**
  * Server side implementation of IController interface.
@@ -109,8 +104,8 @@ public final class MasterController implements IController
 
 	private JToolBar _toolBar;
 
-	/*
-	 * (non-Javadoc)
+	/**
+	 *
 	 * 
 	 * @see salomon.engine.controller.IController#exit()
 	 */
@@ -121,12 +116,18 @@ public final class MasterController implements IController
 	}
 
 	// TODO: change it
+	/**
+	 * refreshes the controller
+	 */
 	public void refresh()
 	{
 		_pluginMangerGUI.refresh();
 		_taskManagerGUI.refresh();
 	}
 
+	/**
+	 * @see salomon.engine.controller.IController#start(salomon.engine.platform.IManagerEngine)
+	 */
 	public void start(IManagerEngine managerEngine)
 	{
 		_managerEngineHolder = new ManagerEngineHolder(managerEngine);
@@ -226,10 +227,10 @@ public final class MasterController implements IController
 		frame.setVisible(true);
 	}
 
-	private void initialize()
-	{
-
-	}
+//	private void initialize()
+//	{
+//
+//	}
 
 	private void initRMI()
 	{
@@ -271,10 +272,8 @@ public final class MasterController implements IController
 			implements IMasterControllerListener
 	{
 
-		/*
-		 * (non-Javadoc)
-		 * 
-		 * @see salomon.engine.platform.remote.event.IMasterControllerListener#controllerAdded(salomon.engine.platform.remote.event.RemoteControllerEvent)
+		/**
+		 * @see salomon.engine.remote.event.IMasterControllerListener#controllerAdded(salomon.engine.remote.event.RemoteControllerEvent)
 		 */
 		public void controllerAdded(RemoteControllerEvent event)
 		{
@@ -283,10 +282,8 @@ public final class MasterController implements IController
 			_remoteControllerPanel.addController(controllerGUI);
 		}
 
-		/*
-		 * (non-Javadoc)
-		 * 
-		 * @see salomon.engine.platform.remote.event.IMasterControllerListener#controllerRemoved(salomon.engine.platform.remote.event.RemoteControllerEvent)
+		/**
+		 * @see salomon.engine.remote.event.IMasterControllerListener#controllerRemoved(salomon.engine.remote.event.RemoteControllerEvent)
 		 */
 		public void controllerRemoved(RemoteControllerEvent event)
 		{
@@ -328,6 +325,10 @@ public final class MasterController implements IController
 
 		private String _resourcesDir;
 
+		/**
+		 * creates MasterGUIMenu
+		 * @param actionManager manager
+		 */
 		public MasterGUIMenu(ActionManager actionManager)
 		{
 			_actionManager = actionManager;

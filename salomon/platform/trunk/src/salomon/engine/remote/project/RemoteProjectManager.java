@@ -28,7 +28,6 @@ import java.util.Map;
 
 import salomon.engine.project.IProject;
 import salomon.engine.project.IProjectManager;
-
 import salomon.platform.exception.PlatformException;
 
 /**

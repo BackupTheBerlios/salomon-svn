@@ -22,7 +22,6 @@
 package salomon.engine.project;
 
 import salomon.engine.task.ITaskManager;
-
 import salomon.platform.exception.PlatformException;
 
 /**

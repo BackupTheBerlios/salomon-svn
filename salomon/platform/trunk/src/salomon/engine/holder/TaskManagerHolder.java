@@ -25,7 +25,6 @@ package salomon.engine.holder;
 import salomon.engine.task.ITask;
 import salomon.engine.task.ITaskManager;
 import salomon.engine.task.ITaskRunner;
-
 import salomon.platform.exception.PlatformException;
 
 /**

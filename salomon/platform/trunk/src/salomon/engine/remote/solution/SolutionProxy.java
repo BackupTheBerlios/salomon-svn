@@ -28,7 +28,6 @@ import org.apache.log4j.Logger;
 import salomon.engine.project.IProjectManager;
 import salomon.engine.remote.project.ProjectManagerProxy;
 import salomon.engine.solution.ISolution;
-
 import salomon.platform.IDataEngine;
 import salomon.platform.exception.PlatformException;
 

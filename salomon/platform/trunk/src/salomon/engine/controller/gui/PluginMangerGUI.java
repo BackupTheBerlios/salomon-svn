@@ -46,16 +46,12 @@ import org.apache.log4j.Logger;
 
 import salomon.engine.Messages;
 import salomon.engine.controller.gui.action.ActionManager;
+import salomon.engine.platform.IManagerEngine;
 import salomon.engine.plugin.LocalPlugin;
-
-import salomon.util.gui.Utils;
-
 import salomon.platform.exception.PlatformException;
-
 import salomon.plugin.Description;
 import salomon.plugin.IPlugin;
-
-import salomon.engine.platform.IManagerEngine;
+import salomon.util.gui.Utils;
 
 /**
  * 

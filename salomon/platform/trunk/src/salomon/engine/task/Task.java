@@ -32,14 +32,11 @@ import salomon.engine.database.DBManager;
 import salomon.engine.database.IDBSupporting;
 import salomon.engine.database.queries.SQLDelete;
 import salomon.engine.database.queries.SQLUpdate;
-
-import salomon.util.serialization.SimpleStruct;
-
+import salomon.engine.platform.serialization.XMLSerializer;
 import salomon.plugin.IPlugin;
 import salomon.plugin.IResult;
 import salomon.plugin.ISettings;
-
-import salomon.engine.platform.serialization.XMLSerializer;
+import salomon.util.serialization.SimpleStruct;
 
 /**
  * Represents task which may be executed. It is an implementation of ITask

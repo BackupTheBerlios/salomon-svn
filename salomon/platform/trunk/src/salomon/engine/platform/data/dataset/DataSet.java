@@ -39,9 +39,7 @@ import salomon.engine.database.queries.SQLDelete;
 import salomon.engine.database.queries.SQLInsert;
 import salomon.engine.database.queries.SQLSelect;
 import salomon.engine.database.queries.SQLUpdate;
-
 import salomon.platform.data.dataset.IDataSet;
-import salomon.platform.exception.PlatformException;
 
 /**
  * Class represents data set. Data set is a subset of data stored in tables, its

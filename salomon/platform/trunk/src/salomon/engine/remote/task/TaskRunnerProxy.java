@@ -26,7 +26,6 @@ import java.rmi.RemoteException;
 import org.apache.log4j.Logger;
 
 import salomon.engine.task.ITaskRunner;
-
 import salomon.platform.exception.PlatformException;
 
 /**

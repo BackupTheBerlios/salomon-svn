@@ -20,8 +20,6 @@
  */
 package salomon.engine.solution;
 
-import java.sql.SQLException;
-
 import junit.framework.TestCase;
 
 import org.apache.log4j.Logger;

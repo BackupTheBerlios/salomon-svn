@@ -30,7 +30,6 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
 import salomon.platform.exception.PlatformException;
-
 import salomon.plugin.Description;
 import salomon.plugin.IPlugin;
 

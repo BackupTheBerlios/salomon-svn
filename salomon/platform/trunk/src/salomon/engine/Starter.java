@@ -31,14 +31,12 @@ import salomon.engine.controller.LibraryController;
 import salomon.engine.controller.LocalController;
 import salomon.engine.controller.MasterController;
 import salomon.engine.controller.ServantController;
+import salomon.engine.platform.IManagerEngine;
+import salomon.engine.platform.ManagerEngine;
 import salomon.engine.project.IProjectManager;
 import salomon.engine.project.ProjectManager;
 import salomon.engine.task.TaskManager;
-
 import salomon.platform.exception.PlatformException;
-
-import salomon.engine.platform.IManagerEngine;
-import salomon.engine.platform.ManagerEngine;
 
 /**
  * Class starts application execution.
@@ -50,7 +48,7 @@ public final class Starter
 
 	private IManagerEngine _managerEngine;
 
-	private ProjectManager _projectManager = null;
+//	private ProjectManager _projectManager = null;
 
 	private Starter()
 	{
@@ -116,16 +114,27 @@ public final class Starter
 		start();
 	}
 
+	/**
+	 * creates library controller
+	 * @return the created LibraryController
+	 */
 	public static LibraryController createLibraryController()
 	{
 		return Starter.startLibrary();
 	}
 
+	/**
+	 * performs clean-up and exits
+	 */
 	public static void exit()
 	{
 		getInstance().exitImpl();
 	}
 
+	/**
+	 * main method for starting Salomon
+	 * @param args parameters from the command line
+	 */
 	public static void main(String[] args)
 	{
 		if (args.length > 0) {

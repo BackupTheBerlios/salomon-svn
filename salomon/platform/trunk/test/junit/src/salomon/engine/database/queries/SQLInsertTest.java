@@ -21,9 +21,7 @@
 
 package salomon.engine.database.queries;
 
-import java.sql.Date;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 
 import junit.framework.TestCase;
 

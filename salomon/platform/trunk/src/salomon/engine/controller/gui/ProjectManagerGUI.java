@@ -37,19 +37,15 @@ import javax.swing.JTextField;
 import org.apache.log4j.Logger;
 
 import salomon.engine.database.DBManager;
+import salomon.engine.platform.IManagerEngine;
 import salomon.engine.project.IProject;
 import salomon.engine.project.IProjectManager;
 import salomon.engine.project.ProjectManager;
 import salomon.engine.task.ITask;
 import salomon.engine.task.ITaskManager;
-
-import salomon.util.gui.Utils;
-
 import salomon.platform.exception.PlatformException;
-
 import salomon.plugin.ISettings;
-
-import salomon.engine.platform.IManagerEngine;
+import salomon.util.gui.Utils;
 
 /**
  * Class used to manage with projects editing.

@@ -28,9 +28,7 @@ import org.apache.log4j.Logger;
 
 import salomon.engine.plugin.PluginLoader;
 import salomon.engine.task.ITask;
-
 import salomon.platform.exception.PlatformException;
-
 import salomon.plugin.IPlugin;
 import salomon.plugin.IResult;
 import salomon.plugin.ISettings;

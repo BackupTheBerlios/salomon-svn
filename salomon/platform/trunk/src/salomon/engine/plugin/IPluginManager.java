@@ -23,7 +23,6 @@ package salomon.engine.plugin;
 
 
 import salomon.platform.exception.PlatformException;
-
 import salomon.plugin.IPlugin;
 
 /**

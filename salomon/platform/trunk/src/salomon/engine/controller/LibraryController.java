@@ -39,6 +39,8 @@ public final class LibraryController implements IController
 
 	/**
 	 * Temp method!
+	 * runs the task result
+	 * @return String with the 
 	 */
 	public String runTask()
 	{

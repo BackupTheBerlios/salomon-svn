@@ -21,7 +21,6 @@
 
 package salomon.engine.database.queries;
 
-import junit.framework.Test;
 import junit.framework.TestSuite;
 
 /**

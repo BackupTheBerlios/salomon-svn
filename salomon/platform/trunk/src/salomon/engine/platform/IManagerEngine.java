@@ -25,7 +25,6 @@ import salomon.engine.plugin.IPluginManager;
 import salomon.engine.project.IProjectManager;
 import salomon.engine.solution.ISolutionManager;
 import salomon.engine.task.ITaskManager;
-
 import salomon.platform.exception.PlatformException;
 
 /**

@@ -26,12 +26,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import salomon.engine.database.IDBSupporting;
+import salomon.engine.platform.DataEngine;
 import salomon.engine.project.IProjectManager;
-
 import salomon.platform.IDataEngine;
 import salomon.platform.exception.PlatformException;
-
-import salomon.engine.platform.DataEngine;
 
 /**
  * 

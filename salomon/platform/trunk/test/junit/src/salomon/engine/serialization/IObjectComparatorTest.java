@@ -6,10 +6,10 @@
 
 package salomon.engine.serialization;
 
+import junit.framework.TestCase;
 import salomon.util.serialization.SimpleInteger;
 import salomon.util.serialization.SimpleString;
 import salomon.util.serialization.SimpleStruct;
-import junit.framework.TestCase;
 
 /**
  * 

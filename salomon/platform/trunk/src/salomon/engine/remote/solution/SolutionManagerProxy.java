@@ -29,7 +29,6 @@ import org.apache.log4j.Logger;
 
 import salomon.engine.solution.ISolution;
 import salomon.engine.solution.ISolutionManager;
-
 import salomon.platform.exception.PlatformException;
 
 /**

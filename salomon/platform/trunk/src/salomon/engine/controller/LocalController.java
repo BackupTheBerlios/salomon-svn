@@ -55,13 +55,10 @@ import salomon.engine.controller.gui.SplashScreen;
 import salomon.engine.controller.gui.TaskManagerGUI;
 import salomon.engine.controller.gui.action.ActionManager;
 import salomon.engine.database.DBManager;
-import salomon.engine.project.IProject;
-
-import salomon.util.gui.Utils;
-
-import salomon.platform.exception.PlatformException;
-
 import salomon.engine.platform.IManagerEngine;
+import salomon.engine.project.IProject;
+import salomon.platform.exception.PlatformException;
+import salomon.util.gui.Utils;
 
 /**
  * Local implementation of IController interface.
@@ -86,18 +83,17 @@ public final class LocalController implements IController
 
 	private JToolBar _toolBar;
 
-	/*
-	 * (non-Javadoc)
+	/**
 	 * 
 	 * @see salomon.engine.controller.IController#exit()
 	 */
 	public void exit()
 	{
-
+		//nothing to do
 	}
 
 	/**
-	 * @see salomon.engine.controller.IController#start(salomon.engine.platform.IProjectManager)
+	 * @see salomon.engine.controller.IController#start(salomon.engine.platform.IManagerEngine)
 	 */
 	public void start(IManagerEngine managerEngine)
 	{
@@ -187,15 +183,15 @@ public final class LocalController implements IController
 		return _toolBar;
 	}
 
-	private void initialize()
-	{
-
-	}
+//	private void initialize()
+//	{
+//
+//	}
 
 	private final class LocalGUIMenu
 	{
 
-		private ActionManager _actionManager;
+//		private ActionManager _actionManager;
 
 		private JButton _btnNew;
 
@@ -221,6 +217,10 @@ public final class LocalController implements IController
 
 		private String _resourcesDir;
 
+		/**
+		 * creates LocalGUIMenu
+		 * @param actionManager
+		 */
 		public LocalGUIMenu(ActionManager actionManager)
 		{
 			_actionManager = actionManager;
