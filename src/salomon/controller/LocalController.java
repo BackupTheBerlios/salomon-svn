@@ -46,6 +46,8 @@ public final class LocalController implements IController
 			List taskList = e.getTaskList();
 			_logger.info("taskList" + taskList);
 			TaskManager taskManager = _managerEngine.getTasksManager();
+			// removing old tasks
+			taskManager.clearTaskList();
 			for (Iterator iter = taskList.iterator(); iter.hasNext();) {
 				taskManager.addTask((Task) iter.next());
 			}
