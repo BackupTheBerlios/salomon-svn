@@ -6,23 +6,19 @@ import javax.swing.AbstractAction;
 import salomon.controller.gui.TaskEditionManager;
 
 /**
- * 
- * TODO: add comment.
- * @author krzychu
- * 
+ * Represents abstract action caused while editing plugins.
+ *  
  */
 public abstract class AbstractPluginAction extends AbstractAction
 {
-    /**
-     * an object which method are called in implementation of actionPerformed()
-     * method
-     */   
+	/**
+	 * an object which method are called in implementation of actionPerformed()
+	 * method
+	 */
+	protected TaskEditionManager _taskEditionManager;
 
-    protected TaskEditionManager _taskEditionManager = null;
-
-    protected AbstractPluginAction(TaskEditionManager editionManager)
-    {
-        _taskEditionManager = editionManager;
-    }
-
+	public AbstractPluginAction(TaskEditionManager editionManager)
+	{
+		_taskEditionManager = editionManager;
+	}
 }
