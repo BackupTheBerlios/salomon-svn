@@ -1,0 +1,1 @@
+java -Djava.rmi.server.RMIClassLoaderSpi=salomon.core.plugin.PluginRMIClassLoaderSpi -Djava.security.policy=all.policy -jar salomon.jar
