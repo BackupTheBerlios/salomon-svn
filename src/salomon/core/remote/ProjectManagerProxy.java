@@ -2,6 +2,8 @@
 package salomon.core.remote;
 
 import java.rmi.RemoteException;
+import java.sql.SQLException;
+import java.util.Collection;
 
 import org.apache.log4j.Logger;
 
@@ -96,4 +98,18 @@ public final class ProjectManagerProxy implements IProjectManager
 	}
 
 	private static Logger _logger = Logger.getLogger(ProjectManagerProxy.class);
+
+	/* (non-Javadoc)
+	 * @see salomon.core.project.IProjectManager#getAvailableProjects()
+	 */
+	public Collection getAvailableProjects() throws ClassNotFoundException, SQLException 
+	{
+        Collection projects = null;
+        try {
+            projects = _remoteProjectManager.getAvailableProjects();
+        } catch (RemoteException e) {
+            _logger.fatal("", e);
+        }
+		return projects;
+	}
 }

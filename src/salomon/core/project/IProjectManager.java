@@ -1,20 +1,8 @@
-/*
- * $RCSfile:$
- * $Revision:$
- *
- * Comments:
- *
- * (C) Copyright ParaSoft Corporation 2004.  All rights reserved.
- * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF ParaSoft
- * The copyright notice above does not evidence any
- * actual or intended publication of such source code.
- *
- * $Author:$          $Locker:$
- * $Date:$
- * $Log:$
- */
 
 package salomon.core.project;
+
+import java.sql.SQLException;
+import java.util.Collection;
 
 /**
  * 
@@ -44,6 +32,21 @@ public interface IProjectManager
 	 * @throws Exception
 	 */
 	public void saveProject() throws Exception, ClassNotFoundException;
+	
+    /**
+     * Returns collection of available projects.
+     * 
+     * TODO: change it 
+	 * Returns collection od arrays of object
+     * 1 row is an array of column names
+     * next are data.
+     * If there is no data, only column names are returned
+     * 
+	 * @return
+     * @throws ClassNotFoundException
+     * @throws SQLException
+	 */
+    public Collection getAvailableProjects() throws SQLException, ClassNotFoundException; 
 
 	/**
 	 * @return Returns the currentProject.

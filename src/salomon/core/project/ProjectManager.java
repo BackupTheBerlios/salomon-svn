@@ -13,6 +13,7 @@ import java.util.Set;
 
 import org.apache.log4j.Logger;
 
+import salomon.controller.gui.Utils;
 import salomon.core.IManagerEngine;
 import salomon.core.data.DBManager;
 import salomon.core.data.common.DBColumnName;
@@ -123,7 +124,7 @@ public final class ProjectManager implements IProjectManager
 	 */
 	public void saveProject() throws Exception, ClassNotFoundException
 	{
-		// saving project header        
+		// saving project header
 		int projectID = saveProjectHeader();
 		_currentProject.setProjectID(projectID);
 		// saving plugins
@@ -131,16 +132,15 @@ public final class ProjectManager implements IProjectManager
 		// saving tasks
 		saveTasks();
 		_logger.info("Project successfully saved.");
-        //TODO: bez tego czasem zawisa :-(
-        _dbManager.commit();
+		//TODO: bez tego czasem zawisa :-(
+		_dbManager.commit();
 	}
 
 	/**
 	 * Method selects tasks for given project id
 	 * 
 	 * @param projectID
-	 * @return @throws
-	 *         ClassNotFoundException
+	 * @return @throws ClassNotFoundException
 	 * @throws Exception
 	 */
 	private List getTasksForProject(int projectID) throws Exception
@@ -405,6 +405,28 @@ public final class ProjectManager implements IProjectManager
 	public IProject getCurrentProject()
 	{
 		return _currentProject;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see salomon.core.project.IProjectManager#getAvailableProjects()
+	 */
+	public Collection getAvailableProjects() throws SQLException, ClassNotFoundException
+	{
+		Collection projects = null;
+		DBTableName[] tableNames = {new DBTableName("projects")};
+		DBColumnName[] columnNames = {
+				new DBColumnName(tableNames[0], "project_id", "Id"),
+				new DBColumnName(tableNames[0], "name", "Name"),
+				new DBColumnName(tableNames[0], "info", "Info")};
+		// executing query
+		ResultSet resultSet = null;
+
+		resultSet = DBManager.getInstance().select(columnNames, tableNames,
+				null);
+		projects = Utils.getDataFromResultSet(resultSet);
+		return projects;
 	}
 
 } // end KnowledgeSystemManager

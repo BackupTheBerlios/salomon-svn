@@ -1,6 +1,9 @@
 
 package salomon.core.holder;
 
+import java.sql.SQLException;
+import java.util.Collection;
+
 import salomon.core.project.IProject;
 import salomon.core.project.IProjectManager;
 
@@ -66,5 +69,13 @@ final class ProjectManagerHolder implements IProjectManager
 	void setCurrent(IProjectManager projectManager)
 	{
 		_currentProjectManager = projectManager;
+	}
+
+	/* (non-Javadoc)
+	 * @see salomon.core.project.IProjectManager#getAvailableProjects()
+	 */
+	public Collection getAvailableProjects() throws SQLException, ClassNotFoundException
+	{
+		return _currentProjectManager.getAvailableProjects();
 	}
 }

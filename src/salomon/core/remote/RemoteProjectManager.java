@@ -3,6 +3,8 @@ package salomon.core.remote;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.sql.SQLException;
+import java.util.Collection;
 
 import salomon.core.project.IProject;
 import salomon.core.project.IProjectManager;
@@ -78,5 +80,13 @@ public final class RemoteProjectManager extends UnicastRemoteObject
 		}
 
 		return _currentRemoteProject;
+	}
+
+	/* (non-Javadoc)
+	 * @see salomon.core.remote.IRemoteProjectManager#getAvailableProjects()
+	 */
+	public Collection getAvailableProjects() throws RemoteException, SQLException, ClassNotFoundException
+	{		
+		return _projectManager.getAvailableProjects();
 	}
 }

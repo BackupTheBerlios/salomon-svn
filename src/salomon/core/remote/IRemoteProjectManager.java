@@ -3,6 +3,8 @@ package salomon.core.remote;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.sql.SQLException;
+import java.util.Collection;
 
 /**
  * 
@@ -45,4 +47,5 @@ public interface IRemoteProjectManager extends Remote
      */
 	IRemoteProject getCurrentProject() throws RemoteException;
 
+    public Collection getAvailableProjects() throws RemoteException, ClassNotFoundException, SQLException; 
 }
