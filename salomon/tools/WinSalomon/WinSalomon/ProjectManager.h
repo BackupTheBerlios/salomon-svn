@@ -48,7 +48,7 @@ public:
 
 	DLL_SHARE Project* ceateProject();
 
-	DLL_SHARE Project* getProjects();
+	//DLL_SHARE Project* getProjects();
 
 	DLL_SHARE Project* getProject(int projectID);
 

@@ -46,7 +46,7 @@ DLL_SHARE Task* TaskManager::createTask()
 	
 	jobject task = this->getEnv()->CallObjectMethod(this->getObject(), createTaskMethod);
 	
-	Task* result = new Task(getEnv(), task);
+	Task* result = result = new Task(getEnv(), task);
 
 	if (result != 0)
 	{
@@ -55,7 +55,7 @@ DLL_SHARE Task* TaskManager::createTask()
 	else
 	{
 		std::cout << "failure" << std::endl;
-	}
+	}	
 
 	return result;
 }

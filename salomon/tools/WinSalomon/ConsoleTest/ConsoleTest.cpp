@@ -32,6 +32,12 @@ int main()
 	{		
 	}
 	
+	ProjectManager* projectManager = managerEngine->getProjectManger();
+	if (projectManager != 0)
+	{
+		Project* project = projectManager->ceateProject();
+	}
+
 	TaskManager* taskManager = managerEngine->getTaskManager();
 	if ( taskManager != 0)
 	{		
@@ -44,10 +50,6 @@ int main()
 		std::cout << "Task created" << std::endl;
 	}
 
-	if (managerEngine->getProjectManger() != 0)
-	{
-		
-	}
 
 	//if (managerEngine->getPluginManager() != 0)
 	//{

@@ -24,6 +24,52 @@
 
 const char* ProjectManager::CLASS_NAME = "salomon/engine/project/IProjectManager";
 
+DLL_SHARE void ProjectManager::addProject(Project* project)
+{
+	std::cout << "Not imlemented yet" << std::endl;
+}
+
+DLL_SHARE Project* ProjectManager::ceateProject()
+{
+	std::cout << "createProject...";
+
+	jmethodID ceateProjectMethod = this->findMethod("createProject", "()Lsalomon/engine/project/IProject;");	
+	
+	jobject project = this->getEnv()->CallObjectMethod(this->getObject(), ceateProjectMethod);
+	
+	Project* result = result = new Project(getEnv(), project);
+
+	if (result != 0)
+	{
+		std::cout << "success" << std::endl;
+	}
+	else
+	{
+		std::cout << "failure" << std::endl;
+	}	
+
+	return result;
+}
+
+//DLL_SHARE Project* getProjects();
+
+DLL_SHARE Project* ProjectManager::getProject(int projectID)
+{
+	std::cout << "Not imlemented yet" << std::endl;
+	return NULL;
+}
+
+DLL_SHARE void ProjectManager::saveProject()
+{
+	std::cout << "Not imlemented yet" << std::endl;
+}
+    
+DLL_SHARE Project* ProjectManager::getCurrentProject()
+{
+	std::cout << "Not imlemented yet" << std::endl;
+	return NULL;
+}
+
 //ProjectManager::ProjectManager(void)
 //{
 //}
