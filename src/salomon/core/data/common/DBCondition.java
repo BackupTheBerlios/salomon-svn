@@ -33,9 +33,9 @@ public class DBCondition
 	public static final int REL_L = 4; // less
 
 	public static final int REL_M = 5; //more
-	
+
 	public static final int REL_LIKE = 6; //more
-	
+
 	private DBColumnName _columnName = null;
 
 	private Object _value = null;
@@ -44,8 +44,9 @@ public class DBCondition
 
 	private int _type = 0;
 
-	private static String[] relations = {"<>", "<=", ">=", "=", "<", ">", "LIKE"};
-	
+	private static String[] relations = {"<>", "<=", ">=", "=", "<", ">",
+			"LIKE"};
+
 	private static Logger _logger = Logger.getLogger(DBCondition.class);
 
 	/**
@@ -84,7 +85,7 @@ public class DBCondition
 				break;
 			}
 		}
-	
+
 		// setting type
 		if (columnValue.startsWith("'")) {
 			_type = TEXT;
@@ -97,7 +98,8 @@ public class DBCondition
 		DBTableName dbTableName = new DBTableName(strTableName);
 		_columnName = new DBColumnName(dbTableName, columnName);
 	}
-	// returns table name of the left side of condition 
+
+	// returns table name of the left side of condition
 	public DBTableName getTableName()
 	{
 		return _columnName.getTableName();

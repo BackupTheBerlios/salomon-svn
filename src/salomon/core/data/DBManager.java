@@ -5,10 +5,19 @@
 
 package salomon.core.data;
 
-import java.sql.*;
-import salomon.core.Config;
-import salomon.core.data.common.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 import org.apache.log4j.Logger;
+
+import salomon.core.Config;
+import salomon.core.data.common.DBColumnName;
+import salomon.core.data.common.DBCondition;
+import salomon.core.data.common.DBTableName;
+import salomon.core.data.common.DBValue;
 
 /**
  * @author nico
@@ -70,8 +79,7 @@ public class DBManager
 		}
 		connectString += _dataBasePath;
 		_logger.info("connectString: " + connectString);
-		_connection = DriverManager
-				.getConnection(connectString, _user, _passwd);
+		_connection = DriverManager.getConnection(connectString, _user, _passwd);
 		_connection.setAutoCommit(false);
 		_statement = _connection.createStatement();
 	}
@@ -248,8 +256,7 @@ public class DBManager
 	public int update(DBValue[] values, DBCondition[] conditions)
 			throws SQLException
 	{
-		String tableName = values[0].getColumnName().getTableName()
-				.getForUpdate();
+		String tableName = values[0].getColumnName().getTableName().getForUpdate();
 		String query = "UPDATE " + tableName + " SET ";
 		for (int i = 0; i < values.length - 1; i++) {
 			query += values[i].getColumnName().getForUpdate() + "=";

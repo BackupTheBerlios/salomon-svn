@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
+
 import salomon.core.data.DBManager;
 import salomon.core.data.common.DBColumnName;
 import salomon.core.data.common.DBCondition;
@@ -45,8 +46,7 @@ public class DataSetManager
 		//
 		if (!conditions.isEmpty()) {
 			conditionsArray = new DBCondition[conditions.size()];
-			dataSet.setConditions((DBCondition[]) conditions
-					.toArray(conditionsArray));
+			dataSet.setConditions((DBCondition[]) conditions.toArray(conditionsArray));
 		}
 		return dataSet;
 	}

@@ -10,19 +10,23 @@ import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+
+import org.apache.log4j.Logger;
+
 import salomon.core.data.DBManager;
 import salomon.core.data.common.DBColumnName;
 import salomon.core.data.common.DBCondition;
 import salomon.core.data.common.DBTableName;
-import org.apache.log4j.Logger;
 
 /**
  *  
  */
 public class DataSet
 {
-	/** Conditions determinating data set.
-	 * If _conditions == null it means that data set includes all data */
+	/**
+	 * Conditions determinating data set. If _conditions == null it means that
+	 * data set includes all data
+	 */
 	private DBCondition[] _conditions = null;
 
 	private DBTableName[] _tableNames = null;
@@ -39,9 +43,7 @@ public class DataSet
 			//preparing conditions
 			//
 			List conditonList = getConditionsByTable(tableNames);
-			_logger
-					.info("DataSet.selectData(): conditonList = "
-							+ conditonList);
+			_logger.info("DataSet.selectData(): conditonList = " + conditonList);
 			if (conditonList.size() > 0) {
 				//
 				//adding conditions determinating data set
@@ -49,8 +51,7 @@ public class DataSet
 				queryConditions = new DBCondition[conditonList.size()
 						+ conditions.length];
 				conditonList.addAll(Arrays.asList(conditions));
-				queryConditions = (DBCondition[]) conditonList
-						.toArray(queryConditions);
+				queryConditions = (DBCondition[]) conditonList.toArray(queryConditions);
 			}
 		} else {
 			queryConditions = conditions;

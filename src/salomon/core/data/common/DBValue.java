@@ -80,7 +80,7 @@ public class DBValue
 				value += _value;
 				break;
 			case TEXT :
-				value += "'" + ((_value == null) ? "" : _value ) + "'";
+				value += "'" + ((_value == null) ? "" : _value) + "'";
 				break;
 			default :
 				_logger.error("Invalid condition type: " + _type);

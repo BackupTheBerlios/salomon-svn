@@ -5,7 +5,6 @@
 
 package salomon.core.data.dataset;
 
-
 /**
  *  
  */

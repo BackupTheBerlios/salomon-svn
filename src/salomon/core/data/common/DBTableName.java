@@ -14,6 +14,7 @@ public class DBTableName
 {
 
 	private String _tableAlias = null;
+
 	private String _tableName = null;
 
 	public DBTableName(String name)
@@ -40,8 +41,7 @@ public class DBTableName
 	 */
 	public boolean equals(Object tableName)
 	{
-		return _tableName
-				.equalsIgnoreCase(((DBTableName) tableName)._tableName);
+		return _tableName.equalsIgnoreCase(((DBTableName) tableName)._tableName);
 	}
 
 	// returns e.g "users" u ("name" alias)

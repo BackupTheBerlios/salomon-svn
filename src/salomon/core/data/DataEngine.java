@@ -5,9 +5,9 @@
 
 package salomon.core.data;
 
-import salomon.core.data.attribute.*;
-import salomon.core.data.dataset.*;
-import salomon.core.data.ruleset.*;
+import salomon.core.data.attribute.AttributeManager;
+import salomon.core.data.dataset.DataSetManager;
+import salomon.core.data.ruleset.RuleSetManager;
 
 /**
  *  
