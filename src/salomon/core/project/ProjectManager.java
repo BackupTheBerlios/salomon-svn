@@ -123,7 +123,7 @@ public final class ProjectManager implements IProjectManager
 	 */
 	public void saveProject() throws Exception, ClassNotFoundException
 	{
-		// saving project header
+		// saving project header        
 		int projectID = saveProjectHeader();
 		_currentProject.setProjectID(projectID);
 		// saving plugins
@@ -131,6 +131,8 @@ public final class ProjectManager implements IProjectManager
 		// saving tasks
 		saveTasks();
 		_logger.info("Project successfully saved.");
+        //TODO: bez tego czasem zawisa :-(
+        _dbManager.commit();
 	}
 
 	/**
