@@ -22,6 +22,7 @@
 package salomon.util.serialization;
 
 import salomon.platform.serialization.IInteger;
+import salomon.platform.serialization.IObject;
 
 /**
  * 
@@ -60,5 +61,14 @@ public class SimpleInteger implements IInteger
 	public void setValue(int value)
 	{
 		_value = value;
+	}
+
+	/**
+	 * @see salomon.platform.serialization.IObject#getType()
+	 */
+	public IObject.Types getType()
+	{
+		// TODO Auto-generated method stub
+		return IObject.Types.INT;
 	}
 }

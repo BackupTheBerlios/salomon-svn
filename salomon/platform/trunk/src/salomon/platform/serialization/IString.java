@@ -28,4 +28,5 @@ public interface IString extends IObject
 {
 	void setValue(String value);
     String getValue();
+
 }

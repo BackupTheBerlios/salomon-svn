@@ -62,4 +62,14 @@ public class SimpleArray implements IArray
 	{
 		_value = value;
 	}
+
+	/**
+	 * @see salomon.platform.serialization.IObject#getType()
+	 */
+	public IObject.Types getType()
+	{
+        return IObject.Types.STRING;
+	}
+    
+
 }

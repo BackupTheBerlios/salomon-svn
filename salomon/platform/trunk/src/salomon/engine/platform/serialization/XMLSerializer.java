@@ -22,17 +22,23 @@
 package salomon.engine.platform.serialization;
 
 import java.io.InputStream;
+import java.io.OutputStream;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Result;
+import javax.xml.transform.Source;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
 import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
-import salomon.platform.serialization.IObject;
+import salomon.util.serialization.SimpleStruct;
 
 /**
  * 
@@ -41,16 +47,22 @@ public final class XMLSerializer
 {
 private static final Logger LOGGER = Logger.getLogger(XMLSerializer.class);
 
-	public IObject deserialize(InputStream is)
+	/**
+	 * reads data from the given stream and creates SimpleStruct,
+     * can be called recurrently
+	 * @param is
+	 * @return SimpleStruct
+	 */
+	public SimpleStruct deserialize(InputStream is)
 	{
         Document document = null;
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        IObject result = null;
+        SimpleStruct result = null;
         try {
             DocumentBuilder builder =  factory.newDocumentBuilder();
             document = builder.parse(is);
             Node root = document.getChildNodes().item(0);
-            result = StructSerializer.deserialize(root);
+            result = StructDeserializer.deserialize(root);
         } catch (Exception e) {
         	LOGGER.error("", e);
         }
@@ -60,7 +72,13 @@ private static final Logger LOGGER = Logger.getLogger(XMLSerializer.class);
 
     
     
-	public void serialize(IObject value, InputStream is)
+	/**
+	 * creates XML out of the given struct
+	 * @param value
+	 * @param os
+	 * 
+     */
+	public void serialize(SimpleStruct value, OutputStream os)
 	{
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         Document document = null;
@@ -70,9 +88,14 @@ private static final Logger LOGGER = Logger.getLogger(XMLSerializer.class);
 		} catch (ParserConfigurationException e) {
             LOGGER.error("", e);
 		}
-        //document.createE
-        Element root = document.createElement(StructSerializer.NODE_STRUCT); 
-        document.appendChild(root);
-        System.out.println(document.toString());
+        document.appendChild(StructSerializer.serialize(document, value, null));
+        try {
+            Result result = new StreamResult(os);
+            Source source = new DOMSource(document);
+			Transformer  writer = TransformerFactory.newInstance().newTransformer();
+            writer.transform(source, result);
+		} catch (Exception e) {
+            LOGGER.error("", e);
+		}
 	}
 }

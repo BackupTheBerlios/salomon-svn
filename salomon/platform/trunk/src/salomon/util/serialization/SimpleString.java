@@ -21,6 +21,7 @@
 
 package salomon.util.serialization;
 
+import salomon.platform.serialization.IObject;
 import salomon.platform.serialization.IString;
 
 /**
@@ -61,5 +62,14 @@ public class SimpleString implements IString
 	{
 		_value = value;
 	}
+
+    /**
+     * @see salomon.platform.serialization.IObject#getType()
+     */
+    public IObject.Types getType()
+    {
+        // TODO Auto-generated method stub
+        return IObject.Types.STRING;
+    }
 
 }

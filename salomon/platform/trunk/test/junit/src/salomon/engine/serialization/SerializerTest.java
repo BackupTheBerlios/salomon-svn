@@ -48,7 +48,7 @@ private static final String TEST_FILE_NAME = "test/junit/res/struct.xml";
         SimpleStruct struct = null;
         try {
 			FileInputStream is = new FileInputStream(TEST_FILE_NAME);
-             struct= (SimpleStruct) serializer.deserialize(is);
+             struct= serializer.deserialize(is);
 		} catch (FileNotFoundException e) {
             assertTrue("File not found", false);
 		}
@@ -66,12 +66,18 @@ private static final String TEST_FILE_NAME = "test/junit/res/struct.xml";
 
     public void testSerialize() {
         XMLSerializer serializer = new XMLSerializer();
-    	IObject object = null;
+    	SimpleStruct object = null;
         try {
             FileInputStream is = new FileInputStream(TEST_FILE_NAME);
-            object= (SimpleStruct) serializer.deserialize(is);
+            object= serializer.deserialize(is);
         } catch (FileNotFoundException e) {
             assertTrue("File not found", false);
         }
+        serializer.serialize(object, System.out);
     }
+    
+    public static void main(String[] args)
+	{
+		new SerializerTest().testSerialize();
+	}
 }

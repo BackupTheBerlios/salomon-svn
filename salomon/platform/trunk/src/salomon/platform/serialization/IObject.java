@@ -27,5 +27,8 @@ package salomon.platform.serialization;
  */
 public interface IObject
 {
+    enum Types {STRUCT, STRING, INT, ARRAY};
+    
+    Types getType();
 	// empty body
 }

@@ -33,15 +33,9 @@ import salomon.platform.serialization.IStruct;
  */
 public class SimpleStruct implements IStruct
 {
-	private Map<String, IObject> _fields = new HashMap<String, IObject>();
+
     
-	/**
-	 * @see salomon.platform.serialization.IStruct#setField(java.lang.String, salomon.platform.serialization.IObject)
-	 */
-	public void setField(String name, IObject value)
-	{
-        _fields.put(name, value);
-	}
+    private Map<String, IObject> _fields = new HashMap<String, IObject>();
 
 	/**
 	 * @see salomon.platform.serialization.IStruct#getField(java.lang.String)
@@ -59,5 +53,20 @@ public class SimpleStruct implements IStruct
         Set<String> keys = _fields.keySet();
         
         return keys.toArray(new String[keys.size()]);
+	}
+    /**
+     * @see salomon.platform.serialization.IObject#getType()
+     */
+    public IObject.Types getType()
+    {
+        return IObject.Types.STRUCT;
+    }
+    
+	/**
+	 * @see salomon.platform.serialization.IStruct#setField(java.lang.String, salomon.platform.serialization.IObject)
+	 */
+	public void setField(String name, IObject value)
+	{
+        _fields.put(name, value);
 	}
 }

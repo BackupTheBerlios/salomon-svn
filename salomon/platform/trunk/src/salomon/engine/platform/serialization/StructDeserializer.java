@@ -6,11 +6,9 @@
 
 package salomon.engine.platform.serialization;
 
-import org.apache.log4j.Logger;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import salomon.platform.serialization.IObject;
 import salomon.util.serialization.SimpleInteger;
 import salomon.util.serialization.SimpleString;
 import salomon.util.serialization.SimpleStruct;
@@ -22,7 +20,7 @@ import salomon.util.serialization.SimpleStruct;
  * @author kuba
  * 
  */
-public class StructSerializer
+class StructDeserializer implements INodeNames
 {
 
 	/**
@@ -31,7 +29,7 @@ public class StructSerializer
 	 * @param node
 	 * @return IObject
 	 */
-	public static IObject deserialize(Node node)
+	public static SimpleStruct deserialize(Node node)
 	{
 		SimpleStruct result = new SimpleStruct();
 		NodeList nodeList = node.getChildNodes();
@@ -50,14 +48,13 @@ public class StructSerializer
 				result.setField(nodeName, object);
 			} else if (NODE_STRUCT.equals(nodeType)) {
 				String nodeName = getNodeName(tmp);
-				result.setField(nodeName, StructSerializer.deserialize(tmp));
+				result.setField(nodeName, StructDeserializer.deserialize(tmp));
 			}
 		}
 		return result;
 	}
-    
 
-    private static int getIntValue(Node node)
+	private static int getIntValue(Node node)
 	{
 		String value = node.getAttributes().getNamedItem(ATTR_VALUE)
 				.getNodeValue();
@@ -83,21 +80,5 @@ public class StructSerializer
 				.getNodeValue();
 		return result;
 	}
-
-	private static final String ATTR_NAME = "name";
-
-	private static final String ATTR_VALUE = "value";
-
-	private static final Logger LOGGER = Logger
-			.getLogger(StructSerializer.class);
-
-	private static final String NODE_INT = "int";
-
-	private static final String NODE_STRING = "string";
-
-	/**
-	 * Comment for <code>NODE_STRUCT</code>
-	 */
-	public static final String NODE_STRUCT = "struct";
 
 }
