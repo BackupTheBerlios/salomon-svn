@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import salomon.core.data.DBManager;
+import salomon.core.data.IDBSupporting;
 import salomon.core.data.common.SQLDelete;
 import salomon.core.data.common.SQLUpdate;
 
