@@ -55,12 +55,16 @@ Druga warstwa to warstwa odpowiedzialna za komunikacjê po stronie klienta. W sk³
 Trzecia warstwa to warstwa odpowiedzialna za ukrycie po stronie serwera faktu zdalnoœci obiektów.  W sk³ad warstwy tej wchodz¹: \emph{ManagerEngineProxy, PluginManagerProxy, PluginProxy, TaskManagerProxy, TaskProxy, ProjectManagerProxy, ProjectProxy}. Klasy te to proste wrappery na zdalne obiekty, które implementuj¹ odpowiednie interfejsy z j¹dra systemu. Deleguj¹ wywo³ania metod do zdalnych obiektów i zajmuj¹ siê obs³ug¹ zdalnych wyj¹tków. 
 
 \paragraph{}
-Klasy implemetuj¹ce \emph{ISettings} i \emph{IResult} musz¹ byæ serializowane.
-
-\paragraph{}
 Dziêki zastosowaniu budowy warstwowej interfejsy z j¹dra systemu nie musza dziedziczyæ po Remote ani wyj¹tków \emph{RemoteException}, a podmiana technologii s³u¿¹cej do komunikacji, to tylko wymiana drugiej i trzeciej warstwy, bez ingerencji w logikê systemu. Nie ma wymagania na to, aby zdalne interfejsy dok³adnie odpowiada³y swoim odpowiednikom z j¹dra.
 
 \paragraph{}
 Dodatkowo na potrzeby GUI serwera zosta³a stworzona kolejna warstwa, w której sk³ad wchodz¹: \emph{ManagerEngineHolder, PluginManagerHolder, ProjectManagerHolder, TaskManagerHolder}. Zadaniem tej warstwy jest zapewnienie bezpieczeñstwa zmiany obecnie konfigurowanego klienta. Klasy te to wrappery, które przechowuj¹ instancje odpowiednich klas z warstwy trzeciej. Dziêki takim wrapperom podmiana aktualnie konfigurowanego klienta nastêpuje tylko w jednym miejscu. Podmiana polega na podmianie instancji przechowywanych w Holderach. Warstwa zabezpiecza przed sytuacj¹, w której nie wszystkie instancje w GUI wskazuj¹ na jednego klienta. 
 
+Warstwowa struktura klas
 
+\begin{figure}[htb]
+	\centering
+		\includegraphics[scale=0.45, angle=270]{Communication.jpg}
+	\caption{Warstwowa struktura klas}
+	\label{fig:Communication}
+\end{figure}
