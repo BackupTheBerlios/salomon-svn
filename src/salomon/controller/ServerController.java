@@ -6,6 +6,7 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.rmi.RMISecurityManager;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
@@ -28,8 +29,9 @@ import org.apache.log4j.Logger;
 
 import salomon.controller.gui.ControllerFrame;
 import salomon.controller.gui.ControllerPanel;
-import salomon.controller.gui.HostPanel;
 import salomon.controller.gui.ProjectEditionManager;
+import salomon.controller.gui.RemoteControllerGUI;
+import salomon.controller.gui.RemoteControllerPanel;
 import salomon.controller.gui.SplashScreen;
 import salomon.controller.gui.TaskEditionManager;
 import salomon.controller.gui.action.ActionManager;
@@ -39,8 +41,9 @@ import salomon.core.Messages;
 import salomon.core.SQLConsole;
 import salomon.core.data.DBManager;
 import salomon.core.holder.ManagerEngineHolder;
-import salomon.core.remote.IMasterController;
 import salomon.core.remote.MasterController;
+import salomon.core.remote.event.IMasterControllerListener;
+import salomon.core.remote.event.RemoteControllerEvent;
 
 /**
  *  
@@ -51,18 +54,20 @@ public final class ServerController implements IController
 	private ActionManager _actionManager;
 
 	private JPanel _contentPane;
-    
-    private JSplitPane _splitPane;
 
 	private ServerGUIMenu _guiMenu;
 
-	private IManagerEngine _managerEngine;
+	private ManagerEngineHolder _managerEngineHolder;
 
-	private IMasterController _masterController;
+	private MasterController _masterController;
 
 	private JMenuBar _menuBar;
 
 	private ProjectEditionManager _projectEditionManager;
+
+	private RemoteControllerPanel _remoteControllerPanel;
+
+	private JSplitPane _splitPane;
 
 	private TaskEditionManager _taskEditionManager;
 
@@ -70,20 +75,22 @@ public final class ServerController implements IController
 
 	public void start(IManagerEngine managerEngine)
 	{
-		_managerEngine = new ManagerEngineHolder(managerEngine);
+		_managerEngineHolder = new ManagerEngineHolder(managerEngine);
 		initGUI();
-		//initRMI();
+		initRMI();
 	}
 
 	private JComponent getJContentPane()
 	{
 		if (_contentPane == null) {
-			_contentPane = new JPanel();                
-            _contentPane.setLayout(new BorderLayout());
-            _splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);            
-            _splitPane.setLeftComponent(new HostPanel().getHostPanel());
-            _splitPane.setRightComponent(new ControllerPanel(_taskEditionManager,_actionManager));
-            _contentPane.add(_splitPane);
+			_contentPane = new JPanel();
+			_contentPane.setLayout(new BorderLayout());
+			_splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
+			_remoteControllerPanel = new RemoteControllerPanel(_managerEngineHolder);            
+			_splitPane.setLeftComponent(_remoteControllerPanel.getControllerPanel());
+			_splitPane.setRightComponent(new ControllerPanel(
+					_taskEditionManager, _actionManager));
+			_contentPane.add(_splitPane);
 		}
 		return _contentPane;
 	}
@@ -136,9 +143,9 @@ public final class ServerController implements IController
 		}
 
 		// Creates a new empty project
-		_managerEngine.getProjectManager().newProject();
-		_projectEditionManager = new ProjectEditionManager(_managerEngine);
-		_taskEditionManager = new TaskEditionManager(_managerEngine);
+		_managerEngineHolder.getProjectManager().newProject();
+		_projectEditionManager = new ProjectEditionManager(_managerEngineHolder);
+		_taskEditionManager = new TaskEditionManager(_managerEngineHolder);
 		_actionManager = new ActionManager(_projectEditionManager,
 				_taskEditionManager);
 		_guiMenu = new ServerGUIMenu(_actionManager);
@@ -149,8 +156,9 @@ public final class ServerController implements IController
 
 		_taskEditionManager.setParent(frame);
 		_projectEditionManager.setParent(frame);
+        _remoteControllerPanel.setParent(frame);
+        
 		_projectEditionManager.setTaskEditionManager(_taskEditionManager);
-
 		SplashScreen.hide();
 		frame.setVisible(true);
 	}
@@ -163,13 +171,44 @@ public final class ServerController implements IController
 	private void initRMI()
 	{
 		try {
+            //System.setSecurityManager(new RMISecurityManager());
 			_masterController = new MasterController();
+            _masterController.addMasterControllerListener(new MasterControllerListener());
 			Registry registry = LocateRegistry.createRegistry(RMI_PORT);
 			//TODO: Use bind method
 			registry.rebind("MasterController", _masterController);
 		} catch (RemoteException e) {
 			_logger.error(e);
 		}
+	}
+
+	private final class MasterControllerListener
+			implements IMasterControllerListener
+	{
+
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see salomon.core.remote.event.IMasterControllerListener#controllerAdded(salomon.core.remote.event.RemoteControllerEvent)
+		 */
+		public void controllerAdded(RemoteControllerEvent event)
+		{
+			RemoteControllerGUI controllerGUI = new RemoteControllerGUI(
+					event.getController());
+			_remoteControllerPanel.addController(controllerGUI);
+		}
+
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see salomon.core.remote.event.IMasterControllerListener#controllerRemoved(salomon.core.remote.event.RemoteControllerEvent)
+		 */
+		public void controllerRemoved(RemoteControllerEvent event)
+		{            
+            RemoteControllerGUI controllerGUI = new RemoteControllerGUI(event.getController());
+			_remoteControllerPanel.removeController(controllerGUI);
+		}
+
 	}
 
 	private final static class ServerGUIMenu
