@@ -12,8 +12,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.io.File;
+import java.net.URL;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -30,11 +31,13 @@ import org.apache.log4j.Logger;
 import salomon.core.IManagerEngine;
 import salomon.core.Messages;
 import salomon.core.plugin.PluginLoader;
-import salomon.core.task.Task;
+import salomon.core.task.ITask;
 import salomon.plugin.IPlugin;
 import salomon.plugin.IResultComponent;
 import salomon.plugin.ISettingComponent;
 import salomon.plugin.ISettings;
+
+import com.sun.jmx.snmp.tasks.Task;
 
 /**
  * @author nico
@@ -77,9 +80,10 @@ public final class TaskEditionManager
 		_taskList.addMouseListener(_popupListener);
 		_pluginList.addMouseListener(_popupListener);
 		//TODO: getting plugin from Engine?
-		File[] files = _managerEngine.getPluginManager().getAvailablePlugins();
-		for (int i = 0; i < files.length; i++) {
-			_pluginListModel.addElement(new LocalPlugin(files[i]));
+		Collection urls = _managerEngine.getPluginManager().getAvailablePlugins();
+		for (Iterator iter = urls.iterator(); iter.hasNext();) {
+			URL url = (URL) iter.next();
+			_pluginListModel.addElement(new LocalPlugin(url));
 		}
 	}
 
@@ -94,10 +98,10 @@ public final class TaskEditionManager
 			IPlugin plugin;
 			try {
 				plugin = localPlugin.getPlugin();
-				Task task = new Task();
-				task.setPlugin(plugin);
-				task.setName(getTaskName());
-				_taskListModel.addElement(task);
+				TaskGUI taskGUI = new TaskGUI();
+				taskGUI.setPlugin(plugin);
+				taskGUI.setName(getTaskName());
+				_taskListModel.addElement(taskGUI);
 			} catch (Exception e) {
 				_logger.fatal("", e); //$NON-NLS-1$				
 				_parent.showErrorMessage(Messages.getString("ERR_CANNOT_LOAD_PLUGIN"));
@@ -163,14 +167,23 @@ public final class TaskEditionManager
 	 * 
 	 * @param tasks
 	 */
-	public void reloadTasks(List tasks)
+	public void refresh()
 	{
+		_logger.debug("reloading plugins");
+		_pluginListModel.removeAllElements();
+		Collection plugins = _managerEngine.getPluginManager().getAvailablePlugins();
+		for (Iterator iter = plugins.iterator(); iter.hasNext();) {
+            LocalPlugin localPlugin = new LocalPlugin((URL) iter.next());
+			_pluginListModel.addElement(localPlugin);    
+		}
 		_logger.debug("reloading tasks");
 		_taskListModel.removeAllElements();
+		Collection tasks = _managerEngine.getTasksManager().getTasks();
 		for (Iterator iter = tasks.iterator(); iter.hasNext();) {
 			_logger.debug("adding task");
-			_taskListModel.addElement(iter.next());
+			_taskListModel.addElement(new TaskGUI((ITask) iter.next()));
 		}
+
 	}
 
 	/**
@@ -195,8 +208,7 @@ public final class TaskEditionManager
 	}
 
 	/**
-	 * @param parent
-	 *            The parent to set.
+	 * @param parent The parent to set.
 	 */
 	public void setParent(ControllerFrame parent)
 	{
@@ -271,7 +283,7 @@ public final class TaskEditionManager
 
 	private void showResultPanel()
 	{
-		Task currentTask = (Task) _taskListModel.get(_selectedItem);
+		TaskGUI currentTask = (TaskGUI) _taskListModel.get(_selectedItem);
 		IPlugin plugin = currentTask.getPlugin();
 		IResultComponent resultComponent = plugin.getResultComponent();
 		Component comp = resultComponent.getComponent(currentTask.getResult());
@@ -294,7 +306,7 @@ public final class TaskEditionManager
 
 	private void showSettingsPanel()
 	{
-		Task currentTask = (Task) _taskListModel.get(_selectedItem);
+		TaskGUI currentTask = (TaskGUI) _taskListModel.get(_selectedItem);
 		IPlugin plugin = currentTask.getPlugin();
 		ISettingComponent settingComponent = plugin.getSettingComponent();
 		ISettings inputSettings = currentTask.getSettings();
@@ -317,9 +329,9 @@ public final class TaskEditionManager
 	{
 		private IPlugin _plugin = null;
 
-		private File _pluginLocation = null;
+		private URL _pluginLocation = null;
 
-		public LocalPlugin(File pluginFile)
+		public LocalPlugin(URL pluginFile)
 		{
 			_pluginLocation = pluginFile;
 		}
@@ -341,7 +353,11 @@ public final class TaskEditionManager
 
 		public String toString()
 		{
-			return _pluginLocation.toString();
+            //TODO:
+            String path = _pluginLocation.getPath();
+            int index = path.lastIndexOf('/');
+            
+			return path.substring(index + 1);
 		}
 	}
 

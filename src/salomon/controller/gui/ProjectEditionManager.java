@@ -22,10 +22,9 @@ import salomon.core.SQLConsole;
 import salomon.core.data.DBManager;
 import salomon.core.data.common.DBColumnName;
 import salomon.core.data.common.DBTableName;
+import salomon.core.project.IProject;
 import salomon.core.project.IProjectManager;
-import salomon.core.project.Project;
 import salomon.core.task.ITaskManager;
-import salomon.core.task.Task;
 import salomon.plugin.ISettings;
 
 /**
@@ -37,7 +36,6 @@ import salomon.plugin.ISettings;
  */
 public final class ProjectEditionManager
 {
-
 	private IManagerEngine _managerEngine;
 
 	private ControllerFrame _parent;
@@ -63,17 +61,18 @@ public final class ProjectEditionManager
 
 	public void newProject()
 	{
-		Project project = _projectManager.newProject();
+		_projectManager.newProject();
+		IProject project = _projectManager.getCurrentProject();
 		setProjectProperties(project);
-		_parent.refreshGui(project);
+		_parent.refreshGui();
 	}
 
 	public void openProject()
 	{
 		try {
 			int projectId = chooseProject();
-			Project project = _projectManager.loadProject(projectId);
-			_parent.refreshGui(project);
+			_projectManager.loadProject(projectId);
+			_parent.refreshGui();
 		} catch (Exception e) {
 			_logger.fatal("", e);
 			_parent.showErrorMessage("Cannot load project.");
@@ -82,7 +81,7 @@ public final class ProjectEditionManager
 
 	public void saveProject()
 	{
-		Project project = _projectManager.getCurrentProject();
+		IProject project = _projectManager.getCurrentProject();
 		if (project.getName() == null) {
 			setProjectProperties(project);
 		}
@@ -90,8 +89,7 @@ public final class ProjectEditionManager
 	}
 
 	/**
-	 * @param parent
-	 *            The parent to set.
+	 * @param parent The parent to set.
 	 */
 	public void setParent(ControllerFrame parent)
 	{
@@ -103,7 +101,7 @@ public final class ProjectEditionManager
 	 * 
 	 * @param project
 	 */
-	public void setProjectProperties(Project project)
+	public void setProjectProperties(IProject project)
 	{
 		if (_pnlProjectProperties == null) {
 			_pnlProjectProperties = new JPanel();
@@ -171,7 +169,7 @@ public final class ProjectEditionManager
 		//
 		List incorrectTasks = new LinkedList();
 		for (Iterator iter = taskList.iterator(); iter.hasNext();) {
-			Task task = (Task) iter.next();
+			TaskGUI task = (TaskGUI) iter.next();
 			if (task.getSettings() == null) {
 				incorrectTasks.add(task);
 			}
@@ -179,7 +177,7 @@ public final class ProjectEditionManager
 		if (!incorrectTasks.isEmpty()) {
 			String message = "There are tasks with settings not set:\n";
 			for (Iterator iter = incorrectTasks.iterator(); iter.hasNext();) {
-				Task task = (Task) iter.next();
+				TaskGUI task = (TaskGUI) iter.next();
 				message += task.getName() + "\n";
 			}
 			message += "Do you want to use default settings?";
@@ -187,7 +185,7 @@ public final class ProjectEditionManager
 				// getting default settings
 				_logger.debug("getting default settings");
 				for (Iterator iter = incorrectTasks.iterator(); iter.hasNext();) {
-					Task task = (Task) iter.next();
+					TaskGUI task = (TaskGUI) iter.next();
 					ISettings defaultSettings = task.getPlugin().getSettingComponent().getDefaultSettings();
 					task.setSettings(defaultSettings);
 				}
@@ -202,13 +200,15 @@ public final class ProjectEditionManager
 			//
 			// removing old tasks
 			//
-			ITaskManager taskManager = _projectManager.getCurrentProject().getManagerEngine().getTasksManager();
+			ITaskManager taskManager = _managerEngine.getTasksManager();
 			taskManager.clearTaskList();
 			for (Iterator iter = taskList.iterator(); iter.hasNext();) {
-				taskManager.addTask((Task) iter.next());
+				TaskGUI taskGUI = (TaskGUI) iter.next();
+				taskGUI.save(taskManager.createTask());
 			}
+
 			// saving project
-			_projectManager.saveProject(_projectManager.getCurrentProject());
+			_projectManager.saveProject();
 			DBManager.getInstance().commit();
 			_logger.info("Transaction commited");
 			_parent.showInfoMessage("Project saved successfully");
