@@ -28,8 +28,8 @@ import java.rmi.server.UnicastRemoteObject;
 import org.apache.log4j.Logger;
 
 import salomon.engine.plugin.PluginLoader;
+import salomon.engine.task.ITask;
 
-import salomon.platform.task.ITask;
 import salomon.plugin.IResult;
 import salomon.plugin.ISettings;
 

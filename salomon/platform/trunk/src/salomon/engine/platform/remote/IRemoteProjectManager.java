@@ -24,8 +24,9 @@ package salomon.engine.platform.remote;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
+import salomon.engine.project.IProject;
+
 import salomon.platform.exception.PlatformException;
-import salomon.platform.project.IProject;
 
 /**
  * Remote version of IProjectManager interface. It has all methods from

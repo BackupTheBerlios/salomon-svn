@@ -19,7 +19,7 @@
  * 
  */
 
-package salomon.platform.task;
+package salomon.engine.task;
 
 /**
  * 

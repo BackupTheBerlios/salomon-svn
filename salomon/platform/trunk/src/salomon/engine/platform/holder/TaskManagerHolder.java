@@ -22,10 +22,11 @@
 package salomon.engine.platform.holder;
 
 
+import salomon.engine.task.ITask;
+import salomon.engine.task.ITaskManager;
+import salomon.engine.task.ITaskRunner;
+
 import salomon.platform.exception.PlatformException;
-import salomon.platform.task.ITask;
-import salomon.platform.task.ITaskManager;
-import salomon.platform.task.ITaskRunner;
 
 /**
  * Holds taskManager of current client.
@@ -89,7 +90,7 @@ final class TaskManagerHolder implements ITaskManager
 	}
 
 	/**
-	 * @see salomon.platform.task.ITaskManager#addTask()
+	 * @see salomon.engine.task.ITaskManager#addTask()
 	 */
 	public void addTask()
 	{
@@ -97,7 +98,7 @@ final class TaskManagerHolder implements ITaskManager
 	}
 
 	/**
-	 * @see salomon.platform.task.ITaskManager#addTask(salomon.platform.task.ITask)
+	 * @see salomon.engine.task.ITaskManager#addTask(salomon.platform.task.ITask)
 	 */
 	public void addTask(ITask task) throws PlatformException
 	{
@@ -105,7 +106,7 @@ final class TaskManagerHolder implements ITaskManager
 	}
 
 	/**
-	 * @see salomon.platform.task.ITaskManager#getRunner()
+	 * @see salomon.engine.task.ITaskManager#getRunner()
 	 */
 	public ITaskRunner getRunner() throws PlatformException
 	{

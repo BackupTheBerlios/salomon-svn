@@ -19,7 +19,7 @@
  * 
  */
 
-package salomon.platform.plugin;
+package salomon.engine.plugin;
 
 
 import salomon.plugin.Description;

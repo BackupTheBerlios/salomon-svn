@@ -27,10 +27,11 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 
+import salomon.engine.task.ITask;
+import salomon.engine.task.ITaskManager;
+import salomon.engine.task.ITaskRunner;
+
 import salomon.platform.exception.PlatformException;
-import salomon.platform.task.ITask;
-import salomon.platform.task.ITaskManager;
-import salomon.platform.task.ITaskRunner;
 
 /**
  * Class is a sever side wrapper of IRemoteTaskManager object. It implements
@@ -54,7 +55,7 @@ public final class TaskManagerProxy implements ITaskManager
 	}
 
 	/**
-	 * @see salomon.platform.task.ITaskManager#addTask()
+	 * @see salomon.engine.task.ITaskManager#addTask()
 	 */
 	public void addTask()
 	{
@@ -62,7 +63,7 @@ public final class TaskManagerProxy implements ITaskManager
 	}
 
 	/**
-	 * @see salomon.platform.task.ITaskManager#addTask(salomon.platform.task.ITask)
+	 * @see salomon.engine.task.ITaskManager#addTask(salomon.platform.task.ITask)
 	 */
 	public void addTask(ITask task) throws PlatformException
 	{
@@ -110,7 +111,7 @@ public final class TaskManagerProxy implements ITaskManager
 	}
 
 	/**
-	 * @see salomon.platform.task.ITaskManager#getRunner()
+	 * @see salomon.engine.task.ITaskManager#getRunner()
 	 */
 	public ITaskRunner getRunner() throws PlatformException
 	{

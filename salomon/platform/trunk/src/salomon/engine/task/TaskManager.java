@@ -35,9 +35,6 @@ import salomon.engine.platform.DataEngine;
 import salomon.engine.platform.Environment;
 
 import salomon.platform.exception.PlatformException;
-import salomon.platform.task.ITask;
-import salomon.platform.task.ITaskManager;
-import salomon.platform.task.ITaskRunner;
 
 import salomon.plugin.IPlugin;
 import salomon.plugin.IResult;
@@ -78,7 +75,7 @@ public final class TaskManager implements ITaskManager
 	}
 
 	/**
-	 * @see salomon.platform.task.ITaskManager#addTask(salomon.platform.task.ITask)
+	 * @see salomon.engine.task.ITaskManager#addTask(salomon.platform.task.ITask)
 	 */
 	public void addTask(ITask task)
 	{
@@ -107,7 +104,7 @@ public final class TaskManager implements ITaskManager
 	} // end getCurrentTask
 
 	/**
-	 * @see salomon.platform.task.ITaskManager#getRunner()
+	 * @see salomon.engine.task.ITaskManager#getRunner()
 	 */
 	public ITaskRunner getRunner() throws PlatformException
 	{

@@ -19,7 +19,7 @@
  * 
  */
 
-package salomon.platform.task;
+package salomon.engine.task;
 
 import salomon.plugin.IPlugin;
 import salomon.plugin.IResult;

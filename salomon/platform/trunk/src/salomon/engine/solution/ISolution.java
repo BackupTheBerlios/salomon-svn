@@ -19,13 +19,13 @@
  * 
  */
 
-package salomon.platform.solution;
+package salomon.engine.solution;
 
-import salomon.platform.project.IProjectManager;
+import salomon.engine.project.IProjectManager;
 
 /**
  * Represents a solution.
- * @see salomon.platform.solution.ISolutionManager
+ * @see salomon.engine.solution.ISolutionManager
  */
 public interface ISolution
 {

@@ -33,7 +33,6 @@ import salomon.engine.DBManager;
 
 import salomon.engine.platform.data.common.SQLDelete;
 import salomon.engine.platform.data.common.SQLSelect;
-import salomon.platform.plugin.IPluginManager;
 import salomon.plugin.Description;
 import salomon.plugin.IPlugin;
 

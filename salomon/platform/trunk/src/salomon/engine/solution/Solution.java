@@ -21,8 +21,8 @@
 
 package salomon.engine.solution;
 
-import salomon.platform.project.IProjectManager;
-import salomon.platform.solution.ISolution;
+import salomon.engine.project.IProjectManager;
+
 
 /**
  * 
@@ -31,7 +31,7 @@ final class Solution implements ISolution
 {
 
 	/**
-	 * @see salomon.platform.solution.ISolution#getProjectManager()
+	 * @see salomon.engine.solution.ISolution#getProjectManager()
 	 */
 	public IProjectManager getProjectManager()
 	{

@@ -21,9 +21,10 @@
 
 package salomon.engine.platform.holder;
 
+import salomon.engine.project.IProject;
+import salomon.engine.project.IProjectManager;
+
 import salomon.platform.exception.PlatformException;
-import salomon.platform.project.IProject;
-import salomon.platform.project.IProjectManager;
 
 /**
  * Holds projectManager of current client.
@@ -43,7 +44,7 @@ final class ProjectManagerHolder implements IProjectManager
 	}
 
 	/**
-	 * @see salomon.platform.project.IProjectManager#addProject(salomon.platform.project.IProject)
+	 * @see salomon.engine.project.IProjectManager#addProject(salomon.platform.project.IProject)
 	 */
 	public void addProject(IProject project) throws PlatformException
 	{
@@ -51,7 +52,7 @@ final class ProjectManagerHolder implements IProjectManager
 	}
 
 	/**
-	 * @see salomon.platform.project.IProjectManager#ceateProject()
+	 * @see salomon.engine.project.IProjectManager#ceateProject()
 	 */
 	public void ceateProject()
 	{
@@ -59,7 +60,7 @@ final class ProjectManagerHolder implements IProjectManager
 	}
 
 	/**
-	 * @see salomon.platform.project.IProjectManager#createProject()
+	 * @see salomon.engine.project.IProjectManager#createProject()
 	 */
 	public IProject createProject()
 	{
@@ -67,7 +68,7 @@ final class ProjectManagerHolder implements IProjectManager
 	}
 
 	/**
-	 * @see salomon.platform.project.IProjectManager#getProjects()
+	 * @see salomon.engine.project.IProjectManager#getProjects()
 	 */
 	public IProject[] getProjects() throws PlatformException
 	{
@@ -75,7 +76,7 @@ final class ProjectManagerHolder implements IProjectManager
 	}
 
 	/**
-	 * @see salomon.platform.project.IProjectManager#loadProject(int)
+	 * @see salomon.engine.project.IProjectManager#loadProject(int)
 	 */
 	public IProject loadProject(int projectID) throws PlatformException
 	{
@@ -83,7 +84,7 @@ final class ProjectManagerHolder implements IProjectManager
 	}
 
 	/**
-	 * @see salomon.platform.project.IProjectManager#saveProject()
+	 * @see salomon.engine.project.IProjectManager#saveProject()
 	 */
 	public void saveProject() throws PlatformException
 	{

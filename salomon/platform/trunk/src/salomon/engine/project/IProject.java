@@ -19,7 +19,7 @@
  * 
  */
 
-package salomon.platform.project;
+package salomon.engine.project;
 
 /**
  * An interface for projects.

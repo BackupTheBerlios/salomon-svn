@@ -37,11 +37,11 @@ import javax.swing.JTextField;
 import org.apache.log4j.Logger;
 
 import salomon.engine.DBManager;
+import salomon.engine.project.IProject;
+import salomon.engine.project.IProjectManager;
+import salomon.engine.task.ITaskManager;
 
 import salomon.engine.platform.IManagerEngine;
-import salomon.platform.project.IProject;
-import salomon.platform.project.IProjectManager;
-import salomon.platform.task.ITaskManager;
 import salomon.plugin.ISettings;
 import salomon.util.gui.Utils;
 

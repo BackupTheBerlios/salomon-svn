@@ -25,7 +25,8 @@ import java.rmi.RemoteException;
 
 import org.apache.log4j.Logger;
 
-import salomon.platform.project.IProject;
+import salomon.engine.project.IProject;
+
 
 /**
  * Class is a sever side wrapper of IRemoteProject object. It implements

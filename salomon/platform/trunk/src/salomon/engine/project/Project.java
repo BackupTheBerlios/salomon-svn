@@ -30,7 +30,6 @@ import salomon.engine.IDBSupporting;
 
 import salomon.engine.platform.data.common.SQLDelete;
 import salomon.engine.platform.data.common.SQLUpdate;
-import salomon.platform.project.IProject;
 
 /**
  * Represents a project, it is an implementation of IProject interface.

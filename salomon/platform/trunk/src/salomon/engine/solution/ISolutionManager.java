@@ -19,14 +19,14 @@
  * 
  */
 
-package salomon.platform.solution;
+package salomon.engine.solution;
 
 import salomon.platform.exception.PlatformException;
 
 /**
  * Manager of solutions.
  * 
- * @see salomon.platform.solution.ISolution
+ * @see salomon.engine.solution.ISolution
  */
 public interface ISolutionManager
 {

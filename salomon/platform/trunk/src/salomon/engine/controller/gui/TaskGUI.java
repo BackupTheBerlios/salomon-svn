@@ -21,7 +21,8 @@
 
 package salomon.engine.controller.gui;
 
-import salomon.platform.task.ITask;
+import salomon.engine.task.ITask;
+
 import salomon.plugin.IPlugin;
 import salomon.plugin.IResult;
 import salomon.plugin.ISettings;

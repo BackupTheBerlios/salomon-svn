@@ -32,6 +32,7 @@ import org.apache.log4j.Logger;
 
 import salomon.engine.DBManager;
 import salomon.engine.plugin.PluginLoader;
+import salomon.engine.task.ITask;
 import salomon.engine.task.Task;
 
 import salomon.engine.platform.IManagerEngine;
@@ -42,9 +43,6 @@ import salomon.util.gui.Utils;
 
 import salomon.platform.exception.DBException;
 import salomon.platform.exception.PlatformException;
-import salomon.platform.project.IProject;
-import salomon.platform.project.IProjectManager;
-import salomon.platform.task.ITask;
 
 import salomon.plugin.Description;
 import salomon.plugin.IPlugin;
@@ -75,7 +73,7 @@ public final class ProjectManager implements IProjectManager
 	}
 
 	/**
-	 * @see salomon.platform.project.IProjectManager#addProject(salomon.platform.project.IProject)
+	 * @see salomon.engine.project.IProjectManager#addProject(salomon.platform.project.IProject)
 	 */
 	public void addProject(IProject project)
 	{
@@ -90,7 +88,7 @@ public final class ProjectManager implements IProjectManager
 	}
 
 	/**
-	 * @see salomon.platform.project.IProjectManager#createProject()
+	 * @see salomon.engine.project.IProjectManager#createProject()
 	 */
 	public IProject createProject()
 	{

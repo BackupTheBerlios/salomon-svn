@@ -25,9 +25,10 @@ import java.rmi.RemoteException;
 
 import org.apache.log4j.Logger;
 
+import salomon.engine.project.IProject;
+import salomon.engine.project.IProjectManager;
+
 import salomon.platform.exception.PlatformException;
-import salomon.platform.project.IProject;
-import salomon.platform.project.IProjectManager;
 
 /**
  * Class is a sever side wrapper of IRemoteProjectManager object. It implements
@@ -53,7 +54,7 @@ public final class ProjectManagerProxy implements IProjectManager
 	}
 
 	/**
-	 * @see salomon.platform.project.IProjectManager#addProject(salomon.platform.project.IProject)
+	 * @see salomon.engine.project.IProjectManager#addProject(salomon.platform.project.IProject)
 	 */
 	public void addProject(IProject project)
 	{
@@ -77,7 +78,7 @@ public final class ProjectManagerProxy implements IProjectManager
 	}
 
 	/**
-	 * @see salomon.platform.project.IProjectManager#createProject()
+	 * @see salomon.engine.project.IProjectManager#createProject()
 	 */
 	public IProject createProject()
 	{

@@ -21,8 +21,6 @@
 
 package salomon.engine.solution;
 
-import salomon.platform.solution.ISolution;
-import salomon.platform.solution.ISolutionManager;
 
 /**
  * 
@@ -31,7 +29,7 @@ public final class SolutionManger implements ISolutionManager
 {
 
 	/**
-	 * @see salomon.platform.solution.ISolutionManager#getSolutions()
+	 * @see salomon.engine.solution.ISolutionManager#getSolutions()
 	 */
 	public ISolution[] getSolutions()
 	{
@@ -39,7 +37,7 @@ public final class SolutionManger implements ISolutionManager
 	}
 
 	/**
-	 * @see salomon.platform.solution.ISolutionManager#getSolution(java.lang.String)
+	 * @see salomon.engine.solution.ISolutionManager#getSolution(java.lang.String)
 	 */
 	public ISolution getSolution(String name)
 	{
@@ -47,7 +45,7 @@ public final class SolutionManger implements ISolutionManager
 	}
 
 	/**
-	 * @see salomon.platform.solution.ISolutionManager#createSolution()
+	 * @see salomon.engine.solution.ISolutionManager#createSolution()
 	 */
 	public ISolution createSolution()
 	{
@@ -55,7 +53,7 @@ public final class SolutionManger implements ISolutionManager
 	}
 
 	/**
-	 * @see salomon.platform.solution.ISolutionManager#addSolution(salomon.platform.solution.ISolution)
+	 * @see salomon.engine.solution.ISolutionManager#addSolution(salomon.platform.solution.ISolution)
 	 */
 	public void addSolution(ISolution solution)
 	{

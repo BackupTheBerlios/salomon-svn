@@ -19,7 +19,7 @@
  * 
  */
 
-package salomon.platform.project;
+package salomon.engine.project;
 
 import salomon.platform.exception.PlatformException;
 

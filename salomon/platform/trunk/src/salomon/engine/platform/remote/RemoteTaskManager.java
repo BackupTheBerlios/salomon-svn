@@ -28,9 +28,10 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 
+import salomon.engine.task.ITask;
+import salomon.engine.task.ITaskManager;
+
 import salomon.platform.exception.PlatformException;
-import salomon.platform.task.ITask;
-import salomon.platform.task.ITaskManager;
 
 /**
  * Class representing remote instance of ITaskManager.

@@ -30,7 +30,6 @@ import salomon.engine.IDBSupporting;
 
 import salomon.engine.platform.data.common.SQLDelete;
 import salomon.engine.platform.data.common.SQLUpdate;
-import salomon.platform.task.ITask;
 import salomon.plugin.IPlugin;
 import salomon.plugin.IResult;
 import salomon.plugin.ISettings;

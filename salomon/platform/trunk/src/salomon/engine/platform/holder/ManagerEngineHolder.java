@@ -21,10 +21,11 @@
 
 package salomon.engine.platform.holder;
 
+import salomon.engine.plugin.IPluginManager;
+import salomon.engine.project.IProjectManager;
+import salomon.engine.task.ITaskManager;
+
 import salomon.engine.platform.IManagerEngine;
-import salomon.platform.plugin.IPluginManager;
-import salomon.platform.project.IProjectManager;
-import salomon.platform.task.ITaskManager;
 
 /**
  * Holds all other holders.
