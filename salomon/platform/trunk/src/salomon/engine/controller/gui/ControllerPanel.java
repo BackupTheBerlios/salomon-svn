@@ -60,6 +60,8 @@ public final class ControllerPanel extends JPanel
 
 	private JList _lstTasks;
 
+	private PluginMangerGUI _pluginMangerGUI;
+
 	private JPanel _pnlInit;
 
 	private JPanel _pnlManagerButtons;
@@ -79,11 +81,9 @@ public final class ControllerPanel extends JPanel
 	private int _strutWidth = 10;
 
 	private TaskManagerGUI _taskManagerGUI;
-	
-	private PluginMangerGUI _pluginMangerGUI;
 
-	public ControllerPanel(TaskManagerGUI taskManagerGUI, PluginMangerGUI pluginMangerGUI,
-			ActionManager actionManager)
+	public ControllerPanel(TaskManagerGUI taskManagerGUI,
+			PluginMangerGUI pluginMangerGUI, ActionManager actionManager)
 	{
 		super();
 		_actionManager = actionManager;
@@ -109,7 +109,7 @@ public final class ControllerPanel extends JPanel
 		LOGGER.debug("ControllerPane: refreshing...");
 		super.validate();
 		_pluginMangerGUI.refresh();
-		_taskManagerGUI.refresh();		
+		_taskManagerGUI.refresh();
 	}
 
 	/**

@@ -204,10 +204,6 @@ public final class MasterController implements IController
 		_guiMenu = new MasterGUIMenu(_actionManager);
 		ControllerFrame frame = new ControllerFrame();
 		// frame.setContentPane(getJContentPane());
-
-		_taskManagerGUI.setParent(frame);
-		_projectManagerGUI.setParent(frame);
-		_remoteControllerPanel.setParent(frame);
 		_pluginMangerGUI.setActionManager(_actionManager);
 		_taskManagerGUI.setActionManager(_actionManager);
 		// FIXME
@@ -216,6 +212,10 @@ public final class MasterController implements IController
 		frame.setJMenuBar(getJMenuBar());
 		frame.setJToolBar(getToolBar());
 		frame.setControllerPanel(_controllerPanel);
+		_taskManagerGUI.setParent(frame);
+		_projectManagerGUI.setParent(frame);
+		_remoteControllerPanel.setParent(frame);
+
 		Utils.setParent(getJContentPane());
 		SplashScreen.hide();
 		frame.setVisible(true);

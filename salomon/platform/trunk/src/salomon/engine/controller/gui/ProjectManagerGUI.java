@@ -63,7 +63,7 @@ public final class ProjectManagerGUI
 
 	private JPanel _pnlProjectProperties;
 
-	private TaskManagerGUI _taskEditionManager;
+	private TaskManagerGUI _taskManagerGUI;
 
 	private JTextField _txtProjectInfo;
 
@@ -74,8 +74,8 @@ public final class ProjectManagerGUI
 	public ProjectManagerGUI(IManagerEngine managerEngine)
 	{
 		_managerEngine = managerEngine;
-	}
-
+	}	
+	
 	public void newProject()
 	{
 		IProjectManager projectManager;
@@ -117,7 +117,7 @@ public final class ProjectManagerGUI
 				setProjectProperties(project);
 			}
 
-			List<TaskGUI> taskList = _taskEditionManager.getTasks();
+			List<TaskGUI> taskList = _taskManagerGUI.getTasks();
 			LOGGER.info("taskList = " + taskList);
 			//
 			// task list cannot be empty
@@ -234,7 +234,7 @@ public final class ProjectManagerGUI
 
 	public void setTaskManagerGUI(TaskManagerGUI taskEditionManager)
 	{
-		_taskEditionManager = taskEditionManager;
+		_taskManagerGUI = taskEditionManager;
 	}
 
 	private int chooseProject()

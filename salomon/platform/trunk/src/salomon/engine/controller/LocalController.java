@@ -55,8 +55,11 @@ import salomon.engine.controller.gui.SplashScreen;
 import salomon.engine.controller.gui.TaskManagerGUI;
 import salomon.engine.controller.gui.action.ActionManager;
 import salomon.engine.database.DBManager;
+import salomon.engine.project.IProject;
 
 import salomon.util.gui.Utils;
+
+import salomon.platform.exception.PlatformException;
 
 import salomon.engine.platform.IManagerEngine;
 
@@ -109,7 +112,15 @@ public final class LocalController implements IController
 		_managerEngine = managerEngine;
 		// Creates a new empty project
 		// FIXME add support for Solution
-		// _managerEngine.getProjectManager().ceateProject();
+		IProject project;
+		try {
+			project = _managerEngine.getProjectManager().ceateProject();
+			_managerEngine.getProjectManager().addProject(project);
+		} catch (PlatformException e) {
+			LOGGER.fatal("", e);
+			Utils.showErrorMessage("ERR_CANNOT_CREATE_PROJECT");
+			return;
+		}		
 		_projectManagerGUI = new ProjectManagerGUI(_managerEngine);
 		_taskManagerGUI = new TaskManagerGUI(_managerEngine);
 		_pluginMangerGUI = new PluginMangerGUI(_managerEngine);
@@ -121,7 +132,7 @@ public final class LocalController implements IController
 		_taskManagerGUI.setParent(frame);
 		_projectManagerGUI.setParent(frame);
 		_pluginMangerGUI.setActionManager(_actionManager);
-		_taskManagerGUI.setActionManager(_actionManager);		
+		_taskManagerGUI.setActionManager(_actionManager);
 		_projectManagerGUI.setTaskManagerGUI(_taskManagerGUI);
 		// loading plugins
 		_pluginMangerGUI.refresh();
