@@ -3,10 +3,16 @@
 \paragraph{Kontroler}
 Kontroler to jedna instancja Salomona pracuj¹ca w okreœlonym trybie: lokalnym, jako serwer lub klient. 
 
-\paragraph{Manager} Klasy maj¹ce w nazwie s³owo \emph{Manager} pe³ni¹ szczególn¹ funkcjê - najczêœciej odpowiadaj¹ za zarz¹dzanie innymi klasami, z regu³y tymi, które stanowi¹ resztê nazwy (np. \emph{PluginManger} zarz¹dza pluginami, \emph{ProjectManger} - projektami)
+\paragraph{Menad¿er} Klasy maj¹ce w nazwie s³owo \emph{Manager} pe³ni¹ szczególn¹ funkcjê - najczêœciej odpowiadaj¹ za zarz¹dzanie innymi klasami, z regu³y tymi, które stanowi¹ resztê nazwy (np. \emph{PluginManger} zarz¹dza pluginami, \emph{ProjectManger} - projektami). G³ównym zadaniem menad¿erów jest odseparowanie wtyczek od operacji bezpoœrednio na danych.
 
 \paragraph{Projekt}
 W ramach projektów zapisywana jest konfiguracja systemu przed wykonaniem kolejki zadañ. Zapisywana jest lista zadañ do wykonania, ich ustawienia oraz pluginy, które maj¹ byæ u¿yte do ich wykonania.
 
-\paragraph{Plugin}
+\paragraph{Plugin (wtyczka)}
 Jest to zewnêtrzny program odpowiedzialny za wykonanie konkretnego zadania. Nie jest integraln¹ czêœci¹ systemu, w razie koniecznoœci jest pobierany z okreœlonej lokalizacji i przekazywane jest mu konkretne zadanie do wykonania.
+
+\paragraph{Œrodowisko}
+Miejsce w którym przechowywane s¹ zmienne œrodowiskowe.
+
+\paragraph{Zmienna œrodowiskowa}
+S³u¿y do przekazywania informacji miêdzy kolejnymi zadaniami.
