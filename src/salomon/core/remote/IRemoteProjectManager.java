@@ -13,30 +13,36 @@ import java.rmi.RemoteException;
  */
 public interface IRemoteProjectManager extends Remote
 {
-	public void newProject() throws RemoteException;
+	void newProject() throws RemoteException;
 
 	/**
-	 * Method loads project from data base.
-	 * 
-	 * @param projectID
-	 * @return loaded project
-	 * @throws Exception
-	 */
-	public void loadProject(int projectID) throws Exception, RemoteException;
+     * Method loads project from data base.
+     *
+     * @param projectID
+     * @return loaded project
+     * @throws Exception
+     * @pre $none
+     * @post $none
+     */
+	void loadProject(int projectID) throws Exception, RemoteException;
 
 	/**
-	 * Method saves project in data base - project header, plugins and tasks are
-	 * saved.
-	 * 
-	 * @throws ClassNotFoundException
-	 * @throws Exception
-	 */
-	public void saveProject() throws Exception, RemoteException,
+     * Method saves project in data base - project header, plugins and tasks are
+     * saved.
+     *
+     * @throws ClassNotFoundException
+     * @throws Exception
+     * @pre $none
+     * @post $none
+     */
+	void saveProject() throws Exception, RemoteException,
 			ClassNotFoundException;
 
 	/**
-	 * @return Returns the currentProject.
-	 */
-	public IRemoteProject getCurrentProject() throws RemoteException;
+     * @return Returns the currentProject.
+     * @pre $none
+     * @post $result != null
+     */
+	IRemoteProject getCurrentProject() throws RemoteException;
 
 }
