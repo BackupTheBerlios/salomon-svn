@@ -7,22 +7,49 @@
   <head>
     <meta name="keywords" content="java,knowledge mining,salomon"/>
     <meta name="description" content="Salomon is a tool for a distributed knowledge mining"/>
-    <meta name="Robots" content="index,follow" />
+    <meta name="Robots" content="noindex,follow" />
   </head>
 
   <body>
-
-    <release version="0.9.4" date="2005-01-1" description="Pre-1.0-Release">
-      <action type="update">New Year's release ;D</action>
+    <release version="0.9.5" date="2004-01-09" description="Pre-1.0-Release">
+    <action type="add">
+        Example Plugin
+    </action>
+    <action type="add">
+        Unit tests created for all testable classes
+    </action>
+    <action type="add">
+        Java 1.5 Support
+    </action>
+    <action type="update">
+        Data base handling interfaces changed
+            - Separate clases for each kind of data queries created 
+    </action>
+    <action type="update">
+        GUI classes refactored
+    </action>
+    <action type="update">
+      	full separation between GUI and logic
+    </action>
+    <action type="update">
+      	Separation of the Controler classes from the rest of engine
+    </action> 
+    <action type="update">
+        Plugin SDK library 
+        - all classes needed by plugins separated from engine
+        - Infterfaces extracted from  clases needed by plugins 
+    </action> 
+    <action type="update">
+      	new serialization
+    </action>
+    <action type="fix">
+      	fixed bugs created by previous refactoring  
+    </action>
     </release>
 
-    <release version="0.9.3" date="2004-01-09" description="Pre-1.0-Release">
-      <action type="add">
-        TODO
-      </action>
-      <action type="update">
-      	TODO
-	  </action>
+    <release version="0.9.4" date="2005-01-1" description="Pre-1.0-Release">
+        <action type="update">New Year's release ;D</action>
+        <action type="update">Some Gui Tests created</action>
     </release>
 
   </body>
