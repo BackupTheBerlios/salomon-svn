@@ -13,7 +13,8 @@ import salomon.core.project.IProject;
  * @author krzychu
  *  
  */
-public final class RemoteProject extends UnicastRemoteObject implements IRemoteProject
+public final class RemoteProject extends UnicastRemoteObject
+		implements IRemoteProject
 {
 
 	IProject _project;

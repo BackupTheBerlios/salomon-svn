@@ -205,23 +205,23 @@ public final class Starter
 			String mode = null;
 			try {
 				mode = Config.getString("MODE");
-                if ("local".equals(mode)) {
-                    starter.startLocal();
-                } else if ("server".equals(mode)) {
-                    starter.startServer();
-                } else if ("client".equals(mode)) {
-                    starter.startClient();
-                } else {
-                    _logger.error("Wrong argument");
-                    starter.startLocal();
-                }                
-                
+				if ("local".equals(mode)) {
+					starter.startLocal();
+				} else if ("server".equals(mode)) {
+					starter.startServer();
+				} else if ("client".equals(mode)) {
+					starter.startClient();
+				} else {
+					_logger.error("Wrong argument");
+					starter.startLocal();
+				}
+
 			} catch (MissingResourceException e) {
 				_logger.fatal("", e);
-                //TODO: read from properties which controller should be run
-                _logger.warn("No argument choosen");
-                starter.startLocal();
-			}           
+				//TODO: read from properties which controller should be run
+				_logger.warn("No argument choosen");
+				starter.startLocal();
+			}
 		}
 
 	}

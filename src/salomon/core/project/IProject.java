@@ -4,8 +4,9 @@ package salomon.core.project;
 /**
  * 
  * TODO: add comment.
- * @author krzychu
  * 
+ * @author krzychu
+ *  
  */
 public interface IProject
 {

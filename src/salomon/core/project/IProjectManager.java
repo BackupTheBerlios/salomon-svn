@@ -16,7 +16,6 @@
 
 package salomon.core.project;
 
-
 /**
  * 
  * TODO: add comment.
@@ -40,12 +39,11 @@ public interface IProjectManager
 	/**
 	 * Method saves project in data base - project header, plugins and tasks are
 	 * saved.
-	 *
+	 * 
 	 * @throws ClassNotFoundException
 	 * @throws Exception
 	 */
-	public void saveProject() throws Exception,
-			ClassNotFoundException;
+	public void saveProject() throws Exception, ClassNotFoundException;
 
 	/**
 	 * @return Returns the currentProject.

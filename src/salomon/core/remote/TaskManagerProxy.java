@@ -24,7 +24,8 @@ import salomon.core.task.ITaskManager;
  */
 public final class TaskManagerProxy implements ITaskManager
 {
-    private Map _proxies = new HashMap();
+	private Map _proxies = new HashMap();
+
 	private IRemoteTaskManager _remoteTaskManager;
 
 	/**
@@ -34,7 +35,6 @@ public final class TaskManagerProxy implements ITaskManager
 	{
 		_remoteTaskManager = remoteTaskManager;
 	}
-
 
 	/*
 	 * (non-Javadoc)
@@ -50,21 +50,22 @@ public final class TaskManagerProxy implements ITaskManager
 		}
 	}
 
-
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see salomon.core.task.ITaskManager#createTask()
 	 */
 	public ITask createTask()
 	{
-        ITask task = null;
-        try {
-            task = getTaskProxy(_remoteTaskManager.createTask());
-        } catch (RemoteException e) {
-            _logger.error(e);
-        }
+		ITask task = null;
+		try {
+			task = getTaskProxy(_remoteTaskManager.createTask());
+		} catch (RemoteException e) {
+			_logger.error(e);
+		}
 		return task;
 	}
-    
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -75,7 +76,7 @@ public final class TaskManagerProxy implements ITaskManager
 		ITask task = null;
 		try {
 			task = getTaskProxy(_remoteTaskManager.getCurrentTask());
-		} catch (RemoteException e) {			
+		} catch (RemoteException e) {
 			_logger.error(e);
 		}
 		return task;
@@ -91,14 +92,14 @@ public final class TaskManagerProxy implements ITaskManager
 		List tasks = new ArrayList();
 		try {
 			Collection remoteTasks = _remoteTaskManager.getTasks();
-            for (Iterator iter = remoteTasks.iterator(); iter.hasNext();) {
+			for (Iterator iter = remoteTasks.iterator(); iter.hasNext();) {
 				IRemoteTask remoteTask = (IRemoteTask) iter.next();
-                tasks.add(getTaskProxy(remoteTask));
+				tasks.add(getTaskProxy(remoteTask));
 			}
-		} catch (RemoteException e) {			
+		} catch (RemoteException e) {
 			_logger.error(e);
 		}
-        
+
 		return Collections.unmodifiableCollection(tasks);
 	}
 
@@ -116,15 +117,17 @@ public final class TaskManagerProxy implements ITaskManager
 		}
 	}
 
-    private ITask getTaskProxy(IRemoteTask remoteTask) {
-        ITask task = null;
-    	if (_proxies.containsKey(remoteTask)) {
-    		task = (ITask) _proxies.get(remoteTask); 
-        } else {
-            task = new TaskProxy(remoteTask);
-            _proxies.put(remoteTask, task);            
-        }
-        return task;
-    }
+	private ITask getTaskProxy(IRemoteTask remoteTask)
+	{
+		ITask task = null;
+		if (_proxies.containsKey(remoteTask)) {
+			task = (ITask) _proxies.get(remoteTask);
+		} else {
+			task = new TaskProxy(remoteTask);
+			_proxies.put(remoteTask, task);
+		}
+		return task;
+	}
+
 	private static Logger _logger = Logger.getLogger(TaskManagerProxy.class);
 }

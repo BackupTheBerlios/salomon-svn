@@ -1,12 +1,12 @@
-package salomon.core.project;
 
+package salomon.core.project;
 
 /**
  *  
  */
 final class Project implements IProject
 {
-	private String _info = null;	
+	private String _info = null;
 
 	private String _name = null;
 
@@ -48,7 +48,6 @@ final class Project implements IProject
 	{
 		_info = info;
 	}
-
 
 	/**
 	 * @param name

@@ -1,6 +1,6 @@
+
 package salomon.core.project;
 
-import java.io.File;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -26,8 +26,6 @@ import salomon.core.task.TaskManager;
 import salomon.plugin.Description;
 import salomon.plugin.IPlugin;
 import salomon.plugin.ISettings;
-
-
 
 /**
  *  
@@ -104,7 +102,7 @@ public final class ProjectManager implements IProjectManager
 		Collection tasks = getTasksForProject(projectID);
 		_logger.info("Project successfully loaded.");
 		// clearing old tasks
-		TaskManager taskManeger = (TaskManager)_managerEngine.getTasksManager();
+		TaskManager taskManeger = (TaskManager) _managerEngine.getTasksManager();
 		taskManeger.clearTaskList();
 		taskManeger.addAllTasks(tasks);
 		_logger.debug("project: " + project);
@@ -123,8 +121,7 @@ public final class ProjectManager implements IProjectManager
 	 * @throws ClassNotFoundException
 	 * @throws Exception
 	 */
-	public void saveProject() throws Exception,
-			ClassNotFoundException
+	public void saveProject() throws Exception, ClassNotFoundException
 	{
 		// saving project header
 		int projectID = saveProjectHeader();
@@ -184,11 +181,11 @@ public final class ProjectManager implements IProjectManager
 				_logger.info("" + taskId + "|" + taskName + "|" + taskInfo
 						+ "|" + pluginName + "|" + pluginInfo + "|" + location
 						+ "|" + settings + "|" + result);
-                //TODO: move task loading to task manager ?
+				//TODO: move task loading to task manager ?
 				ITask task = _managerEngine.getTasksManager().createTask();
 				task.setName(taskName);
 				task.setTaskId(taskId);
-                URL url = new URL(location);
+				URL url = new URL(location);
 				IPlugin plugin = PluginLoader.loadPlugin(url);
 				plugin.getDescription().setLocation(url);
 				plugin.getDescription().setName(pluginName);
@@ -212,7 +209,7 @@ public final class ProjectManager implements IProjectManager
 	/**
 	 * Saves plugins for project. If there are plugins which doesn't exists in
 	 * data base, they are inserted.
-	 *
+	 * 
 	 * @throws SQLException
 	 */
 	private void savePlugins() throws SQLException
@@ -285,8 +282,8 @@ public final class ProjectManager implements IProjectManager
 		DBTableName tableName = new DBTableName("tasks");
 		DBCondition[] conditions = {
 				new DBCondition(new DBColumnName(tableName, "project_id"),
-						DBCondition.REL_EQ,
-						new Integer(_currentProject.getProjectID()),
+						DBCondition.REL_EQ, new Integer(
+								_currentProject.getProjectID()),
 						DBCondition.NUMBERIC),
 				new DBCondition(new DBColumnName(tableName, "status"),
 						DBCondition.REL_EQ, Task.ACTIVE, DBCondition.TEXT)};
@@ -362,13 +359,12 @@ public final class ProjectManager implements IProjectManager
 	/**
 	 * Saves project header. If project does not exist in data base it is
 	 * inserted.
-	 *
+	 * 
 	 * @return project id
 	 * @throws SQLException
 	 * @throws ClassNotFoundException
 	 */
-	private int saveProjectHeader() throws SQLException,
-			ClassNotFoundException
+	private int saveProjectHeader() throws SQLException, ClassNotFoundException
 	{
 		int projectID = 0;
 		//

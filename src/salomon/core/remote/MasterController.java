@@ -24,6 +24,7 @@ public final class MasterController extends UnicastRemoteObject
 {
 
 	private List _listeners = new LinkedList();
+
 	private Set _remoteControllers = new HashSet();
 
 	/**

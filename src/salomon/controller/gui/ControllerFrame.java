@@ -44,7 +44,7 @@ public final class ControllerFrame extends JFrame
 	 */
 	public void refreshGui()
 	{
-        super.validate();        
+		super.validate();
 	}
 
 	public void setMainPanel(JPanel panel)

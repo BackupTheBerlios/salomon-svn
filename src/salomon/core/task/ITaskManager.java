@@ -28,8 +28,8 @@ import java.util.Collection;
 public interface ITaskManager
 {
 	public void clearTaskList();
-    
-    public ITask createTask(); 
+
+	public ITask createTask();
 
 	public ITask getCurrentTask();
 

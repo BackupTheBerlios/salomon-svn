@@ -64,7 +64,8 @@ public final class RemoteControllerPanel
 	}
 
 	/**
-	 * @param parent The parent to set.
+	 * @param parent
+	 *            The parent to set.
 	 */
 	public void setParent(ControllerFrame parent)
 	{
@@ -78,7 +79,7 @@ public final class RemoteControllerPanel
 		{
 			RemoteControllerGUI controllerGUI = (RemoteControllerGUI) ((JList) e.getSource()).getSelectedValue();
 			_engineHolder.setCurrentManager(controllerGUI.getManagerEngine());
-            _parent.refreshGui();
+			_parent.refreshGui();
 		}
 
 	}

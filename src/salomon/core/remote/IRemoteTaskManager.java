@@ -21,6 +21,6 @@ public interface IRemoteTaskManager extends Remote
 	public Collection getTasks() throws RemoteException;
 
 	public void start() throws RemoteException;
-    
-    public IRemoteTask createTask() throws RemoteException;
+
+	public IRemoteTask createTask() throws RemoteException;
 }

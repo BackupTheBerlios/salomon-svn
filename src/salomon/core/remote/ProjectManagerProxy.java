@@ -18,9 +18,10 @@ import salomon.core.project.IProjectManager;
 public final class ProjectManagerProxy implements IProjectManager
 {
 	private IRemoteProjectManager _remoteProjectManager;
-    
-    private IRemoteProject _currentRemoteProject;
-    private IProject _currentProject;
+
+	private IRemoteProject _currentRemoteProject;
+
+	private IProject _currentProject;
 
 	/**
 	 *  
@@ -39,10 +40,10 @@ public final class ProjectManagerProxy implements IProjectManager
 	{
 		try {
 			IRemoteProject remoteProject = _remoteProjectManager.getCurrentProject();
-            if (remoteProject != _currentRemoteProject) {
-                _currentRemoteProject = remoteProject;
-                _currentProject = new ProjectProxy(_currentRemoteProject);
-            }
+			if (remoteProject != _currentRemoteProject) {
+				_currentRemoteProject = remoteProject;
+				_currentProject = new ProjectProxy(_currentRemoteProject);
+			}
 		} catch (RemoteException e) {
 			_logger.error(e);
 		}

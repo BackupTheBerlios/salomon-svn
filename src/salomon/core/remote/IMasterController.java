@@ -4,7 +4,6 @@ package salomon.core.remote;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
-
 /**
  * 
  * TODO: add comment.

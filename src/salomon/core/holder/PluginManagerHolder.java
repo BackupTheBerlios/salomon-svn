@@ -36,11 +36,11 @@ final class PluginManagerHolder implements IPluginManager
 		_currentPluginManager = pluginManager;
 	}
 
-//	/* (non-Javadoc)
-//	 * @see salomon.core.plugin.IPluginManager#getPlugin(java.net.URL)
-//	 */
-//	public IPlugin getPlugin(URL url)
-//	{		
-//		return _currentPluginManager.getPlugin(url);
-//	}
+	//	/* (non-Javadoc)
+	//	 * @see salomon.core.plugin.IPluginManager#getPlugin(java.net.URL)
+	//	 */
+	//	public IPlugin getPlugin(URL url)
+	//	{
+	//		return _currentPluginManager.getPlugin(url);
+	//	}
 }

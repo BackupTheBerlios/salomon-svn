@@ -46,13 +46,12 @@ public final class PluginManagerProxy implements IPluginManager
 		return result;
 	}
 
-//	/* (non-Javadoc)
-//	 * @see salomon.core.plugin.IPluginManager#getPlugin(java.net.URL)
-//	 */
-//	public IPlugin getPlugin(URL url)
-//	{		
-//		return PluginLoader.loadPlugin(_remotePluginManager.getPlugin();
-//	}
-    
+	//	/* (non-Javadoc)
+	//	 * @see salomon.core.plugin.IPluginManager#getPlugin(java.net.URL)
+	//	 */
+	//	public IPlugin getPlugin(URL url)
+	//	{
+	//		return PluginLoader.loadPlugin(_remotePluginManager.getPlugin();
+	//	}
 
 }

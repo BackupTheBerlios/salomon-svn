@@ -29,17 +29,20 @@ public interface IRemoteProject extends Remote
 	public int getProjectID() throws RemoteException;
 
 	/**
-	 * @param info The info to set.
+	 * @param info
+	 *            The info to set.
 	 */
 	public void setInfo(String info) throws RemoteException;
 
 	/**
-	 * @param name The name to set.
+	 * @param name
+	 *            The name to set.
 	 */
 	public void setName(String name) throws RemoteException;
 
 	/**
-	 * @param projectId The projectID to set.
+	 * @param projectId
+	 *            The projectID to set.
 	 */
 	public void setProjectID(int projectId) throws RemoteException;
 }

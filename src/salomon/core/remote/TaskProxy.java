@@ -56,8 +56,8 @@ public final class TaskProxy implements ITask
 	{
 		IPlugin plugin = null;
 		try {
-            URL pluginLocation = _remoteTask.getPlugin();
-            try {
+			URL pluginLocation = _remoteTask.getPlugin();
+			try {
 				plugin = PluginLoader.loadPlugin(pluginLocation);
 			} catch (Exception e1) {
 				_logger.fatal("", e1);

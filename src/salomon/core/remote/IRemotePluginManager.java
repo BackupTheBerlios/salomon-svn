@@ -15,6 +15,6 @@ import java.util.Collection;
 public interface IRemotePluginManager extends Remote
 {
 	public Collection getAvailablePlugins() throws RemoteException;
-    
-//    public IRemotePlugin getPlugin(URL url) throws RemoteException;
+
+	//    public IRemotePlugin getPlugin(URL url) throws RemoteException;
 }

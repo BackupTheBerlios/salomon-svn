@@ -89,7 +89,8 @@ public final class ProjectEditionManager
 	}
 
 	/**
-	 * @param parent The parent to set.
+	 * @param parent
+	 *            The parent to set.
 	 */
 	public void setParent(ControllerFrame parent)
 	{

@@ -29,9 +29,12 @@ public final class ManagerEngineHolder implements IManagerEngine
 	public ManagerEngineHolder(IManagerEngine managerEngine)
 	{
 		_currentManagerEngine = managerEngine;
-        _pluginManagerHolder = new PluginManagerHolder(_currentManagerEngine.getPluginManager());
-        _projectManagerHolder = new ProjectManagerHolder(_currentManagerEngine.getProjectManager());
-        _taskManagerHolder = new TaskManagerHolder(_currentManagerEngine.getTasksManager());
+		_pluginManagerHolder = new PluginManagerHolder(
+				_currentManagerEngine.getPluginManager());
+		_projectManagerHolder = new ProjectManagerHolder(
+				_currentManagerEngine.getProjectManager());
+		_taskManagerHolder = new TaskManagerHolder(
+				_currentManagerEngine.getTasksManager());
 	}
 
 	/*

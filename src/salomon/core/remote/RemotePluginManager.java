@@ -39,12 +39,12 @@ public final class RemotePluginManager extends UnicastRemoteObject
 		return _pluginManager.getAvailablePlugins();
 	}
 
-//	/* (non-Javadoc)
-//	 * @see salomon.core.remote.IRemotePluginManager#getPlugin(java.net.URL)
-//	 */
-//	public IRemotePlugin getPlugin(URL url) throws RemoteException
-//	{
-//		return _pluginManager.get;
-//	}
+	//	/* (non-Javadoc)
+	//	 * @see salomon.core.remote.IRemotePluginManager#getPlugin(java.net.URL)
+	//	 */
+	//	public IRemotePlugin getPlugin(URL url) throws RemoteException
+	//	{
+	//		return _pluginManager.get;
+	//	}
 
 }

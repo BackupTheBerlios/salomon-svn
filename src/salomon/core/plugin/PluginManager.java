@@ -12,7 +12,6 @@ import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 
 import org.apache.log4j.Logger;
@@ -20,7 +19,6 @@ import org.apache.log4j.Logger;
 import salomon.core.Config;
 import salomon.core.data.DBManager;
 import salomon.core.data.common.DBColumnName;
-import salomon.core.data.common.DBCondition;
 import salomon.core.data.common.DBTableName;
 
 /**
@@ -50,7 +48,7 @@ public final class PluginManager implements IPluginManager
 				"location")};
 		// executing query
 		ResultSet resultSet = null;
-        //TODO: change it
+		//TODO: change it
 		Collection stringCollection = new ArrayList();
 		try {
 			resultSet = DBManager.getInstance().select(columnNames, tableNames,

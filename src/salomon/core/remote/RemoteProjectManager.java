@@ -19,15 +19,17 @@ public final class RemoteProjectManager extends UnicastRemoteObject
 {
 
 	private IProjectManager _projectManager;
-    private IRemoteProject _currentRemoteProject;
-    private IProject _currentProject;
+
+	private IRemoteProject _currentRemoteProject;
+
+	private IProject _currentProject;
 
 	/**
 	 * @throws RemoteException
 	 */
 	protected RemoteProjectManager(IProjectManager projectManager)
 			throws RemoteException
-	{		
+	{
 		_projectManager = projectManager;
 	}
 
@@ -38,7 +40,7 @@ public final class RemoteProjectManager extends UnicastRemoteObject
 	 */
 	public void newProject() throws RemoteException
 	{
-        _projectManager.newProject();
+		_projectManager.newProject();
 	}
 
 	/*
@@ -69,12 +71,12 @@ public final class RemoteProjectManager extends UnicastRemoteObject
 	 */
 	public IRemoteProject getCurrentProject() throws RemoteException
 	{
-        IProject project = _projectManager.getCurrentProject();
-        if (project != _currentProject) {
-        	_currentProject = project;
-            _currentRemoteProject = new RemoteProject(_currentProject);
-        }
-        
+		IProject project = _projectManager.getCurrentProject();
+		if (project != _currentProject) {
+			_currentProject = project;
+			_currentRemoteProject = new RemoteProject(_currentProject);
+		}
+
 		return _currentRemoteProject;
 	}
 }

@@ -27,7 +27,7 @@ public interface IRemoteProjectManager extends Remote
 	/**
 	 * Method saves project in data base - project header, plugins and tasks are
 	 * saved.
-	 *
+	 * 
 	 * @throws ClassNotFoundException
 	 * @throws Exception
 	 */

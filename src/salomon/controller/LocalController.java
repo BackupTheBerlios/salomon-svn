@@ -31,6 +31,7 @@ import salomon.controller.gui.action.ActionManager;
 import salomon.core.Config;
 import salomon.core.IManagerEngine;
 import salomon.core.Messages;
+import salomon.core.Resources;
 import salomon.core.SQLConsole;
 import salomon.core.data.DBManager;
 
@@ -41,7 +42,7 @@ import salomon.core.data.DBManager;
  * @author krzychu
  *  
  */
-public final class LocalController  implements IController
+public final class LocalController implements IController
 {
 
 	private JPanel _contentPane;
@@ -180,7 +181,7 @@ public final class LocalController  implements IController
 		JButton getBtnNew()
 		{
 			if (_btnNew == null) {
-				_btnNew = createProjectButton(Config.getString("ICO_PROJECT_NEW")); //$NON-NLS-1$
+				_btnNew = createProjectButton(Resources.getString("ICO_PROJECT_NEW")); //$NON-NLS-1$
 			}
 			return _btnNew;
 		}
@@ -188,7 +189,7 @@ public final class LocalController  implements IController
 		JButton getBtnOpen()
 		{
 			if (_btnOpen == null) {
-				_btnOpen = createProjectButton(Config.getString("ICO_PROJECT_OPEN")); //$NON-NLS-1$
+				_btnOpen = createProjectButton(Resources.getString("ICO_PROJECT_OPEN")); //$NON-NLS-1$
 			}
 			return _btnOpen;
 		}
@@ -196,7 +197,7 @@ public final class LocalController  implements IController
 		JButton getBtnSave()
 		{
 			if (_btnSave == null) {
-				_btnSave = createProjectButton(Config.getString("ICO_PROJECT_SAVE")); //$NON-NLS-1$
+				_btnSave = createProjectButton(Resources.getString("ICO_PROJECT_SAVE")); //$NON-NLS-1$
 			}
 			return _btnSave;
 		}
@@ -321,7 +322,7 @@ public final class LocalController  implements IController
 				// application name
 				//
 				JLabel lblAppName = new JLabel(new ImageIcon(_resourcesDir
-						+ "/" + Config.getString("LOGO"))); //$NON-NLS-1$
+						+ Config.FILE_SEPARATOR + Resources.getString("LOGO"))); //$NON-NLS-1$
 				//
 				// version and author panel
 				//
@@ -368,7 +369,7 @@ public final class LocalController  implements IController
 				// application name
 				//
 				JLabel lblAppName = new JLabel(new ImageIcon(_resourcesDir
-						+ "/" + Config.getString("LOGO"))); //$NON-NLS-1$
+						+ Config.FILE_SEPARATOR + Resources.getString("LOGO"))); //$NON-NLS-1$
 				//
 				// version and author panel
 				//

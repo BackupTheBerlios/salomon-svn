@@ -15,6 +15,7 @@ import javax.swing.JButton;
 import org.apache.log4j.Logger;
 
 import salomon.core.Config;
+import salomon.core.Resources;
 
 /**
  * @author nico Class agregates all buttons used in GUIController.
@@ -62,7 +63,7 @@ public final class GUIButtons
 	JButton getBtnAdd()
 	{
 		if (_btnAdd == null) {
-			_btnAdd = createManipulationButton(Config.getString("ICO_TASK_ADD")); //$NON-NLS-1$
+			_btnAdd = createManipulationButton(Resources.getString("ICO_TASK_ADD")); //$NON-NLS-1$
 		}
 		return _btnAdd;
 	}
@@ -75,7 +76,7 @@ public final class GUIButtons
 	JButton getBtnDown()
 	{
 		if (_btnDown == null) {
-			_btnDown = createManipulationButton(Config.getString("ICO_TASK_DOWN")); //$NON-NLS-1$
+			_btnDown = createManipulationButton(Resources.getString("ICO_TASK_DOWN")); //$NON-NLS-1$
 		}
 		return _btnDown;
 	}
@@ -88,7 +89,7 @@ public final class GUIButtons
 	JButton getBtnFirst()
 	{
 		if (_btnFirst == null) {
-			_btnFirst = createManipulationButton(Config.getString("ICO_TASK_FIRST")); //$NON-NLS-1$
+			_btnFirst = createManipulationButton(Resources.getString("ICO_TASK_FIRST")); //$NON-NLS-1$
 		}
 		return _btnFirst;
 	}
@@ -101,7 +102,7 @@ public final class GUIButtons
 	JButton getBtnLast()
 	{
 		if (_btnLast == null) {
-			_btnLast = createManipulationButton(Config.getString("ICO_TASK_LAST")); //$NON-NLS-1$
+			_btnLast = createManipulationButton(Resources.getString("ICO_TASK_LAST")); //$NON-NLS-1$
 		}
 		return _btnLast;
 	}
@@ -114,7 +115,7 @@ public final class GUIButtons
 	JButton getBtnRemove()
 	{
 		if (_btnRemove == null) {
-			_btnRemove = createManipulationButton(Config.getString("ICO_TASK_REMOVE")); //$NON-NLS-1$
+			_btnRemove = createManipulationButton(Resources.getString("ICO_TASK_REMOVE")); //$NON-NLS-1$
 		}
 		return _btnRemove;
 	}
@@ -127,7 +128,7 @@ public final class GUIButtons
 	JButton getBtnRemoveAll()
 	{
 		if (_btnRemoveAll == null) {
-			_btnRemoveAll = createManipulationButton(Config.getString("ICO_TASK_REMOVEALL")); //$NON-NLS-1$
+			_btnRemoveAll = createManipulationButton(Resources.getString("ICO_TASK_REMOVEALL")); //$NON-NLS-1$
 		}
 		return _btnRemoveAll;
 	}
@@ -140,7 +141,7 @@ public final class GUIButtons
 	JButton getBtnUp()
 	{
 		if (_btnUp == null) {
-			_btnUp = createManipulationButton(Config.getString("ICO_TASK_UP")); //$NON-NLS-1$
+			_btnUp = createManipulationButton(Resources.getString("ICO_TASK_UP")); //$NON-NLS-1$
 		}
 		return _btnUp;
 	}
@@ -194,5 +195,6 @@ public final class GUIButtons
 			}
 		}
 	}
+
 	private static Logger _logger = Logger.getLogger(GUIButtons.class);
 }

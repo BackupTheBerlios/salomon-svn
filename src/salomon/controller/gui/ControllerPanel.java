@@ -95,9 +95,9 @@ public final class ControllerPanel extends JPanel
 	 */
 
 	public void validate()
-	{		
+	{
 		super.validate();
-        _taskEditionManager.refresh();
+		_taskEditionManager.refresh();
 	}
 
 	/**

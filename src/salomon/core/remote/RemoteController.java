@@ -31,7 +31,7 @@ public final class RemoteController extends UnicastRemoteObject
 			throws RemoteException
 	{
 		_remoteManagerEngine = new RemoteManagerEngine(managerEngine);
-        _name = name;
+		_name = name;
 	}
 
 	/*

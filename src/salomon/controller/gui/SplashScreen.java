@@ -17,6 +17,7 @@ import org.apache.log4j.Logger;
 
 import salomon.core.Config;
 import salomon.core.Messages;
+import salomon.core.Resources;
 
 /**
  * 
@@ -39,21 +40,21 @@ public final class SplashScreen
 	{
 		_startTime = System.currentTimeMillis();
 		_resourcesDir = Config.getString("RESOURCES_DIR");
-		ImageIcon image = new ImageIcon(_resourcesDir + "/"
-				+ Config.getString("SPLASH_SCREEN"));
+		ImageIcon image = new ImageIcon(_resourcesDir + Config.FILE_SEPARATOR
+				+ Resources.getString("SPLASH_SCREEN"));
 		SplashLabel splashLabel = new SplashLabel(image);
 		_splashScreen = new JWindow();
 		_splashScreen.setLocation(splashLabel.getLocation());
 		_splashScreen.getContentPane().add(splashLabel);
 		_splashScreen.pack();
-	} 
+	}
 
 	public static void hide()
 	{
 		if (SwingUtilities.isEventDispatchThread()) {
-			getInstance().hideSplashScreen();            
+			getInstance().hideSplashScreen();
 		} else {
-            _logger.debug("nie w gui");
+			_logger.debug("nie w gui");
 			try {
 				SwingUtilities.invokeAndWait(new Runnable() {
 					public void run()
@@ -61,7 +62,7 @@ public final class SplashScreen
 						getInstance().hideSplashScreen();
 					}
 				});
-			} catch (InterruptedException e) {			
+			} catch (InterruptedException e) {
 				_logger.fatal("", e);
 			} catch (InvocationTargetException e) {
 				_logger.error("", e);
@@ -103,7 +104,7 @@ public final class SplashScreen
 
 		if (SwingUtilities.isEventDispatchThread()) {
 			getInstance().showSplashScreen();
-		} else {            
+		} else {
 			try {
 				SwingUtilities.invokeAndWait(new Runnable() {
 					public void run()
@@ -111,7 +112,7 @@ public final class SplashScreen
 						getInstance().showSplashScreen();
 					}
 				});
-			} catch (InterruptedException e) {			
+			} catch (InterruptedException e) {
 				_logger.fatal("", e);
 			} catch (InvocationTargetException e) {
 				_logger.fatal("", e);

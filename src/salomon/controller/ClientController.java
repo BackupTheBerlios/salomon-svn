@@ -44,18 +44,18 @@ public final class ClientController implements IController
 	private void initRMI()
 	{
 		try {
-            //System.setSecurityManager(new RMISecurityManager());
-            String hostName = "remote";
-            
-            try {
+			//System.setSecurityManager(new RMISecurityManager());
+			String hostName = "remote";
+
+			try {
 				hostName = InetAddress.getLocalHost().getHostName();
 			} catch (UnknownHostException e2) {
 				_logger.fatal("", e2);
 			}
-            
+
 			_remoteController = new RemoteController(_managerEngine, hostName);
-            // new project is created at the beggining
-            _remoteController.getManagerEngine().getProjectManager().newProject();
+			// new project is created at the beggining
+			_remoteController.getManagerEngine().getProjectManager().newProject();
 			Registry registry = LocateRegistry.getRegistry(_serverHost,
 					_serverPort);
 			try {

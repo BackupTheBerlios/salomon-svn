@@ -37,6 +37,7 @@ import salomon.controller.gui.action.ActionManager;
 import salomon.core.Config;
 import salomon.core.IManagerEngine;
 import salomon.core.Messages;
+import salomon.core.Resources;
 import salomon.core.SQLConsole;
 import salomon.core.data.DBManager;
 import salomon.core.holder.ManagerEngineHolder;
@@ -85,7 +86,8 @@ public final class ServerController implements IController
 			_contentPane = new JPanel();
 			_contentPane.setLayout(new BorderLayout());
 			_splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
-			_remoteControllerPanel = new RemoteControllerPanel(_managerEngineHolder);            
+			_remoteControllerPanel = new RemoteControllerPanel(
+					_managerEngineHolder);
 			_splitPane.setLeftComponent(_remoteControllerPanel.getControllerPanel());
 			_splitPane.setRightComponent(new ControllerPanel(
 					_taskEditionManager, _actionManager));
@@ -155,8 +157,8 @@ public final class ServerController implements IController
 
 		_taskEditionManager.setParent(frame);
 		_projectEditionManager.setParent(frame);
-        _remoteControllerPanel.setParent(frame);
-        
+		_remoteControllerPanel.setParent(frame);
+
 		_projectEditionManager.setTaskEditionManager(_taskEditionManager);
 		SplashScreen.hide();
 		frame.setVisible(true);
@@ -170,9 +172,9 @@ public final class ServerController implements IController
 	private void initRMI()
 	{
 		try {
-            //System.setSecurityManager(new RMISecurityManager());
+			//System.setSecurityManager(new RMISecurityManager());
 			_masterController = new MasterController();
-            _masterController.addMasterControllerListener(new MasterControllerListener());
+			_masterController.addMasterControllerListener(new MasterControllerListener());
 			Registry registry = LocateRegistry.createRegistry(RMI_PORT);
 			//TODO: Use bind method
 			registry.rebind("MasterController", _masterController);
@@ -203,8 +205,9 @@ public final class ServerController implements IController
 		 * @see salomon.core.remote.event.IMasterControllerListener#controllerRemoved(salomon.core.remote.event.RemoteControllerEvent)
 		 */
 		public void controllerRemoved(RemoteControllerEvent event)
-		{            
-            RemoteControllerGUI controllerGUI = new RemoteControllerGUI(event.getController());
+		{
+			RemoteControllerGUI controllerGUI = new RemoteControllerGUI(
+					event.getController());
 			_remoteControllerPanel.removeController(controllerGUI);
 		}
 
@@ -248,7 +251,7 @@ public final class ServerController implements IController
 		JButton getBtnNew()
 		{
 			if (_btnNew == null) {
-				_btnNew = createProjectButton(Config.getString("ICO_PROJECT_NEW")); //$NON-NLS-1$
+				_btnNew = createProjectButton(Resources.getString("ICO_PROJECT_NEW")); //$NON-NLS-1$
 			}
 			return _btnNew;
 		}
@@ -256,7 +259,7 @@ public final class ServerController implements IController
 		JButton getBtnOpen()
 		{
 			if (_btnOpen == null) {
-				_btnOpen = createProjectButton(Config.getString("ICO_PROJECT_OPEN")); //$NON-NLS-1$
+				_btnOpen = createProjectButton(Resources.getString("ICO_PROJECT_OPEN")); //$NON-NLS-1$
 			}
 			return _btnOpen;
 		}
@@ -264,7 +267,7 @@ public final class ServerController implements IController
 		JButton getBtnSave()
 		{
 			if (_btnSave == null) {
-				_btnSave = createProjectButton(Config.getString("ICO_PROJECT_SAVE")); //$NON-NLS-1$
+				_btnSave = createProjectButton(Resources.getString("ICO_PROJECT_SAVE")); //$NON-NLS-1$
 			}
 			return _btnSave;
 		}
@@ -389,7 +392,7 @@ public final class ServerController implements IController
 				// application name
 				//
 				JLabel lblAppName = new JLabel(new ImageIcon(_resourcesDir
-						+ "/" + Config.getString("LOGO"))); //$NON-NLS-1$
+						+ Config.FILE_SEPARATOR + Resources.getString("LOGO"))); //$NON-NLS-1$
 				//
 				// version and author panel
 				//
@@ -436,7 +439,7 @@ public final class ServerController implements IController
 				// application name
 				//
 				JLabel lblAppName = new JLabel(new ImageIcon(_resourcesDir
-						+ "/" + Config.getString("LOGO"))); //$NON-NLS-1$
+						+ Config.FILE_SEPARATOR + Resources.getString("LOGO"))); //$NON-NLS-1$
 				//
 				// version and author panel
 				//

@@ -57,7 +57,8 @@ public class DBManager
 	 * Deletes records basing on given conditions. Table name is taken from the
 	 * first condition.
 	 * 
-	 * @param conditions conditions of query
+	 * @param conditions
+	 *            conditions of query
 	 * @return number of deleted records
 	 * @throws SQLException
 	 */
@@ -106,7 +107,8 @@ public class DBManager
 	 * Inserts record specified in DBValue array. Table name is taken from the
 	 * first element from array.
 	 * 
-	 * @param values values to insert
+	 * @param values
+	 *            values to insert
 	 * @return always false
 	 * @throws SQLException
 	 */
@@ -133,8 +135,10 @@ public class DBManager
 	 * first element from array. Method autoincrement value in column
 	 * primaryKey.
 	 * 
-	 * @param values values to insert
-	 * @param primaryKey primary key column name
+	 * @param values
+	 *            values to insert
+	 * @param primaryKey
+	 *            primary key column name
 	 * @return generated primary key
 	 * @throws SQLException
 	 */
@@ -184,10 +188,12 @@ public class DBManager
 	 * from tables basing on tableNames using conditions specified in
 	 * conditions. If conditions is null, all data is selected.
 	 * 
-	 * @param columnNames column names to select (if null all columns are
-	 *            selected)
-	 * @param tableNames tables used in conditions (not null)
-	 * @param conditions conditions of query (if null all data are selected)
+	 * @param columnNames
+	 *            column names to select (if null all columns are selected)
+	 * @param tableNames
+	 *            tables used in conditions (not null)
+	 * @param conditions
+	 *            conditions of query (if null all data are selected)
 	 * @return selected result set
 	 * @throws SQLException
 	 */
@@ -228,8 +234,10 @@ public class DBManager
 	 * conditions. Table name is taken from the first element of values array.
 	 * If conditions array is null, all data from appropriate table are updated.
 	 * 
-	 * @param values values to set
-	 * @param conditions conditions of query (if null all data are updated)
+	 * @param values
+	 *            values to set
+	 * @param conditions
+	 *            conditions of query (if null all data are updated)
 	 * @return number of updated rows
 	 * @throws SQLException
 	 */

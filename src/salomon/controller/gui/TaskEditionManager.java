@@ -173,8 +173,8 @@ public final class TaskEditionManager
 		_pluginListModel.removeAllElements();
 		Collection plugins = _managerEngine.getPluginManager().getAvailablePlugins();
 		for (Iterator iter = plugins.iterator(); iter.hasNext();) {
-            LocalPlugin localPlugin = new LocalPlugin((URL) iter.next());
-			_pluginListModel.addElement(localPlugin);    
+			LocalPlugin localPlugin = new LocalPlugin((URL) iter.next());
+			_pluginListModel.addElement(localPlugin);
 		}
 		_logger.debug("reloading tasks");
 		_taskListModel.removeAllElements();
@@ -208,7 +208,8 @@ public final class TaskEditionManager
 	}
 
 	/**
-	 * @param parent The parent to set.
+	 * @param parent
+	 *            The parent to set.
 	 */
 	public void setParent(ControllerFrame parent)
 	{
@@ -353,10 +354,10 @@ public final class TaskEditionManager
 
 		public String toString()
 		{
-            //TODO:
-            String path = _pluginLocation.getPath();
-            int index = path.lastIndexOf('/');
-            
+			//TODO:
+			String path = _pluginLocation.getPath();
+			int index = path.lastIndexOf('/');
+
 			return path.substring(index + 1);
 		}
 	}

@@ -48,8 +48,7 @@ final class ProjectManagerHolder implements IProjectManager
 	 * 
 	 * @see salomon.core.IProjectManager#saveProject(salomon.core.Project)
 	 */
-	public void saveProject() throws Exception,
-			ClassNotFoundException
+	public void saveProject() throws Exception, ClassNotFoundException
 	{
 		_currentProjectManager.saveProject();
 	}

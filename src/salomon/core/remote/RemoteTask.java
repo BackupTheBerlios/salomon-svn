@@ -15,28 +15,36 @@ import salomon.plugin.ISettings;
 /**
  * 
  * TODO: add comment.
- * @author krzychu
  * 
+ * @author krzychu
+ *  
  */
-public final class RemoteTask extends UnicastRemoteObject implements IRemoteTask
+public final class RemoteTask extends UnicastRemoteObject
+		implements IRemoteTask
 {
 	private ITask _task;
-    /**
-	 * 
+
+	/**
+	 *  
 	 */
 	public RemoteTask(ITask task) throws RemoteException
 	{
 		_task = task;
 	}
-	/* (non-Javadoc)
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see salomon.core.remote.IRemoteTask#getName()
 	 */
 	public String getName() throws RemoteException
-	{	
+	{
 		return _task.getName();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see salomon.core.remote.IRemoteTask#getPlugin()
 	 */
 	public URL getPlugin() throws RemoteException
@@ -44,7 +52,9 @@ public final class RemoteTask extends UnicastRemoteObject implements IRemoteTask
 		return PluginLoader.getPluginLocation(_task.getPlugin());
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see salomon.core.remote.IRemoteTask#getResult()
 	 */
 	public IResult getResult() throws RemoteException
@@ -52,31 +62,39 @@ public final class RemoteTask extends UnicastRemoteObject implements IRemoteTask
 		return _task.getResult();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see salomon.core.remote.IRemoteTask#getSettings()
 	 */
 	public ISettings getSettings() throws RemoteException
-	{	
+	{
 		return _task.getSettings();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see salomon.core.remote.IRemoteTask#getStatus()
 	 */
 	public String getStatus() throws RemoteException
-	{ 
+	{
 		return _task.getStatus();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see salomon.core.remote.IRemoteTask#getTaksId()
 	 */
 	public int getTaskId() throws RemoteException
-	{		
+	{
 		return _task.getTaskId();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see salomon.core.remote.IRemoteTask#setName(java.lang.String)
 	 */
 	public void setName(String name) throws RemoteException
@@ -84,7 +102,9 @@ public final class RemoteTask extends UnicastRemoteObject implements IRemoteTask
 		_task.setName(name);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see salomon.core.remote.IRemoteTask#setPlugin(salomon.plugin.IPlugin)
 	 */
 	public void setPlugin(URL plugin) throws RemoteException
@@ -96,7 +116,9 @@ public final class RemoteTask extends UnicastRemoteObject implements IRemoteTask
 		}
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see salomon.core.remote.IRemoteTask#setResult(salomon.plugin.IResult)
 	 */
 	public void setResult(IResult result) throws RemoteException
@@ -104,7 +126,9 @@ public final class RemoteTask extends UnicastRemoteObject implements IRemoteTask
 		_task.setResult(result);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see salomon.core.remote.IRemoteTask#setSettings(salomon.plugin.ISettings)
 	 */
 	public void setSettings(ISettings settings) throws RemoteException
@@ -112,7 +136,9 @@ public final class RemoteTask extends UnicastRemoteObject implements IRemoteTask
 		_task.setSettings(settings);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see salomon.core.remote.IRemoteTask#setStatus(java.lang.String)
 	 */
 	public void setStatus(String status) throws RemoteException
@@ -120,13 +146,16 @@ public final class RemoteTask extends UnicastRemoteObject implements IRemoteTask
 		_task.setStatus(status);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see salomon.core.remote.IRemoteTask#setTaksId(int)
 	 */
 	public void setTaskId(int taskId) throws RemoteException
 	{
 		_task.setTaskId(taskId);
 	}
-    private static Logger _logger = Logger.getLogger(RemoteTask.class);
+
+	private static Logger _logger = Logger.getLogger(RemoteTask.class);
 
 }

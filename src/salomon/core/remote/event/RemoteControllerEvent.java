@@ -15,19 +15,21 @@ import salomon.core.remote.MasterController;
  */
 public final class RemoteControllerEvent extends EventObject
 {
-    private IRemoteController _controller;
+	private IRemoteController _controller;
+
 	/**
 	 *  
 	 */
-	public RemoteControllerEvent(MasterController source, IRemoteController controller)
+	public RemoteControllerEvent(MasterController source,
+			IRemoteController controller)
 	{
 		super(source);
-        _controller = controller;
-        
+		_controller = controller;
+
 	}
-    
-    public IRemoteController getController()
-    {
-    	return _controller;
-    }
+
+	public IRemoteController getController()
+	{
+		return _controller;
+	}
 }

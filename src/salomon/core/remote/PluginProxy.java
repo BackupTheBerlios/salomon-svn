@@ -13,15 +13,19 @@ import salomon.plugin.ISettings;
 /**
  * 
  * TODO: add comment.
- * @author krzychu
  * 
+ * @author krzychu
+ *  
  */
 public final class PluginProxy implements IPlugin
 {
 	private IRemotePlugin _remotePlugin;
-    private IPlugin _localPlugin;
-    
-	/* (non-Javadoc)
+
+	private IPlugin _localPlugin;
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see salomon.plugin.IPlugin#initizalize()
 	 */
 	public void initizalize()
@@ -29,7 +33,9 @@ public final class PluginProxy implements IPlugin
 		_localPlugin.initizalize();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see salomon.plugin.IPlugin#destroy()
 	 */
 	public void destroy()
@@ -37,17 +43,22 @@ public final class PluginProxy implements IPlugin
 		_localPlugin.destroy();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see salomon.plugin.IPlugin#getDescription()
 	 */
 	public Description getDescription()
 	{
-		
+
 		return null;//_localPlugin.get;
 	}
 
-	/* (non-Javadoc)
-	 * @see salomon.plugin.IDataPlugin#doJob(salomon.core.data.DataEngine, salomon.core.data.Environment, salomon.plugin.ISettings)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see salomon.plugin.IDataPlugin#doJob(salomon.core.data.DataEngine,
+	 *      salomon.core.data.Environment, salomon.plugin.ISettings)
 	 */
 	public IResult doJob(DataEngine engine, Environment environment,
 			ISettings settings)
@@ -56,7 +67,9 @@ public final class PluginProxy implements IPlugin
 		return null;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see salomon.plugin.IGraphicPlugin#getSettingComponent()
 	 */
 	public ISettingComponent getSettingComponent()
@@ -65,7 +78,9 @@ public final class PluginProxy implements IPlugin
 		return null;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see salomon.plugin.IGraphicPlugin#getResultComponent()
 	 */
 	public IResultComponent getResultComponent()

@@ -8,8 +8,9 @@ import salomon.plugin.ISettings;
 /**
  * 
  * TODO: add comment.
- * @author krzychu
  * 
+ * @author krzychu
+ *  
  */
 public interface ITask
 {

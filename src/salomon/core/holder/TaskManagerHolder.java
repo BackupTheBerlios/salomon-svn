@@ -25,7 +25,6 @@ final class TaskManagerHolder implements ITaskManager
 		_currentTaskManager = taskManager;
 	}
 
-
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -71,12 +70,13 @@ final class TaskManagerHolder implements ITaskManager
 		_currentTaskManager = taskManager;
 	}
 
-
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see salomon.core.task.ITaskManager#createTask()
 	 */
 	public ITask createTask()
 	{
-        return _currentTaskManager.createTask();
+		return _currentTaskManager.createTask();
 	}
 }

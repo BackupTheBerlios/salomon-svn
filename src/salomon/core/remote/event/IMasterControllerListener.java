@@ -4,11 +4,13 @@ package salomon.core.remote.event;
 /**
  * 
  * TODO: add comment.
- * @author krzychu
  * 
+ * @author krzychu
+ *  
  */
 public interface IMasterControllerListener
 {
 	void controllerAdded(RemoteControllerEvent event);
-    void controllerRemoved(RemoteControllerEvent event);
+
+	void controllerRemoved(RemoteControllerEvent event);
 }
