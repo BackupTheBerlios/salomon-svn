@@ -5,6 +5,8 @@
 
 package salomon.plugin;
 
+import java.io.File;
+
 /**
  *  
  */
@@ -20,6 +22,10 @@ public class Description
 	private String _output;
 
 	private String _version;
+	
+	private int _pluginID;
+	
+	private File _location;
 
 	public Description()
 	{
@@ -118,5 +124,33 @@ public class Description
 	public void setVersion(String version)
 	{
 		_version = version;
+	}
+	/**
+	 * @return Returns the location.
+	 */
+	public File getLocation()
+	{
+		return _location;
+	}
+	/**
+	 * @param location The location to set.
+	 */
+	public void setLocation(File location)
+	{
+		_location = location;
+	}
+	/**
+	 * @return Returns the pluginID.
+	 */
+	public int getPluginID()
+	{
+		return _pluginID;
+	}
+	/**
+	 * @param pluginID The pluginID to set.
+	 */
+	public void setPluginID(int pluginID)
+	{
+		this._pluginID = pluginID;
 	}
 } // end Description
