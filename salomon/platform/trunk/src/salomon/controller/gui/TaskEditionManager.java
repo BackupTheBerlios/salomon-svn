@@ -138,6 +138,9 @@ public final class TaskEditionManager
 			IPlugin plugin;
 			try {
 				plugin = localPlugin.getPlugin();
+               // TODO: change it !!!
+                int pluginID = localPlugin.getPluginDescription().getPluginID();                
+                plugin.getDescription().setPluginID(pluginID);                
 				TaskGUI taskGUI = new TaskGUI();
 				taskGUI.setPlugin(plugin);
 				taskGUI.setName(getTaskName());
@@ -405,7 +408,7 @@ public final class TaskEditionManager
 			inputSettings = plugin.getSettingComponent().getDefaultSettings();
 		}
 		int result = JOptionPane.showConfirmDialog(_positionComponent,
-				settingComponent.getComponent(inputSettings, null), //TODO: !!!!!!
+				settingComponent.getComponent(inputSettings, null), //TODO: change it!!!
 				Messages.getString("TIT_PLUGIN_SETTINGS"), //$NON-NLS-1$
 				JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
 		if (result == JOptionPane.OK_OPTION) {

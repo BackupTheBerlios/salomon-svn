@@ -137,6 +137,7 @@ public class Utils
 		// printing result
 		StringBuffer buffer = new StringBuffer(512);
 		int rowCount = 0;
+        buffer.append("\n");
 		for (Iterator iter = allData.iterator(); iter.hasNext();) {
 			Object[] row = (Object[]) iter.next();
 			for (int i = 0; i < row.length; i++) {

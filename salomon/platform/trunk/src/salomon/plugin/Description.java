@@ -4,22 +4,23 @@ package salomon.plugin;
 import java.io.Serializable;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import salomon.core.data.DBManager;
-import salomon.core.data.common.DBColumnName;
-import salomon.core.data.common.DBCondition;
-import salomon.core.data.common.DBTableName;
-import salomon.core.data.common.DBValue;
+import salomon.core.data.common.SQLDelete;
+import salomon.core.data.common.SQLUpdate;
 
 /**
  * Class represents plugin description.
  *
  */
-public class Description implements Serializable
+public class Description implements Serializable, IDBSupporting
 {
 	public static final String TABLE_NAME = "plugins";
+    
+    private static final String GEN_NAME = "gen_plugin_id";
 
 	private String _info;
 
@@ -173,13 +174,13 @@ public class Description implements Serializable
 	 * @throws SQLException
 	 * @throws MalformedURLException
 	 */
-	public void init(ResultSet resultSet) throws MalformedURLException,
+	public void load(ResultSet resultSet) throws MalformedURLException,
 			SQLException
 	{
 		_pluginID = resultSet.getInt("plugin_id");
-		_name = resultSet.getString("name");
+		_name = resultSet.getString("plugin_name");
 		_location = new URL(resultSet.getString("location"));
-		_info = resultSet.getString("info");
+		_info = resultSet.getString("plugin_info");
 	}
 
 	/**
@@ -193,16 +194,15 @@ public class Description implements Serializable
 	 */
 	public int save() throws SQLException, ClassNotFoundException
 	{
-		DBTableName[] tableNames = {new DBTableName(TABLE_NAME)};
-		DBValue[] values = {
-				new DBValue(new DBColumnName(tableNames[0], "name"), _name,
-						DBValue.TEXT),
-				new DBValue(new DBColumnName(tableNames[0], "info"), _info,
-						DBValue.TEXT),
-				new DBValue(new DBColumnName(tableNames[0], "location"),
-						_location, DBValue.TEXT)};
-		_pluginID = DBManager.getInstance().insertOrUpdate(values, "plugin_id",
-				_pluginID);
+        SQLUpdate update = new SQLUpdate(TABLE_NAME);
+        update.addValue("plugin_name", _name);
+        update.addValue("location", _location.toString());
+        if (_info != null) {
+        	update.addValue("plugin_info", _info);
+        }
+        update.addValue("lm_date", new Date(System.currentTimeMillis()));
+		_pluginID = DBManager.getInstance().insertOrUpdate(update, "plugin_id",
+				_pluginID, GEN_NAME);
 		return _pluginID;
 	}
 	/**
@@ -214,12 +214,10 @@ public class Description implements Serializable
 	 * @throws SQLException
 	 */
 	public boolean delete() throws SQLException, ClassNotFoundException
-	{
-		DBTableName[] tableNames = {new DBTableName(TABLE_NAME)};
-		DBCondition[] conditions = {new DBCondition(new DBColumnName(
-				tableNames[0], "plugin_id"), DBCondition.REL_EQ, new Integer(
-				_pluginID), DBCondition.NUMBERIC)};
-		return (DBManager.getInstance().delete(conditions) > 0);
+	{		
+        SQLDelete delete = new SQLDelete(TABLE_NAME);
+        delete.addCondition("plugin_id =", _pluginID);
+		return (DBManager.getInstance().delete(delete) > 0);
 	}
 
 } // end Description
