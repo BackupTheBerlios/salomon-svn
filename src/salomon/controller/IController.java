@@ -1,16 +1,14 @@
 
 package salomon.controller;
 
-import salomon.core.ProjectManager;
+import salomon.core.IManagerEngine;
 
 /**
  *  
  */
 public interface IController
 {
-	
-	public void start(ProjectManager projectManager);
+
+	public void start(IManagerEngine managerEngine);
 } // end IManager
-
-
 
