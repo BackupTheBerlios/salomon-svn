@@ -4,6 +4,7 @@ package salomon.controller;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.rmi.NotBoundException;
+import java.rmi.RMISecurityManager;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
@@ -44,7 +45,7 @@ public final class ClientController implements IController
 	private void initRMI()
 	{
 		try {
-			//System.setSecurityManager(new RMISecurityManager());
+			System.setSecurityManager(new RMISecurityManager());
 			String hostName = "remote";
 
 			try {

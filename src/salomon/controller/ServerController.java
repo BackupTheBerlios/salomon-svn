@@ -6,6 +6,7 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.rmi.RMISecurityManager;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
@@ -73,6 +74,8 @@ public final class ServerController implements IController
 
 	private JToolBar _toolBar;
 
+	private ControllerPanel _controllerPanel;
+
 	public void start(IManagerEngine managerEngine)
 	{
 		_managerEngineHolder = new ManagerEngineHolder(managerEngine);
@@ -89,8 +92,9 @@ public final class ServerController implements IController
 			_remoteControllerPanel = new RemoteControllerPanel(
 					_managerEngineHolder);
 			_splitPane.setLeftComponent(_remoteControllerPanel.getControllerPanel());
-			_splitPane.setRightComponent(new ControllerPanel(
-					_taskEditionManager, _actionManager));
+			_controllerPanel = new ControllerPanel(_taskEditionManager,
+					_actionManager);
+			_splitPane.setRightComponent(_controllerPanel);
 			_contentPane.add(_splitPane);
 		}
 		return _contentPane;
@@ -151,9 +155,11 @@ public final class ServerController implements IController
 				_taskEditionManager);
 		_guiMenu = new ServerGUIMenu(_actionManager);
 		ControllerFrame frame = new ControllerFrame();
-		frame.setContentPane(getJContentPane());
+		//frame.setContentPane(getJContentPane());
+		frame.setMainPanel(getJContentPane());
 		frame.setJMenuBar(getJMenuBar());
 		frame.setJToolBar(getToolBar());
+        frame.setControllerPanel(_controllerPanel);
 
 		_taskEditionManager.setParent(frame);
 		_projectEditionManager.setParent(frame);
@@ -172,7 +178,7 @@ public final class ServerController implements IController
 	private void initRMI()
 	{
 		try {
-			//System.setSecurityManager(new RMISecurityManager());
+			System.setSecurityManager(new RMISecurityManager());
 			_masterController = new MasterController();
 			_masterController.addMasterControllerListener(new MasterControllerListener());
 			Registry registry = LocateRegistry.createRegistry(RMI_PORT);
@@ -181,6 +187,12 @@ public final class ServerController implements IController
 		} catch (RemoteException e) {
 			_logger.error(e);
 		}
+	}
+
+	//TODO: change it
+	public void refresh()
+	{
+		_taskEditionManager.refresh();
 	}
 
 	private final class MasterControllerListener
