@@ -60,9 +60,11 @@ public class DataSetTest extends TestCase
 		LOGGER.debug("select: " + selectBefore);
 		try {
 			ResultSet result = dataSet.selectData(select);
-			ResultSet result2 = dataSet.selectData(select);
-			result.close();
+            result.close();
+            _manager.rollback();
+			ResultSet result2 = dataSet.selectData(select);	
 			result2.close();
+            
 			success = true;
 		} catch (SQLException e) {
 			LOGGER.fatal("", e);

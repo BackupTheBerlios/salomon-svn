@@ -45,6 +45,7 @@ public class SQLDeleteTest extends TestCase
         delete.addCondition("plugin_id =", 5);
         boolean success = false;
         try {
+            _manager.rollback();
             _manager.delete(delete);
             success = true;
             _manager.commit();

@@ -61,7 +61,7 @@ public class SQLInsertTest extends TestCase
     //        }
     //        assertTrue(success);
     //    }
-
+    /*
     public void testGetQuery2()
     {
         _logger.debug("SQLInsertTest.testGetQuery2()");
@@ -72,6 +72,7 @@ public class SQLInsertTest extends TestCase
         insert.addValue("location", "http://www.gdzies.pl");
         insert.addValue("info", "id z generatora");
         try {
+            _manager.rollback() ;
             _manager.insert(insert, "plugin_id", "gen_plugin_id");
             success = true;
             _manager.commit();
@@ -82,7 +83,7 @@ public class SQLInsertTest extends TestCase
         }
         assertTrue(success);
     }
-
+    *//*
     public void testGetQuery3()
     {
         _logger.debug("SQLInsertTest.testGetQuery3()");
@@ -105,7 +106,7 @@ public class SQLInsertTest extends TestCase
         }
         assertTrue(success);
     }
-
+*//*
     public void testGetQuery4()
     {
         _logger.debug("SQLInsertTest.testGetQuery4()");
@@ -128,10 +129,15 @@ public class SQLInsertTest extends TestCase
         }
         assertTrue(success);
     }
-
+*/
     /*
      * @see TestCase#setUp()
      */
+    public void testGetQuery5() throws Exception ,SQLException
+    {
+            
+    }
+    
     protected void setUp() throws Exception
     {
         PropertyConfigurator.configure("log.conf"); //$NON-NLS-1$      

@@ -27,8 +27,10 @@ import junit.framework.TestCase;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
+import org.omg.CORBA._PolicyStub;
 
 import salomon.engine.platform.ManagerEngine;
+import salomon.engine.project.IProjectManager;
 import salomon.engine.project.Project;
 import salomon.engine.project.ProjectManager;
 import salomon.engine.task.ITask;
@@ -38,6 +40,7 @@ import salomon.platform.exception.PlatformException;
 public class TaskManagerTest extends TestCase {
 
     private TaskManager _TaskManager;
+    private ProjectManager _ProjectManager ;
 
     public static void main(String[] args) {
         junit.textui.TestRunner.run(TaskManagerTest.class);
@@ -50,11 +53,15 @@ public class TaskManagerTest extends TestCase {
         super.setUp();
         PropertyConfigurator.configure("log.conf");
         _TaskManager = new TaskManager() ;
+        _ProjectManager = new ProjectManager(new ManagerEngine());
+        _ProjectManager.addProject(_ProjectManager.ceateProject()) ;
+        _TaskManager.setProjectManger(_ProjectManager);
     }
 
     public void testCreateTask() {
         ITask task ;
         try {
+
             task = _TaskManager.createTask();
             assertNotNull(task) ;
             

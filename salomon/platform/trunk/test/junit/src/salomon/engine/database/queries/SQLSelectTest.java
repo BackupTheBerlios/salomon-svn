@@ -48,16 +48,18 @@ public class SQLSelectTest extends TestCase
 
         SQLSelect sel = new SQLSelect();
         sel.addTable("tasks");
-
+        
         try {
+            
             ResultSet resultSet = _manager.select(sel);
             assertNotNull(resultSet);
             resultSet.close();
-            success = true;
+            success = true;        
         } catch (SQLException e) {
             e.printStackTrace();
             success = false;
         }
+        _manager.rollback() ;
         assertTrue(success);
     }
 
@@ -77,6 +79,7 @@ public class SQLSelectTest extends TestCase
         sel.addCondition("task_name =", "Jacks' task''");
 
         try {
+            
             ResultSet resultSet = _manager.select(sel);
             assertNotNull(resultSet);
             resultSet.close();
@@ -85,6 +88,8 @@ public class SQLSelectTest extends TestCase
             e.printStackTrace();
             success = false;
         }
+        
+        _manager.rollback() ;
         assertTrue(success);
     }
 
@@ -105,6 +110,7 @@ public class SQLSelectTest extends TestCase
             e.printStackTrace();
             success = false;
         }
+        _manager.rollback() ;
         assertTrue(success);
     }
     

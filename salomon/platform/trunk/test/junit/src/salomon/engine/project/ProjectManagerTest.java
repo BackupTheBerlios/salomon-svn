@@ -21,18 +21,21 @@
 
 package salomon.engine.project;
 
+import java.sql.SQLException;
+
 import junit.framework.TestCase;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
+import salomon.engine.database.DBManager;
 import salomon.engine.platform.ManagerEngine;
 
 public class ProjectManagerTest extends TestCase
 {
 	private ProjectManager _projectManager;
 
-	public void testGetProject()
+	public void testGetProject() throws Exception 
 	{
 		LOGGER.info("ProjectManagerTest.testGetProject()");
 		boolean success = false;
@@ -41,6 +44,7 @@ public class ProjectManagerTest extends TestCase
 			success = true;
 		} catch (Exception e) {
 			LOGGER.fatal("", e);
+            throw e ;
 		}
 		assertTrue(success);
 	}
@@ -69,6 +73,15 @@ public class ProjectManagerTest extends TestCase
 	protected void setUp() throws Exception
 	{
 		PropertyConfigurator.configure("log.conf"); //$NON-NLS-1$           
+        
+        try {
+            DBManager.getInstance();
+        } catch (SQLException e) {
+            LOGGER.fatal("", e);
+        } catch (ClassNotFoundException e) {
+            LOGGER.error("", e);
+        }
+        
 		ManagerEngine engine = new ManagerEngine();
 		_projectManager = new ProjectManager(engine);
 	}

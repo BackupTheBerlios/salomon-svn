@@ -115,6 +115,15 @@ public class ProjectTest extends TestCase
 	protected void setUp() throws Exception
 	{
 		PropertyConfigurator.configure("log.conf"); //$NON-NLS-1$   
+        
+        try {
+            DBManager.getInstance();
+        } catch (SQLException e) {
+            LOGGER.fatal("", e);
+        } catch (ClassNotFoundException e) {
+            LOGGER.error("", e);
+        }
+        
 		_manager = DBManager.getInstance();
 	}
 

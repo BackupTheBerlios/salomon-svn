@@ -42,14 +42,13 @@ public class TaskTest extends TestCase {
     protected void setUp() throws Exception {
         super.setUp();
         PropertyConfigurator.configure("log.conf");
-        _Task = testCreateTask() ;
         
     }
 
     /**
      * @return
      */
-    private Task testCreateTask() {
+    public void testCreateTask() {
         LOGGER.info("TaskTest.testCreateTask");
         Task result = new Task();
         result.setName("test task") ;
@@ -61,26 +60,9 @@ public class TaskTest extends TestCase {
         //result.setPlugin(null) ; 
         //result.setSettings(null) ;
         //result.setResult(null);
-        return result;
+        _Task = result ;
     }
     
-    /**
-     * 
-     */
-    private void testLoadResultSet() {
-        LOGGER.info("TaskTest.testLoadResultSet");
-        assertNotNull(_Task) ;
-        
-        assertNotNull("AWAITING for implelention",null);
-        try {
-            _Task.load(null) ;
-        } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-            assertFalse(true);
-        }
-    }
-
     /* (non-Javadoc)
      * @see junit.framework.TestCase#tearDown()
      */
