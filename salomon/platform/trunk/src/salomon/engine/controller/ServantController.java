@@ -95,7 +95,9 @@ public final class ServantController implements IController
 			}
 
 		} catch (RemoteException e) {
-			LOGGER.fatal("", e);
+			LOGGER.fatal("Fatal error while initializing RMI."
+					+ " Application will be terminated", e);
+			System.exit(1);
 		}
 	}
 

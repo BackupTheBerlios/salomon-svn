@@ -255,6 +255,7 @@ public final class MasterController implements IController
 			_registry.rebind("CentralController", _masterController);
 		} catch (RemoteException e) {
 			LOGGER.error(e);
+			System.exit(1);
 		}
 		try {
 			ICentralController controller = (ICentralController) _registry

@@ -1,6 +1,8 @@
 
 package salomon.engine.plugin;
 
+import java.io.Serializable;
+
 import org.apache.log4j.Logger;
 
 
@@ -15,7 +17,7 @@ import salomon.plugin.ISettingComponent;
 import salomon.plugin.ISettings;
 
 /** Class helps managing plugin loading */
-public final class LocalPlugin implements IPlugin
+public final class LocalPlugin implements IPlugin, Serializable
 {
 
 	private Description _description;
