@@ -141,6 +141,7 @@ public class ProjectManager
 		DBTableName[] tableNames = {new DBTableName("tasks"),
 				new DBTableName("plugins")};
 		DBColumnName[] columnNames = {
+				new DBColumnName(tableNames[0], "task_id"),
 				new DBColumnName(tableNames[0], "name", "task_name"),
 				new DBColumnName(tableNames[0], "info", "task_info"),
 				new DBColumnName(tableNames[1], "plugin_id"),
@@ -162,6 +163,7 @@ public class ProjectManager
 		boolean success = true;
 		try {
 			while (resultSet.next()) {
+				int taskId = resultSet.getInt("task_id");
 				String taskName = resultSet.getString("task_name");
 				String taskInfo = resultSet.getString("task_info");
 				int pluginId = resultSet.getInt("plugin_id");
@@ -170,11 +172,12 @@ public class ProjectManager
 				String location = resultSet.getString("location");
 				String settings = resultSet.getString("settings");
 				String result = resultSet.getString("result");
-				_logger.info(taskName + "|" + taskInfo + "|" + pluginName + "|"
+				_logger.info("" + taskId + "|" + taskName + "|" + taskInfo + "|" + pluginName + "|"
 						+ pluginInfo + "|" + location + "|" + settings + "|"
 						+ result);
 				Task task = new Task();
 				task.setName(taskName);
+				task.setTaksId(taskId);
 				IPlugin plugin = PluginLoader.loadPlugin(location);
 				plugin.getDescription().setLocation(new File(location));
 				plugin.getDescription().setName(pluginName);
