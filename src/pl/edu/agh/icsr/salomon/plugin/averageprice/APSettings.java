@@ -5,6 +5,7 @@
 
 package pl.edu.agh.icsr.salomon.plugin.averageprice;
 
+import java.io.Serializable;
 import java.util.NoSuchElementException;
 import java.util.StringTokenizer;
 
@@ -14,7 +15,7 @@ import salomon.plugin.ISettings;
  * @author nico
  *  
  */
-public class APSettings implements ISettings
+public final class APSettings implements ISettings, Serializable
 {
 	private String _email = null;
 
