@@ -252,7 +252,7 @@ public final class ProjectManager implements IProjectManager
 				// loading plugin description
 				description.load(resultSet);
 				IPlugin plugin = PluginLoader.loadPlugin(description.getLocation());
-				ISettings pluginSettings = plugin.getSettingComponent().getSettings();
+				ISettings pluginSettings = plugin.getSettingComponent().getDefaultSettings();
 
 				Task task = (Task) _managerEngine.getTasksManager().createTask();
 				task.setSettings(pluginSettings);
