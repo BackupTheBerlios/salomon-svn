@@ -21,11 +21,6 @@ public class ManagerEngine
 	public TaskManager getTasksManager()
 	{		
 		return _taskManager;
-	} 
+	}	
 	
-	public Project getKnowledgeSystems()
-	{
-		// your code here
-		return null;
-	} // end getKnowledgeSystems
 } // end ManagerEngine
