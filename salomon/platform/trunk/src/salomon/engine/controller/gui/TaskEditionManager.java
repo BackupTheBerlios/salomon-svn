@@ -1,6 +1,22 @@
 /*
- * Created on 2004-05-03
+ * Copyright (C) 2004 Salomon Team
  *
+ * This file is part of Salomon.
+ *
+ * Salomon is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * Salomon is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with Salomon; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * 
  */
 
 package salomon.engine.controller.gui;
@@ -15,8 +31,6 @@ import java.awt.event.MouseListener;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Arrays;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.swing.Box;
@@ -37,7 +51,6 @@ import salomon.engine.controller.gui.action.ActionManager;
 import salomon.engine.platform.IManagerEngine;
 import salomon.engine.platform.Messages;
 import salomon.engine.platform.plugin.PluginLoader;
-import salomon.platform.task.ITask;
 import salomon.plugin.Description;
 import salomon.plugin.IPlugin;
 import salomon.plugin.IResultComponent;
@@ -112,7 +125,7 @@ public final class TaskEditionManager
 			try {
 				url = new URL(_txtPluginLocation.getText());
 			} catch (MalformedURLException e) {
-				_logger.fatal("", e);
+				LOGGER.fatal("", e);
 				Utils.showErrorMessage(Messages.getString("ERR_CANNOT_SAVE_PLUGIN"));
 				return;
 			}
@@ -147,11 +160,11 @@ public final class TaskEditionManager
 				taskGUI.setName(getTaskName());
 				_taskListModel.addElement(taskGUI);
 			} catch (Exception e) {
-				_logger.fatal("", e); //$NON-NLS-1$				
+				LOGGER.fatal("", e); //$NON-NLS-1$				
 				Utils.showErrorMessage(Messages.getString("ERR_CANNOT_LOAD_PLUGIN"));
 			}
 		} else {
-			_logger.warn("Invalid index. Wrong list selected?"); //$NON-NLS-1$
+			LOGGER.warn("Invalid index. Wrong list selected?"); //$NON-NLS-1$
 		}
 	}
 
@@ -183,7 +196,7 @@ public final class TaskEditionManager
 				_taskListModel.add(index + 1, task);
 				_taskList.setSelectedIndex(index + 1);
 			} else {
-				_logger.warn("Nothing or wrong index selected"); //$NON-NLS-1$
+				LOGGER.warn("Nothing or wrong index selected"); //$NON-NLS-1$
 			}
 		}
 	}
@@ -201,7 +214,7 @@ public final class TaskEditionManager
 				_taskListModel.add(index - 1, task);
 				_taskList.setSelectedIndex(index - 1);
 			} else {
-				_logger.warn("Nothing or wrong index selected"); //$NON-NLS-1$
+				LOGGER.warn("Nothing or wrong index selected"); //$NON-NLS-1$
 			}
 		}
 	}
@@ -213,22 +226,26 @@ public final class TaskEditionManager
 	 */
 	public void refresh()
 	{
-		_logger.debug("reloading plugins");
-		_pluginListModel.removeAllElements();
-		Collection plugins = _managerEngine.getPluginManager().getAvailablePlugins();
-		for (Iterator iter = plugins.iterator(); iter.hasNext();) {
-			LocalPlugin localPlugin = new LocalPlugin((Description) iter.next());
-			_logger.debug("adding plugin:" + localPlugin);
-			_logger.debug("description:" + localPlugin.getPluginDescription());
-			_pluginListModel.addElement(localPlugin);
-		}
-		_logger.debug("reloading tasks");
-		_taskListModel.removeAllElements();
-		ITask[] tasks = _managerEngine.getTasksManager().getTasks();
-        for (ITask task : tasks) {
-            _logger.debug("adding task");
-            _taskListModel.addElement(new TaskGUI(task));   
-        }
+        //FIXME
+        
+        throw new UnsupportedOperationException(
+				"Method refresh() not implemented yet!");
+//		LOGGER.debug("reloading plugins");
+//		_pluginListModel.removeAllElements();
+//		Collection plugins = _managerEngine.getPluginManager().getPlugins();
+//		for (Iterator iter = plugins.iterator(); iter.hasNext();) {
+//			LocalPlugin localPlugin = new LocalPlugin((Description) iter.next());
+//			LOGGER.debug("adding plugin:" + localPlugin);
+//			LOGGER.debug("description:" + localPlugin.getPluginDescription());
+//			_pluginListModel.addElement(localPlugin);
+//		}
+//		LOGGER.debug("reloading tasks");
+//		_taskListModel.removeAllElements();
+//		ITask[] tasks = _managerEngine.getTasksManager().getTasks();
+//        for (ITask task : tasks) {
+//            LOGGER.debug("adding task");
+//            _taskListModel.addElement(new TaskGUI(task));   
+//        }
 	}
 
 	public void removePlugin()
@@ -256,13 +273,18 @@ public final class TaskEditionManager
 			TaskGUI task = (TaskGUI) _taskListModel.remove(index);
 			System.out.println("plugin = " + task); //$NON-NLS-1$
 		} else {
-			_logger.warn("Invalid index. Wrong list selected?"); //$NON-NLS-1$
+			LOGGER.warn("Invalid index. Wrong list selected?"); //$NON-NLS-1$
 		}
 	}
 
+    /**
+     * Starts executing task.
+     */
 	public void runTasks()
 	{
-		_managerEngine.getTasksManager().start();
+        throw new UnsupportedOperationException(
+				"Method runTasks() not implemented yet!");
+//FIXME		_managerEngine.getTasksManager().start();
 	}
 
 	public void savePlugin()
@@ -281,7 +303,7 @@ public final class TaskEditionManager
 			try {
 				url = new URL(_txtPluginLocation.getText());
 			} catch (MalformedURLException e) {
-				_logger.fatal("", e);
+				LOGGER.fatal("", e);
 				Utils.showErrorMessage(Messages.getString("ERR_CANNOT_SAVE_PLUGIN"));
 				return;
 			}
@@ -412,7 +434,7 @@ public final class TaskEditionManager
 				JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
 		if (result == JOptionPane.OK_OPTION) {
 			ISettings settings = settingComponent.getSettings();
-			_logger.info("settings: " + settings); //$NON-NLS-1$
+			LOGGER.info("settings: " + settings); //$NON-NLS-1$
 			currentTask.setSettings(settings);
 		}
 	}
@@ -439,7 +461,7 @@ public final class TaskEditionManager
 		public IPlugin getPlugin() throws Exception
 		{
 			if (_plugin == null) {
-				_logger.debug("trying to load plugin"); //$NON-NLS-1$
+				LOGGER.debug("trying to load plugin"); //$NON-NLS-1$
 				_plugin = PluginLoader.loadPlugin(_pluginDescription.getLocation());
 			}
 			return _plugin;
@@ -530,5 +552,5 @@ public final class TaskEditionManager
 		}
 	}
 
-	private static Logger _logger = Logger.getLogger(TaskEditionManager.class);
+	private static final Logger LOGGER = Logger.getLogger(TaskEditionManager.class);
 }

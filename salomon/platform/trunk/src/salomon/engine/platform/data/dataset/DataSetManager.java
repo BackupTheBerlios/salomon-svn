@@ -1,3 +1,23 @@
+/*
+ * Copyright (C) 2004 Salomon Team
+ *
+ * This file is part of Salomon.
+ *
+ * Salomon is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * Salomon is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with Salomon; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * 
+ */
 
 package salomon.engine.platform.data.dataset;
 
@@ -17,9 +37,16 @@ import salomon.platform.exception.PlatformException;
 /**
  * Class manages with datasets.
  */
-public class DataSetManager implements IDataSetManager
+public final class DataSetManager implements IDataSetManager
 {
-	private static final Logger _logger = Logger.getLogger(DataSetManager.class);
+
+	/**
+	 * @see salomon.platform.data.dataset.IDataSetManager#add(salomon.platform.data.dataset.IDataSet)
+	 */
+	public void add(IDataSet dataSet) throws PlatformException
+	{
+        throw new UnsupportedOperationException("Method add() not implemented yet!");
+	}
 
 	public IDataSet getDataSet(String name) throws PlatformException
 	{
@@ -28,7 +55,7 @@ public class DataSetManager implements IDataSetManager
 		try {
 			resultSet = getDataSetItems(name);
 		} catch (Exception e) {
-			_logger.fatal("", e);
+			LOGGER.fatal("", e);
 			throw new PlatformException(e.getLocalizedMessage());
 		}
 		Collection<String> conditions = new HashSet<String>();
@@ -43,7 +70,7 @@ public class DataSetManager implements IDataSetManager
 				conditions.add(condition);
 			}
 		} catch (SQLException e) {
-			_logger.fatal("", e);
+			LOGGER.fatal("", e);
 			throw new PlatformException(e.getLocalizedMessage());
 		}
 		dataSet = new DataSet();
@@ -52,6 +79,40 @@ public class DataSetManager implements IDataSetManager
 		dataSet.setConditions(conditions);
 
 		return dataSet;
+	}
+
+	/**
+	 * @see salomon.platform.data.dataset.IDataSetManager#getDataSets()
+	 */
+	public IDataSet[] getDataSets() throws PlatformException
+	{
+        throw new UnsupportedOperationException("Method getDataSets() not implemented yet!");
+	}
+
+	/**
+	 * @see salomon.platform.data.dataset.IDataSetManager#intersection(salomon.platform.data.dataset.IDataSet, salomon.platform.data.dataset.IDataSet)
+	 */
+	public IDataSet intersection(IDataSet firstDataSet, IDataSet secondDataSet) throws PlatformException
+	{
+		throw new UnsupportedOperationException("Method intersection() not implemented yet!");
+	}
+
+	/**
+	 * @see salomon.platform.data.dataset.IDataSetManager#minus(salomon.platform.data.dataset.IDataSet, salomon.platform.data.dataset.IDataSet)
+	 */
+	public IDataSet minus(IDataSet firstDataSet, IDataSet secondDataSet) throws PlatformException
+	{
+		throw new UnsupportedOperationException("Method minus() not implemented yet!");
+	}
+
+	/**
+	 * @see salomon.platform.data.dataset.IDataSetManager#union(salomon.platform.data.dataset.IDataSet,
+	 *      salomon.platform.data.dataset.IDataSet)
+	 */
+	public IDataSet union(IDataSet firstDataSet, IDataSet secondDataSet)
+			throws PlatformException
+	{
+        throw new UnsupportedOperationException("Method union() not implemented yet!");
 	}
 
 	private ResultSet getDataSetItems(String dataSetName) throws SQLException,
@@ -68,37 +129,10 @@ public class DataSetManager implements IDataSetManager
 		DBManager connector = DBManager.getInstance();
 		return connector.select(select);
 	}
+    
+	private static final Logger LOGGER = Logger.getLogger(DataSetManager.class);
 
-	private final static String DATASET_ITEMS = "dataset_items";
+	private static final String DATASET_ITEMS = "dataset_items";
 
-	private final static String DATASETS = "datasets";
-
-	/**
-	 * @see salomon.platform.data.dataset.IDataSetManager#union(salomon.platform.data.dataset.IDataSet,
-	 *      salomon.platform.data.dataset.IDataSet)
-	 */
-	public IDataSet union(IDataSet firstDataSet, IDataSet secondDataSet)
-			throws PlatformException
-	{
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("No yet implemented");
-	}
-
-	/**
-	 * @see salomon.platform.data.dataset.IDataSetManager#add(salomon.platform.data.dataset.IDataSet)
-	 */
-	public void add(IDataSet dataSet) throws PlatformException
-	{
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("No yet implemented");
-	}
-
-	/**
-	 * @see salomon.platform.data.dataset.IDataSetManager#getDataSets()
-	 */
-	public IDataSet[] getDataSets() throws PlatformException
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
+	private static final String DATASETS = "datasets";
 }

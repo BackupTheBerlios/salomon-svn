@@ -1,3 +1,23 @@
+/*
+ * Copyright (C) 2004 Salomon Team
+ *
+ * This file is part of Salomon.
+ *
+ * Salomon is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * Salomon is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with Salomon; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * 
+ */
 
 package salomon.engine.platform;
 
@@ -36,9 +56,8 @@ import salomon.util.gui.Utils;
  * managing with database easier supplying commands history.
  *  
  */
-public class SQLConsole extends JFrame
+public final class SQLConsole extends JFrame
 {
-
 	private JButton _btnCommit = null;
 
 	private JButton _btnExecute = null;
@@ -95,9 +114,9 @@ public class SQLConsole extends JFrame
 		try {
 			_connector = DBManager.getInstance();
 		} catch (SQLException e) {
-			_logger.fatal("", e); //$NON-NLS-1$
+			LOGGER.fatal("", e); //$NON-NLS-1$
 		} catch (ClassNotFoundException e) {
-			_logger.fatal("", e); //$NON-NLS-1$
+			LOGGER.fatal("", e); //$NON-NLS-1$
 		}
 		_msgArea = getMessageArea();
 		_history = new CommandHistory(100);
@@ -132,7 +151,7 @@ public class SQLConsole extends JFrame
 			// if there was no exception, then adding command to the history
 			_history.addCommand(query);
 		} catch (SQLException e) {
-			_logger.fatal("", e); //$NON-NLS-1$
+			LOGGER.fatal("", e); //$NON-NLS-1$
 			showMessage(e.getLocalizedMessage());
 		}
 	}
@@ -270,7 +289,7 @@ public class SQLConsole extends JFrame
 	private JTextArea getMessageArea()
 	{
 		JTextArea txtArea = new JTextArea();
-		((JTextArea) txtArea).setEditable(false);
+		txtArea.setEditable(false);
 		txtArea.setBackground(Color.WHITE);
 		return txtArea;
 	}
@@ -356,8 +375,6 @@ public class SQLConsole extends JFrame
 
 	/**
 	 * This method initializes this
-	 * 
-	 * @return void
 	 */
 	private void initialize()
 	{
@@ -371,7 +388,7 @@ public class SQLConsole extends JFrame
 					try {
 						_connector.disconnect();
 					} catch (SQLException e1) {
-						_logger.fatal("", e1); //$NON-NLS-1$
+						LOGGER.fatal("", e1); //$NON-NLS-1$
 					}
 					System.exit(0);
 				}
@@ -424,7 +441,7 @@ public class SQLConsole extends JFrame
 	private static void printResultSet(ResultSet resultSet) throws SQLException
 	{
 		if (resultSet == null) {
-			_logger.fatal("Result set is empty"); //$NON-NLS-1$
+			LOGGER.fatal("Result set is empty"); //$NON-NLS-1$
 			return;
 		}
 		ResultSetMetaData metaData = resultSet.getMetaData();
@@ -463,16 +480,14 @@ public class SQLConsole extends JFrame
 			}
 			buffer.append("\n"); //$NON-NLS-1$
 		}
-		_logger.fatal(buffer);
+		LOGGER.fatal(buffer);
 	}   
     
     
 	/**
 	 * Class manages command history list.
-	 * 
-	 * @author nico
 	 */
-	class CommandHistory
+	private static final class CommandHistory
 	{
 		private List _commandHistory = null;
 
@@ -522,5 +537,5 @@ public class SQLConsole extends JFrame
 		}
 	}
 
-	private static Logger _logger = Logger.getLogger(SQLConsole.class);
+	private static final Logger LOGGER = Logger.getLogger(SQLConsole.class);
 }

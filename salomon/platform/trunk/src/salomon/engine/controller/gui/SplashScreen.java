@@ -1,3 +1,23 @@
+/*
+ * Copyright (C) 2004 Salomon Team
+ *
+ * This file is part of Salomon.
+ *
+ * Salomon is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * Salomon is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with Salomon; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * 
+ */
 
 package salomon.engine.controller.gui;
 
@@ -56,9 +76,9 @@ public final class SplashScreen
 					}
 				});
 			} catch (InterruptedException e) {
-				_logger.fatal("", e);
+				LOGGER.fatal("", e);
 			} catch (InvocationTargetException e) {
-				_logger.error("", e);
+				LOGGER.error("", e);
 			}
 		}
 	}
@@ -72,14 +92,14 @@ public final class SplashScreen
 			splashTime = Long.parseLong(Config.getString("SPLASH_TIME")) * 1000;
 			waitingTime = splashTime - (currentTime - _startTime);
 		} catch (NumberFormatException e) {
-			_logger.fatal("", e);
+			LOGGER.fatal("", e);
 		}
-		_logger.debug("waitingtime: " + waitingTime);
+		LOGGER.debug("waitingtime: " + waitingTime);
 		if (waitingTime > 0) {
 			try {
 				Thread.sleep(waitingTime);
 			} catch (InterruptedException e) {
-				_logger.fatal("", e);
+				LOGGER.fatal("", e);
 			}
 		}
 
@@ -106,9 +126,9 @@ public final class SplashScreen
 					}
 				});
 			} catch (InterruptedException e) {
-				_logger.fatal("", e);
+				LOGGER.fatal("", e);
 			} catch (InvocationTargetException e) {
-				_logger.fatal("", e);
+				LOGGER.fatal("", e);
 			}
 		}
 	}
@@ -135,7 +155,7 @@ public final class SplashScreen
 		public SplashLabel(ImageIcon image)
 		{
 			super(image);
-			_logger.debug("image: " + image);
+			LOGGER.debug("image: " + image);
 			_location = new Point();
 			_location.x = (Toolkit.getDefaultToolkit().getScreenSize().width - image.getIconWidth()) / 2;
 			_location.y = (Toolkit.getDefaultToolkit().getScreenSize().height - image.getIconHeight()) / 2;
@@ -166,5 +186,5 @@ public final class SplashScreen
 
 	private static SplashScreen _instance = null;
 
-	private static Logger _logger = Logger.getLogger(SplashScreen.class);
+	private static final Logger LOGGER = Logger.getLogger(SplashScreen.class);
 }

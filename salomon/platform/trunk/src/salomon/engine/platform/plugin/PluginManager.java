@@ -1,6 +1,22 @@
 /*
- * Created on 2004-05-22
+ * Copyright (C) 2004 Salomon Team
  *
+ * This file is part of Salomon.
+ *
+ * Salomon is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * Salomon is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with Salomon; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * 
  */
 
 package salomon.engine.platform.plugin;
@@ -18,6 +34,7 @@ import salomon.engine.platform.data.common.SQLDelete;
 import salomon.engine.platform.data.common.SQLSelect;
 import salomon.platform.plugin.IPluginManager;
 import salomon.plugin.Description;
+import salomon.plugin.IPlugin;
 
 /**
  * Class manager available plugins.
@@ -29,7 +46,7 @@ public final class PluginManager implements IPluginManager
 	 * 
 	 * @return plugin descriptions
 	 */
-	public Collection getAvailablePlugins()
+	public IPlugin[] getPlugins()
 	{
 		Collection<Description> result = new LinkedList<Description>();
         SQLSelect select = new SQLSelect();
@@ -44,13 +61,14 @@ public final class PluginManager implements IPluginManager
 				result.add(desc);
 			}
 		} catch (SQLException e) {
-			_logger.fatal("", e);
+			LOGGER.fatal("", e);
 		} catch (ClassNotFoundException e) {
-			_logger.fatal("", e);
+			LOGGER.fatal("", e);
 		} catch (MalformedURLException e) {
-			_logger.fatal("", e);
+			LOGGER.fatal("", e);
 		}
-		return result;
+        //FIXME
+        throw new UnsupportedOperationException("Method union() not implemented yet!");
 	}
 	/**
      * Removes from data base information about given plugin.
@@ -74,13 +92,13 @@ public final class PluginManager implements IPluginManager
 			description.delete();
 			result = true;
 			dbManager.commit();
-			_logger.info("Plugin successfully deleted.");
+			LOGGER.info("Plugin successfully deleted.");
 		} catch (SQLException e) {
 			dbManager.rollback();
-			_logger.fatal("", e);
+			LOGGER.fatal("", e);
 		} catch (ClassNotFoundException e) {
 			dbManager.rollback();
-			_logger.fatal("", e);
+			LOGGER.fatal("", e);
 		}
 		return result;
 	}
@@ -97,15 +115,15 @@ public final class PluginManager implements IPluginManager
 			description.save();
 			DBManager.getInstance().commit();
 			result = true;
-			_logger.info("Plugin successfully saved.");
+			LOGGER.info("Plugin successfully saved.");
 		} catch (SQLException e) {
-			_logger.fatal("", e);
+			LOGGER.fatal("", e);
 		} catch (ClassNotFoundException e) {
-			_logger.fatal("", e);
+			LOGGER.fatal("", e);
 		}
 		return result;
 	}
 
-	private static Logger _logger = Logger.getLogger(PluginLoader.class);
+	private static final Logger LOGGER = Logger.getLogger(PluginLoader.class);
 
 }

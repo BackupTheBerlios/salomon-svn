@@ -1,11 +1,30 @@
+/*
+ * Copyright (C) 2004 Salomon Team
+ *
+ * This file is part of Salomon.
+ *
+ * Salomon is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * Salomon is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with Salomon; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * 
+ */
 
 package salomon.engine.platform.remote;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
-import java.sql.SQLException;
-import java.util.Collection;
 
+import salomon.platform.exception.PlatformException;
 import salomon.platform.project.IProject;
 import salomon.platform.project.IProjectManager;
 
@@ -15,7 +34,6 @@ import salomon.platform.project.IProjectManager;
 public final class RemoteProjectManager extends UnicastRemoteObject
 		implements IRemoteProjectManager
 {
-
 	private IProjectManager _projectManager;
 
 	private IRemoteProject _currentRemoteProject;
@@ -31,61 +49,38 @@ public final class RemoteProjectManager extends UnicastRemoteObject
 		_projectManager = projectManager;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
+	/**
+	 * @throws PlatformException
 	 * @see salomon.engine.platform.IRemoteProjectManager#newProject()
 	 */
-	public void newProject() throws RemoteException
+	public void createProject() throws RemoteException, PlatformException
 	{
-		_projectManager.newProject();
+		_projectManager.ceateProject();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
+	/**
 	 * @see salomon.engine.platform.IRemoteProjectManager#loadProject(int)
 	 */
-	public void loadProject(int projectID) throws Exception, RemoteException
+	public IProject loadProject(int projectID) throws PlatformException
 	{
-		_projectManager.loadProject(projectID);
+		return _projectManager.loadProject(projectID);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
+	/**
 	 * @see salomon.engine.platform.IRemoteProjectManager#saveProject(salomon.engine.platform.Project)
 	 */
-	public void saveProject() throws Exception, RemoteException,
-			ClassNotFoundException
+	public void saveProject() throws PlatformException, RemoteException
 	{
 		_projectManager.saveProject();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see salomon.engine.platform.IRemoteProjectManager#getCurrentProject()
-	 */
-	public IRemoteProject getCurrentProject() throws RemoteException
-	{
-		IProject project = _projectManager.getCurrentProject();
-		if (project != _currentProject) {
-			_currentProject = project;
-			_currentRemoteProject = new RemoteProject(_currentProject);
-		}
-
-		return _currentRemoteProject;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
+	/**
 	 * @see salomon.engine.platform.remote.IRemoteProjectManager#getAvailableProjects()
 	 */
-	public Collection getAvailableProjects() throws RemoteException,
-			SQLException, ClassNotFoundException
+	public IProject[] getProjects() throws RemoteException,
+			PlatformException
 	{
-		return _projectManager.getAvailableProjects();
+		return _projectManager.getProjects();
 	}
+
 }

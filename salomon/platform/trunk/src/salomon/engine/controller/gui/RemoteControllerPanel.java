@@ -1,3 +1,23 @@
+/*
+ * Copyright (C) 2004 Salomon Team
+ *
+ * This file is part of Salomon.
+ *
+ * Salomon is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * Salomon is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with Salomon; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * 
+ */
 
 package salomon.engine.controller.gui;
 
@@ -52,7 +72,7 @@ public final class RemoteControllerPanel
 	public void addController(RemoteControllerGUI controller)
 	{
 		_controllerListModel.addElement(controller);
-		_logger.debug("controller added.");
+		LOGGER.debug("controller added.");
 	}
 
 	/**
@@ -65,7 +85,7 @@ public final class RemoteControllerPanel
 
 	public void removeAllControllers()
 	{
-		_logger.debug("Removing controllers: " + _controllerListModel.getSize());
+		LOGGER.debug("Removing controllers: " + _controllerListModel.getSize());
 		// slow but simple ;-)
 		Object[] controllers = _controllerListModel.toArray();
 		for (int i = 0; i < controllers.length; i++) {
@@ -75,10 +95,10 @@ public final class RemoteControllerPanel
 
 	public void removeController(RemoteControllerGUI controller)
 	{
-		_logger.debug("RemoteControllerPanel.removeController()");
+		LOGGER.debug("RemoteControllerPanel.removeController()");
 		controller.exit();
 		_controllerListModel.removeElement(controller);
-		_logger.debug("controller removed.");
+		LOGGER.debug("controller removed.");
 	}
 
 	/**
@@ -152,5 +172,5 @@ public final class RemoteControllerPanel
 
 	}
 
-	private static Logger _logger = Logger.getLogger(RemoteControllerPanel.class);
+	private static Logger LOGGER = Logger.getLogger(RemoteControllerPanel.class);
 }

@@ -27,5 +27,5 @@ package salomon.platform.serialization;
  */
 public interface IObject
 {
-
+	// empty body
 }

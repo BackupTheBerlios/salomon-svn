@@ -1,3 +1,23 @@
+/*
+ * Copyright (C) 2004 Salomon Team
+ *
+ * This file is part of Salomon.
+ *
+ * Salomon is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * Salomon is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with Salomon; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * 
+ */
 
 package salomon.engine.platform.remote;
 
@@ -22,7 +42,7 @@ public final class PluginProxy implements IPlugin
 
 	private IPlugin _localPlugin;
 
-	/*
+	/**
 	 * (non-Javadoc)
 	 * 
 	 * @see salomon.plugin.IPlugin#initizalize()
@@ -32,9 +52,7 @@ public final class PluginProxy implements IPlugin
 		_localPlugin.initizalize();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
+	/**
 	 * @see salomon.plugin.IPlugin#destroy()
 	 */
 	public void destroy()
@@ -42,50 +60,46 @@ public final class PluginProxy implements IPlugin
 		_localPlugin.destroy();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
+	/**
 	 * @see salomon.plugin.IPlugin#getDescription()
 	 */
 	public Description getDescription()
 	{
 
-		return null;//_localPlugin.get;
+        //FIXME
+        throw new UnsupportedOperationException(
+                "Method getResultComponent() not implemented yet!");
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
+	/**
 	 * @see salomon.plugin.IDataPlugin#doJob(salomon.engine.platform.data.DataEngine,
 	 *      salomon.engine.platform.data.Environment, salomon.plugin.ISettings)
 	 */
 	public IResult doJob(IDataEngine engine, IEnvironment environment,
 			ISettings settings)
 	{
-		// TODO Auto-generated method stub
-		return null;
+        //FIXME
+        throw new UnsupportedOperationException(
+                "Method getResultComponent() not implemented yet!");
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
+	/**
 	 * @see salomon.plugin.IGraphicPlugin#getSettingComponent()
 	 */
 	public ISettingComponent getSettingComponent()
 	{
-		// TODO Auto-generated method stub
-		return null;
+        //FIXME
+        throw new UnsupportedOperationException(
+                "Method getResultComponent() not implemented yet!");
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
+	/**
 	 * @see salomon.plugin.IGraphicPlugin#getResultComponent()
 	 */
 	public IResultComponent getResultComponent()
 	{
-		// TODO Auto-generated method stub
-		return null;
+        //FIXME
+        throw new UnsupportedOperationException(
+				"Method getResultComponent() not implemented yet!");
 	}
-
 }

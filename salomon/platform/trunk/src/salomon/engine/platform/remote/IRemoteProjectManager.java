@@ -1,10 +1,31 @@
+/*
+ * Copyright (C) 2004 Salomon Team
+ *
+ * This file is part of Salomon.
+ *
+ * Salomon is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * Salomon is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with Salomon; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * 
+ */
 
 package salomon.engine.platform.remote;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
-import java.sql.SQLException;
-import java.util.Collection;
+
+import salomon.platform.exception.PlatformException;
+import salomon.platform.project.IProject;
 
 /**
  * Remote version of IProjectManager interface. It has all methods from
@@ -14,38 +35,29 @@ import java.util.Collection;
  */
 public interface IRemoteProjectManager extends Remote
 {
-	void newProject() throws RemoteException;
+	void createProject() throws PlatformException, RemoteException;
+
+
+	IProject[] getProjects() throws RemoteException,
+			PlatformException;
 
 	/**
 	 * Method loads project from data base.
-	 * 
+	 * FIXME: make IRemoveProject 
 	 * @param projectID
-	 * @return loaded project
-	 * @throws Exception
+	 * @throws PlatformException
 	 * @pre $none
 	 * @post $none
 	 */
-	void loadProject(int projectID) throws Exception, RemoteException;
+	IProject loadProject(int projectID) throws PlatformException, RemoteException;
 
 	/**
 	 * Method saves project in data base - project header, plugins and tasks are
 	 * saved.
 	 * 
-	 * @throws ClassNotFoundException
-	 * @throws Exception
+	 * @throws PlatformException
 	 * @pre $none
 	 * @post $none
 	 */
-	void saveProject() throws Exception, RemoteException,
-			ClassNotFoundException;
-
-	/**
-	 * @return Returns the currentProject.
-	 * @pre $none
-	 * @post $result != null
-	 */
-	IRemoteProject getCurrentProject() throws RemoteException;
-
-	public Collection getAvailableProjects() throws RemoteException,
-			ClassNotFoundException, SQLException;
+	void saveProject() throws PlatformException, RemoteException;
 }

@@ -1,3 +1,23 @@
+/*
+ * Copyright (C) 2004 Salomon Team
+ *
+ * This file is part of Salomon.
+ *
+ * Salomon is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * Salomon is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with Salomon; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * 
+ */
 
 package salomon.engine.platform.plugin;
 
@@ -8,20 +28,20 @@ import java.rmi.server.RMIClassLoaderSpi;
 import org.apache.log4j.Logger;
 
 /**
- *  Class required by RMI, whem application uses its own class loader. 
- * 
+ * Class required by RMI, whem application uses its own class loader. 
  */
 public final class PluginRMIClassLoaderSpi extends RMIClassLoaderSpi
 {
-	
+	/**
+     * 
+     *
+	 */
 	public PluginRMIClassLoaderSpi()
 	{
-		_logger.debug("Creating PluginRMIClassLoaderSpi");
+		LOGGER.debug("Creating PluginRMIClassLoaderSpi");
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
+	/**
 	 * @see java.rmi.server.RMIClassLoaderSpi#getClassAnnotation(java.lang.Class)
 	 */
 	public String getClassAnnotation(Class cl)
@@ -29,22 +49,18 @@ public final class PluginRMIClassLoaderSpi extends RMIClassLoaderSpi
 		return null;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
+	/**
 	 * @see java.rmi.server.RMIClassLoaderSpi#getClassLoader(java.lang.String)
 	 */
 	public ClassLoader getClassLoader(String codebase)
 			throws MalformedURLException
 	{
-		_logger.error("Not implemented!!!");
+		LOGGER.error("Not implemented!!!");
 
 		return null;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
+	/**
 	 * @see java.rmi.server.RMIClassLoaderSpi#loadClass(java.lang.String,
 	 *      java.lang.String, java.lang.ClassLoader)
 	 */
@@ -55,9 +71,7 @@ public final class PluginRMIClassLoaderSpi extends RMIClassLoaderSpi
 		return PluginClassLoader.getInstance().loadClass(name);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
+	/**
 	 * @see java.rmi.server.RMIClassLoaderSpi#loadProxyClass(java.lang.String,
 	 *      java.lang.String[], java.lang.ClassLoader)
 	 */
@@ -77,5 +91,5 @@ public final class PluginRMIClassLoaderSpi extends RMIClassLoaderSpi
 		return proxyClass;
 	}
     
-	private static Logger _logger = Logger.getLogger(PluginRMIClassLoaderSpi.class);
+	private static Logger LOGGER = Logger.getLogger(PluginRMIClassLoaderSpi.class);
 }

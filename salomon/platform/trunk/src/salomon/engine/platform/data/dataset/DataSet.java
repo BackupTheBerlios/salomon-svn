@@ -1,3 +1,23 @@
+/*
+ * Copyright (C) 2004 Salomon Team
+ *
+ * This file is part of Salomon.
+ *
+ * Salomon is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * Salomon is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with Salomon; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * 
+ */
 
 package salomon.engine.platform.data.dataset;
 
@@ -10,14 +30,14 @@ import org.apache.log4j.Logger;
 
 import salomon.engine.platform.DBManager;
 import salomon.engine.platform.data.common.SQLSelect;
+
 import salomon.platform.data.dataset.IDataSet;
 
 /**
  * Class represents data set. Data set is a subset of data stored in tables, its
  * conditions specifies how to get this subset.
- * 
  */
-public class DataSet implements IDataSet
+class DataSet implements IDataSet
 {
 	/**
 	 * Conditions determinating data set. If conditions are empty it means that
@@ -27,19 +47,35 @@ public class DataSet implements IDataSet
 
 	private Collection<String> _tableNames;
 
-	private static Logger _logger = Logger.getLogger(DataSet.class);
+	/**
+	 * Method returns the conditions determinating data set.
+	 * 
+	 * @return conditions determinating data set.
+	 */
+	public Collection<String> getConditions()
+	{
+		return _conditions;
+	}
+
+	/**
+	 * @see salomon.platform.data.dataset.IDataSet#getName()
+	 */
+	public String getName()
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 	/**
 	 * Method selects data basing on given parameters. It takes into account
 	 * conditions determinating data set - conditions passed as the arguments of
-	 * method are concatenated to them.
+	 * method are concatenated to them. TODO: reimplement it
 	 * 
 	 * @param select SELECT query
 	 * @return
 	 * @throws SQLException
 	 * @throws ClassNotFoundException
 	 */
-	// TODO: reimplement it
 	public ResultSet selectData(SQLSelect select) throws SQLException,
 			ClassNotFoundException
 	{
@@ -70,18 +106,18 @@ public class DataSet implements IDataSet
 
 	/**
 	 * Method returns ResultSet basing on given query. Query is modified - all
-	 * conditions determinating data set are concatenated to the query;
+	 * conditions determinating data set are concatenated to the query; TODO:
+	 * reimplement it
 	 * 
 	 * @param query SQL query to be executed
 	 * @return
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	// TODO: reimplement it
 	public ResultSet selectData(String query) throws SQLException,
 			ClassNotFoundException
 	{
-		_logger.info("given query: " + query);
+		LOGGER.info("given query: " + query);
 		String finalQuery = query.trim().toLowerCase();
 		//
 		// If there are some conditions determinating data set
@@ -128,13 +164,45 @@ public class DataSet implements IDataSet
 	}
 
 	/**
-	 * Method returns the conditions determinating data set.
+	 * Method sets conditions determinating data set.
 	 * 
-	 * @return conditions determinating data set.
+	 * @param conditions to set
 	 */
-	public Collection<String> getConditions()
+	public void setConditions(Collection<String> conditions)
 	{
-		return _conditions;
+		_conditions = conditions;
+	}
+
+	/**
+	 * @see salomon.platform.data.dataset.IDataSet#setName(java.lang.String)
+	 */
+	public void setName(String name)
+	{
+		// TODO Auto-generated method stub
+
+	}
+
+	/**
+	 * @param tableNames The tableNames to set.
+	 */
+	public void setTableNames(Collection<String> tableNames)
+	{
+		_tableNames = tableNames;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
+	public String toString()
+	{
+		String dataSet = "[";
+		for (String condition : _conditions) {
+			dataSet += condition + ",";
+		}
+		dataSet += "]";
+		return dataSet;
 	}
 
 	/**
@@ -165,54 +233,5 @@ public class DataSet implements IDataSet
 		return null;
 	}
 
-	/**
-	 * Method sets conditions determinating data set.
-	 * 
-	 * @param conditions to set
-	 */
-	public void setConditions(Collection<String> conditions)
-	{
-		_conditions = conditions;
-	}
-
-	/**
-	 * @param tableNames The tableNames to set.
-	 */
-	public void setTableNames(Collection<String> tableNames)
-	{
-		_tableNames = tableNames;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
-	 */
-	public String toString()
-	{
-		String dataSet = "[";
-		for (String condition : _conditions) {
-			dataSet += condition + ",";
-		}
-		dataSet += "]";
-		return dataSet;
-	}
-
-	/**
-	 * @see salomon.platform.data.dataset.IDataSet#setName(java.lang.String)
-	 */
-	public void setName(String name)
-	{
-		// TODO Auto-generated method stub
-
-	}
-
-	/**
-	 * @see salomon.platform.data.dataset.IDataSet#getName()
-	 */
-	public String getName()
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
+	private static final Logger LOGGER = Logger.getLogger(DataSet.class);
 }

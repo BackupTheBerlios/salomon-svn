@@ -1,9 +1,28 @@
+/*
+ * Copyright (C) 2004 Salomon Team
+ *
+ * This file is part of Salomon.
+ *
+ * Salomon is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * Salomon is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with Salomon; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * 
+ */
 
 package salomon.engine.controller.gui;
 
 import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -53,11 +72,14 @@ public final class ProjectEditionManager
 
 	public void newProject()
 	{
-		IProjectManager projectManager = _managerEngine.getProjectManager();
-		projectManager.newProject();
-		IProject project = projectManager.getCurrentProject();
-		setProjectProperties(project);
-		_parent.refreshGui();
+        //FIXME
+        throw new UnsupportedOperationException(
+				"Method newProject() not implemented yet!");
+//		IProjectManager projectManager = _managerEngine.getProjectManager();
+//		projectManager.ceateProject();
+		//IProject project = projectManager.getCurrentProject();
+//		setProjectProperties(project);
+//		_parent.refreshGui();
 	}
 
 	public void openProject()
@@ -69,18 +91,19 @@ public final class ProjectEditionManager
 				_parent.refreshGui();
 			}
 		} catch (Exception e) {
-			_logger.fatal("", e);
+			LOGGER.fatal("", e);
 			Utils.showErrorMessage("Cannot load project.");
 		}
 	}
 
 	public void saveProject()
 	{
-		IProject project = _managerEngine.getProjectManager().getCurrentProject();
-		if (project.getName() == null) {
-			setProjectProperties(project);
-		}
-		saveTaskList(_taskEditionManager.getTasks());
+        //FIXME
+//		IProject project = _managerEngine.getProjectManager().getCurrentProject();
+//		if (project.getName() == null) {
+//			setProjectProperties(project);
+//		}
+//		saveTaskList(_taskEditionManager.getTasks());
 	}
 
 	/**
@@ -126,24 +149,27 @@ public final class ProjectEditionManager
 
 	private int chooseProject()
 	{
-		int projectID = 0;
-		
-		try {
-			Collection projects = _managerEngine.getProjectManager().getAvailableProjects();
-			JTable projectTable = null;
-			projectTable = Utils.createResultTable(projects);
-			projectID = showProjectList(projectTable);
-		} catch (Exception e) {
-			_logger.fatal("", e);
-			Utils.showErrorMessage("Cannot load project list.");
-		}
-
-		return projectID;
+        //FIXME
+        throw new UnsupportedOperationException(
+				"Method chooseProject() not implemented yet!");
+//		int projectID = 0;
+//		
+//		try {
+//			Collection projects = _managerEngine.getProjectManager().getProjects();
+//			JTable projectTable = null;
+//			projectTable = Utils.createResultTable(projects);
+//			projectID = showProjectList(projectTable);
+//		} catch (Exception e) {
+//			LOGGER.fatal("", e);
+//			Utils.showErrorMessage("Cannot load project list.");
+//		}
+//
+//		return projectID;
 	}
 
 	private void saveTaskList(List taskList)
 	{
-		_logger.info("taskList = " + taskList);
+		LOGGER.info("taskList = " + taskList);
 		//
 		// task list cannot be empty
 		//
@@ -172,7 +198,7 @@ public final class ProjectEditionManager
 			message += "Do you want to use default settings?";
 			if (Utils.showWarningMessage(message)) {
 				// getting default settings
-				_logger.debug("getting default settings");
+				LOGGER.debug("getting default settings");
 				for (Iterator iter = incorrectTasks.iterator(); iter.hasNext();) {
 					TaskGUI task = (TaskGUI) iter.next();
 					ISettings defaultSettings = task.getPlugin().getSettingComponent().getDefaultSettings();
@@ -200,15 +226,15 @@ public final class ProjectEditionManager
 			// saving project
 			_managerEngine.getProjectManager().saveProject();
 			DBManager.getInstance().commit();
-			_logger.info("Transaction commited");
+			LOGGER.info("Transaction commited");
 			Utils.showInfoMessage("Project saved successfully");
 		} catch (Exception e1) {
-			_logger.fatal("", e1);
+			LOGGER.fatal("", e1);
 			Utils.showErrorMessage("Could not save project.");
 			try {
 				DBManager.getInstance().rollback();
 			} catch (Exception sqlEx) {
-				_logger.fatal("", sqlEx);
+				LOGGER.fatal("", sqlEx);
 				Utils.showErrorMessage("Could not rollback transaction.");
 			}
 		}
@@ -235,5 +261,5 @@ public final class ProjectEditionManager
 		return projectID;
 	}
 
-	private static Logger _logger = Logger.getLogger(ProjectEditionManager.class);
+	private static final Logger LOGGER = Logger.getLogger(ProjectEditionManager.class);
 }

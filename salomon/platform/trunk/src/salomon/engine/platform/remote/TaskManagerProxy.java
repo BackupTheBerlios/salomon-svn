@@ -1,19 +1,36 @@
+/*
+ * Copyright (C) 2004 Salomon Team
+ *
+ * This file is part of Salomon.
+ *
+ * Salomon is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * Salomon is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with Salomon; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * 
+ */
 
 package salomon.engine.platform.remote;
 
 import java.rmi.RemoteException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
 
+import salomon.platform.exception.PlatformException;
 import salomon.platform.task.ITask;
 import salomon.platform.task.ITaskManager;
+import salomon.platform.task.ITaskRunner;
 
 /**
  * Class is a sever side wrapper of IRemoteTaskManager object. It implements
@@ -36,58 +53,74 @@ public final class TaskManagerProxy implements ITaskManager
 		_remoteTaskManager = remoteTaskManager;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
+	/**
+	 * @see salomon.platform.task.ITaskManager#addTask()
+	 */
+	public void addTask()
+	{
+		throw new UnsupportedOperationException("Method addTask() not implemented yet!");
+	}
+
+	/**
+	 * @see salomon.platform.task.ITaskManager#addTask(salomon.platform.task.ITask)
+	 */
+	public void addTask(ITask task) throws PlatformException
+	{
+		throw new UnsupportedOperationException("Method addTask() not implemented yet!");
+	}
+
+	/**
 	 * @see salomon.engine.platform.task.ITaskManager#clearTaskList()
 	 */
-	public void clearTaskList()
+	public void clearTaskList() throws PlatformException
 	{
 		try {
 			_remoteTaskManager.clearTaskList();
 		} catch (RemoteException e) {
-			_logger.error(e);
+			LOGGER.error(e);
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
+	/**
 	 * @see salomon.engine.platform.task.ITaskManager#createTask()
 	 */
-	public ITask createTask()
+	public ITask createTask() throws PlatformException
 	{
 		ITask task = null;
 		try {
 			task = getTaskProxy(_remoteTaskManager.createTask());
 		} catch (RemoteException e) {
-			_logger.error(e);
+			LOGGER.error(e);
 		}
 		return task;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
+	/**
 	 * @see salomon.engine.platform.task.ITaskManager#getCurrentTask()
 	 */
-	public ITask getCurrentTask()
+	public ITask getCurrentTask() throws PlatformException
 	{
 		ITask task = null;
 		try {
 			task = getTaskProxy(_remoteTaskManager.getCurrentTask());
 		} catch (RemoteException e) {
-			_logger.error(e);
+			LOGGER.error(e);
 		}
 		return task;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
+	/**
+	 * @see salomon.platform.task.ITaskManager#getRunner()
+	 */
+	public ITaskRunner getRunner() throws PlatformException
+	{
+		throw new UnsupportedOperationException("Method getRunner() not implemented yet!");
+	}
+
+	/**
 	 * @see salomon.engine.platform.task.ITaskManager#getTasks()
 	 */
-	public ITask[] getTasks()
+	public ITask[] getTasks() throws PlatformException
 	{
 		ITask[] tasks = null;
 		try {
@@ -97,23 +130,21 @@ public final class TaskManagerProxy implements ITaskManager
 				tasks[i] = getTaskProxy(remoteTasks[i]);
 			}
 		} catch (RemoteException e) {
-			_logger.error(e);
+			LOGGER.error(e);
 		}
 
 		return tasks;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
+	/**
 	 * @see salomon.engine.platform.task.ITaskManager#start()
 	 */
-	public void start()
+	public void start() throws PlatformException
 	{
 		try {
 			_remoteTaskManager.start();
 		} catch (RemoteException e) {
-			_logger.error(e);
+			LOGGER.error(e);
 		}
 	}
 
@@ -129,5 +160,5 @@ public final class TaskManagerProxy implements ITaskManager
 		return task;
 	}
 
-	private static final Logger _logger = Logger.getLogger(TaskManagerProxy.class);
+	private static final Logger LOGGER = Logger.getLogger(TaskManagerProxy.class);
 }

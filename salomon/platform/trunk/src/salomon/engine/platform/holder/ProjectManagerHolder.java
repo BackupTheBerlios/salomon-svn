@@ -1,9 +1,27 @@
+/*
+ * Copyright (C) 2004 Salomon Team
+ *
+ * This file is part of Salomon.
+ *
+ * Salomon is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * Salomon is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with Salomon; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * 
+ */
 
 package salomon.engine.platform.holder;
 
-import java.sql.SQLException;
-import java.util.Collection;
-
+import salomon.platform.exception.PlatformException;
 import salomon.platform.project.IProject;
 import salomon.platform.project.IProjectManager;
 
@@ -24,56 +42,53 @@ final class ProjectManagerHolder implements IProjectManager
 		_currentProjectManager = projectManager;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see salomon.engine.platform.IProjectManager#newProject()
+	/**
+	 * @see salomon.platform.project.IProjectManager#addProject(salomon.platform.project.IProject)
 	 */
-	public void newProject()
+	public void addProject(IProject project) throws PlatformException
 	{
-		_currentProjectManager.newProject();
+		_currentProjectManager.addProject(project);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see salomon.engine.platform.IProjectManager#loadProject(int)
+	/**
+	 * @see salomon.platform.project.IProjectManager#ceateProject()
 	 */
-	public void loadProject(int projectID) throws Exception
+	public void ceateProject()
 	{
-		_currentProjectManager.loadProject(projectID);
+		throw new UnsupportedOperationException("Method ceateProject() not implemented yet!");
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see salomon.engine.platform.IProjectManager#saveProject(salomon.engine.platform.Project)
+	/**
+	 * @see salomon.platform.project.IProjectManager#createProject()
 	 */
-	public void saveProject() throws Exception, ClassNotFoundException
+	public IProject createProject()
 	{
-		_currentProjectManager.saveProject();
+		throw new UnsupportedOperationException("Method createProject() not implemented yet!");
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see salomon.engine.platform.IProjectManager#getCurrentProject()
+	/**
+	 * @see salomon.platform.project.IProjectManager#getProjects()
 	 */
-	public IProject getCurrentProject()
+	public IProject[] getProjects() throws PlatformException
 	{
-		return _currentProjectManager.getCurrentProject();
+		throw new UnsupportedOperationException("Method getProjects() not implemented yet!");
 	}
 
-	void setCurrent(IProjectManager projectManager)
+	/**
+	 * @see salomon.platform.project.IProjectManager#loadProject(int)
+	 */
+	public IProject loadProject(int projectID) throws PlatformException
 	{
-		_currentProjectManager = projectManager;
+		throw new UnsupportedOperationException("Method loadProject() not implemented yet!");
 	}
 
-	/* (non-Javadoc)
-	 * @see salomon.engine.platform.project.IProjectManager#getAvailableProjects()
+	/**
+	 * @see salomon.platform.project.IProjectManager#saveProject()
 	 */
-	public Collection getAvailableProjects() throws SQLException, ClassNotFoundException
+	public void saveProject() throws PlatformException
 	{
-		return _currentProjectManager.getAvailableProjects();
+		throw new UnsupportedOperationException("Method saveProject() not implemented yet!");
 	}
+
+
 }

@@ -31,12 +31,13 @@ public final class XMLSerializator
 
 	public IObject deserialize(String value)
 	{
-		// TODO: add implementation
-		return null;
+		throw new UnsupportedOperationException(
+				"Method deserialize() not implemented yet!");
 	}
+
 	public String serialize(IObject value)
 	{
-		// TODO: add implementation
-		return null;
+		throw new UnsupportedOperationException(
+				"Method serialize() not implemented yet!");
 	}
 }

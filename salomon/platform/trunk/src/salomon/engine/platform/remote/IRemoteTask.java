@@ -1,3 +1,23 @@
+/*
+ * Copyright (C) 2004 Salomon Team
+ *
+ * This file is part of Salomon.
+ *
+ * Salomon is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * Salomon is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with Salomon; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * 
+ */
 
 package salomon.engine.platform.remote;
 
@@ -58,21 +78,18 @@ public interface IRemoteTask extends Remote
 	void setName(String name) throws RemoteException;
 
 	/**
-	 * @param _plugin The _plugin to set.
 	 * @pre $none
 	 * @post $none
 	 */
 	void setPlugin(URL url) throws RemoteException;
 
 	/**
-	 * @param _result The _result to set.
 	 * @pre $none
 	 * @post $none
 	 */
 	void setResult(IResult result) throws RemoteException;
 
 	/**
-	 * @param _settings The _settings to set.
 	 * @pre $none
 	 * @post $none
 	 */

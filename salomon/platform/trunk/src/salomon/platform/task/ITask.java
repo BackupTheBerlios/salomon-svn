@@ -1,3 +1,24 @@
+/*
+ * Copyright (C) 2004 Salomon Team
+ *
+ * This file is part of Salomon.
+ *
+ * Salomon is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * Salomon is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with Salomon; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * 
+ */
+
 package salomon.platform.task;
 
 import salomon.plugin.IPlugin;
@@ -14,66 +35,66 @@ public interface ITask
 	/**
 	 * @return Returns the name.
 	 */
-	public String getName();
+	String getName();
 
 	/**
 	 * @return Returns the _plugin.
 	 */
-	public IPlugin getPlugin();
+	IPlugin getPlugin();
 
 	/**
 	 * @return Returns the _result.
 	 */
-	public IResult getResult();
+	IResult getResult();
 
 	/**
 	 * @return Returns the _settings.
 	 */
-	public ISettings getSettings();
+	ISettings getSettings();
 
 	/**
 	 * @return Returns the status.
 	 */
-	public String getStatus();
+	String getStatus();
 
 	/**
 	 * @param name
 	 *            The name to set.
 	 */
-	public void setName(String name);
+	void setName(String name);
 
 	/**
 	 * @param plugin
 	 *            The plugin to set.
 	 */
-	public void setPlugin(IPlugin plugin);
+	void setPlugin(IPlugin plugin);
 
 	/**
 	 * @param result
 	 *            The result to set.
 	 */
-	public void setResult(IResult result);
+	void setResult(IResult result);
 
 	/**
 	 * @param settings
 	 *            The settings to set.
 	 */
-	public void setSettings(ISettings settings);
+	void setSettings(ISettings settings);
 
 	/**
 	 * @param status
 	 *            The status to set.
 	 */
-	public void setStatus(String status);
+	void setStatus(String status);
 
 	/**
 	 * @return Returns the taksId.
 	 */
-	public int getTaskId();
+	int getTaskId();
 
 	/**
 	 * @param taskId
 	 *            The taskId to set.
 	 */
-	public void setTaskId(int taskId);
+	void setTaskId(int taskId);
 }

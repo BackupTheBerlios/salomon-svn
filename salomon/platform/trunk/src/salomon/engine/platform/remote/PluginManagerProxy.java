@@ -1,13 +1,34 @@
+/*
+ * Copyright (C) 2004 Salomon Team
+ *
+ * This file is part of Salomon.
+ *
+ * Salomon is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * Salomon is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with Salomon; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * 
+ */
 
 package salomon.engine.platform.remote;
 
 import java.rmi.RemoteException;
-import java.util.Collection;
 
 import org.apache.log4j.Logger;
 
 import salomon.platform.plugin.IPluginManager;
+
 import salomon.plugin.Description;
+import salomon.plugin.IPlugin;
 
 /**
  * Class is a sever side wrapper of IRemotePluginManager object. It implements
@@ -17,7 +38,6 @@ import salomon.plugin.Description;
  */
 public final class PluginManagerProxy implements IPluginManager
 {
-
 	private IRemotePluginManager _remotePluginManager;
 
 	/**
@@ -29,25 +49,26 @@ public final class PluginManagerProxy implements IPluginManager
 		_remotePluginManager = remotePluginManager;
 	}
 
-	/*
+	/**
 	 * (non-Javadoc)
 	 * 
-	 * @see salomon.engine.platform.plugin.IPluginManager#getAvailablePlugins()
+	 * @see salomon.engine.platform.plugin.IPluginManager#getPlugins()
 	 */
-	public Collection getAvailablePlugins()
+	public IPlugin[] getPlugins()
 	{
-		Collection result = null;
+		IPlugin[] result = null;
 		try {
-			result = _remotePluginManager.getAvailablePlugins();
+			result = _remotePluginManager.getPlugins();
 		} catch (RemoteException e) {
-			_logger.fatal("", e);
+			LOGGER.fatal("", e);
 		}
+        
 		return result;
 	}
 
-	private static final Logger _logger = Logger.getLogger(PluginManagerProxy.class);
+	private static final Logger LOGGER = Logger.getLogger(PluginManagerProxy.class);
 
-	/*
+	/**
 	 * (non-Javadoc)
 	 * 
 	 * @see salomon.engine.platform.plugin.IPluginManager#addPlugin(salomon.plugin.Description)
@@ -58,12 +79,12 @@ public final class PluginManagerProxy implements IPluginManager
 		try {
 			result = _remotePluginManager.savePlugin(description);
 		} catch (RemoteException e) {
-			_logger.fatal("", e);
+			LOGGER.fatal("", e);
 		}
 		return result;
 	}
 
-	/*
+	/**
 	 * (non-Javadoc)
 	 * 
 	 * @see salomon.engine.platform.plugin.IPluginManager#removePlugin(salomon.plugin.Description)
@@ -75,7 +96,7 @@ public final class PluginManagerProxy implements IPluginManager
 		try {
 			result = _remotePluginManager.removePlugin(description);
 		} catch (RemoteException e) {
-			_logger.fatal("", e);
+			LOGGER.fatal("", e);
 		}
 		return result;
 	}

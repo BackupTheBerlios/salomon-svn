@@ -1,3 +1,23 @@
+/*
+ * Copyright (C) 2004 Salomon Team
+ *
+ * This file is part of Salomon.
+ *
+ * Salomon is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * Salomon is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with Salomon; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * 
+ */
 
 package salomon.engine.platform.remote;
 
@@ -16,7 +36,6 @@ import salomon.plugin.ISettings;
  * Class is a sever side wrapper of IRemoteTask object. It implements ITask
  * interface and delegates methods execution to remote object catching all
  * RemoteExceptions.
- *  
  */
 public final class TaskProxy implements ITask
 {
@@ -31,9 +50,7 @@ public final class TaskProxy implements ITask
 		_remoteTask = remoteTask;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
+	/**
 	 * @see salomon.engine.platform.task.ITask#getName()
 	 */
 	public String getName()
@@ -42,14 +59,12 @@ public final class TaskProxy implements ITask
 		try {
 			name = _remoteTask.getName();
 		} catch (RemoteException e) {
-			_logger.fatal("", e);
+			LOGGER.fatal("", e);
 		}
 		return name;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
+	/**
 	 * @see salomon.engine.platform.task.ITask#getPlugin()
 	 */
 	public IPlugin getPlugin()
@@ -60,17 +75,15 @@ public final class TaskProxy implements ITask
 			try {
 				plugin = PluginLoader.loadPlugin(pluginLocation);
 			} catch (Exception e1) {
-				_logger.fatal("", e1);
+				LOGGER.fatal("", e1);
 			}
 		} catch (RemoteException e) {
-			_logger.fatal("", e);
+			LOGGER.fatal("", e);
 		}
 		return plugin;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
+	/**
 	 * @see salomon.engine.platform.task.ITask#getResult()
 	 */
 	public IResult getResult()
@@ -79,14 +92,12 @@ public final class TaskProxy implements ITask
 		try {
 			result = _remoteTask.getResult();
 		} catch (RemoteException e) {
-			_logger.fatal("", e);
+			LOGGER.fatal("", e);
 		}
 		return result;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
+	/**
 	 * @see salomon.engine.platform.task.ITask#getSettings()
 	 */
 	public ISettings getSettings()
@@ -95,14 +106,12 @@ public final class TaskProxy implements ITask
 		try {
 			settings = _remoteTask.getSettings();
 		} catch (RemoteException e) {
-			_logger.fatal("", e);
+			LOGGER.fatal("", e);
 		}
 		return settings;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
+	/**
 	 * @see salomon.engine.platform.task.ITask#getStatus()
 	 */
 	public String getStatus()
@@ -111,14 +120,12 @@ public final class TaskProxy implements ITask
 		try {
 			status = _remoteTask.getStatus();
 		} catch (RemoteException e) {
-			_logger.fatal("", e);
+			LOGGER.fatal("", e);
 		}
 		return status;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
+	/**
 	 * @see salomon.engine.platform.task.ITask#getTaskId()
 	 */
 	public int getTaskId()
@@ -127,14 +134,12 @@ public final class TaskProxy implements ITask
 		try {
 			id = _remoteTask.getTaskId();
 		} catch (RemoteException e) {
-			_logger.fatal("", e);
+			LOGGER.fatal("", e);
 		}
 		return id;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
+	/**
 	 * @see salomon.engine.platform.task.ITask#setName(java.lang.String)
 	 */
 	public void setName(String name)
@@ -142,13 +147,11 @@ public final class TaskProxy implements ITask
 		try {
 			_remoteTask.setName(name);
 		} catch (RemoteException e) {
-			_logger.fatal("", e);
+			LOGGER.fatal("", e);
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
+	/**
 	 * @see salomon.engine.platform.task.ITask#setPlugin(salomon.plugin.IPlugin)
 	 */
 	public void setPlugin(IPlugin plugin)
@@ -156,13 +159,11 @@ public final class TaskProxy implements ITask
 		try {
 			_remoteTask.setPlugin(PluginLoader.getPluginLocation(plugin));
 		} catch (RemoteException e) {
-			_logger.fatal("", e);
+			LOGGER.fatal("", e);
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
+	/**
 	 * @see salomon.engine.platform.task.ITask#setResult(salomon.plugin.IResult)
 	 */
 	public void setResult(IResult result)
@@ -170,13 +171,11 @@ public final class TaskProxy implements ITask
 		try {
 			_remoteTask.setResult(result);
 		} catch (RemoteException e) {
-			_logger.fatal("", e);
+			LOGGER.fatal("", e);
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
+	/**
 	 * @see salomon.engine.platform.task.ITask#setSettings(salomon.plugin.ISettings)
 	 */
 	public void setSettings(ISettings settings)
@@ -184,13 +183,11 @@ public final class TaskProxy implements ITask
 		try {
 			_remoteTask.setSettings(settings);
 		} catch (RemoteException e) {
-			_logger.fatal("", e);
+			LOGGER.fatal("", e);
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
+	/**
 	 * @see salomon.engine.platform.task.ITask#setStatus(java.lang.String)
 	 */
 	public void setStatus(String status)
@@ -198,14 +195,12 @@ public final class TaskProxy implements ITask
 		try {
 			_remoteTask.setStatus(status);
 		} catch (RemoteException e) {
-			_logger.fatal("", e);
+			LOGGER.fatal("", e);
 		}
 
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
+	/**
 	 * @see salomon.engine.platform.task.ITask#setTaskId(int)
 	 */
 	public void setTaskId(int taskId)
@@ -213,10 +208,10 @@ public final class TaskProxy implements ITask
 		try {
 			_remoteTask.setTaskId(taskId);
 		} catch (RemoteException e) {
-			_logger.fatal("", e);
+			LOGGER.fatal("", e);
 		}
 	}
 
-	private static Logger _logger = Logger.getLogger(TaskProxy.class);
+	private static final Logger LOGGER = Logger.getLogger(TaskProxy.class);
 
 }

@@ -1,6 +1,22 @@
 /*
- * Created on 2004-05-04
+ * Copyright (C) 2004 Salomon Team
  *
+ * This file is part of Salomon.
+ *
+ * Salomon is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * Salomon is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with Salomon; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * 
  */
 
 package salomon.engine.platform;
@@ -22,10 +38,8 @@ import salomon.util.gui.Utils;
 /**
  * Class is responsible for data base operations. It enables executing SQL
  * queries and transaction managing.
- * 
- * @author nico
  */
-public class DBManager
+public final class DBManager
 {
 	private Connection _connection = null;
 
@@ -56,13 +70,13 @@ public class DBManager
 	 */
 	public void commit()
 	{
-		_logger.info("Commit");
+		LOGGER.info("Commit");
 		try {
 			_connection.commit();
 		} catch (SQLException e) {
-			_logger.fatal("!!!COMMIT FAILED!!!");
+			LOGGER.fatal("!!!COMMIT FAILED!!!");
 			Utils.showErrorMessage("ERR_CRITICAL");
-			_logger.fatal("", e);
+			LOGGER.fatal("", e);
 		}
 	}
 
@@ -76,7 +90,7 @@ public class DBManager
 	public int delete(SQLDelete deleteObject) throws SQLException
 	{
 		String query = deleteObject.getQuery();
-		_logger.info("query = " + query); //$NON-NLS-1$
+		LOGGER.info("query = " + query); //$NON-NLS-1$
 		return _statement.executeUpdate(query);
 	}
 
@@ -103,7 +117,7 @@ public class DBManager
 	 */
 	public boolean executeQuery(String query) throws SQLException
 	{
-		_logger.info("Executing query = " + query); //$NON-NLS-1$
+		LOGGER.info("Executing query = " + query); //$NON-NLS-1$
 		return _statement.execute(query);
 	}
 
@@ -139,7 +153,7 @@ public class DBManager
 	public boolean insert(SQLInsert insertObject) throws SQLException
 	{
 		String query = insertObject.getQuery();
-		_logger.info("query = " + query); //$NON-NLS-1$	
+		LOGGER.info("query = " + query); //$NON-NLS-1$	
 		return _statement.execute(query);
 	}
 
@@ -159,11 +173,11 @@ public class DBManager
 		String autoIncrement = "SELECT coalesce(max(" + primaryKey
 				+ "), 0) + 1 ";
 		autoIncrement += "FROM " + insertObject.getTableName();
-		_logger.debug("autoIncrement: " + autoIncrement);
+		LOGGER.debug("autoIncrement: " + autoIncrement);
 		ResultSet resultSet = _statement.executeQuery(autoIncrement);
 		resultSet.next();
 		int primaryKeyID = resultSet.getInt(1);
-		_logger.debug("primaryKeyID: " + primaryKeyID);
+		LOGGER.debug("primaryKeyID: " + primaryKeyID);
 		resultSet.close();
 
 		// Inserting data
@@ -190,11 +204,11 @@ public class DBManager
 		// selecting value of primary key
 		String autoIncrement = "SELECT GEN_ID(" + generator
 				+ ", 1) FROM RDB$DATABASE";
-		_logger.debug("autoIncrement: " + autoIncrement);
+		LOGGER.debug("autoIncrement: " + autoIncrement);
 		ResultSet resultSet = _statement.executeQuery(autoIncrement);
 		resultSet.next();
 		int primaryKeyID = resultSet.getInt(1);
-		_logger.debug("primaryKeyID: " + primaryKeyID);
+		LOGGER.debug("primaryKeyID: " + primaryKeyID);
 		resultSet.close();
 
 		// Inserting data
@@ -221,7 +235,7 @@ public class DBManager
 		int foundID = updateIfExists(updateObject, primaryKey, id);
 		if (foundID < 0) {
 			foundID = insert(updateObject.updateToInsert(), primaryKey);
-			_logger.info("New record inserted, id = " + foundID);
+			LOGGER.info("New record inserted, id = " + foundID);
 		}
 		return foundID;
 	}
@@ -242,7 +256,7 @@ public class DBManager
         int foundID = updateIfExists(updateObject, primaryKey, id);
         if (foundID < 0) {            
             foundID = insert(updateObject.updateToInsert(), primaryKey, generator);
-            _logger.info("New record inserted, id = " + foundID);
+            LOGGER.info("New record inserted, id = " + foundID);
         }
         return foundID;
     }    
@@ -255,13 +269,13 @@ public class DBManager
 
 	public void rollback()
 	{
-		_logger.info("Rollback");
+		LOGGER.info("Rollback");
 		try {
 			_connection.rollback();
 		} catch (SQLException e) {
-			_logger.fatal("!!!ROLLBACK FAILED!!!");
+			LOGGER.fatal("!!!ROLLBACK FAILED!!!");
 			Utils.showErrorMessage("ERR_CRITICAL");
-			_logger.fatal("", e);
+			LOGGER.fatal("", e);
 		}
 	}
 
@@ -276,7 +290,7 @@ public class DBManager
 	public ResultSet select(SQLSelect selectObject) throws SQLException
 	{
 		String query = selectObject.getQuery();
-		_logger.info("query = " + query); //$NON-NLS-1$
+		LOGGER.info("query = " + query); //$NON-NLS-1$
 		return _statement.executeQuery(query);
 	}
 
@@ -291,7 +305,7 @@ public class DBManager
 	public int update(SQLUpdate updateObject) throws SQLException
 	{
 		String query = updateObject.getQuery();
-		_logger.info("query = " + query); //$NON-NLS-1$
+		LOGGER.info("query = " + query); //$NON-NLS-1$
 		return _statement.executeUpdate(query);
 	}
 
@@ -307,7 +321,7 @@ public class DBManager
 					+ Config.FILE_SEPARATOR;
 		}
 		connectString += _dataBasePath;
-		_logger.info("connectString: " + connectString);
+		LOGGER.info("connectString: " + connectString);
 		_connection = DriverManager.getConnection(connectString, _user, _passwd);
 		// setting auto commit off
 		_connection.setAutoCommit(false);
@@ -336,15 +350,15 @@ public class DBManager
 		// otherwise new id is generated
 		if (resultSet.next()) {
 			foundID = resultSet.getInt(primaryKey);
-			_logger.info("Record found, id = " + foundID);
+			LOGGER.info("Record found, id = " + foundID);
             updateObject.addCondition(primaryKey + " =", foundID);
 			resultSet.close();			
 			int updatedRows = update(updateObject);
             if (updatedRows > 1) {
-            	_logger.error("TOO MANY ROWS: " + updatedRows);
+            	LOGGER.error("TOO MANY ROWS: " + updatedRows);
                 foundID = -1;
             }
-			_logger.info("Record updated");
+			LOGGER.info("Record updated");
 		}
 		return foundID;
 	}
@@ -368,5 +382,5 @@ public class DBManager
 
 	private static DBManager _instance = null;
 
-	private static Logger _logger = Logger.getLogger(DBManager.class);
+	private static final Logger LOGGER = Logger.getLogger(DBManager.class);
 }

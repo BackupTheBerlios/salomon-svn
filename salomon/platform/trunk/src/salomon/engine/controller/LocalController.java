@@ -1,3 +1,23 @@
+/*
+ * Copyright (C) 2004 Salomon Team
+ *
+ * This file is part of Salomon.
+ *
+ * Salomon is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * Salomon is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with Salomon; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * 
+ */
 
 package salomon.engine.controller;
 
@@ -35,15 +55,14 @@ import salomon.engine.platform.IManagerEngine;
 import salomon.engine.platform.Messages;
 import salomon.engine.platform.Resources;
 import salomon.engine.platform.SQLConsole;
+
 import salomon.util.gui.Utils;
 
 /**
  * Local implementation of IController interface.
- *  
  */
 public final class LocalController implements IController
 {
-
 	private ActionManager _actionManager;
 
 	private ControllerPanel _contentPane;
@@ -63,40 +82,51 @@ public final class LocalController implements IController
 	/*
 	 * (non-Javadoc)
 	 * 
+	 * @see salomon.engine.controller.IController#exit()
+	 */
+	public void exit()
+	{
+
+	}
+
+	/**
 	 * @see salomon.engine.controller.IController#start(salomon.engine.platform.IProjectManager)
 	 */
 	public void start(IManagerEngine managerEngine)
 	{
-		SplashScreen.show();
-		try {
-			DBManager.getInstance();
-		} catch (SQLException e) {
-			_logger.fatal("", e);
-		} catch (ClassNotFoundException e) {
-			_logger.error("", e);
-		}
-		_managerEngine = managerEngine;
-		// Creates a new empty project
-		_managerEngine.getProjectManager().newProject();
-		_projectEditionManager = new ProjectEditionManager(_managerEngine);
-		_taskEditionManager = new TaskEditionManager(_managerEngine);
-		_actionManager = new ActionManager(_projectEditionManager,
-				_taskEditionManager);
-		_guiMenu = new LocalGUIMenu(_actionManager);
-		ControllerFrame frame = new ControllerFrame();
-		frame.setContentPane(getJContentPane());
-		frame.setJMenuBar(getJMenuBar());
-		frame.setJToolBar(getToolBar());
-		frame.setControllerPanel(_contentPane);
-		_taskEditionManager.setParent(frame);
-		_projectEditionManager.setParent(frame);
-		_taskEditionManager.setActionManager(_actionManager);
-		_projectEditionManager.setTaskEditionManager(_taskEditionManager);
-		// loading plugins
-		_taskEditionManager.refresh();
-		Utils.setParent(getJContentPane());
-		SplashScreen.hide();
-		frame.setVisible(true);
+        throw new UnsupportedOperationException(
+				"Method start() not implemented yet!");
+
+// SplashScreen.show();
+//		try {
+//			DBManager.getInstance();
+//		} catch (SQLException e) {
+//			LOGGER.fatal("", e);
+//		} catch (ClassNotFoundException e) {
+//			LOGGER.error("", e);
+//		}
+//		_managerEngine = managerEngine;
+//		// Creates a new empty project
+////FIXME		_managerEngine.getProjectManager().ceateProject();
+//		_projectEditionManager = new ProjectEditionManager(_managerEngine);
+//		_taskEditionManager = new TaskEditionManager(_managerEngine);
+//		_actionManager = new ActionManager(_projectEditionManager,
+//				_taskEditionManager);
+//		_guiMenu = new LocalGUIMenu(_actionManager);
+//		ControllerFrame frame = new ControllerFrame();
+//		frame.setContentPane(getJContentPane());
+//		frame.setJMenuBar(getJMenuBar());
+//		frame.setJToolBar(getToolBar());
+//		frame.setControllerPanel(_contentPane);
+//		_taskEditionManager.setParent(frame);
+//		_projectEditionManager.setParent(frame);
+//		_taskEditionManager.setActionManager(_actionManager);
+//		_projectEditionManager.setTaskEditionManager(_taskEditionManager);
+//		// loading plugins
+//		_taskEditionManager.refresh();
+//		Utils.setParent(getJContentPane());
+//		SplashScreen.hide();
+//		frame.setVisible(true);
 	}
 
 	private JComponent getJContentPane()
@@ -406,13 +436,5 @@ public final class LocalController implements IController
 
 	}
 
-	private static Logger _logger = Logger.getLogger(LocalController.class);
-
-	/* (non-Javadoc)
-	 * @see salomon.engine.controller.IController#exit()
-	 */
-	public void exit()
-	{
-		
-	}
+	private static final Logger LOGGER = Logger.getLogger(LocalController.class);
 }

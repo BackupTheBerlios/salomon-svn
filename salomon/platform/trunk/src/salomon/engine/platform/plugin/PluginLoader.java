@@ -1,6 +1,22 @@
 /*
- * Created on 2004-05-21
+ * Copyright (C) 2004 Salomon Team
  *
+ * This file is part of Salomon.
+ *
+ * Salomon is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * Salomon is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with Salomon; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * 
  */
 
 package salomon.engine.platform.plugin;
@@ -20,12 +36,12 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 
 import salomon.engine.platform.Config;
+
 import salomon.plugin.IPlugin;
 
 /**
  * Class is responsible for dynamic plugin loading. It loads plugin from remote
  * location using PluginClassLoader.
- *  
  */
 public final class PluginLoader
 {
@@ -66,7 +82,7 @@ public final class PluginLoader
 	{
 		String fileName = _pluginsDir + Config.FILE_SEPARATOR;
 		String tmpFileName = url.getFile();
-		_logger.debug("trying to download: " + tmpFileName);
+		LOGGER.debug("trying to download: " + tmpFileName);
 		fileName += tmpFileName.substring(tmpFileName.lastIndexOf("/") + 1);
 		File pluginFile = new File(fileName);
 		DataInputStream input = new DataInputStream(new BufferedInputStream(
@@ -80,7 +96,7 @@ public final class PluginLoader
 		}
 		input.close();
 		output.close();
-		_logger.info("downloaded file: " + pluginFile);
+		LOGGER.info("downloaded file: " + pluginFile);
 		return pluginFile;
 	}
 
@@ -88,7 +104,7 @@ public final class PluginLoader
 	 * Checks if given plugin exists in local cache.
 	 * 
 	 * @param url plugin location
-	 * @return
+	 * @return The file
 	 */
 	private static File getFromCache(URL url)
 	{
@@ -96,12 +112,12 @@ public final class PluginLoader
 		String tmpFileName = url.getFile();
 		String fileName = tmpFileName.substring(tmpFileName.lastIndexOf("/") + 1);
 		File dir = new File(_pluginsDir);
-		_logger.info("looking for plugins in: " + dir.getAbsolutePath());
+		LOGGER.info("looking for plugins in: " + dir.getAbsolutePath());
 		File[] plugins = dir.listFiles(new PluginLoader().new PluginFileFilter(
 				"jar"));
 		for (int i = 0; i < plugins.length; i++) {
 			if (plugins[i].getName().equals(fileName)) {
-				_logger.info("found in cache: " + plugins[i]);
+				LOGGER.info("found in cache: " + plugins[i]);
 				pluginFile = plugins[i];
 				break;
 			}
@@ -111,7 +127,6 @@ public final class PluginLoader
 
 	/**
 	 * File filter used to find plugins.
-	 *  
 	 */
 	class PluginFileFilter implements FileFilter
 	{
@@ -164,9 +179,9 @@ public final class PluginLoader
 		}
 	}
 
-	private static Logger _logger = Logger.getLogger(PluginLoader.class);
-
 	private static String _pluginsDir = Config.getString("PLUGINS_DIR");
 
 	private static Map _pluginsLoaded = new HashMap();
+
+	private static final Logger LOGGER = Logger.getLogger(PluginLoader.class);
 }

@@ -21,13 +21,12 @@
 
 package salomon.platform.data.attribute;
 
+import salomon.platform.exception.PlatformException;
+
 /**
- * 
- * TODO: add comment.
- * @author kuba
  * 
  */
 public interface IAttributeManager
 {
-
+	IAttribiute[] getAttributes() throws PlatformException;
 }

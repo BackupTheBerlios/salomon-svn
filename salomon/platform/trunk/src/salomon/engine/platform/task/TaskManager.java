@@ -1,9 +1,28 @@
+/*
+ * Copyright (C) 2004 Salomon Team
+ *
+ * This file is part of Salomon.
+ *
+ * Salomon is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * Salomon is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with Salomon; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * 
+ */
 
 package salomon.engine.platform.task;
 
 import java.sql.SQLException;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
 
@@ -13,40 +32,62 @@ import salomon.engine.platform.DBManager;
 import salomon.engine.platform.DataEngine;
 import salomon.engine.platform.Environment;
 import salomon.engine.platform.project.ProjectManager;
+
+import salomon.platform.exception.PlatformException;
 import salomon.platform.task.ITask;
 import salomon.platform.task.ITaskManager;
+import salomon.platform.task.ITaskRunner;
+
 import salomon.plugin.IPlugin;
 import salomon.plugin.IResult;
 import salomon.plugin.ISettings;
 
 /**
- * An implemetation of ITaskManager interface.
- * Class manages with tasks editing and executing.
- *   
+ * An implemetation of ITaskManager interface. Class manages with tasks editing
+ * and executing.
+ * 
  */
 public final class TaskManager implements ITaskManager
 {
-	private static Logger _logger = Logger.getLogger(TaskManager.class);
 
 	private DataEngine _dataEngine;
 
 	private Environment _environment;
 
+	private ProjectManager _projectManger;
+
 	private TaskEngine _taskEngine;
 
 	private LinkedList<ITask> _tasks;
-
-	private ProjectManager _projectManger;
 
 	public TaskManager()
 	{
 		_tasks = new LinkedList<ITask>();
 		_dataEngine = new DataEngine();
 		_taskEngine = new TaskEngine();
-		//TODO: where it should be created?
+		// TODO: where it should be created?
 		_environment = new Environment();
-		//TODO: temporary
+		// TODO: temporary
 		_environment.put("CURRENT_DATA_SET", "all_data");
+	}
+
+	public void addAllTasks(Collection<ITask> tasks)
+	{
+		_tasks.addAll(tasks);
+	}
+
+	/**
+	 * @see salomon.platform.task.ITaskManager#addTask(salomon.platform.task.ITask)
+	 */
+	public void addTask(ITask task)
+	{
+		throw new UnsupportedOperationException(
+				"Method addTask() not implemented yet!");
+	}
+
+	public void clearTaskList()
+	{
+		_tasks.clear();
 	}
 
 	public ITask createTask()
@@ -57,31 +98,37 @@ public final class TaskManager implements ITaskManager
 		return newTask;
 	}
 
-	public void clearTaskList()
-	{
-		_tasks.clear();
-	}
-
-	public void addAllTasks(Collection<ITask> tasks)
-	{
-		_tasks.addAll(tasks);
-	}
-
 	public ITask getCurrentTask()
 	{
 		Task result = null;
 		return result;
-		//if (_tasks.)
+		// if (_tasks.)
 	} // end getCurrentTask
 
+	/**
+	 * @see salomon.platform.task.ITaskManager#getRunner()
+	 */
+	public ITaskRunner getRunner() throws PlatformException
+	{
+		throw new UnsupportedOperationException("Method getRunner() not implemented yet!");
+	}
+
 	public ITask[] getTasks()
-	{        
+	{
 		return _tasks.toArray(new ITask[_tasks.size()]);
+	}
+
+	/**
+	 * @param projectManger The projectManger to set.
+	 */
+	public void setProjectManger(ProjectManager projectManger)
+	{
+		_projectManger = projectManger;
 	}
 
 	public void start()
 	{
-		//_taskEngine.start();
+		// _taskEngine.start();
 		new TaskEngine().start();
 	}
 
@@ -105,15 +152,15 @@ public final class TaskManager implements ITaskManager
 					try {
 						DBManager.getInstance().commit();
 					} catch (ClassNotFoundException e1) {
-						_logger.fatal("", e1);
+						LOGGER.fatal("", e1);
 					} catch (SQLException e1) {
-						_logger.fatal("", e1);
+						LOGGER.fatal("", e1);
 					}
 					//
 					// processing task
 					//
 					IPlugin plugin = task.getPlugin();
-					_logger.debug("plugin: " + plugin + " id: "
+					LOGGER.debug("plugin: " + plugin + " id: "
 							+ plugin.getDescription().getPluginID());
 					IResult result = plugin.doJob(_dataEngine, _environment,
 							settings);
@@ -125,32 +172,32 @@ public final class TaskManager implements ITaskManager
 					try {
 						DBManager.getInstance().commit();
 					} catch (ClassNotFoundException e1) {
-						_logger.fatal("", e1);
+						LOGGER.fatal("", e1);
 					} catch (SQLException e1) {
-						_logger.fatal("", e1);
+						LOGGER.fatal("", e1);
 					}
 					//
 					// if task was not processed correctly
 					// exception is caught and shoul be handled here
 					//
 				} catch (Exception e) {
-					_logger.fatal("TASK PROCESSING ERROR", e);
+					LOGGER.fatal("TASK PROCESSING ERROR", e);
 					task.setStatus(Task.EXCEPTION);
 					try {
 						_projectManger.updateTask(task, projectId);
 					} catch (SQLException e1) {
-						_logger.fatal("", e1);
+						LOGGER.fatal("", e1);
 					}
 					try {
 						DBManager.getInstance().commit();
 					} catch (ClassNotFoundException e1) {
-						_logger.fatal("", e1);
+						LOGGER.fatal("", e1);
 					} catch (SQLException e1) {
-						_logger.fatal("", e1);
+						LOGGER.fatal("", e1);
 					}
 				}
 			}
-			//_tasks.clear();
+			// _tasks.clear();
 		}
 
 		private ITask getTask()
@@ -169,20 +216,13 @@ public final class TaskManager implements ITaskManager
 					try {
 						_tasks.wait();
 					} catch (InterruptedException e) {
-						_logger.fatal("", e);
+						LOGGER.fatal("", e);
 					}
 				}
-			} //while (currentTask != null);
+			} // while (currentTask != null);
 			return currentTask;
 		}
 	}
 
-	/**
-	 * @param projectManger
-	 *            The projectManger to set.
-	 */
-	public void setProjectManger(ProjectManager projectManger)
-	{
-		_projectManger = projectManger;
-	}
+	private static final Logger LOGGER = Logger.getLogger(TaskManager.class);
 }
