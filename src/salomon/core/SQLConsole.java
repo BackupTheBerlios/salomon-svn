@@ -29,6 +29,7 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
 import pl.edu.agh.icsr.salomon.plugin.averageprice.AveragePrice;
+import salomon.controller.gui.Utils;
 import salomon.core.data.DBManager;
 import salomon.core.data.DataEngine;
 import salomon.core.data.common.DBColumnName;
@@ -122,12 +123,12 @@ public class SQLConsole extends JFrame
 		ResultSet resultSet = null;
 		try {
 			_connector.executeQuery(query);
-			resultSet = _connector.getResultSet();
+			resultSet = _connector.getResultSet();            
 			if (resultSet == null) {
 				int updatedRows = _connector.getUpdateCount();
 				showMessage(Messages.getString("TXT_UPDATED_ROWS") + updatedRows); //$NON-NLS-1$
 			} else {
-				cmpResult = createResultTable(resultSet);
+				cmpResult = Utils.createResultTable(resultSet);
 				_scrlResult.setViewportView(cmpResult);
 			}
 			// if there was no exception, then adding command to the history
@@ -449,58 +450,6 @@ public class SQLConsole extends JFrame
 	{
 		_msgArea.setText(message);
 		_scrlResult.setViewportView(_msgArea);
-	}
-
-	/**
-	 * Method creates JTable representing given result set.
-	 * 
-	 * @param resultSet result of SQL query
-	 * @return table representing given result set.
-	 * @throws SQLException
-	 */
-	public static JTable createResultTable(ResultSet resultSet)
-			throws SQLException
-	{
-		ResultSetMetaData metaData = resultSet.getMetaData();
-		int columnCount = metaData.getColumnCount();
-		String[] columnNames = new String[columnCount];
-		// getting column names
-		for (int i = 0; i < columnCount; i++) {
-			columnNames[i] = metaData.getColumnLabel(i + 1);
-		}
-		// getting data
-		LinkedList rows = new LinkedList();
-		int size = 0;
-		while (resultSet.next()) {
-			Object[] row = new Object[columnCount];
-			int i = 0;
-			for (; i < columnCount; i++) {
-				row[i] = resultSet.getObject(i + 1);
-			}
-			rows.add(row);
-			size++;
-		}
-		// creating result table
-		Object[][] data = new Object[size][columnCount];
-		for (int i = 0; i < size; i++) {
-			data[i] = (Object[]) rows.get(i);
-		}
-		// printing result
-		StringBuffer buffer = new StringBuffer(512);
-		for (int i = 0; i < columnCount; i++) {
-			buffer.append(columnNames[i] + " "); //$NON-NLS-1$
-		}
-		buffer.append("\n=============================================\n"); //$NON-NLS-1$
-		for (int i = 0; i < size; i++) {
-			for (int j = 0; j < columnCount; j++) {
-				buffer.append(data[i][j] + "|"); //$NON-NLS-1$
-			}
-			buffer.append("\n"); //$NON-NLS-1$
-		}
-		_logger.info(buffer);
-		JTable table = new JTable(data, columnNames);
-		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-		return table;
 	}
 
 	public static void main(String[] args)
