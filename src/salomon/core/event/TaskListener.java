@@ -26,5 +26,5 @@ public interface TaskListener
 	 * @param e
 	 */
 	void applyTasks(TaskEvent e);
-	
+		
 }
