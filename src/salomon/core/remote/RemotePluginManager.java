@@ -6,6 +6,7 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.Collection;
 
 import salomon.core.plugin.IPluginManager;
+import salomon.plugin.Description;
 
 /**
  * 
@@ -38,6 +39,14 @@ public final class RemotePluginManager extends UnicastRemoteObject
 	public Collection getAvailablePlugins() throws RemoteException
 	{
 		return _pluginManager.getAvailablePlugins();
+	}
+
+	/* (non-Javadoc)
+	 * @see salomon.core.remote.IRemotePluginManager#addPlugin(salomon.plugin.Description)
+	 */
+	public boolean addPlugin(Description description) throws RemoteException
+	{
+		return _pluginManager.addPlugin(description);		
 	}
 
 	//	/* (non-Javadoc)

@@ -7,6 +7,7 @@ import java.util.Collection;
 import org.apache.log4j.Logger;
 
 import salomon.core.plugin.IPluginManager;
+import salomon.plugin.Description;
 
 /**
  * 
@@ -40,12 +41,26 @@ public final class PluginManagerProxy implements IPluginManager
 		try {
 			result = _remotePluginManager.getAvailablePlugins();
 		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			_logger.error(e);
+			_logger.fatal("", e);
 		}
 		return result;
 	}
 	private static final Logger _logger = Logger.getLogger(PluginManagerProxy.class);
+
+	/* (non-Javadoc)
+	 * @see salomon.core.plugin.IPluginManager#addPlugin(salomon.plugin.Description)
+	 */
+	public boolean addPlugin(Description description)
+	{
+        boolean result = false;
+		try {
+			result = _remotePluginManager.addPlugin(description);
+		} catch (RemoteException e) {
+			_logger.fatal("", e);
+		}		
+        return result;
+	}
+    
 
 	//	/* (non-Javadoc)
 	//	 * @see salomon.core.plugin.IPluginManager#getPlugin(java.net.URL)
