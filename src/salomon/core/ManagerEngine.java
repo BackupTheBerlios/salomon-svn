@@ -1,7 +1,3 @@
-/** Java class "ManagerEngine.java" generated from Poseidon for UML.
- *  Poseidon for UML is developed by <A HREF="http://www.gentleware.com">Gentleware</A>.
- *  Generated with <A HREF="http://jakarta.apache.org/velocity/">velocity</A> template engine.
- */
 
 package salomon.core;
 
@@ -13,6 +9,8 @@ import salomon.core.task.ITaskManager;
 import salomon.core.task.TaskManager;
 
 /**
+ * Class creates and holds all managers used by plugins. They are created only
+ * in this class to avoid multiple instances.
  *  
  */
 public final class ManagerEngine implements IManagerEngine

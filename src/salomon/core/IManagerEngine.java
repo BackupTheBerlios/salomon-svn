@@ -6,10 +6,7 @@ import salomon.core.project.IProjectManager;
 import salomon.core.task.ITaskManager;
 
 /**
- * 
- * TODO: add comment.
- * 
- * @author krzychu
+ * Interface used to pass ManagerEngine to plugins. 
  *  
  */
 public interface IManagerEngine

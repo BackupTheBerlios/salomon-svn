@@ -38,6 +38,12 @@ import salomon.core.data.common.DBTableName;
 import salomon.core.data.dataset.DataSet;
 import salomon.core.data.dataset.DataSetManager;
 
+/**
+ * Class represents simple SQL console. It is used to debug application. Allows
+ * excecuting SQL queries and DDL statements. It supports transactions and makes
+ * managing with database easier supplying commands history.
+ *  
+ */
 public class SQLConsole extends JFrame
 {
 
@@ -123,7 +129,7 @@ public class SQLConsole extends JFrame
 		ResultSet resultSet = null;
 		try {
 			_connector.executeQuery(query);
-			resultSet = _connector.getResultSet();            
+			resultSet = _connector.getResultSet();
 			if (resultSet == null) {
 				int updatedRows = _connector.getUpdateCount();
 				showMessage(Messages.getString("TXT_UPDATED_ROWS") + updatedRows); //$NON-NLS-1$
