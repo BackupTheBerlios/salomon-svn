@@ -11,10 +11,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import salomon.engine.platform.exception.PlatformException;
 import salomon.platform.IDataEngine;
 import salomon.platform.data.dataset.IDataSet;
 import salomon.platform.data.dataset.IDataSetManager;
+import salomon.platform.exception.PlatformException;
 import salomon.plugin.ISettingComponent;
 import salomon.plugin.ISettings;
 

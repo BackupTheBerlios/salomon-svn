@@ -1,6 +1,6 @@
 package salomon.platform.data.dataset;
 
-import salomon.engine.platform.exception.PlatformException;
+import salomon.platform.exception.PlatformException;
 
 
 /**

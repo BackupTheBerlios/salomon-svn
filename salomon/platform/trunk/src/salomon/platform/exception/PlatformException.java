@@ -19,7 +19,7 @@
  * 
  */
 
-package salomon.engine.platform.exception;
+package salomon.platform.exception;
 
 /**
  * 

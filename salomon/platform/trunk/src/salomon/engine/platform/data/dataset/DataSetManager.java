@@ -10,9 +10,9 @@ import org.apache.log4j.Logger;
 
 import salomon.engine.platform.DBManager;
 import salomon.engine.platform.data.common.SQLSelect;
-import salomon.engine.platform.exception.PlatformException;
 import salomon.platform.data.dataset.IDataSet;
 import salomon.platform.data.dataset.IDataSetManager;
+import salomon.platform.exception.PlatformException;
 
 /**
  * Class manages with datasets.
