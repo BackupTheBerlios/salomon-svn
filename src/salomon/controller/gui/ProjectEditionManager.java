@@ -72,8 +72,10 @@ public final class ProjectEditionManager
 	{
 		try {
 			int projectId = chooseProject();
-			_projectManager.loadProject(projectId);
-			_parent.refreshGui();
+            if (projectId > 0) {
+            	_projectManager.loadProject(projectId);
+            	_parent.refreshGui();
+            }
 		} catch (Exception e) {
 			_logger.fatal("", e);
 			Utils.showErrorMessage("Cannot load project.");
@@ -233,7 +235,7 @@ public final class ProjectEditionManager
 		Dimension dim = new Dimension(250, 200);
 		panel.setMaximumSize(dim);
 		panel.setPreferredSize(dim);
-		//TODO:
+
 		int result = JOptionPane.showConfirmDialog(_parent, panel,
 				"Choose project", JOptionPane.OK_CANCEL_OPTION,
 				JOptionPane.PLAIN_MESSAGE);
