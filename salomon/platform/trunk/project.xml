@@ -69,7 +69,7 @@
       <groupId>firebirdsql</groupId>
       <artifactId>firebirdsql</artifactId>
       <version>1.5.2</version>
-      <jar>lib\firebirdsql.jar</jar>
+      <jar>lib/firebirdsql.jar</jar>
       <type>jar</type>
       <url>http://firebird.sourceforge.net/</url>
     </dependency>

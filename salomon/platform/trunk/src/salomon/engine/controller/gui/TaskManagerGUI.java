@@ -43,21 +43,18 @@ import org.apache.log4j.Logger;
 
 import salomon.engine.Messages;
 import salomon.engine.controller.gui.action.ActionManager;
+import salomon.engine.platform.IManagerEngine;
 import salomon.engine.plugin.LocalPlugin;
 import salomon.engine.solution.Solution;
 import salomon.engine.task.ITask;
-
-import salomon.util.gui.Utils;
-
 import salomon.platform.IDataEngine;
 import salomon.platform.exception.PlatformException;
-
 import salomon.plugin.IPlugin;
+import salomon.plugin.IResult;
 import salomon.plugin.IResultComponent;
 import salomon.plugin.ISettingComponent;
 import salomon.plugin.ISettings;
-
-import salomon.engine.platform.IManagerEngine;
+import salomon.util.gui.Utils;
 
 /**
  * Class used to manage with tasks editing. It enables creating and configuring
@@ -283,7 +280,8 @@ public final class TaskManagerGUI
 		TaskGUI currentTask = (TaskGUI) _taskListModel.get(_selectedItem);
 		IPlugin plugin = currentTask.getPlugin();
 		IResultComponent resultComponent = plugin.getResultComponent();
-		Component comp = resultComponent.getComponent(currentTask.getResult());
+		IResult result = currentTask.getResult();
+		Component comp = resultComponent.getComponent(result);
 		Dimension maxDim = new Dimension(400, 300);
 		Dimension prefDim = comp.getPreferredSize();
 		// setting maximum size
@@ -316,8 +314,9 @@ public final class TaskManagerGUI
 		} catch (PlatformException e) {
 			LOGGER.fatal("", e);
 		} 
+		Component taskSettings = settingComponent.getComponent(inputSettings, dataEngine);
 		int result = JOptionPane.showConfirmDialog(_positionComponent,				
-				settingComponent.getComponent(inputSettings, dataEngine), 
+				taskSettings, 
 				Messages.getString("TIT_PLUGIN_SETTINGS"), //$NON-NLS-1$
 				JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
 		if (result == JOptionPane.OK_OPTION) {
