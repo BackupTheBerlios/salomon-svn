@@ -13,6 +13,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.sql.ResultSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -26,8 +27,12 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JToolBar;
 import javax.swing.JWindow;
@@ -37,6 +42,10 @@ import org.apache.log4j.Logger;
 import salomon.core.Config;
 import salomon.core.Messages;
 import salomon.core.Project;
+import salomon.core.SQLConsole;
+import salomon.core.data.DBManager;
+import salomon.core.data.common.DBColumnName;
+import salomon.core.data.common.DBTableName;
 import salomon.core.event.ProjectEvent;
 import salomon.core.event.ProjectListener;
 import salomon.core.event.TaskEvent;
@@ -195,7 +204,7 @@ public class ControllerGUI extends JFrame
 		String name = project.getName();
 		String info = project.getInfo();
 		_txtProjectName.setText(name == null ? "" : name);
-		_txtProjectName.setText(info == null ? "" : info);
+		_txtProjectInfo.setText(info == null ? "" : info);
 		JOptionPane.showMessageDialog(_contentPane, _pnlProjectProperties,
 				"Enter project properties", JOptionPane.INFORMATION_MESSAGE);
 		project.setName(_txtProjectName.getText());
@@ -215,10 +224,11 @@ public class ControllerGUI extends JFrame
 			project.add(_guiMenu.getItmNew());
 			project.add(_guiMenu.getItmOpen());
 			project.add(_guiMenu.getItmSave());
+			project.addSeparator();
 			project.add(_guiMenu.getItmExit());
 			JMenu tools = new JMenu(Messages.getString("MNU_TOOLS")); //$NON-NLS-1$
 			tools.add(_guiMenu.getItmSQLConsole());
-			JMenu help = new JMenu(Messages.getString("MNU_HELP")); //$NON-NLS-1$
+			JMenu help = new JMenu(Messages.getString("MNU_HELP")); //$NON-NLS-1$			
 			help.add(_guiMenu.getItmAbout());
 			_menuBar.add(project);
 			_menuBar.add(tools);
@@ -311,12 +321,60 @@ public class ControllerGUI extends JFrame
 		}
 	}
 
-	private void fireLoadProject(ProjectEvent event)
+	void fireLoadProject(ProjectEvent event)
 	{
-		for (Iterator iter = _projectListeners.iterator(); iter.hasNext();) {
-			ProjectListener listener = (ProjectListener) iter.next();
-			listener.loadProject(event);
+		int projectID = chooseProject();
+		if (projectID > 0) {
+			event.setProjectID(projectID);
+			for (Iterator iter = _projectListeners.iterator(); iter.hasNext();) {
+				ProjectListener listener = (ProjectListener) iter.next();
+				listener.loadProject(event);
+			}
 		}
+	}
+
+	private int chooseProject()
+	{
+		int projectID = 0;
+		DBTableName[] tableNames = {new DBTableName("projects")};
+		DBColumnName[] columnNames = {
+				new DBColumnName(tableNames[0], "project_id", "Id"),
+				new DBColumnName(tableNames[0], "name", "Name"),
+				new DBColumnName(tableNames[0], "info", "Info")};
+		// executing query
+		ResultSet resultSet = null;
+		try {
+			resultSet = DBManager.getInstance().select(columnNames, tableNames,
+					null);
+			JTable projectTable = null;
+			projectTable = SQLConsole.createResultTable(resultSet);			
+			projectID = showProjectList(projectTable);
+		} catch (Exception e) {
+			_logger.fatal("", e);
+			showErrorMessage("Cannot load project list.");
+		}
+		return projectID;
+	}
+
+	private int showProjectList(JTable table)
+	{
+		int projectID = 0;
+		JScrollPane panel = new JScrollPane();
+		panel.setViewportView(table);
+		Dimension dim = new Dimension(250, 200);
+		panel.setMaximumSize(dim);
+		panel.setPreferredSize(dim);		
+		int result = JOptionPane.showConfirmDialog(_contentPane, panel,
+				"Choose project", JOptionPane.OK_CANCEL_OPTION,
+				JOptionPane.PLAIN_MESSAGE);		
+		if (result == JOptionPane.OK_OPTION) {
+			int selectedRow = table.getSelectedRow();
+			if (selectedRow >= 0) {
+				projectID = ((Integer) table.getValueAt(selectedRow, 0))
+						.intValue();
+			}
+		}
+		return projectID;
 	}
 
 	void fireNewProject(ProjectEvent event)
@@ -327,7 +385,7 @@ public class ControllerGUI extends JFrame
 		}
 	}
 
-	void fireRunTasks(TaskEvent event)
+	private void fireRunTasks(TaskEvent event)
 	{
 		for (Iterator iter = _taskListeners.iterator(); iter.hasNext();) {
 			TaskListener listener = (TaskListener) iter.next();
@@ -337,6 +395,7 @@ public class ControllerGUI extends JFrame
 
 	void fireSaveProject(ProjectEvent event)
 	{
+		event.setTaskList(_taskEditionManager.getTasks());
 		for (Iterator iter = _projectListeners.iterator(); iter.hasNext();) {
 			ProjectListener listener = (ProjectListener) iter.next();
 			listener.saveProject(event);
