@@ -5,6 +5,14 @@
 System zosta³ podzielony na 3 g³ówne czêœci: platformê, kontrolery
 i~pluginy.
 
+\begin{figure}[htb]
+	\centering
+		\includegraphics[width=0.90\textwidth]{img/uml/core.jpg}
+	\caption{G³ówne klasy systemu}
+	\label{fig:core}
+\end{figure}
+
+
 \subsection{Platforma}
 
 Dostarcza podstawowej funkcjonalnoœci  umo¿liwiaj¹cej pracê ca³ego
@@ -24,40 +32,55 @@ W obecnej wersji mechanizm ten jest bardzo ubogi  - pozwala on na przekazywanie 
 
 W kolejnej wersji Salomona dodane zostan¹ klasy odpowiedzialne za przechowywanie danych. Klasy te bêd¹ odpowiadaæ poszczególnym typom prostym oraz strukturze (struktura bêdzie mog³a zawieraæ inne struktury oraz typy proste). Za pomoc¹ takich elementów, programista bêdzie móg³ stworzyæ hierarchiczne struktury danych. Wprowadzenie takiego mechanizmu podyktowane jest potrzeb¹ ukrycia przed programist¹ sposobu zapisu danych w bazie lub w pliku. W obecnej wersji Salomona, twórca wtyczki musi dostarczyæ mechanizm serializacji oraz deserializacji ustawieñ i rezultatów zadañ do napisu – taki mechanizm niesie za sob¹ niebezpieczeñstwo niepoprawnoœci oraz nieefektywnoœci implementacji. Dostarczenie spójnego modelu seralizacji danych pozwala na niewidoczny dla wtyczek sposób podmiany implementacji na bardziej efektywn¹ itp. Mechanizm ten mo¿e okazaæ siê równie¿ po¿yteczny po dodaniu do Salomona mo¿liwoœci definiowania zadañ w pliku (np. XML). Seralizacja danych mo¿e odbywaæ siê do wielu formatów np. XML, CSV, tabel w bazie danych itp. 
 
-%TODO: zmienic to
+
 \newpage
-Opis klas platformy:
 
-\subsubsection{DataEngine}
-Obiekt przekazywany pluginom do wykonania zadania. Udostêpnia im menad¿ery do operowania na danych (\emph{DataSetManager}, \emph{RuleSetManager}, w przysz³oœci \emph{AttributeManager} i inne).
+\subsection{DataEngine}
+Klasa przekazywana pluginom podczas ich wykonania.
+Za pomoc¹ pobieranych z niej menad¿erów (\emph{DataSetManager}, \emph{RuleSetManager}, w przysz³oœci \emph{AttributeManager} i inne) wtyczki mog¹ operowaæ na danych znajduj¹cych siê w bazie.
 
-\subsubsection{DataSetManager}
-Zarz¹dza zbiorami danych. Pozwala tworzyæ nowe podzbiory danych na
-podstawie zawartych w bazie informacji oraz umo¿liwia operowanie
-na nich.
-
-\subsubsection{RuleSetManager}
-Zarz¹dza regu³ami. Pozwala tworzyæ nowe regu³y oraz
-zarz¹dza dostêpem do ju¿ istniej¹cych.
+\begin{figure}[htb]
+	\centering
+		\includegraphics[width=0.80\textwidth]{img/uml/manager_engine.jpg}
+	\caption{Interfejsy do zarz¹dzania wiedz¹}
+	\label{fig:manager_engine}
+\end{figure}
 
 \subsubsection{DBManager}
 Odpowiada za po³¹czenie z baz¹ danych. Dostarcza metody
 zapewniaj¹ce dostêp do danych przechowywanych w bazie. Swoj¹
 funkcjonalnoœæ udostêpnia odpowiednim menad¿erom.
 
+\subsubsection{DataSetManager}
+Zarz¹dza zbiorami danych. Pozwala tworzyæ nowe podzbiory danych na
+podstawie zawartych w bazie informacji oraz umo¿liwia operowanie
+na nich.
+\subsubsection{RuleSetManager}
+Zarz¹dza regu³ami. Pozwala tworzyæ nowe regu³y oraz
+zarz¹dza dostêpem do ju¿ istniej¹cych.
+
+\newpage
+
 \subsubsection{IManagerEngine}
 Klasa zarz¹dza pozosta³ymi menad¿erami. Utrzymuje jedn¹ instancjê ka¿dego z nich 
 i udostêpnia je pozosta³ym klasom z platformy.
+
+\begin{figure}[htb]
+	\centering
+		\includegraphics[width=0.90\textwidth]{img/uml/manager_engine.jpg}
+	\caption{G³ówna klasa zarz¹dzaj¹ca}
+	\label{fig:manager_engine}
+\end{figure}
 
 \subsubsection{IProjectManager}
 Zarz¹dza projektami. Pozwala na utworzenie nowego
 projektu, zapisanie bie¿¹cego do bazy danych oraz na za³adowanie z bazy.
 
 \subsubsection{IPluginManger}
-Zarz¹dza pluginami. Zapewnia zapis pluginów do bazy oraz za³adowanie listy dostêpnych pluginów.
+Zarz¹dza pluginami. Pozwala na utworzenie zapisanie informacji o nowym pluginie (jego nazwa, lokalizacja) oraz na pobranie listy dostêpnych pluginów.
 
 \subsubsection{ITaskManger}
-Zarz¹dza zadaniami. Jest odpowiedzialny za utworzenie nowego zadania, pobranie listy zadañ do wykonania oraz uruchomienie zadañ.
+Zarz¹dza zadaniami. 
 
 \subsection{Kontrolery}
 Kontrolery odpowiadaj¹ za interakcjê
@@ -81,9 +104,9 @@ zadania oraz wyœwietla ich wyniki.
 
 \subsubsection{ServantController}
 Zadaniem tego kontrolera jest odszukanie g³ównego kontrolera
-(\emph{ServerController}), zarejestrowanie siê i udostêpnianie mu
+(\emph{MasterController}), zarejestrowanie siê i udostêpnianie mu
 swoich us³ug. Ta wersja kontrolera nie posiada GUI, zarz¹dzanie
-nim odbywa siê za pomoc¹ klasy \emph{ServantController}.
+nim odbywa siê za pomoc¹ klasy \emph{MasterController}.
 
 
 \subsection{Pluginy}
