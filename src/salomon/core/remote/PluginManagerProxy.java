@@ -17,13 +17,13 @@ import salomon.core.plugin.IPluginManager;
  */
 public final class PluginManagerProxy implements IPluginManager
 {
-	private static Logger _logger = Logger.getLogger(PluginManagerProxy.class);
 
 	private IRemotePluginManager _remotePluginManager;
 
 	/**
-	 *  
-	 */
+     * @pre $none
+     * @post $none
+     */
 	public PluginManagerProxy(IRemotePluginManager remotePluginManager)
 	{
 		_remotePluginManager = remotePluginManager;
@@ -45,6 +45,7 @@ public final class PluginManagerProxy implements IPluginManager
 		}
 		return result;
 	}
+	private static final Logger _logger = Logger.getLogger(PluginManagerProxy.class);
 
 	//	/* (non-Javadoc)
 	//	 * @see salomon.core.plugin.IPluginManager#getPlugin(java.net.URL)
