@@ -21,45 +21,93 @@
 
 package salomon.engine.platform.data.dataset;
 
+import java.net.MalformedURLException;
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collection;
-import java.util.List;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 import org.apache.log4j.Logger;
 
 import salomon.engine.database.DBManager;
+import salomon.engine.database.IDBSupporting;
+import salomon.engine.database.queries.SQLDelete;
+import salomon.engine.database.queries.SQLInsert;
 import salomon.engine.database.queries.SQLSelect;
-
+import salomon.engine.database.queries.SQLUpdate;
 
 import salomon.platform.data.dataset.IDataSet;
+import salomon.platform.exception.PlatformException;
 
 /**
  * Class represents data set. Data set is a subset of data stored in tables, its
  * conditions specifies how to get this subset.
+ * 
+ * TODO: add join between tables support
  */
-class DataSet implements IDataSet
+class DataSet implements IDataSet, IDBSupporting
 {
-	/**
-	 * Conditions determinating data set. If conditions are empty it means that
-	 * data set includes all data
-	 */
-	private Collection<String> _conditions;
 
-	private Collection<String> _tableNames;
-	
+	/**
+	 * Conditions determinating data set. key is table name, value - list of
+	 * conditions corresponding to given table
+	 */
+	private Map<String, Set<String>> _conditions;
+	private int _datasetID;
+
+	private String _info;
+
 	private String _name;
 
 	/**
-	 * Method returns the conditions determinating data set.
-	 * 
-	 * @return conditions determinating data set.
+	 * Creates data set. This constructor can be used only from DataSetManager.
 	 */
-	public Collection<String> getConditions()
+	DataSet(String name)
 	{
-		return _conditions;
+		_datasetID = 0;
+		_name = name;
+		_conditions = new HashMap<String, Set<String>>();
 	}
-	
+
+	/**
+	 * Method adds condition corresponding to given table name
+	 * 
+	 * @param tableName
+	 * @param condition
+	 */
+	public void addCondition(String tableName, String condition)
+	{
+		Set<String> tableConditions = _conditions.get(tableName);
+		if (tableConditions == null) {
+			tableConditions = new HashSet<String>();
+			_conditions.put(tableName, tableConditions);
+		}
+		tableConditions.add(condition);
+	}
+
+	/**
+	 * @see salomon.engine.database.IDBSupporting#delete()
+	 */
+	public boolean delete() throws SQLException, ClassNotFoundException
+	{
+		throw new UnsupportedOperationException(
+				"Method delete() not implemented yet!");
+	}
+
+	/**
+	 * Returns the info.
+	 * 
+	 * @return The info
+	 */
+	public String getInfo()
+	{
+		return _info;
+	}
+
 	/**
 	 * @see salomon.platform.data.dataset.IDataSet#getName()
 	 */
@@ -67,15 +115,66 @@ class DataSet implements IDataSet
 	{
 		return _name;
 	}
-	
+
 	/**
+	 * @see salomon.engine.database.IDBSupporting#load(java.sql.ResultSet)
+	 * 
+	 * Only dataset header is loaded.
+	 * Items cannot be loaded, bacause it is imposible to open more than one
+	 * result set in the same time.
+	 * To load items, use @see loadItems() method. 
 	 * 
 	 */
-	DataSet(String name)
+	public void load(ResultSet resultSet) throws MalformedURLException,
+			SQLException
 	{
-		_name = name;
+		throw new UnsupportedOperationException(
+				"Method load() not implemented yet!");
 	}
 	
+	public void loadItems() throws SQLException
+	{
+		throw new UnsupportedOperationException(
+				"Method loadItems() not implemented yet!");
+	}
+
+	/**
+	 * @see salomon.engine.database.IDBSupporting#save()
+	 */
+	public int save() throws SQLException, ClassNotFoundException
+	{
+		//removing old items
+		SQLDelete delete = new SQLDelete();
+		delete.setTable(ITEMS_TABLE_NAME);
+		delete.addCondition("dataset_id = ", _datasetID);
+		int rows = DBManager.getInstance().delete(delete);
+		LOGGER.debug("rows deleted: " + rows);
+		
+		//saving header
+		SQLUpdate update = new SQLUpdate(TABLE_NAME);
+		if (_name != null) {
+			update.addValue("dataset_name", _name);
+		}
+		if (_info != null) {
+			update.addValue("dataset_info", _info);
+		}
+		update.addValue("lm_date", new Date(System.currentTimeMillis()));
+		_datasetID = DBManager.getInstance().insertOrUpdate(update,
+				"dataset_id", _datasetID, GEN_NAME);
+		
+		// saving items
+		for (String tableName : _conditions.keySet()) {
+			for (String condition: _conditions.get(tableName)) {
+				SQLInsert insert = new SQLInsert(ITEMS_TABLE_NAME);
+				insert.addValue("dataset_id", _datasetID);
+				insert.addValue("table_name", tableName);
+				insert.addValue("condition", condition);
+				LOGGER.debug("insert: " + insert.getQuery());
+			}
+		}
+		return _datasetID;
+	}
+
 	/**
 	 * Method selects data basing on given parameters. It takes into account
 	 * conditions determinating data set - conditions passed as the arguments of
@@ -88,29 +187,28 @@ class DataSet implements IDataSet
 	public ResultSet selectData(SQLSelect select) throws SQLException,
 			ClassNotFoundException
 	{
-		// Collection<String> queryConditions = null;
-		//        
-		// if (_conditions != null) {
-		// //
-		// //preparing conditions
-		// //
-		// List conditonList = getConditionsByTable(tableNames);
-		// _logger.info("DataSet.selectData(): conditonList = " + conditonList);
-		// if (conditonList.size() > 0) {
-		// //
-		// //adding conditions determinating data set
-		// //
-		// queryConditions = new DBCondition[conditonList.size()
-		// + conditions.length];
-		// conditonList.addAll(Arrays.asList(conditions));
-		// queryConditions = (DBCondition[])
-		// conditonList.toArray(queryConditions);
-		// }
-		// } else {
-		// queryConditions = conditions;
-		// }
-		// DBManager connector = DBManager.getInstance();
-		return DBManager.getInstance().select(select);
+		SQLSelect selectCopy = (SQLSelect) select.clone();
+		// getting all tables used in select and _tableNames
+		// (intersection of these sets)
+		// These tables are needed to add conditions determinating dataset
+		Collection<String> commonTables = selectCopy.getTables();
+		commonTables.retainAll(_conditions.keySet());
+
+		if (_conditions.size() > 0) {
+			// preparing conditions
+			for (String commonTable : commonTables) {
+				for (String condition : _conditions.get(commonTable)) {
+					selectCopy.addCondition(condition);
+				}
+			}
+		}
+		// adding tables from original select
+		for (String tableName : select.getTables()) {
+			selectCopy.addTable(tableName);
+		}
+
+		LOGGER.debug("selectCopy: " + selectCopy.getQuery());
+		return DBManager.getInstance().select(selectCopy);
 	}
 
 	/**
@@ -172,13 +270,13 @@ class DataSet implements IDataSet
 	}
 
 	/**
-	 * Method sets conditions determinating data set.
+	 * Set the value of info field.
 	 * 
-	 * @param conditions to set
+	 * @param info The info to set
 	 */
-	public void setConditions(Collection<String> conditions)
+	public void setInfo(String info)
 	{
-		_conditions = conditions;
+		_info = info;
 	}
 
 	/**
@@ -189,14 +287,6 @@ class DataSet implements IDataSet
 		_name = name;
 	}
 
-	/**
-	 * @param tableNames The tableNames to set.
-	 */
-	public void setTableNames(Collection<String> tableNames)
-	{
-		_tableNames = tableNames;
-	}
-
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -204,40 +294,14 @@ class DataSet implements IDataSet
 	 */
 	public String toString()
 	{
-		String dataSet = "[";
-		for (String condition : _conditions) {
-			dataSet += condition + ",";
-		}
-		dataSet += "]";
-		return dataSet;
+		return _name + ": " + _conditions;
 	}
 
-	/**
-	 * Returns conditions which refers to tables specified by tableNames. Data
-	 * set is a subset of data stored in tables, conditions specifies how to get
-	 * this subset. Conditions got from plugin has to be added to condition list
-	 * determinating data set.
-	 * TODO: reimplement it
-	 * @param tableNames
-	 * @return
-	 */
-	private List<String> getConditionsByTable(Collection<String> tableNames)
-	{
-		// List conditionList = new LinkedList();
-		// // Checking which condition determinating data set
-		// // should be added to specified condition list
-		// // If conditions table name is the same as tableName[i]
-		// // then it should be added
-		// for (int i = 0; i < _conditions.length; i++) {
-		// for (int j = 0; j < tableNames.length; j++) {
-		// if (tableNames[j].equals(_conditions[i].getTableName())) {
-		// conditionList.add(_conditions[i]);
-		// }
-		// }
-		// }
-		// return conditionList;
-		return null;
-	}
+	public static final String TABLE_NAME = "datasets";
+	
+	public static final String ITEMS_TABLE_NAME = "dataset_items";
+
+	private static final String GEN_NAME = "gen_dataset_id";
 
 	private static final Logger LOGGER = Logger.getLogger(DataSet.class);
 }
