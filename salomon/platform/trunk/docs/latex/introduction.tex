@@ -71,7 +71,7 @@ Basic design objectives:
 	
 	\item \textbf{open architecture.}
 	
-	Inserting a middle tier between database and plug-ins. Its goal is hiding the details of how the data is organized. Architecture openness gives the possibility to extend this tier.
+	Inserting a middle tier between database and plug-ins. Its goal is to hide the details of how the data is organized. Architecture openness gives the possibility to extend this tier.
 	
 	\item \textbf{platform independence.}
 	
@@ -96,7 +96,7 @@ Basic design objectives:
 \subsection{Graph}
 
 Discovering knowledge is an iterative, divided into stages, process. Stages can form cycles. 
-During each stage the knowledge is processed. Knowledge discovering process can be directed according to the user's preferences. Each stage forms a closed whole. Some stages are separate, so they can be performed concurrently. Salomon's architecture enables supports distributed (and this implies concurrent) processing of those stages and synchronizing their results.
+During each stage the knowledge is processed. Knowledge discovering process can be directed according to the user's preferences. Each stage forms a closed whole. Some stages are separate, so they can be performed concurrently. Salomon's architecture enables support for distributed (and this implies concurrent) processing of those stages and synchronizing their results.
 
 The representation of the stage in Salomon is a \emph{task}. Each task may have a few predecessors and consequents. Simply speaking, tasks can be organized in a form of a graph.
 
