@@ -1,18 +1,44 @@
 
 package salomon.controller.gui;
 
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.GridLayout;
+import java.awt.Point;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import javax.accessibility.Accessible;
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JToolBar;
+import javax.swing.JWindow;
+import javax.swing.SwingUtilities;
 import javax.swing.border.TitledBorder;
-import salomon.core.Config;
-import salomon.core.SQLConsole;
-import salomon.core.event.*;
 import org.apache.log4j.Logger;
+import salomon.core.Config;
+import salomon.core.Messages;
+import salomon.core.SQLConsole;
+import salomon.core.event.TaskEvent;
+import salomon.core.event.TaskListener;
 
 /*
  * Created on 2004-05-03
@@ -28,31 +54,15 @@ public class ControllerGUI extends JFrame
 
 	private JWindow _splashScreen = null;
 
-	private JButton _btnAdd = null;
-
-	private JButton _btnAddAll = null;
-
-	private JButton _btnApply = null;
-
-	private JButton _btnDown = null;
-
-	private JButton _btnFirst = null;
-
-	private JButton _btnLast = null;
-
 	private JButton _btnNew = null;
 
 	private JButton _btnOpen = null;
 
-	private JButton _btnRemove = null;
-
-	private JButton _btnRemoveAll = null;
-
-	private JButton _btnRun = null;
+	private JButton _btnApply = null;
 
 	private JButton _btnSave = null;
 
-	private JButton _btnUp = null;
+	private JButton _btnRun = null;
 
 	private JPanel _contentPane = null;
 
@@ -71,8 +81,6 @@ public class ControllerGUI extends JFrame
 	private JList _lstPlugins = null;
 
 	private JList _lstTasks = null;
-
-	private ManipulationListener _manipulationListener = null;
 
 	private JMenuBar _menuBar = null;
 
@@ -103,6 +111,8 @@ public class ControllerGUI extends JFrame
 	private JToolBar _toolBar = null;
 
 	private String _resourcesDir = null;
+	
+	private GUIButtons _guiButtons = null;
 
 	public ControllerGUI()
 	{
@@ -116,12 +126,16 @@ public class ControllerGUI extends JFrame
 				showSplashScreen();
 			}
 		});
-		_taskEditionManager = new TaskEditionManager();
-		_manipulationListener = new ManipulationListener();
 		_projectListener = new ProjectListener();
+		_taskEditionManager = new TaskEditionManager();
 		_taskListeners = new LinkedList();
+		_guiButtons = new GUIButtons();
+		_guiButtons.setEditionManager(_taskEditionManager);
 		initialize();
+		_taskEditionManager.setPositionComponent(_contentPane);
+		//
 		// waiting configured time
+		//
 		long currentTime = System.currentTimeMillis();
 		long splashTime = 0;
 		long waitingTime = 0;
@@ -147,6 +161,50 @@ public class ControllerGUI extends JFrame
 		});
 	}
 
+	/**
+	 * This method initializes _btnApply
+	 * 
+	 * @return JButton
+	 */
+	private JButton getBtnApply()
+	{
+		if (_btnApply == null) {
+			_btnApply = new JButton();
+			_btnApply.setText(Messages.getString("BTN_APPLY")); //$NON-NLS-1$
+			_btnApply.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e)
+				{
+					TaskEvent taskEvent = new TaskEvent();
+					taskEvent.setTaskList(_taskEditionManager.getTasks());
+					_logger.debug("applying tasks - sending TaskEvent"); //$NON-NLS-1$
+					fireApplyTasks(taskEvent);
+				}
+			});
+		}
+		return _btnApply;
+	}
+
+	/**
+	 * This method initializes _btnRun
+	 * 
+	 * @return JButton
+	 */
+	JButton getBtnRun()
+	{
+		if (_btnRun == null) {
+			_btnRun = new JButton();
+			_btnRun.setText(Messages.getString("BTN_RUN")); //$NON-NLS-1$
+			_btnRun.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e)
+				{
+					TaskEvent taskEvent = new TaskEvent();
+					fireRunTasks(taskEvent);
+				}
+			});
+		}
+		return _btnRun;
+	}
+
 	public static void main(String[] args)
 	{
 		new ControllerGUI().setVisible(true);
@@ -154,18 +212,6 @@ public class ControllerGUI extends JFrame
 
 	private void createSplashScreen()
 	{
-		//		ImageIcon image = new ImageIcon(_resourcesDir + "/"
-		//				+ Config.getString("SPLASH_SCREEN"));
-		//		_logger.debug("image: " + image);
-		//		JLabel splashLabel = new JLabel(image);
-		//		_splashScreen = new JWindow();
-		//		int x = (Toolkit.getDefaultToolkit().getScreenSize().width - image
-		//				.getIconWidth()) / 2;
-		//		int y = (Toolkit.getDefaultToolkit().getScreenSize().height - image
-		//				.getIconHeight()) / 2;
-		//		_splashScreen.setLocation(x, y);
-		//		_splashScreen.getContentPane().add(splashLabel);
-		//		_splashScreen.pack();
 		ImageIcon image = new ImageIcon(_resourcesDir + "/"
 				+ Config.getString("SPLASH_SCREEN"));
 		SplashLabel splashLabel = new SplashLabel(image);
@@ -221,25 +267,6 @@ public class ControllerGUI extends JFrame
 		_taskListeners.remove(listener);
 	}
 
-	/**
-	 * Creates button with given text and standard settings
-	 * 
-	 * @param text
-	 * @return
-	 */
-	private JButton createManipulationButton(String text)
-	{
-		JButton button = new JButton();
-		button.setText(text);
-		button.setFont(new Font("Dialog", Font.BOLD, 10)); //$NON-NLS-1$
-		button.addActionListener(_manipulationListener);
-		Dimension dim = new Dimension(50, 25);
-		button.setPreferredSize(dim);
-		button.setMinimumSize(dim);
-		button.setMaximumSize(dim);
-		return button;
-	}
-
 	private JButton createProjectButton(String text)
 	{
 		JButton button = new JButton();
@@ -272,94 +299,6 @@ public class ControllerGUI extends JFrame
 		}
 	}
 
-	/**
-	 * This method initializes _btnAdd
-	 * 
-	 * @return JButton
-	 */
-	private JButton getBtnAdd()
-	{
-		if (_btnAdd == null) {
-			_btnAdd = createManipulationButton(">"); //$NON-NLS-1$
-		}
-		return _btnAdd;
-	}
-
-	/**
-	 * This method initializes _btnAddAll
-	 * 
-	 * @return JButton
-	 */
-	private JButton getBtnAddAll()
-	{
-		if (_btnAddAll == null) {
-			_btnAddAll = createManipulationButton(">>"); //$NON-NLS-1$
-		}
-		return _btnAddAll;
-	}
-
-	/**
-	 * This method initializes _btnApply
-	 * 
-	 * @return JButton
-	 */
-	private JButton getBtnApply()
-	{
-		if (_btnApply == null) {
-			_btnApply = new JButton();
-			_btnApply.setText(Messages.getString("BTN_APPLY")); //$NON-NLS-1$
-			_btnApply.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e)
-				{
-					TaskEvent taskEvent = new TaskEvent();
-					taskEvent.setTaskList(_taskEditionManager.getTasks());
-					_logger.debug("applying tasks - sending TaskEvent"); //$NON-NLS-1$
-					fireApplyTasks(taskEvent);
-				}
-			});
-		}
-		return _btnApply;
-	}
-
-	/**
-	 * This method initializes _btnDown
-	 * 
-	 * @return JButton
-	 */
-	private JButton getBtnDown()
-	{
-		if (_btnDown == null) {
-			_btnDown = createManipulationButton("v"); //$NON-NLS-1$
-		}
-		return _btnDown;
-	}
-
-	/**
-	 * This method initializes _btnFirst
-	 * 
-	 * @return JButton
-	 */
-	private JButton getBtnFirst()
-	{
-		if (_btnFirst == null) {
-			_btnFirst = createManipulationButton("^^"); //$NON-NLS-1$
-		}
-		return _btnFirst;
-	}
-
-	/**
-	 * This method initializes _btnLast
-	 * 
-	 * @return JButton
-	 */
-	private JButton getBtnLast()
-	{
-		if (_btnLast == null) {
-			_btnLast = createManipulationButton("vv"); //$NON-NLS-1$
-		}
-		return _btnLast;
-	}
-
 	private JButton getBtnNew()
 	{
 		if (_btnNew == null) {
@@ -376,72 +315,12 @@ public class ControllerGUI extends JFrame
 		return _btnOpen;
 	}
 
-	/**
-	 * This method initializes _btnRemove
-	 * 
-	 * @return JButton
-	 */
-	private JButton getBtnRemove()
-	{
-		if (_btnRemove == null) {
-			_btnRemove = createManipulationButton("X"); //$NON-NLS-1$
-		}
-		return _btnRemove;
-	}
-
-	/**
-	 * This method initializes _btnRemoveAll
-	 * 
-	 * @return JButton
-	 */
-	private JButton getBtnRemoveAll()
-	{
-		if (_btnRemoveAll == null) {
-			_btnRemoveAll = createManipulationButton("XX"); //$NON-NLS-1$
-		}
-		return _btnRemoveAll;
-	}
-
-	/**
-	 * This method initializes _btnRun
-	 * 
-	 * @return JButton
-	 */
-	private JButton getBtnRun()
-	{
-		if (_btnRun == null) {
-			_btnRun = new JButton();
-			_btnRun.setText(Messages.getString("BTN_RUN")); //$NON-NLS-1$
-			_btnRun.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e)
-				{
-					TaskEvent taskEvent = new TaskEvent();
-					fireRunTasks(taskEvent);
-				}
-			});
-		}
-		return _btnRun;
-	}
-
 	private JButton getBtnSave()
 	{
 		if (_btnSave == null) {
 			_btnSave = createProjectButton(Messages.getString("BTN_SAVE")); //$NON-NLS-1$
 		}
 		return _btnSave;
-	}
-
-	/**
-	 * This method initializes _btnUp
-	 * 
-	 * @return JButton
-	 */
-	private JButton getBtnUp()
-	{
-		if (_btnUp == null) {
-			_btnUp = createManipulationButton("^"); //$NON-NLS-1$
-		}
-		return _btnUp;
 	}
 
 	private JMenuItem getItmAbout()
@@ -467,7 +346,7 @@ public class ControllerGUI extends JFrame
 			_itmExit.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e)
 				{
-					System.out.println("actionPerformed()"); //$NON-NLS-1$
+					exit();
 				}
 			});
 		}
@@ -569,6 +448,63 @@ public class ControllerGUI extends JFrame
 	private JPanel getPnlAbout()
 	{
 		if (_pnlAbout == null) {
+			if (Config.getString("OFFICIAL").equalsIgnoreCase("Y")) {
+				_pnlAbout = getOfficialAbout();
+			} else {
+				_pnlAbout = getUnofficialAbout();
+			}
+		}
+		return _pnlAbout;
+	}
+
+	private JPanel getOfficialAbout()
+	{
+		if (_pnlAbout == null) {
+			_pnlAbout = new JPanel();
+			_pnlAbout.setLayout(new BorderLayout());
+			_pnlAbout.setBorder(BorderFactory.createEmptyBorder(30, 0, 30, 0));
+			//
+			// application name
+			//
+			JLabel lblAppName = new JLabel(new ImageIcon(_resourcesDir
+					+ "/" + Config.getString("LOGO"))); //$NON-NLS-1$
+			//
+			// version and author panel
+			//
+			JPanel detailsPanel = new JPanel();
+			detailsPanel.setLayout(new GridLayout(0, 2));
+			JLabel lblVersionTitle = new JLabel(Messages
+					.getString("TIT_VERSION")); //$NON-NLS-1$
+			JLabel lblVersion = new JLabel(Messages.getString("VERSION")); //$NON-NLS-1$
+			lblVersion.setForeground(Color.RED);
+			JLabel lblAuthorsTitle = new JLabel(Messages
+					.getString("TIT_AUTHORS")); //$NON-NLS-1$
+			JLabel lblStub = new JLabel();
+			JLabel lblAuthor1 = new JLabel("Nikodem Jura"); //$NON-NLS-1$
+			JLabel lblAuthor2 = new JLabel("Krzysztof Rajda"); //$NON-NLS-1$
+			JLabel lblThanksTitle = new JLabel(Messages.getString("TIT_THANKS")); //$NON-NLS-1$
+			JLabel lblThanks = new JLabel("Jakub Galkowski"); //$NON-NLS-1$
+			// setting components on panel
+			detailsPanel.add(lblVersionTitle);
+			detailsPanel.add(lblVersion);
+			detailsPanel.add(lblAuthorsTitle);
+			detailsPanel.add(lblAuthor1);
+			detailsPanel.add(lblStub);
+			detailsPanel.add(lblAuthor2);
+			detailsPanel.add(lblThanksTitle);
+			detailsPanel.add(lblThanks);
+			detailsPanel
+					.setBorder(BorderFactory.createEmptyBorder(30, 0, 0, 0));
+			// adding componens
+			_pnlAbout.add(lblAppName, BorderLayout.CENTER);
+			_pnlAbout.add(detailsPanel, BorderLayout.SOUTH);
+		}
+		return _pnlAbout;
+	}
+
+	private JPanel getUnofficialAbout()
+	{
+		if (_pnlAbout == null) {
 			_pnlAbout = new JPanel();
 			_pnlAbout.setLayout(new BorderLayout());
 			_pnlAbout.setBorder(BorderFactory.createEmptyBorder(30, 0, 30, 0));
@@ -645,13 +581,13 @@ public class ControllerGUI extends JFrame
 			_pnlPluginButtons.setLayout(new BoxLayout(_pnlPluginButtons,
 					BoxLayout.Y_AXIS));
 			_pnlPluginButtons.add(Box.createVerticalGlue());
-			_pnlPluginButtons.add(getBtnAddAll());
+			_pnlPluginButtons.add(_guiButtons.getBtnAddAll());
 			_pnlPluginButtons.add(Box.createVerticalStrut(_strutHeight));
-			_pnlPluginButtons.add(getBtnAdd());
+			_pnlPluginButtons.add(_guiButtons.getBtnAdd());
 			_pnlPluginButtons.add(Box.createVerticalStrut(_strutHeight));
-			_pnlPluginButtons.add(getBtnRemove());
+			_pnlPluginButtons.add(_guiButtons.getBtnRemove());
 			_pnlPluginButtons.add(Box.createVerticalStrut(_strutHeight));
-			_pnlPluginButtons.add(getBtnRemoveAll());
+			_pnlPluginButtons.add(_guiButtons.getBtnRemoveAll());
 			_pnlPluginButtons.add(Box.createVerticalGlue());
 		}
 		return _pnlPluginButtons;
@@ -688,13 +624,13 @@ public class ControllerGUI extends JFrame
 			_pnlTaskButtons.setLayout(new BoxLayout(_pnlTaskButtons,
 					BoxLayout.Y_AXIS));
 			_pnlTaskButtons.add(Box.createVerticalGlue());
-			_pnlTaskButtons.add(getBtnFirst());
+			_pnlTaskButtons.add(_guiButtons.getBtnFirst());
 			_pnlTaskButtons.add(Box.createVerticalStrut(_strutHeight));
-			_pnlTaskButtons.add(getBtnUp());
+			_pnlTaskButtons.add(_guiButtons.getBtnUp());
 			_pnlTaskButtons.add(Box.createVerticalStrut(_strutHeight));
-			_pnlTaskButtons.add(getBtnDown());
+			_pnlTaskButtons.add(_guiButtons.getBtnDown());
 			_pnlTaskButtons.add(Box.createVerticalStrut(_strutHeight));
-			_pnlTaskButtons.add(getBtnLast());
+			_pnlTaskButtons.add(_guiButtons.getBtnLast());
 			_pnlTaskButtons.add(Box.createVerticalGlue());
 		}
 		return _pnlTaskButtons;
@@ -742,6 +678,13 @@ public class ControllerGUI extends JFrame
 	{
 		this.setContentPane(getJContentPane());
 		this.setSize(600, 500);
+		//
+		// center frame
+		//
+		Point location = new Point();
+		location.x = (Toolkit.getDefaultToolkit().getScreenSize().width - getWidth()) / 2;
+		location.y = (Toolkit.getDefaultToolkit().getScreenSize().height - getHeight()) / 2;
+		this.setLocation(location);
 		this.setTitle(Messages.getString("APP_NAME")); //$NON-NLS-1$
 		this.setJMenuBar(getJMenuBar());
 		this.addWindowListener(new WindowAdapter() {
@@ -756,7 +699,7 @@ public class ControllerGUI extends JFrame
 	/** Method shows about dialog. */
 	private void showAboutDialog()
 	{
-		JOptionPane.showMessageDialog(null, getPnlAbout(), "About",
+		JOptionPane.showMessageDialog(_contentPane, getPnlAbout(), "About",
 				JOptionPane.PLAIN_MESSAGE);
 	}
 
@@ -770,40 +713,7 @@ public class ControllerGUI extends JFrame
 
 	/**
 	 * 
-	 * @author nico
-	 * 
-	 * Class handles events from buttons, which are used to manage tasks.
-	 */
-	private class ManipulationListener implements ActionListener
-	{
-		public void actionPerformed(ActionEvent e)
-		{
-			Object object = e.getSource();
-			if (object == _btnAdd) {
-				_taskEditionManager.addTask();
-			} else if (object == _btnAddAll) {
-				// TODO:
-			} else if (object == _btnRemove) {
-				_taskEditionManager.removeTask();
-			} else if (object == _btnRemoveAll) {
-				//TODO:
-			} else if (object == _btnUp) {
-				_taskEditionManager.moveUp();
-			} else if (object == _btnDown) {
-				_taskEditionManager.moveDown();
-			} else if (object == _btnFirst) {
-				//TODO:
-			} else if (object == _btnLast) {
-				//TODO:
-			} else {
-				_logger.error("Not supported button: " + object); //$NON-NLS-1$
-			}
-		}
-	}
-
-	/**
-	 * 
-	 * @author nico
+	 * @author nic
 	 * 
 	 * Class handles events from buttons and menu items, which are used to
 	 * manage projects.
@@ -826,10 +736,10 @@ public class ControllerGUI extends JFrame
 	}
 
 	/**
-	 * @author nico
+	 * @author nic
 	 * 
 	 * Class represents splash screen label. It allows to place version and
-	 * other information at the screen
+	 * other information at the scree
 	 *  
 	 */
 	private class SplashLabel extends JLabel
@@ -856,8 +766,9 @@ public class ControllerGUI extends JFrame
 			Font newFont = new Font("Dialog", Font.BOLD, 15);
 			g.setColor(newColor);
 			g.setFont(newFont);
-			String version = Config.getString("VERSION") + ": " + Messages.getString("VERSION"); 
-			g.drawString(version, 200, 200);
+			String version = Messages.getString("TIT_VERSION") + ": "
+					+ Messages.getString("VERSION");
+			g.drawString(version, 255, 260);
 			// setting back old color and font
 			g.setColor(oldColor);
 			g.setFont(oldFont);
