@@ -29,6 +29,8 @@ import salomon.platform.exception.PlatformException;
 public interface ITaskManager
 {
 	void addTask(ITask task) throws PlatformException;
+	
+	void addTask(ITask task, String pluginUrl, String settings) throws PlatformException;
 
 	/**
 	 * Clear list of created tasks.

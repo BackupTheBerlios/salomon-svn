@@ -21,6 +21,9 @@
 
 package salomon.engine.task;
 
+import java.io.ByteArrayInputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.sql.SQLException;
 import java.util.Collection;
 import java.util.LinkedList;
@@ -28,17 +31,21 @@ import java.util.LinkedList;
 import org.apache.log4j.Logger;
 
 import salomon.engine.database.DBManager;
+import salomon.engine.plugin.PluginLoader;
 import salomon.engine.solution.Solution;
 
 import salomon.platform.IDataEngine;
 import salomon.platform.exception.PlatformException;
+import salomon.platform.serialization.IStruct;
 
+import salomon.plugin.Description;
 import salomon.plugin.IPlugin;
 import salomon.plugin.IResult;
 import salomon.plugin.ISettings;
 
 import salomon.engine.platform.Environment;
 import salomon.engine.platform.IManagerEngine;
+import salomon.engine.platform.serialization.XMLSerializer;
 
 /**
  * An implemetation of ITaskManager interface. Class manages with tasks editing
@@ -51,7 +58,7 @@ public final class TaskManager implements ITaskManager
 	private IDataEngine _dataEngine;
 
 	private Environment _environment;
-	
+
 	private IManagerEngine _managerEngine;
 
 	private TaskEngine _taskEngine;
@@ -62,7 +69,7 @@ public final class TaskManager implements ITaskManager
 	{
 		_managerEngine = managerEngine;
 		_tasks = new LinkedList<ITask>();
-		//FIXME
+		// FIXME
 		try {
 			_dataEngine = Solution.getInstance().getDataEngine();
 		} catch (PlatformException e) {
@@ -85,6 +92,7 @@ public final class TaskManager implements ITaskManager
 	 */
 	public void addTask(ITask task)
 	{
+		LOGGER.debug("TaskManager.addTask(): " + task);
 		_tasks.add(task);
 	}
 
@@ -96,7 +104,7 @@ public final class TaskManager implements ITaskManager
 	public ITask createTask() throws PlatformException
 	{
 		Task newTask = new Task();
-        newTask.setProjectID(_managerEngine.getProjectManager().getCurrentProject().getProjectID());
+		newTask.setProjectID(_managerEngine.getProjectManager().getCurrentProject().getProjectID());
 		return newTask;
 	}
 
@@ -124,8 +132,8 @@ public final class TaskManager implements ITaskManager
 	{
 		// _taskEngine.start();
 		new TaskEngine().start();
-	} 
-    
+	}
+
 	private final class TaskEngine extends Thread
 	{
 		public void run()
@@ -136,14 +144,14 @@ public final class TaskManager implements ITaskManager
 			 * task.getPlugin(); Settings settings = task.getSettings();
 			 * plugin.doJob(_dataEngine, _environment, settings);
 			 */
-			
+
 			for (ITask task : _tasks) {
 				try {
 					LOGGER.info("task: " + task.getName());
 					ISettings settings = task.getSettings();
 					task.setStatus(Task.REALIZATION);
 					// changing status
-					((Task)task).save();
+					((Task) task).save();
 					try {
 						DBManager.getInstance().commit();
 					} catch (ClassNotFoundException e1) {
@@ -163,7 +171,7 @@ public final class TaskManager implements ITaskManager
 					// saving result of its execution
 					//
 					task.setResult(result);
-					((Task)task).save();
+					((Task) task).save();
 					try {
 						DBManager.getInstance().commit();
 					} catch (ClassNotFoundException e1) {
@@ -176,10 +184,10 @@ public final class TaskManager implements ITaskManager
 					// exception is caught and shoul be handled here
 					//
 				} catch (Exception e) {
-					LOGGER.fatal("TASK PROCESSING ERROR", e);					
+					LOGGER.fatal("TASK PROCESSING ERROR", e);
 					try {
-                        task.setStatus(Task.EXCEPTION);
-                        ((Task)task).save();
+						task.setStatus(Task.EXCEPTION);
+						((Task) task).save();
 					} catch (Exception e1) {
 						LOGGER.fatal("", e1);
 					}
@@ -220,4 +228,40 @@ public final class TaskManager implements ITaskManager
 	}
 
 	private static final Logger LOGGER = Logger.getLogger(TaskManager.class);
+
+	/**
+	 * @see salomon.engine.task.ITaskManager#addTask(salomon.engine.task.ITask,
+	 *      java.lang.String, java.lang.String)
+	 */
+	public void addTask(ITask task, String pluginUrl, String settings)
+			throws PlatformException
+	{
+		IPlugin plugin = null;
+		URL url = null;
+		try {
+			url = new URL(pluginUrl);
+		} catch (MalformedURLException e) {
+			LOGGER.fatal("", e);
+		}
+		try {
+			plugin = PluginLoader.loadPlugin(url);
+		} catch (Exception e) {
+			LOGGER.fatal("", e);
+		}
+		Description desc = new Description();
+
+		desc.setLocation(url);
+
+		desc.setPluginID(67);
+		plugin.setDescription(desc);
+
+		ByteArrayInputStream bis = new ByteArrayInputStream(settings.getBytes());
+		IStruct struct = XMLSerializer.deserialize(bis);
+
+		ISettings set = plugin.getSettingComponent().getDefaultSettings();
+		set.init(struct);
+		task.setSettings(set);
+		task.setPlugin(plugin);
+		addTask(task);
+	}
 }

@@ -225,7 +225,8 @@ public final class Task implements ITask, IDBSupporting
 	 */
 	public void setName(String name)
 	{
-		this._name = name;
+		LOGGER.debug("Task.setName(): " + name);
+		_name = name;
 	}
 
 	/**

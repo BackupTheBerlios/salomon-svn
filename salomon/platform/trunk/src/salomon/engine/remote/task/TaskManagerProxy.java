@@ -180,4 +180,19 @@ public final class TaskManagerProxy implements ITaskManager
 	}
 
 	private static final Logger LOGGER = Logger.getLogger(TaskManagerProxy.class);
+
+	/**
+	 * @see salomon.engine.task.ITaskManager#addTask(salomon.engine.task.ITask, java.lang.String, java.lang.String)
+	 */
+	public void addTask(ITask task, String pluginUrl, String settings) throws PlatformException
+	{
+		try {
+			TaskProxy taskProxy = (TaskProxy) task;
+	        IRemoteTask remoteTask = taskProxy.getRemoteTask();
+			_remoteTaskManager.addTask(remoteTask, pluginUrl, settings);
+		} catch (RemoteException e) {
+			LOGGER.error("Remote error!", e);
+			throw new PlatformException(e.getLocalizedMessage());
+		}
+	}
 }
