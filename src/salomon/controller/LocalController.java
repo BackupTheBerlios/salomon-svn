@@ -1,56 +1,161 @@
-/** Java class "StandAloneManager.java" generated from Poseidon for UML.
- *  Poseidon for UML is developed by <A HREF="http://www.gentleware.com">Gentleware</A>.
- *  Generated with <A HREF="http://jakarta.apache.org/velocity/">velocity</A> template engine.
- */
 
 package salomon.controller;
 
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
-
+import org.apache.log4j.Logger;
 import salomon.controller.gui.ControllerGUI;
-import salomon.core.ManagerEngine;
+import salomon.core.Project;
+import salomon.core.ProjectManager;
+import salomon.core.data.DBManager;
+import salomon.core.event.ProjectEvent;
+import salomon.core.event.ProjectListener;
 import salomon.core.event.TaskEvent;
 import salomon.core.event.TaskListener;
 import salomon.core.task.Task;
 import salomon.core.task.TaskManager;
-
-import org.apache.log4j.Logger;
+import salomon.plugin.ISettings;
 
 /**
  *  
  */
 public final class LocalController implements IController
 {
-	private ManagerEngine _managerEngine = null;
-
 	private static Logger _logger = Logger.getLogger(LocalController.class);
 
-	public void start(ManagerEngine engine)
+	private ControllerGUI _controllerGUI = null;
+
+	private ProjectManager _projectManager = null;
+
+	public void start(ProjectManager projectManager)
 	{
-		_managerEngine = engine;
-		ControllerGUI managerGUI = new ControllerGUI();
-		managerGUI.addTaskListener(new SAMTaskListener());
-		managerGUI.setVisible(true);
+		_projectManager = projectManager;
+		projectManager.newProject();
+		_controllerGUI = new ControllerGUI();
+		_controllerGUI.addTaskListener(new LocalTaskListener());
+		_controllerGUI.addProjectListener(new LocalProjectListener());
+		_controllerGUI.setVisible(true);
 	}
 
-	private class SAMTaskListener implements TaskListener
+	private void loadProject(int projectID)
 	{
-		public void runTasks(TaskEvent e)
-		{
-			_managerEngine.getTasksManager().start();
-		}
+		//TODO:
+	}
 
-		public void applyTasks(TaskEvent e)
-		{
-			List taskList = e.getTaskList();
-			_logger.info("taskList" + taskList);
-			TaskManager taskManager = _managerEngine.getTasksManager();
+	private void newProject()
+	{
+		Project project = _projectManager.newProject();
+		_controllerGUI.setProjectProperties(project);
+		_controllerGUI.refreshGui(project);
+	}
+
+	private void saveProject(Project project)
+	{
+	}
+
+	private void saveTaskList(List taskList)
+	{
+		_logger.info("taskList" + taskList);
+		//
+		// task list cannot be empty
+		//
+		if (taskList.isEmpty()) {
+			_controllerGUI.showErrorMessage("There is no tasks to save");
+			return;
+		}
+		//
+		// checking if all tasks have settings set
+		// if not - question to user, if he agrees
+		// default settings will be set and project will be saved
+		//
+		List incorrectTasks = new LinkedList();
+		for (Iterator iter = taskList.iterator(); iter.hasNext();) {
+			Task task = (Task) iter.next();
+			if (task.getSettings() == null) {
+				incorrectTasks.add(task);
+			}
+		}
+		if (!incorrectTasks.isEmpty()) {
+			String message = "There are tasks with settings not set:\n";
+			for (Iterator iter = incorrectTasks.iterator(); iter.hasNext();) {
+				Task task = (Task) iter.next();
+				message += task.getName() + "\n";
+			}
+			message += "Do you want to use default settings?";
+			if (_controllerGUI.showWarningMessage(message)) {
+				// getting default settings
+				_logger.debug("getting default settings");
+				for (Iterator iter = incorrectTasks.iterator(); iter.hasNext();) {
+					Task task = (Task) iter.next();
+					ISettings defaultSettings = task.getPlugin()
+							.getSettingComponent().getDefaultSettings();
+					task.setSettings(defaultSettings);
+				}
+			} else {
+				return;
+			}
+		}
+		//
+		// saving project
+		//
+		try {
+			//
 			// removing old tasks
+			//
+			TaskManager taskManager = _projectManager.getCurrentProject()
+					.getManagerEngine().getTasksManager();
 			taskManager.clearTaskList();
 			for (Iterator iter = taskList.iterator(); iter.hasNext();) {
 				taskManager.addTask((Task) iter.next());
 			}
+			// saving project
+			_projectManager.saveProject(_projectManager.getCurrentProject());
+			DBManager.getInstance().commit();
+			_logger.info("Transaction commited");
+			_controllerGUI.showInfoMessage("Project saved successfully");
+		} catch (Exception e1) {
+			_logger.fatal("", e1);
+			_controllerGUI.showErrorMessage("Could not save project.");
+			try {
+				DBManager.getInstance().rollback();
+			} catch (Exception sqlEx) {
+				_logger.fatal("", sqlEx);
+				_controllerGUI
+						.showErrorMessage("Could not rollback transaction.");
+			}
+		}
+	}
+
+	private class LocalProjectListener implements ProjectListener
+	{
+		public void loadProject(ProjectEvent e)
+		{
+			LocalController.this.loadProject(e.getProjectID());
+		}
+
+		public void newProject(ProjectEvent e)
+		{
+			LocalController.this.newProject();
+		}
+
+		public void saveProject(ProjectEvent e)
+		{
+			LocalController.this.saveTaskList(e.getTaskList());
+		}
+	}
+
+	private class LocalTaskListener implements TaskListener
+	{
+		public void applyTasks(TaskEvent e)
+		{
+			saveTaskList(e.getTaskList());
+		}
+
+		public void runTasks(TaskEvent e)
+		{
+			_projectManager.getCurrentProject().getManagerEngine()
+					.getTasksManager().start();
 		}
 	}
 }
