@@ -71,20 +71,20 @@ insert into "projects"
 values (3, 'Project3', 'test projet 3');
 
 -- plugins
-insert into "plugins"
+INSERT INTO "plugins"("plugin_id","name","info","location")
 values (1, 'Average Price', 'Plugin computes average price of sold cars', 'plugins\AveragePrice.jar');
 
-insert into "plugins"
+INSERT INTO "plugins"("plugin_id","name","info","location")
 values (2, 'Simple SQL Console', 'Plugin is simple SQL Console', 'plugins\SimpleSQLConsole.jar');
 
 -- tasks
-insert into "tasks"
-values (1, 1, 1, 'task1', 'test task1', '', '');
+INSERT INTO "tasks"("task_id","project_id","plugin_id","name","info", "plugin_settings","plugin_result", "status")
+values (1, 1, 1, 'task1', 'test task1', '', '', 'AC');
 
-insert into "tasks"
-values (2, 2, 1, 'task1', 'test task1', '', '');
+INSERT INTO "tasks"("task_id","project_id","plugin_id","name","info", "plugin_settings","plugin_result", "status")
+values (2, 2, 1, 'task1', 'test task1', '', '', 'AC');
 
-insert into "tasks"
-values (3, 1, 2, 'task2', 'test task2', '', '');
+INSERT INTO "tasks"("task_id","project_id","plugin_id","name","info", "plugin_settings","plugin_result", "status")
+values (3, 1, 2, 'task2', 'test task2', '', '', 'AC');
 
 
