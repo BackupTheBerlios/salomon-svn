@@ -273,15 +273,15 @@ class TaskEditionManager
 	}
 
 	/** Class helps managing plugin loading */
-	private class LocalPlugin
+	public class LocalPlugin
 	{
 		private IPlugin _plugin = null;
 
-		private File _pluginFile = null;
+		private File _pluginLocation = null;
 
 		public LocalPlugin(File pluginFile)
 		{
-			_pluginFile = pluginFile;
+			_pluginLocation = pluginFile;						
 		}
 
 		/**
@@ -294,14 +294,14 @@ class TaskEditionManager
 		{
 			if (_plugin == null) {
 				_logger.debug("trying to load plugin"); //$NON-NLS-1$
-				_plugin = PluginLoader.loadPlugin(_pluginFile);
+				_plugin = PluginLoader.loadPlugin(_pluginLocation);				
 			}
 			return _plugin;
 		}
 
 		public String toString()
 		{
-			return _pluginFile.toString();
+			return _pluginLocation.toString();
 		}
 	}
 
