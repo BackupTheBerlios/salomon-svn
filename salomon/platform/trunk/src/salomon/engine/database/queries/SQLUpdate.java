@@ -176,7 +176,7 @@ public final class SQLUpdate
 	 */
 	public String getQuery()
 	{
-		StringBuffer query = new StringBuffer("UPDATE ").append(_tableName).append(" SET ");
+		StringBuilder query = new StringBuilder("UPDATE ").append(_tableName).append(" SET ");
 
 		Iterator<SQLPair> colIter = _values.iterator();
 		// first column is added without comma

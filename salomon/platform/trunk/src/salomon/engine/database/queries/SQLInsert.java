@@ -127,26 +127,25 @@ public final class SQLInsert
 	public String getQuery()
 	{
 		String query = "INSERT INTO " + _tableName;
-		String colNames = " (";
-		String colValues = " VALUES (";
+		StringBuilder colNames = new StringBuilder(" (");
+		StringBuilder colValues = new StringBuilder(" VALUES (");
 
 		Iterator<SQLPair> colIter = _values.iterator();
 		// first column is added without comma
 		SQLPair pair = colIter.next();
-		colNames += pair.getColumnName();
-		colValues += pair.getValue();
+		colNames.append(pair.getColumnName());
+		colValues.append(pair.getValue());
 
 		// rest of column - with comma
-		// TODO: Use StringBuffer
 		while (colIter.hasNext()) {
 			pair = colIter.next();
-			colNames += ", " + pair.getColumnName();
-			colValues += ", " + pair.getValue();
+			colNames.append(", ").append(pair.getColumnName());
+			colValues.append(", ").append(pair.getValue());
 		}
-		colNames += ")";
-		colValues += ")";
+		colNames.append(")");
+		colValues.append(")");
 
-		return query + colNames + colValues;
+		return query + colNames.toString() + colValues.toString();
 	}
 
 	/**

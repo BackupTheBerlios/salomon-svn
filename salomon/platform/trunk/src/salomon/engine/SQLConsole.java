@@ -472,7 +472,7 @@ public final class SQLConsole extends JFrame
 			data[i] = rows.get(i);
 		}
 		// printing result
-		StringBuffer buffer = new StringBuffer(512);
+		StringBuilder buffer = new StringBuilder(512);
 		for (int i = 0; i < columnCount; i++) {
 			buffer.append(columnNames[i] + " "); //$NON-NLS-1$
 		}

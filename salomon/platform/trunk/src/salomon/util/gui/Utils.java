@@ -154,7 +154,7 @@ public final class Utils
 		}
 
 		// printing result
-		StringBuffer buffer = new StringBuffer(512);
+		StringBuilder buffer = new StringBuilder(512);
 		int rowCount = 0;
 		buffer.append("\n");
 		for (Object[] row : allData) {
