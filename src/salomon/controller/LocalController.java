@@ -40,7 +40,13 @@ public final class LocalController implements IController
 
 	private void loadProject(int projectID)
 	{
-		//TODO:
+		try {
+			Project project = _projectManager.loadProject(projectID);
+			_controllerGUI.refreshGui(project);
+		} catch (Exception e) {
+			_logger.fatal("",e);
+			_controllerGUI.showErrorMessage("Cannot load project.");
+		}
 	}
 
 	private void newProject()
@@ -50,8 +56,13 @@ public final class LocalController implements IController
 		_controllerGUI.refreshGui(project);
 	}
 
-	private void saveProject(Project project)
+	private void saveProject(List taskList)
 	{
+		Project project = _projectManager.getCurrentProject();
+		if (project.getName() == null) {
+			_controllerGUI.setProjectProperties(project);
+		}		
+		saveTaskList(taskList);
 	}
 
 	private void saveTaskList(List taskList)
@@ -141,7 +152,7 @@ public final class LocalController implements IController
 
 		public void saveProject(ProjectEvent e)
 		{
-			LocalController.this.saveTaskList(e.getTaskList());
+			LocalController.this.saveProject(e.getTaskList());
 		}
 	}
 
