@@ -1,8 +1,6 @@
 /*
  * Created on 2004-05-10
  *
- * To change the template for this generated file go to
- * Window - Preferences - Java - Code Generation - Code and Comments
  */
 
 package salomon.core;
@@ -15,8 +13,6 @@ import org.apache.log4j.Logger;
 /**
  * @author nico
  *
- * To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Generation - Code and Comments
  */
 public class Config
 {
@@ -24,11 +20,17 @@ public class Config
 	 
 	private static ResourceBundle RESOURCE_BUNDLE = null;
 	
-	private static Logger _logger = Logger.getLogger(Config.class); 
+	private static Logger _logger = Logger.getLogger(Config.class);
 	
+	public static String FILE_SEPARATOR = null;
+	
+	public static String CURR_DIR = null;
+
 	static {
 		try {
 			RESOURCE_BUNDLE = ResourceBundle.getBundle(BUNDLE_NAME);
+			FILE_SEPARATOR = System.getProperty("file.separator");
+			CURR_DIR = System.getProperty("user.dir");
 		} catch (Exception e) {
 			_logger.fatal("", e);			
 		}
@@ -51,6 +53,7 @@ public class Config
 		try {
 			return RESOURCE_BUNDLE.getString(key);
 		} catch (MissingResourceException e) {
+			_logger.fatal("", e);
 			return '!' + key + '!';
 		}
 	}
