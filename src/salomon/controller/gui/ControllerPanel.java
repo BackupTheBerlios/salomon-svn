@@ -19,7 +19,6 @@ import org.apache.log4j.Logger;
 import salomon.controller.gui.action.ActionManager;
 import salomon.core.Config;
 import salomon.core.Messages;
-import salomon.core.project.Project;
 
 /**
  * 
@@ -95,14 +94,10 @@ public final class ControllerPanel extends JPanel
 	 * @return
 	 */
 
-	/**
-	 * Called after project save/load/creation
-	 * 
-	 * @param project
-	 */
-	public void refreshGui(Project project)
-	{
-		_taskEditionManager.reloadTasks(project.getManagerEngine().getTasksManager().getTasks());
+	public void validate()
+	{		
+		super.validate();
+        _taskEditionManager.refresh();
 	}
 
 	/**
