@@ -1,7 +1,31 @@
 \section{Wprowadzenie}
+Salomon to system do wyci¹gania wiedzy z danych zgodnie z metodologi¹ \emph{Knowlege Mining}.
+Odkrywanie wiedzy to proces iteracyjny, podzielony na etapy. W ka¿dym tym etapie wiedza jest poddawana
+obróbce. Etapy te mog¹ tworzyæ cykle. Na ka¿dym takim etapie proces odkrywania mo¿e byæ ukierunkowany zgodnie
+z wymaganiami u¿ytkownika. Ka¿dy etap tworzy odrêbn¹ ca³oœæ. \\
+W Salomonie reprezentacj¹ etapu jest \emph{zadanie}(Task). Ka¿de zadanie mo¿e posiadaæ kilka nastêpników i kilka
+nastêpników. Ujmuj¹c rzecz proœciej, zadania moga byæ zorganizowane w postaci grafu. \\
+Zadanie zdefiniowane jest jako trójka:
+\begin{itemize}
+	\item algorytm(dostarczany w postaci wtyczki, czyli \emph{pluginu}))
+	\item dane steruj¹ce algorytmem
+	\item dane wejœciowe, z których algorytm bêdzie wyci¹gaæ wiedzê
+\end{itemize}
+Zadanie nie musi siê ograniczaæ do danych, które otrzyma³o z poprzedniego zadania. Ka¿de zadanie ma
+dostêp do ca³ej aktualnie zgromadzonej wiedzy i do wszystkich danych.
 
-Salomon to system realizuj¹cy koncepcjê \emph{Knowlege Mining}.
-Sk³ada siê on z dwóch zasadniczych czêœci - pierwsz¹ z nich
+Na wejœciu lub wyjœciu ka¿dego zadania mog¹ pojawiæ siê dane(w przypadku algorytmów, które
+dokonuj¹ selekcji/segregacji danych), wiedza lub obie te rzeczy naraz.
+\begin{itemize}
+	\item dane \begin{math}\Rightarrow \end{math} dane - najczêœciej taki przypadek zdarza siê kiedy chcemy stworzyæ
+	zbiory treningowe lub zbiory testuj¹ce
+	\item dane \begin{math}\Rightarrow \end{math} wiedza - typowy przyk³ad wyszukiwania wiedzy: dostajemy dane, uzyskujemy wiedzê
+	\item wiedza+dane \begin{math}\Rightarrow \end{math} dane - przypadek taki zachodzi kiedy chcemy wykorzystaæ zgromadzon¹ wiedzê na dostarczonych danych
+	\item wiedza \begin{math}\Rightarrow \end{math} wiedza
+\end{itemize}
+Celem tego projektu jest stworzenie przyjaznego œrodowiska do tworzenia, kontrolowania i efektywnego wykonywania zadañ.
+
+Salomon siê on z dwóch zasadniczych czêœci - pierwsz¹ z nich
 stanowi silnik, którego zadaniem jest zarz¹dzanie i~uruchamianie
 zadañ. Druga czêœæ to zbiór wtyczek, dostarczaj¹cych logikê
 potrzebn¹ do skonfigurowania, wykonania i~wyœwietlenia rezultatów
