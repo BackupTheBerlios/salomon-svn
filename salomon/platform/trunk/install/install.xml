@@ -18,13 +18,14 @@ Installation file for salomon project
     -->
     <info>
         <appname>Salomon</appname>
-        <appversion>1.1b </appversion>
+        <appversion>1.0b</appversion>
         <authors>
             <author name="Krzysztof Rajda" email="krzycho@student.uci.agh.edu.pl"/>
             <author name="Nikodem Jura" email="nico@icslab.agh.edu.pl"/>
             <author name="Jakub Galkowski" email="avi@student.uci.agh.edu.pl"/>
+            <author name="Jakub Pawlowski" email="qoooba@student.uci.agh.edu.pl"/>
         </authors>
-        <url>http://ernie.icslab.agh.edu.pl/~nico/sr/</url>
+	<url>http://salomon.iisg.agh.edu.pl</url>
     </info>
     
     <!-- 
@@ -39,7 +40,7 @@ Installation file for salomon project
     -->
     <locale>
         <langpack iso3="eng"/>
-        <langpack iso3="pol"/>
+	<!--        <langpack iso3="pol"/> -->
     </locale>
     
     <!-- 
