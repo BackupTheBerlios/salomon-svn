@@ -19,11 +19,19 @@
 
 	<property name="release_dir" value="_release" />
 
-	<target name="compile_salomon">
+	<target name="compile_salomon" depends="init">
 		<echo message="Build salomon core" />
-		<javac srcdir="${src_dir}/" includes="salomon/**" classpath="${lib_dir}/log4j-1.2.8.jar" destdir="${bin_dir}" />
+		<javac srcdir="${src_dir}/" includes="salomon/**" classpath="${lib_dir}/log4j-1.2.8.jar" destdir="${bin_dir}" source="1.5"/>
 	</target>
 
+	
+	<path id="project.class.path">
+		<fileset dir="${lib_dir}">
+			<include name="**/*.jar"/>
+		</fileset>
+	</path>
+
+	
 	<target name="build_unionset_jar">
 		<jar destfile="${plugin_dir}/UnionSet.jar" basedir="${bin_dir}" includes="pl/**/unionset/**">
 			<manifest>
@@ -55,7 +63,11 @@
 		</jar>
 	</target>
 
-	<target name="build_plugin_jars" depends="build_unionset_jar" />
+	<target name="build_plugin_jars">
+		<jar destfile="${plugin_dir}/platform.jar" basedir="${bin_dir}" includes="salomon/platform/**"/>
+		<jar destfile="${plugin_dir}/plugin.jar" basedir="${bin_dir}" includes="salomon/plugin/**"/>
+		<jar destfile="${plugin_dir}/util.jar" basedir="${bin_dir}" includes="salomon/util/**"/>
+	</target>
 
 	<target name="build_jars" depends="build_plugin_jars, build_salomon_jar" />
 
@@ -117,7 +129,7 @@
 
 
 
-	<target name="build_rmi_stubs">
+	<target name="build_rmi_stubs" depends="compile_salomon">
 		<rmic classname="salomon.engine.platform.remote.CentralController" base="${bin_dir}" />
 		<rmic classname="salomon.engine.platform.remote.RemoteController" base="${bin_dir}" />
 		<rmic classname="salomon.engine.platform.remote.RemoteManagerEngine" base="${bin_dir}" />
