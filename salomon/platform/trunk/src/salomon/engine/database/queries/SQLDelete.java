@@ -19,7 +19,7 @@
  * 
  */
 
-package salomon.engine.platform.data.common;
+package salomon.engine.database.queries;
 
 import java.util.Iterator;
 import java.util.LinkedList;

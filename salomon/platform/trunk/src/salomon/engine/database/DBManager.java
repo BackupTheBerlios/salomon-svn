@@ -19,7 +19,7 @@
  * 
  */
 
-package salomon.engine;
+package salomon.engine.database;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -29,11 +29,13 @@ import java.sql.Statement;
 
 import org.apache.log4j.Logger;
 
+import salomon.engine.Config;
+import salomon.engine.database.queries.SQLDelete;
+import salomon.engine.database.queries.SQLInsert;
+import salomon.engine.database.queries.SQLSelect;
+import salomon.engine.database.queries.SQLUpdate;
 
-import salomon.engine.platform.data.common.SQLDelete;
-import salomon.engine.platform.data.common.SQLInsert;
-import salomon.engine.platform.data.common.SQLSelect;
-import salomon.engine.platform.data.common.SQLUpdate;
+
 import salomon.util.gui.Utils;
 
 /**

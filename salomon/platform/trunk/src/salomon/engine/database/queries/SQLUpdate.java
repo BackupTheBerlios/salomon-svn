@@ -19,7 +19,7 @@
  * 
  */
 
-package salomon.engine.platform.data.common;
+package salomon.engine.database.queries;
 
 import java.sql.Date;
 import java.sql.Time;

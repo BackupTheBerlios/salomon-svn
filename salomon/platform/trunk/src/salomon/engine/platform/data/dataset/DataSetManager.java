@@ -28,9 +28,9 @@ import java.util.HashSet;
 
 import org.apache.log4j.Logger;
 
-import salomon.engine.DBManager;
+import salomon.engine.database.DBManager;
+import salomon.engine.database.queries.SQLSelect;
 
-import salomon.engine.platform.data.common.SQLSelect;
 import salomon.platform.data.dataset.IDataSet;
 import salomon.platform.data.dataset.IDataSetManager;
 import salomon.platform.exception.PlatformException;

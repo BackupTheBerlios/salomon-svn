@@ -36,7 +36,7 @@ import javax.swing.JTextField;
 
 import org.apache.log4j.Logger;
 
-import salomon.engine.DBManager;
+import salomon.engine.database.DBManager;
 import salomon.engine.project.IProject;
 import salomon.engine.project.IProjectManager;
 import salomon.engine.task.ITaskManager;

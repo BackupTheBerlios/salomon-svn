@@ -28,11 +28,11 @@ import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import salomon.engine.DBManager;
-import salomon.engine.IDBSupporting;
+import salomon.engine.database.DBManager;
+import salomon.engine.database.IDBSupporting;
+import salomon.engine.database.queries.SQLDelete;
+import salomon.engine.database.queries.SQLUpdate;
 
-import salomon.engine.platform.data.common.SQLDelete;
-import salomon.engine.platform.data.common.SQLUpdate;
 
 /**
  * Class represents plugin description.

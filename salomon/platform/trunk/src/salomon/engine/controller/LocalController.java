@@ -43,7 +43,6 @@ import javax.swing.JToolBar;
 import org.apache.log4j.Logger;
 
 import salomon.engine.Config;
-import salomon.engine.DBManager;
 import salomon.engine.Messages;
 import salomon.engine.Resources;
 import salomon.engine.SQLConsole;
@@ -54,6 +53,8 @@ import salomon.engine.controller.gui.ProjectEditionManager;
 import salomon.engine.controller.gui.SplashScreen;
 import salomon.engine.controller.gui.TaskEditionManager;
 import salomon.engine.controller.gui.action.ActionManager;
+import salomon.engine.database.DBManager;
+
 import salomon.engine.platform.IManagerEngine;
 
 import salomon.util.gui.Utils;

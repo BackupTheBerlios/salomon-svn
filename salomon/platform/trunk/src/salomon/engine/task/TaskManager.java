@@ -28,7 +28,7 @@ import java.util.LinkedList;
 
 import org.apache.log4j.Logger;
 
-import salomon.engine.DBManager;
+import salomon.engine.database.DBManager;
 import salomon.engine.project.ProjectManager;
 
 import salomon.engine.platform.DataEngine;
