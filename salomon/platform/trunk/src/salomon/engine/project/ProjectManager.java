@@ -23,7 +23,6 @@ package salomon.engine.project;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Time;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
@@ -32,22 +31,17 @@ import org.apache.log4j.Logger;
 
 import salomon.engine.database.DBManager;
 import salomon.engine.database.queries.SQLSelect;
-import salomon.engine.database.queries.SQLUpdate;
+import salomon.engine.platform.IManagerEngine;
 import salomon.engine.plugin.PluginLoader;
 import salomon.engine.task.ITask;
 import salomon.engine.task.Task;
 import salomon.engine.task.TaskManager;
-
-import salomon.util.gui.Utils;
-
 import salomon.platform.exception.DBException;
 import salomon.platform.exception.PlatformException;
-
 import salomon.plugin.Description;
 import salomon.plugin.IPlugin;
 import salomon.plugin.ISettings;
-
-import salomon.engine.platform.IManagerEngine;
+import salomon.util.gui.Utils;
 
 /**
  * An implemetation of IProjectManager interface. Class manages with projects
@@ -55,10 +49,10 @@ import salomon.engine.platform.IManagerEngine;
  */
 public final class ProjectManager implements IProjectManager
 {
-    // current project has to be kept
-    // because it is possible to switch between projectManagers
-    // so currentProject cannot be kept in GUI
-    
+	// current project has to be kept
+	// because it is possible to switch between projectManagers
+	// so currentProject cannot be kept in GUI
+
 	private IProject _currentProject = null;
 
 	private DBManager _dbManager;
@@ -82,7 +76,7 @@ public final class ProjectManager implements IProjectManager
 	 */
 	public void addProject(IProject project)
 	{
-        _currentProject = project;
+		_currentProject = project;
 	}
 
 	/**
@@ -91,9 +85,12 @@ public final class ProjectManager implements IProjectManager
 	public IProject ceateProject() throws PlatformException
 	{
 		// clearing old tasks
-        //TODO: add support for Solution
-		 _managerEngine.getTasksManager().clearTaskList();        
-		return new Project();
+		// TODO: add support for Solution
+		_managerEngine.getTasksManager().clearTaskList();
+		// FIXME workaround - getCurrentProject method should be removed.
+		IProject result = new Project();
+		_currentProject = result;
+		return result;
 	}
 
 	/**
@@ -104,38 +101,6 @@ public final class ProjectManager implements IProjectManager
 		return _currentProject;
 	}
 
-	/**
-	 * @see IProjectManager#getProjects()
-	 */
-	public IProject[] getProjects() throws PlatformException
-	{
-        // FIXME
-        throw new UnsupportedOperationException("");
-	}
-    // FIXME this method has to be removed but after implementing 
-    // component to show table
-    
-    public Collection getProjectList() throws PlatformException
-	{
-        Collection projects = null;
-        SQLSelect select = new SQLSelect();
-        select.addTable(Project.TABLE_NAME);
-        // executing query
-        ResultSet resultSet = null;
-
-        try {
-            resultSet = DBManager.getInstance().select(select);
-            projects = Utils.getDataFromResultSet(resultSet);
-        } catch (SQLException e) {
-            LOGGER.fatal("", e);
-            throw new DBException(e.getLocalizedMessage());
-        } catch (ClassNotFoundException e) {
-            LOGGER.fatal("", e);
-            throw new PlatformException(e.getLocalizedMessage());
-        }
-        return projects;
-    }  
-    
 	/**
 	 * Method loads project from data base.
 	 * 
@@ -175,18 +140,52 @@ public final class ProjectManager implements IProjectManager
 		}
 
 		// clearing old tasks
-		TaskManager taskManager = (TaskManager) _managerEngine.getTasksManager();
+		TaskManager taskManager = (TaskManager) _managerEngine
+				.getTasksManager();
 		taskManager.clearTaskList();
 		taskManager.addAllTasks(tasks);
 		LOGGER.debug("project: " + project);
-        for(ITask task : taskManager.getTasks()) {
-        	LOGGER.debug("tasks: " + task);
-        }
+		for (ITask task : taskManager.getTasks()) {
+			LOGGER.debug("tasks: " + task);
+		}
 		LOGGER.info("Project successfully loaded.");
 
 		// setting current project
-        _currentProject = project;
+		_currentProject = project;
 		return _currentProject;
+	}
+
+	// FIXME this method has to be removed but after implementing
+	// component to show table
+
+	public Collection getProjectList() throws PlatformException
+	{
+		Collection projects = null;
+		SQLSelect select = new SQLSelect();
+		select.addTable(Project.TABLE_NAME);
+		// executing query
+		ResultSet resultSet = null;
+
+		try {
+			resultSet = DBManager.getInstance().select(select);
+			projects = Utils.getDataFromResultSet(resultSet);
+		} catch (SQLException e) {
+			LOGGER.fatal("", e);
+			throw new DBException(e.getLocalizedMessage());
+		} catch (ClassNotFoundException e) {
+			LOGGER.fatal("", e);
+			throw new PlatformException(e.getLocalizedMessage());
+		}
+		return projects;
+	}
+
+	/**
+	 * @see IProjectManager#getProjects()
+	 */
+	public IProject[] getProjects() throws PlatformException
+	{
+		// FIXME
+		throw new UnsupportedOperationException("");
 	}
 
 	/**
@@ -194,24 +193,24 @@ public final class ProjectManager implements IProjectManager
 	 * saved.
 	 * 
 	 * @see IProjectManager#saveProject()
-	 *
+	 * 
 	 * @throws ClassNotFoundException
 	 * @throws Exception
 	 */
 	public void saveProject() throws PlatformException
 	{
 		// saving project header
-        try {		 
-		 // saving tasks
-         ((Project)_currentProject).save();
-		 saveTasks(_currentProject.getProjectID());
-		 LOGGER.info("Project successfully saved.");
-		 //TODO: bez tego czasem zawisa :-(
-		 _dbManager.commit();
-        } catch (Exception e) {
-        	LOGGER.fatal("",e);
-            throw new PlatformException(e.getLocalizedMessage());
-        }
+		try {
+			// saving tasks
+			((Project) _currentProject).save();
+			saveTasks(_currentProject.getProjectID());
+			LOGGER.info("Project successfully saved.");
+			// TODO: bez tego czasem zawisa :-(
+			_dbManager.commit();
+		} catch (Exception e) {
+			LOGGER.fatal("", e);
+			throw new PlatformException(e.getLocalizedMessage());
+		}
 	}
 
 	/**
@@ -251,10 +250,13 @@ public final class ProjectManager implements IProjectManager
 				Description description = new Description();
 				// loading plugin description
 				description.load(resultSet);
-				IPlugin plugin = PluginLoader.loadPlugin(description.getLocation());
-				ISettings pluginSettings = plugin.getSettingComponent().getDefaultSettings();
+				IPlugin plugin = PluginLoader.loadPlugin(description
+						.getLocation());
+				ISettings pluginSettings = plugin.getSettingComponent()
+						.getDefaultSettings();
 
-				Task task = (Task) _managerEngine.getTasksManager().createTask();
+				Task task = (Task) _managerEngine.getTasksManager()
+						.createTask();
 				task.setSettings(pluginSettings);
 				task.setPlugin(plugin);
 				// loading task
