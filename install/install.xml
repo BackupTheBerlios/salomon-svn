@@ -12,7 +12,6 @@ Installation file for salomon project
 -->
 
 <installation version="1.0">
-
     <!-- 
         The info section.
         The meaning of the tags should be natural ...
@@ -97,6 +96,8 @@ Installation file for salomon project
 	    <file src="../bin/resources.properties" targetdir="$INSTALL_PATH"/>
 	    <file src="../log.conf" targetdir="$INSTALL_PATH"/>
 	    
+	    <!-- resources -->
+	    <fileset dir="../res" targetdir="$INSTALL_PATH/res" defaultexcludes="yes"/>
     <!--            <parsable targetfile="$INSTALL_PATH/script.bat"/> The file will be parsed -->
         </pack>
         <pack name="Docs" required="no">
