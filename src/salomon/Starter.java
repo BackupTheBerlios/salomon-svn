@@ -2,18 +2,22 @@
 package salomon;
 
 import java.sql.SQLException;
+
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
+
 import pl.edu.agh.icsr.salomon.plugin.averageprice.APSettings;
 import salomon.controller.IController;
-import salomon.controller.LocalController;
+import salomon.controller.ServerController;
+import salomon.core.IManagerEngine;
 import salomon.core.ManagerEngine;
-import salomon.core.ProjectManager;
 import salomon.core.data.DBManager;
 import salomon.core.data.common.DBColumnName;
 import salomon.core.data.common.DBCondition;
 import salomon.core.data.common.DBTableName;
 import salomon.core.data.common.DBValue;
+import salomon.core.project.ProjectManager;
+import salomon.core.task.TaskManager;
 
 /**
  *  
@@ -22,10 +26,10 @@ public final class Starter
 {
 	private IController _contoroller;
 
-	private ManagerEngine _managerEngine;
+	private IManagerEngine _managerEngine;
 
 	private static Logger _logger = Logger.getLogger(Starter.class);
-	
+
 	private ProjectManager _projectManager = null;
 
 	public Starter()
@@ -35,18 +39,19 @@ public final class Starter
 	}
 
 	private void initManagers()
-	{		
+	{
 		_managerEngine = new ManagerEngine();
-		_projectManager = new ProjectManager(_managerEngine);
+		((TaskManager) _managerEngine.getTasksManager()).setProjectManger((ProjectManager) _managerEngine.getProjectManager());
 		// oh shit - loop ;-(
-		_managerEngine.getTasksManager().setProjectManger(_projectManager);		
-		_contoroller = new LocalController();
+		//_managerEngine.getTasksManager().setProjectManger(_projectManager);
+		//_contoroller = new LocalController();
+        _contoroller = new ServerController();
 	}
 
 	public void start()
 	{
 		initManagers();
-		_contoroller.start(_projectManager);
+		_contoroller.start(_managerEngine);
 
 		//		try {
 		//			new ProjectManager().loadProject(1);
@@ -55,6 +60,7 @@ public final class Starter
 		//		}
 		//testSettings();
 		//testInsert();
+
 		//testAutoInsert();
 		//testDelete();
 		//testUpdate();
