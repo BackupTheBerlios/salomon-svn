@@ -6,7 +6,7 @@ package ks.core.event;
 /**
  * @author nico
  * 
- * Interface used to enable communication between IManager and ManagerGUI.
+ * Interface used to enable communication between IManager and ControllerGUI.
  * 
  */
 public interface TaskListener
