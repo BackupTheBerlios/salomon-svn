@@ -56,6 +56,8 @@ public final class ServerController implements IController
 
 	private JPanel _contentPane;
 
+	private ControllerPanel _controllerPanel;
+
 	private ServerGUIMenu _guiMenu;
 
 	private ManagerEngineHolder _managerEngineHolder;
@@ -66,6 +68,8 @@ public final class ServerController implements IController
 
 	private ProjectEditionManager _projectEditionManager;
 
+	private Registry _registry;
+
 	private RemoteControllerPanel _remoteControllerPanel;
 
 	private JSplitPane _splitPane;
@@ -74,7 +78,22 @@ public final class ServerController implements IController
 
 	private JToolBar _toolBar;
 
-	private ControllerPanel _controllerPanel;
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see salomon.controller.IController#exit()
+	 */
+	public void exit()
+	{
+		_logger.debug("ServerController.exit()");
+		_remoteControllerPanel.removeAllControllers();
+	}
+
+	//TODO: change it
+	public void refresh()
+	{
+		_taskEditionManager.refresh();
+	}
 
 	public void start(IManagerEngine managerEngine)
 	{
@@ -159,7 +178,7 @@ public final class ServerController implements IController
 		frame.setMainPanel(getJContentPane());
 		frame.setJMenuBar(getJMenuBar());
 		frame.setJToolBar(getToolBar());
-        frame.setControllerPanel(_controllerPanel);
+		frame.setControllerPanel(_controllerPanel);
 
 		_taskEditionManager.setParent(frame);
 		_projectEditionManager.setParent(frame);
@@ -181,18 +200,12 @@ public final class ServerController implements IController
 			System.setSecurityManager(new RMISecurityManager());
 			_masterController = new MasterController();
 			_masterController.addMasterControllerListener(new MasterControllerListener());
-			Registry registry = LocateRegistry.createRegistry(RMI_PORT);
+			_registry = LocateRegistry.createRegistry(RMI_PORT);
 			//TODO: Use bind method
-			registry.rebind("MasterController", _masterController);
+			_registry.rebind("MasterController", _masterController);
 		} catch (RemoteException e) {
 			_logger.error(e);
 		}
-	}
-
-	//TODO: change it
-	public void refresh()
-	{
-		_taskEditionManager.refresh();
 	}
 
 	private final class MasterControllerListener
@@ -218,8 +231,10 @@ public final class ServerController implements IController
 		 */
 		public void controllerRemoved(RemoteControllerEvent event)
 		{
+			_logger.debug("MasterControllerListener.controllerRemoved()");
 			RemoteControllerGUI controllerGUI = new RemoteControllerGUI(
 					event.getController());
+			controllerGUI.exit();
 			_remoteControllerPanel.removeController(controllerGUI);
 		}
 

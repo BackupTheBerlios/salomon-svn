@@ -10,5 +10,7 @@ public interface IController
 {
 
 	public void start(IManagerEngine managerEngine);
+    
+    public void exit();
 } // end IManager
 

@@ -22,17 +22,26 @@ import salomon.core.remote.RemoteController;
  */
 public final class ClientController implements IController
 {
-	private static Logger _logger = Logger.getLogger(ClientController.class);
+
+	private IManagerEngine _managerEngine;
+
+	private IMasterController _masterController;
+
+	private IRemoteController _remoteController;
 
 	private String _serverHost;
 
 	private int _serverPort;
 
-	private IRemoteController _remoteController;
-
-	private IManagerEngine _managerEngine;
-
-	private IMasterController _masterController;
+	public void exit()
+	{
+		_logger.info("Exiting client...");
+		try {
+			_masterController.unregister(_remoteController);
+		} catch (RemoteException e) {
+			_logger.fatal("", e);
+		}
+	}
 
 	public void start(IManagerEngine managerEngine)
 	{
@@ -70,4 +79,6 @@ public final class ClientController implements IController
 			_logger.fatal("", e);
 		}
 	}
+
+	private static Logger _logger = Logger.getLogger(ClientController.class);
 } // end ClientManager

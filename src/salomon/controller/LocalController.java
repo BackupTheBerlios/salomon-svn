@@ -405,4 +405,11 @@ public final class LocalController implements IController
 	}
 
 	private static Logger _logger = Logger.getLogger(LocalController.class);
+
+	/* (non-Javadoc)
+	 * @see salomon.controller.IController#exit()
+	 */
+	public void exit()
+	{		
+	}
 }
