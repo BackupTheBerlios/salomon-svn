@@ -26,13 +26,13 @@ public final class RemoteManagerEngine extends UnicastRemoteObject
 	private IRemoteTaskManager _remoteTaskManager;
 
 	/**
-	 * @throws RemoteException
-	 *  
-	 */
+     * @throws RemoteException
+     * @pre managerEngine != null
+     * @post $none
+     */
 	public RemoteManagerEngine(IManagerEngine managerEngine)
 			throws RemoteException
 	{
-		super();
 		_remotePluginManager = new RemotePluginManager(
 				managerEngine.getPluginManager());
 		_remoteProjectManager = new RemoteProjectManager(
