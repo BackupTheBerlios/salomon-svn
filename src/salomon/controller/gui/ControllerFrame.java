@@ -9,7 +9,6 @@ import java.awt.event.WindowEvent;
 
 import javax.swing.JComponent;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.JToolBar;
 
 import org.apache.log4j.Logger;
@@ -67,33 +66,6 @@ public final class ControllerFrame extends JFrame
 		getContentPane().add(panel, BorderLayout.CENTER);
 	}
 
-	public void showErrorMessage(String msg)
-	{
-		JOptionPane.showMessageDialog(this, msg,
-				Messages.getString("TIT_ERROR"), JOptionPane.ERROR_MESSAGE);
-	}
-
-	public void showInfoMessage(String msg)
-	{
-		JOptionPane.showMessageDialog(this, msg,
-				Messages.getString("TIT_INFO"), JOptionPane.INFORMATION_MESSAGE);
-	}
-
-	public boolean showQuestionMessage(String title, String msg)
-	{
-		int retVal = JOptionPane.showConfirmDialog(this, msg, title,
-				JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
-		return (retVal == JOptionPane.YES_OPTION);
-	}
-
-	public boolean showWarningMessage(String msg)
-	{
-		int retVal = JOptionPane.showConfirmDialog(this, msg,
-				Messages.getString("TIT_WARN"), JOptionPane.YES_NO_OPTION,
-				JOptionPane.WARNING_MESSAGE);
-		return (retVal == JOptionPane.YES_OPTION);
-	}
-
 	private void exit()
 	{
         Starter.exit();
@@ -115,7 +87,7 @@ public final class ControllerFrame extends JFrame
 		location.x = (Toolkit.getDefaultToolkit().getScreenSize().width - getWidth()) / 2;
 		location.y = (Toolkit.getDefaultToolkit().getScreenSize().height - getHeight()) / 2;
 		this.setLocation(location);
-		this.setTitle(Messages.getString("APP_NAME")); //$NON-NLS-1$		
+		this.setTitle(Messages.getString("APP_NAME")); //$NON-NLS-1$        
 		this.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e)
 			{

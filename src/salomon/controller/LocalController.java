@@ -27,6 +27,7 @@ import salomon.controller.gui.ControllerPanel;
 import salomon.controller.gui.ProjectEditionManager;
 import salomon.controller.gui.SplashScreen;
 import salomon.controller.gui.TaskEditionManager;
+import salomon.controller.gui.Utils;
 import salomon.controller.gui.action.ActionManager;
 import salomon.core.Config;
 import salomon.core.IManagerEngine;
@@ -92,7 +93,7 @@ public final class LocalController implements IController
 		_taskEditionManager.setParent(frame);
 		_projectEditionManager.setParent(frame);
 		_projectEditionManager.setTaskEditionManager(_taskEditionManager);
-
+	    Utils.setParent(getJContentPane());
 		SplashScreen.hide();
 		frame.setVisible(true);
 	}
