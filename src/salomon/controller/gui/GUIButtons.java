@@ -8,17 +8,19 @@ package salomon.controller.gui;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+
 import org.apache.log4j.Logger;
+
 import salomon.core.Config;
 
 /**
  * @author nico Class agregates all buttons used in GUIController.
  */
-public class GUIButtons
+public final class GUIButtons
 {
-	private static Logger _logger = Logger.getLogger(GUIButtons.class);
 
 	private JButton _btnAdd = null;
 
@@ -36,12 +38,13 @@ public class GUIButtons
 
 	private ManipulationListener _manipulationListener = null;
 
-	private TaskEditionManager _taskEditionManager = null;
-
 	private String _resourcesDir = null;
 
-	public GUIButtons()
+	private TaskEditionManager _taskEditionManager = null;
+
+	public GUIButtons(TaskEditionManager taskEditionManager)
 	{
+		_taskEditionManager = taskEditionManager;
 		_manipulationListener = new ManipulationListener();
 		_resourcesDir = Config.getString("RESOURCES_DIR");
 	}
@@ -72,8 +75,7 @@ public class GUIButtons
 	JButton getBtnDown()
 	{
 		if (_btnDown == null) {
-			_btnDown = createManipulationButton(Config
-					.getString("ICO_TASK_DOWN")); //$NON-NLS-1$
+			_btnDown = createManipulationButton(Config.getString("ICO_TASK_DOWN")); //$NON-NLS-1$
 		}
 		return _btnDown;
 	}
@@ -86,8 +88,7 @@ public class GUIButtons
 	JButton getBtnFirst()
 	{
 		if (_btnFirst == null) {
-			_btnFirst = createManipulationButton(Config
-					.getString("ICO_TASK_FIRST")); //$NON-NLS-1$
+			_btnFirst = createManipulationButton(Config.getString("ICO_TASK_FIRST")); //$NON-NLS-1$
 		}
 		return _btnFirst;
 	}
@@ -100,8 +101,7 @@ public class GUIButtons
 	JButton getBtnLast()
 	{
 		if (_btnLast == null) {
-			_btnLast = createManipulationButton(Config
-					.getString("ICO_TASK_LAST")); //$NON-NLS-1$
+			_btnLast = createManipulationButton(Config.getString("ICO_TASK_LAST")); //$NON-NLS-1$
 		}
 		return _btnLast;
 	}
@@ -114,8 +114,7 @@ public class GUIButtons
 	JButton getBtnRemove()
 	{
 		if (_btnRemove == null) {
-			_btnRemove = createManipulationButton(Config
-					.getString("ICO_TASK_REMOVE")); //$NON-NLS-1$
+			_btnRemove = createManipulationButton(Config.getString("ICO_TASK_REMOVE")); //$NON-NLS-1$
 		}
 		return _btnRemove;
 	}
@@ -128,8 +127,7 @@ public class GUIButtons
 	JButton getBtnRemoveAll()
 	{
 		if (_btnRemoveAll == null) {
-			_btnRemoveAll = createManipulationButton(Config
-					.getString("ICO_TASK_REMOVEALL")); //$NON-NLS-1$
+			_btnRemoveAll = createManipulationButton(Config.getString("ICO_TASK_REMOVEALL")); //$NON-NLS-1$
 		}
 		return _btnRemoveAll;
 	}
@@ -157,7 +155,7 @@ public class GUIButtons
 	{
 		JButton button = new JButton();
 		button.setIcon(new ImageIcon(_resourcesDir + Config.FILE_SEPARATOR
-				+ text));		
+				+ text));
 		button.addActionListener(_manipulationListener);
 		Dimension dim = new Dimension(50, 25);
 		button.setPreferredSize(dim);
@@ -196,4 +194,5 @@ public class GUIButtons
 			}
 		}
 	}
+	private static Logger _logger = Logger.getLogger(GUIButtons.class);
 }
