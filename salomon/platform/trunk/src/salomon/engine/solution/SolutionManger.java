@@ -21,6 +21,7 @@
 
 package salomon.engine.solution;
 
+import salomon.engine.platform.IManagerEngine;
 
 /**
  * 
@@ -28,29 +29,11 @@ package salomon.engine.solution;
 public final class SolutionManger implements ISolutionManager
 {
 
-	/**
-	 * @see salomon.engine.solution.ISolutionManager#getSolutions()
-	 */
-	public ISolution[] getSolutions()
-	{
-		throw new UnsupportedOperationException("Method getSolutions() not implemented yet!");
-	}
+	private IManagerEngine _managerEngine;
 
-	/**
-	 * @see salomon.engine.solution.ISolutionManager#getSolution(java.lang.String)
-	 */
-	public ISolution getSolution(String name)
+	public SolutionManger(IManagerEngine managerEngine)
 	{
-		//TODO: only for dll		
-		return Solution.getInstance();
-	}
-
-	/**
-	 * @see salomon.engine.solution.ISolutionManager#createSolution()
-	 */
-	public ISolution createSolution()
-	{
-		throw new UnsupportedOperationException("Method createSolution() not implemented yet!");
+		_managerEngine = managerEngine;
 	}
 
 	/**
@@ -58,6 +41,34 @@ public final class SolutionManger implements ISolutionManager
 	 */
 	public void addSolution(ISolution solution)
 	{
-		throw new UnsupportedOperationException("Method addSolution() not implemented yet!");
+		throw new UnsupportedOperationException(
+				"Method addSolution() not implemented yet!");
+	}
+
+	/**
+	 * @see salomon.engine.solution.ISolutionManager#createSolution()
+	 */
+	public ISolution createSolution()
+	{
+		throw new UnsupportedOperationException(
+				"Method createSolution() not implemented yet!");
+	}
+
+	/**
+	 * @see salomon.engine.solution.ISolutionManager#getSolution(java.lang.String)
+	 */
+	public ISolution getSolution(String name)
+	{
+		// TODO: only for dll
+		return Solution.getInstance();
+	}
+
+	/**
+	 * @see salomon.engine.solution.ISolutionManager#getSolutions()
+	 */
+	public ISolution[] getSolutions()
+	{
+		throw new UnsupportedOperationException(
+				"Method getSolutions() not implemented yet!");
 	}
 }

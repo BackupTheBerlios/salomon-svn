@@ -28,14 +28,17 @@ import java.util.LinkedList;
 import org.apache.log4j.Logger;
 
 import salomon.engine.database.DBManager;
-import salomon.engine.platform.Environment;
-import salomon.engine.project.ProjectManager;
 import salomon.engine.solution.Solution;
+
 import salomon.platform.IDataEngine;
 import salomon.platform.exception.PlatformException;
+
 import salomon.plugin.IPlugin;
 import salomon.plugin.IResult;
 import salomon.plugin.ISettings;
+
+import salomon.engine.platform.Environment;
+import salomon.engine.platform.IManagerEngine;
 
 /**
  * An implemetation of ITaskManager interface. Class manages with tasks editing
@@ -48,15 +51,16 @@ public final class TaskManager implements ITaskManager
 	private IDataEngine _dataEngine;
 
 	private Environment _environment;
-
-	private ProjectManager _projectManger;
+	
+	private IManagerEngine _managerEngine;
 
 	private TaskEngine _taskEngine;
 
 	private LinkedList<ITask> _tasks;
 
-	public TaskManager()
+	public TaskManager(IManagerEngine managerEngine)
 	{
+		_managerEngine = managerEngine;
 		_tasks = new LinkedList<ITask>();
 		//FIXME
 		try {
@@ -92,7 +96,7 @@ public final class TaskManager implements ITaskManager
 	public ITask createTask() throws PlatformException
 	{
 		Task newTask = new Task();
-        newTask.setProjectID(_projectManger.getCurrentProject().getProjectID());
+        newTask.setProjectID(_managerEngine.getProjectManager().getCurrentProject().getProjectID());
 		return newTask;
 	}
 
@@ -114,14 +118,6 @@ public final class TaskManager implements ITaskManager
 	public ITask[] getTasks()
 	{
 		return _tasks.toArray(new ITask[_tasks.size()]);
-	}
-
-	/**
-	 * @param projectManger The projectManger to set.
-	 */
-	public void setProjectManger(ProjectManager projectManger)
-	{
-		_projectManger = projectManger;
 	}
 
 	public void start()

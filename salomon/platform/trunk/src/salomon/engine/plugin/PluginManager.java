@@ -32,6 +32,9 @@ import salomon.engine.database.DBManager;
 import salomon.engine.database.queries.SQLDelete;
 import salomon.engine.database.queries.SQLSelect;
 import salomon.platform.exception.PlatformException;
+
+import salomon.engine.platform.IManagerEngine;
+
 import salomon.plugin.Description;
 import salomon.plugin.IPlugin;
 
@@ -40,6 +43,13 @@ import salomon.plugin.IPlugin;
  */
 public final class PluginManager implements IPluginManager
 {
+	private IManagerEngine _managerEngine;
+	
+	public PluginManager(IManagerEngine managerEngine)
+	{
+		_managerEngine = managerEngine;
+	}
+	
 	/**
 	 * Returns collection of LocalPlugins
 	 * 

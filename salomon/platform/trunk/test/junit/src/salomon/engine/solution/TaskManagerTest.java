@@ -37,8 +37,7 @@ import salomon.platform.exception.PlatformException;
 
 public class TaskManagerTest extends TestCase {
 
-    private TaskManager _TaskManager;
-    private ProjectManager _ProjectManager ;
+    private TaskManager _taskManager;  
 
     public static void main(String[] args) {
         junit.textui.TestRunner.run(TaskManagerTest.class);
@@ -50,17 +49,15 @@ public class TaskManagerTest extends TestCase {
     protected void setUp() throws Exception {
         super.setUp();
         PropertyConfigurator.configure("log.conf");
-        _TaskManager = new TaskManager() ;
-        _ProjectManager = new ProjectManager(new ManagerEngine());
-        _ProjectManager.addProject(_ProjectManager.ceateProject()) ;
-        _TaskManager.setProjectManger(_ProjectManager);
+        ManagerEngine engine = new ManagerEngine();
+        _taskManager = (TaskManager) engine.getTasksManager();
     }
 
     public void testCreateTask() {
         ITask task ;
         try {
 
-            task = _TaskManager.createTask();
+            task = _taskManager.createTask();
             assertNotNull(task) ;
             
         } catch (PlatformException e) {
@@ -73,20 +70,20 @@ public class TaskManagerTest extends TestCase {
     public void testAddTask() {
         ITask task ;
         try {
-            task = _TaskManager.createTask();
+            task = _taskManager.createTask();
             assertNotNull(task) ;
             
-            _TaskManager.addTask(task);
+            _taskManager.addTask(task);
             
             //TODO i think addAllTask should take collection<ITask> not Collection<Task>, this cast here could be possibly wrong
             Collection<ITask> tasklist = new ArrayList<ITask>() ;
-            tasklist.add(_TaskManager.createTask());
-            tasklist.add(_TaskManager.createTask());
-            tasklist.add(_TaskManager.createTask());
+            tasklist.add(_taskManager.createTask());
+            tasklist.add(_taskManager.createTask());
+            tasklist.add(_taskManager.createTask());
           
-            _TaskManager.addAllTasks(tasklist);
+            _taskManager.addAllTasks(tasklist);
             
-            ITask tasks[] = _TaskManager.getTasks() ;
+            ITask tasks[] = _taskManager.getTasks() ;
             assertNotNull(tasks) ;
             
         } catch (PlatformException e) {
@@ -98,17 +95,17 @@ public class TaskManagerTest extends TestCase {
     }
     
     public void testClearTasks() {
-        _TaskManager.clearTaskList() ;
+        _taskManager.clearTaskList() ;
     }
     
     public void testGetCurrentTask() {
-       ITask task = _TaskManager.getCurrentTask() ;
+       ITask task = _taskManager.getCurrentTask() ;
     }
     
     public void testGetRunner() {
         
         try {
-            _TaskManager.getRunner() ;
+            _taskManager.getRunner() ;
         } catch (PlatformException e) {
             e.printStackTrace();
             LOGGER.error("PlatformError", e) ;
@@ -116,22 +113,10 @@ public class TaskManagerTest extends TestCase {
         }
     }
     
-    public void testSetProjectManager() {
-        ProjectManager projectManager = new ProjectManager(new ManagerEngine()) ;
-        Project project = new Project() ;
-        try {
-            projectManager.addProject(projectManager.ceateProject()) ;
-        } catch (PlatformException e) {
-            e.printStackTrace();
-            LOGGER.error("PlatformError", e) ;
-            assertFalse(true) ;
-        }      
-        _TaskManager.setProjectManger(projectManager) ;
-    }
     
     public void testEverything() {
         //TODO to be implemented
-        _TaskManager.start();
+        _taskManager.start();
     }
     
     private static Logger LOGGER = Logger.getLogger(TaskManagerTest.class);

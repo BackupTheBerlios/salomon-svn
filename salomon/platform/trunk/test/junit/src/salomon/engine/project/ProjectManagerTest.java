@@ -83,7 +83,7 @@ public class ProjectManagerTest extends TestCase
         }
         
 		ManagerEngine engine = new ManagerEngine();
-		_projectManager = new ProjectManager(engine);
+		_projectManager = (ProjectManager)engine.getProjectManager();
 	}
 
 	private static Logger LOGGER = Logger.getLogger(ProjectManagerTest.class);

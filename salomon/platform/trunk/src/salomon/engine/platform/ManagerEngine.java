@@ -47,11 +47,12 @@ public final class ManagerEngine implements IManagerEngine
 
 	public ManagerEngine()
 	{
-        //FIXME
-		_taskManager = new TaskManager();
+		//TODO: change it after implementing Solution
+		_solutionManager = new SolutionManger(this);
 		_projectManager = new ProjectManager(this);
-		_pluginManager = new PluginManager();
-        _solutionManager = new SolutionManger(); 
+		_taskManager = new TaskManager(this);		
+		_pluginManager = new PluginManager(this);
+         
 
 	}
 

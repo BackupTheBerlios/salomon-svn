@@ -25,6 +25,8 @@ import junit.framework.TestCase;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
+import salomon.engine.platform.ManagerEngine;
+
 public class SolutionManagerTest extends TestCase {
     private SolutionManger _solutionManager ;
     
@@ -38,7 +40,8 @@ public class SolutionManagerTest extends TestCase {
     protected void setUp() throws Exception {
         super.setUp();
         PropertyConfigurator.configure("log.conf");
-        _solutionManager = new SolutionManger() ;
+        ManagerEngine engine = new ManagerEngine();
+        _solutionManager = (SolutionManger) engine.getSolutionManager();
         
     }
     

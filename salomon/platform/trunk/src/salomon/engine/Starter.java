@@ -31,16 +31,13 @@ import salomon.engine.controller.LibraryController;
 import salomon.engine.controller.LocalController;
 import salomon.engine.controller.MasterController;
 import salomon.engine.controller.ServantController;
+
 import salomon.engine.platform.IManagerEngine;
 import salomon.engine.platform.ManagerEngine;
-import salomon.engine.project.IProjectManager;
-import salomon.engine.project.ProjectManager;
-import salomon.engine.task.TaskManager;
-import salomon.platform.exception.PlatformException;
 
 /**
  * Class starts application execution.
- *  
+ * 
  */
 public final class Starter
 {
@@ -48,7 +45,7 @@ public final class Starter
 
 	private IManagerEngine _managerEngine;
 
-//	private ProjectManager _projectManager = null;
+	// private ProjectManager _projectManager = null;
 
 	private Starter()
 	{
@@ -67,15 +64,8 @@ public final class Starter
 
 	private void initManagers()
 	{
-		//FIXME: Create 
-		try {
-			_managerEngine = new ManagerEngine();
-			TaskManager taskManager = (TaskManager) _managerEngine.getTasksManager();
-			IProjectManager projectManager = _managerEngine.getProjectManager();
-			taskManager.setProjectManger((ProjectManager) projectManager);
-		} catch (PlatformException e) {
-			LOGGER.fatal("", e);
-		}
+		// FIXME: Create
+		_managerEngine = new ManagerEngine();
 	}
 
 	private void start()
@@ -95,9 +85,9 @@ public final class Starter
 	{
 		LOGGER.debug("starting MasterController");
 		_contoroller = new LibraryController();
-        start();
-        
-        return (LibraryController) _contoroller;
+		start();
+
+		return (LibraryController) _contoroller;
 	}
 
 	private void startLocalImpl()
@@ -116,6 +106,7 @@ public final class Starter
 
 	/**
 	 * creates library controller
+	 * 
 	 * @return the created LibraryController
 	 */
 	public static LibraryController createLibraryController()
@@ -133,6 +124,7 @@ public final class Starter
 
 	/**
 	 * main method for starting Salomon
+	 * 
 	 * @param args parameters from the command line
 	 */
 	public static void main(String[] args)

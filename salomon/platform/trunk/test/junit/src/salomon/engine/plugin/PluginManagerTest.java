@@ -30,6 +30,9 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
 import salomon.platform.exception.PlatformException;
+
+import salomon.engine.platform.ManagerEngine;
+
 import salomon.plugin.Description;
 import salomon.plugin.IPlugin;
 
@@ -103,8 +106,9 @@ public class PluginManagerTest extends TestCase
 
 	protected void setUp() throws Exception
 	{
-		PropertyConfigurator.configure("log.conf"); //$NON-NLS-1$   
-		pluginManager = new PluginManager();
+		PropertyConfigurator.configure("log.conf"); //$NON-NLS-1$
+		ManagerEngine engine = new ManagerEngine();
+		pluginManager = (PluginManager)engine.getPluginManager();
 	}
 
 	private static Logger LOGGER = Logger.getLogger(PluginManagerTest.class);
