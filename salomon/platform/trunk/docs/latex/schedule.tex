@@ -9,6 +9,7 @@
 \usepackage{times}
 \usepackage{epsfig}
 \usepackage{color}
+\usepackage[urlcolor=blue, colorlinks=true, bookmarks=true, bookmarksnumbered=true]{hyperref}
 
 %ustawienie wielkosci akapitu
 %\setlength{\parindent}{0mm}
@@ -57,7 +58,7 @@ Kolejne zmiany opisane w tym planie bêd¹ wchodzi³y do jego kolejnych wersji (0.9
 		\begin{itemize}
 			\item Uruchomienie portalu na serwerze
 			\item Dodanie forum, galerii, newsów itp.
-%			\item Zainstalowanie Gemini(\href{http://www.countersoft.com}{http://www.countersoft.com})
+			\item Zainstalowanie Gemini (\href{http://www.countersoft.com}{http://www.countersoft.com})
 			\item Zainstalowanie Bugzilli
 			\item Zainstalowanie Twiki
 			\item Podpiêcie WebSVN
@@ -85,12 +86,12 @@ Kolejne zmiany opisane w tym planie bêd¹ wchodzi³y do jego kolejnych wersji (0.9
 	\item Testy	
 	\begin{itemize}
 		\item JUnit - testy jednostkowe dla klas, które da siê w ten sposób przetestowaæ
-		\item JUnit - GUI testy
+		\item Abbot - GUI testy
 		\item prezentacja wyników testów na stronie
 	\end{itemize}		
 	\end{enumerate}
 	
-	\item Wersja 0.9 - Refactoring kodu \textbf{(85\%)}
+	\item Wersja 0.9 - Refactoring kodu \textbf{(95\%)}
 	\begin{enumerate}
 		\item poprawienie przejrzystoœci kodu		
 		\begin{itemize}
@@ -100,6 +101,7 @@ Kolejne zmiany opisane w tym planie bêd¹ wchodzi³y do jego kolejnych wersji (0.9
 				\item nowe klasy dla poszczególnych typów zapytañ
 				\item wykorzystanie zapytañ
 			\end{itemize}
+			\item nowa warstwa - solution (do wspó³pracy z danymi zapisanymi w osobnych bazach)			
 			\item refaktoring kodu w klasach GUI
 			\item support dla Javy 1.5
 			\item dok³adne odseparowanie GUI od logiki		
@@ -140,8 +142,8 @@ Kolejne zmiany opisane w tym planie bêd¹ wchodzi³y do jego kolejnych wersji (0.9
 		\item wprowadzenie kategorii dla pluginów
 		\item prezentacja pluginów w formie drzewiastej
 		\item prezentacja stanu zadañ w formie graficznej
-		\item nowa warstwa - solution (do wspó³pracy z danymi zapisanymi w osobnych bazach)			
 	\end{itemize}
+	\item Zapoznanie siê z projektem \emph{WEKA} (\href {http://www.cs.waikato.ac.nz/~ml/weka/}{http://www.cs.waikato.ac.nz/~ml/weka/})
 	
 			Etap bêdzie realizowany stopniowo, nie wszystkie zmiany wejd¹ do nastêpnej wersji Salomona (1.1). Do tej wersji planuje siê dodanie tylko obs³ugi regu³. Do kolejnych wersji wprowadzana bêdzie obs³uga kolejnych typów danych oraz pozosta³e funkcjonalnoœci. Najwa¿niejszym punktem tego etapu jest dodanie obs³ugi regu³, która to jest konieczna by stworzyæ wersjê dla twórców pluginu, jest to najbardziej ryzykowny punkt etapu.
 
@@ -176,10 +178,10 @@ Kolejne zmiany opisane w tym planie bêd¹ wchodzi³y do jego kolejnych wersji (0.9
 	
 	Etap ten obejmuje rozszerzenie mo¿liwoœci integracji lub wykorzystana Salomona z przez inne systemy. Jest on planowany powy¿ej wersji 1.2, w zwi¹zku z czym nie bêdzie na razie dok³adnie rozwa¿any.
 		
-	\item Importer baz danych
+	\item Integracja danych z innych baz danych
 	\begin{itemize}
 		\item informacje o strukturze bazy danych
-		\item importer dla poszczególnych typów baz		
+		\item integracja z danymi pochodz¹cymi z ró¿nych baz:
 		\begin{itemize}
 			\item Firebird
 			\item Oracle
@@ -187,7 +189,7 @@ Kolejne zmiany opisane w tym planie bêd¹ wchodzi³y do jego kolejnych wersji (0.9
 		\end{itemize}
 	\end{itemize}
 	
-	Dodanie importera baz danych planowane jest po zaimplementowaniu obs³ugi wszystkich typów danych (regu³, drzew itp), najwczeœniej w wersji 1.4 systemu.
+	Dodanie integracji danych z innych baz danych planowane jest po zaimplementowaniu obs³ugi wszystkich typów danych (regu³, drzew itp), najwczeœniej w wersji 1.4 systemu.
 		
 	%\item Poprawa wspó³bie¿noœci
 	
