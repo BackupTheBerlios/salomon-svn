@@ -23,6 +23,7 @@ import salomon.platform.project.IProject;
 import salomon.platform.project.IProjectManager;
 import salomon.platform.task.ITaskManager;
 import salomon.plugin.ISettings;
+import salomon.util.gui.Utils;
 
 /**
  * Class used to manage with projects editing.  

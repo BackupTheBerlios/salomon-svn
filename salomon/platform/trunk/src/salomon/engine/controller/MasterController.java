@@ -33,7 +33,6 @@ import salomon.engine.controller.gui.RemoteControllerGUI;
 import salomon.engine.controller.gui.RemoteControllerPanel;
 import salomon.engine.controller.gui.SplashScreen;
 import salomon.engine.controller.gui.TaskEditionManager;
-import salomon.engine.controller.gui.Utils;
 import salomon.engine.controller.gui.action.ActionManager;
 import salomon.engine.platform.Config;
 import salomon.engine.platform.DBManager;
@@ -45,6 +44,7 @@ import salomon.engine.platform.holder.ManagerEngineHolder;
 import salomon.engine.platform.remote.CentralController;
 import salomon.engine.platform.remote.event.IMasterControllerListener;
 import salomon.engine.platform.remote.event.RemoteControllerEvent;
+import salomon.util.gui.Utils;
 
 /**
  * Server side implementation of IController interface.

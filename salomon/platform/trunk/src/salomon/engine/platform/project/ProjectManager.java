@@ -10,7 +10,6 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import salomon.engine.controller.gui.Utils;
 import salomon.engine.platform.DBManager;
 import salomon.engine.platform.IManagerEngine;
 import salomon.engine.platform.data.common.SQLSelect;
@@ -24,6 +23,7 @@ import salomon.platform.task.ITask;
 import salomon.plugin.Description;
 import salomon.plugin.IPlugin;
 import salomon.plugin.ISettings;
+import salomon.util.gui.Utils;
 
 /**
  * An implemetation of IProjectManager interface. Class manages with projects

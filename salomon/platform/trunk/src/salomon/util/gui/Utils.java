@@ -1,5 +1,5 @@
 
-package salomon.engine.controller.gui;
+package salomon.util.gui;
 
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;

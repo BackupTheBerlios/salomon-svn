@@ -28,7 +28,6 @@ import salomon.engine.controller.gui.ControllerPanel;
 import salomon.engine.controller.gui.ProjectEditionManager;
 import salomon.engine.controller.gui.SplashScreen;
 import salomon.engine.controller.gui.TaskEditionManager;
-import salomon.engine.controller.gui.Utils;
 import salomon.engine.controller.gui.action.ActionManager;
 import salomon.engine.platform.Config;
 import salomon.engine.platform.DBManager;
@@ -36,6 +35,7 @@ import salomon.engine.platform.IManagerEngine;
 import salomon.engine.platform.Messages;
 import salomon.engine.platform.Resources;
 import salomon.engine.platform.SQLConsole;
+import salomon.util.gui.Utils;
 
 /**
  * Local implementation of IController interface.

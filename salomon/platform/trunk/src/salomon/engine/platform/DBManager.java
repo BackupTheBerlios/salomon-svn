@@ -13,11 +13,11 @@ import java.sql.Statement;
 
 import org.apache.log4j.Logger;
 
-import salomon.engine.controller.gui.Utils;
 import salomon.engine.platform.data.common.SQLDelete;
 import salomon.engine.platform.data.common.SQLInsert;
 import salomon.engine.platform.data.common.SQLSelect;
 import salomon.engine.platform.data.common.SQLUpdate;
+import salomon.util.gui.Utils;
 
 /**
  * Class is responsible for data base operations. It enables executing SQL

@@ -43,6 +43,7 @@ import salomon.plugin.IPlugin;
 import salomon.plugin.IResultComponent;
 import salomon.plugin.ISettingComponent;
 import salomon.plugin.ISettings;
+import salomon.util.gui.Utils;
 
 /**
  * Class used to manage with tasks editing. It enables creating and configuring
