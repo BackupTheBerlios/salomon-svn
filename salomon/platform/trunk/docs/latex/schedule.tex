@@ -1,0 +1,175 @@
+%& --translate-file=cp1250pl
+%bez powyzszej linijki nie dzialaja polskie znaki (musi ona byc w pierwszej linii dokumentu
+%%&platex --translate-file=il2-pl % przeyestowac z tym
+\documentclass[a4paper,12pt]{article}
+\usepackage[polish]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[dvips]{graphicx}
+%\usepackage{intendfirst}
+\usepackage{times}
+\usepackage{epsfig}
+\usepackage{color}
+
+%ustawienie wielkosci akapitu
+%\setlength{\parindent}{0mm}
+%%odstÓp miÓdzy akapitami
+%\setlength{\parskip}{2mm}
+
+%ustawienia rozmiaru tekstu
+    \textwidth 16cm
+    \textheight 24cm 
+    \topmargin -15mm
+    \evensidemargin-3mm
+    \oddsidemargin -3mm
+    
+
+
+\title{Salomon}
+
+\author{Nikodem Jura \emph{(nico@icslab.agh.edu.pl)}
+        \\
+        Krzysztof Rajda \emph{(krzycho@student.uci.agh.edu.pl)}
+        \\
+        Jakub Ga³kowski \emph{(avi@student.uci.agh.edu.pl)}               
+        \\
+        Jakub Paw³owski \emph{(qoooba@student.uci.agh.edu.pl)}}             
+        
+
+\begin{document}
+
+\maketitle
+%wylaczenie numerowania na I stronie
+\thispagestyle{empty}
+
+\begin{center}
+\textcolor{blue}{\underline{salomon.iisg.agh.edu.pl}}
+\end{center}
+
+\newpage
+
+Obecn¹ wersj¹ Salomona jest wersja 1.0. 
+Kolejne zmiany opisane w tym planie bêd¹ wchodzi³y do jego kolejnych wersji (1.1, 1.2 itd). 
+
+\begin{enumerate}
+	\item Stworzenie wersji dystrybucyjnej dla tworców pluginów	
+	\begin{enumerate}
+		\item poprawienie przejrzystoœci kodu		
+		\begin{itemize}
+			\item refaktoring kodu klas i pakietów
+			\item zmiana klas do obs³ugi bazy danych			
+			\begin{itemize}
+				\item nowe klasy dla poszczególnych typów zapytañ
+				\item wykorzystanie zapytañ
+			\end{itemize}
+			\item refaktoring kodu w klasach GUI
+			\item support dla Javy 1.5
+			\item dok³adne odseparowanie GUI od logiki
+		\end{itemize}
+		\item zamieniæ klasy platformy u¿ywane przez pluginy na interfejsy
+		\item zdefiniowaæ interfejsy dla klas zarz¹dzaj¹cych strukturami danych
+		\item nowa serializacja
+		\item przyk³adowy plugin (wysokie ryzyko)
+		\item odseparowaæ kontrolery od reszty klas		
+	\end{enumerate}
+
+	Prace zwi¹zane z przygotowaniem wersji w postaci paczki \emph{jar} dla twórców pluginów s¹ ju¿ dalece posuniête, przeprowadzony zosta³ refaktoring kodu i wydzielenie czêœci, która bêdzie wchodzi³a w sk³ad paczki dla atorów pluginów.
+	
+	Nie wszystkie wymienione dzia³ania musz¹ znaleŸæ siê w tej wersji, np. refaktoring kodu w klasach GUI czy odseparowanie go 	od logiki nie jest z punktu widzenia twórcy pluginu istotne i jest spraw¹ wewnêtrznej implementacji samej platformy.
+	Najwa¿niejsz¹ czêœci¹ tego punktu jest zdefiniowanie interfejsów dla klas zarz¹dzaj¹cych strukturami danych. Od ich odpowiedniego zdefiniowania zale¿y stopieñ funkcjonalnoœci platformy. By móc przewidzieæ, jaka funkcjonalnoœæ mo¿e byæ potrzebna, konieczne jest zaimplementowanie przyk³adowego pluginu operuj¹cego np. na zbiorach danych i regu³ach. Punkty te s¹ obarczone najwiêkszym ryzykiem i mog¹ opóŸniæ zakoñczenie ca³ego etapu. Jego zakoñczenie jest wymagane do stworzenia wersji 1.1 Salomona.	
+	
+	\item Rozbudowa funkcjonalnoœci platformy	
+	\begin{itemize}
+		\item obs³uga nowych typów danych		
+		\begin{itemize}
+			\item dodanie obs³ugi atrybutów
+			\item dodanie obs³ugi regu³
+			\item dodanie obs³ugi drzew
+		\end{itemize}
+		\item statystyki dla zadañ
+		\item wersjonowanie pluginów
+		\item wprowadzenie kategorii dla pluginów
+		\item prezentacja pluginów w formie drzewiastej
+		\item prezentacja stanu zadañ w formie graficznej
+		\item nowa warstwa - solution (do wspó³pracy z danymi zapisanymi w osobnych bazach)			
+	\end{itemize}
+	
+			Etap bêdzie realizowany stopniowo, nie wszystkie zmiany wejd¹ do nastêpnej wersji Salomona (1.1). Do tej wersji planuje siê dodanie tylko obs³ugi regu³. Do kolejnych wersji wprowadzana bêdzie obs³uga kolejnych typów danych oraz pozosta³e funkcjonalnoœci. Najwa¿niejszym punktem tego etapu jest dodanie obs³ugi regu³, która to jest konieczna by stworzyæ wersjê dla twórców pluginu, jest to najbardziej ryzykowny punkt etapu.
+
+	
+	\item Nowe komponenty graficzne	
+	\begin{itemize}
+		\item uniwesalny wyœwietlaj¹cy dane z tabeli		
+		\item dla poszczególnych struktur danych
+		\begin{itemize}
+			\item komponent dla zbiorów danych
+			\item komponent dla atrybutów
+			\item komponent dla regu³
+			\item komponent dla drzew			
+		\end{itemize}
+		\item dla obiektów sk³adaj¹cych siê na system		
+		\begin{itemize}
+			\item komponent dla projektów
+			\item komponent dla zadañ
+			\item komponent dla pluginów
+			\item komponent dla solutionów
+		\end{itemize}		
+	\end{itemize}
+	
+			Etap ten s³u¿y g³ównie poprawie funkcjonalnoœci interfejsu u¿ytkownika. Bêdzie on realizowany wraz z dodawaniem obs³ugi kolejnych typów danych. W zwi¹zku z kosmetycznym znaczeniem, nie wi¹¿e siê z du¿ym ryzykiem.
+
+	
+	\item Nowe kontrolery	
+	\begin{itemize}
+		\item Salomon jako biblioteka
+		\item œrodowisko dla pojedynczego pluginu						
+	\end{itemize}	
+	
+	Etap ten obejmuje rozszerzenie mo¿liwoœci integracji lub wykorzystana Salomona z przez inne systemy. Jest on planowany powy¿ej wersji 1.2, w zwi¹zku z czym nie bêdzie na razie dok³adnie rozwa¿any.
+		
+	\item Importer baz danych
+	\begin{itemize}
+		\item informacje o strukturze bazy danych
+		\item importer dla poszczególnych typów baz		
+		\begin{itemize}
+			\item Firebird
+			\item Oracle
+			\item Postgres
+		\end{itemize}
+	\end{itemize}
+	
+	Dodanie importera baz danych planowane jest po zaimplementowaniu obs³ugi wszystkich typów danych (regu³, drzew itp), najwczeœniej w wersji 1.4 systemu.
+		
+	%\item Poprawa wspó³bie¿noœci
+	
+	\item Inne	
+	\begin{itemize}
+		\item przet³umaczyæ zasoby na angielski
+		\item batchmode
+		\item wybór kontrolerów na etapie instalacji
+	\end{itemize}
+	
+	Prace w planowane w tym etapie realizowane bêd¹ w okresie mniejszego obci¹¿enia innymi pracami, nie planuje siê jeszcze konkretnych wersji, do których mia³yby zostaæ w³¹czone.
+	
+	\item Dokumentacja	
+	\begin{itemize}
+		\item poprawiæ wprowadzenie
+		\item przet³umaczyæ je na angielski
+		\item dodanie/modyfikacja diagramów klas, use-case, sekwencji
+		\item utworzenie prezentacji w Latex - u
+		\item utworzenie portalu dla Salomona (maven)
+	\end{itemize}
+	
+	Dokumentacja systemu rozwijana ma byæ na bie¿¹co, wraz z wprowadzanymi zmianami. Na podstawie zebranego dotychczas doœwiadczenia mo¿na twierdziæ, ¿e jest on obarczony du¿ym ryzykiem i trzeba na niego zwróciæ szczególn¹ uwagê.
+	
+	\item Testy	
+	\begin{itemize}
+		\item JUnit - testy jednostkowe dla klas, które da siê w ten sposób przetestowaæ
+		\item JUnit - GUI testy
+		\item prezentacja wyników testów na stronie
+	\end{itemize}
+	
+	Testy systemu tworzone s¹ na bie¿¹co, wraz z wprowadzanymi zmianami (dotyczy to \emph{JUnit}). W przysz³oœci planowane jest uruchomienie automatycznych nocnych testów. Etap ten nie jest obarczony du¿ym ryzykiem.
+	
+\end{enumerate}
+
+\end{document}
