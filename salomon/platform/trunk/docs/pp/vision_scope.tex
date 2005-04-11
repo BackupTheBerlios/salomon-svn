@@ -1,11 +1,8 @@
 \documentclass[a4paper]{article}
 \usepackage[polish]{babel}
-\usepackage[latin2]{inputenc}
-\usepackage{polski}
-\usepackage{amsfonts}
+\usepackage[cp1250]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage[dvips]{graphicx}
-%\usepackage{pldoc}
 
 \pagestyle{headings}
 \textwidth      15.5cm
@@ -68,65 +65,44 @@ System przetwarzania wiedzy\\}
 \newpage
 
 \section{Wstêp}
-Salomon to system do wydobywania wiedzy z danych zgodnie z metodologi± \emph{Knowlege Mining}.
-Odkrywanie wiedzy to proces iteracyjny, podzielony na etapy. Etapy te mog± tworzyæ cykle. \\
+Salomon to system do wydobywania wiedzy z danych zgodnie z metodologi¹ \emph{Knowlege Mining}.
+Odkrywanie wiedzy to proces iteracyjny, podzielony na etapy. Etapy te mog¹ tworzyæ cykle. \\
 W ka¿dym tym etapie wiedza jest poddawana
 obróbce. Na ka¿dym takim etapie proces odkrywania mo¿e byæ ukierunkowany zgodnie
-z wymaganiami u¿ytkownika. Ka¿dy etap tworzy odrêbn± ca³o¶æ. Czê¶æ etapów jest roz³±czna, zatem mog± byæ wykonywane wspó³bie¿nie. 
+z wymaganiami u¿ytkownika. Ka¿dy etap tworzy odrêbn¹ ca³oœæ. Czêœæ etapów jest roz³¹czna, zatem mog¹ byæ wykonywane wspó³bie¿nie. 
 
-Celem tego projektu jest stworzenie przyjaznego ¶rodowiska do tworzenia, kontrolowania i efektywnego wykonywania zadañ oraz przechowywania zgromadzonej wiedzy.
+Celem tego projektu jest stworzenie przyjaznego œrodowiska do tworzenia, kontrolowania i efektywnego wykonywania zadañ oraz przechowywania zgromadzonej wiedzy.
 
 \subsection{S³ownik}
 
-%\paragraph{Kontroler}
-%Kontroler to jedna instancja Salomona pracuj±ca w okre¶lonym trybie: lokalnym, jako serwer lub klient. 
+Patrz: Dokumentacja istniej¹cej platformy Salomon ver 0.9.
 
-%\paragraph{Menad¿er} 
-%Klasy maj±ce w nazwie s³owo \emph{Manager} pe³ni± szczególn± funkcjê - najczê¶ciej odpowiadaj± za zarz±dzanie innymi klasami, z regu³y tymi, które stanowi± resztê nazwy (np. \emph{PluginManger} zarz±dza pluginami, \emph{ProjectManger} - projektami). G³ównym zadaniem menad¿erów jest odseparowanie wtyczek od operacji bezpo¶rednio na danych.
-
-%\paragraph{Solution} 
-%Terminem tym okre¶lamy strukturê grupuj±c± projekty. Dotycz± one tej samej bazy z rzeczywistymi danymi.
-
-%\paragraph{Projekt}
-%W ramach projektów zapisywana jest konfiguracja systemu przed wykonaniem kolejki zadañ. Zapisywana jest lista zadañ do wykonania, ich ustawienia oraz pluginy, które maj± byæ u¿yte do ich wykonania.
-
-\paragraph{Plugin (wtyczka)}
-Jest to zewnêtrzny program odpowiedzialny za wykonanie konkretnego zadania. Nie jest integraln± czê¶ci± systemu, w razie konieczno¶ci jest pobierany z okre¶lonej lokalizacji i przekazywane jest mu konkretne zadanie do wykonania.
-
-%\paragraph{¦rodowisko}
-%Miejsce w którym przechowywane s± zmienne ¶rodowiskowe.
-
-%\paragraph{Zmienna ¶rodowiskowa}
-%S³u¿y do przekazywania informacji miêdzy kolejnymi zadaniami.
-
-\subsection{Odno¶niki}
-Dokumentacja istniej±cej wersji platfomy Salomon.
+\subsection{Odnoœniki}
+Patrz: Dokumentacja istniej¹cej platformy Salomon ver 0.9.
 
 \section{Zakres problemu}
-Ostateczna wersj± produktu bêdzie system wyposa¿ony w pe³n± obs³ugê zbiorów danych, regu³ i atrybutów oraz mo¿liwo¶æ pracy z danymi zawartymi w ró¿nych bazach danych wraz z kompletn± dokumentacj± techniczn± i u¿ytkow±.
+Ostateczna wersj¹ produktu bêdzie system wyposa¿ony w pe³n¹ obs³ugê zbiorów danych, regu³ i atrybutów oraz mo¿liwoœæ pracy z danymi zawartymi w ró¿nych bazach danych wraz z kompletn¹ dokumentacj¹ techniczn¹ i u¿ytkow¹.
 
-System ten bêdzie siê sk³ada³ z platformy, oraz uruchamianych na niej odpowiednich pluginów. Produkt powinien zawieraæ w pe³ni funkcjonaln± platformê, oraz przyk³adowe aplikacje demonstruj±ce mo¿liwo¶æ realizacji systemu w architekturze platforma-pluginy. 
+System ten bêdzie siê sk³ada³ z platformy, oraz uruchamianych na niej odpowiednich pluginów. Produkt powinien zawieraæ w pe³ni funkcjonaln¹ platformê, oraz przyk³adowe aplikacje demonstruj¹ce mo¿liwoœæ realizacji systemu w architekturze platforma-pluginy. 
 
 \subsection{Nie objête zakresem problemu}
-W zakres produktu nie bêd± wchodziæ w pe³ni funkcjonalne pluginy.
+W zakres produktu nie bêd¹ wchodziæ w pe³ni funkcjonalne pluginy, a jedynie pluginy demonstracyjne.
 
 
-\section{Funkcjonalno¶ci produktu}
+\section{Funkcjonalnoœci produktu}
 
 \subsection{Rozwój Salomona}
-Stabilna wersja Salomona wyposa¿ona ma byæ w pe³n± obs³ugê zbiorów danych oraz mo¿liwo¶æ pracy z danymi zawartymi w ró¿nych bazach danych. W szczególno¶ci
+Stabilna wersja Salomona wyposa¿ona ma byæ w pe³n¹ obs³ugê zbiorów danych oraz mo¿liwoœæ pracy z danymi zawartymi w wybranej bazie danych. W szczególnoœci:
 \begin{itemize}
 \item ma poprawnie obs³ugiwaæ algorytmy oparte na zbiorach danych oraz zaprezentowaæ wyniki ich dzia³ania
 \item ma umo¿liwiaæ obs³ugê algorytmów opartych na regu³ach i  atrybutach i prezentowaæ dzia³anie obliczeñ na nich opartych
-\item nale¿y przygotowaæ kompletn± dokumentacjê techniczn±
+\item nale¿y przygotowaæ kompletn¹ dokumentacjê techniczn¹
 \end{itemize}
-
-%\subsection{Priorytety funkcjonalno¶ci }
 
 \section{Wymagania}
 \subsection{Stosowane standardy}
 \begin{itemize}
-\item projekt bêdzie realizowany w Javie, uwzglêdniaj±c odpowiednie standardy kodowania (zastosowanie odpowiedniego pluginu do platformy Eclipse)
+\item projekt bêdzie realizowany w Javie, uwzglêdniaj¹c odpowiednie standardy kodowania (zastosowanie odpowiedniego pluginu do platformy Eclipse)
 \item jêzyk angielski stosowany do dokumentacji publikowanej w wiki
 \item subversion jako mechanizm wersjonowania plików
 \item ant i maven
@@ -143,16 +119,15 @@ Przewidywane technologie i narzêdzia
 \end{itemize}
 
 \subsection{Wymagania dla systemu}
-Zgodno¶æ z wymaganiami systemowymi dla istniej±cej wersji platformy Salomon.
+Zgodnoœæ z wymaganiami systemowymi dla istniej¹cej wersji platformy Salomon.
 
 \section{Wymagania stawiane dokumentacji}
-Dokumentacja powinna obejmowaæ odpowiednie komentarze w kodzie, oraz dokumenty tworzone podczas realizacji projektu, wzorowane na metodologii MSF.
-%\subsection{Opis instalacji i konfiguracji}
+Dokumentacja powinna obejmowaæ odpowiednie komentarze w kodzie, oraz dokumenty tworzone podczas realizacji projektu, wzorowane na metodologii RUP.
 \subsection{Wersjonowanie i pakiety}
-Dokumentacja i sam projekt bêd± wersjonowane w systemie Subversion (SVN) i dostêpne on-line na stronie internetowej projektu.
+Dokumentacja i sam projekt bêd¹ wersjonowane w systemie Subversion (SVN) i dostêpne on-line na stronie internetowej projektu.
 
 \section{Ryzyko}
-Najbardziej niepewn± czê¶ci± bêdzie realizacja przyk³adowego pluginu, oraz refactoring kodu.
+Najbardziej niepewn¹ czêœci¹ bêdzie realizacja przyk³adowego pluginu, oraz refactoring kodu.
 
 \end{document}
 
