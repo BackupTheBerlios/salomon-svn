@@ -31,7 +31,7 @@ System przetwarzania wiedzy\\}
 
 
 \begin{flushright}
-{\Large \emph{Vision Scope, ver 1.0} }
+{\Large \emph{Vision, ver 1.0} }
 \end{flushright}
 
 \vspace{7cm}
@@ -44,7 +44,7 @@ System przetwarzania wiedzy\\}
   \hline \hline
   31.03.2005 & 1.0 & utworzenie & Leszek Grzanka\\
   \hline
-  &&&\\
+  11.04.2005 & 1.1 & rozbudowa, dostosowanie do RUP & Leszek Grzanka\\
   \hline
   &&&\\
   \hline
@@ -53,6 +53,7 @@ System przetwarzania wiedzy\\}
 
 \[\] \[\] \[\] \[\] \[\] \[\] \[\] \[\] \[\]
 
+% Zaczerpniete z MSF - osoba odpowiedzialna za dokument %
 \begin{flushleft}
 { \Large Autor} \[\]
 \begin{tabular}{|p{3.5cm}||p{3cm}|p{4.5cm}|p{3cm}|}
@@ -64,70 +65,118 @@ System przetwarzania wiedzy\\}
 
 \newpage
 
-\section{Wstêp}
+\section{Wstêp - opis problemu}
 Salomon to system do wydobywania wiedzy z danych zgodnie z metodologi¹ \emph{Knowlege Mining}.
-Odkrywanie wiedzy to proces iteracyjny, podzielony na etapy. Etapy te mog¹ tworzyæ cykle. \\
-W ka¿dym tym etapie wiedza jest poddawana
-obróbce. Na ka¿dym takim etapie proces odkrywania mo¿e byæ ukierunkowany zgodnie
-z wymaganiami u¿ytkownika. Ka¿dy etap tworzy odrêbn¹ ca³oœæ. Czêœæ etapów jest roz³¹czna, zatem mog¹ byæ wykonywane wspó³bie¿nie. 
+\subsection{Proces odkrywania wiedzy}
+Odkrywanie wiedzy to proces iteracyjny, podzielony na etapy. Etapy te mog¹ tworzyæ cykle.
+W ka¿dym tym etapie wiedza jest poddawana obróbce. Na ka¿dym takim etapie proces odkrywania mo¿e byæ ukierunkowany zgodnie z wymaganiami u¿ytkownika. Ka¿dy etap tworzy odrêbn¹ ca³oœæ. Czêœæ etapów jest roz³¹czna, zatem mog¹ byæ wykonywane wspó³bie¿nie. 
+Ka¿dy etap reprezentowany jest przez zadanie, które mo¿na interpretowaæ jako jedn¹ fazê wykonania pewnego algorytmu. Z ka¿dym etapem zwi¹zane s¹ dane wejœciowe, oraz dane konfiguracyjne. Dane wyjœciowe mog¹ pos³u¿yæ jako dane wejœciowe do innych etapów.
+\subsection{Dane,wiedza}
+Wiedza jest pewnego rodzaju struktur¹ (metadane) opisuj¹c¹ powi¹zania pomiêdzy danymi. Typowe zagadnienie w procesie ekstrakcji wiedzy to wydobywanie wiedzy na podstawie zebranych danych (np. okreœlanie struktury danych). Mo¿liwe jest tak¿e wykorzystywanie zebranej, lub wekstraktowanej wiedzy na pewnych danych, w celu udzielenia odpowiedzi na pytania powi¹zane z wiedz¹.
 
-Celem tego projektu jest stworzenie przyjaznego œrodowiska do tworzenia, kontrolowania i efektywnego wykonywania zadañ oraz przechowywania zgromadzonej wiedzy.
+Celem tego projektu jest stworzenie przyjaznego œrodowiska do tworzenia, kontrolowania i efektywnego wykonywania zadañ oraz przechowywania zgromadzonej wiedzy. 
 
 \subsection{S³ownik}
-
 Patrz: Dokumentacja istniej¹cej platformy Salomon ver 0.9.
 
-\subsection{Odnoœniki}
-Patrz: Dokumentacja istniej¹cej platformy Salomon ver 0.9.
+\section{Opis produktu}
+Ostateczna wersj¹ produktu bêdzie system Salomon ver 1.0 wyposa¿ony w pe³n¹ obs³ugê zarz¹dzania etapami przetwarzania wiedzy (zadania), zbiorów danych oraz mo¿liwoœæ pracy z danymi zawartymi w bazie danych wraz z kompletn¹ dokumentacj¹ techniczn¹ i u¿ytkow¹.
 
-\section{Zakres problemu}
-Ostateczna wersj¹ produktu bêdzie system wyposa¿ony w pe³n¹ obs³ugê zbiorów danych, regu³ i atrybutów oraz mo¿liwoœæ pracy z danymi zawartymi w ró¿nych bazach danych wraz z kompletn¹ dokumentacj¹ techniczn¹ i u¿ytkow¹.
+System ten bêdzie siê sk³ada³ z platformy, oraz uruchamianych na niej odpowiednich pluginów. Produkt powinien zawieraæ w pe³ni funkcjonaln¹ platformê, oraz przyk³adowe aplikacje demonstruj¹ce mo¿liwoœæ realizacji systemu w architekturze platforma-pluginy. Konieczne bêdzie tak¿e rozszerzenie platformy ver. 0.9 o warstwê poœredni¹ pomiêdzy pluginami, a baz¹ danych w której przechowywane bêd¹ dane (istnieje w wersji 0.9 taka warstwa, ale poœrednicz¹ca przy dostêpie do wiedzy).
 
-System ten bêdzie siê sk³ada³ z platformy, oraz uruchamianych na niej odpowiednich pluginów. Produkt powinien zawieraæ w pe³ni funkcjonaln¹ platformê, oraz przyk³adowe aplikacje demonstruj¹ce mo¿liwoœæ realizacji systemu w architekturze platforma-pluginy. 
+\subsection{U¿ytkownicy systemu}
+U¿ytkownikami systemu bêd¹ zarówno u¿ytkownicy koñcowi, przeprowadzaj¹cy ekstrakcjê wiedzy, jak i programiœci tworz¹cy nowe pluginy Salomona. Produkt bêdzie udostêpnia³ developerom pluginów zwarte i kompletne œrodowisko do rozwoju algorytmów odpowiedzialnych za ekstrakcjê wiedzy.
 
-\subsection{Nie objête zakresem problemu}
-W zakres produktu nie bêd¹ wchodziæ w pe³ni funkcjonalne pluginy, a jedynie pluginy demonstracyjne.
-
+\subsection{Poza zakresem problemu}
+W zakres produktu nie bêd¹ wchodziæ w pe³ni funkcjonalne pluginy, a jedynie pluginy demonstracyjne. Platforma nie bêdzie realizowaæ wspó³bie¿noœci i rozproszenia, a jedynie przetwarzaæ etapy lokalnie na jednym komputerze.
 
 \section{Funkcjonalnoœci produktu}
 
-\subsection{Rozwój Salomona}
-Stabilna wersja Salomona wyposa¿ona ma byæ w pe³n¹ obs³ugê zbiorów danych oraz mo¿liwoœæ pracy z danymi zawartymi w wybranej bazie danych. W szczególnoœci:
-\begin{itemize}
-\item ma poprawnie obs³ugiwaæ algorytmy oparte na zbiorach danych oraz zaprezentowaæ wyniki ich dzia³ania
-\item ma umo¿liwiaæ obs³ugê algorytmów opartych na regu³ach i  atrybutach i prezentowaæ dzia³anie obliczeñ na nich opartych
-\item nale¿y przygotowaæ kompletn¹ dokumentacjê techniczn¹
-\end{itemize}
+\subsection{U¿ytkownicy koñcowi}
+U¿ytkownicy koñcowi bêd¹ mogli uzyskaæ dostêp do systemu poprzez graficzny interfejs u¿ytkownika (GUI). Powinien on umo¿liwiaæ wykonanie nastêpuj¹cych akcji:
+\begin{enumerate}
+	\item Stworzenie grupy projektów (nazywanej przez nas obiektem \emph{Solution})\\
+	U¿ytkownik bêdzie móg³ skonfigurowaæ m.in. po³¹czenie z baz¹ danych.
+	
+	\item Operacje na projekcie:
+		\begin{itemize}
+			\item Uruchomienie projektu\\
+            Akcja ta powoduje wykonanie zadañ zgromadzonych w tym projekcie. Wykonanie tej akcji wymaga wczeœniejszej konfiguracji w postaci specyfikacji listy zadañ do wykonania oraz ich indywidualnej konfiguracji.  
+			\item Przerwanie wykonywania projektu\\
+            Przerywa aktualnie wykonywana listê zadañ. Jeœli aktualnie wykonywane jest zadnie, to czy je przerwaæ le¿y w gestii u¿ytkownika. Jeœli dokona on wyboru, ¿e zadanie ma byæ przerwane natychmiast, wyniki z poprzedniego zadnia nie ulegaj¹ zmianie, w przeciwnym wypadku projekt zostaje zakoñczony po zakoñczeniu bie¿¹cego zadnia
+			\item Monitorowanie pracy\\
+            W podstawowej wersji monitorowanie wykonania polegaæ bêdzie na wyœwietleniu paska postêpu, którego stan bêdzie zmieniany po ka¿dym wykonaniu zadnia atomowego. W nastêpnych wersjach mo¿e pojawiæ siê mo¿liwoœæ rejestracji zdarzeñ aktualnie wykonywanego zadania informuj¹cych o jego stanie.
+            
+			\item Przegl¹danie rezultatów\\
+            Ka¿de zadanie automatycznie specyfikuje jak bêdzie prezentowaæ swoje wyniki, wiêc po wybraniu tej akcji inicjatywa prezentacji wyników spada na zadanie. Domyœlnie prezentowane s¹ wyniki ostatniego zadnia koñcz¹cego przetwarzanie, mo¿emy jednak, podczas wykonywania projektu, przejrzeæ wyniki ka¿dego z zadañ cz¹stkowych z osobna.
+		\end{itemize}
+
+	\item Operacje na zadaniach:
+		\begin{itemize}
+			\item Dodanie\\
+            Akcja dodania nowego zadania polega na wstawieniu do kolejki zadañ do wykonania, pluginu implementuj¹cego funkcjonalnoœæ tego zadania. 
+            Dodatkowo okreœlamy nastêpuj¹ce po nim zadnie oraz zadanie poprzedzaj¹ce, oraz dokonujemy edycji ustawieñ zadania.          
+			\item Usuniêcie\\
+            Akcja usuwa aktualnie zaznaczone zadnie. 
+			\item Organizowanie zadañ, ustawianie poprzedników, nastêpników\\
+            Pozwala na zmianê aktualnej kolejnoœci wykonywania zadañ. 
+		\end{itemize}
+	
+	\item Administracja
+		\begin{itemize}
+			\item Operacje na pluginach: dodanie, usuniêcie\\
+            Akcja ta pozwala rozszerzyæ mo¿liwoœci platformy przez dodanie pluginów. Pluginy pozwalaj¹ wykonywaæ nowe rodzaje zadañ b¹dŸ rozszerzyæ mo¿liwoœci ju¿ istniej¹cych w systemie i importowaæ wiedzê z nowych Ÿróde³.
+			\item Konfiguracja\\
+            Konfiguracja pozwala nam dostosowaæ system do w³asnych potrzeb, podczas tego kroku mo¿emy wyspecyfikowaæ wszystkie parametry pracy systemu jako ca³oœci, czyli parametry takie jak lokalizacja bazy danych b¹dŸ rozproszenie systemu. 
+		\end{itemize}
+
+\end{enumerate}
+
+% TODO
+\subsection{Developerzy}
+
+\begin{enumerate}
+\item Magazynowanie wiedzy
+\item Magazynowanie danych
+\end{enumerate}
+
+\section{Priorytety funkcjonalnoœci}
+Pierwszorzêdnym celem jest zmodyfikowanie i rozszerzenie wersji 0.9 w takim stopniu, aby mo¿liwe by³o realizowanie testowych pluginów i spe³nia³a ona podstawow¹ funkcjonalnoœæ, wymagan¹ od j¹dra systemu. W drugiej kolejnoœci jest dopiero realizowanie przyk³adowych wtyczek, rozbudowa GUI dla u¿ytkowników koñcowych, czy te¿ skompletowanie pe³nej dokumentacji u¿ytkownika.
 
 \section{Wymagania}
 \subsection{Stosowane standardy}
-\begin{itemize}
-\item projekt bêdzie realizowany w Javie, uwzglêdniaj¹c odpowiednie standardy kodowania (zastosowanie odpowiedniego pluginu do platformy Eclipse)
-\item jêzyk angielski stosowany do dokumentacji publikowanej w wiki
-\item subversion jako mechanizm wersjonowania plików
-\item ant i maven
-\end{itemize}
-
-Przewidywane technologie i narzêdzia
-\begin{itemize}
-\item Eclipse
-\item Subversion (np Tortoise, plugin do Eclipse'a)
-\item Firebird
-\item Ant
-\item Junit
-\item Abbot
-\end{itemize}
+Patrz: Dokumentacja istniej¹cej platformy Salomon ver 0.9.
 
 \subsection{Wymagania dla systemu}
 Zgodnoœæ z wymaganiami systemowymi dla istniej¹cej wersji platformy Salomon.
 
 \section{Wymagania stawiane dokumentacji}
-Dokumentacja powinna obejmowaæ odpowiednie komentarze w kodzie, oraz dokumenty tworzone podczas realizacji projektu, wzorowane na metodologii RUP.
+Dokumentacja powinna obejmowaæ odpowiednie komentarze w kodzie, oraz dokumenty tworzone podczas realizacji projektu, wzorowane na metodologii RUP. W szczególnoœci, dokumenty powstaj¹ce w kolejnych fazach bêd¹ obejmowaæ:
+\begin{itemize}
+\item Vision\_Scope
+\item Software Development Plan (SDP)
+\item Iteration Description (ID)
+\item System Architecture Description (SAD)
+dokument SAD, wraz z istniej¹c¹ dokumentacj¹ ver. 0.9 stanowiæ bêd¹ podstawowe Ÿród³o wiedzy dla developerów pluginów
+\item Manual (M)\\
+manual przeznaczony jest dla koñcowych u¿ytkowników
+\end{itemize}
+
+Dokumentacja tworzona bêdzie w systemie \LaTeX.
+
+
 \subsection{Wersjonowanie i pakiety}
 Dokumentacja i sam projekt bêd¹ wersjonowane w systemie Subversion (SVN) i dostêpne on-line na stronie internetowej projektu.
 
 \section{Ryzyko}
-Najbardziej niepewn¹ czêœci¹ bêdzie realizacja przyk³adowego pluginu, oraz refactoring kodu.
+
+\begin{itemize}
+\item wdra¿anie nowych cz³onków zespo³u\\
+pewne opóŸnienia czasowe spowodowane by³y nieprzewidzianymi trudnoœciami z wdro¿eniem narzêdzi u¿ywanych przy pracy z projektem, takich jak Ant,Subversion. Z powodu braku wyspecyfikowania w dokumentacji projektowej, jakich konkretnie wersji narzêdzi trzeba u¿ywaæ (tak, aby dostosowaæ je do u¿ywanej Javy 1.5), powsta³y problemy zwi¹zane z kompilacj¹ i instalacj¹ platformy Salomon ver 0.9.\\
+Ryzyko nie by³o przewidziane.
+\item ryzyko wydajnoœciowe\\
+istotnym czynnikiem mog¹cym wp³yn¹æ na wartoœæ koñcowego produktu mo¿e byæ niedostosowanie platformy do rozmiaru przetwarzanych danych. Mo¿liwe jest i¿ demonstracyjne pluginy nie poradz¹ sobie z ekstrakcj¹ wiedzy z du¿ej iloœci danych. Konieczne bêdzie przeprowadzenie testów wydajnoœciowych.
+\end{itemize}
 
 \end{document}
 
