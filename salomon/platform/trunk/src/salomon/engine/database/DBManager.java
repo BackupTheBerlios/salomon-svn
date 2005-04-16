@@ -63,9 +63,7 @@ public final class DBManager
 		_user = Config.getString("USER"); //$NON-NLS-1$
 		_passwd = Config.getString("PASSWD"); //$NON-NLS-1$
 		_isEmbedded = Config.getString("EMBEDDED").equalsIgnoreCase("Y");
-		boolean useCurrDir = Config.getString("USE_CURR_DIR").equalsIgnoreCase(
-				"Y");
-		if (useCurrDir) {
+		if (_isEmbedded) {
 			_dataBasePath = Config.CURR_DIR + Config.FILE_SEPARATOR
 					+ _dataBasePath;
 		}
@@ -328,7 +326,7 @@ public final class DBManager
 		StringBuilder connectString = new StringBuilder("jdbc:firebirdsql:");
 		if (_isEmbedded) {
 			connectString.append("embedded:");
-			connectString.append(Config.FILE_SEPARATOR);
+			//connectString.append(Config.FILE_SEPARATOR);
 		} else {
 			connectString.append(_hostName).append(":");
 		}
