@@ -31,7 +31,7 @@ System przetwarzania wiedzy\\}
 
 
 \begin{flushright}
-{\Large \emph{Vision, ver 1.0} }
+{\Large \emph{Vision, ver 1.2} }
 \end{flushright}
 
 \vspace{7cm}
@@ -46,22 +46,22 @@ System przetwarzania wiedzy\\}
   \hline
   11.04.2005 & 1.1 & rozbudowa, dostosowanie do RUP & Leszek Grzanka\\
   \hline
-  &&&\\
+  17.04.2005 & 1.2 & okreœlenie priorytetów zadañ, drobne poprawki & Nikodem Jura\\
   \hline
 \end{tabular}
 \end{flushleft}
 
-\[\] \[\] \[\] \[\] \[\] \[\] \[\] \[\] \[\]
+%\[\] \[\] \[\] \[\] \[\] \[\] \[\] \[\] \[\]
 
 % Zaczerpniete z MSF - osoba odpowiedzialna za dokument %
-\begin{flushleft}
-{ \Large Autor} \[\]
-\begin{tabular}{|p{3.5cm}||p{3cm}|p{4.5cm}|p{3cm}|}
-  \hline 
-  Leszek Grzanka & Tester,Developer & grzanka@student.agh.edu.pl & 31.03.2005 \\
-  \hline
-\end{tabular}
-\end{flushleft}
+%\begin{flushleft}
+%{ \Large Autor} \[\]
+%\begin{tabular}{|p{3.5cm}||p{3cm}|p{4.5cm}|p{3cm}|}
+%  \hline 
+%  Leszek Grzanka & Tester,Developer & grzanka@student.agh.edu.pl & 31.03.2005 \\
+%  \hline
+%\end{tabular}
+%\end{flushleft}
 
 \newpage
 
@@ -80,7 +80,7 @@ Celem tego projektu jest stworzenie przyjaznego œrodowiska do tworzenia, kontrol
 Patrz: Dokumentacja istniej¹cej platformy Salomon ver 0.9.
 
 \section{Opis produktu}
-Ostateczna wersj¹ produktu bêdzie system Salomon ver 1.0 wyposa¿ony w pe³n¹ obs³ugê zarz¹dzania etapami przetwarzania wiedzy (zadania), zbiorów danych oraz mo¿liwoœæ pracy z danymi zawartymi w bazie danych wraz z kompletn¹ dokumentacj¹ techniczn¹ i u¿ytkow¹.
+Ostateczna wersj¹ produktu bêdzie system Salomon ver 1.0 wyposa¿ony w pe³n¹ obs³ugê zarz¹dzania etapami przetwarzania wiedzy (zadania), zbiorów danych oraz mo¿liwoœæ pracy z danymi zawartymi w bazie danych wraz z dokumentacj¹ techniczn¹ i u¿ytkow¹.
 
 System ten bêdzie siê sk³ada³ z platformy, oraz uruchamianych na niej odpowiednich pluginów. Produkt powinien zawieraæ w pe³ni funkcjonaln¹ platformê, oraz przyk³adowe aplikacje demonstruj¹ce mo¿liwoœæ realizacji systemu w architekturze platforma-pluginy. Konieczne bêdzie tak¿e rozszerzenie platformy ver. 0.9 o warstwê poœredni¹ pomiêdzy pluginami, a baz¹ danych w której przechowywane bêd¹ dane (istnieje w wersji 0.9 taka warstwa, ale poœrednicz¹ca przy dostêpie do wiedzy).
 
@@ -133,15 +133,32 @@ U¿ytkownicy koñcowi bêd¹ mogli uzyskaæ dostêp do systemu poprzez graficzny inter
 \end{enumerate}
 
 % TODO
-\subsection{Developerzy}
+%\subsection{Developerzy}
 
-\begin{enumerate}
-\item Magazynowanie wiedzy
-\item Magazynowanie danych
-\end{enumerate}
+%\begin{enumerate}
+%\item Magazynowanie wiedzy
+%\item Magazynowanie danych
+%\end{enumerate}
 
 \section{Priorytety funkcjonalnoœci}
-Pierwszorzêdnym celem jest zmodyfikowanie i rozszerzenie wersji 0.9 w takim stopniu, aby mo¿liwe by³o realizowanie testowych pluginów i spe³nia³a ona podstawow¹ funkcjonalnoœæ, wymagan¹ od j¹dra systemu. W drugiej kolejnoœci jest dopiero realizowanie przyk³adowych wtyczek, rozbudowa GUI dla u¿ytkowników koñcowych, czy te¿ skompletowanie pe³nej dokumentacji u¿ytkownika.
+Pierwszorzêdnym celem jest ustabilizowanie i rozszerzenie wersji 0.9 w takim stopniu, aby mo¿liwe by³o realizowanie testowych pluginów i spe³nia³a ona podstawow¹ funkcjonalnoœæ, wymagan¹ od j¹dra systemu. W drugiej kolejnoœci jest dopiero realizowanie przyk³adowych wtyczek, rozbudowa GUI dla u¿ytkowników koñcowych, czy te¿ skompletowanie pe³nej dokumentacji u¿ytkownika.
+
+Zadania do wykonania w ramach tej wersji wg ich priorytetów.
+
+\begin{itemize}	
+	\item dodanie mo¿liwoœci pod³¹czania siê do zewnêtrznych baz danych (zaimplementowanie warstwy \emph{Solution})	
+	\begin{itemize}
+		\item reprezentacja warstwy w bazie danych
+		\item zintegrowanie jej z reszt¹ systemu
+		\item dodanie mo¿liwoœci zarz¹dzania ni¹ z GUI
+	\end{itemize}		
+	\item usuniêcie podstawowych bugów, zwi¹zanych z przeprowadzonym wczeœniej refactoringiem	
+	\item implementacja obs³ugi operacji na zbiorach danych	
+	\begin{itemize}
+		\item zaimplementowanie zdefiniowanych ju¿ interfejsów
+	\end{itemize}	
+	\item zaimplementowanie pluginu wykorzystuj¹cego podstawowe operacje do manipulacji zbiorami danych
+\end{itemize}
 
 \section{Wymagania}
 \subsection{Stosowane standardy}
@@ -151,26 +168,15 @@ Patrz: Dokumentacja istniej¹cej platformy Salomon ver 0.9.
 Zgodnoœæ z wymaganiami systemowymi dla istniej¹cej wersji platformy Salomon.
 
 \section{Wymagania stawiane dokumentacji}
-Dokumentacja powinna obejmowaæ odpowiednie komentarze w kodzie, oraz dokumenty tworzone podczas realizacji projektu, wzorowane na metodologii RUP. W szczególnoœci, dokumenty powstaj¹ce w kolejnych fazach bêd¹ obejmowaæ:
-\begin{itemize}
-\item Vision\_Scope
-\item Software Development Plan (SDP)
-\item Iteration Description (ID)
-\item System Architecture Description (SAD)
-dokument SAD, wraz z istniej¹c¹ dokumentacj¹ ver. 0.9 stanowiæ bêd¹ podstawowe Ÿród³o wiedzy dla developerów pluginów
-\item Manual (M)\\
-manual przeznaczony jest dla koñcowych u¿ytkowników
-\end{itemize}
-
-Dokumentacja tworzona bêdzie w systemie \LaTeX.
-
+Dokumentacja powinna obejmowaæ odpowiednie komentarze w kodzie, oraz dokumenty tworzone podczas realizacji projektu, wzorowane na metodologii RUP. 
+Dokumentacja tworzona bêdzie w systemie \LaTeX, w jêzyku polskim. 
 
 \subsection{Wersjonowanie i pakiety}
 Dokumentacja i sam projekt bêd¹ wersjonowane w systemie Subversion (SVN) i dostêpne on-line na stronie internetowej projektu.
 
 \section{Ryzyko}
-
 \begin{itemize}
+
 \item wdra¿anie nowych cz³onków zespo³u\\
 pewne opóŸnienia czasowe spowodowane by³y nieprzewidzianymi trudnoœciami z wdro¿eniem narzêdzi u¿ywanych przy pracy z projektem, takich jak Ant,Subversion. Z powodu braku wyspecyfikowania w dokumentacji projektowej, jakich konkretnie wersji narzêdzi trzeba u¿ywaæ (tak, aby dostosowaæ je do u¿ywanej Javy 1.5), powsta³y problemy zwi¹zane z kompilacj¹ i instalacj¹ platformy Salomon ver 0.9.\\
 Ryzyko nie by³o przewidziane.
