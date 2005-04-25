@@ -1,0 +1,124 @@
+\documentclass[a4paper]{article}
+\usepackage[polish]{babel}
+\usepackage[cp1250]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[dvips]{graphicx}
+%\usepackage{colortbl}
+
+\pagestyle{headings}
+\textwidth      15.5cm
+\oddsidemargin    .1cm
+\evensidemargin   .1cm
+
+\begin{document}
+
+\thispagestyle{empty}
+
+\begin{minipage}{5cm}
+\includegraphics[scale=0.7]{salomon.eps}
+\end{minipage}
+\begin{minipage}{10cm}
+\begin{center}
+{\Large Salomon\\
+System przetwarzania wiedzy\\}
+\end{center}
+\end{minipage}
+
+\vspace*{0.5cm}
+
+\hrulefill
+
+\vspace*{1cm}
+
+
+\begin{flushright}
+{\Large \emph{Vision, ver 1.0} }
+\end{flushright}
+
+%\vspace{7cm}
+
+\begin{flushleft}
+{ \Large Historia wersji }\[\]
+\begin{tabular}{|p{2.5cm}||p{1.5cm}|p{6cm}|p{3.5cm}|}
+  \hline
+  Data & Wersja & Opis & Autor \\
+  \hline \hline
+  25.04.2005 & 1.0 & utworzenie & \emph{Krzysztof Rajda}\\
+  \hline
+\end{tabular}
+\end{flushleft}
+
+%\[\] \[\] \[\] \[\] \[\] \[\] \[\] \[\] \[\]
+
+% Zaczerpniete z MSF - osoba odpowiedzialna za dokument %
+%\begin{flushleft}
+%{ \Large Autor} \[\]
+%\begin{tabular}{|p{3.5cm}||p{3cm}|p{4.5cm}|p{3cm}|}
+%  \hline 
+%  Leszek Grzanka & Tester,Programista & grzanka@student.agh.edu.pl & 31.03.2005 \\
+%  \hline
+%\end{tabular}
+%\end{flushleft}
+
+\newpage
+
+\section{Wstêp}
+Salomon to system do wydobywania wiedzy z danych zgodnie z metodologi¹ \emph{Knowlege Mining}.
+
+\section{Orgranizacja pojektu}
+
+	\begin{flushleft}
+		%{ \Large Historia wersji }\[\]
+		\begin{tabular}{|l|l|}
+  		\hline
+  		Osoba & Rola wg. RUP \\
+  		\hline \hline
+  		Analysts & Krzysztof Rajda \\
+  		\hline
+  		Project Managers & Nikodem Jura\\
+  		\hline
+  		Process Engineers & Leszek Grzanka\\
+  		\hline
+  		Architects & Krzysztof Rajda\\
+  		\hline
+  		Developers & all \\
+  		\hline
+  		Testers & Jakub Ga³kowski \\
+  		\hline
+		\end{tabular}
+	\end{flushleft}
+
+
+\section{Terminarz projektu}
+\subsection{Podzia³ projektu na fazy i iteracje}
+	\begin{flushleft}
+		%{ \Large Historia wersji }\[\]
+%		\begin{tabular}{|p{{0.75\textwidth}}|p{7cm}|p{7cm}|p{7cm}|p{7cm}|}
+		\begin{tabular}{|l|l|l|l|p{5cm}|}
+  		\hline
+  		Faza & Iteracja & G³ówne cele & Produkty & Planowe rozpoczêcie/zakoñczenie \\
+  		\hline 
+  		\hline
+  		Inception &  I1 & Rozpoznanie problemu i otoczenia & Vision i SDP & \\
+  		\hline
+  		Eleboration & E1 & & Dokument SAD &  \\
+  		\hline
+  		Construction & C1 & stabilna wersja Salomona & &  \\
+  		\hline
+  		Construction & C2 & poprawna obs³uga zbiorów danych & &  \\
+  		\hline
+  		Transition & T1 & prezentacja dzia³ania zbiorów danych& &  \\
+  		\hline
+		\end{tabular}
+	\end{flushleft}
+
+\subsection{Diagram Gantt'a}
+\section{Plan akceptacji produktu}
+Akceptacja produktu bêdzie kilkuetapowa:
+\begin{itemize}
+	\item co nocne testy jednostkowe (dodaæ tutaj wszystkie rodzaje testów?)
+	\item przedstawienie klientowi do akceptacji produktu fazy \emph{elaboration},
+	\item prezentacja klientowi ostatecznego produktu.
+\end{itemize}
+\end{document}
+
