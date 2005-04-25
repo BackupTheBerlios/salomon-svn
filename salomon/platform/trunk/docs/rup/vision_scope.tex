@@ -48,22 +48,10 @@ System przetwarzania wiedzy\\}
   \hline
   17.04.2005 & 1.2 & okreœlenie priorytetów zadañ, drobne poprawki & \emph{Nikodem Jura}\\
   \hline    
-  25.04.2005 & 1.3 & podzia³ funkcjonalnoœci i priorytetów ze wzgêdu na docelowe grupy u¿ytkowników & \emph{Nikodem Jura}\\
+  25.04.2005 & 1.3 & podzia³ funkcjonalnoœci i priorytetów ze wzglêdu na docelowe grupy u¿ytkowników & \emph{Nikodem Jura}\\
   \hline
 \end{tabular}
 \end{flushleft}
-
-%\[\] \[\] \[\] \[\] \[\] \[\] \[\] \[\] \[\]
-
-% Zaczerpniete z MSF - osoba odpowiedzialna za dokument %
-%\begin{flushleft}
-%{ \Large Autor} \[\]
-%\begin{tabular}{|p{3.5cm}||p{3cm}|p{4.5cm}|p{3cm}|}
-%  \hline 
-%  Leszek Grzanka & Tester,Programista & grzanka@student.agh.edu.pl & 31.03.2005 \\
-%  \hline
-%\end{tabular}
-%\end{flushleft}
 
 \newpage
 
@@ -82,7 +70,7 @@ Celem tego projektu jest stworzenie przyjaznego œrodowiska do tworzenia, kontrol
 Patrz: Dokumentacja istniej¹cej platformy \emph{Salomon ver 0.9}.
 
 \section{Opis produktu}
-Ostateczna wersj¹ produktu bêdzie system \emph{Salomon ver 1.}0 wyposa¿ony w pe³n¹ obs³ugê zarz¹dzania etapami przetwarzania wiedzy (zadania), zbiorów danych oraz mo¿liwoœæ pracy z danymi zawartymi w bazie danych wraz z dokumentacj¹ techniczn¹ i u¿ytkow¹.
+Ostateczna wersj¹ produktu bêdzie system \emph{Salomon ver 1.0} wyposa¿ony w pe³n¹ obs³ugê zarz¹dzania etapami przetwarzania wiedzy (zadania), zbiorów danych oraz mo¿liwoœæ pracy z danymi zawartymi w bazie danych wraz z dokumentacj¹ techniczn¹ i u¿ytkow¹.
 
 System ten bêdzie siê sk³ada³ z platformy, oraz uruchamianych na niej odpowiednich wtyczek. Produkt powinien zawieraæ w pe³ni funkcjonaln¹ platformê, oraz przyk³adowe aplikacje demonstruj¹ce mo¿liwoœæ realizacji systemu w architekturze platforma-wtyczki. Konieczne bêdzie tak¿e rozszerzenie platformy ver. 0.9 o warstwê poœredni¹ pomiêdzy wtyczkami, a baz¹ danych w której przechowywane bêd¹ dane (istnieje w wersji 0.9 taka warstwa, ale poœrednicz¹ca przy dostêpie do wiedzy).
 
@@ -123,7 +111,7 @@ U¿ytkownicy koñcowi bêd¹ mogli uzyskaæ dostêp do systemu poprzez graficzny inter
 			\item Organizowanie zadañ, ustawianie poprzedników, nastêpników\\
             Pozwala na zmianê aktualnej kolejnoœci wykonywania zadañ. 
 		\end{itemize}
-	
+
 	\item Administracja
 		\begin{itemize}
 			\item Operacje na wtyczkach: dodanie, usuniêcie\\
@@ -139,17 +127,17 @@ U¿ytkownicy koñcowi bêd¹ mogli uzyskaæ dostêp do systemu poprzez graficzny inter
 Ta grupa u¿ytkowników korzystaæ bêdzie z API udostêpnianego przez Salomona, w celu jego dalszego rozwijania. Konieczne jest uzupe³nienie i pe³ne zaimplementowanie zdefiniowanych ju¿ interfejsów.
 
 \begin{enumerate}
-	\item Magazynowanie wiedzy		
-	
+	\item Magazynowanie wiedzy
+
 	\begin{itemize}
-		\item podstawowe operacje na zbiorach danych		
+		\item podstawowe operacje na zbiorach danych
 		\begin{itemize}
 			\item zarz¹dzanie nimi -- tworzenie, modyfikacja, usuwanie
 			\item operowanie na nich -- sumowanie, obliczanie przeciêcia, ró¿nicy
 		\end{itemize}
 	\end{itemize}
 	\item Magazynowanie danych
-		
+
 	Dane magazynowane bêd¹ w zewnêtrznych bazach danych. Konieczne jest dostarczenie warstwy poœrednicz¹cej w dostêpie do nich -- \emph{(Solution)}. 
 	\begin{itemize}
 		\item reprezentacja warstwy \emph{Solution} w bazie danych
@@ -165,18 +153,18 @@ Pierwszorzêdnym celem jest ustabilizowanie i rozszerzenie wersji 0.9 w takim sto
 Zadania do wykonania w ramach tej wersji wg ich priorytetów z podzia³em na u¿ytkowników docelowych:
 
 \begin{enumerate}
-	\item U¿ytkownicy koñcowi	
+	\item U¿ytkownicy koñcowi
 	\begin{itemize}
 		\item dodanie mo¿liwoœci zarz¹dzania pod³¹czaniem do zewnêtrznych baz danych z poziomu GUI
 		\item dostarczenie wtyczki prezentuj¹cej podstawowe operacje na zbiorach danych (tworzenie, sumowanie)
 	\end{itemize}
-	
-	\item Programiœci		
+
+	\item Programiœci
 	\begin{itemize}
 		\item obs³uga warstwy \emph{Solution}
 		\item obs³uga podstawowych operacji na zbiorach danych (zarz¹dzanie oraz operowanie na nich)
 	\end{itemize}
-	
+
 \end{enumerate}
 
 \section{Wymagania}
@@ -194,4 +182,3 @@ Dokumentacja tworzona bêdzie w systemie \LaTeX, w jêzyku polskim. Dodatkowo czêœ
 Dokumentacja i sam projekt bêd¹ wersjonowane w systemie \emph{Subversion (SVN)} i dostêpne on-line na stronie internetowej projektu.
 
 \end{document}
-
