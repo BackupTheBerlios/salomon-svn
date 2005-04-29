@@ -21,17 +21,77 @@
 
 package salomon.platform.data.dataset;
 
+import salomon.platform.IInfo;
+import salomon.platform.IUniqueId;
+import salomon.platform.exception.PlatformException;
+
 /**
  * 
  */
 public interface IDataSet
 {
+	IUniqueId getId() throws PlatformException;
 	/**
+	 * Gets the info of this data set.
+	 * 
+	 * @return the data set info
 	 */
-	void setName(String name);
+	IInfo getInfo() throws PlatformException;
+	/**
+	 * 
+	 * TODO: add comment.
+	 * @param dataSet
+	 * @return
+	 * @throws PlatformException
+	 */
+	IDataSet intersection(IDataSet dataSet) throws PlatformException;
 
 	/**
-     * 
+	 * 
+	 * TODO: add comment.
+	 * @param dataSet
+	 * @param id
+	 * @return
+	 * @throws PlatformException
 	 */
-	String getName();
+	IDataSet intersection(IDataSet dataSet, IUniqueId id)
+			throws PlatformException;
+
+	/**
+	 * 
+	 * TODO: add comment.
+	 * @param dataSet
+	 * @return
+	 * @throws PlatformException
+	 */
+	IDataSet minus(IDataSet dataSet) throws PlatformException;
+
+	/**
+	 * 
+	 * TODO: add comment.
+	 * @param dataSet
+	 * @param id
+	 * @return
+	 * @throws PlatformException
+	 */
+	IDataSet minus(IDataSet dataSet, IUniqueId id) throws PlatformException;
+
+	/**
+	 * Gets union of this data set and given.
+	 * 
+	 * @param dataSet
+	 * @return
+	 */
+	IDataSet union(IDataSet dataSet) throws PlatformException;
+
+	/**
+	 * 
+	 * TODO: add comment.
+	 * @param dataSet
+	 * @param id
+	 * @return
+	 * @throws PlatformException
+	 */
+	IDataSet union(IDataSet dataSet, IUniqueId id) throws PlatformException;
+
 }

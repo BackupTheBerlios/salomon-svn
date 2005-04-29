@@ -21,6 +21,7 @@
 
 package salomon.platform.data.dataset;
 
+import salomon.platform.IUniqueId;
 import salomon.platform.exception.PlatformException;
 
 /**
@@ -29,40 +30,42 @@ import salomon.platform.exception.PlatformException;
 public interface IDataSetManager
 {
 	/**
-	 * TODO: add comment.
+	 * Adds the data set to the storage.
 	 * 
-	 * @param dataSet
+	 * @param dataSet the data set to add
+	 * 
 	 */
 	void add(IDataSet dataSet) throws PlatformException;
+	
+	/**
+	 * Removes the given data set from the storage.
+	 * 
+	 * @param dataSet the data set to remove
+	 * @throws PlatformException
+	 */
+	void remove(IDataSet dataSet) throws PlatformException;
 
 	/**
-	 * TODO: add comment.
+	 * Creates empty data set.
 	 * 
-	 * @param name
-	 * @return
+	 * @param id the data set unique id
+	 * @return the empty data set
 	 */
-	IDataSet getDataSet(String name) throws PlatformException;
+	IDataSet createEmpty(IUniqueId id) throws PlatformException;
 
 	/**
-	 * TODO: add comment.
+	 * Gets all data sets.
 	 * 
-	 * @return
+	 * @return the all data sets
 	 */
-	IDataSet[] getDataSets() throws PlatformException;
-
-	IDataSet intersection(IDataSet firstDataSet, IDataSet secondDataSet)
-			throws PlatformException;
-
-	IDataSet minus(IDataSet firstDataSet, IDataSet secondDataSet)
-			throws PlatformException;
+	IDataSet[] getAll() throws PlatformException;
 
 	/**
-	 * TODO: add comment.
+	 * Gets a data set with the given id. 
 	 * 
-	 * @param firstDataSet
-	 * @param secondDataSet
-	 * @return
+	 * @param id data set id
+	 * @return wanted data set
 	 */
-	IDataSet union(IDataSet firstDataSet, IDataSet secondDataSet)
-			throws PlatformException;
+	IDataSet getDataSet(IUniqueId id) throws PlatformException;
+
 }

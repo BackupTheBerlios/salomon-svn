@@ -74,9 +74,9 @@ public final class DataSetManager implements IDataSetManager
 	}
 
 	/**
-	 * @see salomon.platform.data.dataset.IDataSetManager#getDataSets()
+	 * @see salomon.platform.data.dataset.IDataSetManager#getAll()
 	 */
-	public IDataSet[] getDataSets() throws PlatformException
+	public IDataSet[] getAll() throws PlatformException
 	{
 		throw new UnsupportedOperationException(
 				"Method getDataSets() not implemented yet!");

@@ -107,9 +107,9 @@ class DataSet implements IDataSet, IDBSupporting
 	}
 
 	/**
-	 * @see salomon.platform.data.dataset.IDataSet#getName()
+	 * @see salomon.platform.data.dataset.IDataSet#getId()
 	 */
-	public String getName()
+	public String getId()
 	{
 		return _name;
 	}
