@@ -32,7 +32,7 @@ System przetwarzania wiedzy\\}
 
 
 \begin{flushright}
-{\Large \emph{Vision, ver 1.0} }
+{\Large \emph{Vision, ver 1.1} }
 \end{flushright}
 
 %\vspace{7cm}
@@ -45,20 +45,10 @@ System przetwarzania wiedzy\\}
   \hline \hline
   25.04.2005 & 1.0 & utworzenie & \emph{Krzysztof Rajda}\\
   \hline
+  03.05.2005 & 1.1 & opis poszczególnych faz & \emph{Nikodem Jura}\\
+  \hline
 \end{tabular}
 \end{flushleft}
-
-%\[\] \[\] \[\] \[\] \[\] \[\] \[\] \[\] \[\]
-
-% Zaczerpniete z MSF - osoba odpowiedzialna za dokument %
-%\begin{flushleft}
-%{ \Large Autor} \[\]
-%\begin{tabular}{|p{3.5cm}||p{3cm}|p{4.5cm}|p{3cm}|}
-%  \hline 
-%  Leszek Grzanka & Tester,Programista & grzanka@student.agh.edu.pl & 31.03.2005 \\
-%  \hline
-%\end{tabular}
-%\end{flushleft}
 
 \newpage
 
@@ -66,7 +56,7 @@ System przetwarzania wiedzy\\}
 Celem planu konstrukcji oprogramowania jest wyznaczenie ról poszczególnych cz³onków zespo³u oraz harmonogramu praca.
 Przypisanie ról pozwoli wyegzekwowaæ brakuj¹ce elementy systemu, od osób za nie odpowiedzialnych oraz zlecenie poprawek, 
 w wypadku, gdyby jakiœ element jakieœ elementy nie dzia³a³y zgodnie z dokumentacj¹.
-Stowrzenie harmonogramu pozwoli oceniæ postêp prac i odpowiedzieæ na pytanie, czy koñcowy termin realizacji projektu jest osi¹galny.
+Stworzenie harmonogramu pozwoli oceniæ postêp prac i odpowiedzieæ na pytanie, czy koñcowy termin realizacji projektu jest osi¹galny.
 
 \section{Orgranizacja pojektu}
 
@@ -101,11 +91,10 @@ Stowrzenie harmonogramu pozwoli oceniæ postêp prac i odpowiedzieæ na pytanie, cz
   		\hline
   		%\rowcolor[gray]{0.8}
   		Faza & Iteracja & G³ówne cele & Produkty & Planowe rozpoczêcie/zakoñczenie \\
-  		\hline 
   		\hline
-  		Inception &  I1 & Rozpoznanie problemu i otoczenia & Vision i SDP & 11.05.2005 \\
+  		Inception &  I1 & Rozpoznanie problemu i otoczenia & Vision i SDP & 27.04.2005 \\
   		\hline
-  		Eleboration & E1 & & Dokument SAD &  25.05.2005 \\
+  		Eleboration & E1 & & Dokument SAD &  05.05.2005 \\
   		\hline
   		Construction & C1 & Stabilizacja Salomona & Stabilna wersja Salomona & 08.06.2005 \\
   		\hline
@@ -115,14 +104,41 @@ Stowrzenie harmonogramu pozwoli oceniæ postêp prac i odpowiedzieæ na pytanie, cz
   		\hline
 		\end{tabular}
 	\end{flushleft}
+	
+	
+\begin{itemize}
+	\item[E1] 	
+	\begin{itemize}
+		\item projekt nowej warstwy - \emph{Solution}, reprezentuj¹cej zewnêtrzne bazy danych
+		\item projekt klasy realizuj¹cej po³¹czenie z zewnêtrznymi bazami
+		\item koncepcja prostych algorytmów operuj¹cych na zbiorach danych (wzorowanych na pojêciach teoriomnogoœciowych)		
+		\begin{itemize}
+			\item suma
+			\item przeciêcie
+			\item ró¿nica
+		\end{itemize}
+	\end{itemize}
+	\item[C1]	
+	\begin{itemize}
+		\item dzia³aj¹ca platforma z obs³ug¹ warstwy \emph{Solution}
+		\item mo¿liwoœæ pod³¹czania siê do zewnêtrznych baz danych, na których mog¹ operowaæ wtyczki
+		\item wewnêtrzny milestone - wersja dla grupy wspó³tworz¹cej Salomona
+	\end{itemize}
+	\item[C2] 	
+	\begin{itemize}
+		\item obs³uga podstawowych operacji na zbiorach danych
+		\item prezentacja ich dzia³ania za pomoc¹ wtyczek
+	\end{itemize}
+\end{itemize}
 
 \subsection{Diagram Gantt'a}
 \section{Plan akceptacji produktu}
 Akceptacja produktu bêdzie kilkuetapowa:
 \begin{itemize}
-	\item co nocne testy jednostkowe (dodaæ tutaj wszystkie rodzaje testów?)
-	\item przedstawienie klientowi do akceptacji produktu fazy \emph{elaboration},
-	\item prezentacja klientowi ostatecznego produktu.
+	\item przedstawienie klientowi do akceptacji produktu fazy \emph{Elaboration}		
+ 	\item wszystkie testy jednostkowe bezb³êdne
+	\item testy ca³oœciowe bezb³êdne	
+	\item prezentacja klientowi ostatecznego produktu
 \end{itemize}
 \end{document}
 
