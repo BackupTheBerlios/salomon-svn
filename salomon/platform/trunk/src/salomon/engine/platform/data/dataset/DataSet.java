@@ -39,7 +39,11 @@ import salomon.engine.database.queries.SQLDelete;
 import salomon.engine.database.queries.SQLInsert;
 import salomon.engine.database.queries.SQLSelect;
 import salomon.engine.database.queries.SQLUpdate;
+
+import salomon.platform.IInfo;
+import salomon.platform.IUniqueId;
 import salomon.platform.data.dataset.IDataSet;
+import salomon.platform.exception.PlatformException;
 
 /**
  * Class represents data set. Data set is a subset of data stored in tables, its
@@ -96,24 +100,7 @@ class DataSet implements IDataSet, IDBSupporting
 				"Method delete() not implemented yet!");
 	}
 
-	/**
-	 * Returns the info.
-	 * 
-	 * @return The info
-	 */
-	public String getInfo()
-	{
-		return _info;
-	}
-
-	/**
-	 * @see salomon.platform.data.dataset.IDataSet#getId()
-	 */
-	public String getId()
-	{
-		return _name;
-	}
-
+	
 	/**
 	 * @see salomon.engine.database.IDBSupporting#load(java.sql.ResultSet)
 	 * 
@@ -302,4 +289,44 @@ class DataSet implements IDataSet, IDBSupporting
 	private static final String GEN_NAME = "gen_dataset_id";
 
 	private static final Logger LOGGER = Logger.getLogger(DataSet.class);
+
+	public IDataSet intersection(IDataSet dataSet) throws PlatformException
+	{
+		throw new UnsupportedOperationException("Method intersection() not implemented yet!");
+	}
+
+	public IDataSet intersection(IDataSet dataSet, IUniqueId id) throws PlatformException
+	{
+		throw new UnsupportedOperationException("Method intersection() not implemented yet!");
+	}
+
+	public IDataSet minus(IDataSet dataSet) throws PlatformException
+	{
+		throw new UnsupportedOperationException("Method minus() not implemented yet!");
+	}
+
+	public IDataSet minus(IDataSet dataSet, IUniqueId id) throws PlatformException
+	{
+		throw new UnsupportedOperationException("Method minus() not implemented yet!");
+	}
+
+	public IDataSet union(IDataSet dataSet) throws PlatformException
+	{
+		throw new UnsupportedOperationException("Method union() not implemented yet!");
+	}
+
+	public IDataSet union(IDataSet dataSet, IUniqueId id) throws PlatformException
+	{
+		throw new UnsupportedOperationException("Method union() not implemented yet!");
+	}
+
+	public IUniqueId getId() throws PlatformException
+	{
+		throw new UnsupportedOperationException("Method getId() not implemented yet!");
+	}
+
+	public IInfo getInfo() throws PlatformException
+	{
+		throw new UnsupportedOperationException("Method getInfo() not implemented yet!");
+	}
 }

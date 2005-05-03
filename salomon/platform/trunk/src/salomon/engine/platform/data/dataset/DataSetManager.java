@@ -28,6 +28,8 @@ import org.apache.log4j.Logger;
 
 import salomon.engine.database.DBManager;
 import salomon.engine.database.queries.SQLSelect;
+
+import salomon.platform.IUniqueId;
 import salomon.platform.data.dataset.IDataSet;
 import salomon.platform.data.dataset.IDataSetManager;
 import salomon.platform.exception.PlatformException;
@@ -133,4 +135,19 @@ public final class DataSetManager implements IDataSetManager
 	private static final String DATASETS = "datasets";
 
 	private static final Logger LOGGER = Logger.getLogger(DataSetManager.class);
+
+	public void remove(IDataSet dataSet) throws PlatformException
+	{
+		throw new UnsupportedOperationException("Method remove() not implemented yet!");
+	}
+
+	public IDataSet createEmpty(IUniqueId id) throws PlatformException
+	{
+		throw new UnsupportedOperationException("Method createEmpty() not implemented yet!");
+	}
+
+	public IDataSet getDataSet(IUniqueId id) throws PlatformException
+	{
+		throw new UnsupportedOperationException("Method getDataSet() not implemented yet!");
+	}
 }
