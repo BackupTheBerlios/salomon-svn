@@ -11,13 +11,25 @@ SET NAMES ISO8859_2;
 /****                                Tables                                ****/
 /******************************************************************************/
 
+CREATE TABLE SOLUTIONS (
+    SOLUTION_ID    INTEGER NOT NULL,
+    SOLUTION_NAME  VARCHAR(25) NOT NULL,
+    SOLUTION_INFO  VARCHAR(250),
+    HOSTNAME       VARCHAR(250),
+    DB_PATH        VARCHAR(250) NOT NULL,
+    USERNAME       VARCHAR(25) NOT NULL,
+    PASSWD         VARCHAR(25) NOT NULL,
+    LM_DATE        TIMESTAMP
+);
+
+
 CREATE TABLE PROJECTS (
     PROJECT_ID    INTEGER NOT NULL,
+    SOLUTION_ID   INTEGER,
     PROJECT_NAME  VARCHAR(25),
     PROJECT_INFO  VARCHAR(250),
     LM_DATE       TIMESTAMP
 );
-
 
 
 CREATE TABLE PLUGINS (
@@ -64,6 +76,8 @@ CREATE TABLE DATASET_ITEMS (
 /****                             Primary Keys                             ****/
 /******************************************************************************/
 
+ALTER TABLE SOLUTIONS ADD CONSTRAINT PK_SOLUTIONS PRIMARY KEY (SOLUTION_ID);
+
 ALTER TABLE PROJECTS ADD CONSTRAINT PK_PROJECTS PRIMARY KEY (PROJECT_ID);
 
 ALTER TABLE PLUGINS ADD CONSTRAINT PK_PLUGINS PRIMARY KEY (PLUGIN_ID);
@@ -77,6 +91,8 @@ ALTER TABLE DATASET_ITEMS ADD CONSTRAINT PK_DATASET_ITEMS PRIMARY KEY (DATASET_I
 /******************************************************************************/
 /****                             Foreign Keys                             ****/
 /******************************************************************************/
+
+ALTER TABLE PROJECTS ADD CONSTRAINT FK_PROJECTS_SOLUTIONS FOREIGN KEY (SOLUTION_ID) REFERENCES SOLUTIONS (SOLUTION_ID);
 
 ALTER TABLE TASKS ADD CONSTRAINT FK_TASKS_PLUGINS FOREIGN KEY (PLUGIN_ID) REFERENCES PLUGINS (PLUGIN_ID);
 
