@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004 Salomon Team
+ * Copyright (C) 2005 Salomon Team
  *
  * This file is part of Salomon.
  *
@@ -19,21 +19,17 @@
  * 
  */
 
-package salomon.engine.solution;
+package salomon.engine.plugin;
 
-import salomon.engine.project.IProjectManager;
-import salomon.platform.IDataEngine;
 import salomon.platform.IInfo;
 import salomon.platform.exception.PlatformException;
 
+import salomon.plugin.IPlugin;
 
 /**
- * Represents a solution.
- * @see salomon.engine.solution.ISolutionManager
+ * 
  */
-public interface ISolution
+public interface ILocalPlugin extends IPlugin
 {
 	IInfo getInfo() throws PlatformException;
-    IDataEngine getDataEngine() throws PlatformException;
-    IProjectManager getProjectManager() throws PlatformException;
 }

@@ -21,19 +21,24 @@
 
 package salomon.engine.solution;
 
+import salomon.engine.database.DBManager;
+
 import salomon.engine.platform.IManagerEngine;
 
 /**
  * 
  */
-public final class SolutionManger implements ISolutionManager
+public final class SolutionManager implements ISolutionManager
 {
 
 	private IManagerEngine _managerEngine;
+	
+	private DBManager _dbManager;
 
-	public SolutionManger(IManagerEngine managerEngine)
+	public SolutionManager(IManagerEngine managerEngine, DBManager manager)
 	{
 		_managerEngine = managerEngine;
+		_dbManager = manager;
 	}
 
 	/**
@@ -59,8 +64,8 @@ public final class SolutionManger implements ISolutionManager
 	 */
 	public ISolution getSolution(String name)
 	{
-		// TODO: only for dll
-		return Solution.getInstance();
+		throw new UnsupportedOperationException(
+				"Method getSolution() not implemented yet!");
 	}
 
 	/**

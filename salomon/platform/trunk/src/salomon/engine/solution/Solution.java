@@ -21,39 +21,43 @@
 
 package salomon.engine.solution;
 
-import java.net.MalformedURLException;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
-import salomon.engine.database.IDBSupporting;
-import salomon.engine.platform.DataEngine;
+import salomon.engine.database.DBManager;
 import salomon.engine.project.IProjectManager;
+
 import salomon.platform.IDataEngine;
 import salomon.platform.exception.PlatformException;
+
+import salomon.engine.platform.DataEngine;
+import salomon.engine.platform.ManagerEngine;
 
 /**
  * 
  */
-public final class Solution implements ISolution, IDBSupporting
+public final class Solution implements ISolution
 {
 
 	private DataEngine _dataEngine;
 
-	private Solution()
+	private ManagerEngine _managerEngine;
+
+	private SolutionInfo _solutionInfo;
+	
+	private DBManager _dbManager;
+
+	/**
+	 * Constructor should be used only by createSolution() in SolutionManager.
+	 *  
+	 * @param managerEngine
+	 */
+	protected Solution(ManagerEngine managerEngine, DBManager manager)
 	{
+		_managerEngine = managerEngine;
+		_dbManager = manager;
+		//TODO:
 		_dataEngine = new DataEngine();
 	}
 
-	/**
-	 * @see salomon.engine.database.IDBSupporting#delete()
-	 */
-	public boolean delete() throws SQLException, ClassNotFoundException
-	{
-		throw new UnsupportedOperationException(
-				"Method delete() not implemented yet!");
-	}
-
-	/**
+		/**
 	 * @see salomon.engine.solution.ISolution#getDataEngine()
 	 */
 	public IDataEngine getDataEngine() throws PlatformException
@@ -66,41 +70,12 @@ public final class Solution implements ISolution, IDBSupporting
 	 */
 	public IProjectManager getProjectManager()
 	{
-		throw new UnsupportedOperationException(
-				"Method getProjectManager() not implemented yet!");
+		return _managerEngine.getProjectManager();
 	}
 
-	/**
-	 * @see salomon.engine.database.IDBSupporting#load(java.sql.ResultSet)
-	 */
-	public void load(ResultSet resultSet) throws MalformedURLException,
-			SQLException
+	public SolutionInfo getInfo()
 	{
-		throw new UnsupportedOperationException(
-				"Method load() not implemented yet!");
+		return _solutionInfo;
 	}
 
-	/**
-	 * @see salomon.engine.database.IDBSupporting#save()
-	 */
-	public int save() throws SQLException, ClassNotFoundException
-	{
-		throw new UnsupportedOperationException(
-				"Method save() not implemented yet!");
-	}
-
-	/**
-	 * Returns instance.
-	 * 
-	 * @return The _instance
-	 */
-	public static ISolution getInstance()
-	{
-		if (_instance == null) {
-			_instance = new Solution();
-		}
-		return _instance;
-	}
-
-	static ISolution _instance;
 }

@@ -26,5 +26,5 @@ package salomon.platform;
  */
 public interface IUniqueId
 {
-	String getId();
+	int getId();
 }

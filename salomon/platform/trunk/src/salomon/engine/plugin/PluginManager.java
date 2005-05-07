@@ -22,7 +22,6 @@
 package salomon.engine.plugin;
 
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.Collection;
 import java.util.LinkedList;
 
@@ -31,56 +30,104 @@ import org.apache.log4j.Logger;
 import salomon.engine.database.DBManager;
 import salomon.engine.database.queries.SQLDelete;
 import salomon.engine.database.queries.SQLSelect;
+
+import salomon.platform.IUniqueId;
 import salomon.platform.exception.PlatformException;
-
-import salomon.engine.platform.IManagerEngine;
-
-import salomon.plugin.Description;
-import salomon.plugin.IPlugin;
 
 /**
  * Class manager available plugins.
  */
 public final class PluginManager implements IPluginManager
 {
-	private IManagerEngine _managerEngine;
-	
-	public PluginManager(IManagerEngine managerEngine)
+	private DBManager _dbManager;
+
+	private LinkedList<ILocalPlugin> _plugins;
+
+	private void loadPlugins() throws PlatformException
 	{
-		_managerEngine = managerEngine;
-	}
-	
-	/**
-	 * Returns collection of LocalPlugins
-	 * 
-	 * @return plugin descriptions
-	 */
-	public LocalPlugin[] getPlugins() throws PlatformException
-	{
-		Collection<Description> result = new LinkedList<Description>();
 		SQLSelect select = new SQLSelect();
-		select.addTable(Description.TABLE_NAME);
+		select.addTable(PluginInfo.TABLE_NAME);
 		// executing query
 		ResultSet resultSet = null;
 		try {
-			resultSet = DBManager.getInstance().select(select);
+			resultSet = _dbManager.select(select);
 			while (resultSet.next()) {
-				Description desc = new Description();
-				desc.load(resultSet);
-				result.add(desc);
+				LocalPlugin localPlugin = this.createPlugin();
+				localPlugin.getInfo().load(resultSet);
+				//this.addPlugin(localPlugin);
+				_plugins.add(localPlugin);
 			}
 		} catch (Exception e) {
 			LOGGER.fatal("", e);
 			throw new PlatformException(e.getLocalizedMessage());
 		}
+	}
 
-		LocalPlugin[] plugins = null;
-		if (!result.isEmpty()) {
-			plugins = new LocalPlugin[result.size()];
+	public PluginManager(DBManager manager)
+	{
+		_dbManager = manager;
+		_plugins = new LinkedList<ILocalPlugin>();
+	}
+
+	/**
+	 * @throws PlatformException 
+	 * @see salomon.engine.plugin.IPluginManager#addPlugin(salomon.plugin.IPlugin)
+	 */
+	public void addPlugin(ILocalPlugin plugin) throws PlatformException
+	{
+		try {
+			plugin.getInfo().save();
+			_plugins.add(plugin);
+		} catch (Exception e) {
+			LOGGER.fatal("", e);
+			throw new PlatformException(e.getLocalizedMessage());
+		}
+	}
+
+	/**
+	 * @throws PlatformException 
+	 * @see salomon.engine.plugin.IPluginManager#createPlugin()
+	 */
+	public LocalPlugin createPlugin() throws PlatformException
+	{
+		LocalPlugin localPlugin = new LocalPlugin(_dbManager);
+		return localPlugin;
+	}
+
+	public ILocalPlugin getPlugin(IUniqueId id) throws PlatformException
+	{
+		LocalPlugin localPlugin = null;
+
+		if (_plugins.isEmpty()) {
+			loadPlugins();
+		}
+		// if plugin exists in collection, then it is returned
+		for (ILocalPlugin plugin : _plugins) {
+			if (plugin.getInfo().getId() == id.getId()) {
+				localPlugin = (LocalPlugin) plugin;
+				break;
+			}
+		}
+		return localPlugin;
+	}
+
+	/**
+	 * Returns collection of LocalPlugins
+	 * 
+	 * @return plugin descriptions
+	 */
+	public ILocalPlugin[] getPlugins() throws PlatformException
+	{
+		if (_plugins.isEmpty()) {
+			loadPlugins();
+		}
+
+		ILocalPlugin[] plugins = null;
+		if (!_plugins.isEmpty()) {
+			plugins = new LocalPlugin[_plugins.size()];
 			int i = 0;
-			for (Description desc : result) {
-                plugins[i] = this.createPlugin();
-				plugins[i].setDescription(desc);
+			for (ILocalPlugin plugin : _plugins) {
+				plugins[i] = plugin;
 				i++;
 			}
 		}
@@ -93,32 +140,27 @@ public final class PluginManager implements IPluginManager
 	 * @param plugin to remove
 	 * @return true if successfully removed, false otherwise
 	 */
-	public boolean removePlugin(IPlugin plugin)
+	public boolean removePlugin(ILocalPlugin plugin)
 	{
 		boolean result = false;
-		DBManager dbManager = null;
 		try {
 			// removing all related tasks
-			Description description = plugin.getDescription();
+			PluginInfo pluginInfo = ((LocalPlugin) plugin).getInfo();
 			// TODO: change to Task.TABLE_NAME
 			SQLDelete delete = new SQLDelete("tasks");
-			delete.addCondition("plugin_id =", description.getPluginID());
+			delete.addCondition("plugin_id =", pluginInfo.getPluginID());
 
-			dbManager = DBManager.getInstance();
-			dbManager.delete(delete);
+			_dbManager.delete(delete);
 			// removing plugin
-			description.delete();
+			pluginInfo.delete();
+			_plugins.remove(plugin);
 			result = true;
-			dbManager.commit();
+			_dbManager.commit();
 			LOGGER.info("Plugin successfully deleted.");
-		} catch (SQLException e) {
-			dbManager.rollback();
-			LOGGER.fatal("", e);
-		} catch (ClassNotFoundException e) {
-			dbManager.rollback();
+		} catch (Exception e) {
+			_dbManager.rollback();
 			LOGGER.fatal("", e);
 		}
-
 		return result;
 	}
 
@@ -127,39 +169,19 @@ public final class PluginManager implements IPluginManager
 	 * 
 	 * @return true if successfully saved, false otherwise
 	 */
-	public boolean savePlugin(IPlugin plugin)
+	public boolean savePlugin(ILocalPlugin plugin)
 	{
 		boolean result = false;
 		try {
-			plugin.getDescription().save();
-			DBManager.getInstance().commit();
+			plugin.getInfo().save();
+			_dbManager.commit();
 			result = true;
 			LOGGER.info("Plugin successfully saved.");
-		} catch (SQLException e) {
-			LOGGER.fatal("", e);
-		} catch (ClassNotFoundException e) {
+		} catch (Exception e) {
 			LOGGER.fatal("", e);
 		}
-
 		return result;
 	}
 
 	private static final Logger LOGGER = Logger.getLogger(PluginLoader.class);
-
-	/**
-	 * @see salomon.engine.plugin.IPluginManager#createPlugin()
-	 */
-	public LocalPlugin createPlugin()
-	{
-		return new LocalPlugin();
-	}
-
-	/**
-	 * @see salomon.engine.plugin.IPluginManager#addPlugin(salomon.plugin.IPlugin)
-	 */
-	public void addPlugin(IPlugin plugin)
-	{
-		throw new UnsupportedOperationException("Method addPlugin() not implemented yet!");
-	}
-
 }

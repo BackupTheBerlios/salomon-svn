@@ -21,31 +21,23 @@
 
 package salomon.engine.task;
 
-import java.io.ByteArrayInputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.sql.SQLException;
 import java.util.Collection;
 import java.util.LinkedList;
 
 import org.apache.log4j.Logger;
 
 import salomon.engine.database.DBManager;
-import salomon.engine.plugin.PluginLoader;
-import salomon.engine.solution.Solution;
+import salomon.engine.plugin.ILocalPlugin;
+import salomon.engine.project.IProject;
 
 import salomon.platform.IDataEngine;
 import salomon.platform.exception.PlatformException;
-import salomon.platform.serialization.IStruct;
 
-import salomon.plugin.Description;
-import salomon.plugin.IPlugin;
 import salomon.plugin.IResult;
 import salomon.plugin.ISettings;
 
 import salomon.engine.platform.Environment;
 import salomon.engine.platform.IManagerEngine;
-import salomon.engine.platform.serialization.XMLSerializer;
 
 /**
  * An implemetation of ITaskManager interface. Class manages with tasks editing
@@ -57,24 +49,29 @@ public final class TaskManager implements ITaskManager
 
 	private IDataEngine _dataEngine;
 
+	private DBManager _dbManager;
+
 	private Environment _environment;
 
+//	private IProject _project;
+	
 	private IManagerEngine _managerEngine;
 
 	private TaskEngine _taskEngine;
 
 	private LinkedList<ITask> _tasks;
 
-	public TaskManager(IManagerEngine managerEngine)
+	public TaskManager(IManagerEngine project, DBManager manager)
 	{
-		_managerEngine = managerEngine;
+		_managerEngine = project;
+		_dbManager = manager;
 		_tasks = new LinkedList<ITask>();
 		// FIXME
-		try {
-			_dataEngine = Solution.getInstance().getDataEngine();
-		} catch (PlatformException e) {
-			LOGGER.fatal("", e);
-		}
+		//		try {
+		//			_dataEngine = project.getSolution().getDataEngine();
+		//		} catch (PlatformException e) {
+		//			LOGGER.fatal("", e);
+		//		}
 		_taskEngine = new TaskEngine();
 		// TODO: where it should be created?
 		_environment = new Environment();
@@ -99,39 +96,42 @@ public final class TaskManager implements ITaskManager
 	 * @see salomon.engine.task.ITaskManager#addTask(salomon.engine.task.ITask,
 	 *      java.lang.String, java.lang.String)
 	 */
+	//FIXME: is it called anywhere??
 	public void addTask(ITask task, String pluginUrl, String settings)
 			throws PlatformException
 	{
-		try {
-			LOGGER.debug("TaskManager.addTask()");
-			LOGGER.debug("pluginURL: " + pluginUrl);
-			LOGGER.debug("settings: " + settings);
-			IPlugin plugin = null;
-			URL url = null;
-
-			url = new URL(pluginUrl);
-
-			plugin = PluginLoader.loadPlugin(url);
-			Description desc = new Description();
-
-			desc.setLocation(url);
-
-			desc.setPluginID(67);
-			plugin.setDescription(desc);
-
-			ByteArrayInputStream bis = new ByteArrayInputStream(
-					settings.getBytes());
-			IStruct struct = XMLSerializer.deserialize(bis);
-
-			ISettings set = plugin.getSettingComponent().getDefaultSettings();
-			set.init(struct);
-			task.setSettings(set);
-			task.setPlugin(plugin);
-			addTask(task);
-		} catch (Exception e) {
-			LOGGER.fatal("", e);
-			throw new PlatformException(e.getLocalizedMessage());
-		}
+		//		try {
+		//			LOGGER.debug("TaskManager.addTask()");
+		//			LOGGER.debug("pluginURL: " + pluginUrl);
+		//			LOGGER.debug("settings: " + settings);
+		//			IPlugin plugin = null;
+		//			URL url = null;
+		//
+		//			url = new URL(pluginUrl);
+		//
+		//			plugin = PluginLoader.loadPlugin(url);
+		//			PluginInfo desc = new PluginInfo();
+		//
+		//			desc.setLocation(url);
+		//
+		//			desc.setPluginID(67);
+		//			plugin.setDescription(desc);
+		//
+		//			ByteArrayInputStream bis = new ByteArrayInputStream(
+		//					settings.getBytes());
+		//			IStruct struct = XMLSerializer.deserialize(bis);
+		//
+		//			ISettings set = plugin.getSettingComponent().getDefaultSettings();
+		//			set.init(struct);
+		//			task.setSettings(set);
+		//			task.setPlugin(plugin);
+		//			addTask(task);
+		//		} catch (Exception e) {
+		//			LOGGER.fatal("", e);
+		//			throw new PlatformException(e.getLocalizedMessage());
+		//		}
+		throw new UnsupportedOperationException(
+				"Method addTask() not implemented yet!");
 	}
 
 	public void clearTaskList()
@@ -141,8 +141,14 @@ public final class TaskManager implements ITaskManager
 
 	public ITask createTask() throws PlatformException
 	{
-		Task newTask = new Task();
-		newTask.setProjectID(_managerEngine.getProjectManager().getCurrentProject().getProjectID());
+		Task newTask = new Task(_dbManager);
+		newTask.getInfo().setProjectID(_managerEngine.getProjectManager().getCurrentProject().getInfo().getId());
+//		try {
+//			newTask.getInfo().save();
+//		} catch (Exception e) {
+//			LOGGER.fatal("", e);
+//			throw new PlatformException(e.getLocalizedMessage());
+//		}
 		return newTask;
 	}
 
@@ -163,6 +169,9 @@ public final class TaskManager implements ITaskManager
 
 	public ITask[] getTasks()
 	{
+		if (_tasks.size() == 0) {
+			// load tasks from data base
+		}
 		return _tasks.toArray(new ITask[_tasks.size()]);
 	}
 
@@ -182,41 +191,30 @@ public final class TaskManager implements ITaskManager
 			 * task.getPlugin(); Settings settings = task.getSettings();
 			 * plugin.doJob(_dataEngine, _environment, settings);
 			 */
-
+			TaskInfo taskInfo = null;
 			for (ITask task : _tasks) {
 				try {
-					LOGGER.info("task: " + task.getName());
+					taskInfo = ((Task) task).getInfo();
+					LOGGER.info("task: " + taskInfo.getName());
 					ISettings settings = task.getSettings();
-					task.setStatus(Task.REALIZATION);
+					taskInfo.setStatus(TaskInfo.REALIZATION);
 					// changing status
-					((Task) task).save();
-					try {
-						DBManager.getInstance().commit();
-					} catch (ClassNotFoundException e1) {
-						LOGGER.fatal("", e1);
-					} catch (SQLException e1) {
-						LOGGER.fatal("", e1);
-					}
+					taskInfo.save();
+					_dbManager.commit();
 					//
 					// processing task
 					//
-					IPlugin plugin = task.getPlugin();
+					ILocalPlugin plugin = task.getPlugin();
 					LOGGER.debug("plugin: " + plugin + " id: "
-							+ plugin.getDescription().getPluginID());
+							+ plugin.getInfo().getId());
 					IResult result = plugin.doJob(_dataEngine, _environment,
 							settings);
 					//
 					// saving result of its execution
 					//
 					task.setResult(result);
-					((Task) task).save();
-					try {
-						DBManager.getInstance().commit();
-					} catch (ClassNotFoundException e1) {
-						LOGGER.fatal("", e1);
-					} catch (SQLException e1) {
-						LOGGER.fatal("", e1);
-					}
+					taskInfo.save();
+					_dbManager.commit();
 					//
 					// if task was not processed correctly
 					// exception is caught and shoul be handled here
@@ -224,18 +222,12 @@ public final class TaskManager implements ITaskManager
 				} catch (Exception e) {
 					LOGGER.fatal("TASK PROCESSING ERROR", e);
 					try {
-						task.setStatus(Task.EXCEPTION);
-						((Task) task).save();
-					} catch (Exception e1) {
-						LOGGER.fatal("", e1);
+						taskInfo.setStatus(TaskInfo.EXCEPTION);
+						taskInfo.save();
+					} catch (Exception ex) {
+						LOGGER.fatal("", ex);
 					}
-					try {
-						DBManager.getInstance().commit();
-					} catch (ClassNotFoundException e1) {
-						LOGGER.fatal("", e1);
-					} catch (SQLException e1) {
-						LOGGER.fatal("", e1);
-					}
+					_dbManager.commit();
 				}
 			}
 			// _tasks.clear();

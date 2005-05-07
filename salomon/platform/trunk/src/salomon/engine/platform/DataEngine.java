@@ -69,11 +69,6 @@ public final class DataEngine implements IDataEngine
 		return _dataSetManager;
 	}
 
-	public DBManager getDbManager() throws SQLException, ClassNotFoundException
-	{
-		return DBManager.getInstance();
-	}
-
 	/**
 	 * 
 	 */

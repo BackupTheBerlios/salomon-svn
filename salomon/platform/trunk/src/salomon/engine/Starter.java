@@ -21,16 +21,21 @@
 
 package salomon.engine;
 
+import java.sql.SQLException;
 import java.util.MissingResourceException;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
+
+
 
 import salomon.engine.controller.IController;
 import salomon.engine.controller.LibraryController;
 import salomon.engine.controller.LocalController;
 import salomon.engine.controller.MasterController;
 import salomon.engine.controller.ServantController;
+
+import salomon.util.gui.Utils;
 
 import salomon.engine.platform.IManagerEngine;
 import salomon.engine.platform.ManagerEngine;
@@ -65,7 +70,12 @@ public final class Starter
 	private void initManagers()
 	{
 		// FIXME: Create
-		_managerEngine = new ManagerEngine();
+		try {
+			_managerEngine = new ManagerEngine();
+		} catch (Exception e) {
+			LOGGER.fatal("", e);
+			Utils.showErrorMessage("ERR_CONNECTION_ERROR");
+		} 
 	}
 
 	private void start()

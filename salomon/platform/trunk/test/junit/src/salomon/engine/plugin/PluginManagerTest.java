@@ -33,7 +33,6 @@ import salomon.platform.exception.PlatformException;
 
 import salomon.engine.platform.ManagerEngine;
 
-import salomon.plugin.Description;
 import salomon.plugin.IPlugin;
 
 public class PluginManagerTest extends TestCase
@@ -61,7 +60,7 @@ public class PluginManagerTest extends TestCase
 	{
 		LOGGER.debug("PluginManagerTest.testRemovePlugin()");
 		LocalPlugin plugin = new LocalPlugin();
-		Description desc = new Description();
+		PluginInfo desc = new PluginInfo();
 		desc.setPluginID(35);
 		plugin.setDescription(desc);
 		assertTrue(pluginManager.removePlugin(plugin));
@@ -73,7 +72,7 @@ public class PluginManagerTest extends TestCase
 		boolean success = false;
 		// adds new plugin
 		LocalPlugin plugin = new LocalPlugin();
-		Description desc = new Description("new plugin", "added");
+		PluginInfo desc = new PluginInfo("new plugin", "added");
 		try {
 			desc.setLocation(new URL("http://www.jakas.lokalizacja.com"));
 			success = true;
@@ -91,7 +90,7 @@ public class PluginManagerTest extends TestCase
 		boolean success = false;
 		// updates the existing one
 		LocalPlugin plugin = new LocalPlugin();		
-		Description desc = new Description("plugin updated", "updated");
+		PluginInfo desc = new PluginInfo("plugin updated", "updated");
 		desc.setPluginID(20);		
 		try {
 			desc.setLocation(new URL("http://www.jakas.lokalizacja.com"));

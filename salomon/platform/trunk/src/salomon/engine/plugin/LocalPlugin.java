@@ -5,9 +5,12 @@ import java.io.Serializable;
 
 import org.apache.log4j.Logger;
 
+import salomon.engine.database.DBManager;
+
 import salomon.platform.IDataEngine;
 import salomon.platform.IEnvironment;
-import salomon.plugin.Description;
+import salomon.platform.exception.PlatformException;
+
 import salomon.plugin.IPlugin;
 import salomon.plugin.IResult;
 import salomon.plugin.IResultComponent;
@@ -15,26 +18,19 @@ import salomon.plugin.ISettingComponent;
 import salomon.plugin.ISettings;
 
 /** Class helps managing plugin loading */
-public final class LocalPlugin implements IPlugin, Serializable
+public final class LocalPlugin implements ILocalPlugin, Serializable
 {
 
-	private Description _description;
-    
-    /**
-	 * 
-	 */
-	public LocalPlugin()
-	{
-        _description = new Description();
-	}
+	private IPlugin _plugin;
+
+	private PluginInfo _pluginInfo;
 
 	/**
-	 * @see salomon.plugin.IPlugin#destroy()
+	 * 
 	 */
-	public void destroy()
+	protected LocalPlugin(DBManager manager)
 	{
-		throw new UnsupportedOperationException(
-				"Method destroy() not implemented yet!");
+		_pluginInfo = new PluginInfo(manager);
 	}
 
 	/**
@@ -44,16 +40,15 @@ public final class LocalPlugin implements IPlugin, Serializable
 	public IResult doJob(IDataEngine engine, IEnvironment environment,
 			ISettings settings)
 	{
-		throw new UnsupportedOperationException(
-				"Method doJob() not implemented yet!");
+		if (_plugin == null) {
+			throw new Error("Plugin not loaded");
+		}
+		return _plugin.doJob(engine, environment, settings);
 	}
 
-	/**
-	 * @see salomon.plugin.IPlugin#getDescription()
-	 */
-	public Description getDescription()
+	public PluginInfo getInfo() throws PlatformException
 	{
-		return _description;
+		return _pluginInfo;
 	}
 
 	/**
@@ -61,8 +56,10 @@ public final class LocalPlugin implements IPlugin, Serializable
 	 */
 	public IResultComponent getResultComponent()
 	{
-		throw new UnsupportedOperationException(
-				"Method getResultComponent() not implemented yet!");
+		if (_plugin == null) {
+			throw new Error("Plugin not loaded");
+		}
+		return _plugin.getResultComponent();
 	}
 
 	/**
@@ -70,17 +67,10 @@ public final class LocalPlugin implements IPlugin, Serializable
 	 */
 	public ISettingComponent getSettingComponent()
 	{
-		throw new UnsupportedOperationException(
-				"Method getSettingComponent() not implemented yet!");
-	}
-
-	/**
-	 * @see salomon.plugin.IPlugin#initizalize()
-	 */
-	public void initizalize()
-	{
-		throw new UnsupportedOperationException(
-				"Method initizalize() not implemented yet!");
+		if (_plugin == null) {
+			throw new Error("Plugin not loaded");
+		}
+		return _plugin.getSettingComponent();
 	}
 
 	/**
@@ -89,23 +79,20 @@ public final class LocalPlugin implements IPlugin, Serializable
 	 * 
 	 * @throws Exception
 	 */
-	public IPlugin load() throws Exception
+	public void load() throws Exception
 	{
 		LOGGER.debug("trying to load plugin"); //$NON-NLS-1$
-		IPlugin plugin = PluginLoader.loadPlugin(_description.getLocation());
-        plugin.setDescription(_description);        
-		return plugin;
-	}
-
-	public void setDescription(Description description)
-	{
-		_description = description;
+		if (_plugin == null) {
+			_plugin = PluginLoader.loadPlugin(_pluginInfo.getLocation());
+		} else {
+			LOGGER.debug("plugin already loaded"); //$NON-NLS-1$
+		}
 	}
 
 	public String toString()
 	{
 		// TODO: change it to name:version or sth
-		String path = _description.getLocation().getPath();
+		String path = _pluginInfo.getLocation().getPath();
 		int index = path.lastIndexOf('/');
 		return path.substring(index + 1);
 	}

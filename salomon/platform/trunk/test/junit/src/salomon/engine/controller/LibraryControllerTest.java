@@ -30,6 +30,7 @@ import junit.framework.TestCase;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
+import salomon.engine.plugin.PluginInfo;
 import salomon.engine.plugin.PluginLoader;
 import salomon.engine.project.IProject;
 import salomon.engine.project.IProjectManager;
@@ -39,7 +40,6 @@ import salomon.engine.task.ITaskManager;
 import salomon.platform.exception.PlatformException;
 import salomon.platform.serialization.IStruct;
 
-import salomon.plugin.Description;
 import salomon.plugin.IPlugin;
 import salomon.plugin.ISettings;
 
@@ -83,7 +83,7 @@ public class LibraryControllerTest extends TestCase
 		} catch (Exception e1) {
 			LOGGER.fatal("", e1);
 		}
-		Description desc = new Description();
+		PluginInfo desc = new PluginInfo();
 		try {
 			desc.setLocation(new URL("http://location.org/datasetunion.jar"));
 		} catch (MalformedURLException e2) {

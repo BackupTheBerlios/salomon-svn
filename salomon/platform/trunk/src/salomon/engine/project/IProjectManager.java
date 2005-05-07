@@ -21,6 +21,8 @@
 
 package salomon.engine.project;
 
+import salomon.engine.solution.ISolution;
+
 import salomon.platform.exception.PlatformException;
 
 /**
@@ -65,6 +67,9 @@ public interface IProjectManager
 	 * saved.
 	 */
 	void saveProject() throws PlatformException;
-     
+    
+	//TODO: it should not be used 
     IProject getCurrentProject() throws PlatformException;
+	
+	ISolution getSolution() throws PlatformException;
 }

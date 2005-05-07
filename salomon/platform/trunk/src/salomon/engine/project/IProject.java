@@ -22,6 +22,8 @@
 package salomon.engine.project;
 
 import salomon.engine.task.ITaskManager;
+
+import salomon.platform.IInfo;
 import salomon.platform.exception.PlatformException;
 
 /**
@@ -32,17 +34,7 @@ public interface IProject
 	/**
 	 * @return Returns the info.
 	 */
-	String getInfo() throws PlatformException;
-
-	/**
-	 * @return Returns the name.
-	 */
-	String getName() throws PlatformException;
-
-	/**
-	 * @return Returns the projectID.
-	 */
-	int getProjectID() throws PlatformException;
+	IInfo getInfo() throws PlatformException;
 
 	/**
 	 * Returns the TaskManager.
@@ -53,20 +45,4 @@ public interface IProject
 	 * @post $result != null
 	 */
 	ITaskManager getTaskManager() throws PlatformException;
-
-	/**
-	 * @param info The info to set.
-	 */
-	void setInfo(String info) throws PlatformException;
-
-	/**
-	 * @param name The name to set.
-	 */
-	void setName(String name) throws PlatformException;
-
-	/**
-     * @deprecated id should be created by ProjectManager when project is being created.
-	 * @param projectId The projectID to set.
-	 */
-	void setProjectID(int projectId) throws PlatformException;
 }

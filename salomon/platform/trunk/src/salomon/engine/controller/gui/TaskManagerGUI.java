@@ -47,6 +47,9 @@ import salomon.engine.platform.IManagerEngine;
 import salomon.engine.plugin.LocalPlugin;
 import salomon.engine.solution.Solution;
 import salomon.engine.task.ITask;
+import salomon.engine.task.ITaskManager;
+import salomon.engine.task.TaskManager;
+
 import salomon.platform.IDataEngine;
 import salomon.platform.exception.PlatformException;
 import salomon.plugin.IPlugin;
@@ -65,7 +68,7 @@ public final class TaskManagerGUI
 
 	private ActionManager _actionManager;
 
-	private IManagerEngine _managerEngine;
+	private ITaskManager _taskManager;
 
 	private ControllerFrame _parent;
 
@@ -81,9 +84,9 @@ public final class TaskManagerGUI
 
 	private JPopupMenu _taskPopup;
 
-	public TaskManagerGUI(IManagerEngine managerEngine)
+	public TaskManagerGUI(ITaskManager taskManager)
 	{
-		_managerEngine = managerEngine;
+		_taskManager = taskManager;
 		_taskListModel = new DefaultListModel();
 		_taskList = new JList(_taskListModel);
 		// adding listener
@@ -102,12 +105,11 @@ public final class TaskManagerGUI
 			return;
 		}
 
-		IPlugin plugin;
 		try {
 			// loading plugin
-			plugin = localPlugin.load();
+			localPlugin.load();
 			TaskGUI taskGUI = new TaskGUI();
-			taskGUI.setPlugin(plugin);
+			taskGUI.setPlugin(localPlugin);
 			taskGUI.setName(getTaskName());
 			_taskListModel.addElement(taskGUI);
 		} catch (Exception e) {
@@ -183,7 +185,7 @@ public final class TaskManagerGUI
 		ITask[] tasks = null;
 		try {
 			// TODO: change it
-			tasks = _managerEngine.getTasksManager().getTasks();
+			tasks = _taskManager.getTasks();
 		} catch (PlatformException e1) {
 			LOGGER.fatal("", e1);
 			Utils.showErrorMessage("Cannot load task list");
@@ -217,7 +219,7 @@ public final class TaskManagerGUI
 	public void runTasks()
 	{
 		try {
-			_managerEngine.getTasksManager().start();
+			_taskManager.start();
 		} catch (PlatformException e) {
 			LOGGER.fatal("", e);
 			Utils.showErrorMessage("ERR_CANNOT_RUN_TASKS");
@@ -309,11 +311,11 @@ public final class TaskManagerGUI
 		}
 		//FIXME!!!
 		IDataEngine dataEngine = null;
-		try {
-			dataEngine = Solution.getInstance().getDataEngine();
-		} catch (PlatformException e) {
-			LOGGER.fatal("", e);
-		} 
+//		try 
+//			dataEngine = Solution.getInstance().getDataEngine();
+//		} catch (PlatformException e) {
+//			LOGGER.fatal("", e);
+//		} 
 		Component taskSettings = settingComponent.getComponent(inputSettings, dataEngine);
 		int result = JOptionPane.showConfirmDialog(_positionComponent,				
 				taskSettings, 

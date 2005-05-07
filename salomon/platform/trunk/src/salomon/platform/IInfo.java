@@ -21,6 +21,9 @@
 
 package salomon.platform;
 
+import java.net.MalformedURLException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Date;
 
 import salomon.platform.exception.PlatformException;
@@ -28,8 +31,10 @@ import salomon.platform.exception.PlatformException;
 /**
  * 
  */
-public interface IInfo
+public interface IInfo extends IUniqueId
 {
+	int getId();
+	
 	Date getCreationDate() throws PlatformException;
 
 	String getDescription() throws PlatformException;
@@ -40,5 +45,34 @@ public interface IInfo
 	 * Sets the description.
 	 * @param description the description
 	 */
-	void setDescription(String description) throws PlatformException;;
+	void setDescription(String description) throws PlatformException;
+	
+
+	/**
+	 * Removes itself from database. After successsful finish object should be
+	 * destroyed.
+	 * 
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	boolean delete() throws SQLException, ClassNotFoundException;
+	/**
+	 * Initializes itself basing on given row from resultSet.
+	 * 
+	 * @param resultSet
+	 * @throws SQLException
+	 * @throws MalformedURLException
+	 */
+	void load(ResultSet resultSet) throws MalformedURLException, SQLException;
+
+	/**
+	 * Saves itself in data base. If already exists in database performs update
+	 * otherwise inserts new record. Returns current id if update was executed
+	 * or new id in case of insert.
+	 * 
+	 * @return unique id
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	int save() throws SQLException, ClassNotFoundException;
 }

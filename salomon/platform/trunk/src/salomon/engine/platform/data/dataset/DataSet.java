@@ -21,11 +21,10 @@
 
 package salomon.engine.platform.data.dataset;
 
+//import java.net.MalformedURLException;
 import java.net.MalformedURLException;
-import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -33,12 +32,7 @@ import java.util.Set;
 
 import org.apache.log4j.Logger;
 
-import salomon.engine.database.DBManager;
-import salomon.engine.database.IDBSupporting;
-import salomon.engine.database.queries.SQLDelete;
-import salomon.engine.database.queries.SQLInsert;
 import salomon.engine.database.queries.SQLSelect;
-import salomon.engine.database.queries.SQLUpdate;
 
 import salomon.platform.IInfo;
 import salomon.platform.IUniqueId;
@@ -51,7 +45,7 @@ import salomon.platform.exception.PlatformException;
  * 
  * TODO: add join between tables support
  */
-class DataSet implements IDataSet, IDBSupporting
+class DataSet implements IDataSet
 {
 
 	/**
@@ -129,35 +123,38 @@ class DataSet implements IDataSet, IDBSupporting
 	public int save() throws SQLException, ClassNotFoundException
 	{
 		//removing old items
-		SQLDelete delete = new SQLDelete();
-		delete.setTable(ITEMS_TABLE_NAME);
-		delete.addCondition("dataset_id = ", _datasetID);
-		int rows = DBManager.getInstance().delete(delete);
-		LOGGER.debug("rows deleted: " + rows);
-		
-		//saving header
-		SQLUpdate update = new SQLUpdate(TABLE_NAME);
-		if (_name != null) {
-			update.addValue("dataset_name", _name);
-		}
-		if (_info != null) {
-			update.addValue("dataset_info", _info);
-		}
-		update.addValue("lm_date", new Date(System.currentTimeMillis()));
-		_datasetID = DBManager.getInstance().insertOrUpdate(update,
-				"dataset_id", _datasetID, GEN_NAME);
-		
-		// saving items
-		for (String tableName : _conditions.keySet()) {
-			for (String condition: _conditions.get(tableName)) {
-				SQLInsert insert = new SQLInsert(ITEMS_TABLE_NAME);
-				insert.addValue("dataset_id", _datasetID);
-				insert.addValue("table_name", tableName);
-				insert.addValue("condition", condition);
-				LOGGER.debug("insert: " + insert.getQuery());
-			}
-		}
-		return _datasetID;
+		//FIXME: reimplement it
+//		SQLDelete delete = new SQLDelete();
+//		delete.setTable(ITEMS_TABLE_NAME);
+//		delete.addCondition("dataset_id = ", _datasetID);
+//		int rows = DBManager.getInstance().delete(delete);
+//		LOGGER.debug("rows deleted: " + rows);
+//		
+//		//saving header
+//		SQLUpdate update = new SQLUpdate(TABLE_NAME);
+//		if (_name != null) {
+//			update.addValue("dataset_name", _name);
+//		}
+//		if (_info != null) {
+//			update.addValue("dataset_info", _info);
+//		}
+//		update.addValue("lm_date", new Date(System.currentTimeMillis()));
+//		_datasetID = DBManager.getInstance().insertOrUpdate(update,
+//				"dataset_id", _datasetID, GEN_NAME);
+//		
+//		// saving items
+//		for (String tableName : _conditions.keySet()) {
+//			for (String condition: _conditions.get(tableName)) {
+//				SQLInsert insert = new SQLInsert(ITEMS_TABLE_NAME);
+//				insert.addValue("dataset_id", _datasetID);
+//				insert.addValue("table_name", tableName);
+//				insert.addValue("condition", condition);
+//				LOGGER.debug("insert: " + insert.getQuery());
+//			}
+//		}
+//		return _datasetID;
+		throw new UnsupportedOperationException(
+				"Method save() not implemented yet!");
 	}
 
 	/**
@@ -172,28 +169,30 @@ class DataSet implements IDataSet, IDBSupporting
 	public ResultSet selectData(SQLSelect select) throws SQLException,
 			ClassNotFoundException
 	{
-		SQLSelect selectCopy = (SQLSelect) select.clone();
-		// getting all tables used in select and _tableNames
-		// (intersection of these sets)
-		// These tables are needed to add conditions determinating dataset
-		Collection<String> commonTables = selectCopy.getTables();
-		commonTables.retainAll(_conditions.keySet());
-
-		if (_conditions.size() > 0) {
-			// preparing conditions
-			for (String commonTable : commonTables) {
-				for (String condition : _conditions.get(commonTable)) {
-					selectCopy.addCondition(condition);
-				}
-			}
-		}
-		// adding tables from original select
-		for (String tableName : select.getTables()) {
-			selectCopy.addTable(tableName);
-		}
-
-		LOGGER.debug("selectCopy: " + selectCopy.getQuery());
-		return DBManager.getInstance().select(selectCopy);
+//		SQLSelect selectCopy = (SQLSelect) select.clone();
+//		// getting all tables used in select and _tableNames
+//		// (intersection of these sets)
+//		// These tables are needed to add conditions determinating dataset
+//		Collection<String> commonTables = selectCopy.getTables();
+//		commonTables.retainAll(_conditions.keySet());
+//
+//		if (_conditions.size() > 0) {
+//			// preparing conditions
+//			for (String commonTable : commonTables) {
+//				for (String condition : _conditions.get(commonTable)) {
+//					selectCopy.addCondition(condition);
+//				}
+//			}
+//		}
+//		// adding tables from original select
+//		for (String tableName : select.getTables()) {
+//			selectCopy.addTable(tableName);
+//		}
+//
+//		LOGGER.debug("selectCopy: " + selectCopy.getQuery());
+//		return DBManager.getInstance().select(selectCopy);
+		throw new UnsupportedOperationException(
+				"Method selectData() not implemented yet!");
 	}
 
 	/**
@@ -251,7 +250,8 @@ class DataSet implements IDataSet, IDBSupporting
 		// DBManager connector = DBManager.getInstance();
 		// connector.executeQuery(finalQuery);
 		// return connector.getResultSet();
-		return null;
+		throw new UnsupportedOperationException(
+				"Method selectData() not implemented yet!");
 	}
 
 	/**

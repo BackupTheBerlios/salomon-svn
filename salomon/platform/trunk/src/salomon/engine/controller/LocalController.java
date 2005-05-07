@@ -26,7 +26,6 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -54,11 +53,13 @@ import salomon.engine.controller.gui.ProjectManagerGUI;
 import salomon.engine.controller.gui.SplashScreen;
 import salomon.engine.controller.gui.TaskManagerGUI;
 import salomon.engine.controller.gui.action.ActionManager;
-import salomon.engine.database.DBManager;
-import salomon.engine.platform.IManagerEngine;
 import salomon.engine.project.IProject;
-import salomon.platform.exception.PlatformException;
+
 import salomon.util.gui.Utils;
+
+import salomon.platform.exception.PlatformException;
+
+import salomon.engine.platform.IManagerEngine;
 
 /**
  * Local implementation of IController interface.
@@ -97,14 +98,6 @@ public final class LocalController implements IController
 	 */
 	public void start(IManagerEngine managerEngine)
 	{
-
-		try {
-			DBManager.getInstance();
-		} catch (SQLException e) {
-			LOGGER.fatal("", e);
-		} catch (ClassNotFoundException e) {
-			LOGGER.error("", e);
-		}
 		_managerEngine = managerEngine;
 		// Creates a new empty project
 		// FIXME add support for Solution
@@ -116,10 +109,21 @@ public final class LocalController implements IController
 			LOGGER.fatal("", e);
 			Utils.showErrorMessage("ERR_CANNOT_CREATE_PROJECT");
 			return;
-		}		
-		_projectManagerGUI = new ProjectManagerGUI(_managerEngine);
-		_taskManagerGUI = new TaskManagerGUI(_managerEngine);
-		_pluginMangerGUI = new PluginMangerGUI(_managerEngine);
+		}
+		//FIXME: add cascade model support
+
+		try {
+			_projectManagerGUI = new ProjectManagerGUI(
+					_managerEngine.getProjectManager());
+			_taskManagerGUI = new TaskManagerGUI(
+					_managerEngine.getTasksManager());
+			_pluginMangerGUI = new PluginMangerGUI(
+					_managerEngine.getPluginManager());
+		} catch (PlatformException e) {
+			LOGGER.fatal("", e);
+			Utils.showErrorMessage("ERR_CANNOT_SHOW_GUI");
+			return;
+		}
 
 		_actionManager = new ActionManager(_projectManagerGUI, _taskManagerGUI,
 				_pluginMangerGUI);
@@ -183,15 +187,8 @@ public final class LocalController implements IController
 		return _toolBar;
 	}
 
-//	private void initialize()
-//	{
-//
-//	}
-
 	private final class LocalGUIMenu
 	{
-
-//		private ActionManager _actionManager;
 
 		private JButton _btnNew;
 

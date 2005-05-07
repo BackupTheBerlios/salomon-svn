@@ -21,9 +21,10 @@
 
 package salomon.engine.remote.plugin;
 
+import salomon.engine.plugin.PluginInfo;
+
 import salomon.platform.IDataEngine;
 import salomon.platform.IEnvironment;
-import salomon.plugin.Description;
 import salomon.plugin.IPlugin;
 import salomon.plugin.IResult;
 import salomon.plugin.IResultComponent;
@@ -65,7 +66,7 @@ public final class PluginProxy implements IPlugin
 	/**
 	 * @see salomon.plugin.IPlugin#getDescription()
 	 */
-	public Description getDescription()
+	public PluginInfo getDescription()
 	{
 
 		//FIXME
@@ -102,9 +103,9 @@ public final class PluginProxy implements IPlugin
 	}
 
 	/**
-	 * @see salomon.plugin.IPlugin#setDescription(salomon.plugin.Description)
+	 * @see salomon.plugin.IPlugin#setDescription(salomon.engine.plugin.PluginInfo)
 	 */
-	public void setDescription(Description description)
+	public void setDescription(PluginInfo description)
 	{
 		_localPlugin.setDescription(description);
 	}

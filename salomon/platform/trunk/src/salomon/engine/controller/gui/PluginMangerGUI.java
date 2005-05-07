@@ -47,9 +47,13 @@ import org.apache.log4j.Logger;
 import salomon.engine.Messages;
 import salomon.engine.controller.gui.action.ActionManager;
 import salomon.engine.platform.IManagerEngine;
+
+import salomon.engine.plugin.ILocalPlugin;
+import salomon.engine.plugin.IPluginManager;
 import salomon.engine.plugin.LocalPlugin;
+import salomon.engine.plugin.PluginInfo;
+
 import salomon.platform.exception.PlatformException;
-import salomon.plugin.Description;
 import salomon.plugin.IPlugin;
 import salomon.util.gui.Utils;
 
@@ -62,7 +66,7 @@ public final class PluginMangerGUI
 
 	private JComponent _editPluginPanel;
 
-	private IManagerEngine _managerEngine;
+	private IPluginManager _pluginManager;
 
 	private ControllerFrame _parent;
 
@@ -76,7 +80,7 @@ public final class PluginMangerGUI
 
 	private int _selectedItem;
 
-	private JTextField _txtPluginInfo;
+	private JTextField _txtPluginDescription;
 
 	private JTextField _txtPluginLocation;
 
@@ -85,9 +89,9 @@ public final class PluginMangerGUI
 	/**
 	 * 
 	 */
-	public PluginMangerGUI(IManagerEngine managerEngine)
+	public PluginMangerGUI(IPluginManager pluginManager)
 	{
-		_managerEngine = managerEngine;
+		_pluginManager = pluginManager;
 
 		_pluginListModel = new DefaultListModel();
 		_pluginList = new JList(_pluginListModel);
@@ -104,7 +108,7 @@ public final class PluginMangerGUI
 		getEditPluginPanel();
 		_txtPluginName.setText("");
 		_txtPluginLocation.setText("");
-		_txtPluginInfo.setText("");
+		_txtPluginDescription.setText("");
 		int retVal = JOptionPane.showConfirmDialog(_parent,
 				getEditPluginPanel(), Messages.getString("MNU_ADD_PLUGIN"),
 				JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
@@ -117,21 +121,22 @@ public final class PluginMangerGUI
 				Utils.showErrorMessage(Messages.getString("ERR_CANNOT_SAVE_PLUGIN_INVALID_URL"));
 				return;
 			}
-			IPlugin plugin = null;
+			LocalPlugin plugin = null;
 			try {
-				plugin = _managerEngine.getPluginManager().createPlugin();
+				plugin = (LocalPlugin) _pluginManager.createPlugin();
 			} catch (PlatformException e) {
 				LOGGER.fatal("", e);
 				Utils.showErrorMessage(Messages.getString("ERR_CANNOT_SAVE_PLUGIN"));
 				return;
 			}
-			Description desc = plugin.getDescription();
-			desc.setName(_txtPluginName.getText());
-			desc.setLocation(url);
-			desc.setInfo(_txtPluginInfo.getText());
 			boolean wasOk = false;
 			try {
-				wasOk = _managerEngine.getPluginManager().savePlugin(plugin);
+				PluginInfo desc = plugin.getInfo();
+				desc.setName(_txtPluginName.getText());
+				desc.setLocation(url);
+				desc.setDescription(_txtPluginDescription.getText());
+
+				wasOk = _pluginManager.savePlugin(plugin);
 			} catch (PlatformException e) {
 				LOGGER.error("", e);
 				Utils.showErrorMessage(Messages.getString("ERR_CANNOT_SAVE_PLUGIN"));
@@ -154,18 +159,19 @@ public final class PluginMangerGUI
 		LOGGER.debug("reloading plugins");
 		_pluginListModel.removeAllElements();
 
-		IPlugin[] plugins = null;
+		ILocalPlugin[] plugins = null;
 		try {
-			plugins = _managerEngine.getPluginManager().getPlugins();
+			plugins = _pluginManager.getPlugins();
+
+			for (ILocalPlugin plugin : plugins) {
+				LOGGER.debug("adding plugin:" + plugin);
+				LOGGER.debug("description:" + plugin.getInfo().getDescription());
+				_pluginListModel.addElement(plugin);
+			}
 		} catch (PlatformException e) {
 			LOGGER.fatal("", e);
 			Utils.showErrorMessage("Cannot load plugin list");
 			return;
-		}
-		for (IPlugin plugin : plugins) {
-			LOGGER.debug("adding plugin:" + plugin);
-			LOGGER.debug("description:" + plugin.getDescription());
-			_pluginListModel.addElement(plugin);
 		}
 	}
 
@@ -173,11 +179,11 @@ public final class PluginMangerGUI
 	{
 		if (Utils.showQuestionMessage(Messages.getString("TIT_WARN"),
 				Messages.getString("TXT_REMOVE_PLUGIN_QUESTION"))) {
-			IPlugin plugin = (LocalPlugin) _pluginListModel.get(_selectedItem);
+			ILocalPlugin plugin = (LocalPlugin) _pluginListModel.get(_selectedItem);
 
 			boolean wasOk = false;
 			try {
-				wasOk = _managerEngine.getPluginManager().removePlugin(plugin);
+				wasOk = _pluginManager.removePlugin(plugin);
 			} catch (PlatformException e) {
 				LOGGER.error("", e);
 			}
@@ -192,13 +198,20 @@ public final class PluginMangerGUI
 
 	public void savePlugin()
 	{
-		IPlugin plugin = (IPlugin) _pluginListModel.get(_selectedItem);
-		Description desc = plugin.getDescription();
+		LocalPlugin plugin = (LocalPlugin) _pluginListModel.get(_selectedItem);
+		PluginInfo pluginInfo = null;
+		try {
+			pluginInfo = plugin.getInfo();
+		} catch (PlatformException e) {
+			LOGGER.fatal("", e);
+			Utils.showErrorMessage(Messages.getString("ERR_CANNOT_SAVE_PLUGIN"));
+			return;
+		}
 		// to initialize components
 		getEditPluginPanel();
-		_txtPluginName.setText(desc.getName());
-		_txtPluginLocation.setText(desc.getLocation().toString());
-		_txtPluginInfo.setText(desc.getInfo());
+		_txtPluginName.setText(pluginInfo.getName());
+		_txtPluginLocation.setText(pluginInfo.getLocation().toString());
+		_txtPluginDescription.setText(pluginInfo.getDescription());
 		int retVal = JOptionPane.showConfirmDialog(_parent,
 				getEditPluginPanel(), Messages.getString("MNU_EDIT_PLUGIN"),
 				JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
@@ -211,13 +224,13 @@ public final class PluginMangerGUI
 				Utils.showErrorMessage(Messages.getString("ERR_CANNOT_SAVE_PLUGIN"));
 				return;
 			}
-			desc.setName(_txtPluginName.getText());
-			desc.setLocation(url);
-			desc.setInfo(_txtPluginInfo.getText());
-
 			boolean wasOk = false;
 			try {
-				wasOk = _managerEngine.getPluginManager().savePlugin(plugin);
+				pluginInfo.setName(_txtPluginName.getText());
+				pluginInfo.setLocation(url);
+				pluginInfo.setDescription(_txtPluginDescription.getText());
+
+				wasOk = _pluginManager.savePlugin(plugin);
 			} catch (PlatformException e) {
 				LOGGER.error("", e);
 				Utils.showErrorMessage(Messages.getString("ERR_CANNOT_SAVE_PLUGIN"));
@@ -267,11 +280,13 @@ public final class PluginMangerGUI
 		return _pluginPopup;
 	}
 
-	private final class PluginSelectionListener implements ListSelectionListener
+	private final class PluginSelectionListener
+			implements ListSelectionListener
 	{
 		public void valueChanged(ListSelectionEvent e)
 		{
-			_actionManager.getAddTaskAction().setPlugin((LocalPlugin)((JList)e.getSource()).getSelectedValue());				
+			_actionManager.getAddTaskAction().setPlugin(
+					(LocalPlugin) ((JList) e.getSource()).getSelectedValue());
 		}
 	}
 
@@ -286,7 +301,7 @@ public final class PluginMangerGUI
 		{
 			_txtPluginName = new JTextField();
 			_txtPluginLocation = new JTextField();
-			_txtPluginInfo = new JTextField();
+			_txtPluginDescription = new JTextField();
 			this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 			this.add(createLabeledText(Messages.getString("TXT_PLUGIN_NAME"),
 					_txtPluginName));
@@ -294,7 +309,7 @@ public final class PluginMangerGUI
 					Messages.getString("TXT_PLUGIN_LOCATION"),
 					_txtPluginLocation));
 			this.add(createLabeledText(Messages.getString("TXT_PLUGIN_INFO"),
-					_txtPluginInfo));
+					_txtPluginDescription));
 		}
 
 		private Box createLabeledText(String labelText, JTextField textField)

@@ -192,19 +192,14 @@ public final class MasterController implements IController
 	private void initGUI()
 	{
 		SplashScreen.show();
-		try {
-			DBManager.getInstance();
-		} catch (SQLException e) {
-			LOGGER.fatal("", e);
-		} catch (ClassNotFoundException e) {
-			LOGGER.error("", e);
-		}
 
 		// Creates a new empty project
 		// FIXME _managerEngineHolder.getProjectManager().ceateProject();
-		_projectManagerGUI = new ProjectManagerGUI(_managerEngineHolder);
-		_taskManagerGUI = new TaskManagerGUI(_managerEngineHolder);
-		_pluginMangerGUI = new PluginMangerGUI(_managerEngineHolder);
+		
+		//FIXME:
+//		_projectManagerGUI = new ProjectManagerGUI(_managerEngineHolder.getProjectManager());
+//		_taskManagerGUI = new TaskManagerGUI)_managerEngineHolder);
+//		_pluginMangerGUI = new PluginMangerGUI(_managerEngineHolder);
 		_actionManager = new ActionManager(_projectManagerGUI, _taskManagerGUI,
 				_pluginMangerGUI);
 		_guiMenu = new MasterGUIMenu(_actionManager);

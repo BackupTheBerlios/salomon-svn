@@ -21,14 +21,19 @@
 
 package salomon.engine.platform;
 
+import java.sql.SQLException;
+
+import salomon.engine.database.DBManager;
 import salomon.engine.plugin.IPluginManager;
 import salomon.engine.plugin.PluginManager;
 import salomon.engine.project.IProjectManager;
 import salomon.engine.project.ProjectManager;
 import salomon.engine.solution.ISolutionManager;
-import salomon.engine.solution.SolutionManger;
+import salomon.engine.solution.SolutionManager;
 import salomon.engine.task.ITaskManager;
 import salomon.engine.task.TaskManager;
+
+import salomon.platform.exception.PlatformException;
 
 /**
  * Class creates and holds all managers used by plugins. They are created only
@@ -44,16 +49,18 @@ public final class ManagerEngine implements IManagerEngine
 	private ITaskManager _taskManager;
     
     private ISolutionManager _solutionManager;
+	
+	private DBManager _dbManager;
 
-	public ManagerEngine()
+	public ManagerEngine() throws SQLException, ClassNotFoundException, PlatformException
 	{
 		//TODO: change it after implementing Solution
-		_solutionManager = new SolutionManger(this);
-		_projectManager = new ProjectManager(this);
-		_taskManager = new TaskManager(this);		
-		_pluginManager = new PluginManager(this);
-         
-
+		_dbManager = new DBManager();
+		_dbManager.connect();
+		_solutionManager = new SolutionManager(this, _dbManager);
+		_projectManager = new ProjectManager(this, _dbManager);
+		_taskManager = new TaskManager(this, _dbManager);		
+		_pluginManager = new PluginManager(_dbManager);
 	}
 
 	public ManagerEngine(ITaskManager taskManager,

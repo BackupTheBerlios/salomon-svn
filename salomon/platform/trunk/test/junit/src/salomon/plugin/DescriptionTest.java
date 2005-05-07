@@ -33,6 +33,7 @@ import org.apache.log4j.PropertyConfigurator;
 
 import salomon.engine.database.DBManager;
 import salomon.engine.database.queries.SQLSelect;
+import salomon.engine.plugin.PluginInfo;
 
 /**
  * 
@@ -48,7 +49,7 @@ public class DescriptionTest extends TestCase
 	{
 		LOGGER.debug("DescriptionTest.testDelete()");
 		boolean success = false;
-		Description desc = new Description();
+		PluginInfo desc = new PluginInfo();
 		desc.setPluginID(40);
 		try {
 			desc.delete();
@@ -66,7 +67,7 @@ public class DescriptionTest extends TestCase
 		LOGGER.debug("DescriptionTest.testLoad()");
 		boolean success = false;
 		SQLSelect select = new SQLSelect();
-		select.addTable(Description.TABLE_NAME);
+		select.addTable(PluginInfo.TABLE_NAME);
 		select.addCondition("plugin_id =", 20);
 		ResultSet resultSet = null;
 		try {
@@ -78,7 +79,7 @@ public class DescriptionTest extends TestCase
 		}
 		assertTrue(success);
 		success = false;
-		Description desc = new Description();
+		PluginInfo desc = new PluginInfo();
 		try {
 			if (resultSet.next()) {
 				desc.load(resultSet);
@@ -104,7 +105,7 @@ public class DescriptionTest extends TestCase
 	{
 		LOGGER.debug("DescriptionTest.testSave()");
 		boolean success = false;
-		Description desc = new Description();
+		PluginInfo desc = new PluginInfo();
 		desc.setName("test_plugin");
 		try {
 			desc.setLocation(new URL("http://www.test_description.pl"));

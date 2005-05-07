@@ -21,23 +21,16 @@
 
 package salomon.engine.task;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.sql.Date;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Time;
 
 import org.apache.log4j.Logger;
 
 import salomon.engine.database.DBManager;
-import salomon.engine.database.IDBSupporting;
-import salomon.engine.database.queries.SQLDelete;
-import salomon.engine.database.queries.SQLUpdate;
+import salomon.engine.plugin.ILocalPlugin;
 
 import salomon.util.serialization.SimpleStruct;
 
-import salomon.platform.serialization.IObject;
+import salomon.platform.exception.PlatformException;
 
 import salomon.plugin.IPlugin;
 import salomon.plugin.IResult;
@@ -49,77 +42,42 @@ import salomon.engine.platform.serialization.XMLSerializer;
  * Represents task which may be executed. It is an implementation of ITask
  * interface.
  */
-public final class Task implements ITask, IDBSupporting
+public final class Task implements ITask
 {
+	private DBManager _dbManager;
 
-	private String _info;
-
-	private String _name;
-
-	private IPlugin _plugin;
-
-	private int _projectID;
+	private ILocalPlugin _plugin;
 
 	private IResult _result;
 
 	private ISettings _settings;
 
-	private String _status;
+	private TaskInfo _taskInfo;
 
-	private int _taskID;
-
-	public Task()
+	protected Task(DBManager manager)
 	{
-		_taskID = 0;
-		_projectID = 0;
-		_status = ACTIVE;
+		_dbManager = manager;
+		_taskInfo = new TaskInfo(manager);
+		_taskInfo.setStatus(TaskInfo.ACTIVE);
 	}
 
-	/**
-	 * Removes itself from database. After successsful finish object should be
-	 * destroyed. This method deletes records only from 'tasks' table. It has
-	 * some constraints (some foreign keys), which should by taken into account
-	 * by TaskManager.
-	 * 
-	 * @return
-	 * @throws ClassNotFoundException
-	 * @throws SQLException
-	 */
-	public boolean delete() throws SQLException, ClassNotFoundException
+	public TaskInfo getInfo() throws PlatformException
 	{
-		SQLDelete delete = new SQLDelete(TABLE_NAME);
-		delete.addCondition("task_id =", _taskID);
-		return (DBManager.getInstance().delete(delete) > 0);
-	}
-
-	/**
-	 * @return Returns the name.
-	 */
-	public String getName()
-	{
-		return _name;
+		return _taskInfo;
 	}
 
 	/**
 	 * @return Returns the _plugin.
 	 */
-	public IPlugin getPlugin()
+	public ILocalPlugin getPlugin() throws PlatformException
 	{
 		return _plugin;
 	}
 
 	/**
-	 * @return Returns the projectID.
-	 */
-	public int getProjectID()
-	{
-		return _projectID;
-	}
-
-	/**
 	 * @return Returns the _result.
 	 */
-	public IResult getResult()
+	public IResult getResult() throws PlatformException
 	{
 		IResult result = _result;
 		if (_result == null) {
@@ -131,155 +89,44 @@ public final class Task implements ITask, IDBSupporting
 	/**
 	 * @return Returns the _settings.
 	 */
-	public ISettings getSettings()
+	public ISettings getSettings() throws PlatformException
 	{
 		return _settings;
 	}
 
 	/**
-	 * @return Returns the status.
-	 */
-	public String getStatus()
-	{
-		return _status;
-	}
-
-	/**
-	 * @return Returns the taksId.
-	 */
-	public int getTaskId()
-	{
-		return _taskID;
-	}
-
-	/**
-	 * Initializes itself basing on given row from resultSet. Before calling
-	 * this method ISettings object must be set.
-	 * 
-	 * @param resultSet
-	 * @throws SQLException
-	 */
-	public void load(ResultSet resultSet) throws SQLException
-	{
-		_taskID = resultSet.getInt("task_id");
-		_projectID = resultSet.getInt("project_id");
-		// it is not neccessery to set plugin id
-		_name = resultSet.getString("task_name");
-		_info = resultSet.getString("task_info");
-		// setting has to be set
-		String settings = resultSet.getString("plugin_settings");
-		if (_plugin != null) {
-			LOGGER.debug("loading settings...");
-		
-		ByteArrayInputStream bis = new ByteArrayInputStream(settings.getBytes());
-		IObject object = XMLSerializer.deserialize(bis);
-		_settings = _plugin.getSettingComponent().getDefaultSettings();
-		_settings.init(object);
-		} 
-		// TODO: support result loading?
-		_status = resultSet.getString("status");
-	}
-
-	/**
-	 * Saves itself in data base. If already exists in database performs update
-	 * otherwise inserts new record. Returns current id if update was executed
-	 * or new id in case of insert.
-	 * 
-	 * @return unique id
-	 * @throws ClassNotFoundException
-	 * @throws SQLException
-	 */
-	public int save() throws SQLException, ClassNotFoundException
-	{
-		SQLUpdate update = new SQLUpdate(TABLE_NAME);
-		update.addValue("project_id", _projectID);
-		update.addValue("plugin_id", _plugin.getDescription().getPluginID());
-		update.addValue("task_name", _name);
-		if (_info != null) {
-			update.addValue("task_info", _info);
-		}
-		// let it happen?
-		if (_settings != null) {
-			ByteArrayOutputStream bos = new ByteArrayOutputStream();
-			XMLSerializer.serialize((SimpleStruct) _settings, bos);
-			update.addValue("plugin_settings", bos.toString());
-		}
-		if (_result != null) {
-			update.addValue("plugin_result", _result.resultToString());
-		}
-		update.addValue("status", _status);
-		// updating start/stop time depanding on status
-		if (_status == REALIZATION) {
-			update.addValue("start_time", new Time(System.currentTimeMillis()));
-		} else if (_status == FINISHED || _status == ERROR) {
-			update.addValue("stop_time", new Time(System.currentTimeMillis()));
-		}
-		update.addValue("lm_date", new Date(System.currentTimeMillis()));
-		_taskID = DBManager.getInstance().insertOrUpdate(update, "task_id",
-				_taskID, GEN_NAME);
-		return _taskID;
-	}
-
-	/**
-	 * @param name The name to set.
-	 */
-	public void setName(String name)
-	{
-		LOGGER.debug("Task.setName(): " + name);
-		_name = name;
-	}
-
-	/**
 	 * @param plugin The plugin to set.
 	 */
-	public void setPlugin(IPlugin plugin)
+	public void setPlugin(ILocalPlugin plugin) throws PlatformException
 	{
 		_plugin = plugin;
 	}
 
 	/**
-	 * @param projectID The projectID to set.
-	 */
-	public void setProjectID(int projectID)
-	{
-		_projectID = projectID;
-	}
-
-	/**
 	 * @param result The result to set.
+	 * @pre result != null
 	 */
-	public void setResult(IResult result)
+	public void setResult(IResult result) throws PlatformException
 	{
 		_result = result;
+		_taskInfo.setResult(_result.resultToString());
 		if (_result.isSuccessful()) {
-			_status = Task.FINISHED;
+			_taskInfo.setStatus(TaskInfo.FINISHED);
 		} else {
-			_status = Task.ERROR;
+			_taskInfo.setStatus(TaskInfo.ERROR);
 		}
 	}
 
 	/**
 	 * @param settings The settings to set.
+	 * @pre settings != null
 	 */
-	public void setSettings(ISettings settings)
+	public void setSettings(ISettings settings) throws PlatformException
 	{
 		_settings = settings;
-	}
-
-	/**
-	 * @param status The status to set.
-	 */
-	public void setStatus(String status)
-	{
-		this._status = status;
-	}
-
-	/**
-	 * @param taksId The taksId to set.
-	 */
-	public void setTaskId(int taskId)
-	{
-		_taskID = taskId;
+		ByteArrayOutputStream bos = new ByteArrayOutputStream();
+		XMLSerializer.serialize((SimpleStruct) _settings, bos);
+		_taskInfo.setSettings(bos.toString());
 	}
 
 	/**
@@ -287,22 +134,9 @@ public final class Task implements ITask, IDBSupporting
 	 */
 	public String toString()
 	{
-		return _name + " [" + _plugin + "," + _settings + "," + _result + "]";
+		return _taskInfo.getName() + " [" + _plugin + "," + _settings + ","
+				+ _result + "]";
 	}
 
-	public static final String ACTIVE = "AC";
-
-	public static final String ERROR = "ER";
-
-	public static final String EXCEPTION = "EX";
-
-	public static final String FINISHED = "FI";
-
-	public static final String REALIZATION = "RE";
-
-	public static final String TABLE_NAME = "tasks";
-
-	private static final String GEN_NAME = "gen_task_id";
-	
 	private static final Logger LOGGER = Logger.getLogger(Task.class);
 } // end Task

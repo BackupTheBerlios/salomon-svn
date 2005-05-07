@@ -118,16 +118,18 @@ public final class DataSetManager implements IDataSetManager
 	private ResultSet getDataSetItems(String dataSetName) throws SQLException,
 			ClassNotFoundException
 	{
-		SQLSelect select = new SQLSelect();
-		select.addColumn("table_name");
-		select.addColumn("condition");
-		select.addTable(DATASETS + " d");
-		select.addTable(DATASET_ITEMS + " di");
-		select.addCondition("d.dataset_id = di.dataset_id");
-		select.addCondition("dataset_name =", dataSetName);
-
-		DBManager connector = DBManager.getInstance();
-		return connector.select(select);
+//		SQLSelect select = new SQLSelect();
+//		select.addColumn("table_name");
+//		select.addColumn("condition");
+//		select.addTable(DATASETS + " d");
+//		select.addTable(DATASET_ITEMS + " di");
+//		select.addCondition("d.dataset_id = di.dataset_id");
+//		select.addCondition("dataset_name =", dataSetName);
+//
+//		DBManager connector = DBManager.getInstance();
+//		return connector.select(select);
+		throw new UnsupportedOperationException(
+				"Method enclosing_method() not implemented yet!");
 	}
 
 	private static final String DATASET_ITEMS = "dataset_items";

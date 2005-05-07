@@ -23,8 +23,13 @@ package salomon.engine.controller.gui;
 
 import org.apache.log4j.Logger;
 
+import salomon.engine.plugin.ILocalPlugin;
 import salomon.engine.task.ITask;
+import salomon.engine.task.Task;
+import salomon.engine.task.TaskInfo;
+
 import salomon.platform.exception.PlatformException;
+
 import salomon.plugin.IPlugin;
 import salomon.plugin.IResult;
 import salomon.plugin.ISettings;
@@ -38,7 +43,7 @@ public final class TaskGUI
 {
 	private String _name;
 
-	private IPlugin _plugin;
+	private ILocalPlugin _plugin;
 
 	private IResult _result;
 
@@ -46,7 +51,7 @@ public final class TaskGUI
 
 	private String _status;
 
-	private ITask _task;
+	private Task _task;
 
 	private int _taskId;
 
@@ -57,14 +62,15 @@ public final class TaskGUI
 
 	public TaskGUI(ITask task)
 	{
-		_task = task;
+		_task = (Task)task;
 		try {
-			_name = _task.getName();
+			TaskInfo taskInfo = _task.getInfo();
+			_name = taskInfo.getName();
 			_plugin = _task.getPlugin();
 			_result = _task.getResult();
 			_settings = _task.getSettings();
-			_status = _task.getStatus();
-			_taskId = _task.getTaskId();
+			_status = taskInfo.getStatus();
+			_taskId = taskInfo.getId();
 		} catch (PlatformException e) {
 			LOGGER.fatal("", e);
 		}
@@ -146,7 +152,7 @@ public final class TaskGUI
 		String status = null;
 		if (isInitialized()) {
 			try {
-				status = _task.getStatus();
+				status = ((Task)_task).getInfo().getStatus();
 			} catch (PlatformException e) {
 				LOGGER.error("", e);
 				// FIXME
@@ -166,7 +172,7 @@ public final class TaskGUI
 		int taskId = -1;
 		if (isInitialized()) {
 			try {
-				taskId = _task.getTaskId();
+				taskId = _task.getInfo().getId();
 			} catch (PlatformException e) {
 				LOGGER.error("", e);
 				// FIXME
@@ -196,12 +202,12 @@ public final class TaskGUI
 	 */
 	public void initialize(ITask task)
 	{
-		_task = task;
+		_task = (Task)task;
 		// important: set first plugin
 		try {
 			_task.setPlugin(_plugin);
 			_task.setSettings(_settings);
-			_task.setName(_name);
+			_task.getInfo().setName(_name);
 		} catch (PlatformException e) {
 			LOGGER.error("", e);
 			// FIXME
@@ -219,7 +225,7 @@ public final class TaskGUI
 	/**
 	 * @param plugin The plugin to set.
 	 */
-	public void setPlugin(IPlugin plugin)
+	public void setPlugin(ILocalPlugin plugin)
 	{
 		_plugin = plugin;
 	}

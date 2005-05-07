@@ -36,16 +36,20 @@ import javax.swing.JTextField;
 
 import org.apache.log4j.Logger;
 
-import salomon.engine.database.DBManager;
-import salomon.engine.platform.IManagerEngine;
 import salomon.engine.project.IProject;
 import salomon.engine.project.IProjectManager;
+import salomon.engine.project.Project;
 import salomon.engine.project.ProjectManager;
 import salomon.engine.task.ITask;
 import salomon.engine.task.ITaskManager;
-import salomon.platform.exception.PlatformException;
-import salomon.plugin.ISettings;
+
 import salomon.util.gui.Utils;
+
+import salomon.platform.exception.PlatformException;
+
+import salomon.plugin.ISettings;
+
+import salomon.engine.platform.IManagerEngine;
 
 /**
  * Class used to manage with projects editing.
@@ -53,7 +57,7 @@ import salomon.util.gui.Utils;
  */
 public final class ProjectManagerGUI
 {
-	private IManagerEngine _managerEngine;
+	private IProjectManager _projectManager;
 
 	private ControllerFrame _parent;
 
@@ -67,19 +71,18 @@ public final class ProjectManagerGUI
 
 	/**
 	 */
-	public ProjectManagerGUI(IManagerEngine managerEngine)
+	public ProjectManagerGUI(IProjectManager projectManager)
 	{
-		_managerEngine = managerEngine;
-	}	
-	
+		_projectManager = projectManager;
+	}
+
 	public void newProject()
 	{
-		IProjectManager projectManager;
-		try {
-			projectManager = _managerEngine.getProjectManager();
-			IProject project = projectManager.createProject();
+		
+		try {			
+			IProject project = _projectManager.createProject();
 			setProjectProperties(project);
-			projectManager.addProject(project);
+			_projectManager.addProject(project);
 			_parent.refreshGui();
 		} catch (PlatformException e) {
 			LOGGER.fatal("", e);
@@ -92,7 +95,7 @@ public final class ProjectManagerGUI
 		try {
 			int projectId = chooseProject();
 			if (projectId > 0) {
-				_managerEngine.getProjectManager().getProject(projectId);
+				_projectManager.getProject(projectId);
 				_parent.refreshGui();
 			}
 		} catch (Exception e) {
@@ -104,12 +107,12 @@ public final class ProjectManagerGUI
 	public void saveProject()
 	{
 		try {
-			IProject project = _managerEngine.getProjectManager().getCurrentProject();
+			Project project = (Project) _projectManager.getCurrentProject();
 
 			// setting project name if neccessary
 			// TODO: remove this checking, make user to enter project name while
 			// creating it
-			if (project.getName() == null) {
+			if (project.getInfo().getName() == null) {
 				setProjectProperties(project);
 			}
 
@@ -159,7 +162,7 @@ public final class ProjectManagerGUI
 			//
 			ITaskManager taskManager;
 			try {
-				taskManager = _managerEngine.getTasksManager();
+				taskManager = _projectManager.getCurrentProject().getTaskManager();
 				taskManager.clearTaskList();
 				for (TaskGUI taskGUI : taskList) {
 					ITask task = taskManager.createTask();
@@ -167,19 +170,11 @@ public final class ProjectManagerGUI
 					taskManager.addTask(task);
 				}
 				// saving project
-				_managerEngine.getProjectManager().saveProject();
-				DBManager.getInstance().commit();
-				LOGGER.info("Transaction commited");
+				_projectManager.saveProject();
 				Utils.showInfoMessage("Project saved successfully");
 			} catch (Exception e1) {
 				LOGGER.fatal("", e1);
 				Utils.showErrorMessage("Could not save project.");
-				try {
-					DBManager.getInstance().rollback();
-				} catch (Exception sqlEx) {
-					LOGGER.fatal("", sqlEx);
-					Utils.showErrorMessage("Could not rollback transaction.");
-				}
 			}
 		} catch (PlatformException e) {
 			LOGGER.fatal("", e);
@@ -200,8 +195,9 @@ public final class ProjectManagerGUI
 	 * 
 	 * @param project
 	 */
-	public void setProjectProperties(IProject project)
+	public void setProjectProperties(IProject iProject)
 	{
+		Project project = (Project) iProject;
 		if (_pnlProjectProperties == null) {
 			_pnlProjectProperties = new JPanel();
 			_pnlProjectProperties.setLayout(new GridLayout(0, 2));
@@ -212,25 +208,22 @@ public final class ProjectManagerGUI
 			_pnlProjectProperties.add(new JLabel("Project info"));
 			_pnlProjectProperties.add(_txtProjectInfo);
 		}
-		try {
-			String name = project.getName();
-			String info = project.getInfo();
-			_txtProjectName.setText(name == null ? "" : name);
-			_txtProjectInfo.setText(info == null ? "" : info);
-			// TODO:
-			JOptionPane.showMessageDialog(_parent, _pnlProjectProperties,
-					"Enter project properties", JOptionPane.INFORMATION_MESSAGE);
-			project.setName(_txtProjectName.getText());
-			project.setInfo(_txtProjectInfo.getText());
-		} catch (PlatformException e) {
-			LOGGER.error("", e);
-			// FIXME
-		}
+
+		String name = project.getInfo().getName();
+		String info = project.getInfo().getInfo();
+		_txtProjectName.setText(name == null ? "" : name);
+		_txtProjectInfo.setText(info == null ? "" : info);
+		// TODO:
+		JOptionPane.showMessageDialog(_parent, _pnlProjectProperties,
+				"Enter project properties", JOptionPane.INFORMATION_MESSAGE);
+		project.getInfo().setName(_txtProjectName.getText());
+		project.getInfo().setInfo(_txtProjectInfo.getText());
+
 	}
 
-	public void setTaskManagerGUI(TaskManagerGUI taskEditionManager)
+	public void setTaskManagerGUI(TaskManagerGUI taskManagerGUI)
 	{
-		_taskManagerGUI = taskEditionManager;
+		_taskManagerGUI = taskManagerGUI;
 	}
 
 	private int chooseProject()
@@ -238,8 +231,8 @@ public final class ProjectManagerGUI
 		int projectID = 0;
 
 		try {
-            //FIXME ugly but quick
-			Collection projects = ((ProjectManager)_managerEngine.getProjectManager()).getProjectList();
+			//FIXME ugly but quick
+			Collection projects = ((ProjectManager) _projectManager).getProjectList();
 			JTable projectTable = null;
 			projectTable = Utils.createResultTable(projects);
 			projectID = showProjectList(projectTable);

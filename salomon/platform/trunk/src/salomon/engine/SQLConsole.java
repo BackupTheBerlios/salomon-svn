@@ -111,13 +111,15 @@ public final class SQLConsole extends JFrame
 		if (isStandAlone) {
 			PropertyConfigurator.configure("log.conf"); //$NON-NLS-1$
 		}
-		try {
-			_connector = DBManager.getInstance();
-		} catch (SQLException e) {
-			LOGGER.fatal("", e); //$NON-NLS-1$
-		} catch (ClassNotFoundException e) {
-			LOGGER.fatal("", e); //$NON-NLS-1$
-		}
+//		FIXME:
+//		try {
+//			
+//			_connector = DBManager.getInstance();
+//		} catch (SQLException e) {
+//			LOGGER.fatal("", e); //$NON-NLS-1$
+//		} catch (ClassNotFoundException e) {
+//			LOGGER.fatal("", e); //$NON-NLS-1$
+//		}
 		_msgArea = getMessageArea();
 		_history = new CommandHistory(100);
 		initialize();

@@ -21,9 +21,12 @@
 
 package salomon.engine.holder;
 
-
+import salomon.engine.plugin.ILocalPlugin;
 import salomon.engine.plugin.IPluginManager;
+
+import salomon.platform.IUniqueId;
 import salomon.platform.exception.PlatformException;
+
 import salomon.plugin.IPlugin;
 
 /**
@@ -40,9 +43,27 @@ final class PluginManagerHolder implements IPluginManager
 	}
 
 	/**
+	 * @throws PlatformException 
+	 * @see salomon.engine.plugin.IPluginManager#addPlugin(salomon.plugin.IPlugin)
+	 */
+	public void addPlugin(ILocalPlugin plugin) throws PlatformException
+	{
+		_currentPluginManager.addPlugin(plugin);
+	}
+
+	/**
+	 * @throws PlatformException 
+	 * @see salomon.engine.plugin.IPluginManager#createPlugin()
+	 */
+	public ILocalPlugin createPlugin() throws PlatformException
+	{
+		return _currentPluginManager.createPlugin();
+	}
+
+	/**
 	 * @see IPluginManager#getPlugins()
 	 */
-	public IPlugin[] getPlugins() throws PlatformException
+	public ILocalPlugin[] getPlugins() throws PlatformException
 	{
 		return _currentPluginManager.getPlugins();
 	}
@@ -50,7 +71,8 @@ final class PluginManagerHolder implements IPluginManager
 	/**
 	 * @see IPluginManager#removePlugin(IPlugin)
 	 */
-	public boolean removePlugin(IPlugin description) throws PlatformException
+	public boolean removePlugin(ILocalPlugin description)
+			throws PlatformException
 	{
 		return _currentPluginManager.removePlugin(description);
 	}
@@ -58,41 +80,23 @@ final class PluginManagerHolder implements IPluginManager
 	/**
 	 * @see IPluginManager#savePlugin(IPlugin)
 	 */
-	public boolean savePlugin(IPlugin plugin) throws PlatformException
+	public boolean savePlugin(ILocalPlugin plugin) throws PlatformException
 	{
-        return _currentPluginManager.savePlugin(plugin);
+		return _currentPluginManager.savePlugin(plugin);
 	}
 
-    /**
-     * @pre pluginManager != null
-     * @post $none
-     */
+	/**
+	 * @pre pluginManager != null
+	 * @post $none
+	 */
 	void setCurrent(IPluginManager pluginManager)
 	{
 		_currentPluginManager = pluginManager;
 	}
 
-	/**
-	 * @see salomon.engine.plugin.IPluginManager#createPlugin()
-	 */
-	public IPlugin createPlugin()
+	public ILocalPlugin getPlugin(IUniqueId id) throws PlatformException
 	{
-		return _currentPluginManager.createPlugin();
+		return _currentPluginManager.getPlugin(id);
 	}
 
-	/**
-	 * @see salomon.engine.plugin.IPluginManager#addPlugin(salomon.plugin.IPlugin)
-	 */
-	public void addPlugin(IPlugin plugin)
-	{
-		_currentPluginManager.addPlugin(plugin);
-	}
-
-	//	/* (non-Javadoc)
-	//	 * @see salomon.engine.platform.plugin.IPluginManager#getPlugin(java.net.URL)
-	//	 */
-	//	public IPlugin getPlugin(URL url)
-	//	{
-	//		return _currentPluginManager.getPlugin(url);
-	//	}
 }

@@ -45,7 +45,7 @@ import salomon.plugin.IPlugin;
 public final class PluginLoader
 {
 
-	public static URL getPluginLocation(IPlugin plugin)
+	public static URL getPluginLocation(ILocalPlugin plugin)
 	{
 		return _pluginsLoaded.get(plugin);
 	}
@@ -72,9 +72,7 @@ public final class PluginLoader
 		PluginClassLoader classLoader = PluginClassLoader.getInstance();
 		classLoader.addUrl(url);
 		// loading appropriate plugin (it has to be in *.jar file
-		plugin = (IPlugin) classLoader.findMainClass(pluginFile).newInstance();
-
-		plugin.getDescription().setLocation(url);
+		plugin = (ILocalPlugin) classLoader.findMainClass(pluginFile).newInstance();		
 		_pluginsLoaded.put(plugin, url);
 
 		return plugin;

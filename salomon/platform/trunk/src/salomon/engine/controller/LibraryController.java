@@ -62,7 +62,7 @@ public final class LibraryController implements IController
 	private void initManagers()
 	{
 		// FIXME: Create
-		_managerEngine = new ManagerEngine();
+		//_managerEngine = new ManagerEngine();
 	}
 
 	private static final Logger LOGGER = Logger.getLogger(LibraryController.class);

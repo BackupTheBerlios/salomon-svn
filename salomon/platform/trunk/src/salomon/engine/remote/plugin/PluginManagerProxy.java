@@ -25,7 +25,10 @@ import java.rmi.RemoteException;
 
 import org.apache.log4j.Logger;
 
+import salomon.engine.plugin.ILocalPlugin;
 import salomon.engine.plugin.IPluginManager;
+
+import salomon.platform.IUniqueId;
 import salomon.platform.exception.PlatformException;
 import salomon.plugin.IPlugin;
 
@@ -101,13 +104,6 @@ public final class PluginManagerProxy implements IPluginManager
 
 	private static final Logger LOGGER = Logger.getLogger(PluginManagerProxy.class);
 
-	/**
-	 * @see salomon.engine.plugin.IPluginManager#createPlugin()
-	 */
-	public IPlugin createPlugin()
-	{
-		throw new UnsupportedOperationException("Method createPlugin() not implemented yet!");
-	}
 
 	/**
 	 * @see salomon.engine.plugin.IPluginManager#addPlugin(salomon.plugin.IPlugin)
@@ -115,6 +111,31 @@ public final class PluginManagerProxy implements IPluginManager
 	public void addPlugin(IPlugin plugin)
 	{
 		throw new UnsupportedOperationException("Method addPlugin() not implemented yet!");
+	}
+
+	public ILocalPlugin getPlugin(IUniqueId id) throws PlatformException
+	{
+		throw new UnsupportedOperationException("Method getPlugin() not implemented yet!");
+	}
+
+	public boolean removePlugin(ILocalPlugin plugin) throws PlatformException
+	{
+		throw new UnsupportedOperationException("Method removePlugin() not implemented yet!");
+	}
+
+	public boolean savePlugin(ILocalPlugin plugin) throws PlatformException
+	{
+		throw new UnsupportedOperationException("Method savePlugin() not implemented yet!");
+	}
+
+	public void addPlugin(ILocalPlugin plugin) throws PlatformException
+	{
+		throw new UnsupportedOperationException("Method addPlugin() not implemented yet!");
+	}
+
+	public ILocalPlugin createPlugin() throws PlatformException
+	{
+		throw new UnsupportedOperationException("Method createPlugin() not implemented yet!");
 	}
 
 }

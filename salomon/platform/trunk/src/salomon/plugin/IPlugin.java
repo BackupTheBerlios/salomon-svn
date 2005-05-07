@@ -27,13 +27,5 @@ package salomon.plugin;
  */
 public interface IPlugin extends IDataPlugin, IGraphicPlugin
 {
-	// not used
-	void initizalize();
-
-	// not used
-	void destroy();
-
-	Description getDescription();
-    
-    void setDescription(Description description);
+	// no new methods, interface just merges methods from IDataPlugin, IGraphicPlugin
 }

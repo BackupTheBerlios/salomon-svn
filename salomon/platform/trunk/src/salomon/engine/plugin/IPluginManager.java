@@ -22,6 +22,7 @@
 package salomon.engine.plugin;
 
 
+import salomon.platform.IUniqueId;
 import salomon.platform.exception.PlatformException;
 import salomon.plugin.IPlugin;
 
@@ -35,7 +36,16 @@ public interface IPluginManager
 	 * 
 	 * @return plugin descriptions
 	 */
-	IPlugin[] getPlugins() throws PlatformException;
+	ILocalPlugin[] getPlugins() throws PlatformException;
+	
+	/**
+	 * Returns plugin basing on given plugin identifier
+	 * 
+	 * @param id plugin identifier
+	 * @return
+	 * @throws PlatformException
+	 */
+	ILocalPlugin getPlugin(IUniqueId id) throws PlatformException;
 
 	/**
 	 * Removes plugin corresponding to given plugin description.
@@ -43,16 +53,16 @@ public interface IPluginManager
 	 * @param description description of plugin to be removed
 	 * @return true if successfully removed, false otherwise
 	 */
-	boolean removePlugin(IPlugin plugin) throws PlatformException;
+	boolean removePlugin(ILocalPlugin plugin) throws PlatformException;
 
 	/**
 	 * Saves plugin description.
 	 * 
 	 * @return true if successfully saved, false otherwise
 	 */
-	boolean savePlugin(IPlugin plugin) throws PlatformException;
+	boolean savePlugin(ILocalPlugin plugin) throws PlatformException;
     
-    IPlugin createPlugin();
+    ILocalPlugin createPlugin() throws PlatformException;
     
-    void addPlugin(IPlugin plugin);
+    void addPlugin(ILocalPlugin plugin) throws PlatformException;	
 }

@@ -28,7 +28,7 @@ import org.apache.log4j.PropertyConfigurator;
 import salomon.engine.platform.ManagerEngine;
 
 public class SolutionManagerTest extends TestCase {
-    private SolutionManger _solutionManager ;
+    private SolutionManager _solutionManager ;
     
     public static void main(String[] args) {
         junit.textui.TestRunner.run(SolutionManagerTest.class);
@@ -41,7 +41,7 @@ public class SolutionManagerTest extends TestCase {
         super.setUp();
         PropertyConfigurator.configure("log.conf");
         ManagerEngine engine = new ManagerEngine();
-        _solutionManager = (SolutionManger) engine.getSolutionManager();
+        _solutionManager = (SolutionManager) engine.getSolutionManager();
         
     }
     
@@ -49,7 +49,7 @@ public class SolutionManagerTest extends TestCase {
      * 
      */
     public void testCreateSolution() {
-        LOGGER.info("SolutionManger.testCreateSolution()");
+        LOGGER.info("SolutionManager.testCreateSolution()");
         ISolution solution = _solutionManager.createSolution() ;
         assertNotNull(solution);
         
@@ -59,7 +59,7 @@ public class SolutionManagerTest extends TestCase {
      * 
      */
     public void testGetAddSolution() {
-        LOGGER.info("SolutionManger.testGetAddSolution()");
+        LOGGER.info("SolutionManager.testGetAddSolution()");
         
         boolean result = false ; 
         ISolution solution = Solution.getInstance() ;
@@ -85,7 +85,7 @@ public class SolutionManagerTest extends TestCase {
      * 
      */
     public void testGetSolution() {
-       LOGGER.info("SolutionManger.testGetSolution()");
+       LOGGER.info("SolutionManager.testGetSolution()");
        ISolution solution = _solutionManager.createSolution() ;
        assertTrue("TEST AWAITING FOR Solution INTERFACE", false) ;
  
@@ -95,5 +95,5 @@ public class SolutionManagerTest extends TestCase {
     }
     
     
-    private static Logger LOGGER = Logger.getLogger(SolutionManger.class);
+    private static Logger LOGGER = Logger.getLogger(SolutionManager.class);
 }

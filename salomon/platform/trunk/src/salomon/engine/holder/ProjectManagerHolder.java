@@ -23,6 +23,8 @@ package salomon.engine.holder;
 
 import salomon.engine.project.IProject;
 import salomon.engine.project.IProjectManager;
+import salomon.engine.solution.ISolution;
+
 import salomon.platform.exception.PlatformException;
 
 /**
@@ -97,6 +99,11 @@ final class ProjectManagerHolder implements IProjectManager
 	void setCurrent(IProjectManager currentProjectManager)
 	{
 		_currentProjectManager = currentProjectManager;
+	}
+
+	public ISolution getSolution() throws PlatformException
+	{
+		return _currentProjectManager.getSolution();
 	}
 
 }

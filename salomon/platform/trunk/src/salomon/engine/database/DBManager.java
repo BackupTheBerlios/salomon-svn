@@ -44,29 +44,11 @@ public final class DBManager
 {
 	private Connection _connection = null;
 
-	private String _dataBasePath = null;
-
-	private String _hostName = null;
-
-	private boolean _isEmbedded = false;
-
-	private String _passwd = null;
-
 	private Statement _statement = null;
 
-	private String _user = null;
-
-	private DBManager()
+	public DBManager()
 	{
-		_hostName = Config.getString("HOSTNAME"); //$NON-NLS-1$
-		_dataBasePath = Config.getString("DB_PATH"); //$NON-NLS-1$
-		_user = Config.getString("USER"); //$NON-NLS-1$
-		_passwd = Config.getString("PASSWD"); //$NON-NLS-1$
-		_isEmbedded = Config.getString("EMBEDDED").equalsIgnoreCase("Y");
-		if (_isEmbedded) {
-			_dataBasePath = Config.CURR_DIR + Config.FILE_SEPARATOR
-					+ _dataBasePath;
-		}
+
 	}
 
 	/**
@@ -83,6 +65,54 @@ public final class DBManager
 			Utils.showErrorMessage("ERR_CRITICAL");
 			LOGGER.fatal("", e);
 		}
+	}
+
+	/**
+	 * Method connects to data base. 
+	 * It uses configuration file to get connection parameters.
+	 * It should be used only by platform, connection is established to main Salomon database. 
+	 * @throws ClassNotFoundException 
+	 * @throws SQLException 
+	 * 
+	 */
+	public void connect() throws SQLException, ClassNotFoundException
+	{
+		String hostName = Config.getString("HOSTNAME"); //$NON-NLS-1$
+		String dataBasePath = Config.getString("DB_PATH"); //$NON-NLS-1$
+		String user = Config.getString("USER"); //$NON-NLS-1$
+		String passwd = Config.getString("PASSWD"); //$NON-NLS-1$	
+		this.connect(hostName, dataBasePath, user, passwd);
+	}
+
+	/**
+	 * Method connects to data base.
+	 * 
+	 * @param host host name or IP address. If empty it means, that it is EMBEDDED mode.
+	 * @param dataBasePath relative (if EMBEDDED mode) or absolute path to database file
+	 * @param user user name
+	 * @param passwd password
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
+	 */
+	public void connect(String host, String dataBasePath, String user,
+			String passwd) throws SQLException, ClassNotFoundException
+	{
+		Class.forName("org.firebirdsql.jdbc.FBDriver"); //$NON-NLS-1$
+		StringBuilder connectString = new StringBuilder("jdbc:firebirdsql:");
+		if (host == null || "".equals(host)) {
+			connectString.append("embedded:");
+			connectString.append(Config.CURR_DIR);
+			connectString.append(Config.FILE_SEPARATOR);
+		} else {
+			connectString.append(host).append(":");
+		}
+		connectString.append(dataBasePath);
+		LOGGER.info("connectString: " + connectString);
+		_connection = DriverManager.getConnection(connectString.toString(),
+				user, passwd);
+		// setting auto commit off
+		_connection.setAutoCommit(false);
+		_statement = _connection.createStatement();
 	}
 
 	/**
@@ -320,25 +350,6 @@ public final class DBManager
 		return _statement.executeUpdate(query);
 	}
 
-	private void connect() throws SQLException, ClassNotFoundException
-	{
-		Class.forName("org.firebirdsql.jdbc.FBDriver"); //$NON-NLS-1$
-		StringBuilder connectString = new StringBuilder("jdbc:firebirdsql:");
-		if (_isEmbedded) {
-			connectString.append("embedded:");
-			//connectString.append(Config.FILE_SEPARATOR);
-		} else {
-			connectString.append(_hostName).append(":");
-		}
-		connectString.append(_dataBasePath);
-		LOGGER.info("connectString: " + connectString);
-		_connection = DriverManager.getConnection(connectString.toString(),
-				_user, _passwd);
-		// setting auto commit off
-		_connection.setAutoCommit(false);
-		_statement = _connection.createStatement();
-	}
-
 	/**
 	 * Updates record if exists in data base.
 	 * 
@@ -384,17 +395,16 @@ public final class DBManager
 	 * @throws SQLException
 	 * @throws ClassNotFoundException
 	 */
-	public static DBManager getInstance() throws SQLException,
-			ClassNotFoundException
-	{
-		if (_instance == null) {
-			_instance = new DBManager();
-			_instance.connect();
-		}
-
-		return _instance;
-	}
-
+	//	public static DBManager getInstance() throws SQLException,
+	//			ClassNotFoundException
+	//	{
+	//		if (_instance == null) {
+	//			_instance = new DBManager();
+	//			//_instance.connect();
+	//		}
+	//
+	//		return _instance;
+	//	}
 	private static DBManager _instance = null;
 
 	private static final Logger LOGGER = Logger.getLogger(DBManager.class);
