@@ -21,6 +21,7 @@
 
 package salomon.engine.solution;
 
+import salomon.platform.IUniqueId;
 import salomon.platform.exception.PlatformException;
 
 /**
@@ -39,13 +40,13 @@ public interface ISolutionManager
 	ISolution[] getSolutions() throws PlatformException;
 
 	/**
-	 * Returns solution with the specified name.
+	 * Returns solution with given identifier.
 	 * 
-	 * @param name The name of solution
+	 * @param id identifier of solution
 	 * @return The solution
 	 * @throws PlatformException
 	 */
-	ISolution getSolution(String name) throws PlatformException;
+	ISolution getSolution(IUniqueId id) throws PlatformException;
 
 	/**
 	 * Creates an empty solution, but doesn't add it to database.
@@ -64,4 +65,12 @@ public interface ISolutionManager
      * @throws PlatformException
      */
 	void addSolution(ISolution solution) throws PlatformException;
+	
+	/**
+	 * Returns current solution.
+	 * 
+	 * @return
+	 * @throws PlatformException
+	 */
+	ISolution getCurrentSolution() throws PlatformException;
 }

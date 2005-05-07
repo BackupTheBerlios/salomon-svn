@@ -26,6 +26,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 
+import salomon.engine.database.DBManager;
+
 import salomon.platform.IInfo;
 import salomon.platform.IUniqueId;
 import salomon.platform.exception.PlatformException;
@@ -35,7 +37,13 @@ import salomon.platform.exception.PlatformException;
  */
 public final class SolutionInfo implements IInfo
 {
-
+	private DBManager _dbManager;
+	
+	public SolutionInfo(DBManager manager)
+	{
+		_dbManager = manager;
+	}
+	
 	public Date getCreationDate() throws PlatformException
 	{
 		throw new UnsupportedOperationException("Method getCreationDate() not implemented yet!");

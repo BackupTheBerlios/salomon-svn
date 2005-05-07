@@ -23,6 +23,9 @@ package salomon.engine.solution;
 
 import salomon.engine.database.DBManager;
 
+import salomon.platform.IUniqueId;
+import salomon.platform.exception.PlatformException;
+
 import salomon.engine.platform.IManagerEngine;
 
 /**
@@ -34,6 +37,8 @@ public final class SolutionManager implements ISolutionManager
 	private IManagerEngine _managerEngine;
 	
 	private DBManager _dbManager;
+	
+	private ISolution _currentSolution;
 
 	public SolutionManager(IManagerEngine managerEngine, DBManager manager)
 	{
@@ -62,7 +67,7 @@ public final class SolutionManager implements ISolutionManager
 	/**
 	 * @see salomon.engine.solution.ISolutionManager#getSolution(java.lang.String)
 	 */
-	public ISolution getSolution(String name)
+	public ISolution getSolution(IUniqueId id)
 	{
 		throw new UnsupportedOperationException(
 				"Method getSolution() not implemented yet!");
@@ -75,5 +80,10 @@ public final class SolutionManager implements ISolutionManager
 	{
 		throw new UnsupportedOperationException(
 				"Method getSolutions() not implemented yet!");
+	}
+
+	public ISolution getCurrentSolution() throws PlatformException
+	{
+		return _currentSolution;
 	}
 }

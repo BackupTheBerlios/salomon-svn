@@ -53,6 +53,7 @@ public final class Solution implements ISolution
 	{
 		_managerEngine = managerEngine;
 		_dbManager = manager;
+		_solutionInfo = new SolutionInfo(_dbManager);
 		//TODO:
 		_dataEngine = new DataEngine();
 	}

@@ -24,6 +24,7 @@ package salomon.engine.database.queries;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedList;
 
 import org.apache.log4j.Logger;
 
@@ -42,7 +43,7 @@ public final class SQLSelect implements Cloneable
 
 	public SQLSelect()
 	{
-		_columns = new HashSet<String>();
+		_columns = new LinkedList<String>();
 		_tables = new HashSet<String>();
 		_conditions = new HashSet<String>();
 	}
@@ -104,6 +105,16 @@ public final class SQLSelect implements Cloneable
 	}
 
 	/**
+	 * Method removes all conditions.
+	 * It prepares select to be called again, but with another conditions.
+	 * 
+	 */
+	public void clearConditions()
+	{
+		_conditions.clear();
+	}
+
+	/**
 	 * @see java.lang.Object#clone()
 	 */
 	public Object clone()
@@ -115,9 +126,9 @@ public final class SQLSelect implements Cloneable
 			LOGGER.fatal("", e);
 		}
 		// deep copy of collections
-		object._columns = (Collection<String>) ((HashSet)object._columns).clone();
-		object._tables = (Collection<String>) ((HashSet)object._tables).clone();
-		object._conditions = (Collection<String>) ((HashSet)object._conditions).clone();
+		object._columns = (Collection<String>) ((HashSet) object._columns).clone();
+		object._tables = (Collection<String>) ((HashSet) object._tables).clone();
+		object._conditions = (Collection<String>) ((HashSet) object._conditions).clone();
 		return object;
 	}
 

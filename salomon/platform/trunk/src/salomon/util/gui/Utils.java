@@ -103,7 +103,6 @@ public final class Utils
 
 		JTable table = new JTable(data, columnNames);
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-
 		return table;
 	}
 
@@ -117,7 +116,7 @@ public final class Utils
 	public static JTable createResultTable(ResultSet resultSet)
 			throws SQLException
 	{
-		JTable table = createResultTable(getDataFromResultSet(resultSet));
+		JTable table = createResultTable(getDataFromResultSet(resultSet));		
 		return table;
 	}
 
@@ -166,9 +165,9 @@ public final class Utils
 			} else {
 				buffer.append("\n"); //$NON-NLS-1$   
 			}
-			rowCount++;
-			LOGGER.info(buffer);
+			rowCount++;			
 		}
+		LOGGER.info(buffer);
 
 		return allData;
 	}

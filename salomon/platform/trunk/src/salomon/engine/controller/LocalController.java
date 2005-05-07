@@ -31,6 +31,7 @@ import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -44,7 +45,6 @@ import org.apache.log4j.Logger;
 import salomon.engine.Config;
 import salomon.engine.Messages;
 import salomon.engine.Resources;
-import salomon.engine.SQLConsole;
 import salomon.engine.Starter;
 import salomon.engine.controller.gui.ControllerFrame;
 import salomon.engine.controller.gui.ControllerPanel;
@@ -53,6 +53,8 @@ import salomon.engine.controller.gui.ProjectManagerGUI;
 import salomon.engine.controller.gui.SplashScreen;
 import salomon.engine.controller.gui.TaskManagerGUI;
 import salomon.engine.controller.gui.action.ActionManager;
+import salomon.engine.controller.gui.viewer.ProjectViewer;
+import salomon.engine.database.DBManager;
 import salomon.engine.project.IProject;
 
 import salomon.util.gui.Utils;
@@ -77,11 +79,11 @@ public final class LocalController implements IController
 
 	private JMenuBar _menuBar;
 
+	private PluginMangerGUI _pluginMangerGUI;
+
 	private ProjectManagerGUI _projectManagerGUI;
 
 	private TaskManagerGUI _taskManagerGUI;
-
-	private PluginMangerGUI _pluginMangerGUI;
 
 	private JToolBar _toolBar;
 
@@ -355,7 +357,11 @@ public final class LocalController implements IController
 		 */
 		void showSQLConsole()
 		{
-			new SQLConsole(((ManagerEngine)_managerEngine).getDbManager());
+			//new SQLConsole(((ManagerEngine)_managerEngine).getDbManager());
+			JFrame objectFrame = new JFrame();
+			objectFrame.getContentPane().add(new ProjectViewer(((ManagerEngine)_managerEngine).getDbManager()));
+			objectFrame.pack();
+			objectFrame.setVisible(true);
 		}
 
 		private JPanel getOfficialAbout()

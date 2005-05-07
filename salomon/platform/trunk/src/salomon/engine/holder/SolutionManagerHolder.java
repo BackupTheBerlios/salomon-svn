@@ -23,6 +23,8 @@ package salomon.engine.holder;
 
 import salomon.engine.solution.ISolution;
 import salomon.engine.solution.ISolutionManager;
+
+import salomon.platform.IUniqueId;
 import salomon.platform.exception.PlatformException;
 
 /**
@@ -54,14 +56,6 @@ public final class SolutionManagerHolder implements ISolutionManager
 	}
 
 	/**
-	 * @see salomon.engine.solution.ISolutionManager#getSolution(java.lang.String)
-	 */
-	public ISolution getSolution(String name) throws PlatformException
-	{
-		return _currentSolutionManager.getSolution(name);
-	}
-
-	/**
 	 * @see salomon.engine.solution.ISolutionManager#getSolutions()
 	 */
 	public ISolution[] getSolutions() throws PlatformException
@@ -72,6 +66,16 @@ public final class SolutionManagerHolder implements ISolutionManager
 	void setCurrent(ISolutionManager currentSolutionManager)
 	{
 		_currentSolutionManager = currentSolutionManager;
+	}
+
+	public ISolution getSolution(IUniqueId id) throws PlatformException
+	{
+		return _currentSolutionManager.getSolution(id);
+	}
+
+	public ISolution getCurrentSolution() throws PlatformException
+	{
+		return _currentSolutionManager.getCurrentSolution();
 	}
 
 }
