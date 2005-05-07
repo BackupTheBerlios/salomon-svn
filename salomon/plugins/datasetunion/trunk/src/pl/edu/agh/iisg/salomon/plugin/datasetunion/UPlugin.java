@@ -21,41 +21,32 @@
 
 package pl.edu.agh.iisg.salomon.plugin.datasetunion;
 
+import salomon.util.serialization.SimpleString;
+
 import salomon.platform.IDataEngine;
 import salomon.platform.IEnvironment;
 import salomon.platform.data.dataset.IDataSet;
 import salomon.platform.data.dataset.IDataSetManager;
 import salomon.platform.serialization.IObject;
 
-import salomon.plugin.Description;
 import salomon.plugin.IPlugin;
 import salomon.plugin.IResult;
 import salomon.plugin.IResultComponent;
 import salomon.plugin.ISettingComponent;
 import salomon.plugin.ISettings;
-import salomon.util.serialization.SimpleString;
 
 /**
  * 
  */
 public final class UPlugin implements IPlugin
 {
-	private Description _description;
+
 
 	/**
 	 * 
 	 */
 	public UPlugin()
 	{
-		_description = new Description("UPlugin", DESCRIPTION);
-	}
-
-	/**
-	 * @see salomon.plugin.IPlugin#destroy()
-	 */
-	public void destroy()
-	{
-		// not used
 	}
 
 	/**
@@ -88,14 +79,6 @@ public final class UPlugin implements IPlugin
 		return uResult;
 	}
 
-	/**
-	 * @see salomon.plugin.IPlugin#getDescription()
-	 */
-	public Description getDescription()
-	{
-
-		return _description;
-	}
 
 	/**
 	 * @see salomon.plugin.IGraphicPlugin#getResultComponent()
@@ -112,22 +95,6 @@ public final class UPlugin implements IPlugin
 	public ISettingComponent getSettingComponent()
 	{
 		return new USettingComponent();
-	}
-
-	/**
-	 * @see salomon.plugin.IPlugin#initizalize()
-	 */
-	public void initizalize()
-	{
-	}
-
-	/**
-	 * @see salomon.plugin.IPlugin#setDescription(salomon.plugin.Description)
-	 */
-	public void setDescription(Description description)
-	{
-		_description = description;
-
 	}
 
 	private static final String DESCRIPTION = "Creates dataset which is a union of two other datasets";
