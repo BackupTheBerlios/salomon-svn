@@ -184,4 +184,14 @@ public final class PluginManager implements IPluginManager
 	}
 
 	private static final Logger LOGGER = Logger.getLogger(PluginLoader.class);
+
+	public boolean removeAll() throws PlatformException
+	{
+		throw new UnsupportedOperationException("Method removeAll() not implemented yet!");
+	}
+
+	public void clearPluginList() throws PlatformException
+	{
+		_plugins.clear();
+	}
 }

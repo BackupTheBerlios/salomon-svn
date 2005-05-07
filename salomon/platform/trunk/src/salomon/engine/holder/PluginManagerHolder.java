@@ -99,4 +99,14 @@ final class PluginManagerHolder implements IPluginManager
 		return _currentPluginManager.getPlugin(id);
 	}
 
+	public boolean removeAll() throws PlatformException
+	{
+		return _currentPluginManager.removeAll();
+	}
+
+	public void clearPluginList() throws PlatformException
+	{
+		_currentPluginManager.clearPluginList();
+	}
+
 }

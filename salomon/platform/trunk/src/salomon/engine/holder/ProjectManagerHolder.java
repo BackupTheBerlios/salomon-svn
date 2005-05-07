@@ -106,4 +106,18 @@ final class ProjectManagerHolder implements IProjectManager
 		return _currentProjectManager.getSolution();
 	}
 
+	/**
+	 * @pre currentProjectManager != null
+	 * @post $none
+	 */
+	public boolean removeProject(IProject project) throws PlatformException
+	{
+		return _currentProjectManager.removeProject(project);
+	}
+
+	public boolean removeAll() throws PlatformException
+	{
+		return _currentProjectManager.removeAll();
+	}
+
 }

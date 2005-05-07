@@ -72,4 +72,8 @@ public interface IProjectManager
     IProject getCurrentProject() throws PlatformException;
 	
 	ISolution getSolution() throws PlatformException;
+	
+	boolean removeProject(IProject project) throws PlatformException;
+	
+	boolean removeAll() throws PlatformException;
 }

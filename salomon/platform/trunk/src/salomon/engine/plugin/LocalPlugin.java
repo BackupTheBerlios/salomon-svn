@@ -92,9 +92,7 @@ public final class LocalPlugin implements ILocalPlugin, Serializable
 	public String toString()
 	{
 		// TODO: change it to name:version or sth
-		String path = _pluginInfo.getLocation().getPath();
-		int index = path.lastIndexOf('/');
-		return path.substring(index + 1);
+		return _pluginInfo.getName(); 
 	}
 
 	private static final Logger LOGGER = Logger.getLogger(LocalPlugin.class);

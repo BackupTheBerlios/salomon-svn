@@ -156,11 +156,12 @@ public final class PluginMangerGUI
 
 	public void refresh()
 	{
-		LOGGER.debug("reloading plugins");
-		_pluginListModel.removeAllElements();
+		LOGGER.debug("reloading plugins");		
 
 		ILocalPlugin[] plugins = null;
 		try {
+			_pluginListModel.removeAllElements();
+			_pluginManager.clearPluginList();
 			plugins = _pluginManager.getPlugins();
 
 			for (ILocalPlugin plugin : plugins) {

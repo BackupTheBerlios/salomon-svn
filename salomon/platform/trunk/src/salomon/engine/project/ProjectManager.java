@@ -314,4 +314,14 @@ public final class ProjectManager implements IProjectManager
 		_solution = solution;
 	}
 
+	public boolean removeProject(IProject project) throws PlatformException
+	{
+		throw new UnsupportedOperationException("Method removeProject() not implemented yet!");
+	}
+
+	public boolean removeAll() throws PlatformException
+	{
+		throw new UnsupportedOperationException("Method removeAll() not implemented yet!");
+	}
+
 } // end KnowledgeSystemManager
