@@ -63,6 +63,8 @@ import salomon.engine.controller.gui.action.ActionManager;
 import salomon.engine.database.DBManager;
 import salomon.engine.holder.ManagerEngineHolder;
 import salomon.engine.platform.IManagerEngine;
+import salomon.engine.platform.ManagerEngine;
+
 import salomon.engine.remote.CentralController;
 import salomon.engine.remote.ICentralController;
 import salomon.engine.remote.event.IMasterControllerListener;
@@ -462,7 +464,8 @@ public final class MasterController implements IController
 		 */
 		void showSQLConsole()
 		{
-			new SQLConsole(false);
+			throw new UnsupportedOperationException(
+					"Method showSQLConsole() not implemented yet!");			
 		}
 
 		private JPanel getOfficialAbout()

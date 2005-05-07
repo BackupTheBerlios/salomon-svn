@@ -72,7 +72,7 @@ public final class PluginLoader
 		PluginClassLoader classLoader = PluginClassLoader.getInstance();
 		classLoader.addUrl(url);
 		// loading appropriate plugin (it has to be in *.jar file
-		plugin = (ILocalPlugin) classLoader.findMainClass(pluginFile).newInstance();		
+		plugin = (IPlugin) classLoader.findMainClass(pluginFile).newInstance();		
 		_pluginsLoaded.put(plugin, url);
 
 		return plugin;

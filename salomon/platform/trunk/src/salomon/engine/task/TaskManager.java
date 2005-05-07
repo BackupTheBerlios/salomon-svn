@@ -66,7 +66,7 @@ public final class TaskManager implements ITaskManager
 		_managerEngine = project;
 		_dbManager = manager;
 		_tasks = new LinkedList<ITask>();
-		// FIXME
+		// FIXME needed by DataSet
 		//		try {
 		//			_dataEngine = project.getSolution().getDataEngine();
 		//		} catch (PlatformException e) {

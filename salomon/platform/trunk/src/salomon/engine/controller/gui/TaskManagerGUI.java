@@ -134,8 +134,7 @@ public final class TaskManagerGUI
 	}
 
 	public List getTasks()
-	{
-		// FIXME
+	{ 
 		return Arrays.asList(_taskListModel.toArray());
 	}
 
@@ -309,7 +308,7 @@ public final class TaskManagerGUI
 		if (inputSettings == null) {
 			inputSettings = plugin.getSettingComponent().getDefaultSettings();
 		}
-		//FIXME!!!
+		//FIXME needed by DataSet
 		IDataEngine dataEngine = null;
 //		try 
 //			dataEngine = Solution.getInstance().getDataEngine();

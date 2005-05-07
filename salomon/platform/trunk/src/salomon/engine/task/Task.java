@@ -100,6 +100,7 @@ public final class Task implements ITask
 	public void setPlugin(ILocalPlugin plugin) throws PlatformException
 	{
 		_plugin = plugin;
+		_taskInfo.setPluginID(plugin.getInfo().getId());
 	}
 
 	/**

@@ -69,7 +69,7 @@ public final class SQLConsole extends JFrame
 	private JButton _btnRollback = null;
 
 	/** Class represents connection to data base */
-	private DBManager _connector = null;
+	private DBManager _dbManager = null;
 
 //	private JPanel _contentPane = null;
 
@@ -104,22 +104,19 @@ public final class SQLConsole extends JFrame
 	 * 
 	 * @param isStandAlone if true SQLConsole is standalone application
 	 */
-	public SQLConsole(boolean isStandAlone)
+	public SQLConsole(DBManager manager)
 	{
 		super();
-		_isStandAlone = isStandAlone;
-		if (isStandAlone) {
+		_isStandAlone = (manager == null);
+		if (_isStandAlone) {
 			PropertyConfigurator.configure("log.conf"); //$NON-NLS-1$
 		}
-//		FIXME:
-//		try {
-//			
-//			_connector = DBManager.getInstance();
-//		} catch (SQLException e) {
-//			LOGGER.fatal("", e); //$NON-NLS-1$
-//		} catch (ClassNotFoundException e) {
-//			LOGGER.fatal("", e); //$NON-NLS-1$
-//		}
+		if (manager != null) {
+			_dbManager = manager;
+		} else {
+			throw new UnsupportedOperationException(
+					"Standalone mode not supported!");
+		}
 		_msgArea = getMessageArea();
 		_history = new CommandHistory(100);
 		initialize();
@@ -127,7 +124,7 @@ public final class SQLConsole extends JFrame
 
 	private void commit()
 	{
-		_connector.commit();
+		_dbManager.commit();
 		showMessage(Messages.getString("TXT_COMMIT_COMPLETE")); //$NON-NLS-1$
 	}
 
@@ -141,10 +138,10 @@ public final class SQLConsole extends JFrame
 		JComponent cmpResult = null;
 		ResultSet resultSet = null;
 		try {
-			_connector.executeQuery(query);
-			resultSet = _connector.getResultSet();
+			_dbManager.executeQuery(query);
+			resultSet = _dbManager.getResultSet();
 			if (resultSet == null) {
-				int updatedRows = _connector.getUpdateCount();
+				int updatedRows = _dbManager.getUpdateCount();
 				showMessage(Messages.getString("TXT_UPDATED_ROWS") + updatedRows); //$NON-NLS-1$
 			} else {
 				cmpResult = Utils.createResultTable(resultSet);
@@ -383,7 +380,7 @@ public final class SQLConsole extends JFrame
 			{
 				if (_isStandAlone) {
 					try {
-						_connector.disconnect();
+						_dbManager.disconnect();
 					} catch (SQLException e1) {
 						LOGGER.fatal("", e1); //$NON-NLS-1$
 					}
@@ -420,7 +417,7 @@ public final class SQLConsole extends JFrame
 
 	private void rollback()
 	{
-		_connector.rollback();
+		_dbManager.rollback();
 		showMessage(Messages.getString("TXT_ROLLBACK_COMPLETE")); //$NON-NLS-1$
 	}
 
@@ -436,7 +433,7 @@ public final class SQLConsole extends JFrame
 	 */
 	public static void main(String[] args)
 	{
-		new SQLConsole(true);
+		new SQLConsole(null);
 	}
 
 //	private static void printResultSet(ResultSet resultSet) throws SQLException

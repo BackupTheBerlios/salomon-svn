@@ -52,6 +52,16 @@ public final class ManagerEngine implements IManagerEngine
 	
 	private DBManager _dbManager;
 
+	/**
+	 * Method used only to support SQLConsole 
+	 * 
+	 * @return
+	 */
+	public DBManager getDbManager()
+	{
+		return _dbManager;
+	}
+	
 	public ManagerEngine() throws SQLException, ClassNotFoundException, PlatformException
 	{
 		//TODO: change it after implementing Solution

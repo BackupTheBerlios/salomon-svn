@@ -78,8 +78,8 @@ public final class ProjectManagerGUI
 
 	public void newProject()
 	{
-		
-		try {			
+
+		try {
 			IProject project = _projectManager.createProject();
 			setProjectProperties(project);
 			_projectManager.addProject(project);
@@ -249,9 +249,9 @@ public final class ProjectManagerGUI
 		int projectID = 0;
 		JScrollPane panel = new JScrollPane();
 		panel.setViewportView(table);
-		Dimension dim = new Dimension(250, 200);
-		panel.setMaximumSize(dim);
-		panel.setPreferredSize(dim);
+//		Dimension dim = new Dimension(250, 200);
+//		panel.setMaximumSize(dim);
+//		panel.setPreferredSize(dim);
 
 		int result = JOptionPane.showConfirmDialog(_parent, panel,
 				"Choose project", JOptionPane.OK_CANCEL_OPTION,

@@ -298,9 +298,7 @@ public final class ProjectManager implements IProjectManager
 		// saving tasks
 		ITask[] tasks = _managerEngine.getTasksManager().getTasks();
 		for (ITask task : tasks) {
-			// TODO: is it neccessary?
-			//((Task) task).setProjectID(projectID);
-			//((Task) task).save();
+			((Task) task).getInfo().save();
 		}
 	}
 

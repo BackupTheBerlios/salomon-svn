@@ -60,6 +60,7 @@ import salomon.util.gui.Utils;
 import salomon.platform.exception.PlatformException;
 
 import salomon.engine.platform.IManagerEngine;
+import salomon.engine.platform.ManagerEngine;
 
 /**
  * Local implementation of IController interface.
@@ -354,7 +355,7 @@ public final class LocalController implements IController
 		 */
 		void showSQLConsole()
 		{
-			new SQLConsole(false);
+			new SQLConsole(((ManagerEngine)_managerEngine).getDbManager());
 		}
 
 		private JPanel getOfficialAbout()

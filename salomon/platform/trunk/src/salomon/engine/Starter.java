@@ -27,8 +27,6 @@ import java.util.MissingResourceException;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
-
-
 import salomon.engine.controller.IController;
 import salomon.engine.controller.LibraryController;
 import salomon.engine.controller.LocalController;
@@ -69,13 +67,12 @@ public final class Starter
 
 	private void initManagers()
 	{
-		// FIXME: Create
 		try {
 			_managerEngine = new ManagerEngine();
 		} catch (Exception e) {
 			LOGGER.fatal("", e);
 			Utils.showErrorMessage("ERR_CONNECTION_ERROR");
-		} 
+		}
 	}
 
 	private void start()

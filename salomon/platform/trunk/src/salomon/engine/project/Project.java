@@ -56,8 +56,7 @@ public final class Project implements IProject
 	 */
 	public ITaskManager getTaskManager() throws PlatformException
 	{
-		throw new UnsupportedOperationException(
-				"Method getTaskManager() not implemented yet!");
+		return _taskManager;
 	}
 
 	@Override
