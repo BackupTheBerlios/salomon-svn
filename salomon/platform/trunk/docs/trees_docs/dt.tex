@@ -4,7 +4,7 @@
 \usepackage[latin2]{inputenc}
 %\usepackage{polski}
 \usepackage[T1]{fontenc}
-\usepackage[dvips]{graphicx}
+\usepackage{graphicx}
 
 
 \pagestyle{headings}
@@ -62,7 +62,8 @@ Wiek 	P³eæ 	Wykszta³cenie 	Jezyki 	Doswiadczenie 	Prezentacja 	Przyjety\linebrea
 \linebreak
 Na podstawie tabeli decyzyjnej tworzymy drzewo, którego wez³ami sa poszczególne atrybuty, ga³eziami wartosci odpowiadajace tym atrybutom, a liscie tworza poszczególne decyzje. Na podstawie przyk³adowych danych wygenerowano nastepujace drzewo:
 
-%co z tym imagem?
+
+
 \begin{figure}
 	\centering
 	\includegraphics[bb=0 0 441 395]{Drzewo_decyzyjne.png}
@@ -121,7 +122,7 @@ $P_{b}=\frac{n_{bc}}{n_{b}}$
 
 
 \subsubsection{Entropia}
-$Entropia = Sum(c){(\frac{n_{bc}}{n_{b}})log_{2}(\frac{n_{bc}}{n_{b}})}$
+$Entropia = Sum(c)(\frac{n_{bc}}{n_{b}})log_{2}(\frac{n_{bc}}{n_{b}})$
 
 \begin{itemize}
 \item Entropia jest zerowa jezeli zbior jest idealnie homogeniczny
@@ -129,7 +130,7 @@ $Entropia = Sum(c){(\frac{n_{bc}}{n_{b}})log_{2}(\frac{n_{bc}}{n_{b}})}$
 \end{itemize}
 
 \subsubsection{Srednia entropia}
-$Srednia entropia = Sum(b){(\frac{n_{b}}{n_{t}})*[Sum(c){(\frac{n_{bc}}{n_{b}})log_{2}(\frac{n_{bc}}{n_{b}})}]}$
+$Srednia entropia = Sum(b)(\frac{n_{b}}{n_{t}})*[Sum(c)(\frac{n_{bc}}{n_{b}})log_{2}(\frac{n_{bc}}{n_{b}})]$
 
 \end{flushleft}
 \end{document}
