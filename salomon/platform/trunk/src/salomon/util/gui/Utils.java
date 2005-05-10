@@ -100,6 +100,8 @@ public final class Utils
 			}
 			rowCount++;
 		}
+		
+		LOGGER.info("rowCount " + rowCount);
 
 		JTable table = new JTable(data, columnNames);
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);

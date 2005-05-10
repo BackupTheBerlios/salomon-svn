@@ -46,7 +46,7 @@ public interface ISolutionManager
 	 * @return The solution
 	 * @throws PlatformException
 	 */
-	ISolution getSolution(IUniqueId id) throws PlatformException;
+	ISolution getSolution(int id) throws PlatformException;
 
 	/**
 	 * Creates an empty solution, but doesn't add it to database.

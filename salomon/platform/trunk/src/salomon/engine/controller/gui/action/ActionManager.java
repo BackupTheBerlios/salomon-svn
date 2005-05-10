@@ -23,6 +23,7 @@ package salomon.engine.controller.gui.action;
 
 import salomon.engine.controller.gui.PluginMangerGUI;
 import salomon.engine.controller.gui.ProjectManagerGUI;
+import salomon.engine.controller.gui.SolutionManagerGUI;
 import salomon.engine.controller.gui.TaskManagerGUI;
 
 /**
@@ -36,9 +37,19 @@ public final class ActionManager
 
 	private AddTaskAction _addTaskAction;
 
+	private EditSolutionAction _editSolutionAction;
+	
+	private ExitAction _exitAction;
+
 	private NewProjectAction _newProjectAction;
 
+	private NewSolutionAction _newSolutionAction;
+
 	private OpenProjectAction _openProjectAction;
+
+	private OpenSolutionAction _openSolutionAction;
+	
+	private PluginMangerGUI _pluginMangerGUI;
 
 	private ProjectManagerGUI _projectManagerGUI;
 
@@ -51,10 +62,13 @@ public final class ActionManager
 	private SavePluginAction _savePluginAction;
 
 	private SaveProjectAction _saveProjectAction;
+	
+	private SaveSolutionAction _saveSolutionAction;
+	
+	private SolutionManagerGUI _solutionManagerGUI;
 
 	private TaskManagerGUI _taskManagerGUI;
-
-	private PluginMangerGUI _pluginMangerGUI;
+	
 
 	/**
 	 * Sets object used to create actions.
@@ -65,6 +79,23 @@ public final class ActionManager
 	public ActionManager(ProjectManagerGUI projectManagerGUI,
 			TaskManagerGUI taskManagerGUI, PluginMangerGUI pluginMangerGUI)
 	{
+		_projectManagerGUI = projectManagerGUI;
+		_taskManagerGUI = taskManagerGUI;
+		_pluginMangerGUI = pluginMangerGUI;
+	}
+
+	
+	/**
+	 * Sets object used to create actions.
+	 * @param solutionManagerGUI
+	 * @param projectManagerGUI
+	 * @param taskManagerGUI
+	 * @param pluginMangerGUI
+	 */
+	public ActionManager(SolutionManagerGUI solutionManagerGUI, ProjectManagerGUI projectManagerGUI,
+			TaskManagerGUI taskManagerGUI, PluginMangerGUI pluginMangerGUI)
+	{
+		_solutionManagerGUI = solutionManagerGUI;
 		_projectManagerGUI = projectManagerGUI;
 		_taskManagerGUI = taskManagerGUI;
 		_pluginMangerGUI = pluginMangerGUI;
@@ -92,6 +123,19 @@ public final class ActionManager
 	}
 
 	/**
+	 * Returns an instance of EditSolutionAction.
+	 * 
+	 * @return an instance of EditSolutionAction.
+	 */
+	public EditSolutionAction getEditSolutionAction()
+	{
+		if (_editSolutionAction == null) {
+			_editSolutionAction = new EditSolutionAction(_solutionManagerGUI);
+		}
+		return _editSolutionAction;
+	}
+	
+	/**
 	 * Returns an instance of NewProjectAction.
 	 * 
 	 * @return an instance of NewProjectAction.
@@ -102,6 +146,19 @@ public final class ActionManager
 			_newProjectAction = new NewProjectAction(_projectManagerGUI);
 		}
 		return _newProjectAction;
+	}
+	
+	/**
+	 * Returns an instance of NewSolutionAction.
+	 * 
+	 * @return an instance of NewSolutionAction.
+	 */
+	public NewSolutionAction getNewSolutionAction()
+	{
+		if (_newSolutionAction == null) {
+			_newSolutionAction = new NewSolutionAction(_solutionManagerGUI);
+		}
+		return _newSolutionAction;
 	}
 
 	/**
@@ -115,6 +172,19 @@ public final class ActionManager
 			_openProjectAction = new OpenProjectAction(_projectManagerGUI);
 		}
 		return _openProjectAction;
+	}
+	
+	/**
+	 * Returns an instance of OpenSolutionAction.
+	 * 
+	 * @return an instance of OpenSolutionAction.
+	 */
+	public OpenSolutionAction getOpenSolutionAction()
+	{
+		if (_openSolutionAction == null) {
+			_openSolutionAction = new OpenSolutionAction(_solutionManagerGUI);
+		}
+		return _openSolutionAction;
 	}
 
 	/**
@@ -176,4 +246,31 @@ public final class ActionManager
 		}
 		return _saveProjectAction;
 	}
+	
+	/**
+	 * Returns an instance of SaveSolutionAction.
+	 * 
+	 * @return an instance of SaveSolutionAction.
+	 */
+	public SaveSolutionAction getSaveSolutionAction()
+	{
+		if (_saveSolutionAction == null) {
+			_saveSolutionAction = new SaveSolutionAction(_solutionManagerGUI);
+		}
+		return _saveSolutionAction;
+	}
+	
+	/**
+	 * Returns an instance of ExitAction.
+	 * 
+	 * @return an instance of ExitAction.
+	 */
+	public ExitAction getExitAction()
+	{
+		if (_exitAction == null) {
+			_exitAction = new ExitAction();
+		}
+		return _exitAction;
+	}
+	
 }

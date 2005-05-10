@@ -45,7 +45,6 @@ import salomon.engine.controller.gui.action.ActionManager;
  */
 public final class ControllerPanel extends JPanel
 {
-
 	private ActionManager _actionManager;
 
 	private JButton _btnApply;
@@ -55,7 +54,7 @@ public final class ControllerPanel extends JPanel
 	private JPanel _contentPane;
 
 	private GUIButtons _guiButtons;
-
+	
 	private JList _lstPlugins;
 
 	private JList _lstTasks;
@@ -69,7 +68,7 @@ public final class ControllerPanel extends JPanel
 	private JPanel _pnlPluginButtons;
 
 	private JPanel _pnlPlugins;
-
+	
 	private JPanel _pnlTaskButtons;
 
 	private JPanel _pnlTasks;
@@ -81,6 +80,7 @@ public final class ControllerPanel extends JPanel
 	private int _strutWidth = 10;
 
 	private TaskManagerGUI _taskManagerGUI;
+
 
 	public ControllerPanel(TaskManagerGUI taskManagerGUI,
 			PluginMangerGUI pluginMangerGUI, ActionManager actionManager)

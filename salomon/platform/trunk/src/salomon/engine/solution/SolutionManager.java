@@ -21,12 +21,37 @@
 
 package salomon.engine.solution;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
+
+import org.apache.log4j.Logger;
+
 import salomon.engine.database.DBManager;
+import salomon.engine.database.queries.SQLSelect;
+import salomon.engine.plugin.LocalPlugin;
+import salomon.engine.plugin.PluginInfo;
+import salomon.engine.project.IProject;
+import salomon.engine.project.Project;
+import salomon.engine.project.ProjectInfo;
+import salomon.engine.project.ProjectManager;
+import salomon.engine.task.ITask;
+import salomon.engine.task.Task;
+import salomon.engine.task.TaskInfo;
+import salomon.engine.task.TaskManager;
+
+import salomon.util.gui.Utils;
 
 import salomon.platform.IUniqueId;
+import salomon.platform.exception.DBException;
 import salomon.platform.exception.PlatformException;
 
+import salomon.plugin.ISettings;
+
 import salomon.engine.platform.IManagerEngine;
+import salomon.engine.platform.ManagerEngine;
 
 /**
  * 
@@ -47,12 +72,19 @@ public final class SolutionManager implements ISolutionManager
 	}
 
 	/**
+	 * @throws PlatformException 
 	 * @see salomon.engine.solution.ISolutionManager#addSolution(salomon.platform.solution.ISolution)
 	 */
-	public void addSolution(ISolution solution)
+	public void addSolution(ISolution solution) throws PlatformException
 	{
-		throw new UnsupportedOperationException(
-				"Method addSolution() not implemented yet!");
+		try {
+			solution.getInfo().save();
+			_dbManager.commit();
+		} catch (Exception e) {
+			LOGGER.fatal("", e);
+			throw new PlatformException(e.getLocalizedMessage());
+		}
+		_currentSolution = solution;
 	}
 
 	/**
@@ -60,19 +92,103 @@ public final class SolutionManager implements ISolutionManager
 	 */
 	public ISolution createSolution()
 	{
-		throw new UnsupportedOperationException(
-				"Method createSolution() not implemented yet!");
+		ISolution result = new Solution((ManagerEngine) _managerEngine , _dbManager);
+		_currentSolution = result;
+		return result;
+	}
+	
+	/**
+	 * @throws PlatformException 
+	 * @see salomon.engine.solution.ISolutionManager#getSolution(java.lang.String)
+	 */
+	public ISolution getSolution(int id) throws PlatformException
+	{
+		ISolution solution = this.createSolution();
+		// loading plugin information
+		// building query
+		SQLSelect select = new SQLSelect();
+		select.addTable(SolutionInfo.TABLE_NAME);
+		select.addCondition("solution_id =", id);
+		List<IProject> projects = null;
+		ResultSet resultSet = null;
+		try {
+			resultSet = _dbManager.select(select);
+			resultSet.next();
+			// loading solution
+			((Solution) solution).getInfo().load(resultSet);
+
+			// one row should be found, if found more, the first is got
+			if (resultSet.next()) {
+				LOGGER.warn("TOO MANY ROWS");
+			}
+			resultSet.close();
+
+			// adding tasks
+		//	projects = getProjectsForSolution(id);
+		} catch (Exception e) {
+			LOGGER.fatal("", e);
+			throw new DBException(e.getLocalizedMessage());
+		}
+
+		// clearing old tasks
+		ProjectManager projectManager = (ProjectManager) _managerEngine.getProjectManager();
+	//	taskManager.clearTaskList();
+	//	taskManager.addAllTasks(tasks);
+		LOGGER.debug("solution: " + solution);
+	//	for (IProject project : projectManager.getProjects()) {
+	//		LOGGER.debug("projects: " + project);
+	//	}
+		LOGGER.info("Solution successfully loaded.");
+
+		// setting current project
+		_currentSolution = solution;
+		return _currentSolution;
 	}
 
 	/**
-	 * @see salomon.engine.solution.ISolutionManager#getSolution(java.lang.String)
+	 * Method selects projects for given solution id
+	 * 
+	 * @param solutionID
+	 * @return
+	 * @throws ClassNotFoundException
+	 * @throws Exception
 	 */
-	public ISolution getSolution(IUniqueId id)
+	private List<IProject> getProjectsForSolution(int solutionID) throws Exception
 	{
-		throw new UnsupportedOperationException(
-				"Method getSolution() not implemented yet!");
+		List<IProject> projects = new LinkedList<IProject>();
+		SQLSelect select = new SQLSelect();
+		select.addTable(ProjectInfo.TABLE_NAME);
+		select.addColumn("project_id");
+		select.addColumn("solution_id");
+		select.addColumn("project_name");
+		select.addColumn("project_info");
+		select.addColumn("lm_date");
+		select.addCondition("solution_id =", solutionID);
+		
+		// executing query
+		ResultSet resultSet = null;
+		resultSet = _dbManager.select(select);
+		ProjectManager projectManager = (ProjectManager)_currentSolution.getProjectManager();
+		try {
+			while (resultSet.next()) {	
+				Project project = (Project) projectManager.createProject();
+				// loading task
+				project.getInfo().load(resultSet);
+				projectManager.addProject(project);
+				projects.add(project);
+			}
+		} catch (Exception e) {
+			LOGGER.fatal("", e);
+			resultSet.close();
+			throw e;
+		}
+		resultSet.close();
+
+		return projects;
 	}
 
+	
+	
 	/**
 	 * @see salomon.engine.solution.ISolutionManager#getSolutions()
 	 */
@@ -82,8 +198,33 @@ public final class SolutionManager implements ISolutionManager
 				"Method getSolutions() not implemented yet!");
 	}
 
+	// FIXME this method has to be removed but after implementing
+	// component to show table
+
+	public Collection getSolutionList() throws PlatformException
+	{
+		Collection solutions = null;
+		SQLSelect select = new SQLSelect();
+		select.addTable(SolutionInfo.TABLE_NAME);
+		// executing query
+		ResultSet resultSet = null;
+
+		try {
+			resultSet = _dbManager.select(select);
+			solutions = Utils.getDataFromResultSet(resultSet);
+		} catch (SQLException e) {
+			LOGGER.fatal("", e);
+			throw new DBException(e.getLocalizedMessage());
+		} 
+		return solutions;
+	}
+
+	
 	public ISolution getCurrentSolution() throws PlatformException
 	{
 		return _currentSolution;
 	}
+	
+	private static final Logger LOGGER = Logger.getLogger(SolutionManager.class);
+	
 }

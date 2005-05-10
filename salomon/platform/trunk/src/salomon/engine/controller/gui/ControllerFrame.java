@@ -47,7 +47,8 @@ public final class ControllerFrame extends JFrame
 
 	private ControllerPanel _controllerPanel;
 
-//	private String _resourcesDir;
+	
+   //	private String _resourcesDir;
 
 	/**
 	 * creates new ControllerFrame
@@ -77,7 +78,7 @@ public final class ControllerFrame extends JFrame
 	{
 		_controllerPanel = controllerPanel;
 	}
-
+	
 	/**
 	 * TODO: add comment.
 	 * @param toolBar

@@ -101,12 +101,12 @@ public final class DBManager
 		StringBuilder connectString = new StringBuilder("jdbc:firebirdsql:");
 		if (host == null || "".equals(host)) {
 			connectString.append("embedded:");
-			connectString.append(Config.CURR_DIR);
+			connectString.append(Config.CURR_DIR);		
 			connectString.append(Config.FILE_SEPARATOR);
 		} else {
 			connectString.append(host).append(":");
 		}
-		connectString.append(dataBasePath);
+		connectString.append(dataBasePath);	
 		LOGGER.info("connectString: " + connectString);
 		_connection = DriverManager.getConnection(connectString.toString(),
 				user, passwd);
