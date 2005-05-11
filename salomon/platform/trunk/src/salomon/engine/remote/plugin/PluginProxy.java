@@ -64,7 +64,7 @@ public final class PluginProxy implements IPlugin
 	}
 
 	/**
-	 * @see salomon.plugin.IPlugin#getDescription()
+	 * @see salomon.plugin.IPlugin#getInfo()
 	 */
 	public PluginInfo getDescription()
 	{
@@ -103,10 +103,10 @@ public final class PluginProxy implements IPlugin
 	}
 
 	/**
-	 * @see salomon.plugin.IPlugin#setDescription(salomon.engine.plugin.PluginInfo)
+	 * @see salomon.plugin.IPlugin#setInfo(salomon.engine.plugin.PluginInfo)
 	 */
 	public void setDescription(PluginInfo description)
 	{
-		_localPlugin.setDescription(description);
+		_localPlugin.setInfo(description);
 	}
 }

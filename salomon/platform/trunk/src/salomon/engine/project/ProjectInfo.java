@@ -45,6 +45,8 @@ public final class ProjectInfo implements IInfo
 
 	private int _projectID = 0;
 
+	private int _solutionID = 0;
+
 	public ProjectInfo(DBManager dbManager)
 	{
 		_dbManager = dbManager;
@@ -68,12 +70,6 @@ public final class ProjectInfo implements IInfo
 	{
 		throw new UnsupportedOperationException(
 				"Method getCreationDate() not implemented yet!");
-	}
-
-	public String getDescription() throws PlatformException
-	{
-		throw new UnsupportedOperationException(
-				"Method getDescription() not implemented yet!");
 	}
 
 	/**
@@ -104,6 +100,11 @@ public final class ProjectInfo implements IInfo
 	public String getName()
 	{
 		return _name;
+	}
+
+	public int getSolutionID()
+	{
+		return _solutionID;
 	}
 
 	/**
@@ -141,12 +142,6 @@ public final class ProjectInfo implements IInfo
 		_projectID = _dbManager.insertOrUpdate(update, "project_id",
 				_projectID, GEN_NAME);
 		return _projectID;
-	}
-
-	public void setDescription(String description) throws PlatformException
-	{
-		throw new UnsupportedOperationException(
-				"Method setDescription() not implemented yet!");
 	}
 
 	/**

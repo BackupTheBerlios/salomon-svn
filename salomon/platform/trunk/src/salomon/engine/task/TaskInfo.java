@@ -88,18 +88,17 @@ public final class TaskInfo implements IInfo
 				"Method getCreationDate() not implemented yet!");
 	}
 
-	public String getDescription() throws PlatformException
-	{
-		throw new UnsupportedOperationException(
-				"Method getDescription() not implemented yet!");
-	}
-
 	/**
 	 * @return Returns the taksId.
 	 */
 	public int getId()
 	{
 		return _taskID;
+	}
+
+	public String getInfo() throws PlatformException
+	{
+		return _info;
 	}
 
 	public Date getLastModificationDate() throws PlatformException
@@ -204,10 +203,9 @@ public final class TaskInfo implements IInfo
 		return _taskID;
 	}
 
-	public void setDescription(String description) throws PlatformException
+	public void setInfo(String info) throws PlatformException
 	{
-		throw new UnsupportedOperationException(
-				"Method setDescription() not implemented yet!");
+		_info = info;
 	}
 
 	/**

@@ -134,7 +134,7 @@ public final class PluginMangerGUI
 				PluginInfo desc = plugin.getInfo();
 				desc.setName(_txtPluginName.getText());
 				desc.setLocation(url);
-				desc.setDescription(_txtPluginDescription.getText());
+				desc.setInfo(_txtPluginDescription.getText());
 
 				wasOk = _pluginManager.savePlugin(plugin);
 			} catch (PlatformException e) {
@@ -166,7 +166,7 @@ public final class PluginMangerGUI
 
 			for (ILocalPlugin plugin : plugins) {
 				LOGGER.debug("adding plugin:" + plugin);
-				LOGGER.debug("description:" + plugin.getInfo().getDescription());
+				LOGGER.debug("description:" + plugin.getInfo().getInfo());
 				_pluginListModel.addElement(plugin);
 			}
 		} catch (PlatformException e) {
@@ -212,7 +212,7 @@ public final class PluginMangerGUI
 		getEditPluginPanel();
 		_txtPluginName.setText(pluginInfo.getName());
 		_txtPluginLocation.setText(pluginInfo.getLocation().toString());
-		_txtPluginDescription.setText(pluginInfo.getDescription());
+		_txtPluginDescription.setText(pluginInfo.getInfo());
 		int retVal = JOptionPane.showConfirmDialog(_parent,
 				getEditPluginPanel(), Messages.getString("MNU_EDIT_PLUGIN"),
 				JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
@@ -229,7 +229,7 @@ public final class PluginMangerGUI
 			try {
 				pluginInfo.setName(_txtPluginName.getText());
 				pluginInfo.setLocation(url);
-				pluginInfo.setDescription(_txtPluginDescription.getText());
+				pluginInfo.setInfo(_txtPluginDescription.getText());
 
 				wasOk = _pluginManager.savePlugin(plugin);
 			} catch (PlatformException e) {

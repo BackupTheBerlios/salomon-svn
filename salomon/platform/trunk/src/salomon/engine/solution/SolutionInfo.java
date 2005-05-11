@@ -63,19 +63,9 @@ public final class SolutionInfo implements IInfo
 		throw new UnsupportedOperationException("Method getCreationDate() not implemented yet!");
 	}
 
-	public String getDescription() throws PlatformException
-	{
-		throw new UnsupportedOperationException("Method getDescription() not implemented yet!");
-	}
-
 	public Date getLastModificationDate() throws PlatformException
 	{
 		throw new UnsupportedOperationException("Method getLastModificationDate() not implemented yet!");
-	}
-
-	public void setDescription(String description) throws PlatformException
-	{
-		throw new UnsupportedOperationException("Method setDescription() not implemented yet!");
 	}
 
 	public boolean delete() throws SQLException, ClassNotFoundException

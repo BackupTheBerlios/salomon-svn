@@ -48,7 +48,7 @@ public class PluginManagerTest extends TestCase
 			plugins = pluginManager.getPlugins();
 			assertFalse(plugins.length == 0);
 		for (int i = 0; i < plugins.length; i++) {
-			LOGGER.debug(plugins[i].getDescription());
+			LOGGER.debug(plugins[i].getInfo());
 		}
 		} catch (PlatformException e) {
 			LOGGER.fatal("", e);			
@@ -62,7 +62,7 @@ public class PluginManagerTest extends TestCase
 		LocalPlugin plugin = new LocalPlugin();
 		PluginInfo desc = new PluginInfo();
 		desc.setPluginID(35);
-		plugin.setDescription(desc);
+		plugin.setInfo(desc);
 		assertTrue(pluginManager.removePlugin(plugin));
 	}
 
@@ -79,7 +79,7 @@ public class PluginManagerTest extends TestCase
 		} catch (MalformedURLException e) {
 			LOGGER.fatal("", e);
 		}
-		plugin.setDescription(desc);
+		plugin.setInfo(desc);
 		assertTrue(success);
 		assertTrue(pluginManager.savePlugin(plugin));
 	}
@@ -98,7 +98,7 @@ public class PluginManagerTest extends TestCase
 		} catch (MalformedURLException e) {
 			LOGGER.fatal("", e);
 		}
-		plugin.setDescription(desc);
+		plugin.setInfo(desc);
 		assertTrue(success);
 		assertTrue(pluginManager.savePlugin(plugin));
 	}

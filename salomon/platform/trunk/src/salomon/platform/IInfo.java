@@ -37,7 +37,7 @@ public interface IInfo extends IUniqueId
 	
 	Date getCreationDate() throws PlatformException;
 
-	String getDescription() throws PlatformException;
+	String getInfo() throws PlatformException;
 
 	Date getLastModificationDate() throws PlatformException;
 
@@ -45,7 +45,7 @@ public interface IInfo extends IUniqueId
 	 * Sets the description.
 	 * @param description the description
 	 */
-	void setDescription(String description) throws PlatformException;
+	void setInfo(String info) throws PlatformException;
 	
 
 	/**

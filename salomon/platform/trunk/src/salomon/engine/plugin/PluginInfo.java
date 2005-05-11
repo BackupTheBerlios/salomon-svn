@@ -42,7 +42,7 @@ public class PluginInfo implements IInfo, Serializable
 {
 	private DBManager _dbManager;
 
-	private String _description;
+	private String _info;
 
 	private String _input;
 
@@ -68,7 +68,7 @@ public class PluginInfo implements IInfo, Serializable
 	public PluginInfo(String name, String info)
 	{
 		_name = name;
-		_description = info;
+		_info = info;
 	}
 
 	/**
@@ -94,9 +94,9 @@ public class PluginInfo implements IInfo, Serializable
 	/**
 	 * @return Returns the description.
 	 */
-	public String getDescription()
+	public String getInfo()
 	{
-		return _description;
+		return _info;
 	}
 
 	public int getId()
@@ -171,7 +171,7 @@ public class PluginInfo implements IInfo, Serializable
 		_pluginID = resultSet.getInt("plugin_id");
 		_name = resultSet.getString("plugin_name");
 		_location = new URL(resultSet.getString("location"));
-		_description = resultSet.getString("plugin_info");
+		_info = resultSet.getString("plugin_info");
 	}
 
 	/**
@@ -188,8 +188,8 @@ public class PluginInfo implements IInfo, Serializable
 		SQLUpdate update = new SQLUpdate(TABLE_NAME);
 		update.addValue("plugin_name", _name);
 		update.addValue("location", _location.toString());
-		if (_description != null) {
-			update.addValue("plugin_info", _description);
+		if (_info != null) {
+			update.addValue("plugin_info", _info);
 		}
 		update.addValue("lm_date", new Date(System.currentTimeMillis()));
 		_pluginID = _dbManager.insertOrUpdate(update, "plugin_id", _pluginID,
@@ -197,9 +197,9 @@ public class PluginInfo implements IInfo, Serializable
 		return _pluginID;
 	}
 
-	public void setDescription(String description) throws PlatformException
+	public void setInfo(String info) throws PlatformException
 	{
-		_description = description;
+		_info = info;
 	}
 
 	/**
@@ -239,7 +239,7 @@ public class PluginInfo implements IInfo, Serializable
 	 */
 	public void setPluginID(int pluginID)
 	{
-		this._pluginID = pluginID;
+		_pluginID = pluginID;
 	}
 
 	/**
@@ -253,7 +253,7 @@ public class PluginInfo implements IInfo, Serializable
 	public String toString()
 	{
 		return "" + _pluginID + "," + _name + "," + _location + ","
-				+ _description;
+				+ _info;
 	}
 
 	public static final String TABLE_NAME = "plugins";

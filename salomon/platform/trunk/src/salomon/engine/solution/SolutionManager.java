@@ -131,7 +131,7 @@ public final class SolutionManager implements ISolutionManager
 		}
 
 		// clearing old tasks
-		ProjectManager projectManager = (ProjectManager) _managerEngine.getProjectManager();
+		//ProjectManager projectManager = (ProjectManager) _managerEngine.getProjectManager();
 	//	taskManager.clearTaskList();
 	//	taskManager.addAllTasks(tasks);
 		LOGGER.debug("solution: " + solution);
