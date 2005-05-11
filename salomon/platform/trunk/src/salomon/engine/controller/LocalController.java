@@ -50,6 +50,7 @@ import org.apache.log4j.Logger;
 import salomon.engine.Config;
 import salomon.engine.Messages;
 import salomon.engine.Resources;
+import salomon.engine.SQLConsole;
 import salomon.engine.Starter;
 import salomon.engine.controller.gui.ControllerFrame;
 import salomon.engine.controller.gui.ControllerPanel;
@@ -108,21 +109,8 @@ public final class LocalController implements IController
 	 */
 	public void start(IManagerEngine managerEngine)
 	{
-		_managerEngine = managerEngine;
-				
-		
-		// FIXME add support for Solution
-
-		// Creates a new empty project
-		IProject project;
-		try {
-			project = _managerEngine.getProjectManager().createProject();
-			_managerEngine.getProjectManager().addProject(project);
-		} catch (PlatformException e) {
-			LOGGER.fatal("", e);
-			Utils.showErrorMessage("ERR_CANNOT_CREATE_PROJECT");
-			return;
-		}
+		_managerEngine = managerEngine;				
+		SplashScreen.show();
 		//FIXME: add cascade model support
 		try {
 			_solutionManagerGUI = new SolutionManagerGUI(
@@ -137,50 +125,36 @@ public final class LocalController implements IController
 			LOGGER.fatal("", e);
 			Utils.showErrorMessage("ERR_CANNOT_SHOW_GUI");
 			return;
-		}
+		}		
 
-		
-		JFrame startframe = new JFrame();
-		startframe.getContentPane().setLayout(new BorderLayout());
-		startframe.setSize(600, 500);
-		Point location = new Point();
-		location.x = (Toolkit.getDefaultToolkit().getScreenSize().width - startframe.getWidth()) / 2;
-		location.y = (Toolkit.getDefaultToolkit().getScreenSize().height - startframe.getHeight()) / 2;
-		startframe.setLocation(location);
-		startframe.setTitle(Messages.getString("APP_NAME")); //$NON-NLS-1$        
-		
-		
 		_actionManager = new ActionManager(_solutionManagerGUI, _projectManagerGUI, _taskManagerGUI,
-				_pluginMangerGUI);
-		_solutionManagerGUI.setProjectManagerGUI(_projectManagerGUI);
-		_solutionManagerGUI.setActionManager(_actionManager);
-		_solutionManagerGUI.setParent(startframe);
-		_solutionManagerGUI.chooseSolution();
-		Utils.setParent(_solutionManagerGUI.getPanel());		
-		// create content panel
-		
-		startframe.setContentPane(_solutionManagerGUI.getPanel());
-		SplashScreen.hide();
-		startframe.setVisible(true);
+				_pluginMangerGUI);		
 		
 		_guiMenu = new LocalGUIMenu(_actionManager);
 		ControllerFrame frame = new ControllerFrame();
-		_taskManagerGUI.setParent(frame);
+		_solutionManagerGUI.setParent(frame);		
 		_projectManagerGUI.setParent(frame);
-		_solutionManagerGUI.setNextFrame(frame);
+		_taskManagerGUI.setParent(frame);
+		
+		_solutionManagerGUI.setActionManager(_actionManager);
 		_pluginMangerGUI.setActionManager(_actionManager);
 		_taskManagerGUI.setActionManager(_actionManager);
 		_projectManagerGUI.setTaskManagerGUI(_taskManagerGUI);
+		
+		SplashScreen.hide();
+		// choosing solution, add support for exiting application
+		// if user doesn't choose solution
+		_solutionManagerGUI.chooseSolutionOnStart();
 		// loading plugins
 		_pluginMangerGUI.refresh();
 		_taskManagerGUI.refresh();
+		
 		frame.setContentPane(getJContentPane());
 		frame.setJMenuBar(getJMenuBar());
 		frame.setJToolBar(getToolBar());
 		frame.setControllerPanel(_contentPane);
-		Utils.setParent(getJContentPane());
-		//SplashScreen.hide();
-		frame.setVisible(false);
+		Utils.setParent(getJContentPane());		
+		frame.setVisible(true);
 	}
 
 	public JComponent getJContentPane()
@@ -471,11 +445,11 @@ public final class LocalController implements IController
 		 */
 		void showSQLConsole()
 		{
-			//new SQLConsole(((ManagerEngine)_managerEngine).getDbManager());
-			JFrame objectFrame = new JFrame();
-			objectFrame.getContentPane().add(new ProjectViewer(((ManagerEngine)_managerEngine).getDbManager()));
-			objectFrame.pack();
-			objectFrame.setVisible(true);
+			new SQLConsole(((ManagerEngine)_managerEngine).getDbManager());
+//			JFrame objectFrame = new JFrame();
+//			objectFrame.getContentPane().add(new ProjectViewer(((ManagerEngine)_managerEngine).getDbManager()));
+//			objectFrame.pack();
+//			objectFrame.setVisible(true);
 		}
 
 		private JPanel getOfficialAbout()

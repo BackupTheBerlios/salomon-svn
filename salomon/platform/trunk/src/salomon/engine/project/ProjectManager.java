@@ -38,6 +38,7 @@ import salomon.engine.plugin.LocalPlugin;
 import salomon.engine.plugin.PluginInfo;
 import salomon.engine.plugin.PluginLoader;
 import salomon.engine.solution.ISolution;
+import salomon.engine.solution.Solution;
 import salomon.engine.task.ITask;
 import salomon.engine.task.Task;
 import salomon.engine.task.TaskInfo;
@@ -93,14 +94,16 @@ public final class ProjectManager implements IProjectManager
 	public IProject createProject() throws PlatformException
 	{
 		// clearing old tasks
-		// TODO: add support for Solution
 		if (_currentProject != null) {
 			_currentProject.getTaskManager().clearTaskList();
 		}
 		// FIXME workaround - getCurrentProject method should be removed.
-		IProject result = new Project(_managerEngine.getTasksManager(), _dbManager);
-		_currentProject = result;
-		return result;
+		_currentProject = new Project(_managerEngine.getTasksManager(), _dbManager);
+		// FIXME - after cascade model adding, method _solution.getInfo().getSolutionID()
+		// should be used instead
+		Solution solution = (Solution) _managerEngine.getSolutionManager().getCurrentSolution();
+		((Project)_currentProject).getInfo().setSolutionID(solution.getInfo().getId());		
+		return _currentProject;
 	}
 
 	/**
@@ -148,7 +151,7 @@ public final class ProjectManager implements IProjectManager
 			LOGGER.fatal("", e);
 			throw new DBException(e.getLocalizedMessage());
 		}
-
+		//FIXME move it to TaskManager
 		// clearing old tasks
 		TaskManager taskManager = (TaskManager) _managerEngine
 				.getTasksManager();

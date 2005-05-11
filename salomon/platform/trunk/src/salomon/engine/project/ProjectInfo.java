@@ -116,6 +116,7 @@ public final class ProjectInfo implements IInfo
 	public void load(ResultSet resultSet) throws SQLException
 	{
 		_projectID = resultSet.getInt("project_id");
+		_solutionID = resultSet.getInt("solution_id");
 		_name = resultSet.getString("project_name");
 		_info = resultSet.getString("project_info");
 	}
@@ -166,6 +167,11 @@ public final class ProjectInfo implements IInfo
 	public void setProjectID(int projectId)
 	{
 		_projectID = projectId;
+	}
+
+	public void setSolutionID(int solutionID)
+	{
+		_solutionID = solutionID;
 	}
 
 	public String toString()

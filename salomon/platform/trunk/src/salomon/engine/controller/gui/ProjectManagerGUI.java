@@ -96,6 +96,7 @@ public final class ProjectManagerGUI
 			int projectId = chooseProject();
 			if (projectId > 0) {
 				_projectManager.getProject(projectId);
+				// FIXME:_taskManagerGUI.reload();
 				_parent.refreshGui();
 			}
 		} catch (Exception e) {

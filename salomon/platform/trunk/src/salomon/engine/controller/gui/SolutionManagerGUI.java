@@ -23,8 +23,7 @@ package salomon.engine.controller.gui;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
-import java.awt.print.PrinterException;
-import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 
 import javax.swing.Box;
@@ -34,18 +33,15 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.ScrollPaneLayout;
+import javax.swing.SwingUtilities;
 
 import org.apache.log4j.Logger;
 
 import salomon.engine.Messages;
-import salomon.engine.Starter;
 import salomon.engine.controller.gui.action.ActionManager;
-import salomon.engine.plugin.ILocalPlugin;
-import salomon.engine.project.IProjectManager;
+import salomon.engine.project.IProject;
 import salomon.engine.solution.ISolution;
 import salomon.engine.solution.ISolutionManager;
 import salomon.engine.solution.Solution;
@@ -62,42 +58,38 @@ import salomon.platform.exception.PlatformException;
 public final class SolutionManagerGUI
 {
 	private ActionManager _actionManager;
-	
-	private ISolutionManager _solutionManager;
 
-	private JFrame _parent;
-	
-	private JFrame _nextFrame;
+	private JButton _btnEdit;
+
+	private JButton _btnExit;
 
 	private JButton _btnNew;
 
-	private JButton _btnEdit;
-	
 	private JButton _btnOpen;
-	
-	private JButton _btnExit;	
-	
-	private JPanel _pnlSolutionController;
-	
-	private JPanel _pnlSolutionProperties;
-	
+
+	private JFrame _parent;
+
 	private JPanel _pnlManagerButtons;
 
+	private JPanel _pnlSolutionController;
+
+	private JPanel _pnlSolutionProperties;
+
+	private ISolutionManager _solutionManager;
+
 	private JTable _tblSolutionList;
-	
-	private ProjectManagerGUI _projectManagerGUI;
+
+	private JTextField _txtDBPath;
+
+	private JTextField _txtHostname;
+
+	private JTextField _txtPasswd;
 
 	private JTextField _txtSolutionInfo;
 
 	private JTextField _txtSolutionName;
 
-	private JTextField _txtHostname;
-
-	private JTextField _txtDBPath;
-
 	private JTextField _txtUsername;
-
-	private JTextField _txtPasswd;
 
 	/**
 	 */
@@ -106,48 +98,56 @@ public final class SolutionManagerGUI
 		_solutionManager = solutionManager;
 	}
 
-	public void newSolution()
+	public int chooseSolution()
 	{
+		int solutionID = 0;
+
 		try {
-			ISolution solution = _solutionManager.createSolution();
-			setSolutionProperties(solution);
+			//FIXME ugly but quick
 			Collection solutions = ((SolutionManager) _solutionManager).getSolutionList();
-			LOGGER.info("Solutionow " + solutions.size());				
-			_tblSolutionList = Utils.createResultTable(solutions);
-			_pnlSolutionController.removeAll();
-			_pnlSolutionController.add(getPnlManagerButtons(), BorderLayout.SOUTH);
-			_pnlSolutionController.add(_tblSolutionList, BorderLayout.CENTER);
-			_parent.setVisible(true);	
-		} catch (PlatformException e) {
+			if (_tblSolutionList == null) {
+				_tblSolutionList = Utils.createResultTable(solutions);
+			}
+			solutionID = showSolutionList();
+		} catch (Exception e) {
 			LOGGER.fatal("", e);
-			Utils.showErrorMessage("Cannot create solution");
+			Utils.showErrorMessage("Cannot load solution list.");
+		}
+		int result = JOptionPane.showConfirmDialog(getSolutionController(),
+				_pnlSolutionController, "Choose solution",
+				JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE);
+		if (result == JOptionPane.OK_OPTION) {
+			int selectedRow = _tblSolutionList.getSelectedRow();
+			if (selectedRow >= 0) {
+				solutionID = ((Integer) _tblSolutionList.getValueAt(
+						selectedRow, 0)).intValue();
+				LOGGER.info("SolutionManagerGUI.chooseSolution() chosen solution: "
+						+ solutionID);
+			}
+		}
+		return solutionID;
+	}
+
+	public void chooseSolutionOnStart()
+	{
+		if (SwingUtilities.isEventDispatchThread()) {
+			chooseSolution();
+		} else {
+			try {
+				SwingUtilities.invokeAndWait(new Runnable() {
+					public void run()
+					{
+						chooseSolution();
+					}
+				});
+			} catch (InterruptedException e) {
+				LOGGER.fatal("", e);
+			} catch (InvocationTargetException e) {
+				LOGGER.fatal("", e);
+			}
 		}
 	}
 
-	private void prepareGUI(){
-		
-	}
-	
-	public void openSolution()
-	{
-		try {
-			int solutionID = 0;
-			int selectedRow = _tblSolutionList.getSelectedRow();
-			if (selectedRow >= 0) {
-				solutionID = ((Integer) _tblSolutionList.getValueAt(selectedRow, 0)).intValue();
-			}
-			if (solutionID > 0) {
-				_solutionManager.getSolution(solutionID);
-				_parent.setVisible(false);
-				setParent(_nextFrame);
-				_nextFrame.setVisible(true);
-			}
-		} catch (Exception e) {
-			LOGGER.fatal("", e);
-			Utils.showErrorMessage("Cannot load solution.");
-		}
-	}
-	
 	public void editSolution()
 	{
 		try {
@@ -155,25 +155,82 @@ public final class SolutionManagerGUI
 			int solutionID = 0;
 			int selectedRow = _tblSolutionList.getSelectedRow();
 			if (selectedRow >= 0) {
-				solutionID = ((Integer) _tblSolutionList.getValueAt(selectedRow, 0)).intValue();
+				solutionID = ((Integer) _tblSolutionList.getValueAt(
+						selectedRow, 0)).intValue();
 			}
 			if (solutionID > 0) {
 				solution = _solutionManager.getSolution(solutionID);
 				setSolutionProperties(solution);
 				Collection solutions = ((SolutionManager) _solutionManager).getSolutionList();
-				LOGGER.info("Solutionow " + solutions.size());				
+				LOGGER.info("Solutionow " + solutions.size());
 				_tblSolutionList = Utils.createResultTable(solutions);
 				_pnlSolutionController.removeAll();
-				_pnlSolutionController.add(getPnlManagerButtons(), BorderLayout.SOUTH);
-				_pnlSolutionController.add(_tblSolutionList, BorderLayout.CENTER);
-				_parent.setVisible(true);				
+				_pnlSolutionController.add(getPnlManagerButtons(),
+						BorderLayout.SOUTH);
+				_pnlSolutionController.add(_tblSolutionList,
+						BorderLayout.CENTER);
+				_parent.setVisible(true);
 			}
 		} catch (PlatformException e) {
 			LOGGER.fatal("", e);
 			Utils.showErrorMessage("Cannot create solution");
 		}
 	}
-	
+
+	public JPanel getPanel()
+	{
+		return _pnlSolutionController;
+	}
+
+	public void newSolution()
+	{
+		try {
+			ISolution solution = _solutionManager.createSolution();
+			setSolutionProperties(solution);
+			Collection solutions = ((SolutionManager) _solutionManager).getSolutionList();
+			LOGGER.info("Solutionow " + solutions.size());
+			_tblSolutionList = Utils.createResultTable(solutions);
+			_pnlSolutionController.removeAll();
+			_pnlSolutionController.add(getPnlManagerButtons(),
+					BorderLayout.SOUTH);
+			_pnlSolutionController.add(_tblSolutionList, BorderLayout.CENTER);
+			_parent.setVisible(true);
+		} catch (PlatformException e) {
+			LOGGER.fatal("", e);
+			Utils.showErrorMessage("Cannot create solution");
+		}
+	}
+
+	public void openSolution()
+	{
+		try {
+			int solutionID = 0;
+			int selectedRow = _tblSolutionList.getSelectedRow();
+			if (selectedRow >= 0) {
+				solutionID = ((Integer) _tblSolutionList.getValueAt(
+						selectedRow, 0)).intValue();
+			}
+			if (solutionID > 0) {
+				//FIXME - do it in better way
+				Solution solution = (Solution) _solutionManager.getSolution(solutionID);
+				//_parent.setVisible(false);
+				//setParent(_nextFrame);
+				//_nextFrame.setVisible(true);
+				// Creates a new empty project				
+				try {
+					IProject project = solution.getProjectManager().createProject();
+					solution.getProjectManager().addProject(project);
+				} catch (PlatformException e) {
+					LOGGER.fatal("", e);
+					Utils.showErrorMessage("ERR_CANNOT_CREATE_PROJECT");
+					return;
+				}
+			}
+		} catch (Exception e) {
+			LOGGER.fatal("", e);
+			Utils.showErrorMessage("Cannot load solution.");
+		}
+	}
 
 	public void saveSolution()
 	{
@@ -197,21 +254,13 @@ public final class SolutionManagerGUI
 	{
 		_actionManager = actionManager;
 	}
-	
+
 	/**
 	 * @param startframe The parent to set.
 	 */
 	public void setParent(JFrame startframe)
 	{
 		_parent = startframe;
-	}
-	
-	/**
-	 * @param frame The next frame to set.
-	 */
-	public void setNextFrame(JFrame frame)
-	{
-		_nextFrame = frame;
 	}
 
 	/**
@@ -220,7 +269,8 @@ public final class SolutionManagerGUI
 	 * @param solution
 	 * @throws PlatformException 
 	 */
-	public void setSolutionProperties(ISolution iSolution) throws PlatformException
+	public void setSolutionProperties(ISolution iSolution)
+			throws PlatformException
 	{
 		Solution solution = (Solution) iSolution;
 		if (_pnlSolutionProperties == null) {
@@ -258,12 +308,13 @@ public final class SolutionManagerGUI
 		_txtDBPath.setText(path == null ? "" : path);
 		_txtUsername.setText(user == null ? "" : user);
 		_txtPasswd.setText(pass == null ? "" : pass);
-		
+
 		// TODO:
-		int result = JOptionPane.showConfirmDialog(_parent, _pnlSolutionProperties,
-				"Enter solution properties", JOptionPane.OK_CANCEL_OPTION , JOptionPane.PLAIN_MESSAGE);
-		
-		if( result == JOptionPane.OK_OPTION){
+		int result = JOptionPane.showConfirmDialog(_parent,
+				_pnlSolutionProperties, "Enter solution properties",
+				JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+
+		if (result == JOptionPane.OK_OPTION) {
 			solution.getInfo().setName(_txtSolutionName.getText());
 			solution.getInfo().setInfo(_txtSolutionInfo.getText());
 			solution.getInfo().setHost(_txtHostname.getText());
@@ -274,44 +325,6 @@ public final class SolutionManagerGUI
 		}
 	}
 
-	public void setProjectManagerGUI(ProjectManagerGUI projectManagerGUI)
-	{
-		_projectManagerGUI = projectManagerGUI;
-	}
-
-	
-	public int chooseSolution()
-	{
-		int solutionID = 0;
-
-		try {
-			//FIXME ugly but quick
-			Collection solutions = ((SolutionManager) _solutionManager).getSolutionList();
-			if( _tblSolutionList == null ){
-				_tblSolutionList = Utils.createResultTable(solutions);
-			}
-			solutionID = showSolutionList();
-		} catch (Exception e) {
-			LOGGER.fatal("", e);
-			Utils.showErrorMessage("Cannot load solution list.");
-		}
-
-		return solutionID;
-	}
-		
-	/**
-	 * This method initializes _btnNew
-	 * @return JButton
-	 */
-	JButton getBtnNew()
-	{
-		if (_btnNew == null) {
-			_btnNew = new JButton(_actionManager.getNewSolutionAction() );
-			_btnNew.setText(Messages.getString("BTN_NEW")); //$NON-NLS-1$
-		}
-		return _btnNew;
-	}
-
 	/**
 	 * This method initializes _btnEdit
 	 * @return JButton
@@ -319,23 +332,10 @@ public final class SolutionManagerGUI
 	JButton getBtnEdit()
 	{
 		if (_btnEdit == null) {
-			_btnEdit = new JButton(_actionManager.getEditSolutionAction() );
+			_btnEdit = new JButton(_actionManager.getEditSolutionAction());
 			_btnEdit.setText(Messages.getString("BTN_EDIT")); //$NON-NLS-1$
 		}
 		return _btnEdit;
-	}
-
-	/**
-	 * This method initializes _btnOpen
-	 * @return JButton
-	 */
-	JButton getBtnOpen()
-	{
-		if (_btnOpen == null) {
-			_btnOpen = new JButton(_actionManager.getOpenSolutionAction() );
-			_btnOpen.setText(Messages.getString("BTN_OPEN")); //$NON-NLS-1$
-		}
-		return _btnOpen;
 	}
 
 	/**
@@ -345,12 +345,38 @@ public final class SolutionManagerGUI
 	JButton getBtnExit()
 	{
 		if (_btnExit == null) {
-			_btnExit = new JButton( _actionManager.getExitAction() );
+			_btnExit = new JButton(_actionManager.getExitAction());
 			_btnExit.setText(Messages.getString("BTN_EXIT")); //$NON-NLS-1$
 		}
 		return _btnExit;
 	}
-	
+
+	/**
+	 * This method initializes _btnNew
+	 * @return JButton
+	 */
+	JButton getBtnNew()
+	{
+		if (_btnNew == null) {
+			_btnNew = new JButton(_actionManager.getNewSolutionAction());
+			_btnNew.setText(Messages.getString("BTN_NEW")); //$NON-NLS-1$
+		}
+		return _btnNew;
+	}
+
+	/**
+	 * This method initializes _btnOpen
+	 * @return JButton
+	 */
+	JButton getBtnOpen()
+	{
+		if (_btnOpen == null) {
+			_btnOpen = new JButton(_actionManager.getOpenSolutionAction());
+			_btnOpen.setText(Messages.getString("BTN_OPEN")); //$NON-NLS-1$
+		}
+		return _btnOpen;
+	}
+
 	/**
 	 * This method initializes _pnlManagerButtons
 	 * 
@@ -369,37 +395,45 @@ public final class SolutionManagerGUI
 			_pnlManagerButtons.add(Box.createHorizontalStrut(10));
 			_pnlManagerButtons.add(getBtnOpen());
 			_pnlManagerButtons.add(Box.createHorizontalStrut(10));
-			_pnlManagerButtons.add(getBtnExit());		
+			_pnlManagerButtons.add(getBtnExit());
 			_pnlManagerButtons.add(Box.createHorizontalGlue());
 		}
 		return _pnlManagerButtons;
 	}
 
-	
-	public JPanel getPanel(){
+	private JPanel getSolutionController()
+	{
+		if (_pnlSolutionController == null) {
+			_pnlSolutionController = new JPanel();
+			_pnlSolutionController.setLayout(new BorderLayout());
+			_pnlSolutionController.add(getPnlManagerButtons(),
+					BorderLayout.SOUTH);
+			_pnlSolutionController.add(_tblSolutionList, BorderLayout.CENTER);
+		}
 		return _pnlSolutionController;
 	}
-	
+
 	private int showSolutionList()
 	{
 		int solutionID = 0;
 
-		if( _pnlSolutionController == null ){
+		if (_pnlSolutionController == null) {
 			_pnlSolutionController = new JPanel();
 			_pnlSolutionController.setLayout(new BorderLayout());
-			_pnlSolutionController.add(getPnlManagerButtons(), BorderLayout.SOUTH);
+			_pnlSolutionController.add(getPnlManagerButtons(),
+					BorderLayout.SOUTH);
 			_pnlSolutionController.add(_tblSolutionList, BorderLayout.CENTER);
-		}		
-				
-//		int result = JOptionPane.showConfirmDialog(_pnlSolutionController, _pnlSolutionController,
-//				"Choose solution", JOptionPane.DEFAULT_OPTION,
-//				JOptionPane.PLAIN_MESSAGE);
-//		if (result == JOptionPane.OK_OPTION) {
-//			int selectedRow = _tblSolutionList.getSelectedRow();
-//			if (selectedRow >= 0) {
-//				solutionID = ((Integer) _tblSolutionList.getValueAt(selectedRow, 0)).intValue();
-//			}
-//		} 
+		}
+
+		//		int result = JOptionPane.showConfirmDialog(_pnlSolutionController, _pnlSolutionController,
+		//				"Choose solution", JOptionPane.DEFAULT_OPTION,
+		//				JOptionPane.PLAIN_MESSAGE);
+		//		if (result == JOptionPane.OK_OPTION) {
+		//			int selectedRow = _tblSolutionList.getSelectedRow();
+		//			if (selectedRow >= 0) {
+		//				solutionID = ((Integer) _tblSolutionList.getValueAt(selectedRow, 0)).intValue();
+		//			}
+		//		} 
 
 		return solutionID;
 	}
