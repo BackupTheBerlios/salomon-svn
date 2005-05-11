@@ -68,7 +68,7 @@ public final class SolutionManagerHolder implements ISolutionManager
 		_currentSolutionManager = currentSolutionManager;
 	}
 
-	public ISolution getSolution(IUniqueId id) throws PlatformException
+	public ISolution getSolution(int id) throws PlatformException
 	{
 		return _currentSolutionManager.getSolution(id);
 	}
