@@ -31,23 +31,23 @@ import org.apache.log4j.Logger;
 
 import salomon.engine.database.DBManager;
 import salomon.engine.database.queries.SQLSelect;
-import salomon.engine.platform.IManagerEngine;
-
-import salomon.engine.plugin.ILocalPlugin;
 import salomon.engine.plugin.LocalPlugin;
 import salomon.engine.plugin.PluginInfo;
-import salomon.engine.plugin.PluginLoader;
 import salomon.engine.solution.ISolution;
 import salomon.engine.solution.Solution;
 import salomon.engine.task.ITask;
 import salomon.engine.task.Task;
 import salomon.engine.task.TaskInfo;
 import salomon.engine.task.TaskManager;
+
+import salomon.util.gui.Utils;
+
 import salomon.platform.exception.DBException;
 import salomon.platform.exception.PlatformException;
-import salomon.plugin.IPlugin;
+
 import salomon.plugin.ISettings;
-import salomon.util.gui.Utils;
+
+import salomon.engine.platform.IManagerEngine;
 
 /**
  * An implemetation of IProjectManager interface. Class manages with projects
@@ -64,7 +64,7 @@ public final class ProjectManager implements IProjectManager
 	private DBManager _dbManager;
 
 	private IManagerEngine _managerEngine = null;
-	
+
 	private ISolution _solution;
 
 	public ProjectManager(IManagerEngine managerEngine, DBManager manager)
@@ -80,7 +80,7 @@ public final class ProjectManager implements IProjectManager
 	public void addProject(IProject project) throws PlatformException
 	{
 		try {
-			project.getInfo().save();			
+			project.getInfo().save();
 		} catch (Exception e) {
 			LOGGER.fatal("", e);
 			throw new PlatformException(e.getLocalizedMessage());
@@ -98,11 +98,13 @@ public final class ProjectManager implements IProjectManager
 			_currentProject.getTaskManager().clearTaskList();
 		}
 		// FIXME workaround - getCurrentProject method should be removed.
-		_currentProject = new Project(_managerEngine.getTasksManager(), _dbManager);
+		_currentProject = new Project(_managerEngine.getTasksManager(),
+				_dbManager);
 		// FIXME - after cascade model adding, method _solution.getInfo().getSolutionID()
 		// should be used instead
 		Solution solution = (Solution) _managerEngine.getSolutionManager().getCurrentSolution();
-		((Project)_currentProject).getInfo().setSolutionID(solution.getInfo().getId());		
+		((Project) _currentProject).getInfo().setSolutionID(
+				solution.getInfo().getId());
 		return _currentProject;
 	}
 
@@ -112,6 +114,11 @@ public final class ProjectManager implements IProjectManager
 	public IProject getCurrentProject()
 	{
 		return _currentProject;
+	}
+
+	public DBManager getDbManager()
+	{
+		return _dbManager;
 	}
 
 	/**
@@ -153,8 +160,7 @@ public final class ProjectManager implements IProjectManager
 		}
 		//FIXME move it to TaskManager
 		// clearing old tasks
-		TaskManager taskManager = (TaskManager) _managerEngine
-				.getTasksManager();
+		TaskManager taskManager = (TaskManager) _managerEngine.getTasksManager();
 		taskManager.clearTaskList();
 		taskManager.addAllTasks(tasks);
 		LOGGER.debug("project: " + project);
@@ -185,7 +191,7 @@ public final class ProjectManager implements IProjectManager
 		} catch (SQLException e) {
 			LOGGER.fatal("", e);
 			throw new DBException(e.getLocalizedMessage());
-		} 
+		}
 		return projects;
 	}
 
@@ -196,6 +202,24 @@ public final class ProjectManager implements IProjectManager
 	{
 		// FIXME
 		throw new UnsupportedOperationException("");
+	}
+
+	public ISolution getSolution() throws PlatformException
+	{
+		throw new UnsupportedOperationException(
+				"Method getSolution() not implemented yet!");
+	}
+
+	public boolean removeAll() throws PlatformException
+	{
+		throw new UnsupportedOperationException(
+				"Method removeAll() not implemented yet!");
+	}
+
+	public boolean removeProject(IProject project) throws PlatformException
+	{
+		throw new UnsupportedOperationException(
+				"Method removeProject() not implemented yet!");
 	}
 
 	/**
@@ -214,12 +238,17 @@ public final class ProjectManager implements IProjectManager
 			// saving tasks
 			((Project) _currentProject).getInfo().save();
 			saveTasks(_currentProject.getInfo().getId());
-			_dbManager.commit();			
+			_dbManager.commit();
 		} catch (Exception e) {
-			_dbManager.rollback();			
+			_dbManager.rollback();
 			LOGGER.fatal("", e);
 			throw new PlatformException(e.getLocalizedMessage());
 		}
+	}
+
+	public void setSolution(ISolution solution)
+	{
+		_solution = solution;
 	}
 
 	/**
@@ -253,22 +282,23 @@ public final class ProjectManager implements IProjectManager
 		// executing query
 		ResultSet resultSet = null;
 		resultSet = _dbManager.select(select);
-		TaskManager taskManager = (TaskManager)_currentProject.getTaskManager();
+		TaskManager taskManager = (TaskManager) _currentProject.getTaskManager();
 		try {
 			while (resultSet.next()) {
 				// TODO: move task loading to task manager ?
-//				PluginInfo description = new PluginInfo();
-//				// loading plugin description
-//				description.load(resultSet);
-//				IPlugin plugin = PluginLoader.loadPlugin(description
-//						.getLocation());
-//				ISettings pluginSettings = plugin.getSettingComponent()
-//						.getDefaultSettings();				
-				
+				//				PluginInfo description = new PluginInfo();
+				//				// loading plugin description
+				//				description.load(resultSet);
+				//				IPlugin plugin = PluginLoader.loadPlugin(description
+				//						.getLocation());
+				//				ISettings pluginSettings = plugin.getSettingComponent()
+				//						.getDefaultSettings();				
+
 				// TODO: Plugin info shoul not be instantied from outside of pluginManger :-/
 				PluginInfo pluginInfo = new PluginInfo(_dbManager);
 				pluginInfo.load(resultSet);
-				LocalPlugin localPlugin = (LocalPlugin) _managerEngine.getPluginManager().getPlugin(pluginInfo);
+				LocalPlugin localPlugin = (LocalPlugin) _managerEngine.getPluginManager().getPlugin(
+						pluginInfo);
 				//FIXME: real settings should be loaded
 				ISettings pluginSettings = localPlugin.getSettingComponent().getDefaultSettings();
 
@@ -306,25 +336,5 @@ public final class ProjectManager implements IProjectManager
 	}
 
 	private static final Logger LOGGER = Logger.getLogger(ProjectManager.class);
-
-	public ISolution getSolution() throws PlatformException
-	{
-		throw new UnsupportedOperationException("Method getSolution() not implemented yet!");
-	}
-	
-	public void setSolution(ISolution solution)
-	{
-		_solution = solution;
-	}
-
-	public boolean removeProject(IProject project) throws PlatformException
-	{
-		throw new UnsupportedOperationException("Method removeProject() not implemented yet!");
-	}
-
-	public boolean removeAll() throws PlatformException
-	{
-		throw new UnsupportedOperationException("Method removeAll() not implemented yet!");
-	}
 
 } // end KnowledgeSystemManager

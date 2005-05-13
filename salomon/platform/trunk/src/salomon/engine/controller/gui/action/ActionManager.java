@@ -38,7 +38,7 @@ public final class ActionManager
 	private AddTaskAction _addTaskAction;
 
 	private EditSolutionAction _editSolutionAction;
-	
+
 	private ExitAction _exitAction;
 
 	private NewProjectAction _newProjectAction;
@@ -48,7 +48,7 @@ public final class ActionManager
 	private OpenProjectAction _openProjectAction;
 
 	private OpenSolutionAction _openSolutionAction;
-	
+
 	private PluginMangerGUI _pluginMangerGUI;
 
 	private ProjectManagerGUI _projectManagerGUI;
@@ -62,13 +62,14 @@ public final class ActionManager
 	private SavePluginAction _savePluginAction;
 
 	private SaveProjectAction _saveProjectAction;
-	
+
 	private SaveSolutionAction _saveSolutionAction;
-	
+
 	private SolutionManagerGUI _solutionManagerGUI;
 
 	private TaskManagerGUI _taskManagerGUI;
-	
+
+	private ViewProjectsAction _viewProjectsAction;
 
 	/**
 	 * Sets object used to create actions.
@@ -84,7 +85,6 @@ public final class ActionManager
 		_pluginMangerGUI = pluginMangerGUI;
 	}
 
-	
 	/**
 	 * Sets object used to create actions.
 	 * @param solutionManagerGUI
@@ -92,8 +92,9 @@ public final class ActionManager
 	 * @param taskManagerGUI
 	 * @param pluginMangerGUI
 	 */
-	public ActionManager(SolutionManagerGUI solutionManagerGUI, ProjectManagerGUI projectManagerGUI,
-			TaskManagerGUI taskManagerGUI, PluginMangerGUI pluginMangerGUI)
+	public ActionManager(SolutionManagerGUI solutionManagerGUI,
+			ProjectManagerGUI projectManagerGUI, TaskManagerGUI taskManagerGUI,
+			PluginMangerGUI pluginMangerGUI)
 	{
 		_solutionManagerGUI = solutionManagerGUI;
 		_projectManagerGUI = projectManagerGUI;
@@ -134,7 +135,20 @@ public final class ActionManager
 		}
 		return _editSolutionAction;
 	}
-	
+
+	/**
+	 * Returns an instance of ExitAction.
+	 * 
+	 * @return an instance of ExitAction.
+	 */
+	public ExitAction getExitAction()
+	{
+		if (_exitAction == null) {
+			_exitAction = new ExitAction();
+		}
+		return _exitAction;
+	}
+
 	/**
 	 * Returns an instance of NewProjectAction.
 	 * 
@@ -147,7 +161,7 @@ public final class ActionManager
 		}
 		return _newProjectAction;
 	}
-	
+
 	/**
 	 * Returns an instance of NewSolutionAction.
 	 * 
@@ -173,7 +187,7 @@ public final class ActionManager
 		}
 		return _openProjectAction;
 	}
-	
+
 	/**
 	 * Returns an instance of OpenSolutionAction.
 	 * 
@@ -246,7 +260,7 @@ public final class ActionManager
 		}
 		return _saveProjectAction;
 	}
-	
+
 	/**
 	 * Returns an instance of SaveSolutionAction.
 	 * 
@@ -259,18 +273,13 @@ public final class ActionManager
 		}
 		return _saveSolutionAction;
 	}
-	
-	/**
-	 * Returns an instance of ExitAction.
-	 * 
-	 * @return an instance of ExitAction.
-	 */
-	public ExitAction getExitAction()
+
+	public ViewProjectsAction getViewProjectsAction()
 	{
-		if (_exitAction == null) {
-			_exitAction = new ExitAction();
+		if (_viewProjectsAction == null) {
+			_viewProjectsAction = new ViewProjectsAction(_projectManagerGUI);
 		}
-		return _exitAction;
+		return _viewProjectsAction;
 	}
-	
+
 }

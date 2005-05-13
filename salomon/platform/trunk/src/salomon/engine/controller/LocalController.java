@@ -24,19 +24,13 @@ package salomon.engine.controller;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
-import java.awt.Point;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.io.IOException;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -60,8 +54,6 @@ import salomon.engine.controller.gui.SolutionManagerGUI;
 import salomon.engine.controller.gui.SplashScreen;
 import salomon.engine.controller.gui.TaskManagerGUI;
 import salomon.engine.controller.gui.action.ActionManager;
-import salomon.engine.controller.gui.viewer.ProjectViewer;
-import salomon.engine.project.IProject;
 
 import salomon.util.gui.Utils;
 
@@ -102,6 +94,54 @@ public final class LocalController implements IController
 	public void exit()
 	{
 		//nothing to do
+	}
+
+	public JComponent getJContentPane()
+	{
+		if (_contentPane == null) {
+			_contentPane = new ControllerPanel(_taskManagerGUI,
+					_pluginMangerGUI, _actionManager);
+		}
+		return _contentPane;
+	}
+
+	public JMenuBar getJMenuBar()
+	{
+		if (_menuBar == null) {
+			_menuBar = new JMenuBar();
+			JMenu solution = new JMenu(Messages.getString("MNU_SOLUTION")); //$NON-NLS-1$
+			solution.add(_guiMenu.getItmNewSolution());
+			solution.add(_guiMenu.getItmOpenSolution());				
+			solution.add(_guiMenu.getItmSaveSolution());
+			solution.addSeparator();
+			solution.add(_guiMenu.getItmExit());
+			JMenu project = new JMenu(Messages.getString("MNU_PROJECT")); //$NON-NLS-1$
+			project.add(_guiMenu.getItmNewProject());
+			project.add(_guiMenu.getItmOpenProject());
+			project.add(_guiMenu.getItmSaveProject());
+			JMenu tools = new JMenu(Messages.getString("MNU_TOOLS")); //$NON-NLS-1$
+			tools.add(_guiMenu.getItmViewProjects());
+			tools.addSeparator();
+			tools.add(_guiMenu.getItmSQLConsole());
+			JMenu help = new JMenu(Messages.getString("MNU_HELP")); //$NON-NLS-1$           
+			help.add(_guiMenu.getItmAbout());
+			_menuBar.add(solution);
+			_menuBar.add(project);
+			_menuBar.add(tools);
+			_menuBar.add(help);
+		}
+		return _menuBar;
+	}
+
+	public JToolBar getToolBar()
+	{
+		if (_toolBar == null) {
+			_toolBar = new JToolBar();
+			_toolBar.add(_guiMenu.getBtnNewSolution());
+			_toolBar.add(_guiMenu.getBtnOpenSolution());
+			_toolBar.add(_guiMenu.getBtnSaveSolution());
+		}
+		return _toolBar;
 	}
 
 	/**
@@ -157,84 +197,40 @@ public final class LocalController implements IController
 		frame.setVisible(true);
 	}
 
-	public JComponent getJContentPane()
-	{
-		if (_contentPane == null) {
-			_contentPane = new ControllerPanel(_taskManagerGUI,
-					_pluginMangerGUI, _actionManager);
-		}
-		return _contentPane;
-	}
-
-	public JMenuBar getJMenuBar()
-	{
-		if (_menuBar == null) {
-			_menuBar = new JMenuBar();
-			JMenu solution = new JMenu(Messages.getString("MNU_SOLUTION")); //$NON-NLS-1$
-			solution.add(_guiMenu.getItmNewSolution());
-			solution.add(_guiMenu.getItmOpenSolution());				
-			solution.add(_guiMenu.getItmSaveSolution());
-			solution.addSeparator();
-			solution.add(_guiMenu.getItmExit());
-			JMenu project = new JMenu(Messages.getString("MNU_PROJECT")); //$NON-NLS-1$
-			project.add(_guiMenu.getItmNewProject());
-			project.add(_guiMenu.getItmOpenProject());
-			project.add(_guiMenu.getItmSaveProject());
-			JMenu tools = new JMenu(Messages.getString("MNU_TOOLS")); //$NON-NLS-1$
-			tools.add(_guiMenu.getItmSQLConsole());
-			JMenu help = new JMenu(Messages.getString("MNU_HELP")); //$NON-NLS-1$           
-			help.add(_guiMenu.getItmAbout());
-			_menuBar.add(solution);
-			_menuBar.add(project);
-			_menuBar.add(tools);
-			_menuBar.add(help);
-		}
-		return _menuBar;
-	}
-
-	public JToolBar getToolBar()
-	{
-		if (_toolBar == null) {
-			_toolBar = new JToolBar();
-			_toolBar.add(_guiMenu.getBtnNewSolution());
-			_toolBar.add(_guiMenu.getBtnOpenSolution());
-			_toolBar.add(_guiMenu.getBtnSaveSolution());
-		}
-		return _toolBar;
-	}
-
 	private final class LocalGUIMenu
 	{
 
-		private JButton _btnNewSolution;
-
-		private JButton _btnOpenSolution;
-
-		private JButton _btnSaveSolution;
-
 		private JButton _btnNewProject;
+
+		private JButton _btnNewSolution;
 
 		private JButton _btnOpenProject;
 
+		private JButton _btnOpenSolution;
+
 		private JButton _btnSaveProject;
+
+		private JButton _btnSaveSolution;
 		
 		private JMenuItem _itmAbout;
 
 		private JMenuItem _itmExit;
 
-		private JMenuItem _itmNewSolution;
-
-		private JMenuItem _itmOpenSolution;
-
-		private JMenuItem _itmSaveSolution;
-
 		private JMenuItem _itmNewProject;
+
+		private JMenuItem _itmNewSolution;
 
 		private JMenuItem _itmOpenProject;
 
+		private JMenuItem _itmOpenSolution;
+
 		private JMenuItem _itmSaveProject;
+
+		private JMenuItem _itmSaveSolution;
 		
 		private JMenuItem _itmSQLConsole;
+		
+		private JMenuItem _itmViewProjects;
 
 		private JPanel _pnlAbout;
 
@@ -251,40 +247,6 @@ public final class LocalController implements IController
 			_actionManager = actionManager;
 			_resourcesDir = Config.getString("RESOURCES_DIR");
 		}
-
-		JButton getBtnNewSolution()
-		{
-			if (_btnNewSolution == null) {
-				_btnNewSolution = new JButton(_actionManager.getNewSolutionAction());
-				_btnNewSolution.setIcon(new ImageIcon(_resourcesDir
-						+ Config.FILE_SEPARATOR
-						+ Resources.getString("ICO_SOLUTION_NEW"))); //$NON-NLS-1$
-			}
-			return _btnNewSolution;
-		}
-
-		JButton getBtnOpenSolution()
-		{
-			if (_btnOpenSolution == null) {
-				_btnOpenSolution = new JButton(_actionManager.getOpenSolutionAction());
-				_btnOpenSolution.setIcon(new ImageIcon(_resourcesDir
-						+ Config.FILE_SEPARATOR
-						+ Resources.getString("ICO_SOLUTION_OPEN"))); //$NON-NLS-1$                
-			}
-			return _btnOpenSolution;
-		}
-
-		JButton getBtnSaveSolution()
-		{
-			if (_btnSaveSolution == null) {
-				_btnSaveSolution = new JButton(_actionManager.getSaveSolutionAction());
-				_btnSaveSolution.setIcon(new ImageIcon(_resourcesDir
-						+ Config.FILE_SEPARATOR
-						+ Resources.getString("ICO_SOLUTION_SAVE"))); //$NON-NLS-1$
-			}
-			return _btnSaveSolution;
-		}
-
 		JButton getBtnNewProject()
 		{
 			if (_btnNewProject == null) {
@@ -294,6 +256,16 @@ public final class LocalController implements IController
 						+ Resources.getString("ICO_PROJECT_NEW"))); //$NON-NLS-1$
 			}
 			return _btnNewProject;
+		}
+		JButton getBtnNewSolution()
+		{
+			if (_btnNewSolution == null) {
+				_btnNewSolution = new JButton(_actionManager.getNewSolutionAction());
+				_btnNewSolution.setIcon(new ImageIcon(_resourcesDir
+						+ Config.FILE_SEPARATOR
+						+ Resources.getString("ICO_SOLUTION_NEW"))); //$NON-NLS-1$
+			}
+			return _btnNewSolution;
 		}
 
 		JButton getBtnOpenProject()
@@ -307,6 +279,17 @@ public final class LocalController implements IController
 			return _btnOpenProject;
 		}
 
+		JButton getBtnOpenSolution()
+		{
+			if (_btnOpenSolution == null) {
+				_btnOpenSolution = new JButton(_actionManager.getOpenSolutionAction());
+				_btnOpenSolution.setIcon(new ImageIcon(_resourcesDir
+						+ Config.FILE_SEPARATOR
+						+ Resources.getString("ICO_SOLUTION_OPEN"))); //$NON-NLS-1$                
+			}
+			return _btnOpenSolution;
+		}
+
 		JButton getBtnSaveProject()
 		{
 			if (_btnSaveProject == null) {
@@ -317,7 +300,18 @@ public final class LocalController implements IController
 			}
 			return _btnSaveProject;
 		}
-		
+
+		JButton getBtnSaveSolution()
+		{
+			if (_btnSaveSolution == null) {
+				_btnSaveSolution = new JButton(_actionManager.getSaveSolutionAction());
+				_btnSaveSolution.setIcon(new ImageIcon(_resourcesDir
+						+ Config.FILE_SEPARATOR
+						+ Resources.getString("ICO_SOLUTION_SAVE"))); //$NON-NLS-1$
+			}
+			return _btnSaveSolution;
+		}
+
 		JMenuItem getItmAbout()
 		{
 			if (_itmAbout == null) {
@@ -332,7 +326,7 @@ public final class LocalController implements IController
 			}
 			return _itmAbout;
 		}
-
+		
 		JMenuItem getItmExit()
 		{
 			if (_itmExit == null) {
@@ -348,36 +342,6 @@ public final class LocalController implements IController
 			return _itmExit;
 		}
 
-		JMenuItem getItmNewSolution()
-		{
-			if (_itmNewSolution == null) {
-				_itmNewSolution = new JMenuItem();
-				_itmNewSolution.setText(Messages.getString("MNU_NEW")); //$NON-NLS-1$
-				_itmNewSolution.addActionListener(_actionManager.getNewSolutionAction());
-			}
-			return _itmNewSolution;
-		}
-
-		JMenuItem getItmOpenSolution()
-		{
-			if (_itmOpenSolution == null) {
-				_itmOpenSolution = new JMenuItem();
-				_itmOpenSolution.setText(Messages.getString("MNU_OPEN")); //$NON-NLS-1$
-				_itmOpenSolution.addActionListener(_actionManager.getOpenSolutionAction());
-			}
-			return _itmOpenSolution;
-		}
-
-		JMenuItem getItmSaveSolution()
-		{
-			if (_itmSaveSolution == null) {
-				_itmSaveSolution = new JMenuItem();
-				_itmSaveSolution.setText(Messages.getString("MNU_SAVE")); //$NON-NLS-1$
-				_itmSaveSolution.addActionListener(_actionManager.getSaveSolutionAction());
-			}
-			return _itmSaveSolution;
-		}
-
 		JMenuItem getItmNewProject()
 		{
 			if (_itmNewProject == null) {
@@ -386,6 +350,16 @@ public final class LocalController implements IController
 				_itmNewProject.addActionListener(_actionManager.getNewProjectAction());
 			}
 			return _itmNewProject;
+		}
+
+		JMenuItem getItmNewSolution()
+		{
+			if (_itmNewSolution == null) {
+				_itmNewSolution = new JMenuItem();
+				_itmNewSolution.setText(Messages.getString("MNU_NEW")); //$NON-NLS-1$
+				_itmNewSolution.addActionListener(_actionManager.getNewSolutionAction());
+			}
+			return _itmNewSolution;
 		}
 
 		JMenuItem getItmOpenProject()
@@ -398,6 +372,16 @@ public final class LocalController implements IController
 			return _itmOpenProject;
 		}
 
+		JMenuItem getItmOpenSolution()
+		{
+			if (_itmOpenSolution == null) {
+				_itmOpenSolution = new JMenuItem();
+				_itmOpenSolution.setText(Messages.getString("MNU_OPEN")); //$NON-NLS-1$
+				_itmOpenSolution.addActionListener(_actionManager.getOpenSolutionAction());
+			}
+			return _itmOpenSolution;
+		}
+
 		JMenuItem getItmSaveProject()
 		{
 			if (_itmSaveProject == null) {
@@ -407,7 +391,17 @@ public final class LocalController implements IController
 			}
 			return _itmSaveProject;
 		}
-		
+
+		JMenuItem getItmSaveSolution()
+		{
+			if (_itmSaveSolution == null) {
+				_itmSaveSolution = new JMenuItem();
+				_itmSaveSolution.setText(Messages.getString("MNU_SAVE")); //$NON-NLS-1$
+				_itmSaveSolution.addActionListener(_actionManager.getSaveSolutionAction());
+			}
+			return _itmSaveSolution;
+		}
+
 		JMenuItem getItmSQLConsole()
 		{
 			if (_itmSQLConsole == null) {
@@ -421,6 +415,16 @@ public final class LocalController implements IController
 				});
 			}
 			return _itmSQLConsole;
+		}
+		
+		JMenuItem getItmViewProjects()
+		{
+			if (_itmViewProjects == null) {
+				_itmViewProjects = new JMenuItem();
+				_itmViewProjects.setText(Messages.getString("MNU_SHOW_PROJECTS")); //$NON-NLS-1$
+				_itmViewProjects.addActionListener(_actionManager.getViewProjectsAction());
+			}
+			return _itmViewProjects;
 		}
 
 		JPanel getPnlAbout()
@@ -446,10 +450,6 @@ public final class LocalController implements IController
 		void showSQLConsole()
 		{
 			new SQLConsole(((ManagerEngine)_managerEngine).getDbManager());
-//			JFrame objectFrame = new JFrame();
-//			objectFrame.getContentPane().add(new ProjectViewer(((ManagerEngine)_managerEngine).getDbManager()));
-//			objectFrame.pack();
-//			objectFrame.setVisible(true);
 		}
 
 		private JPanel getOfficialAbout()

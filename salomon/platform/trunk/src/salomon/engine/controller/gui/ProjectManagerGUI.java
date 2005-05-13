@@ -27,6 +27,7 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -36,6 +37,8 @@ import javax.swing.JTextField;
 
 import org.apache.log4j.Logger;
 
+import salomon.engine.Messages;
+import salomon.engine.controller.gui.viewer.ProjectViewer;
 import salomon.engine.project.IProject;
 import salomon.engine.project.IProjectManager;
 import salomon.engine.project.Project;
@@ -68,12 +71,14 @@ public final class ProjectManagerGUI
 	private JTextField _txtProjectInfo;
 
 	private JTextField _txtProjectName;
+	
+	private JFrame _projectViewerFrame;
 
 	/**
 	 */
 	public ProjectManagerGUI(IProjectManager projectManager)
-	{
-		_projectManager = projectManager;
+	{	
+		_projectManager = projectManager;		
 	}
 
 	public void newProject()
@@ -89,7 +94,17 @@ public final class ProjectManagerGUI
 			Utils.showErrorMessage("Cannot create project");
 		}
 	}
-
+	
+	public void viewProjects()
+	{
+		if (_projectViewerFrame == null) {
+			_projectViewerFrame = new JFrame(Messages.getString("TIT_PROJECTS"));
+			_projectViewerFrame.getContentPane().add(new ProjectViewer(((ProjectManager)_projectManager).getDbManager()));
+			_projectViewerFrame.pack();				
+		}		
+		_projectViewerFrame.setVisible(true);
+	}
+	
 	public void openProject()
 	{
 		try {
