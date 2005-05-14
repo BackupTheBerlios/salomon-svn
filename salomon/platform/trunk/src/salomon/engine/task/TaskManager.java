@@ -258,4 +258,8 @@ public final class TaskManager implements ITaskManager
 	}
 
 	private static final Logger LOGGER = Logger.getLogger(TaskManager.class);
+
+    public DBManager getDBManager() {
+        return _dbManager;
+    }
 }

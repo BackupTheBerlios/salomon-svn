@@ -71,6 +71,12 @@ public final class ActionManager
 
 	private ViewProjectsAction _viewProjectsAction;
 
+    private ViewSolutionAction _viewSolutionAction;
+
+    private ViewPluginsAction _viewPluginsAction;
+
+    private ViewTaskAction _viewTaskAction;
+
 	/**
 	 * Sets object used to create actions.
 	 * 
@@ -282,4 +288,27 @@ public final class ActionManager
 		return _viewProjectsAction;
 	}
 
+    public ViewSolutionAction getViewSolutionAction()
+    {
+        if (_viewSolutionAction == null) {
+            _viewSolutionAction = new ViewSolutionAction(_solutionManagerGUI);
+        }
+        return _viewSolutionAction;
+    }
+    
+    public ViewPluginsAction getViewPluginsAction()
+    {
+        if (_viewPluginsAction == null) {
+            _viewPluginsAction = new ViewPluginsAction(_pluginMangerGUI);
+        }
+        return _viewPluginsAction;
+    }
+    
+    public ViewTaskAction getViewTasksAction()
+    {
+        if (_viewTaskAction == null) {
+            _viewTaskAction = new ViewTaskAction(_taskManagerGUI);
+        }
+        return _viewTaskAction;
+    }
 }

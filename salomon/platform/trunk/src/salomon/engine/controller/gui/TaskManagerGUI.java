@@ -33,6 +33,7 @@ import java.util.List;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JComponent;
+import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
@@ -43,8 +44,11 @@ import org.apache.log4j.Logger;
 
 import salomon.engine.Messages;
 import salomon.engine.controller.gui.action.ActionManager;
+import salomon.engine.controller.gui.viewer.PluginViewer;
+import salomon.engine.controller.gui.viewer.TaskViewer;
 import salomon.engine.platform.IManagerEngine;
 import salomon.engine.plugin.LocalPlugin;
+import salomon.engine.plugin.PluginManager;
 import salomon.engine.solution.Solution;
 import salomon.engine.task.ITask;
 import salomon.engine.task.ITaskManager;
@@ -352,4 +356,16 @@ public final class TaskManagerGUI
 	}
 
 	static final Logger LOGGER = Logger.getLogger(TaskManagerGUI.class);
+
+    private JFrame _tasksViewerFrame;
+
+    public void viewTasks() {
+        if (_tasksViewerFrame == null) {
+            _tasksViewerFrame = new JFrame(Messages.getString("TIT_TASKS"));
+            _tasksViewerFrame.getContentPane().add(new TaskViewer(((TaskManager)_taskManager).getDBManager()));
+            _tasksViewerFrame.pack(); 
+        }
+        
+        _tasksViewerFrame.setVisible(true) ;   
+    }
 }

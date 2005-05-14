@@ -121,6 +121,9 @@ public final class LocalController implements IController
 			project.add(_guiMenu.getItmSaveProject());
 			JMenu tools = new JMenu(Messages.getString("MNU_TOOLS")); //$NON-NLS-1$
 			tools.add(_guiMenu.getItmViewProjects());
+            tools.add(_guiMenu.getItmViewSolutions()) ;
+            tools.add(_guiMenu.getItmViewPlugins()) ;
+            tools.add(_guiMenu.getItmViewTasks()) ;
 			tools.addSeparator();
 			tools.add(_guiMenu.getItmSQLConsole());
 			JMenu help = new JMenu(Messages.getString("MNU_HELP")); //$NON-NLS-1$           
@@ -231,12 +234,20 @@ public final class LocalController implements IController
 		private JMenuItem _itmSQLConsole;
 		
 		private JMenuItem _itmViewProjects;
-
+        
+        private JMenuItem _itmViewSolutions;
+        
 		private JPanel _pnlAbout;
 
 		private JComponent _positionComponent;
 
 		private String _resourcesDir;
+
+        private JMenuItem _itmViewTasks;
+
+        private JMenuItem _itmViewPlugins;
+
+        
 
 		/**
 		 * creates LocalGUIMenu
@@ -426,7 +437,37 @@ public final class LocalController implements IController
 			}
 			return _itmViewProjects;
 		}
+        
+        JMenuItem getItmViewSolutions()
+        {
+            if (_itmViewSolutions== null) {
+                _itmViewSolutions = new JMenuItem();
+                _itmViewSolutions.setText(Messages.getString("MNU_SHOW_SOLUTIONS")); //$NON-NLS-1$
+                _itmViewSolutions.addActionListener(_actionManager.getViewSolutionAction());
+            }
+            return _itmViewSolutions;
+        }
 
+        JMenuItem getItmViewTasks()
+        {
+            if (_itmViewTasks== null) {
+                _itmViewTasks = new JMenuItem();
+                _itmViewTasks.setText(Messages.getString("MNU_SHOW_TASKS")); //$NON-NLS-1$
+                _itmViewTasks.addActionListener(_actionManager.getViewTasksAction());
+            }
+            return _itmViewTasks;
+        }
+        
+        JMenuItem getItmViewPlugins()
+        {
+            if (_itmViewPlugins== null) {
+                _itmViewPlugins = new JMenuItem();
+                _itmViewPlugins.setText(Messages.getString("MNU_SHOW_PLUGINS")); //$NON-NLS-1$
+                _itmViewPlugins.addActionListener(_actionManager.getViewPluginsAction());
+            }
+            return _itmViewPlugins;
+        }
+        
 		JPanel getPnlAbout()
 		{
 			if (_pnlAbout == null) {

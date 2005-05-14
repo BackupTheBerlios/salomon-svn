@@ -41,7 +41,12 @@ import org.apache.log4j.Logger;
 
 import salomon.engine.Messages;
 import salomon.engine.controller.gui.action.ActionManager;
+import salomon.engine.controller.gui.viewer.ProjectViewer;
+import salomon.engine.controller.gui.viewer.SolutionViewer;
+import salomon.engine.database.DBManager;
+import salomon.engine.platform.ManagerEngine;
 import salomon.engine.project.IProject;
+import salomon.engine.project.ProjectManager;
 import salomon.engine.solution.ISolution;
 import salomon.engine.solution.ISolutionManager;
 import salomon.engine.solution.Solution;
@@ -90,6 +95,8 @@ public final class SolutionManagerGUI
 	private JTextField _txtSolutionName;
 
 	private JTextField _txtUsername;
+
+    private JFrame _solutionViewerFrame;
 
 	/**
 	 */
@@ -438,5 +445,15 @@ public final class SolutionManagerGUI
 		return solutionID;
 	}
 
+    public void viewSolutionList()
+    {        
+        if (_solutionViewerFrame == null) {
+            _solutionViewerFrame = new JFrame(Messages.getString("TIT_SOLUTIONS"));
+            _solutionViewerFrame.getContentPane().add(new SolutionViewer(((SolutionManager)_solutionManager).getDBManager()));
+            _solutionViewerFrame.pack(); 
+        }
+        
+        _solutionViewerFrame.setVisible(true) ;
+    }
 	private static final Logger LOGGER = Logger.getLogger(SolutionManagerGUI.class);
 }

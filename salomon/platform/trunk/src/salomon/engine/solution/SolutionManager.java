@@ -225,6 +225,11 @@ public final class SolutionManager implements ISolutionManager
 		return _currentSolution;
 	}
 	
+    public DBManager getDBManager()
+    {
+        return _dbManager ; 
+    }
+    
 	private static final Logger LOGGER = Logger.getLogger(SolutionManager.class);
 	
 }

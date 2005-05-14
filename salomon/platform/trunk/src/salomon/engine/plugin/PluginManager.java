@@ -194,4 +194,8 @@ public final class PluginManager implements IPluginManager
 	{
 		_plugins.clear();
 	}
+
+    public DBManager getDBManager() {
+        return _dbManager;
+    }
 }
