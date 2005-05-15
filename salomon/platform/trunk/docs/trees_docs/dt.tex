@@ -62,45 +62,26 @@ Wiek 	P³eæ 	Wykszta³cenie 	Jezyki 	Doswiadczenie 	Prezentacja 	Przyjety\linebrea
 \linebreak
 Na podstawie tabeli decyzyjnej tworzymy drzewo, którego wez³ami sa poszczególne atrybuty, ga³eziami wartosci odpowiadajace tym atrybutom, a liscie tworza poszczególne decyzje. Na podstawie przyk³adowych danych wygenerowano nastepujace drzewo:
 
-
-
-\begin{figure}
-	\centering
-	\includegraphics[bb=0 0 441 395]{Drzewo_decyzyjne.png}
-% Drzewo_decyzyjne.png: 72dpi, width=15.56cm, height=13.93cm, bb=0 0 441 395
-\end{figure}
+	\begin{center}
+	\includegraphics[bb=0 447 441 842]{dd.eps}
+% dd.eps: 300dpi, width=3.73cm, height=3.34cm, bb=0 447 441 842
+	\end{center}
 
 Drzewo w takiej postaci odzwierciedla w jaki sposób by³y na podstawie atrybutów by³y podejmowane decyzje klasyfikujace (dla uproszczenia po³aczono niektóre ga³ezie). Zaleta tej reprezentacji jest jej czytelnosæ dla cz³owieka. W prosty sposób mozna przekszta³ciæ ja do reprezentacji regu³owej.
 
 \section{Algorytm tworzenia drzewa ID3}
+\subsection{Wstep}
+Algorytm tworzenia drzew decyzyjnych ID3 jest jednym z prostszych algorytmow ale zarazem daje on dosc dobre wyniki. Celem jest oczywiscie stworzenie drzewa, ktore za pomoca wartosci atrybutow przyjmowanych przez elementy podzieli nam dziedzine na klasy rownowaznosci (w domysle podgrupy majace taka sama wartosc jednej ze zmiennych). Oczywiscie w typowym przypadku mozliwosci stworzenia takiego drzewa bedzie wiele. Wiec ustalamy dodatkowy cel, jakim bedzie minimalna wysokosc drzewa, liczona jako najwieksza odleglosc od korzenia do liscia. Algorytm ID3 zawsze (jezeli to mozliwe) stworzy nam drzewo decyzyjne. Natomiast nie zawsze jest to drzewo optymalnej wielkosci. Algorytm jest ID3 jest algorytmem zachlannym, decyzje o rozbudowie drzewa sa podejmowane na podstawie przyblizonej oceny kazdego z wariantow jakie mozemy przyjac w danym kroku. Raz podjeta decyzja nie jest juz zmieniana - nie jest to algorytm adaptatywny. Przyjrzyjmy sie jego dzialaniu.
+
 \subsection{W duzym skrocie}
 
-Dopuki kazdy z lisci drzewa nie nalezy do tej samej klasy rownowaznosci (nie jest homogeniczny - jego zmienne decyzyjne nie sa jednakowe) powtarzaj:
+Dopuki kazdy z lisci drzewa nie jest homogeniczny (zmienne decyzyjne jego elementow nie sa jednakowe) powtarzaj:
 
     \begin{itemize}
-\item Wybierz niehomogeniczny lisc
-\item Zamien ten lisc na wezel testowy dzielacy ten podzbior na tak niehomogeniczne podzbiory jak to mozliwe, zgodnie z wyliczeniem entropii
+\item Wybierz ten sposrod nieuzytych jeszcze atrybutow, ktory minimalizuje srednia entropie (opis sredniej entropii dalej)
+\item Rozwin niehomogeniczne liscie wzgledem wybranego atrybutu.
 \end{itemize}
 
-\subsection{Troche dokladniej}
-    \begin{itemize}
-\item Oblicz entropie dla kazdego z atrybutow, ktore chcemy wykorzystac do tworzenia nastepnego poziomu drzewa
-\ item Wybierz najlepszy z nich (ten ktory minimalizuje entropie)
-\end{itemize}
-
-\subsection{Minimalizacja entropii?}
-
-Generalnie zalozenie jest aby tworzyc drzewa decyzyjne optymalnej wielkosci ale z praktycznego punktu widzenia nie jest to uzasadnione ze wzgledu na duzy koszt obliczeniowy. W zastepstwie korzystamy z przyblizonych procedur tworzenia malych, ale niekoniecznie najmniejszych drzew decyzyjnych.
-
-\subsection{Wybieranie atrybutu do obliczania entropii}
-
-Najwazniejszym punktem algorytmu ID3 jest wybor atrybutu do testowania na kazdym lisciu drzewa.
-
-Procedura:
-\begin{itemize}
-\item Nalezy sprawdzic jak atrybut dzieli elementy nalezace do liscia
-\item Minimalizuj srednia entropie (oblicz entropie dla kazdego z wezlow, dla kazdego z z atrybutow i wybierz ten z najmniejsza entropia
-\end{itemize}
 
 \subsection{Formula Entropii}
 
@@ -131,6 +112,25 @@ $Entropia = Sum(c)(-\frac{n_{bc}}{n_{b}})log_{2}(\frac{n_{bc}}{n_{b}})$
 
 \subsubsection{Srednia entropia}
 $Srednia entropia = Sum(b)(\frac{n_{b}}{n_{t}})*[Sum(c)(-\frac{n_{bc}}{n_{b}})log_{2}(\frac{n_{bc}}{n_{b}})]$
+
+
+\subsection{Minimalizacja entropii = Minimalizacja wysokosci drzewa ???}
+
+Ogolne zalozenie jest aby tworzyc drzewa decyzyjne optymalnej wielkosci ale z praktycznego punktu widzenia nie jest to uzasadnione ze wzgledu na duzy koszt obliczeniowy. W zastepstwie korzystamy z przyblizonych procedur tworzenia malych, ale niekoniecznie najmniejszych drzew decyzyjnych.
+
+\subsection{Algorytm w pseudokodzie}
+\begin{enumerate}
+\item Zainicjuj drzewo (wszystkie elementy przypisane do korzenia, ktory jest zarazem lisciem)
+\item Dopuki nie wszystkie liscie sa homogeniczne powtarzaj
+\subitem - Jezeli nie ma nieuzytych atrybutow -> \textbf{koniec z bledem}
+\subitem - Oblicz srednia entropie dla nieuzytych jeszcze atrybutow
+\subitem - Wybierz ten atrybut, ktory minimalizuje srednia entropie (dla ktorego wyliczony w poprzednim punkcie wskaznik jest najmniejszy)
+\subitem - Rozwijaj niehomogeniczne liscie wzgledem wybranego atrybutu (lisc staje sie wezlem, do ktorego sa "przyczepione" liscie powstale z podzialu tego liscia na liscie zawierajace kazda z przyjmowanych przez wybrany atrybut wartosci)
+\item Wypisz drzewo -> \textbf{poprawny koniec}
+
+\end{enumerate}
+\subsection{Podsumowanie}
+Algorytm ID3 jest prostym algorytmem pozwalajacym na generowanie poprawnych drzew decyzyjnych. Jego podstawowa forma, opisana powyzej umozliwia 
 
 \end{flushleft}
 \end{document}
