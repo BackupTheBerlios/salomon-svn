@@ -62,7 +62,29 @@ diagramy dla Solutiona, klasy, pakiety itp
 nowe moduly itp, diagramy Salomon->Baza, Salomon->Pluginy (?)
 
 \subsection{Model danych}
-digramik bazy danych
+
+Do modelu bazy danych zostanie dodana nowa tabela \emph{Solutions}.
+Zawieraæ bêdzie nastêpuj¹ce pola:
+\begin{itemize}
+	\item SOLUTION\_ID -- unikalny identyfikator
+	\item SOLUTION\_NAME -- nazwa
+	\item SOLUTION\_INFO -- krótki opis
+	\item HOSTNAME -- nazwa hosta, na którym znajduje siê dana baza danych
+	\item DB\_PATH -- œcie¿ka do bazy na tym hoœcie
+	\item USERNAME -- login do bazy danych
+	\item PASSWD -- has³o
+	\item C\_DATE -- data utworzenia wpisu
+	\item LM\_DATE -- data ostatniej modyfikacji
+\end{itemize}
+
+Powi¹zania z pozosta³ymi tabelami przedstawia poni¿szy rysunek (Rys \ref{fig:salomon_db}):
+
+\begin{figure}[ht]
+	\centering
+		\includegraphics[width=1.00\textwidth]{../documentation/img/concept/salomon_db.png}
+	\label{fig:salomon_db}
+\end{figure}
+
 
 \section{Model architektoniczny}
 lokalizajca plikow kontfiguracyjnych itp
