@@ -36,10 +36,7 @@ import salomon.engine.database.queries.SQLSelect;
 import salomon.engine.database.queries.SQLUpdate;
 import salomon.util.gui.Utils;
 
-/**
- * Class is responsible for data base operations. It enables executing SQL
- * queries and transaction managing.
- */
+/** * Class is responsible for data base operations. It enables executing SQL * queries and transaction managing. */
 public final class DBManager
 {
 	private Connection _connection = null;
@@ -394,6 +391,9 @@ public final class DBManager
 	 * @return <code>DBManager</code> instance
 	 * @throws SQLException
 	 * @throws ClassNotFoundException
+	 * 
+	 * @uml.property name="_instance"
+	 * @uml.associationEnd multiplicity="(0 1)"
 	 */
 	//	public static DBManager getInstance() throws SQLException,
 	//			ClassNotFoundException

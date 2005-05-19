@@ -26,12 +26,16 @@ import java.awt.event.ActionEvent;
 import salomon.engine.controller.gui.TaskManagerGUI;
 import salomon.engine.plugin.LocalPlugin;
 
-/**
- * 
- */
 public final class AddTaskAction extends AbstractTaskAction
 {
+
+	/**
+	 * 
+	 * @uml.property name="_plugin"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private LocalPlugin _plugin;
+
 	
 	/**
 	 * @param editionManager

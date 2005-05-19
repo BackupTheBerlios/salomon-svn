@@ -32,14 +32,17 @@ import salomon.engine.solution.ISolution;
 import salomon.engine.solution.ISolutionManager;
 import salomon.platform.exception.PlatformException;
 
-/**
- * @see salomon.engine.solution.ISolutionManager
- */
+/** * @see salomon.engine.solution.ISolutionManager */
 public final class RemoteSolutionManager extends UnicastRemoteObject
 		implements IRemoteSolutionManager
 {
 	private Map<ISolution, IRemoteSolution> _proxies = new HashMap<ISolution, IRemoteSolution>();
-    
+
+	/**
+	 * 
+	 * @uml.property name="_solutionManager"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private ISolutionManager _solutionManager;
 
 	/**

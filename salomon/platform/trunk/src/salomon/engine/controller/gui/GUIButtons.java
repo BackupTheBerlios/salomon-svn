@@ -34,9 +34,7 @@ import org.apache.log4j.Logger;
 import salomon.engine.Config;
 import salomon.engine.Resources;
 
-/**
- * Class agregates all buttons used in GUIController.
- */
+/** * Class agregates all buttons used in GUIController. */
 public final class GUIButtons
 {
 	private JButton _btnAdd = null;
@@ -53,10 +51,21 @@ public final class GUIButtons
 
 	private JButton _btnUp = null;
 
+	/**
+	 * 
+	 * @uml.property name="_manipulationListener"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private ManipulationListener _manipulationListener = null;
+
 
 	private String _resourcesDir = null;
 
+	/**
+	 * 
+	 * @uml.property name="_taskManagerGUI"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private TaskManagerGUI _taskManagerGUI = null;
 
 	public GUIButtons(TaskManagerGUI taskManagerGUI)

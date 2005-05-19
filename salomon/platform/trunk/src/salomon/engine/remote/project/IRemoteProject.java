@@ -27,22 +27,18 @@ import java.rmi.RemoteException;
 import salomon.engine.remote.task.IRemoteTaskManager;
 import salomon.platform.exception.PlatformException;
 
-
-/**
- * Remote version of <code>IProject</code> interface.
- * It has all methods from IProject interface, 
- * but adds throwing RemoteException declaration to each of methods.
- * 
- * @see salomon.engine.project.IProject
- */
+/** * Remote version of <code>IProject</code> interface. * It has all methods from IProject interface,  * but adds throwing RemoteException declaration to each of methods. *  * @see salomon.engine.project.IProject */
 public interface IRemoteProject extends Remote
 {
+
 	/**
 	 * @see salomon.engine.project.IProject#getInfo()
 	 * 
 	 * @return Returns the info.
 	 * @pre $none
 	 * @post $result != null
+	 * 
+	 * @uml.property name="info"
 	 */
 	String getInfo() throws RemoteException, PlatformException;
 
@@ -52,6 +48,8 @@ public interface IRemoteProject extends Remote
 	 * @return Returns the name.
 	 * @pre $none
 	 * @post $result != null
+	 * 
+	 * @uml.property name="name"
 	 */
 	String getName() throws RemoteException, PlatformException;
 
@@ -61,8 +59,11 @@ public interface IRemoteProject extends Remote
 	 * @return Returns the projectID.
 	 * @pre $none
 	 * @post $none
+	 * 
+	 * @uml.property name="projectID"
 	 */
 	int getProjectID() throws RemoteException, PlatformException;
+
 
 	/**
 	 * @see salomon.engine.project.IProject#getTaskManager()
@@ -76,6 +77,8 @@ public interface IRemoteProject extends Remote
 	 * @param info The info to set.
 	 * @pre info != null
 	 * @post $none
+	 * 
+	 * @uml.property name="info"
 	 */
 	void setInfo(String info) throws RemoteException, PlatformException;
 
@@ -85,6 +88,8 @@ public interface IRemoteProject extends Remote
 	 * @param name The name to set.
 	 * @pre name != null
 	 * @post $none
+	 * 
+	 * @uml.property name="name"
 	 */
 	void setName(String name) throws RemoteException, PlatformException;
 
@@ -94,6 +99,8 @@ public interface IRemoteProject extends Remote
 	 * @param projectId The projectID to set.
 	 * @pre $none
 	 * @post $none
+	 * 
+	 * @uml.property name="projectID"
 	 */
 	void setProjectID(int projectId) throws RemoteException, PlatformException;
 

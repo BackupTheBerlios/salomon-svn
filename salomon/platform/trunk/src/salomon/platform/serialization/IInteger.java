@@ -21,11 +21,19 @@
 
 package salomon.platform.serialization;
 
-/**
- * 
- */
 public interface IInteger extends IObject
 {
+
+	/**
+	 * 
+	 * @uml.property name="value"
+	 */
 	int getValue();
-    void setValue(int value);
+
+	/**
+	 * 
+	 * @uml.property name="value"
+	 */
+	void setValue(int value);
+
 }

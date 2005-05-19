@@ -17,12 +17,22 @@ import salomon.plugin.IResultComponent;
 import salomon.plugin.ISettingComponent;
 import salomon.plugin.ISettings;
 
-/** Class helps managing plugin loading */
+/** * Class helps managing plugin loading */
 public final class LocalPlugin implements ILocalPlugin, Serializable
 {
 
+	/**
+	 * 
+	 * @uml.property name="_plugin"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private IPlugin _plugin;
 
+	/**
+	 * 
+	 * @uml.property name="_pluginInfo"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private PluginInfo _pluginInfo;
 
 	/**

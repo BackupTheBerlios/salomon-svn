@@ -30,18 +30,35 @@ import salomon.platform.exception.PlatformException;
 import salomon.engine.platform.DataEngine;
 import salomon.engine.platform.ManagerEngine;
 
-/**
- * 
- */
 public final class Solution implements ISolution
 {
 
+	/**
+	 * 
+	 * @uml.property name="_dataEngine"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private DataEngine _dataEngine;
 
+	/**
+	 * 
+	 * @uml.property name="_managerEngine"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private ManagerEngine _managerEngine;
 
+	/**
+	 * 
+	 * @uml.property name="_solutionInfo"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private SolutionInfo _solutionInfo;
-	
+
+	/**
+	 * 
+	 * @uml.property name="_dbManager"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private DBManager _dbManager;
 
 	/**

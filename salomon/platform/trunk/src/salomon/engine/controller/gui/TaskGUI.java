@@ -34,23 +34,40 @@ import salomon.plugin.IPlugin;
 import salomon.plugin.IResult;
 import salomon.plugin.ISettings;
 
-/**
- * Class is graphic representation of a task. It is used to display them on the
- * list of tasks.
- * 
- */
+/** * Class is graphic representation of a task. It is used to display them on the * list of tasks. */
 public final class TaskGUI
 {
 	private String _name;
 
+	/**
+	 * 
+	 * @uml.property name="_plugin"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private ILocalPlugin _plugin;
 
+	/**
+	 * 
+	 * @uml.property name="_result"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private IResult _result;
 
+	/**
+	 * 
+	 * @uml.property name="_settings"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private ISettings _settings;
+
 
 	private String _status;
 
+	/**
+	 * 
+	 * @uml.property name="_task"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private Task _task;
 
 	private int _taskId;

@@ -36,16 +36,29 @@ import salomon.engine.remote.IRemoteController;
 import salomon.engine.remote.RemoteController;
 import salomon.platform.exception.PlatformException;
 
-/**
- * Class is a client implementation of IController interface.
- */
+/** * Class is a client implementation of IController interface. */
 public final class ServantController implements IController
 {
 
+	/**
+	 * 
+	 * @uml.property name="_managerEngine"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private IManagerEngine _managerEngine;
 
+	/**
+	 * 
+	 * @uml.property name="_masterController"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private ICentralController _masterController;
 
+	/**
+	 * 
+	 * @uml.property name="_remoteController"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private IRemoteController _remoteController;
 
 	private String _serverHost;

@@ -25,15 +25,16 @@ import javax.swing.AbstractAction;
 
 import salomon.engine.controller.gui.PluginMangerGUI;
 
-/**
- * Represents abstract action caused while editing plugins.
- * 
- */
+/** * Represents abstract action caused while editing plugins. */
 public abstract class AbstractPluginAction extends AbstractAction
 {
+
 	/**
 	 * an object which method are called in implementation of actionPerformed()
 	 * method
+	 * 
+	 * @uml.property name="_pluginMangerGUI"
+	 * @uml.associationEnd multiplicity="(0 1)"
 	 */
 	protected PluginMangerGUI _pluginMangerGUI;
 

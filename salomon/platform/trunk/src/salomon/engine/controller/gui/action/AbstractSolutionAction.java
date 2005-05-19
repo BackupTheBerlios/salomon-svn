@@ -25,15 +25,16 @@ import javax.swing.AbstractAction;
 
 import salomon.engine.controller.gui.SolutionManagerGUI;
 
-/**
- * Represents abstract action caused while editing solutions.
- * 
- */
+/** * Represents abstract action caused while editing solutions. */
 abstract class AbstractSolutionAction extends AbstractAction
 {
+
 	/**
 	 * an object which method are called in implementation of actionPerformed()
 	 * method
+	 * 
+	 * @uml.property name="_solutionEditionManager"
+	 * @uml.associationEnd multiplicity="(0 1)"
 	 */
 	protected SolutionManagerGUI _solutionEditionManager;
 

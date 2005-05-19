@@ -35,14 +35,15 @@ import salomon.engine.database.DBManager;
 import salomon.engine.database.queries.SQLSelect;
 import salomon.engine.plugin.PluginInfo;
 
-/**
- * 
- * TODO: add comment.
- * 
- */
+/** * TODO: add comment. */
 public class DescriptionTest extends TestCase
 {
 
+	/**
+	 * 
+	 * @uml.property name="_manager"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private DBManager _manager;
 
 	public void testDelete()

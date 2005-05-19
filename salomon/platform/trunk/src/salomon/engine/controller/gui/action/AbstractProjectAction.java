@@ -25,15 +25,16 @@ import javax.swing.AbstractAction;
 
 import salomon.engine.controller.gui.ProjectManagerGUI;
 
-/**
- * Represents abstract action caused while editing projects.
- * 
- */
+/** * Represents abstract action caused while editing projects. */
 abstract class AbstractProjectAction extends AbstractAction
 {
+
 	/**
 	 * an object which method are called in implementation of actionPerformed()
 	 * method
+	 * 
+	 * @uml.property name="_projectEditionManager"
+	 * @uml.associationEnd multiplicity="(0 1)"
 	 */
 	protected ProjectManagerGUI _projectEditionManager;
 

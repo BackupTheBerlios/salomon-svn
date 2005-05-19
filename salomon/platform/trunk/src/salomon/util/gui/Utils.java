@@ -36,10 +36,7 @@ import org.apache.log4j.Logger;
 
 import salomon.engine.Messages;
 
-/**
- * Class supply some useful methods used in GUI. All public methods are static
- * to simplyfy usage.
- */
+/** * Class supply some useful methods used in GUI. All public methods are static * to simplyfy usage. */
 public final class Utils
 {
 	private JComponent _parent;
@@ -233,6 +230,11 @@ public final class Utils
 		return _instance;
 	}
 
+	/**
+	 * 
+	 * @uml.property name="_instance"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private static Utils _instance;
 
 	private static final Logger LOGGER = Logger.getLogger(Utils.class);

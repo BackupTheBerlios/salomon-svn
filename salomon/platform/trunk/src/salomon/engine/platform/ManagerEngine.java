@@ -35,21 +35,44 @@ import salomon.engine.task.TaskManager;
 
 import salomon.platform.exception.PlatformException;
 
-/**
- * Class creates and holds all managers used by plugins. They are created only
- * in this class to avoid multiple instances.
- */
+/** * Class creates and holds all managers used by plugins. They are created only
+ * in this class to avoid multiple instances. */
 public final class ManagerEngine implements IManagerEngine
 {
 
+	/**
+	 * 
+	 * @uml.property name="_pluginManager"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private IPluginManager _pluginManager;
 
+	/**
+	 * 
+	 * @uml.property name="_projectManager"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private IProjectManager _projectManager;
 
+	/**
+	 * 
+	 * @uml.property name="_taskManager"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private ITaskManager _taskManager;
-    
-    private ISolutionManager _solutionManager;
-	
+
+	/**
+	 * 
+	 * @uml.property name="_solutionManager"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
+	private ISolutionManager _solutionManager;
+
+	/**
+	 * 
+	 * @uml.property name="_dbManager"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private DBManager _dbManager;
 
 	/**

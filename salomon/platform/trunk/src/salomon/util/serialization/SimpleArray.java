@@ -24,11 +24,14 @@ package salomon.util.serialization;
 import salomon.platform.serialization.IArray;
 import salomon.platform.serialization.IObject;
 
-/**
- * 
- */
 public class SimpleArray implements IArray
 {
+
+	/**
+	 * 
+	 * @uml.property name="_value"
+	 * @uml.associationEnd multiplicity="(0 -1)"
+	 */
 	private IObject[] _value;
 
 	/**

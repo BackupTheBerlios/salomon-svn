@@ -32,18 +32,24 @@ import salomon.engine.task.ITask;
 import salomon.engine.task.ITaskManager;
 import salomon.platform.exception.PlatformException;
 
-/**
- * Class representing remote instance of ITaskManager.
- * 
- * @see salomon.engine.task.ITaskManager
- */
+/** * Class representing remote instance of ITaskManager. *  * @see salomon.engine.task.ITaskManager */
 public final class RemoteTaskManager extends UnicastRemoteObject
 		implements IRemoteTaskManager
 {
 	private Map<ITask, IRemoteTask> _proxies = new HashMap<ITask, IRemoteTask>();
 
+	/**
+	 * 
+	 * @uml.property name="_remoteTaskRunner"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private IRemoteTaskRunner _remoteTaskRunner;
 
+	/**
+	 * 
+	 * @uml.property name="_taskManager"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private ITaskManager _taskManager;
 
 	/**

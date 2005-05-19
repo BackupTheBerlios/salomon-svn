@@ -35,6 +35,12 @@ import salomon.plugin.DescriptionTest;
 
 public class ProjectTest extends TestCase
 {
+
+	/**
+	 * 
+	 * @uml.property name="_manager"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private DBManager _manager;
 
 	public void testDelete()

@@ -31,17 +31,22 @@ import salomon.plugin.IResultComponent;
 import salomon.plugin.ISettingComponent;
 import salomon.plugin.ISettings;
 
-/**
- * Class is a sever side wrapper of IPluginProxy object. It implements IPlugin
- * interface and delegates methods execution to remote object catching all
- * RemoteExceptions.
- * 
- * @see salomon.engine.remote.plugin.IRemotePlugin  
- */
+/** * Class is a sever side wrapper of IPluginProxy object. It implements IPlugin * interface and delegates methods execution to remote object catching all * RemoteExceptions. *  * @see salomon.engine.remote.plugin.IRemotePlugin */
 public final class PluginProxy implements IPlugin
 {
+
+	/**
+	 * 
+	 * @uml.property name="_localPlugin"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private IPlugin _localPlugin;
 
+	/**
+	 * 
+	 * @uml.property name="_remotePlugin"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private IRemotePlugin _remotePlugin;
 
 	/**

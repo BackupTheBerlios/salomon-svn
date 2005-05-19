@@ -41,10 +41,7 @@ import org.apache.log4j.Logger;
 import salomon.engine.Messages;
 import salomon.engine.holder.ManagerEngineHolder;
 
-
-/**
- * Panel displaying list of connected clients. 
- */
+/** * Panel displaying list of connected clients. */
 public final class RemoteControllerPanel
 {
 
@@ -54,8 +51,18 @@ public final class RemoteControllerPanel
 
 	private JPopupMenu _controllerPopup;
 
+	/**
+	 * 
+	 * @uml.property name="_engineHolder"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private ManagerEngineHolder _engineHolder;
 
+	/**
+	 * 
+	 * @uml.property name="_parent"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private ControllerFrame _parent;
 
 	private int _selectedItem;

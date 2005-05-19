@@ -29,15 +29,23 @@ import salomon.engine.remote.project.RemoteProjectManager;
 import salomon.engine.solution.ISolution;
 import salomon.platform.exception.PlatformException;
 
-
-/**
- * @see salomon.engine.solution.ISolution
- */
+/** * @see salomon.engine.solution.ISolution */
 public final class RemoteSolution extends UnicastRemoteObject
 		implements IRemoteSolution
 {
+
+	/**
+	 * 
+	 * @uml.property name="_remoteProjectManager"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private IRemoteProjectManager _remoteProjectManager;
 
+	/**
+	 * 
+	 * @uml.property name="_solution"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private ISolution _solution;
 
 	/**

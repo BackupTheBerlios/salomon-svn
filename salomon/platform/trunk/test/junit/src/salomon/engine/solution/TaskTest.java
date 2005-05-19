@@ -28,7 +28,14 @@ import org.apache.log4j.PropertyConfigurator;
 import salomon.engine.task.Task;
 
 public class TaskTest extends TestCase {
-    private Task _Task ;
+
+	/**
+	 * 
+	 * @uml.property name="_Task"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
+	private Task _Task;
+
     
     public static void main(String[] args) {
         junit.textui.TestRunner.run(TaskTest.class);

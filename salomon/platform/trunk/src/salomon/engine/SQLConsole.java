@@ -49,13 +49,7 @@ import org.apache.log4j.PropertyConfigurator;
 import salomon.engine.database.DBManager;
 import salomon.util.gui.Utils;
 
-
-/**
- * Class represents simple SQL console. It is used to debug application. Allows
- * excecuting SQL queries and DDL statements. It supports transactions and makes
- * managing with database easier supplying commands history.
- *  
- */
+/** * Class represents simple SQL console. It is used to debug application. Allows * excecuting SQL queries and DDL statements. It supports transactions and makes * managing with database easier supplying commands history. */
 public final class SQLConsole extends JFrame
 {
 	private JButton _btnCommit = null;
@@ -68,13 +62,24 @@ public final class SQLConsole extends JFrame
 
 	private JButton _btnRollback = null;
 
-	/** Class represents connection to data base */
+	/**
+	 * Class represents connection to data base
+	 * 
+	 * @uml.property name="_dbManager"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private DBManager _dbManager = null;
+
 
 //	private JPanel _contentPane = null;
 
 	private JTextPane _edtSQLQuery = null;
 
+	/**
+	 * 
+	 * @uml.property name="_history"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private CommandHistory _history = null;
 
 	/**

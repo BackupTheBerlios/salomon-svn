@@ -33,13 +33,16 @@ import salomon.platform.exception.PlatformException;
 import salomon.plugin.IResult;
 import salomon.plugin.ISettings;
 
-/** 
- * Class representing remote instance of ITask.
- * @see salomon.engine.task.ITask
- */
+/** * Class representing remote instance of ITask. * @see salomon.engine.task.ITask */
 public final class RemoteTask extends UnicastRemoteObject
 		implements IRemoteTask
 {
+
+	/**
+	 * 
+	 * @uml.property name="_task"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private ITask _task;
 
 	/**

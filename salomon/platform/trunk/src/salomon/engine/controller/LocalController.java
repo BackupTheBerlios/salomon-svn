@@ -62,27 +62,67 @@ import salomon.platform.exception.PlatformException;
 import salomon.engine.platform.IManagerEngine;
 import salomon.engine.platform.ManagerEngine;
 
-/**
- * Local implementation of IController interface.
- */
+/** * Local implementation of IController interface. */
 public final class LocalController implements IController
 {
+
+	/**
+	 * 
+	 * @uml.property name="_actionManager"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private ActionManager _actionManager;
 
+	/**
+	 * 
+	 * @uml.property name="_contentPane"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private ControllerPanel _contentPane;
 
+	/**
+	 * 
+	 * @uml.property name="_guiMenu"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private LocalGUIMenu _guiMenu;
 
+	/**
+	 * 
+	 * @uml.property name="_managerEngine"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private IManagerEngine _managerEngine;
+
 
 	private JMenuBar _menuBar;
 
+	/**
+	 * 
+	 * @uml.property name="_pluginMangerGUI"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private PluginMangerGUI _pluginMangerGUI;
 
+	/**
+	 * 
+	 * @uml.property name="_projectManagerGUI"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private ProjectManagerGUI _projectManagerGUI;
-	
+
+	/**
+	 * 
+	 * @uml.property name="_solutionManagerGUI"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private SolutionManagerGUI _solutionManagerGUI;
 
+	/**
+	 * 
+	 * @uml.property name="_taskManagerGUI"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private TaskManagerGUI _taskManagerGUI;
 
 	private JToolBar _toolBar;

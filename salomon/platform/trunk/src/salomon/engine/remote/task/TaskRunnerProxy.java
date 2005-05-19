@@ -28,11 +28,15 @@ import org.apache.log4j.Logger;
 import salomon.engine.task.ITaskRunner;
 import salomon.platform.exception.PlatformException;
 
-/**
- * @see salomon.engine.remote.task.IRemoteTaskRunner
- */
+/** * @see salomon.engine.remote.task.IRemoteTaskRunner */
 public final class TaskRunnerProxy implements ITaskRunner
 {
+
+	/**
+	 * 
+	 * @uml.property name="_remoteTaskRunner"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private IRemoteTaskRunner _remoteTaskRunner;
 
 	/**

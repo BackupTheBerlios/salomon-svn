@@ -30,20 +30,43 @@ import salomon.engine.solution.ISolutionManager;
 import salomon.engine.task.ITaskManager;
 import salomon.platform.exception.PlatformException;
 
-/**
- * Holds all other holders.
- * It manges with swithing between connected clients.
- */
+/** * Holds all other holders. * It manges with swithing between connected clients. */
 public final class ManagerEngineHolder implements IManagerEngine
 {
+
+	/**
+	 * 
+	 * @uml.property name="_currentManagerEngine"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private IManagerEngine _currentManagerEngine;
 
+	/**
+	 * 
+	 * @uml.property name="_pluginManagerHolder"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private PluginManagerHolder _pluginManagerHolder;
 
+	/**
+	 * 
+	 * @uml.property name="_projectManagerHolder"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private ProjectManagerHolder _projectManagerHolder;
 
+	/**
+	 * 
+	 * @uml.property name="_solutionManagerHolder"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private SolutionManagerHolder _solutionManagerHolder;
 
+	/**
+	 * 
+	 * @uml.property name="_taskManagerHolder"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private TaskManagerHolder _taskManagerHolder;
 
 	/**

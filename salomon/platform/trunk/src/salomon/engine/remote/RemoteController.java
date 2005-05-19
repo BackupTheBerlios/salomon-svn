@@ -29,12 +29,7 @@ import org.apache.log4j.Logger;
 import salomon.engine.Starter;
 import salomon.engine.platform.IManagerEngine;
 
-/**
- * An implementation of IRemoteController interface.
- * Its represents remote IController instance.
- * 
- * @see salomon.engine.controller.IController
- */
+/** * An implementation of IRemoteController interface. * Its represents remote IController instance. *  * @see salomon.engine.controller.IController */
 public final class RemoteController extends UnicastRemoteObject
 		implements IRemoteController
 {
@@ -42,6 +37,11 @@ public final class RemoteController extends UnicastRemoteObject
 
 	private String _name;
 
+	/**
+	 * 
+	 * @uml.property name="_remoteManagerEngine"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private IRemoteManagerEngine _remoteManagerEngine;
 
 	/**

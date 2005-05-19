@@ -53,16 +53,28 @@ import salomon.plugin.ISettings;
 import salomon.engine.platform.IManagerEngine;
 import salomon.engine.platform.ManagerEngine;
 
-/**
- * 
- */
 public final class SolutionManager implements ISolutionManager
 {
 
+	/**
+	 * 
+	 * @uml.property name="_managerEngine"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private IManagerEngine _managerEngine;
-	
+
+	/**
+	 * 
+	 * @uml.property name="_dbManager"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private DBManager _dbManager;
-	
+
+	/**
+	 * 
+	 * @uml.property name="_currentSolution"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private ISolution _currentSolution;
 
 	public SolutionManager(IManagerEngine managerEngine, DBManager manager)

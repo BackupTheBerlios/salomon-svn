@@ -30,6 +30,12 @@ import salomon.engine.project.IProjectManager;
 
 public class SolutionTest extends TestCase
 {
+
+	/**
+	 * 
+	 * @uml.property name="_solution"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private Solution _solution;
 
 	public void testEverything()

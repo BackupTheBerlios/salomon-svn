@@ -31,18 +31,17 @@ import salomon.engine.project.IProject;
 import salomon.engine.project.IProjectManager;
 import salomon.platform.exception.PlatformException;
 
-/**
- * Class is a sever side wrapper of IRemoteProjectManager object. It implements
- * IProjectManager interface and delegates methods execution to remote object
- * catching all RemoteExceptions.
- * 
- * @see salomon.engine.remote.project.IRemoteProjectManager
- * 
- */
+/** * Class is a sever side wrapper of IRemoteProjectManager object. It implements * IProjectManager interface and delegates methods execution to remote object * catching all RemoteExceptions. *  * @see salomon.engine.remote.project.IRemoteProjectManager */
 public final class ProjectManagerProxy implements IProjectManager
 {
 
 	private Map<IRemoteProject, IProject> _proxies = new HashMap<IRemoteProject, IProject>();
+
+	/**
+	 * 
+	 * @uml.property name="_remoteProjectManager"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private IRemoteProjectManager _remoteProjectManager;
 
 	/**

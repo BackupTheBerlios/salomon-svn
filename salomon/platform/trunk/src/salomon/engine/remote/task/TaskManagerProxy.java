@@ -32,19 +32,23 @@ import salomon.engine.task.ITaskManager;
 import salomon.engine.task.ITaskRunner;
 import salomon.platform.exception.PlatformException;
 
-/**
- * Class is a sever side wrapper of IRemoteTaskManager object. It implements
- * ITaskManager interface and delegates methods execution to remote object
- * catching all RemoteExceptions.
- * 
- * @see salomon.engine.remote.task.IRemoteTaskManager 
- */
+/** * Class is a sever side wrapper of IRemoteTaskManager object. It implements * ITaskManager interface and delegates methods execution to remote object * catching all RemoteExceptions. *  * @see salomon.engine.remote.task.IRemoteTaskManager */
 public final class TaskManagerProxy implements ITaskManager
 {
 	private Map<IRemoteTask, ITask> _proxies = new HashMap<IRemoteTask, ITask>();
 
+	/**
+	 * 
+	 * @uml.property name="_remoteTaskManager"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private IRemoteTaskManager _remoteTaskManager;
 
+	/**
+	 * 
+	 * @uml.property name="_taskRunnerProxy"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private TaskRunnerProxy _taskRunnerProxy;
 
 	/**

@@ -30,12 +30,16 @@ import salomon.engine.project.IProject;
 import salomon.engine.project.IProjectManager;
 import salomon.platform.exception.PlatformException;
 
-/**
- * Class representing remote instance of IProjectManager.
- */
+/** * Class representing remote instance of IProjectManager. */
 public final class RemoteProjectManager extends UnicastRemoteObject
 		implements IRemoteProjectManager
 {
+
+	/**
+	 * 
+	 * @uml.property name="_projectManager"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private IProjectManager _projectManager;
 
 	private Map<IProject, IRemoteProject> _proxies = new HashMap<IProject, IRemoteProject>();

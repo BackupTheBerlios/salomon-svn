@@ -54,18 +54,32 @@ import salomon.plugin.ISettings;
 
 import salomon.engine.platform.IManagerEngine;
 
-/**
- * Class used to manage with projects editing.
- * 
- */
+/** * Class used to manage with projects editing. */
 public final class ProjectManagerGUI
 {
+
+	/**
+	 * 
+	 * @uml.property name="_projectManager"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private IProjectManager _projectManager;
 
+	/**
+	 * 
+	 * @uml.property name="_parent"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private ControllerFrame _parent;
+
 
 	private JPanel _pnlProjectProperties;
 
+	/**
+	 * 
+	 * @uml.property name="_taskManagerGUI"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private TaskManagerGUI _taskManagerGUI;
 
 	private JTextField _txtProjectInfo;

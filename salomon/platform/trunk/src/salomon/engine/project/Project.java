@@ -27,16 +27,29 @@ import salomon.engine.task.TaskManager;
 
 import salomon.platform.exception.PlatformException;
 
-/**
- * Represents a project, it is an implementation of IProject interface.
- */
+/** * Represents a project, it is an implementation of IProject interface. */
 public final class Project implements IProject
 {
 
+	/**
+	 * 
+	 * @uml.property name="_dbManager"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private DBManager _dbManager;
 
+	/**
+	 * 
+	 * @uml.property name="_projectInfo"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private ProjectInfo _projectInfo;
 
+	/**
+	 * 
+	 * @uml.property name="_taskManager"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private ITaskManager _taskManager;
 
 	protected Project(ITaskManager taskManager, DBManager manager)

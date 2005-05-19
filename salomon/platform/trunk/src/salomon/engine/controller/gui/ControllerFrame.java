@@ -37,14 +37,15 @@ import salomon.engine.Config;
 import salomon.engine.Messages;
 import salomon.engine.Starter;
 
-/**
- * Class represents main program frame. All components are put on its content
- * pane.
- *  
- */
+/** * Class represents main program frame. All components are put on its content * pane. */
 public final class ControllerFrame extends JFrame
 {
 
+	/**
+	 * 
+	 * @uml.property name="_controllerPanel"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private ControllerPanel _controllerPanel;
 
 	

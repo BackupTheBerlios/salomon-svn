@@ -27,11 +27,14 @@ import salomon.engine.solution.ISolutionManager;
 import salomon.platform.IUniqueId;
 import salomon.platform.exception.PlatformException;
 
-/**
- * 
- */
 public final class SolutionManagerHolder implements ISolutionManager
 {
+
+	/**
+	 * 
+	 * @uml.property name="_currentSolutionManager"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private ISolutionManager _currentSolutionManager;
 
 	SolutionManagerHolder(ISolutionManager currentSolutionManager)

@@ -36,21 +36,36 @@ import salomon.engine.solution.ISolutionManager;
 import salomon.engine.task.ITaskManager;
 import salomon.platform.exception.PlatformException;
 
-/**
- * Class is a sever side wrapper of IRemoteManagerEngine object. It implements
- * IManagerEngine interface and delegates methods execution to remote object
- * catching all RemoteExceptions.
- * 
- * @see salomon.engine.remote.IRemoteManagerEngine
- */
+/** * Class is a sever side wrapper of IRemoteManagerEngine object. It implements * IManagerEngine interface and delegates methods execution to remote object * catching all RemoteExceptions. *  * @see salomon.engine.remote.IRemoteManagerEngine */
 public final class ManagerEngineProxy implements IManagerEngine
 {
+
+	/**
+	 * 
+	 * @uml.property name="_pluginManager"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private IPluginManager _pluginManager;
 
+	/**
+	 * 
+	 * @uml.property name="_projectManager"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private IProjectManager _projectManager;
 
+	/**
+	 * 
+	 * @uml.property name="_solutionManager"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private ISolutionManager _solutionManager;
 
+	/**
+	 * 
+	 * @uml.property name="_taskManager"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private ITaskManager _taskManager;
 
 	public ManagerEngineProxy(IRemoteManagerEngine remoteManagerEngine)

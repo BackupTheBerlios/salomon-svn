@@ -32,12 +32,16 @@ import org.apache.log4j.PropertyConfigurator;
 import salomon.engine.database.DBManager;
 import salomon.engine.database.queries.SQLSelect;
 
-/**
- * 
- */
 public class DataSetTest extends TestCase
 {
+
+	/**
+	 * 
+	 * @uml.property name="_manager"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	DBManager _manager;
+
 	/*
 	 * Class under test for ResultSet selectData(SQLSelect)
 	 */

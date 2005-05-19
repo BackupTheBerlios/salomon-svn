@@ -27,13 +27,15 @@ import salomon.engine.solution.ISolution;
 
 import salomon.platform.exception.PlatformException;
 
-/**
- * Holds projectManager of current client. It is used by ManagerEngineHolder to
- * switch between connected clients.
- * 
- */
+/** * Holds projectManager of current client. It is used by ManagerEngineHolder to * switch between connected clients. */
 final class ProjectManagerHolder implements IProjectManager
 {
+
+	/**
+	 * 
+	 * @uml.property name="_currentProjectManager"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private IProjectManager _currentProjectManager;
 
 	/**

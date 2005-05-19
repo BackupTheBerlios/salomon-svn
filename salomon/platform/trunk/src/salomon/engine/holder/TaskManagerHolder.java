@@ -27,12 +27,15 @@ import salomon.engine.task.ITaskManager;
 import salomon.engine.task.ITaskRunner;
 import salomon.platform.exception.PlatformException;
 
-/**
- * Holds taskManager of current client.
- * It is used by ManagerEngineHolder to switch between connected clients.
- */
+/** * Holds taskManager of current client. * It is used by ManagerEngineHolder to switch between connected clients. */
 final class TaskManagerHolder implements ITaskManager
 {
+
+	/**
+	 * 
+	 * @uml.property name="_currentTaskManager"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private ITaskManager _currentTaskManager;
 
 	/**

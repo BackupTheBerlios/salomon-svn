@@ -27,13 +27,18 @@ import java.rmi.server.UnicastRemoteObject;
 import salomon.engine.task.ITaskRunner;
 import salomon.platform.exception.PlatformException;
 
-/**
- * @see salomon.engine.task.ITaskRunner
- */
+/** * @see salomon.engine.task.ITaskRunner */
 public final class RemoteTaskRunner extends UnicastRemoteObject
 		implements IRemoteTaskRunner
 {
-    private ITaskRunner _taskRunner;
+
+	/**
+	 * 
+	 * @uml.property name="_taskRunner"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
+	private ITaskRunner _taskRunner;
+
     
     /**
 	 * 

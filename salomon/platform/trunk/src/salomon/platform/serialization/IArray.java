@@ -21,11 +21,20 @@
 
 package salomon.platform.serialization;
 
-/**
- * 
- */
 public interface IArray extends IObject
 {
+
+	/**
+	 * 
+	 * @uml.property name="value"
+	 */
 	void setValue(IObject[] value);
-    IObject[] getValue();
+
+	/**
+	 * 
+	 * @uml.property name="value"
+	 * @uml.associationEnd multiplicity="(0 -1)"
+	 */
+	IObject[] getValue();
+
 }

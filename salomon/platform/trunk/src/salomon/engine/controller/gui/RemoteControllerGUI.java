@@ -29,15 +29,22 @@ import salomon.engine.platform.IManagerEngine;
 import salomon.engine.remote.IRemoteController;
 import salomon.engine.remote.ManagerEngineProxy;
 
-/**
- * Class is graphic representation of client controllers connected to server.
- * It is used to display them on the list of connected clients. 
- *  
- */
+/** * Class is graphic representation of client controllers connected to server. * It is used to display them on the list of connected clients. */
 public final class RemoteControllerGUI
 {
+
+	/**
+	 * 
+	 * @uml.property name="_managerEngine"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private IManagerEngine _managerEngine;
 
+	/**
+	 * 
+	 * @uml.property name="_remoteController"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private IRemoteController _remoteController;
 
 	/**

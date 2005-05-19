@@ -31,11 +31,7 @@ import java.util.jar.JarFile;
 
 import org.apache.log4j.Logger;
 
-/**
- * Class represents class loader used by application to load plugins. It has to
- * be used to download plugins from remote locations and create an instance of
- * given plugin. This intstance will be used to execute task.
- */
+/** * Class represents class loader used by application to load plugins. It has to * be used to download plugins from remote locations and create an instance of * given plugin. This intstance will be used to execute task. */
 final class PluginClassLoader extends URLClassLoader
 {
 	PluginClassLoader() throws MalformedURLException
@@ -79,6 +75,11 @@ final class PluginClassLoader extends URLClassLoader
 		return _instance;
 	}
 
+	/**
+	 * 
+	 * @uml.property name="_instance"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private static PluginClassLoader _instance;
 
 	private static final Logger LOGGER = Logger.getLogger(PluginClassLoader.class);

@@ -38,15 +38,24 @@ import salomon.util.gui.Utils;
 import salomon.engine.platform.IManagerEngine;
 import salomon.engine.platform.ManagerEngine;
 
-/**
- * Class starts application execution.
- * 
- */
+/** * Class starts application execution. */
 public final class Starter
 {
+
+	/**
+	 * 
+	 * @uml.property name="_contoroller"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private IController _contoroller;
 
+	/**
+	 * 
+	 * @uml.property name="_managerEngine"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private IManagerEngine _managerEngine;
+
 
 	// private ProjectManager _projectManager = null;
 
@@ -196,6 +205,11 @@ public final class Starter
 		getInstance().startServerImpl();
 	}
 
+	/**
+	 * 
+	 * @uml.property name="_instance"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private static Starter _instance;
 
 	private static final Logger LOGGER = Logger.getLogger(Starter.class);

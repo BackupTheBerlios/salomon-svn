@@ -26,11 +26,14 @@ import org.apache.log4j.Logger;
 import salomon.engine.platform.IManagerEngine;
 import salomon.engine.platform.ManagerEngine;
 
-/**
- * 
- */
 public final class LibraryController implements IController
 {
+
+	/**
+	 * 
+	 * @uml.property name="_managerEngine"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private IManagerEngine _managerEngine;
 
 	public LibraryController()

@@ -30,12 +30,15 @@ import org.apache.log4j.PropertyConfigurator;
 
 import salomon.engine.database.DBManager;
 
-/**
- * 
- */
 public class SQLDeleteTest extends TestCase
 {
-    private DBManager _manager;
+
+	/**
+	 * 
+	 * @uml.property name="_manager"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
+	private DBManager _manager;
 
     public void testGetQuery1()
     {

@@ -31,13 +31,15 @@ import salomon.engine.solution.ISolution;
 import salomon.engine.solution.ISolutionManager;
 import salomon.platform.exception.PlatformException;
 
-/**
- * 
- */
 public final class SolutionManagerProxy implements ISolutionManager
 {
 	private Map<IRemoteSolution, ISolution> _remotes = new HashMap<IRemoteSolution, ISolution>();
 
+	/**
+	 * 
+	 * @uml.property name="_remoteSolutionManager"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private IRemoteSolutionManager _remoteSolutionManager;
 
 	/**

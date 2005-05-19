@@ -26,13 +26,15 @@ import java.util.EventObject;
 import salomon.engine.remote.CentralController;
 import salomon.engine.remote.IRemoteController;
 
-
-/**
- * An event used to notify about client's connection or disconnection from
- * server.
- */
+/** * An event used to notify about client's connection or disconnection from * server. */
 public final class RemoteControllerEvent extends EventObject
 {
+
+	/**
+	 * 
+	 * @uml.property name="_controller"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private IRemoteController _controller;
 
 	/**

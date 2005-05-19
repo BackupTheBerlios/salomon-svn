@@ -37,6 +37,12 @@ import salomon.plugin.IPlugin;
 
 public class PluginManagerTest extends TestCase
 {
+
+	/**
+	 * 
+	 * @uml.property name="pluginManager"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private PluginManager pluginManager;
 
 	public void testGetPlugins()

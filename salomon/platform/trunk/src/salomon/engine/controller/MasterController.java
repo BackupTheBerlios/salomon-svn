@@ -71,38 +71,85 @@ import salomon.engine.remote.event.IMasterControllerListener;
 import salomon.engine.remote.event.RemoteControllerEvent;
 import salomon.util.gui.Utils;
 
-/**
- * Server side implementation of IController interface.
- * 
- */
+/** * Server side implementation of IController interface. */
 public final class MasterController implements IController
 {
 
+	/**
+	 * 
+	 * @uml.property name="_actionManager"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private ActionManager _actionManager;
+
 
 	private JPanel _contentPane;
 
+	/**
+	 * 
+	 * @uml.property name="_controllerPanel"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private ControllerPanel _controllerPanel;
 
+	/**
+	 * 
+	 * @uml.property name="_guiMenu"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private MasterGUIMenu _guiMenu;
 
+	/**
+	 * 
+	 * @uml.property name="_managerEngineHolder"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private ManagerEngineHolder _managerEngineHolder;
 
+	/**
+	 * 
+	 * @uml.property name="_masterController"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private CentralController _masterController;
+
 
 	private JMenuBar _menuBar;
 
+	/**
+	 * 
+	 * @uml.property name="_pluginMangerGUI"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private PluginMangerGUI _pluginMangerGUI;
 
+	/**
+	 * 
+	 * @uml.property name="_projectManagerGUI"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private ProjectManagerGUI _projectManagerGUI;
+
 
 	private Registry _registry;
 
+	/**
+	 * 
+	 * @uml.property name="_remoteControllerPanel"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private RemoteControllerPanel _remoteControllerPanel;
+
 
 	private JSplitPane _splitPane;
 
+	/**
+	 * 
+	 * @uml.property name="_taskManagerGUI"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private TaskManagerGUI _taskManagerGUI;
+
 
 	private JToolBar _toolBar;
 
@@ -296,6 +343,11 @@ public final class MasterController implements IController
 	private final static class MasterGUIMenu
 	{
 
+		/**
+		 * 
+		 * @uml.property name="_actionManager"
+		 * @uml.associationEnd multiplicity="(0 1)"
+		 */
 		private ActionManager _actionManager;
 
 		private JButton _btnNew;

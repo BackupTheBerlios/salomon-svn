@@ -21,9 +21,7 @@
 
 package salomon.engine.platform.data.attribute;
 
-/**
- *  Not used yet.
- */
+/** * Not used yet. */
 class Attribute
 {
 	///////////////////////////////////////
@@ -51,7 +49,10 @@ class Attribute
 	///////////////////////////////////////
 	// associations
 	/**
-	 *  
+	 * 
+	 * @uml.property name="attributeManager"
+	 * @uml.associationEnd multiplicity="(0 1)"
 	 */
 	public AttributeManager attributeManager;
+
 } // end Attribute

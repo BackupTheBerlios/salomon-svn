@@ -49,22 +49,40 @@ import salomon.plugin.ISettings;
 
 import salomon.engine.platform.IManagerEngine;
 
-/**
- * An implemetation of IProjectManager interface. Class manages with projects
- * editing.
- */
+/** * An implemetation of IProjectManager interface. Class manages with projects
+ * editing. */
 public final class ProjectManager implements IProjectManager
 {
+
+	/**
+	 * 
+	 * @uml.property name="_currentProject"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	// current project has to be kept
 	// because it is possible to switch between projectManagers
 	// so currentProject cannot be kept in GUI
-
 	private IProject _currentProject = null;
 
+	/**
+	 * 
+	 * @uml.property name="_dbManager"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private DBManager _dbManager;
 
+	/**
+	 * 
+	 * @uml.property name="_managerEngine"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private IManagerEngine _managerEngine = null;
 
+	/**
+	 * 
+	 * @uml.property name="_solution"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private ISolution _solution;
 
 	public ProjectManager(IManagerEngine managerEngine, DBManager manager)

@@ -33,6 +33,12 @@ import salomon.engine.platform.ManagerEngine;
 
 public class ProjectManagerTest extends TestCase
 {
+
+	/**
+	 * 
+	 * @uml.property name="_projectManager"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private ProjectManager _projectManager;
 
 	public void testCreateProject() throws Exception 

@@ -31,14 +31,21 @@ import salomon.engine.solution.ISolution;
 import salomon.platform.IDataEngine;
 import salomon.platform.exception.PlatformException;
 
-
-/**
- * 
- */
 public final class SolutionProxy implements ISolution
 {
+
+	/**
+	 * 
+	 * @uml.property name="_projectManager"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private IProjectManager _projectManager;
-    
+
+	/**
+	 * 
+	 * @uml.property name="_remoteSolution"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private IRemoteSolution _remoteSolution;
 
 	/**

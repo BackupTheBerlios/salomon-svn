@@ -31,17 +31,36 @@ import salomon.engine.platform.data.tree.TreeManager;
 import salomon.platform.IDataEngine;
 import salomon.platform.data.tree.ITreeManager;
 
-/**
- *  Class holds  DataSetManager, RuleSetManager and AttributeManager instances.  
- */
+/** * Class holds  DataSetManager, RuleSetManager and AttributeManager instances. */
 public final class DataEngine implements IDataEngine
 {
+
+	/**
+	 * 
+	 * @uml.property name="_attributeManager"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private AttributeManager _attributeManager;
 
+	/**
+	 * 
+	 * @uml.property name="_dataSetManager"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private DataSetManager _dataSetManager;
 
+	/**
+	 * 
+	 * @uml.property name="_ruleSetManager"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private RuleSetManager _ruleSetManager;
 
+	/**
+	 * 
+	 * @uml.property name="_treeManager"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private TreeManager _treeManager;
 
 	public DataEngine()

@@ -28,13 +28,16 @@ import salomon.engine.plugin.IPluginManager;
 import salomon.platform.exception.PlatformException;
 import salomon.plugin.IPlugin;
 
-/**
- * Class representing remote instance of IPluginManager.
- * @see salomon.engine.plugin.IPluginManager
- */
+/** * Class representing remote instance of IPluginManager. * @see salomon.engine.plugin.IPluginManager */
 public final class RemotePluginManager extends UnicastRemoteObject
 		implements IRemotePluginManager
 {
+
+	/**
+	 * 
+	 * @uml.property name="_pluginManager"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private IPluginManager _pluginManager;
 
 	/**

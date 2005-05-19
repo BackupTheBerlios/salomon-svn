@@ -39,24 +39,44 @@ import salomon.plugin.ISettings;
 import salomon.engine.platform.Environment;
 import salomon.engine.platform.IManagerEngine;
 
-/**
- * An implemetation of ITaskManager interface. Class manages with tasks editing
- * and executing.
- * 
- */
+/** * An implemetation of ITaskManager interface. Class manages with tasks editing * and executing. */
 public final class TaskManager implements ITaskManager
 {
 
+	/**
+	 * 
+	 * @uml.property name="_dataEngine"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private IDataEngine _dataEngine;
 
+	/**
+	 * 
+	 * @uml.property name="_dbManager"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private DBManager _dbManager;
 
+	/**
+	 * 
+	 * @uml.property name="_environment"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private Environment _environment;
 
+/**
+ * 
+ * @uml.property name="_managerEngine"
+ * @uml.associationEnd multiplicity="(0 1)"
+ */
 //	private IProject _project;
-	
-	private IManagerEngine _managerEngine;
+private IManagerEngine _managerEngine;
 
+	/**
+	 * 
+	 * @uml.property name="_taskEngine"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private TaskEngine _taskEngine;
 
 	private LinkedList<ITask> _tasks;

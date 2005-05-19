@@ -37,20 +37,37 @@ import salomon.engine.remote.task.IRemoteTaskManager;
 import salomon.engine.remote.task.RemoteTaskManager;
 import salomon.platform.exception.PlatformException;
 
-/**
- * Class representing remote instance of IManagerEngine.
- * 
- * @see salomon.engine.platform.IManagerEngine
- */
+/** * Class representing remote instance of IManagerEngine. *  * @see salomon.engine.platform.IManagerEngine */
 public final class RemoteManagerEngine extends UnicastRemoteObject
 		implements IRemoteManagerEngine
 {
+
+	/**
+	 * 
+	 * @uml.property name="_remotePluginManager"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private IRemotePluginManager _remotePluginManager;
 
+	/**
+	 * 
+	 * @uml.property name="_remoteProjectManager"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private IRemoteProjectManager _remoteProjectManager;
 
+	/**
+	 * 
+	 * @uml.property name="_remoteSolutionManager"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private IRemoteSolutionManager _remoteSolutionManager;
 
+	/**
+	 * 
+	 * @uml.property name="_remoteTaskManager"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private IRemoteTaskManager _remoteTaskManager;
 
 	/**

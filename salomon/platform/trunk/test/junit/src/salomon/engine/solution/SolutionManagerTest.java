@@ -28,7 +28,14 @@ import org.apache.log4j.PropertyConfigurator;
 import salomon.engine.platform.ManagerEngine;
 
 public class SolutionManagerTest extends TestCase {
-    private SolutionManager _solutionManager ;
+
+	/**
+	 * 
+	 * @uml.property name="_solutionManager"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
+	private SolutionManager _solutionManager;
+
     
     public static void main(String[] args) {
         junit.textui.TestRunner.run(SolutionManagerTest.class);

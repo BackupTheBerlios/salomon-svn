@@ -32,7 +32,13 @@ import salomon.engine.database.DBManager;
 
 public class SQLInsertTest extends TestCase
 {
-    private DBManager _manager;
+
+	/**
+	 * 
+	 * @uml.property name="_manager"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
+	private DBManager _manager;
 
     //    after succesful test this method should not be called again
     //    bacause causes errors in method which uses generator

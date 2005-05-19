@@ -63,17 +63,29 @@ import salomon.plugin.ISettingComponent;
 import salomon.plugin.ISettings;
 import salomon.util.gui.Utils;
 
-/**
- * Class used to manage with tasks editing. It enables creating and configuring
- * tasks and a queue of tasks.
- */
+/** * Class used to manage with tasks editing. It enables creating and configuring * tasks and a queue of tasks. */
 public final class TaskManagerGUI
 {
 
+	/**
+	 * 
+	 * @uml.property name="_actionManager"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private ActionManager _actionManager;
 
+	/**
+	 * 
+	 * @uml.property name="_taskManager"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private ITaskManager _taskManager;
 
+	/**
+	 * 
+	 * @uml.property name="_parent"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private ControllerFrame _parent;
 
 	private MouseListener _popupListener;

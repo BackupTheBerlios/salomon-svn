@@ -30,44 +30,56 @@ import salomon.plugin.IPlugin;
 import salomon.plugin.IResult;
 import salomon.plugin.ISettings;
 
-/**
- * 
- * Interface for tasks.
- * 
- */
+/** * Interface for tasks. */
 public interface ITask
 {
 	/**
 	 * @return Returns the info.
 	 */
 	IInfo getInfo() throws PlatformException;
+
 	/**
 	 * @return Returns the _plugin.
+	 * 
+	 * @uml.property name="plugin"
+	 * @uml.associationEnd multiplicity="(0 1)"
 	 */
 	ILocalPlugin getPlugin() throws PlatformException;
 
 	/**
 	 * @return Returns the _result.
+	 * 
+	 * @uml.property name="result"
+	 * @uml.associationEnd multiplicity="(0 1)"
 	 */
 	IResult getResult() throws PlatformException;
 
 	/**
 	 * @return Returns the _settings.
+	 * 
+	 * @uml.property name="settings"
+	 * @uml.associationEnd multiplicity="(0 1)"
 	 */
 	ISettings getSettings() throws PlatformException;
 
 	/**
 	 * @param plugin The plugin to set.
+	 * 
+	 * @uml.property name="plugin"
 	 */
 	void setPlugin(ILocalPlugin plugin) throws PlatformException;
 
 	/**
 	 * @param result The result to set.
+	 * 
+	 * @uml.property name="result"
 	 */
 	void setResult(IResult result) throws PlatformException;
 
 	/**
 	 * @param settings The settings to set.
+	 * 
+	 * @uml.property name="settings"
 	 */
 	void setSettings(ISettings settings) throws PlatformException;
 

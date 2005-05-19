@@ -32,16 +32,15 @@ import salomon.platform.IUniqueId;
 import salomon.platform.exception.PlatformException;
 import salomon.plugin.IPlugin;
 
-/**
- * Class is a sever side wrapper of IRemotePluginManager object. It implements
- * IPluginManager interface and delegates methods execution to remote object
- * catching all RemoteExceptions.
- * 
- * @see salomon.engine.remote.plugin.IRemotePluginManager
- *  
- */
+/** * Class is a sever side wrapper of IRemotePluginManager object. It implements * IPluginManager interface and delegates methods execution to remote object * catching all RemoteExceptions. *  * @see salomon.engine.remote.plugin.IRemotePluginManager */
 public final class PluginManagerProxy implements IPluginManager
 {
+
+	/**
+	 * 
+	 * @uml.property name="_remotePluginManager"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private IRemotePluginManager _remotePluginManager;
 
 	/**

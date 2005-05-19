@@ -35,11 +35,15 @@ import salomon.engine.database.queries.SQLUpdate;
 import salomon.platform.IInfo;
 import salomon.platform.exception.PlatformException;
 
-/**
- * Class represents plugin description.
- */
+/** * Class represents plugin description. */
 public class PluginInfo implements IInfo, Serializable
 {
+
+	/**
+	 * 
+	 * @uml.property name="_dbManager"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private DBManager _dbManager;
 
 	private String _info;

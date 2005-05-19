@@ -34,11 +34,15 @@ import salomon.engine.database.queries.SQLSelect;
 import salomon.platform.IUniqueId;
 import salomon.platform.exception.PlatformException;
 
-/**
- * Class manager available plugins.
- */
+/** * Class manager available plugins. */
 public final class PluginManager implements IPluginManager
 {
+
+	/**
+	 * 
+	 * @uml.property name="_dbManager"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private DBManager _dbManager;
 
 	private LinkedList<ILocalPlugin> _plugins;

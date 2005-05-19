@@ -56,17 +56,31 @@ import salomon.engine.plugin.PluginManager;
 import salomon.platform.exception.PlatformException;
 import salomon.util.gui.Utils;
 
-/**
- * 
- */
 public final class PluginMangerGUI
 {
+
+	/**
+	 * 
+	 * @uml.property name="_actionManager"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private ActionManager _actionManager;
+
 
 	private JComponent _editPluginPanel;
 
+	/**
+	 * 
+	 * @uml.property name="_pluginManager"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private IPluginManager _pluginManager;
 
+	/**
+	 * 
+	 * @uml.property name="_parent"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private ControllerFrame _parent;
 
 	private JList _pluginList;

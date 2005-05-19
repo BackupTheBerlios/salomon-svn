@@ -30,18 +30,22 @@ import salomon.engine.remote.task.TaskManagerProxy;
 import salomon.engine.task.ITaskManager;
 import salomon.platform.exception.PlatformException;
 
-
-/**
- * Class is a sever side wrapper of IRemoteProject object. It implements
- * IProject interface and delegates methods execution to remote object catching
- * all RemoteExceptions.
- * 
- * @see salomon.engine.remote.project.IRemoteProject
- */
+/** * Class is a sever side wrapper of IRemoteProject object. It implements * IProject interface and delegates methods execution to remote object catching * all RemoteExceptions. *  * @see salomon.engine.remote.project.IRemoteProject */
 public final class ProjectProxy implements IProject
 {
+
+	/**
+	 * 
+	 * @uml.property name="_remoteProject"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private IRemoteProject _remoteProject;
 
+	/**
+	 * 
+	 * @uml.property name="_taskManagerProxy"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private ITaskManager _taskManagerProxy;
 
 	/**

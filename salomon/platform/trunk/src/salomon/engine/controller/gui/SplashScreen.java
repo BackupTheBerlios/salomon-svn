@@ -40,10 +40,7 @@ import salomon.engine.Messages;
 import salomon.engine.Resources;
 import salomon.engine.Version;
 
-
-/**
- * Class represents splash screen.
- */
+/** * Class represents splash screen. */
 public final class SplashScreen
 {
 	private String _resourcesDir = null;
@@ -188,6 +185,11 @@ public final class SplashScreen
 		}
 	}
 
+	/**
+	 * 
+	 * @uml.property name="_instance"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private static SplashScreen _instance = null;
 
 	private static final Logger LOGGER = Logger.getLogger(SplashScreen.class);

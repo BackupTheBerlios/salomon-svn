@@ -56,13 +56,17 @@ import salomon.util.gui.Utils;
 
 import salomon.platform.exception.PlatformException;
 
-/**
- * Class used to manage with projects editing.
- * 
- */
+/** * Class used to manage with projects editing. */
 public final class SolutionManagerGUI
 {
+
+	/**
+	 * 
+	 * @uml.property name="_actionManager"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private ActionManager _actionManager;
+
 
 	private JButton _btnEdit;
 
@@ -80,6 +84,11 @@ public final class SolutionManagerGUI
 
 	private JPanel _pnlSolutionProperties;
 
+	/**
+	 * 
+	 * @uml.property name="_solutionManager"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private ISolutionManager _solutionManager;
 
 	private JTable _tblSolutionList;

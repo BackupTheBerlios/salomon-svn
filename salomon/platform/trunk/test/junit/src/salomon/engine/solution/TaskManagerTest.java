@@ -37,7 +37,14 @@ import salomon.platform.exception.PlatformException;
 
 public class TaskManagerTest extends TestCase {
 
-    private TaskManager _taskManager;  
+	/**
+	 * 
+	 * @uml.property name="_taskManager"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
+	private TaskManager _taskManager;
+
+  
 
     public static void main(String[] args) {
         junit.textui.TestRunner.run(TaskManagerTest.class);

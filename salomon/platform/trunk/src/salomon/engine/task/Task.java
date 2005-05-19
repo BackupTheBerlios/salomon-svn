@@ -38,20 +38,44 @@ import salomon.plugin.ISettings;
 
 import salomon.engine.platform.serialization.XMLSerializer;
 
-/**
- * Represents task which may be executed. It is an implementation of ITask
- * interface.
- */
+/** * Represents task which may be executed. It is an implementation of ITask
+ * interface. */
 public final class Task implements ITask
 {
+
+	/**
+	 * 
+	 * @uml.property name="_dbManager"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private DBManager _dbManager;
 
+	/**
+	 * 
+	 * @uml.property name="_plugin"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private ILocalPlugin _plugin;
 
+	/**
+	 * 
+	 * @uml.property name="_result"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private IResult _result;
 
+	/**
+	 * 
+	 * @uml.property name="_settings"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private ISettings _settings;
 
+	/**
+	 * 
+	 * @uml.property name="_taskInfo"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private TaskInfo _taskInfo;
 
 	protected Task(DBManager manager)
