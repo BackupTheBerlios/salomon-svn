@@ -21,10 +21,20 @@
 
 package salomon.platform.data.tree;
 
+import java.util.Date;
+
 /**
  * 
  */
 public interface ITree
 {
-	//TODO: add methods
+    int getId();
+    String getName();
+    String getInfo();
+    Date getCreateDate();
+    IDataSource getDataSource();
+	INode getRoot();
+
+
+    
 }
