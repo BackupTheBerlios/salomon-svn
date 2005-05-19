@@ -21,8 +21,12 @@
 
 package salomon.engine.platform.data.tree;
 
+import salomon.engine.solution.ISolution;
+
+import salomon.platform.data.tree.IDataSource;
 import salomon.platform.data.tree.ITree;
 import salomon.platform.data.tree.ITreeManager;
+import salomon.platform.exception.PlatformException;
 
 /**
  * 
@@ -30,13 +34,45 @@ import salomon.platform.data.tree.ITreeManager;
 public final class TreeManager implements ITreeManager
 {
 
-	/**
-	 * @see salomon.platform.data.tree.ITreeManager#getTrees()
-	 */
-	public ITree[] getTrees()
-	{
-		throw new UnsupportedOperationException(
-				"Method addRuleSet() not implemented yet!");
-	}
+    public void addTree(ITree tree) throws PlatformException {
+        throw new UnsupportedOperationException("Method addTree() not implemented yet!");
+    }
+
+    public void addTreeDataSource(IDataSource dataSource) throws PlatformException {
+        throw new UnsupportedOperationException("Method addTreeDataSource() not implemented yet!");
+    }
+
+    public IDataSource[] getAllTreeDataSources() throws PlatformException {
+        throw new UnsupportedOperationException("Method getAllTreeDataSources() not implemented yet!");
+    }
+
+    public ITree[] getAllTrees() throws PlatformException {
+        throw new UnsupportedOperationException("Method getAllTrees() not implemented yet!");
+    }
+
+    public ITree getTree(int treeId) throws PlatformException {
+        throw new UnsupportedOperationException("Method getTree() not implemented yet!");
+    }
+
+    public IDataSource getTreeDataSource(int treeDataSourceId) throws PlatformException {
+        throw new UnsupportedOperationException("Method getTreeDataSource() not implemented yet!");
+    }
+
+    public IDataSource[] getTreeDataSources(ISolution solution) throws PlatformException {
+        throw new UnsupportedOperationException("Method getTreeDataSources() not implemented yet!");
+    }
+
+    public ITree[] getTrees(ISolution solution) throws PlatformException {
+        throw new UnsupportedOperationException("Method getTrees() not implemented yet!");
+    }
+
+    public void removeTree(ITree tree) throws PlatformException {
+        throw new UnsupportedOperationException("Method removeTree() not implemented yet!");
+    }
+
+    public void removeTreeDataSource(IDataSource dataSource) throws PlatformException {
+        throw new UnsupportedOperationException("Method removeTreeDataSource() not implemented yet!");
+    }
+
 
 }
