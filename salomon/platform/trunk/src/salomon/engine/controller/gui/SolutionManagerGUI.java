@@ -317,7 +317,7 @@ public final class SolutionManagerGUI
 		String host = solution.getInfo().getHost();
 		String path = solution.getInfo().getPath();
 		String user = solution.getInfo().getUser();
-		String pass = solution.getInfo().getPass();
+		String pass = solution.getInfo().getPasswd();
 		_txtSolutionName.setText(name == null ? "" : name);
 		_txtSolutionInfo.setText(info == null ? "" : info);
 		_txtHostname.setText(host == null ? "" : host);
@@ -336,7 +336,7 @@ public final class SolutionManagerGUI
 			solution.getInfo().setHost(_txtHostname.getText());
 			solution.getInfo().setPath(_txtDBPath.getText());
 			solution.getInfo().setUser(_txtUsername.getText());
-			solution.getInfo().setPass(_txtPasswd.getText());
+			solution.getInfo().setPasswd(_txtPasswd.getText());
 			_solutionManager.addSolution(iSolution);
 		}
 	}

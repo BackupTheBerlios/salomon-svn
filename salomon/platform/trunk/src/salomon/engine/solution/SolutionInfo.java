@@ -53,7 +53,7 @@ public final class SolutionInfo implements IInfo
 	
 	private String _user;
 	
-	private String _pass;
+	private String _passwd;
 
 	private int _solutionID = 0;
 	
@@ -93,7 +93,7 @@ public final class SolutionInfo implements IInfo
 		_host = resultSet.getString("hostname");
 		_path = resultSet.getString("db_path");
 		_user = resultSet.getString("username");
-		_path = resultSet.getString("passwd");		
+		_passwd = resultSet.getString("passwd");		
 	}
 
 	/**
@@ -123,8 +123,8 @@ public final class SolutionInfo implements IInfo
 		if (_user != null) {
 			update.addValue("username", _user);
 		}
-		if (_pass != null) {
-			update.addValue("passwd", _pass);
+		if (_passwd != null) {
+			update.addValue("passwd", _passwd);
 		}		
 		update.addValue("lm_date", new Date(System.currentTimeMillis()));
 		_solutionID = _dbManager.insertOrUpdate(update, "solution_id",
@@ -180,9 +180,9 @@ public final class SolutionInfo implements IInfo
 	/**
 	 * @return Returns the pass.
 	 */
-	public String getPass()
+	public String getPasswd()
 	{
-		return _pass;
+		return _passwd;
 	}
 	
 	/**
@@ -228,9 +228,9 @@ public final class SolutionInfo implements IInfo
 	/**
 	 * @param pass The pass to set.
 	 */
-	public void setPass(String pass)
+	public void setPasswd(String pass)
 	{
-		_pass = pass;
+		_passwd = pass;
 	}
 
 	
@@ -244,7 +244,7 @@ public final class SolutionInfo implements IInfo
 
 	public String toString()
 	{
-		return "[" + _solutionID + ", " + _name + ", " + _info + ", " + _host + ", " + _path +", " + _user +", " + _pass +"]";
+		return "[" + _solutionID + ", " + _name + ", " + _info + ", " + _host + ", " + _path +", " + _user +", " + _passwd +"]";
 	}
 	
 	public static final String TABLE_NAME = "solutions";

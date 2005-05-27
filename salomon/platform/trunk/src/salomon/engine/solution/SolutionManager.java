@@ -121,7 +121,6 @@ public final class SolutionManager implements ISolutionManager
 		SQLSelect select = new SQLSelect();
 		select.addTable(SolutionInfo.TABLE_NAME);
 		select.addCondition("solution_id =", id);
-		List<IProject> projects = null;
 		ResultSet resultSet = null;
 		try {
 			resultSet = _dbManager.select(select);
@@ -134,25 +133,15 @@ public final class SolutionManager implements ISolutionManager
 				LOGGER.warn("TOO MANY ROWS");
 			}
 			resultSet.close();
-
-			// adding tasks
-		//	projects = getProjectsForSolution(id);
 		} catch (Exception e) {
 			LOGGER.fatal("", e);
 			throw new DBException(e.getLocalizedMessage());
 		}
 
-		// clearing old tasks
-		//ProjectManager projectManager = (ProjectManager) _managerEngine.getProjectManager();
-	//	taskManager.clearTaskList();
-	//	taskManager.addAllTasks(tasks);
 		LOGGER.debug("solution: " + solution);
-	//	for (IProject project : projectManager.getProjects()) {
-	//		LOGGER.debug("projects: " + project);
-	//	}
 		LOGGER.info("Solution successfully loaded.");
 
-		// setting current project
+		// setting current solution
 		_currentSolution = solution;
 		return _currentSolution;
 	}
