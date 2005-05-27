@@ -32,12 +32,30 @@ import salomon.platform.exception.PlatformException;
 public interface ISolutionManager
 {
 	/**
-	 * Returns all solutions.
+	 * Stores the solution in the database.
+	 * @see #createSolution()
 	 * 
-	 * @return The array of all solutions
-     * @throws PlatformException
+	 * @param solution The solution
+	 * @throws PlatformException
 	 */
-	ISolution[] getSolutions() throws PlatformException;
+	void addSolution(ISolution solution) throws PlatformException;
+
+	/**
+	 * Creates an empty solution, but doesn't add it to database.
+	 * Use <code>addSolution</code> method to store this solution in the database. 
+	 * @see #addSolution(ISolution)
+	 * @return The empty solution
+	 * @throws PlatformException
+	 */
+	ISolution createSolution() throws PlatformException;
+
+	/**
+	 * Returns current solution.
+	 * 
+	 * @return
+	 * @throws PlatformException
+	 */
+	ISolution getCurrentSolution() throws PlatformException;
 
 	/**
 	 * Returns solution with given identifier.
@@ -46,31 +64,13 @@ public interface ISolutionManager
 	 * @return The solution
 	 * @throws PlatformException
 	 */
-	ISolution getSolution(int id) throws PlatformException;
+	ISolution getSolution(IUniqueId id) throws PlatformException;
 
 	/**
-	 * Creates an empty solution, but doesn't add it to database.
-     * Use <code>addSolution</code> method to store this solution in the database. 
-	 * @see #addSolution(ISolution)
-	 * @return The empty solution
-	 * @throws PlatformException
-	 */
-	ISolution createSolution() throws PlatformException;
-
-    /**
-     * Stores the solution in the database.
-     * @see #createSolution()
-     * 
-     * @param solution The solution
-     * @throws PlatformException
-     */
-	void addSolution(ISolution solution) throws PlatformException;
-	
-	/**
-	 * Returns current solution.
+	 * Returns all solutions.
 	 * 
-	 * @return
+	 * @return The array of all solutions
 	 * @throws PlatformException
 	 */
-	ISolution getCurrentSolution() throws PlatformException;
+	ISolution[] getSolutions() throws PlatformException;
 }

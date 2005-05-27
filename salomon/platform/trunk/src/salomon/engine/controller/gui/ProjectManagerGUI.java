@@ -21,7 +21,6 @@
 
 package salomon.engine.controller.gui;
 
-import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.util.Collection;
 import java.util.LinkedList;
@@ -48,13 +47,14 @@ import salomon.engine.task.ITaskManager;
 
 import salomon.util.gui.Utils;
 
+import salomon.platform.IUniqueId;
 import salomon.platform.exception.PlatformException;
 
 import salomon.plugin.ISettings;
 
-import salomon.engine.platform.IManagerEngine;
-
-/** * Class used to manage with projects editing. */
+/**
+ * Class used to manage with projects editing.
+ */
 public final class ProjectManagerGUI
 {
 
@@ -72,7 +72,6 @@ public final class ProjectManagerGUI
 	 */
 	private ControllerFrame _parent;
 
-
 	private JPanel _pnlProjectProperties;
 
 	/**
@@ -85,14 +84,14 @@ public final class ProjectManagerGUI
 	private JTextField _txtProjectInfo;
 
 	private JTextField _txtProjectName;
-	
+
 	private JFrame _projectViewerFrame;
 
 	/**
 	 */
 	public ProjectManagerGUI(IProjectManager projectManager)
-	{	
-		_projectManager = projectManager;		
+	{
+		_projectManager = projectManager;
 	}
 
 	public void newProject()
@@ -108,23 +107,30 @@ public final class ProjectManagerGUI
 			Utils.showErrorMessage("Cannot create project");
 		}
 	}
-	
+
 	public void viewProjects()
 	{
 		if (_projectViewerFrame == null) {
 			_projectViewerFrame = new JFrame(Messages.getString("TIT_PROJECTS"));
-			_projectViewerFrame.getContentPane().add(new ProjectViewer(((ProjectManager)_projectManager).getDbManager()));
-			_projectViewerFrame.pack();				
-		}		
+			_projectViewerFrame.getContentPane().add(
+					new ProjectViewer(
+							((ProjectManager) _projectManager).getDbManager()));
+			_projectViewerFrame.pack();
+		}
 		_projectViewerFrame.setVisible(true);
 	}
-	
+
 	public void openProject()
 	{
 		try {
-			int projectId = chooseProject();
+			final int projectId = chooseProject();
 			if (projectId > 0) {
-				_projectManager.getProject(projectId);
+				_projectManager.getProject(new IUniqueId() {
+					public int getId()
+					{
+						return projectId;
+					}
+				});
 				// FIXME:_taskManagerGUI.reload();
 				_parent.refreshGui();
 			}
@@ -279,9 +285,9 @@ public final class ProjectManagerGUI
 		int projectID = 0;
 		JScrollPane panel = new JScrollPane();
 		panel.setViewportView(table);
-//		Dimension dim = new Dimension(250, 200);
-//		panel.setMaximumSize(dim);
-//		panel.setPreferredSize(dim);
+		//		Dimension dim = new Dimension(250, 200);
+		//		panel.setMaximumSize(dim);
+		//		panel.setPreferredSize(dim);
 
 		int result = JOptionPane.showConfirmDialog(_parent, panel,
 				"Choose project", JOptionPane.OK_CANCEL_OPTION,

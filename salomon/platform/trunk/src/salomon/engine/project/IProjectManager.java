@@ -23,6 +23,7 @@ package salomon.engine.project;
 
 import salomon.engine.solution.ISolution;
 
+import salomon.platform.IUniqueId;
 import salomon.platform.exception.PlatformException;
 
 /**
@@ -30,17 +31,28 @@ import salomon.platform.exception.PlatformException;
  */
 public interface IProjectManager
 {
-    /**
-     * Adds the project to the Solution. 
-     * @param project The project which should be added
-     * @throws PlatformException
-     */
+	/**
+	 * Adds the project to the Solution. 
+	 * @param project The project which should be added
+	 * @throws PlatformException
+	 */
 	void addProject(IProject project) throws PlatformException;
 
 	/**
 	 * Creates new, empty project
 	 */
 	IProject createProject() throws PlatformException;
+
+	//TODO: it should not be used 
+	IProject getCurrentProject() throws PlatformException;
+
+	/**
+	 * Method loads project from data base.
+	 * 
+	 * @param projectID
+	 * @throws PlatformException
+	 */
+	IProject getProject(IUniqueId projectID) throws PlatformException;
 
 	/**
 	 * Returns collection of available projects.
@@ -54,26 +66,15 @@ public interface IProjectManager
 	 */
 	IProject[] getProjects() throws PlatformException;
 
-	/**
-	 * Method loads project from data base.
-	 * 
-	 * @param projectID
-	 * @throws PlatformException
-	 */
-	IProject getProject(int projectID) throws PlatformException;
+	ISolution getSolution() throws PlatformException;
+
+	boolean removeAll() throws PlatformException;
+
+	boolean removeProject(IProject project) throws PlatformException;
 
 	/**
 	 * Method saves project in data base - project header, plugins and tasks are
 	 * saved.
 	 */
 	void saveProject() throws PlatformException;
-    
-	//TODO: it should not be used 
-    IProject getCurrentProject() throws PlatformException;
-	
-	ISolution getSolution() throws PlatformException;
-	
-	boolean removeProject(IProject project) throws PlatformException;
-	
-	boolean removeAll() throws PlatformException;
 }

@@ -42,6 +42,7 @@ import salomon.engine.task.TaskManager;
 
 import salomon.util.gui.Utils;
 
+import salomon.platform.IUniqueId;
 import salomon.platform.exception.DBException;
 import salomon.platform.exception.PlatformException;
 
@@ -49,8 +50,10 @@ import salomon.plugin.ISettings;
 
 import salomon.engine.platform.IManagerEngine;
 
-/** * An implemetation of IProjectManager interface. Class manages with projects
- * editing. */
+/**
+ * An implemetation of IProjectManager interface. Class manages with projects
+ * editing.
+ */
 public final class ProjectManager implements IProjectManager
 {
 
@@ -148,14 +151,14 @@ public final class ProjectManager implements IProjectManager
 	 * @return loaded project
 	 * @throws PlatformException
 	 */
-	public IProject getProject(int projectID) throws PlatformException
+	public IProject getProject(IUniqueId projectID) throws PlatformException
 	{
 		IProject project = this.createProject();
 		// loading plugin information
 		// building query
 		SQLSelect select = new SQLSelect();
 		select.addTable(ProjectInfo.TABLE_NAME);
-		select.addCondition("project_id =", projectID);
+		select.addCondition("project_id =", projectID.getId());
 		Collection<ITask> tasks = null;
 		ResultSet resultSet = null;
 		try {
@@ -171,7 +174,7 @@ public final class ProjectManager implements IProjectManager
 			resultSet.close();
 
 			// adding tasks
-			tasks = getTasksForProject(projectID);
+			tasks = getTasksForProject(projectID.getId());
 		} catch (Exception e) {
 			LOGGER.fatal("", e);
 			throw new DBException(e.getLocalizedMessage());

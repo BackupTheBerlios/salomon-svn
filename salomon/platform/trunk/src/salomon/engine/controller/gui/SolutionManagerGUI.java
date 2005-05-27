@@ -41,12 +41,8 @@ import org.apache.log4j.Logger;
 
 import salomon.engine.Messages;
 import salomon.engine.controller.gui.action.ActionManager;
-import salomon.engine.controller.gui.viewer.ProjectViewer;
 import salomon.engine.controller.gui.viewer.SolutionViewer;
-import salomon.engine.database.DBManager;
-import salomon.engine.platform.ManagerEngine;
 import salomon.engine.project.IProject;
-import salomon.engine.project.ProjectManager;
 import salomon.engine.solution.ISolution;
 import salomon.engine.solution.ISolutionManager;
 import salomon.engine.solution.Solution;
@@ -54,9 +50,12 @@ import salomon.engine.solution.SolutionManager;
 
 import salomon.util.gui.Utils;
 
+import salomon.platform.IUniqueId;
 import salomon.platform.exception.PlatformException;
 
-/** * Class used to manage with projects editing. */
+/**
+ * Class used to manage with projects editing.
+ */
 public final class SolutionManagerGUI
 {
 
@@ -66,7 +65,6 @@ public final class SolutionManagerGUI
 	 * @uml.associationEnd multiplicity="(0 1)"
 	 */
 	private ActionManager _actionManager;
-
 
 	private JButton _btnEdit;
 
@@ -105,7 +103,7 @@ public final class SolutionManagerGUI
 
 	private JTextField _txtUsername;
 
-    private JFrame _solutionViewerFrame;
+	private JFrame _solutionViewerFrame;
 
 	/**
 	 */
@@ -168,24 +166,29 @@ public final class SolutionManagerGUI
 	{
 		try {
 			ISolution solution = null;
-			int solutionID = 0;
 			int selectedRow = _tblSolutionList.getSelectedRow();
 			if (selectedRow >= 0) {
-				solutionID = ((Integer) _tblSolutionList.getValueAt(
+				final int solutionID = ((Integer) _tblSolutionList.getValueAt(
 						selectedRow, 0)).intValue();
-			}
-			if (solutionID > 0) {
-				solution = _solutionManager.getSolution(solutionID);
-				setSolutionProperties(solution);
-				Collection solutions = ((SolutionManager) _solutionManager).getSolutionList();
-				LOGGER.info("Solutionow " + solutions.size());
-				_tblSolutionList = Utils.createResultTable(solutions);
-				_pnlSolutionController.removeAll();
-				_pnlSolutionController.add(getPnlManagerButtons(),
-						BorderLayout.SOUTH);
-				_pnlSolutionController.add(_tblSolutionList,
-						BorderLayout.CENTER);
-				_parent.setVisible(true);
+
+				if (solutionID > 0) {
+					solution = _solutionManager.getSolution(new IUniqueId() {
+						public int getId()
+						{
+							return solutionID;
+						}
+					});
+					setSolutionProperties(solution);
+					Collection solutions = ((SolutionManager) _solutionManager).getSolutionList();
+					LOGGER.info("Solutionow " + solutions.size());
+					_tblSolutionList = Utils.createResultTable(solutions);
+					_pnlSolutionController.removeAll();
+					_pnlSolutionController.add(getPnlManagerButtons(),
+							BorderLayout.SOUTH);
+					_pnlSolutionController.add(_tblSolutionList,
+							BorderLayout.CENTER);
+					_parent.setVisible(true);
+				}
 			}
 		} catch (PlatformException e) {
 			LOGGER.fatal("", e);
@@ -220,26 +223,32 @@ public final class SolutionManagerGUI
 	public void openSolution()
 	{
 		try {
-			int solutionID = 0;
+
 			int selectedRow = _tblSolutionList.getSelectedRow();
 			if (selectedRow >= 0) {
-				solutionID = ((Integer) _tblSolutionList.getValueAt(
+				final int solutionID = ((Integer) _tblSolutionList.getValueAt(
 						selectedRow, 0)).intValue();
-			}
-			if (solutionID > 0) {
-				//FIXME - do it in better way
-				Solution solution = (Solution) _solutionManager.getSolution(solutionID);
-				//_parent.setVisible(false);
-				//setParent(_nextFrame);
-				//_nextFrame.setVisible(true);
-				// Creates a new empty project				
-				try {
-					IProject project = solution.getProjectManager().createProject();
-					solution.getProjectManager().addProject(project);
-				} catch (PlatformException e) {
-					LOGGER.fatal("", e);
-					Utils.showErrorMessage("ERR_CANNOT_CREATE_PROJECT");
-					return;
+
+				if (solutionID > 0) {
+					//FIXME - do it in better way
+					Solution solution = (Solution) _solutionManager.getSolution(new IUniqueId() {
+						public int getId()
+						{
+							return solutionID;
+						}
+					});
+					//_parent.setVisible(false);
+					//setParent(_nextFrame);
+					//_nextFrame.setVisible(true);
+					// Creates a new empty project				
+					try {
+						IProject project = solution.getProjectManager().createProject();
+						solution.getProjectManager().addProject(project);
+					} catch (PlatformException e) {
+						LOGGER.fatal("", e);
+						Utils.showErrorMessage("ERR_CANNOT_CREATE_PROJECT");
+						return;
+					}
 				}
 			}
 		} catch (Exception e) {
@@ -454,15 +463,19 @@ public final class SolutionManagerGUI
 		return solutionID;
 	}
 
-    public void viewSolutionList()
-    {        
-        if (_solutionViewerFrame == null) {
-            _solutionViewerFrame = new JFrame(Messages.getString("TIT_SOLUTIONS"));
-            _solutionViewerFrame.getContentPane().add(new SolutionViewer(((SolutionManager)_solutionManager).getDBManager()));
-            _solutionViewerFrame.pack(); 
-        }
-        
-        _solutionViewerFrame.setVisible(true) ;
-    }
+	public void viewSolutionList()
+	{
+		if (_solutionViewerFrame == null) {
+			_solutionViewerFrame = new JFrame(
+					Messages.getString("TIT_SOLUTIONS"));
+			_solutionViewerFrame.getContentPane().add(
+					new SolutionViewer(
+							((SolutionManager) _solutionManager).getDBManager()));
+			_solutionViewerFrame.pack();
+		}
+
+		_solutionViewerFrame.setVisible(true);
+	}
+
 	private static final Logger LOGGER = Logger.getLogger(SolutionManagerGUI.class);
 }

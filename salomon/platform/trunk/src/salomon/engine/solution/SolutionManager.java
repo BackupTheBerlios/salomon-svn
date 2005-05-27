@@ -31,24 +31,16 @@ import org.apache.log4j.Logger;
 
 import salomon.engine.database.DBManager;
 import salomon.engine.database.queries.SQLSelect;
-import salomon.engine.plugin.LocalPlugin;
-import salomon.engine.plugin.PluginInfo;
 import salomon.engine.project.IProject;
 import salomon.engine.project.Project;
 import salomon.engine.project.ProjectInfo;
 import salomon.engine.project.ProjectManager;
-import salomon.engine.task.ITask;
-import salomon.engine.task.Task;
-import salomon.engine.task.TaskInfo;
-import salomon.engine.task.TaskManager;
 
 import salomon.util.gui.Utils;
 
 import salomon.platform.IUniqueId;
 import salomon.platform.exception.DBException;
 import salomon.platform.exception.PlatformException;
-
-import salomon.plugin.ISettings;
 
 import salomon.engine.platform.IManagerEngine;
 import salomon.engine.platform.ManagerEngine;
@@ -58,10 +50,10 @@ public final class SolutionManager implements ISolutionManager
 
 	/**
 	 * 
-	 * @uml.property name="_managerEngine"
+	 * @uml.property name="_currentSolution"
 	 * @uml.associationEnd multiplicity="(0 1)"
 	 */
-	private IManagerEngine _managerEngine;
+	private ISolution _currentSolution;
 
 	/**
 	 * 
@@ -72,10 +64,10 @@ public final class SolutionManager implements ISolutionManager
 
 	/**
 	 * 
-	 * @uml.property name="_currentSolution"
+	 * @uml.property name="_managerEngine"
 	 * @uml.associationEnd multiplicity="(0 1)"
 	 */
-	private ISolution _currentSolution;
+	private IManagerEngine _managerEngine;
 
 	public SolutionManager(IManagerEngine managerEngine, DBManager manager)
 	{
@@ -104,23 +96,34 @@ public final class SolutionManager implements ISolutionManager
 	 */
 	public ISolution createSolution()
 	{
-		ISolution result = new Solution((ManagerEngine) _managerEngine , _dbManager);
+		ISolution result = new Solution((ManagerEngine) _managerEngine,
+				_dbManager);
 		_currentSolution = result;
 		return result;
 	}
-	
+
+	public ISolution getCurrentSolution() throws PlatformException
+	{
+		return _currentSolution;
+	}
+
+	public DBManager getDBManager()
+	{
+		return _dbManager;
+	}
+
 	/**
 	 * @throws PlatformException 
 	 * @see salomon.engine.solution.ISolutionManager#getSolution(java.lang.String)
 	 */
-	public ISolution getSolution(int id) throws PlatformException
+	public ISolution getSolution(IUniqueId id) throws PlatformException
 	{
 		ISolution solution = this.createSolution();
 		// loading plugin information
 		// building query
 		SQLSelect select = new SQLSelect();
 		select.addTable(SolutionInfo.TABLE_NAME);
-		select.addCondition("solution_id =", id);
+		select.addCondition("solution_id =", id.getId());
 		ResultSet resultSet = null;
 		try {
 			resultSet = _dbManager.select(select);
@@ -146,59 +149,6 @@ public final class SolutionManager implements ISolutionManager
 		return _currentSolution;
 	}
 
-	/**
-	 * Method selects projects for given solution id
-	 * 
-	 * @param solutionID
-	 * @return
-	 * @throws ClassNotFoundException
-	 * @throws Exception
-	 */
-	private List<IProject> getProjectsForSolution(int solutionID) throws Exception
-	{
-		List<IProject> projects = new LinkedList<IProject>();
-		SQLSelect select = new SQLSelect();
-		select.addTable(ProjectInfo.TABLE_NAME);
-		select.addColumn("project_id");
-		select.addColumn("solution_id");
-		select.addColumn("project_name");
-		select.addColumn("project_info");
-		select.addColumn("lm_date");
-		select.addCondition("solution_id =", solutionID);
-		
-		// executing query
-		ResultSet resultSet = null;
-		resultSet = _dbManager.select(select);
-		ProjectManager projectManager = (ProjectManager)_currentSolution.getProjectManager();
-		try {
-			while (resultSet.next()) {	
-				Project project = (Project) projectManager.createProject();
-				// loading task
-				project.getInfo().load(resultSet);
-				projectManager.addProject(project);
-				projects.add(project);
-			}
-		} catch (Exception e) {
-			LOGGER.fatal("", e);
-			resultSet.close();
-			throw e;
-		}
-		resultSet.close();
-
-		return projects;
-	}
-
-	
-	
-	/**
-	 * @see salomon.engine.solution.ISolutionManager#getSolutions()
-	 */
-	public ISolution[] getSolutions()
-	{
-		throw new UnsupportedOperationException(
-				"Method getSolutions() not implemented yet!");
-	}
-
 	// FIXME this method has to be removed but after implementing
 	// component to show table
 
@@ -216,21 +166,62 @@ public final class SolutionManager implements ISolutionManager
 		} catch (SQLException e) {
 			LOGGER.fatal("", e);
 			throw new DBException(e.getLocalizedMessage());
-		} 
+		}
 		return solutions;
 	}
 
-	
-	public ISolution getCurrentSolution() throws PlatformException
+	/**
+	 * @see salomon.engine.solution.ISolutionManager#getSolutions()
+	 */
+	public ISolution[] getSolutions()
 	{
-		return _currentSolution;
+		throw new UnsupportedOperationException(
+				"Method getSolutions() not implemented yet!");
 	}
-	
-    public DBManager getDBManager()
-    {
-        return _dbManager ; 
-    }
-    
+
+	/**
+	 * Method selects projects for given solution id
+	 * 
+	 * @param solutionID
+	 * @return
+	 * @throws ClassNotFoundException
+	 * @throws Exception
+	 */
+	private List<IProject> getProjectsForSolution(int solutionID)
+			throws Exception
+	{
+		List<IProject> projects = new LinkedList<IProject>();
+		SQLSelect select = new SQLSelect();
+		select.addTable(ProjectInfo.TABLE_NAME);
+		select.addColumn("project_id");
+		select.addColumn("solution_id");
+		select.addColumn("project_name");
+		select.addColumn("project_info");
+		select.addColumn("lm_date");
+		select.addCondition("solution_id =", solutionID);
+
+		// executing query
+		ResultSet resultSet = null;
+		resultSet = _dbManager.select(select);
+		ProjectManager projectManager = (ProjectManager) _currentSolution.getProjectManager();
+		try {
+			while (resultSet.next()) {
+				Project project = (Project) projectManager.createProject();
+				// loading task
+				project.getInfo().load(resultSet);
+				projectManager.addProject(project);
+				projects.add(project);
+			}
+		} catch (Exception e) {
+			LOGGER.fatal("", e);
+			resultSet.close();
+			throw e;
+		}
+		resultSet.close();
+
+		return projects;
+	}
+
 	private static final Logger LOGGER = Logger.getLogger(SolutionManager.class);
-	
+
 }
