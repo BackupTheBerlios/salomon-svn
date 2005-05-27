@@ -32,7 +32,7 @@ System przetwarzania wiedzy\\}
 
 
 \begin{flushright}
-{\Large \emph{Vision, ver 1.1} }
+{\Large \emph{Vision, ver 1.0} }
 \end{flushright}
 
 %\vspace{7cm}
@@ -43,7 +43,7 @@ System przetwarzania wiedzy\\}
   \hline
   Data & Wersja & Opis & Autor \\
   \hline \hline
-  17.05.2005 & 1.0 & utworzenie & \\
+  17.05.2005 & 1.0 & Utworzenie & Nikodem Jura \\
   \hline
 \end{tabular}
 \end{flushleft}
@@ -55,11 +55,23 @@ Celem dokumentu SAD jest sprecyzowanie architektury systemu uwzglêdniaj¹cej now¹
 
 \section{Architektura}
 
-\subsection{Model logiczny}
-diagramy dla Solutiona, klasy, pakiety itp
+W ramach platformy pojawi siê nowa warstwa -- \emph{Solution} -- odpowiedzialna za udostêpnienie zewnêtrznych baz danych. Bêdzie ona warstw¹ nadrzêdn¹ w stosunku do obecnie istniej¹cej warstwy j¹dra systemu (menad¿erów Projektów i Tasków). W ramach jednego \emph{Solutiona} zgrupowane bêd¹ projekty dotycz¹ce tej samej problematyki, korzystaj¹ce z tej samej zewnêtrznej bazy danych.
 
+\subsection{Model logiczny}
+
+Warstwa \emph{Solution} bêdzie reprezentowana przez nowy modu³, który ³¹czy siê z istniej¹cymi klasami zarz¹dzaj¹cymi jak przedstawiono na rysunku:
+
+\newpage
 \subsection{Model implementacyjny}
-nowe moduly itp, diagramy Salomon->Baza, Salomon->Pluginy (?)
+
+Modu³ odpowiedzialny za obs³ugê warstwy \emph{Solution} grupuje projekty dotycz¹ce tej samej problematyki, zapewniaj¹c im dostêp do zewnêtrznej bazy danych. W ramach tej warstwy zgrupowane s¹ tak¿e zbiory danych i drzewa decyzyjne powsta³e na podstawie danych zawartych w danej bazie. Na danych tych operowaæ mog¹ dowolne wtyczki, niezale¿ne od danych.
+
+\begin{figure}[h]
+	\centering
+		\includegraphics[height=0.70\textheight]{img/solution.png}
+	\caption{Solution}
+	\label{fig:solution}
+\end{figure}
 
 \subsection{Model danych}
 
@@ -79,25 +91,11 @@ Zawieraæ bêdzie nastêpuj¹ce pola:
 
 Powi¹zania z pozosta³ymi tabelami przedstawia poni¿szy rysunek (Rys \ref{fig:salomon_db}):
 
-\begin{figure}[ht]
+\begin{figure}[h]
 	\centering
 		\includegraphics[width=1.00\textwidth]{../documentation/img/concept/salomon_db.png}
 	\label{fig:salomon_db}
 \end{figure}
-
-
-\section{Model architektoniczny}
-lokalizajca plikow kontfiguracyjnych itp
-
-\begin{figure}[htbp]
-	\centering
-		\includegraphics[width=1.00\textwidth]{img/solution.png}
-	\caption{Solution}
-	\label{fig:solution}
-\end{figure}
-
-
-\section{Troche o C2}
 
 \end{document}
 
