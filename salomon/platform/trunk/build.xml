@@ -12,6 +12,7 @@
 	<property name="lib_dir" value="lib" />
 	<property name="res_dir" value="res" />
 	<property name="plugin_dir" value="plugins" />
+	<property name="plugin_dev_dir" value="dev" />
 	<property name="db_dir" value="db" />
 	<property name="db_file" value="salomon.gdb" />
 	<property name="crebas_file" value="crebas.sql" />
@@ -66,9 +67,10 @@
 	</target>
 
 	<target name="build_plugin_jars" depends="compile_salomon">
-		<jar destfile="${plugin_dir}/platform.jar" basedir="${bin_dir}" includes="salomon/platform/**"/>
-		<jar destfile="${plugin_dir}/plugin.jar" basedir="${bin_dir}" includes="salomon/plugin/**"/>
-		<jar destfile="${plugin_dir}/util.jar" basedir="${bin_dir}" includes="salomon/util/**"/>
+		<mkdir dir="${plugin_dev_dir}" />
+		<jar destfile="${plugin_dev_dir}/platform.jar" basedir="${bin_dir}" includes="salomon/platform/**"/>
+		<jar destfile="${plugin_dev_dir}/plugin.jar" basedir="${bin_dir}" includes="salomon/plugin/**"/>
+		<jar destfile="${plugin_dev_dir}/util.jar" basedir="${bin_dir}" includes="salomon/util/**"/>
 	</target>
 
 	<target name="build_jars" depends="build_plugin_jars, build_salomon_jar" />
