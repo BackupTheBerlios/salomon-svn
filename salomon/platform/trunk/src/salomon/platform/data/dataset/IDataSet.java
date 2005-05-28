@@ -21,6 +21,10 @@
 
 package salomon.platform.data.dataset;
 
+import java.sql.ResultSet;
+
+import salomon.engine.database.queries.SQLSelect;
+
 import salomon.platform.IInfo;
 import salomon.platform.IUniqueId;
 import salomon.platform.exception.PlatformException;
@@ -30,7 +34,6 @@ import salomon.platform.exception.PlatformException;
  */
 public interface IDataSet
 {
-	IUniqueId getId() throws PlatformException;
 	/**
 	 * Gets the info of this data set.
 	 * 
@@ -93,5 +96,7 @@ public interface IDataSet
 	 * @throws PlatformException
 	 */
 	IDataSet union(IDataSet dataSet, IUniqueId id) throws PlatformException;
+	
+	ResultSet selectData(SQLSelect select) throws PlatformException;
 
 }

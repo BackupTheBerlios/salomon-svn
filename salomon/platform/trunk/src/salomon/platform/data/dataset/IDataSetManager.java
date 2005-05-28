@@ -47,11 +47,10 @@ public interface IDataSetManager
 
 	/**
 	 * Creates empty data set.
-	 * 
-	 * @param id the data set unique id
+ 	 * 
 	 * @return the empty data set
 	 */
-	IDataSet createEmpty(IUniqueId id) throws PlatformException;
+	IDataSet createEmpty() throws PlatformException;
 
 	/**
 	 * Gets all data sets.

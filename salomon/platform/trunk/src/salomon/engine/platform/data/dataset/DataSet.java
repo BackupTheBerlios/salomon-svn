@@ -32,6 +32,8 @@ import java.util.Set;
 
 import org.apache.log4j.Logger;
 
+import salomon.engine.database.DBManager;
+import salomon.engine.database.ExternalDBManager;
 import salomon.engine.database.queries.SQLSelect;
 
 import salomon.platform.IInfo;
@@ -47,13 +49,17 @@ import salomon.platform.exception.PlatformException;
  */
 class DataSet implements IDataSet
 {
-
 	/**
 	 * Conditions determinating data set. key is table name, value - list of
 	 * conditions corresponding to given table
 	 */
 	private Map<String, Set<String>> _conditions;
+
 	private int _datasetID;
+
+	private DBManager _dbManager;
+
+	private ExternalDBManager _externalDBManager;
 
 	private String _info;
 
@@ -62,11 +68,12 @@ class DataSet implements IDataSet
 	/**
 	 * Creates data set. This constructor can be used only from DataSetManager.
 	 */
-	DataSet(String name)
+	protected DataSet(DBManager dbManager, ExternalDBManager externalDBManager)
 	{
 		_datasetID = 0;
-		_name = name;
 		_conditions = new HashMap<String, Set<String>>();
+		_dbManager = dbManager;
+		_externalDBManager = externalDBManager;
 	}
 
 	/**
@@ -94,7 +101,25 @@ class DataSet implements IDataSet
 				"Method delete() not implemented yet!");
 	}
 
-	
+	public IInfo getInfo() throws PlatformException
+	{
+		throw new UnsupportedOperationException(
+				"Method getInfo() not implemented yet!");
+	}
+
+	public IDataSet intersection(IDataSet dataSet) throws PlatformException
+	{
+		throw new UnsupportedOperationException(
+				"Method intersection() not implemented yet!");
+	}
+
+	public IDataSet intersection(IDataSet dataSet, IUniqueId id)
+			throws PlatformException
+	{
+		throw new UnsupportedOperationException(
+				"Method intersection() not implemented yet!");
+	}
+
 	/**
 	 * @see salomon.engine.database.IDBSupporting#load(java.sql.ResultSet)
 	 * 
@@ -110,11 +135,24 @@ class DataSet implements IDataSet
 		throw new UnsupportedOperationException(
 				"Method load() not implemented yet!");
 	}
-	
+
 	public void loadItems() throws SQLException
 	{
 		throw new UnsupportedOperationException(
 				"Method loadItems() not implemented yet!");
+	}
+
+	public IDataSet minus(IDataSet dataSet) throws PlatformException
+	{
+		throw new UnsupportedOperationException(
+				"Method minus() not implemented yet!");
+	}
+
+	public IDataSet minus(IDataSet dataSet, IUniqueId id)
+			throws PlatformException
+	{
+		throw new UnsupportedOperationException(
+				"Method minus() not implemented yet!");
 	}
 
 	/**
@@ -124,35 +162,35 @@ class DataSet implements IDataSet
 	{
 		//removing old items
 		//FIXME: reimplement it
-//		SQLDelete delete = new SQLDelete();
-//		delete.setTable(ITEMS_TABLE_NAME);
-//		delete.addCondition("dataset_id = ", _datasetID);
-//		int rows = DBManager.getInstance().delete(delete);
-//		LOGGER.debug("rows deleted: " + rows);
-//		
-//		//saving header
-//		SQLUpdate update = new SQLUpdate(TABLE_NAME);
-//		if (_name != null) {
-//			update.addValue("dataset_name", _name);
-//		}
-//		if (_info != null) {
-//			update.addValue("dataset_info", _info);
-//		}
-//		update.addValue("lm_date", new Date(System.currentTimeMillis()));
-//		_datasetID = DBManager.getInstance().insertOrUpdate(update,
-//				"dataset_id", _datasetID, GEN_NAME);
-//		
-//		// saving items
-//		for (String tableName : _conditions.keySet()) {
-//			for (String condition: _conditions.get(tableName)) {
-//				SQLInsert insert = new SQLInsert(ITEMS_TABLE_NAME);
-//				insert.addValue("dataset_id", _datasetID);
-//				insert.addValue("table_name", tableName);
-//				insert.addValue("condition", condition);
-//				LOGGER.debug("insert: " + insert.getQuery());
-//			}
-//		}
-//		return _datasetID;
+		//		SQLDelete delete = new SQLDelete();
+		//		delete.setTable(ITEMS_TABLE_NAME);
+		//		delete.addCondition("dataset_id = ", _datasetID);
+		//		int rows = DBManager.getInstance().delete(delete);
+		//		LOGGER.debug("rows deleted: " + rows);
+		//		
+		//		//saving header
+		//		SQLUpdate update = new SQLUpdate(TABLE_NAME);
+		//		if (_name != null) {
+		//			update.addValue("dataset_name", _name);
+		//		}
+		//		if (_info != null) {
+		//			update.addValue("dataset_info", _info);
+		//		}
+		//		update.addValue("lm_date", new Date(System.currentTimeMillis()));
+		//		_datasetID = DBManager.getInstance().insertOrUpdate(update,
+		//				"dataset_id", _datasetID, GEN_NAME);
+		//		
+		//		// saving items
+		//		for (String tableName : _conditions.keySet()) {
+		//			for (String condition: _conditions.get(tableName)) {
+		//				SQLInsert insert = new SQLInsert(ITEMS_TABLE_NAME);
+		//				insert.addValue("dataset_id", _datasetID);
+		//				insert.addValue("table_name", tableName);
+		//				insert.addValue("condition", condition);
+		//				LOGGER.debug("insert: " + insert.getQuery());
+		//			}
+		//		}
+		//		return _datasetID;
 		throw new UnsupportedOperationException(
 				"Method save() not implemented yet!");
 	}
@@ -163,36 +201,42 @@ class DataSet implements IDataSet
 	 * method are concatenated to them. TODO: reimplement it
 	 * 
 	 * @param select SELECT query
-	 * @throws SQLException
-	 * @throws ClassNotFoundException
+	 * @throws PlatformException
 	 */
-	public ResultSet selectData(SQLSelect select) throws SQLException,
-			ClassNotFoundException
+	public ResultSet selectData(SQLSelect select) throws PlatformException
+			
 	{
-//		SQLSelect selectCopy = (SQLSelect) select.clone();
-//		// getting all tables used in select and _tableNames
-//		// (intersection of these sets)
-//		// These tables are needed to add conditions determinating dataset
-//		Collection<String> commonTables = selectCopy.getTables();
-//		commonTables.retainAll(_conditions.keySet());
-//
-//		if (_conditions.size() > 0) {
-//			// preparing conditions
-//			for (String commonTable : commonTables) {
-//				for (String condition : _conditions.get(commonTable)) {
-//					selectCopy.addCondition(condition);
-//				}
-//			}
-//		}
-//		// adding tables from original select
-//		for (String tableName : select.getTables()) {
-//			selectCopy.addTable(tableName);
-//		}
-//
-//		LOGGER.debug("selectCopy: " + selectCopy.getQuery());
-//		return DBManager.getInstance().select(selectCopy);
-		throw new UnsupportedOperationException(
-				"Method selectData() not implemented yet!");
+		//		SQLSelect selectCopy = (SQLSelect) select.clone();
+		//		// getting all tables used in select and _tableNames
+		//		// (intersection of these sets)
+		//		// These tables are needed to add conditions determinating dataset
+		//		Collection<String> commonTables = selectCopy.getTables();
+		//		commonTables.retainAll(_conditions.keySet());
+		//
+		//		if (_conditions.size() > 0) {
+		//			// preparing conditions
+		//			for (String commonTable : commonTables) {
+		//				for (String condition : _conditions.get(commonTable)) {
+		//					selectCopy.addCondition(condition);
+		//				}
+		//			}
+		//		}
+		//		// adding tables from original select
+		//		for (String tableName : select.getTables()) {
+		//			selectCopy.addTable(tableName);
+		//		}
+		//
+		//		LOGGER.debug("selectCopy: " + selectCopy.getQuery());
+		//		return DBManager.getInstance().select(selectCopy);
+		//FIXME: use conditions
+		ResultSet resultSet = null;
+		try {
+			resultSet = _externalDBManager.select(select);
+		} catch (SQLException e) {
+			LOGGER.fatal("", e);
+			throw new PlatformException(e.getLocalizedMessage());
+		}
+		return resultSet;
 	}
 
 	/**
@@ -282,51 +326,24 @@ class DataSet implements IDataSet
 		return _name + ": " + _conditions;
 	}
 
-	public static final String TABLE_NAME = "datasets";
-	
+	public IDataSet union(IDataSet dataSet) throws PlatformException
+	{
+		throw new UnsupportedOperationException(
+				"Method union() not implemented yet!");
+	}
+
+	public IDataSet union(IDataSet dataSet, IUniqueId id)
+			throws PlatformException
+	{
+		throw new UnsupportedOperationException(
+				"Method union() not implemented yet!");
+	}
+
 	public static final String ITEMS_TABLE_NAME = "dataset_items";
+
+	public static final String TABLE_NAME = "datasets";
 
 	private static final String GEN_NAME = "gen_dataset_id";
 
 	private static final Logger LOGGER = Logger.getLogger(DataSet.class);
-
-	public IDataSet intersection(IDataSet dataSet) throws PlatformException
-	{
-		throw new UnsupportedOperationException("Method intersection() not implemented yet!");
-	}
-
-	public IDataSet intersection(IDataSet dataSet, IUniqueId id) throws PlatformException
-	{
-		throw new UnsupportedOperationException("Method intersection() not implemented yet!");
-	}
-
-	public IDataSet minus(IDataSet dataSet) throws PlatformException
-	{
-		throw new UnsupportedOperationException("Method minus() not implemented yet!");
-	}
-
-	public IDataSet minus(IDataSet dataSet, IUniqueId id) throws PlatformException
-	{
-		throw new UnsupportedOperationException("Method minus() not implemented yet!");
-	}
-
-	public IDataSet union(IDataSet dataSet) throws PlatformException
-	{
-		throw new UnsupportedOperationException("Method union() not implemented yet!");
-	}
-
-	public IDataSet union(IDataSet dataSet, IUniqueId id) throws PlatformException
-	{
-		throw new UnsupportedOperationException("Method union() not implemented yet!");
-	}
-
-	public IUniqueId getId() throws PlatformException
-	{
-		throw new UnsupportedOperationException("Method getId() not implemented yet!");
-	}
-
-	public IInfo getInfo() throws PlatformException
-	{
-		throw new UnsupportedOperationException("Method getInfo() not implemented yet!");
-	}
 }

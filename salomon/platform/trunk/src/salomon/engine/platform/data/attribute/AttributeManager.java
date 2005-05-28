@@ -18,7 +18,10 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * 
  */
+
 package salomon.engine.platform.data.attribute;
+
+import salomon.engine.database.DBManager;
 
 import salomon.platform.data.attribute.IAttribiute;
 import salomon.platform.data.attribute.IAttributeManager;
@@ -29,13 +32,20 @@ import salomon.platform.exception.PlatformException;
  */
 public final class AttributeManager implements IAttributeManager
 {
+	private DBManager _dbManager;
+
+	public AttributeManager(DBManager dbManager)
+	{
+		_dbManager = dbManager;
+	}
 
 	/**
 	 * @see salomon.platform.data.attribute.IAttributeManager#getAttributes()
 	 */
 	public IAttribiute[] getAttributes() throws PlatformException
 	{
-		throw new UnsupportedOperationException("Method getAttributes() not implemented yet!");
+		throw new UnsupportedOperationException(
+				"Method getAttributes() not implemented yet!");
 	}
-    
+
 } // end AttributeManager

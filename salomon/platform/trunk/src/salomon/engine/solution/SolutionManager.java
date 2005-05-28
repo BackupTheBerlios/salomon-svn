@@ -94,7 +94,7 @@ public final class SolutionManager implements ISolutionManager
 	/**
 	 * @see salomon.engine.solution.ISolutionManager#createSolution()
 	 */
-	public ISolution createSolution()
+	public ISolution createSolution() throws PlatformException
 	{
 		ISolution result = new Solution((ManagerEngine) _managerEngine,
 				_dbManager);

@@ -27,7 +27,7 @@ import java.sql.SQLException;
 import org.apache.log4j.Logger;
 
 import salomon.engine.database.DBManager;
-import salomon.engine.database.queries.SQLSelect;
+import salomon.engine.database.ExternalDBManager;
 
 import salomon.platform.IUniqueId;
 import salomon.platform.data.dataset.IDataSet;
@@ -39,6 +39,16 @@ import salomon.platform.exception.PlatformException;
  */
 public final class DataSetManager implements IDataSetManager
 {
+	private ExternalDBManager _externalDBManager;
+
+	private DBManager _dbManager;
+
+	public DataSetManager(DBManager dbManager,
+			ExternalDBManager externalDBManager)
+	{
+		_dbManager = dbManager;
+		_externalDBManager = externalDBManager;
+	}
 
 	/**
 	 * @see salomon.platform.data.dataset.IDataSetManager#add(salomon.platform.data.dataset.IDataSet)
@@ -47,6 +57,27 @@ public final class DataSetManager implements IDataSetManager
 	{
 		throw new UnsupportedOperationException(
 				"Method add() not implemented yet!");
+	}
+
+	public IDataSet createEmpty() throws PlatformException
+	{
+		IDataSet dataSet = new DataSet(_dbManager, _externalDBManager);
+		return dataSet;
+	}
+
+	/**
+	 * @see salomon.platform.data.dataset.IDataSetManager#getAll()
+	 */
+	public IDataSet[] getAll() throws PlatformException
+	{
+		throw new UnsupportedOperationException(
+				"Method getDataSets() not implemented yet!");
+	}
+
+	public IDataSet getDataSet(IUniqueId id) throws PlatformException
+	{
+		throw new UnsupportedOperationException(
+				"Method getDataSet() not implemented yet!");
 	}
 
 	public IDataSet getDataSet(String name) throws PlatformException
@@ -58,11 +89,12 @@ public final class DataSetManager implements IDataSetManager
 		} catch (Exception e) {
 			LOGGER.fatal("", e);
 			throw new PlatformException(e.getLocalizedMessage());
-		}	
+		}
 
 		// getting conditions
 		try {
-			dataSet = new DataSet(name);
+			dataSet = (DataSet) this.createEmpty();
+			dataSet.setName(name);
 			while (resultSet.next()) {
 				String tableName = resultSet.getString("table_name");
 				String condition = resultSet.getString("condition");
@@ -73,15 +105,6 @@ public final class DataSetManager implements IDataSetManager
 			throw new PlatformException(e.getLocalizedMessage());
 		}
 		return dataSet;
-	}
-
-	/**
-	 * @see salomon.platform.data.dataset.IDataSetManager#getAll()
-	 */
-	public IDataSet[] getAll() throws PlatformException
-	{
-		throw new UnsupportedOperationException(
-				"Method getDataSets() not implemented yet!");
 	}
 
 	/**
@@ -104,6 +127,12 @@ public final class DataSetManager implements IDataSetManager
 				"Method minus() not implemented yet!");
 	}
 
+	public void remove(IDataSet dataSet) throws PlatformException
+	{
+		throw new UnsupportedOperationException(
+				"Method remove() not implemented yet!");
+	}
+
 	/**
 	 * @see salomon.platform.data.dataset.IDataSetManager#union(salomon.platform.data.dataset.IDataSet,
 	 *      salomon.platform.data.dataset.IDataSet)
@@ -118,16 +147,16 @@ public final class DataSetManager implements IDataSetManager
 	private ResultSet getDataSetItems(String dataSetName) throws SQLException,
 			ClassNotFoundException
 	{
-//		SQLSelect select = new SQLSelect();
-//		select.addColumn("table_name");
-//		select.addColumn("condition");
-//		select.addTable(DATASETS + " d");
-//		select.addTable(DATASET_ITEMS + " di");
-//		select.addCondition("d.dataset_id = di.dataset_id");
-//		select.addCondition("dataset_name =", dataSetName);
-//
-//		DBManager connector = DBManager.getInstance();
-//		return connector.select(select);
+		//		SQLSelect select = new SQLSelect();
+		//		select.addColumn("table_name");
+		//		select.addColumn("condition");
+		//		select.addTable(DATASETS + " d");
+		//		select.addTable(DATASET_ITEMS + " di");
+		//		select.addCondition("d.dataset_id = di.dataset_id");
+		//		select.addCondition("dataset_name =", dataSetName);
+		//
+		//		DBManager connector = DBManager.getInstance();
+		//		return connector.select(select);
 		throw new UnsupportedOperationException(
 				"Method enclosing_method() not implemented yet!");
 	}
@@ -137,19 +166,4 @@ public final class DataSetManager implements IDataSetManager
 	private static final String DATASETS = "datasets";
 
 	private static final Logger LOGGER = Logger.getLogger(DataSetManager.class);
-
-	public void remove(IDataSet dataSet) throws PlatformException
-	{
-		throw new UnsupportedOperationException("Method remove() not implemented yet!");
-	}
-
-	public IDataSet createEmpty(IUniqueId id) throws PlatformException
-	{
-		throw new UnsupportedOperationException("Method createEmpty() not implemented yet!");
-	}
-
-	public IDataSet getDataSet(IUniqueId id) throws PlatformException
-	{
-		throw new UnsupportedOperationException("Method getDataSet() not implemented yet!");
-	}
 }

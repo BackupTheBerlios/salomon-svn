@@ -21,20 +21,22 @@
 
 package salomon.engine.platform;
 
-import java.sql.SQLException;
-
 import salomon.engine.database.DBManager;
+import salomon.engine.database.ExternalDBManager;
+
+import salomon.platform.IDataEngine;
+import salomon.platform.data.tree.ITreeManager;
+
 import salomon.engine.platform.data.attribute.AttributeManager;
 import salomon.engine.platform.data.dataset.DataSetManager;
 import salomon.engine.platform.data.rule.RuleSetManager;
 import salomon.engine.platform.data.tree.TreeManager;
-import salomon.platform.IDataEngine;
-import salomon.platform.data.tree.ITreeManager;
 
-/** * Class holds  DataSetManager, RuleSetManager and AttributeManager instances. */
+/**
+ * Class holds  DataSetManager, RuleSetManager and AttributeManager instances.
+ */
 public final class DataEngine implements IDataEngine
 {
-
 	/**
 	 * 
 	 * @uml.property name="_attributeManager"
@@ -63,13 +65,12 @@ public final class DataEngine implements IDataEngine
 	 */
 	private TreeManager _treeManager;
 
-	public DataEngine()
+	public DataEngine(DBManager dbManager, ExternalDBManager externalDBManager)
 	{
-        _attributeManager = new AttributeManager();
-		_dataSetManager = new DataSetManager();
-        _ruleSetManager = new RuleSetManager();
-        _treeManager = new TreeManager();
-        
+		_attributeManager = new AttributeManager(dbManager);
+		_dataSetManager = new DataSetManager(dbManager, externalDBManager);
+		_ruleSetManager = new RuleSetManager(dbManager);
+		_treeManager = new TreeManager(dbManager);
 	}
 
 	/**

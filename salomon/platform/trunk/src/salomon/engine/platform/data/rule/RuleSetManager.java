@@ -21,6 +21,8 @@
 
 package salomon.engine.platform.data.rule;
 
+import salomon.engine.database.DBManager;
+
 import salomon.platform.data.rule.IRuleSet;
 import salomon.platform.data.rule.IRuleSetManager;
 import salomon.platform.exception.PlatformException;
@@ -30,13 +32,20 @@ import salomon.platform.exception.PlatformException;
  */
 public final class RuleSetManager implements IRuleSetManager
 {
+	private DBManager _dbManager;
+
+	public RuleSetManager(DBManager dbManager)
+	{
+		_dbManager = dbManager;
+	}
 
 	/**
 	 * @see salomon.platform.data.rule.IRuleSetManager#addRuleSet()
 	 */
 	public void addRuleSet() throws PlatformException
 	{
-		throw new UnsupportedOperationException("Method addRuleSet() not implemented yet!");
+		throw new UnsupportedOperationException(
+				"Method addRuleSet() not implemented yet!");
 	}
 
 	/**
@@ -44,7 +53,8 @@ public final class RuleSetManager implements IRuleSetManager
 	 */
 	public IRuleSet createRuleSet() throws PlatformException
 	{
-		throw new UnsupportedOperationException("Method createRuleSet() not implemented yet!");
+		throw new UnsupportedOperationException(
+				"Method createRuleSet() not implemented yet!");
 	}
 
 	/**
@@ -52,7 +62,8 @@ public final class RuleSetManager implements IRuleSetManager
 	 */
 	public IRuleSet[] getRuleSets() throws PlatformException
 	{
-		throw new UnsupportedOperationException("Method getRuleSets() not implemented yet!");
+		throw new UnsupportedOperationException(
+				"Method getRuleSets() not implemented yet!");
 	}
-    
+
 } // end RuleSetManager

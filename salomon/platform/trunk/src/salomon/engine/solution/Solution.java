@@ -21,7 +21,12 @@
 
 package salomon.engine.solution;
 
+import java.sql.SQLException;
+
+import org.apache.log4j.Logger;
+
 import salomon.engine.database.DBManager;
+import salomon.engine.database.ExternalDBManager;
 import salomon.engine.project.IProjectManager;
 
 import salomon.platform.IDataEngine;
@@ -38,7 +43,14 @@ public final class Solution implements ISolution
 	 * @uml.property name="_dataEngine"
 	 * @uml.associationEnd multiplicity="(0 1)"
 	 */
-	private DataEngine _dataEngine;
+	private IDataEngine _dataEngine;
+
+	/**
+	 * 
+	 * @uml.property name="_dbManager"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
+	private DBManager _dbManager;
 
 	/**
 	 * 
@@ -55,32 +67,34 @@ public final class Solution implements ISolution
 	private SolutionInfo _solutionInfo;
 
 	/**
-	 * 
-	 * @uml.property name="_dbManager"
-	 * @uml.associationEnd multiplicity="(0 1)"
-	 */
-	private DBManager _dbManager;
-
-	/**
 	 * Constructor should be used only by createSolution() in SolutionManager.
 	 *  
 	 * @param managerEngine
+	 * @throws PlatformException 
 	 */
 	protected Solution(ManagerEngine managerEngine, DBManager manager)
 	{
 		_managerEngine = managerEngine;
 		_dbManager = manager;
 		_solutionInfo = new SolutionInfo(_dbManager);
-		//TODO:
-		_dataEngine = new DataEngine();
 	}
 
-		/**
+	/**
 	 * @see salomon.engine.solution.ISolution#getDataEngine()
 	 */
 	public IDataEngine getDataEngine() throws PlatformException
 	{
+		if (_dataEngine == null) {
+			// creating data engine
+			// with connection to external data base
+			_dataEngine = this.createDataEngine(_solutionInfo);
+		}
 		return _dataEngine;
+	}
+
+	public SolutionInfo getInfo()
+	{
+		return _solutionInfo;
 	}
 
 	/**
@@ -91,9 +105,28 @@ public final class Solution implements ISolution
 		return _managerEngine.getProjectManager();
 	}
 
-	public SolutionInfo getInfo()
+	private IDataEngine createDataEngine(SolutionInfo solutionInfo)
+			throws PlatformException
 	{
-		return _solutionInfo;
+		ExternalDBManager externalDBManager = new ExternalDBManager();
+		String host = solutionInfo.getHost();
+		String dataBasePath = solutionInfo.getPath();
+		String user = solutionInfo.getUser();
+		String passwd = solutionInfo.getPasswd();
+
+		try {
+			externalDBManager.connect(host, dataBasePath, user, passwd);
+		} catch (SQLException e) {
+			LOGGER.fatal("Cannot connect to external data base", e);
+			throw new PlatformException(e.getLocalizedMessage());
+		} catch (ClassNotFoundException e) {
+			LOGGER.fatal("", e);
+			throw new PlatformException(e.getLocalizedMessage());
+		}
+		IDataEngine dataEngine = new DataEngine(_dbManager, externalDBManager);
+		return dataEngine;
 	}
+
+	private static final Logger LOGGER = Logger.getLogger(Solution.class);
 
 }
