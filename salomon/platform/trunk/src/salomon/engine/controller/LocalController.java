@@ -23,11 +23,12 @@ package salomon.engine.controller;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -274,19 +275,19 @@ public final class LocalController implements IController
 
 		private JMenuItem _itmSQLConsole;
 
+		private JMenuItem _itmViewPlugins;
+
 		private JMenuItem _itmViewProjects;
 
 		private JMenuItem _itmViewSolutions;
+
+		private JMenuItem _itmViewTasks;
 
 		private JPanel _pnlAbout;
 
 		private JComponent _positionComponent;
 
 		private String _resourcesDir;
-
-		private JMenuItem _itmViewTasks;
-
-		private JMenuItem _itmViewPlugins;
 
 		/**
 		 * creates LocalGUIMenu
@@ -475,6 +476,16 @@ public final class LocalController implements IController
 			return _itmSQLConsole;
 		}
 
+		JMenuItem getItmViewPlugins()
+		{
+			if (_itmViewPlugins == null) {
+				_itmViewPlugins = new JMenuItem();
+				_itmViewPlugins.setText(Messages.getString("MNU_SHOW_PLUGINS")); //$NON-NLS-1$
+				_itmViewPlugins.addActionListener(_actionManager.getViewPluginsAction());
+			}
+			return _itmViewPlugins;
+		}
+
 		JMenuItem getItmViewProjects()
 		{
 			if (_itmViewProjects == null) {
@@ -505,24 +516,10 @@ public final class LocalController implements IController
 			return _itmViewTasks;
 		}
 
-		JMenuItem getItmViewPlugins()
-		{
-			if (_itmViewPlugins == null) {
-				_itmViewPlugins = new JMenuItem();
-				_itmViewPlugins.setText(Messages.getString("MNU_SHOW_PLUGINS")); //$NON-NLS-1$
-				_itmViewPlugins.addActionListener(_actionManager.getViewPluginsAction());
-			}
-			return _itmViewPlugins;
-		}
-
 		JPanel getPnlAbout()
 		{
 			if (_pnlAbout == null) {
-				if (Config.getString("OFFICIAL").equalsIgnoreCase("Y")) {
-					_pnlAbout = getOfficialAbout();
-				} else {
-					_pnlAbout = getUnofficialAbout();
-				}
+				_pnlAbout = getAboutPanel();
 			}
 			return _pnlAbout;
 		}
@@ -540,7 +537,7 @@ public final class LocalController implements IController
 			new SQLConsole(((ManagerEngine) _managerEngine).getDbManager());
 		}
 
-		private JPanel getOfficialAbout()
+		private JPanel getAboutPanel()
 		{
 			if (_pnlAbout == null) {
 				_pnlAbout = new JPanel();
@@ -556,28 +553,34 @@ public final class LocalController implements IController
 				// version and author panel
 				//
 				JPanel detailsPanel = new JPanel();
-				detailsPanel.setLayout(new GridLayout(0, 2));
+				detailsPanel.setLayout(new BoxLayout(detailsPanel,
+						BoxLayout.Y_AXIS));
+
 				JLabel lblVersionTitle = new JLabel(
 						Messages.getString("TIT_VERSION")); //$NON-NLS-1$
 				JLabel lblVersion = new JLabel(Messages.getString("VERSION")); //$NON-NLS-1$
 				lblVersion.setForeground(Color.RED);
+				Box versionBox = Box.createHorizontalBox();
+				versionBox.add(lblVersionTitle);
+				versionBox.add(Box.createHorizontalGlue());
+				versionBox.add(lblVersion);
+
 				JLabel lblAuthorsTitle = new JLabel(
 						Messages.getString("TIT_AUTHORS")); //$NON-NLS-1$
-				JLabel lblStub = new JLabel();
-				JLabel lblAuthor1 = new JLabel("Nikodem Jura"); //$NON-NLS-1$
-				JLabel lblAuthor2 = new JLabel("Krzysztof Rajda"); //$NON-NLS-1$
-				JLabel lblThanksTitle = new JLabel(
-						Messages.getString("TIT_THANKS")); //$NON-NLS-1$
-				JLabel lblThanks = new JLabel("Jakub Galkowski"); //$NON-NLS-1$
-				// setting components on panel
-				detailsPanel.add(lblVersionTitle);
-				detailsPanel.add(lblVersion);
-				detailsPanel.add(lblAuthorsTitle);
-				detailsPanel.add(lblAuthor1);
-				detailsPanel.add(lblStub);
-				detailsPanel.add(lblAuthor2);
-				detailsPanel.add(lblThanksTitle);
-				detailsPanel.add(lblThanks);
+				Box authorsBox = Box.createHorizontalBox();
+				authorsBox.add(lblAuthorsTitle);
+
+				detailsPanel.add(versionBox);
+				detailsPanel.add(authorsBox);
+				detailsPanel.add(this.getAuthorLabel("Nikodem Jura",
+						"nico@icslab.agh.edu.pl"));
+				detailsPanel.add(this.getAuthorLabel("Krzysztof Rajda",
+						"krzysztof@rajda.name"));
+				detailsPanel.add(this.getAuthorLabel("Jakub Galkowski",
+						"avi@student.uci.agh.edu.pl"));
+
+				detailsPanel.add(this.getAuthorLabel("Leszek Grzanka  ",
+						"grzanka@student.uci.agh.edu.pl"));
 				detailsPanel.setBorder(BorderFactory.createEmptyBorder(30, 0,
 						0, 0));
 				// adding componens
@@ -587,41 +590,16 @@ public final class LocalController implements IController
 			return _pnlAbout;
 		}
 
-		private JPanel getUnofficialAbout()
+		private JComponent getAuthorLabel(String name, String email)
 		{
-			if (_pnlAbout == null) {
-				_pnlAbout = new JPanel();
-				_pnlAbout.setLayout(new BorderLayout());
-				_pnlAbout.setBorder(BorderFactory.createEmptyBorder(30, 0, 30,
-						0));
-				//
-				// application name
-				//
-				JLabel lblAppName = new JLabel(new ImageIcon(_resourcesDir
-						+ Config.FILE_SEPARATOR + Resources.getString("LOGO"))); //$NON-NLS-1$
-				//
-				// version and author panel
-				//
-				JPanel detailsPanel = new JPanel();
-				detailsPanel.setLayout(new GridLayout(0, 2));
-				JLabel lblVersionTitle = new JLabel(
-						Messages.getString("TIT_VERSION")); //$NON-NLS-1$
-				JLabel lblVersion = new JLabel(Messages.getString("VERSION")); //$NON-NLS-1$
-				lblVersion.setForeground(Color.RED);
-				JLabel lblAuthorsTitle = new JLabel(
-						Messages.getString("TIT_AUTHORS")); //$NON-NLS-1$
-				JLabel lblAuthors = new JLabel(Messages.getString("AUTHORS")); //$NON-NLS-1$
-				detailsPanel.add(lblVersionTitle);
-				detailsPanel.add(lblVersion);
-				detailsPanel.add(lblAuthorsTitle);
-				detailsPanel.add(lblAuthors);
-				detailsPanel.setBorder(BorderFactory.createEmptyBorder(30, 0,
-						0, 0));
-				// adding componens
-				_pnlAbout.add(lblAppName, BorderLayout.CENTER);
-				_pnlAbout.add(detailsPanel, BorderLayout.SOUTH);
-			}
-			return _pnlAbout;
+			Box box = Box.createHorizontalBox();
+			JLabel lblName = new JLabel(name);
+			JLabel lblEmail = new JLabel(email);
+			lblEmail.setForeground(Color.BLUE);
+			box.add(lblName);
+			box.add(Box.createHorizontalGlue());
+			box.add(lblEmail);
+			return box;
 		}
 
 		/** Method shows about dialog. */
