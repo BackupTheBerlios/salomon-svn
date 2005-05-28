@@ -40,49 +40,49 @@ public class SQLDeleteTest extends TestCase
 	 */
 	private DBManager _manager;
 
-    public void testGetQuery1()
-    {
-        _logger.debug("SQLDeleteTest.testGetQuery1()");
-        SQLDelete delete = new SQLDelete("plugins");
-        delete.addCondition("plugin_id =", 5);
-        boolean success = false;
-        try {
-            _manager.rollback();
-            _manager.delete(delete);
-            success = true;
-            _manager.commit();
-        } catch (SQLException e) {
-            success = false;
-            e.printStackTrace();
-            _manager.rollback();
-        }
-        assertTrue(success);
-    }
+	public void testGetQuery1()
+	{
+		_logger.debug("SQLDeleteTest.testGetQuery1()");
+		SQLDelete delete = new SQLDelete("plugins");
+		delete.addCondition("plugin_id =", 5);
+		boolean success = false;
+		try {
+			_manager.rollback();
+			_manager.delete(delete);
+			success = true;
+			_manager.commit();
+		} catch (SQLException e) {
+			success = false;
+			e.printStackTrace();
+			_manager.rollback();
+		}
+		assertTrue(success);
+	}
 
-    public void testGetQuery2()
-    {
-        _logger.debug("SQLDeleteTest.testGetQuery2()");
-        SQLDelete delete = new SQLDelete("plugins");
-        delete.addCondition("plugin_id in (8, 10)");
-        boolean success = false;
-        try {
-            _manager.delete(delete);
-            success = true;
-            _manager.commit();
-        } catch (SQLException e) {
-            success = false;
-            e.printStackTrace();
-            _manager.rollback();
-        }
-        assertTrue(success);
-    }
+	public void testGetQuery2()
+	{
+		_logger.debug("SQLDeleteTest.testGetQuery2()");
+		SQLDelete delete = new SQLDelete("plugins");
+		delete.addCondition("plugin_id in (8, 10)");
+		boolean success = false;
+		try {
+			_manager.delete(delete);
+			success = true;
+			_manager.commit();
+		} catch (SQLException e) {
+			success = false;
+			e.printStackTrace();
+			_manager.rollback();
+		}
+		assertTrue(success);
+	}
 
-    protected void setUp() throws Exception
-    {
-        PropertyConfigurator.configure("log.conf"); //$NON-NLS-1$        
-        _manager = new DBManager() ;
-        _manager.connect() ;
-    }
+	protected void setUp() throws Exception
+	{
+		PropertyConfigurator.configure("log.conf"); //$NON-NLS-1$        
+		_manager = new DBManager();
+		_manager.connect();
+	}
 
-    private static Logger _logger = Logger.getLogger(SQLDeleteTest.class);
+	private static Logger _logger = Logger.getLogger(SQLDeleteTest.class);
 }

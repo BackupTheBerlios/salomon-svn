@@ -21,8 +21,6 @@
 
 package salomon.plugin;
 
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -35,7 +33,9 @@ import salomon.engine.database.DBManager;
 import salomon.engine.database.queries.SQLSelect;
 import salomon.engine.plugin.PluginInfo;
 
-/** * TODO: add comment. */
+/**
+ * TODO: add comment.
+ */
 public class DescriptionTest extends TestCase
 {
 
@@ -109,7 +109,7 @@ public class DescriptionTest extends TestCase
 		//PluginInfo desc = new PluginInfo();
 		//desc.setName("test_plugin");
 		//try {
-			//desc.setLocation(new URL("http://www.test_description.pl"));
+		//desc.setLocation(new URL("http://www.test_description.pl"));
 		//	success = true;
 		//} catch (MalformedURLException e) {
 		//	LOGGER.fatal("", e);
@@ -131,7 +131,7 @@ public class DescriptionTest extends TestCase
 	{
 		PropertyConfigurator.configure("log.conf"); //$NON-NLS-1$   
 		_manager = new DBManager();
-		_manager.connect() ;
+		_manager.connect();
 	}
 
 	private static Logger LOGGER = Logger.getLogger(DescriptionTest.class);

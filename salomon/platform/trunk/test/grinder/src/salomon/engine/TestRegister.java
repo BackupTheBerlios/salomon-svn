@@ -22,15 +22,13 @@
 package salomon.engine;
 
 import java.rmi.RMISecurityManager;
-import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
-import org.apache.log4j.PropertyConfigurator;
-
-import salomon.engine.platform.ManagerEngine;
 import salomon.engine.remote.ICentralController;
 import salomon.engine.remote.RemoteController;
+
+import salomon.engine.platform.ManagerEngine;
 
 /**
  * 
@@ -39,9 +37,9 @@ public class TestRegister
 {
 	public TestRegister()
 	{
-//		PropertyConfigurator.configure("log.conf");
+		//		PropertyConfigurator.configure("log.conf");
 	}
-	
+
 	/**
 	 * test method
 	 * @throws Exception
@@ -57,8 +55,7 @@ public class TestRegister
 		RemoteController remoteController = new RemoteController(managerEngine,
 				server);
 		Registry registry = LocateRegistry.getRegistry(server, serverPort);
-		ICentralController centralController = (ICentralController) registry
-				.lookup("CentralController");
+		ICentralController centralController = (ICentralController) registry.lookup("CentralController");
 		centralController.register(remoteController);
 		centralController.unregister(remoteController);
 	}

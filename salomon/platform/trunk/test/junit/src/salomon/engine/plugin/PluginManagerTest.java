@@ -31,9 +31,9 @@ import org.apache.log4j.PropertyConfigurator;
 
 import salomon.platform.exception.PlatformException;
 
-import salomon.engine.platform.ManagerEngine;
-
 import salomon.plugin.IPlugin;
+
+import salomon.engine.platform.ManagerEngine;
 
 public class PluginManagerTest extends TestCase
 {
@@ -53,11 +53,11 @@ public class PluginManagerTest extends TestCase
 		try {
 			plugins = pluginManager.getPlugins();
 			assertFalse(plugins.length == 0);
-		//for (int i = 0; i < plugins.length; i++) {
-		//	LOGGER.debug(plugins[i].getInfo());
-		//}
+			//for (int i = 0; i < plugins.length; i++) {
+			//	LOGGER.debug(plugins[i].getInfo());
+			//}
 		} catch (PlatformException e) {
-			LOGGER.fatal("", e);			
+			LOGGER.fatal("", e);
 		}
 		assertFalse(plugins == null);
 	}
@@ -97,7 +97,7 @@ public class PluginManagerTest extends TestCase
 		// updates the existing one
 		//LocalPlugin plugin = new LocalPlugin();		
 		PluginInfo desc = new PluginInfo("plugin updated", "updated");
-		desc.setPluginID(20);		
+		desc.setPluginID(20);
 		try {
 			desc.setLocation(new URL("http://www.jakas.lokalizacja.com"));
 			success = true;
@@ -113,7 +113,7 @@ public class PluginManagerTest extends TestCase
 	{
 		PropertyConfigurator.configure("log.conf"); //$NON-NLS-1$
 		ManagerEngine engine = new ManagerEngine();
-		pluginManager = (PluginManager)engine.getPluginManager();
+		pluginManager = (PluginManager) engine.getPluginManager();
 	}
 
 	private static Logger LOGGER = Logger.getLogger(PluginManagerTest.class);

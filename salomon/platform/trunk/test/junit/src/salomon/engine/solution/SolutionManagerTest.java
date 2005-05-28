@@ -86,30 +86,29 @@ public class SolutionManagerTest extends TestCase
 	/**
 	 * 
 	 */
-//	public void testGetAddSolution()
-//	{
-//		LOGGER.info("SolutionManager.testGetAddSolution()");
-//
-//		//boolean result = false ; 
-//		//ISolution solution = Solution.getInstance() ;
-//		//_solutionManager.addSolution(solution) ;
-//
-//		ISolution solutions[] = _solutionManager.getSolutions();
-//		assertNotNull(solutions);
-//
-//		/*
-//		 for (int i = 0; i < solutions.length; i++) {
-//		 if (solutions[i].equals(solution)) {
-//		 result = true ;
-//		 break ;
-//		 }
-//		 }
-//		 
-//		 assertTrue(result);
-//		 */
-//
-//	}
-
+	//	public void testGetAddSolution()
+	//	{
+	//		LOGGER.info("SolutionManager.testGetAddSolution()");
+	//
+	//		//boolean result = false ; 
+	//		//ISolution solution = Solution.getInstance() ;
+	//		//_solutionManager.addSolution(solution) ;
+	//
+	//		ISolution solutions[] = _solutionManager.getSolutions();
+	//		assertNotNull(solutions);
+	//
+	//		/*
+	//		 for (int i = 0; i < solutions.length; i++) {
+	//		 if (solutions[i].equals(solution)) {
+	//		 result = true ;
+	//		 break ;
+	//		 }
+	//		 }
+	//		 
+	//		 assertTrue(result);
+	//		 */
+	//
+	//	}
 	public void testGetDataEngine()
 	{
 		ISolution solution = null;

@@ -18,6 +18,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * 
  */
+
 package salomon.engine.solution;
 
 import junit.framework.TestCase;
@@ -27,7 +28,8 @@ import org.apache.log4j.PropertyConfigurator;
 
 import salomon.engine.task.Task;
 
-public class TaskTest extends TestCase {
+public class TaskTest extends TestCase
+{
 
 	/**
 	 * 
@@ -36,45 +38,48 @@ public class TaskTest extends TestCase {
 	 */
 	private Task _Task;
 
-    
-    public static void main(String[] args) {
-        junit.textui.TestRunner.run(TaskTest.class);
-    }
+	public static void main(String[] args)
+	{
+		junit.textui.TestRunner.run(TaskTest.class);
+	}
 
-    /*
-     * @see TestCase#setUp()
-     */
-    protected void setUp() throws Exception {
-        super.setUp();
-        PropertyConfigurator.configure("log.conf");
-        
-    }
+	/*
+	 * @see TestCase#setUp()
+	 */
+	protected void setUp() throws Exception
+	{
+		super.setUp();
+		PropertyConfigurator.configure("log.conf");
 
-    /**
-     * @return
-     */
-    public void testCreateTask() {
-        LOGGER.info("TaskTest.testCreateTask");
-        //Task result = new Task();
-        //result.setName("test task") ;
-        //result.setStatus(Task.FINISHED) ;
-        //result.setProjectID(0xCAFE) ;
-        //result.setTaskId(0xF00D);
-        
-        // Need this if we wanna realy test sth 
-        //result.setPlugin(null) ; 
-        //result.setSettings(null) ;
-        //result.setResult(null);
-        //_Task = result ;
-    }
-    
-    /* (non-Javadoc)
-     * @see junit.framework.TestCase#tearDown()
-     */
-    protected void tearDown() throws Exception {
-        super.tearDown();
-        //_Task.delete() ;
-    }
+	}
 
-    private static Logger LOGGER = Logger.getLogger(TaskTest.class);
+	/**
+	 * @return
+	 */
+	public void testCreateTask()
+	{
+		LOGGER.info("TaskTest.testCreateTask");
+		//Task result = new Task();
+		//result.setName("test task") ;
+		//result.setStatus(Task.FINISHED) ;
+		//result.setProjectID(0xCAFE) ;
+		//result.setTaskId(0xF00D);
+
+		// Need this if we wanna realy test sth 
+		//result.setPlugin(null) ; 
+		//result.setSettings(null) ;
+		//result.setResult(null);
+		//_Task = result ;
+	}
+
+	/* (non-Javadoc)
+	 * @see junit.framework.TestCase#tearDown()
+	 */
+	protected void tearDown() throws Exception
+	{
+		super.tearDown();
+		//_Task.delete() ;
+	}
+
+	private static Logger LOGGER = Logger.getLogger(TaskTest.class);
 }

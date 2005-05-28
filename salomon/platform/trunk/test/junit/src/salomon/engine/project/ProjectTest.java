@@ -31,6 +31,7 @@ import org.apache.log4j.PropertyConfigurator;
 
 import salomon.engine.database.DBManager;
 import salomon.engine.database.queries.SQLSelect;
+
 import salomon.plugin.DescriptionTest;
 
 public class ProjectTest extends TestCase
@@ -47,10 +48,10 @@ public class ProjectTest extends TestCase
 	{
 		LOGGER.debug("ProjectTest.testDelete()");
 		boolean success = false;
-//		Project project = new Project();
-//		project.setProjectID(2);
+		//		Project project = new Project();
+		//		project.setProjectID(2);
 		try {
-//			project.delete();
+			//			project.delete();
 			success = true;
 			// _manager.commit();
 		} catch (Exception e) {
@@ -78,10 +79,10 @@ public class ProjectTest extends TestCase
 		assertTrue(success);
 		success = false;
 
-//		Project project = new Project();
+		//		Project project = new Project();
 		try {
 			if (resultSet.next()) {
-//				project.load(resultSet);
+				//				project.load(resultSet);
 				success = true;
 			} else {
 				LOGGER.debug("No data found");
@@ -97,17 +98,17 @@ public class ProjectTest extends TestCase
 			}
 		}
 		assertTrue(success);
-//		LOGGER.debug(project);
+		//		LOGGER.debug(project);
 	}
 
 	public void testSave()
 	{
 		LOGGER.debug("ProjectTest.testSave()");
 		boolean success = false;
-//		Project project = new Project();
-//		project.setName("test_project");
+		//		Project project = new Project();
+		//		project.setName("test_project");
 		try {
-//			project.save();
+			//			project.save();
 			_manager.commit();
 			success = true;
 		} catch (Exception e) {
@@ -120,16 +121,15 @@ public class ProjectTest extends TestCase
 	protected void setUp() throws Exception
 	{
 		PropertyConfigurator.configure("log.conf"); //$NON-NLS-1$   
-        
-        try {
-    		_manager = new DBManager();
-    		_manager.connect() ;   
-        } catch (SQLException e) {
-            LOGGER.fatal("", e);
-        } catch (ClassNotFoundException e) {
-            LOGGER.error("", e);
-        }
-        
+
+		try {
+			_manager = new DBManager();
+			_manager.connect();
+		} catch (SQLException e) {
+			LOGGER.fatal("", e);
+		} catch (ClassNotFoundException e) {
+			LOGGER.error("", e);
+		}
 
 	}
 

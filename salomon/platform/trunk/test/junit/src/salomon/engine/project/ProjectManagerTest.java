@@ -29,6 +29,7 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
 import salomon.engine.database.DBManager;
+
 import salomon.engine.platform.ManagerEngine;
 
 public class ProjectManagerTest extends TestCase
@@ -41,7 +42,7 @@ public class ProjectManagerTest extends TestCase
 	 */
 	private ProjectManager _projectManager;
 
-	public void testCreateProject() throws Exception 
+	public void testCreateProject() throws Exception
 	{
 		LOGGER.info("ProjectManagerTest.testCreateProject()");
 		boolean success = false;
@@ -50,12 +51,12 @@ public class ProjectManagerTest extends TestCase
 			success = true;
 		} catch (Exception e) {
 			LOGGER.fatal("", e);
-            throw e ;
+			throw e;
 		}
 		assertTrue(success);
 	}
-	
-	public void testGetProject() throws Exception 
+
+	public void testGetProject() throws Exception
 	{
 		LOGGER.info("ProjectManagerTest.testGetProject()");
 		boolean success = false;
@@ -64,7 +65,7 @@ public class ProjectManagerTest extends TestCase
 		//	success = true;
 		//} catch (Exception e) {
 		//	LOGGER.fatal("", e);
-        //    throw e ;
+		//    throw e ;
 		//}
 		assertTrue(success);
 	}
@@ -93,17 +94,17 @@ public class ProjectManagerTest extends TestCase
 	protected void setUp() throws Exception
 	{
 		PropertyConfigurator.configure("log.conf"); //$NON-NLS-1$           
-        
-        try {
-            new DBManager().connect();
-        } catch (SQLException e) {
-            LOGGER.fatal("", e);
-        } catch (ClassNotFoundException e) {
-            LOGGER.error("", e);
-        }
-        
+
+		try {
+			new DBManager().connect();
+		} catch (SQLException e) {
+			LOGGER.fatal("", e);
+		} catch (ClassNotFoundException e) {
+			LOGGER.error("", e);
+		}
+
 		ManagerEngine engine = new ManagerEngine();
-		_projectManager = (ProjectManager)engine.getProjectManager();
+		_projectManager = (ProjectManager) engine.getProjectManager();
 	}
 
 	private static Logger LOGGER = Logger.getLogger(ProjectManagerTest.class);
