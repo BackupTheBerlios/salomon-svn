@@ -144,7 +144,7 @@ public final class SolutionManagerGUI
 
 	public void chooseSolutionOnStart()
 	{
-		if (SwingUtilities.isEventDispatchThread()) {
+		if (SwingUtilities.isEventDispatchThread()) {			
 			chooseSolution();
 		} else {
 			try {

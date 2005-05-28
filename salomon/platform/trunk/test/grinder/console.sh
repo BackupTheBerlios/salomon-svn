@@ -1,6 +1,6 @@
 #!/bin/bash
-LIB_HOME=../../lib
-CP=../../lib/grinder/grinder.jar
+LIB_HOME=../../ext
+CP=../../ext/grinder/grinder.jar
 CP=$CP\;../../bin/
 for i in `ls $LIB_HOME | grep jar`
 do

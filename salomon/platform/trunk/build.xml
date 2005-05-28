@@ -1,8 +1,8 @@
 <project name="salomon" default="all" basedir=".">
 
 	<!-- Allows us to use the IzPack Ant task -->
-	<taskdef name="izpack" classpath="${basedir}/lib/compiler.jar" classname="com.izforge.izpack.ant.IzPackTask" />
-	<taskdef name="svn" classpath="${basedir}/lib/svn/svnant.jar;${basedir}/lib/svn/svnClientAdapter.jar;${basedir}/lib/svn/svnjavahl.jar" classname="org.tigris.subversion.svnant.SvnTask" />
+	<taskdef name="izpack" classpath="${basedir}/ext/compiler.jar" classname="com.izforge.izpack.ant.IzPackTask" />
+	<taskdef name="svn" classpath="${basedir}/ext/svn/svnant.jar;${basedir}/ext/svn/svnClientAdapter.jar;${basedir}/ext/svn/svnjavahl.jar" classname="org.tigris.subversion.svnant.SvnTask" />
 	<!--	resource="svntask.properties"/> -->
 
 	<property name="src_dir" value="src" />
@@ -54,7 +54,7 @@
 		<mkdir dir="${bin_dir}" />
 	</target>
 
-	<target name="build_salomon_jar" depends="build_rmi_stubs">
+	<target name="build_salomon_jar">
 		<copy file="all.policy" todir="${bin_dir}" />
 		<copy file="log.conf" todir="${bin_dir}" />
 		<jar destfile="salomon.jar" basedir="${bin_dir}" includes="salomon/** *.properties log.conf all.policy">
@@ -130,23 +130,8 @@
 	</target>
 
 
-
-	<target name="build_rmi_stubs" depends="compile_salomon">
-		<rmic classname="salomon.engine.remote.CentralController" base="${bin_dir}" stubversion="-v1.2"/>
-		<rmic classname="salomon.engine.remote.RemoteController" base="${bin_dir}" stubversion="-v1.2"/>
-		<rmic classname="salomon.engine.remote.RemoteManagerEngine" base="${bin_dir}" stubversion="-v1.2"/>
-		<rmic classname="salomon.engine.remote.plugin.RemotePluginManager" base="${bin_dir}" stubversion="-v1.2"/>
-		<rmic classname="salomon.engine.remote.project.RemoteProjectManager" base="${bin_dir}" stubversion="-v1.2"/>
-		<rmic classname="salomon.engine.remote.project.RemoteProject" base="${bin_dir}" stubversion="-v1.2"/>
-		<rmic classname="salomon.engine.remote.task.RemoteTaskManager" base="${bin_dir}" stubversion="-v1.2"/>
-		<rmic classname="salomon.engine.remote.task.RemoteTask" base="${bin_dir}" stubversion="-v1.2"/>
-		<rmic classname="salomon.engine.remote.task.RemoteTaskRunner" base="${bin_dir}" stubversion="-v1.2"/>
-		<rmic classname="salomon.engine.remote.solution.RemoteSolutionManager" base="${bin_dir}" stubversion="-v1.2"/>
-		<rmic classname="salomon.engine.remote.solution.RemoteSolution" base="${bin_dir}" stubversion="-v1.2"/>
-	</target>
-
 	<target name="all" depends="copy_salomon, copy_plugins, 
-		copy_libs, copy_drivers, copy_data_base, copy_init_db,
+		copy_libs, copy_drivers, copy_data_base,
 		copy_res, copy_config, copy_run_files, get_version" />
 
 	<target name="compress" depends="all">
