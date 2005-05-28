@@ -136,6 +136,7 @@ public final class ProjectInfo implements IInfo
 	public int save() throws SQLException, ClassNotFoundException
 	{
 		SQLUpdate update = new SQLUpdate(TABLE_NAME);
+		update.addValue("solution_id", _solutionID);
 		if (_name != null) {
 			update.addValue("project_name", _name);
 		}
