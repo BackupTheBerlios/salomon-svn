@@ -33,11 +33,13 @@ import javax.swing.JToolBar;
 
 import org.apache.log4j.Logger;
 
-import salomon.engine.Config;
 import salomon.engine.Messages;
 import salomon.engine.Starter;
 
-/** * Class represents main program frame. All components are put on its content * pane. */
+/**
+ * Class represents main program frame. All components are put on its content
+ * pane.
+ */
 public final class ControllerFrame extends JFrame
 {
 
@@ -48,8 +50,7 @@ public final class ControllerFrame extends JFrame
 	 */
 	private ControllerPanel _controllerPanel;
 
-	
-   //	private String _resourcesDir;
+	//	private String _resourcesDir;
 
 	/**
 	 * creates new ControllerFrame
@@ -57,7 +58,7 @@ public final class ControllerFrame extends JFrame
 	public ControllerFrame()
 	{
 		super();
-//		_resourcesDir = Config.getString("RESOURCES_DIR");
+		//		_resourcesDir = Config.getString("RESOURCES_DIR");
 		initialize();
 	}
 
@@ -79,7 +80,7 @@ public final class ControllerFrame extends JFrame
 	{
 		_controllerPanel = controllerPanel;
 	}
-	
+
 	/**
 	 * TODO: add comment.
 	 * @param toolBar

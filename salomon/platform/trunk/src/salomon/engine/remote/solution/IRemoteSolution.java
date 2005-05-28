@@ -25,17 +25,18 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 
 import salomon.engine.remote.project.IRemoteProjectManager;
-import salomon.platform.exception.PlatformException;
 
+import salomon.platform.exception.PlatformException;
 
 /**
  * @see salomon.engine.solution.ISolution
  */
 public interface IRemoteSolution extends Remote
 {
-    /**
-     * @see salomon.engine.solution.ISolution#getProjectManager() 
-     */
-    IRemoteProjectManager getProjectManager() throws PlatformException, RemoteException;
+	/**
+	 * @see salomon.engine.solution.ISolution#getProjectManager() 
+	 */
+	IRemoteProjectManager getProjectManager() throws PlatformException,
+			RemoteException;
 
 }

@@ -76,10 +76,10 @@ public class SimpleInteger implements IInteger
 	 */
 	public boolean equals(IObject object)
 	{
-        boolean result = false;
-        if (object.getType() == getType()) {
-        	result = (_value == ((SimpleInteger)object).getValue());
-        }
+		boolean result = false;
+		if (object.getType() == getType()) {
+			result = (_value == ((SimpleInteger) object).getValue());
+		}
 		return result;
 	}
 }

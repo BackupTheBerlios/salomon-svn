@@ -35,6 +35,6 @@ public interface IMasterControllerListener
 	/**
 	 * @pre event != null
 	 * @post $none
-     */
+	 */
 	void controllerRemoved(RemoteControllerEvent event);
 }

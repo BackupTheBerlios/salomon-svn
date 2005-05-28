@@ -27,6 +27,8 @@ package salomon.platform.serialization;
 public interface IStruct extends IObject
 {
 	void setField(String name, IObject value);
-    IObject getField(String name);
-    String[] getFieldNames();
+
+	IObject getField(String name);
+
+	String[] getFieldNames();
 }

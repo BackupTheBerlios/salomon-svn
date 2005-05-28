@@ -26,7 +26,6 @@ import java.rmi.server.UnicastRemoteObject;
 
 import org.apache.log4j.Logger;
 
-import salomon.engine.platform.IManagerEngine;
 import salomon.engine.remote.plugin.IRemotePluginManager;
 import salomon.engine.remote.plugin.RemotePluginManager;
 import salomon.engine.remote.project.IRemoteProjectManager;
@@ -35,9 +34,16 @@ import salomon.engine.remote.solution.IRemoteSolutionManager;
 import salomon.engine.remote.solution.RemoteSolutionManager;
 import salomon.engine.remote.task.IRemoteTaskManager;
 import salomon.engine.remote.task.RemoteTaskManager;
+
 import salomon.platform.exception.PlatformException;
 
-/** * Class representing remote instance of IManagerEngine. *  * @see salomon.engine.platform.IManagerEngine */
+import salomon.engine.platform.IManagerEngine;
+
+/**
+ * Class representing remote instance of IManagerEngine.
+ * 
+ * @see salomon.engine.platform.IManagerEngine
+ */
 public final class RemoteManagerEngine extends UnicastRemoteObject
 		implements IRemoteManagerEngine
 {

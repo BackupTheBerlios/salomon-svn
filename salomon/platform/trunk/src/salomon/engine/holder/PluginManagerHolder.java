@@ -29,7 +29,10 @@ import salomon.platform.exception.PlatformException;
 
 import salomon.plugin.IPlugin;
 
-/** * Holds pluginManager of current client. * It is used by ManagerEngineHolder to switch between connected clients. */
+/**
+ * Holds pluginManager of current client.
+ * It is used by ManagerEngineHolder to switch between connected clients.
+ */
 final class PluginManagerHolder implements IPluginManager
 {
 

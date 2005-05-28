@@ -25,7 +25,9 @@ import javax.swing.AbstractAction;
 
 import salomon.engine.controller.gui.TaskManagerGUI;
 
-/** * Represents abstract action caused while editing tasks. */
+/**
+ * Represents abstract action caused while editing tasks.
+ */
 abstract class AbstractTaskAction extends AbstractAction
 {
 

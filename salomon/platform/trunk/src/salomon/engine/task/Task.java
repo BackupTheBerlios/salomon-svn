@@ -32,14 +32,15 @@ import salomon.util.serialization.SimpleStruct;
 
 import salomon.platform.exception.PlatformException;
 
-import salomon.plugin.IPlugin;
 import salomon.plugin.IResult;
 import salomon.plugin.ISettings;
 
 import salomon.engine.platform.serialization.XMLSerializer;
 
-/** * Represents task which may be executed. It is an implementation of ITask
- * interface. */
+/**
+ * Represents task which may be executed. It is an implementation of ITask
+ * interface.
+ */
 public final class Task implements ITask
 {
 

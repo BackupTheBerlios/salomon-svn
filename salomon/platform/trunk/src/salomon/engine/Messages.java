@@ -57,7 +57,7 @@ public final class Messages
 	private static final Logger LOGGER = Logger.getLogger(Messages.class);
 
 	private static ResourceBundle RESOURCE_BUNDLE;
-    
+
 	static {
 		try {
 			RESOURCE_BUNDLE = ResourceBundle.getBundle(BUNDLE_NAME);

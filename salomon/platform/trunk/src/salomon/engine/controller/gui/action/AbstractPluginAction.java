@@ -25,7 +25,9 @@ import javax.swing.AbstractAction;
 
 import salomon.engine.controller.gui.PluginMangerGUI;
 
-/** * Represents abstract action caused while editing plugins. */
+/**
+ * Represents abstract action caused while editing plugins.
+ */
 public abstract class AbstractPluginAction extends AbstractAction
 {
 

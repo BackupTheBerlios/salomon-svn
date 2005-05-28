@@ -42,34 +42,35 @@ public final class SolutionInfo implements IInfo
 	 */
 	private DBManager _dbManager;
 
-	
 	private String _name;
-	
+
 	private String _info;
 
 	private String _host;
-	
+
 	private String _path;
-	
+
 	private String _user;
-	
+
 	private String _passwd;
 
 	private int _solutionID = 0;
-	
+
 	public SolutionInfo(DBManager manager)
 	{
 		_dbManager = manager;
 	}
-	
+
 	public Date getCreationDate() throws PlatformException
 	{
-		throw new UnsupportedOperationException("Method getCreationDate() not implemented yet!");
+		throw new UnsupportedOperationException(
+				"Method getCreationDate() not implemented yet!");
 	}
 
 	public Date getLastModificationDate() throws PlatformException
 	{
-		throw new UnsupportedOperationException("Method getLastModificationDate() not implemented yet!");
+		throw new UnsupportedOperationException(
+				"Method getLastModificationDate() not implemented yet!");
 	}
 
 	public boolean delete() throws SQLException, ClassNotFoundException
@@ -93,7 +94,7 @@ public final class SolutionInfo implements IInfo
 		_host = resultSet.getString("hostname");
 		_path = resultSet.getString("db_path");
 		_user = resultSet.getString("username");
-		_passwd = resultSet.getString("passwd");		
+		_passwd = resultSet.getString("passwd");
 	}
 
 	/**
@@ -125,7 +126,7 @@ public final class SolutionInfo implements IInfo
 		}
 		if (_passwd != null) {
 			update.addValue("passwd", _passwd);
-		}		
+		}
 		update.addValue("lm_date", new Date(System.currentTimeMillis()));
 		_solutionID = _dbManager.insertOrUpdate(update, "solution_id",
 				_solutionID, GEN_NAME);
@@ -136,7 +137,7 @@ public final class SolutionInfo implements IInfo
 	{
 		return _solutionID;
 	}
-	
+
 	/**
 	 * @return Returns the name.
 	 */
@@ -144,7 +145,7 @@ public final class SolutionInfo implements IInfo
 	{
 		return _name;
 	}
-	
+
 	/**
 	 * @return Returns the info.
 	 */
@@ -152,7 +153,7 @@ public final class SolutionInfo implements IInfo
 	{
 		return _info;
 	}
-	
+
 	/**
 	 * @return Returns the host.
 	 */
@@ -160,7 +161,7 @@ public final class SolutionInfo implements IInfo
 	{
 		return _host;
 	}
-	
+
 	/**
 	 * @return Returns the path.
 	 */
@@ -168,7 +169,7 @@ public final class SolutionInfo implements IInfo
 	{
 		return _path;
 	}
-	
+
 	/**
 	 * @return Returns the user.
 	 */
@@ -176,7 +177,7 @@ public final class SolutionInfo implements IInfo
 	{
 		return _user;
 	}
-	
+
 	/**
 	 * @return Returns the pass.
 	 */
@@ -184,7 +185,7 @@ public final class SolutionInfo implements IInfo
 	{
 		return _passwd;
 	}
-	
+
 	/**
 	 * @param info The info to set.
 	 */
@@ -233,7 +234,6 @@ public final class SolutionInfo implements IInfo
 		_passwd = pass;
 	}
 
-	
 	/**
 	 * @param solutionID The solutionID to set.
 	 */
@@ -244,11 +244,12 @@ public final class SolutionInfo implements IInfo
 
 	public String toString()
 	{
-		return "[" + _solutionID + ", " + _name + ", " + _info + ", " + _host + ", " + _path +", " + _user +", " + _passwd +"]";
+		return "[" + _solutionID + ", " + _name + ", " + _info + ", " + _host
+				+ ", " + _path + ", " + _user + ", " + _passwd + "]";
 	}
-	
+
 	public static final String TABLE_NAME = "solutions";
 
 	private static final String GEN_NAME = "gen_solution_id";
-	
+
 }

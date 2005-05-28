@@ -21,11 +21,9 @@
 
 package salomon.engine.database;
 
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import salomon.engine.Config;
 import salomon.engine.database.queries.SQLSelect;
 
 /**
@@ -33,24 +31,24 @@ import salomon.engine.database.queries.SQLSelect;
  */
 public final class ExternalDBManager
 {
-	private DBManager _externalManager;	
-	
+	private DBManager _externalManager;
+
 	public ExternalDBManager()
 	{
 		_externalManager = new DBManager();
 	}
-	
+
 	public void connect(String host, String dataBasePath, String user,
 			String passwd) throws SQLException, ClassNotFoundException
 	{
 		_externalManager.connect(host, dataBasePath, user, passwd);
 	}
-	
+
 	public void disconnect() throws SQLException
 	{
 		_externalManager.disconnect();
 	}
-	
+
 	/**
 	 * Method selects data from data base getting query from given SQLInsert
 	 * object.
@@ -61,6 +59,6 @@ public final class ExternalDBManager
 	 */
 	public ResultSet select(SQLSelect selectObject) throws SQLException
 	{
-		return _externalManager.select(selectObject); 
+		return _externalManager.select(selectObject);
 	}
 }

@@ -31,39 +31,39 @@ import salomon.platform.data.tree.ITreeManager;
  */
 public interface IDataEngine
 {
-    /**
-     * Return the TreeManager.
-     * @return The TreeManager
-     * 
-     * @pre $none
-     * @post $result != null
-     */
-    ITreeManager getTreeManager();
-    
 	/**
-     * Return the DataSetManager.
-     * @return The DataSetManager
-     * 
-     * @pre $none
-     * @post $result != null
+	 * Return the TreeManager.
+	 * @return The TreeManager
+	 * 
+	 * @pre $none
+	 * @post $result != null
+	 */
+	ITreeManager getTreeManager();
+
+	/**
+	 * Return the DataSetManager.
+	 * @return The DataSetManager
+	 * 
+	 * @pre $none
+	 * @post $result != null
 	 */
 	IDataSetManager getDataSetManager();
 
 	/**
-     * Return the RuleSetManager.
-     * @return The RuleSetManager
-     * 
-     * @pre $none
-     * @post $result != null
+	 * Return the RuleSetManager.
+	 * @return The RuleSetManager
+	 * 
+	 * @pre $none
+	 * @post $result != null
 	 */
 	IRuleSetManager getRuleSetManager();
 
 	/**
-     * Return the AttributeManager.
-     * @return The AttributeManager
-     * 
-     * @pre $none
-     * @post $result != null
+	 * Return the AttributeManager.
+	 * @return The AttributeManager
+	 * 
+	 * @pre $none
+	 * @post $result != null
 	 */
 	IAttributeManager getAttributeManager();
 }

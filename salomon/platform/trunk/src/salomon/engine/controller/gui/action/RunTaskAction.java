@@ -31,11 +31,11 @@ import salomon.engine.controller.gui.TaskManagerGUI;
 public final class RunTaskAction extends AbstractTaskAction
 {
 	/**
-     * Sets an object which method is called in implementation of
-     * actionPerformed() method
-     * 
-     * @param editionManager an instance of TaskManagerGUI
-     */
+	 * Sets an object which method is called in implementation of
+	 * actionPerformed() method
+	 * 
+	 * @param editionManager an instance of TaskManagerGUI
+	 */
 	public RunTaskAction(TaskManagerGUI taskEditionManager)
 	{
 		super(taskEditionManager);

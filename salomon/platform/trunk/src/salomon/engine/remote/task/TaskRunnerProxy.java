@@ -26,9 +26,12 @@ import java.rmi.RemoteException;
 import org.apache.log4j.Logger;
 
 import salomon.engine.task.ITaskRunner;
+
 import salomon.platform.exception.PlatformException;
 
-/** * @see salomon.engine.remote.task.IRemoteTaskRunner */
+/**
+ * @see salomon.engine.remote.task.IRemoteTaskRunner
+ */
 public final class TaskRunnerProxy implements ITaskRunner
 {
 
@@ -52,12 +55,12 @@ public final class TaskRunnerProxy implements ITaskRunner
 	 */
 	public void pause() throws PlatformException
 	{
-        try {
-            _remoteTaskRunner.pause();
-        } catch (RemoteException e) {
-            LOGGER.error("Remote error!", e);
-            throw new PlatformException(e.getLocalizedMessage());
-        }
+		try {
+			_remoteTaskRunner.pause();
+		} catch (RemoteException e) {
+			LOGGER.error("Remote error!", e);
+			throw new PlatformException(e.getLocalizedMessage());
+		}
 	}
 
 	/**
@@ -65,12 +68,12 @@ public final class TaskRunnerProxy implements ITaskRunner
 	 */
 	public void resume() throws PlatformException
 	{
-        try {
-            _remoteTaskRunner.resume();
-        } catch (RemoteException e) {
-            LOGGER.error("Remote error!", e);
-            throw new PlatformException(e.getLocalizedMessage());
-        }
+		try {
+			_remoteTaskRunner.resume();
+		} catch (RemoteException e) {
+			LOGGER.error("Remote error!", e);
+			throw new PlatformException(e.getLocalizedMessage());
+		}
 	}
 
 	/**
@@ -91,12 +94,12 @@ public final class TaskRunnerProxy implements ITaskRunner
 	 */
 	public void stop() throws PlatformException
 	{
-        try {
-            _remoteTaskRunner.stop();
-        } catch (RemoteException e) {
-            LOGGER.error("Remote error!", e);
-            throw new PlatformException(e.getLocalizedMessage());
-        }
+		try {
+			_remoteTaskRunner.stop();
+		} catch (RemoteException e) {
+			LOGGER.error("Remote error!", e);
+			throw new PlatformException(e.getLocalizedMessage());
+		}
 	}
 
 	private static final Logger LOGGER = Logger.getLogger(TaskRunnerProxy.class);

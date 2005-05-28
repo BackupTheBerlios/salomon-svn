@@ -30,7 +30,6 @@ import java.rmi.RMISecurityManager;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
-import java.sql.SQLException;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -50,7 +49,6 @@ import org.apache.log4j.Logger;
 import salomon.engine.Config;
 import salomon.engine.Messages;
 import salomon.engine.Resources;
-import salomon.engine.SQLConsole;
 import salomon.engine.controller.gui.ControllerFrame;
 import salomon.engine.controller.gui.ControllerPanel;
 import salomon.engine.controller.gui.PluginMangerGUI;
@@ -60,18 +58,19 @@ import salomon.engine.controller.gui.RemoteControllerPanel;
 import salomon.engine.controller.gui.SplashScreen;
 import salomon.engine.controller.gui.TaskManagerGUI;
 import salomon.engine.controller.gui.action.ActionManager;
-import salomon.engine.database.DBManager;
 import salomon.engine.holder.ManagerEngineHolder;
-import salomon.engine.platform.IManagerEngine;
-import salomon.engine.platform.ManagerEngine;
-
 import salomon.engine.remote.CentralController;
 import salomon.engine.remote.ICentralController;
 import salomon.engine.remote.event.IMasterControllerListener;
 import salomon.engine.remote.event.RemoteControllerEvent;
+
 import salomon.util.gui.Utils;
 
-/** * Server side implementation of IController interface. */
+import salomon.engine.platform.IManagerEngine;
+
+/**
+ * Server side implementation of IController interface.
+ */
 public final class MasterController implements IController
 {
 
@@ -81,7 +80,6 @@ public final class MasterController implements IController
 	 * @uml.associationEnd multiplicity="(0 1)"
 	 */
 	private ActionManager _actionManager;
-
 
 	private JPanel _contentPane;
 
@@ -113,7 +111,6 @@ public final class MasterController implements IController
 	 */
 	private CentralController _masterController;
 
-
 	private JMenuBar _menuBar;
 
 	/**
@@ -130,7 +127,6 @@ public final class MasterController implements IController
 	 */
 	private ProjectManagerGUI _projectManagerGUI;
 
-
 	private Registry _registry;
 
 	/**
@@ -140,7 +136,6 @@ public final class MasterController implements IController
 	 */
 	private RemoteControllerPanel _remoteControllerPanel;
 
-
 	private JSplitPane _splitPane;
 
 	/**
@@ -149,7 +144,6 @@ public final class MasterController implements IController
 	 * @uml.associationEnd multiplicity="(0 1)"
 	 */
 	private TaskManagerGUI _taskManagerGUI;
-
 
 	private JToolBar _toolBar;
 
@@ -192,8 +186,7 @@ public final class MasterController implements IController
 			_splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
 			_remoteControllerPanel = new RemoteControllerPanel(
 					_managerEngineHolder);
-			_splitPane.setLeftComponent(_remoteControllerPanel
-					.getControllerPanel());
+			_splitPane.setLeftComponent(_remoteControllerPanel.getControllerPanel());
 			_controllerPanel = new ControllerPanel(_taskManagerGUI,
 					_pluginMangerGUI, _actionManager);
 			_splitPane.setRightComponent(_controllerPanel);
@@ -244,11 +237,11 @@ public final class MasterController implements IController
 
 		// Creates a new empty project
 		// FIXME _managerEngineHolder.getProjectManager().ceateProject();
-		
+
 		//FIXME:
-//		_projectManagerGUI = new ProjectManagerGUI(_managerEngineHolder.getProjectManager());
-//		_taskManagerGUI = new TaskManagerGUI)_managerEngineHolder);
-//		_pluginMangerGUI = new PluginMangerGUI(_managerEngineHolder);
+		//		_projectManagerGUI = new ProjectManagerGUI(_managerEngineHolder.getProjectManager());
+		//		_taskManagerGUI = new TaskManagerGUI)_managerEngineHolder);
+		//		_pluginMangerGUI = new PluginMangerGUI(_managerEngineHolder);
 		_actionManager = new ActionManager(_projectManagerGUI, _taskManagerGUI,
 				_pluginMangerGUI);
 		_guiMenu = new MasterGUIMenu(_actionManager);
@@ -271,18 +264,17 @@ public final class MasterController implements IController
 		frame.setVisible(true);
 	}
 
-//	private void initialize()
-//	{
-//
-//	}
+	//	private void initialize()
+	//	{
+	//
+	//	}
 
 	private void initRMI()
 	{
 		try {
 			System.setSecurityManager(new RMISecurityManager());
 			_masterController = new CentralController();
-			_masterController
-					.addMasterControllerListener(new CentralControllerListener());
+			_masterController.addMasterControllerListener(new CentralControllerListener());
 			String rmiPortProperty = Config.getString("SERVER_PORT");
 			int rmiPort = RMI_PORT;
 			if ((rmiPortProperty != null) && (rmiPortProperty.length() != 0)) {
@@ -303,8 +295,7 @@ public final class MasterController implements IController
 			System.exit(1);
 		}
 		try {
-			ICentralController controller = (ICentralController) _registry
-					.lookup("CentralController");
+			ICentralController controller = (ICentralController) _registry.lookup("CentralController");
 			System.out.println(controller);
 		} catch (Exception e1) {
 			LOGGER.fatal("Exception was thrown!", e1);
@@ -321,8 +312,8 @@ public final class MasterController implements IController
 		 */
 		public void controllerAdded(RemoteControllerEvent event)
 		{
-			RemoteControllerGUI controllerGUI = new RemoteControllerGUI(event
-					.getController());
+			RemoteControllerGUI controllerGUI = new RemoteControllerGUI(
+					event.getController());
 			_remoteControllerPanel.addController(controllerGUI);
 		}
 
@@ -332,8 +323,8 @@ public final class MasterController implements IController
 		public void controllerRemoved(RemoteControllerEvent event)
 		{
 			LOGGER.debug("CentralControllerListener.controllerRemoved()");
-			RemoteControllerGUI controllerGUI = new RemoteControllerGUI(event
-					.getController());
+			RemoteControllerGUI controllerGUI = new RemoteControllerGUI(
+					event.getController());
 			controllerGUI.exit();
 			_remoteControllerPanel.removeController(controllerGUI);
 		}
@@ -462,8 +453,7 @@ public final class MasterController implements IController
 			if (_itmOpen == null) {
 				_itmOpen = new JMenuItem();
 				_itmOpen.setText(Messages.getString("MNU_OPEN")); //$NON-NLS-1$
-				_itmOpen.addActionListener(_actionManager
-						.getOpenProjectAction());
+				_itmOpen.addActionListener(_actionManager.getOpenProjectAction());
 			}
 			return _itmOpen;
 		}
@@ -473,8 +463,7 @@ public final class MasterController implements IController
 			if (_itmSave == null) {
 				_itmSave = new JMenuItem();
 				_itmSave.setText(Messages.getString("MNU_SAVE")); //$NON-NLS-1$
-				_itmSave.addActionListener(_actionManager
-						.getSaveProjectAction());
+				_itmSave.addActionListener(_actionManager.getSaveProjectAction());
 			}
 			return _itmSave;
 		}
@@ -517,7 +506,7 @@ public final class MasterController implements IController
 		void showSQLConsole()
 		{
 			throw new UnsupportedOperationException(
-					"Method showSQLConsole() not implemented yet!");			
+					"Method showSQLConsole() not implemented yet!");
 		}
 
 		private JPanel getOfficialAbout()
@@ -537,17 +526,17 @@ public final class MasterController implements IController
 				//
 				JPanel detailsPanel = new JPanel();
 				detailsPanel.setLayout(new GridLayout(0, 2));
-				JLabel lblVersionTitle = new JLabel(Messages
-						.getString("TIT_VERSION")); //$NON-NLS-1$
+				JLabel lblVersionTitle = new JLabel(
+						Messages.getString("TIT_VERSION")); //$NON-NLS-1$
 				JLabel lblVersion = new JLabel(Messages.getString("VERSION")); //$NON-NLS-1$
 				lblVersion.setForeground(Color.RED);
-				JLabel lblAuthorsTitle = new JLabel(Messages
-						.getString("TIT_AUTHORS")); //$NON-NLS-1$
+				JLabel lblAuthorsTitle = new JLabel(
+						Messages.getString("TIT_AUTHORS")); //$NON-NLS-1$
 				JLabel lblStub = new JLabel();
 				JLabel lblAuthor1 = new JLabel("Nikodem Jura"); //$NON-NLS-1$
 				JLabel lblAuthor2 = new JLabel("Krzysztof Rajda"); //$NON-NLS-1$
-				JLabel lblThanksTitle = new JLabel(Messages
-						.getString("TIT_THANKS")); //$NON-NLS-1$
+				JLabel lblThanksTitle = new JLabel(
+						Messages.getString("TIT_THANKS")); //$NON-NLS-1$
 				JLabel lblThanks = new JLabel("Jakub Galkowski"); //$NON-NLS-1$
 				// setting components on panel
 				detailsPanel.add(lblVersionTitle);
@@ -584,12 +573,12 @@ public final class MasterController implements IController
 				//
 				JPanel detailsPanel = new JPanel();
 				detailsPanel.setLayout(new GridLayout(0, 2));
-				JLabel lblVersionTitle = new JLabel(Messages
-						.getString("TIT_VERSION")); //$NON-NLS-1$
+				JLabel lblVersionTitle = new JLabel(
+						Messages.getString("TIT_VERSION")); //$NON-NLS-1$
 				JLabel lblVersion = new JLabel(Messages.getString("VERSION")); //$NON-NLS-1$
 				lblVersion.setForeground(Color.RED);
-				JLabel lblAuthorsTitle = new JLabel(Messages
-						.getString("TIT_AUTHORS")); //$NON-NLS-1$
+				JLabel lblAuthorsTitle = new JLabel(
+						Messages.getString("TIT_AUTHORS")); //$NON-NLS-1$
 				JLabel lblAuthors = new JLabel(Messages.getString("AUTHORS")); //$NON-NLS-1$
 				detailsPanel.add(lblVersionTitle);
 				detailsPanel.add(lblVersion);
@@ -613,8 +602,7 @@ public final class MasterController implements IController
 
 	}
 
-	private static final Logger LOGGER = Logger
-			.getLogger(MasterController.class);
+	private static final Logger LOGGER = Logger.getLogger(MasterController.class);
 
 	private static final int RMI_PORT = 4321;
 } // end ServerManager

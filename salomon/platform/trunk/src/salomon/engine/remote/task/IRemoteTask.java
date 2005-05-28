@@ -26,10 +26,16 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 
 import salomon.platform.exception.PlatformException;
+
 import salomon.plugin.IResult;
 import salomon.plugin.ISettings;
 
-/** * Remote version of ITask interface. It has all methods from ITask interface, * but adds throwing RemoteException declaration to each of methods. *  * @see salomon.engine.task.ITask */
+/**
+ * Remote version of ITask interface. It has all methods from ITask interface,
+ * but adds throwing RemoteException declaration to each of methods.
+ * 
+ * @see salomon.engine.task.ITask
+ */
 public interface IRemoteTask extends Remote
 {
 
@@ -136,9 +142,8 @@ public interface IRemoteTask extends Remote
 	 * 
 	 * @uml.property name="settings"
 	 */
-	void setSettings(ISettings settings)
-		throws RemoteException,
-		PlatformException;
+	void setSettings(ISettings settings) throws RemoteException,
+			PlatformException;
 
 	/**
 	 * @see salomon.engine.task.ITask#setStatus(String)

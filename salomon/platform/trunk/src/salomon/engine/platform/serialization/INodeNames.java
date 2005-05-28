@@ -21,8 +21,7 @@ interface INodeNames
 
 	public static final String ATTR_VALUE = "value";
 
-	public static final Logger LOGGER = Logger
-			.getLogger(StructDeserializer.class);
+	public static final Logger LOGGER = Logger.getLogger(StructDeserializer.class);
 
 	public static final String NODE_INT = "int";
 

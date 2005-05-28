@@ -26,7 +26,10 @@ import salomon.engine.controller.gui.ProjectManagerGUI;
 import salomon.engine.controller.gui.SolutionManagerGUI;
 import salomon.engine.controller.gui.TaskManagerGUI;
 
-/** * Class manages with actions. It creates and holds actions used to create most * of buttons in program. */
+/**
+ * Class manages with actions. It creates and holds actions used to create most
+ * of buttons in program.
+ */
 public final class ActionManager
 {
 
@@ -395,27 +398,27 @@ public final class ActionManager
 		return _viewProjectsAction;
 	}
 
-    public ViewSolutionAction getViewSolutionAction()
-    {
-        if (_viewSolutionAction == null) {
-            _viewSolutionAction = new ViewSolutionAction(_solutionManagerGUI);
-        }
-        return _viewSolutionAction;
-    }
-    
-    public ViewPluginsAction getViewPluginsAction()
-    {
-        if (_viewPluginsAction == null) {
-            _viewPluginsAction = new ViewPluginsAction(_pluginMangerGUI);
-        }
-        return _viewPluginsAction;
-    }
-    
-    public ViewTaskAction getViewTasksAction()
-    {
-        if (_viewTaskAction == null) {
-            _viewTaskAction = new ViewTaskAction(_taskManagerGUI);
-        }
-        return _viewTaskAction;
-    }
+	public ViewSolutionAction getViewSolutionAction()
+	{
+		if (_viewSolutionAction == null) {
+			_viewSolutionAction = new ViewSolutionAction(_solutionManagerGUI);
+		}
+		return _viewSolutionAction;
+	}
+
+	public ViewPluginsAction getViewPluginsAction()
+	{
+		if (_viewPluginsAction == null) {
+			_viewPluginsAction = new ViewPluginsAction(_pluginMangerGUI);
+		}
+		return _viewPluginsAction;
+	}
+
+	public ViewTaskAction getViewTasksAction()
+	{
+		if (_viewTaskAction == null) {
+			_viewTaskAction = new ViewTaskAction(_taskManagerGUI);
+		}
+		return _viewTaskAction;
+	}
 }

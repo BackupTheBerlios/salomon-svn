@@ -27,15 +27,15 @@ package salomon.engine.database.queries;
  */
 final class SQLPair
 {
-    private String _columnName;
+	private String _columnName;
 
-    private String _value;
+	private String _value;
 
-    SQLPair(String columnName, String value)
-    {
-        _columnName = columnName;
-        _value = value;
-    }
+	SQLPair(String columnName, String value)
+	{
+		_columnName = columnName;
+		_value = value;
+	}
 
 	/**
 	 * @return Returns the columnName.
@@ -44,6 +44,7 @@ final class SQLPair
 	{
 		return _columnName;
 	}
+
 	/**
 	 * @return Returns the value.
 	 */

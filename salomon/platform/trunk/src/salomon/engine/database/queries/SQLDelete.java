@@ -36,7 +36,7 @@ public final class SQLDelete
 	private String _tableName;
 
 	public SQLDelete()
-	{        
+	{
 		_conditions = new LinkedList<String>();
 	}
 
@@ -92,30 +92,30 @@ public final class SQLDelete
 	 * @param value value of condition
 	 */
 	public void addCondition(String condition, String value)
-	{        
-        SQLHelper.addCondition(_conditions, condition, value);
+	{
+		SQLHelper.addCondition(_conditions, condition, value);
 	}
-    
-    /**
+
+	/**
 	 * Method returns SELECT query.
 	 * 
 	 * @return SELECT query
 	 */
-    public String getQuery()
-    {
-        String query = "DELETE FROM " + _tableName; //$NON-NLS-1$
-        
-        // adding conditions
-        if (!_conditions.isEmpty()) {
-            query += " WHERE "; //$NON-NLS-1$
-            Iterator<String> condIter = _conditions.iterator();
-            query += condIter.next();
-            while (condIter.hasNext()) {
-                query += " AND " + condIter.next();
-            }
-        }
-        return query;
-    }
+	public String getQuery()
+	{
+		String query = "DELETE FROM " + _tableName; //$NON-NLS-1$
+
+		// adding conditions
+		if (!_conditions.isEmpty()) {
+			query += " WHERE "; //$NON-NLS-1$
+			Iterator<String> condIter = _conditions.iterator();
+			query += condIter.next();
+			while (condIter.hasNext()) {
+				query += " AND " + condIter.next();
+			}
+		}
+		return query;
+	}
 
 	/**
 	 * Sets table which values will be inserted to

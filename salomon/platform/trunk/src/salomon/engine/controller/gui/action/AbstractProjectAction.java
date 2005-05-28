@@ -25,7 +25,9 @@ import javax.swing.AbstractAction;
 
 import salomon.engine.controller.gui.ProjectManagerGUI;
 
-/** * Represents abstract action caused while editing projects. */
+/**
+ * Represents abstract action caused while editing projects.
+ */
 abstract class AbstractProjectAction extends AbstractAction
 {
 

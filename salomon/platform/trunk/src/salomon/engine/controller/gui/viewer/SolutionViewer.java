@@ -26,25 +26,25 @@ import salomon.engine.solution.SolutionInfo;
 
 public class SolutionViewer extends ObjectViewer
 {
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    public SolutionViewer(DBManager dbManager)
-    {
-        super(dbManager);
-    }
+	public SolutionViewer(DBManager dbManager)
+	{
+		super(dbManager);
+	}
 
-    @Override
-    public void initList()
-    {
-        _select.addTable(SolutionInfo.TABLE_NAME);
-        addColumn("solutionId", "SOLUTION_ID");
-        addColumn("name", "SOLUTION_NAME");
-        addColumn("info", "SOLUTION_INFO");
-        addColumn("", "LM_DATE");
-        
-        addFilteredField("id"  , "SOLUTION_ID");
-        addFilteredField("name", "SOLUTION_NAME");
-        addFilteredField("info", "SOLUTION_INFO");
-        addFilteredField("Date", "LM_DATE");
-    }
+	@Override
+	public void initList()
+	{
+		_select.addTable(SolutionInfo.TABLE_NAME);
+		addColumn("solutionId", "SOLUTION_ID");
+		addColumn("name", "SOLUTION_NAME");
+		addColumn("info", "SOLUTION_INFO");
+		addColumn("", "LM_DATE");
+
+		addFilteredField("id", "SOLUTION_ID");
+		addFilteredField("name", "SOLUTION_NAME");
+		addFilteredField("info", "SOLUTION_INFO");
+		addFilteredField("Date", "LM_DATE");
+	}
 }

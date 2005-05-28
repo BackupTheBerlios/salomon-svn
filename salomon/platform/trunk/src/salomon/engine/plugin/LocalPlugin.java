@@ -17,7 +17,9 @@ import salomon.plugin.IResultComponent;
 import salomon.plugin.ISettingComponent;
 import salomon.plugin.ISettings;
 
-/** * Class helps managing plugin loading */
+/**
+ * Class helps managing plugin loading
+ */
 public final class LocalPlugin implements ILocalPlugin, Serializable
 {
 
@@ -102,7 +104,7 @@ public final class LocalPlugin implements ILocalPlugin, Serializable
 	public String toString()
 	{
 		// TODO: change it to name:version or sth
-		return _pluginInfo.getName(); 
+		return _pluginInfo.getName();
 	}
 
 	private static final Logger LOGGER = Logger.getLogger(LocalPlugin.class);

@@ -33,28 +33,40 @@ import salomon.platform.data.tree.ITree;
 public class Tree implements ITree
 {
 
-    public Date getCreateDate() {
-        throw new UnsupportedOperationException("Method getCreateDate() not implemented yet!");
-    }
+	public Date getCreateDate()
+	{
+		throw new UnsupportedOperationException(
+				"Method getCreateDate() not implemented yet!");
+	}
 
-    public IDataSource getDataSource() {
-        throw new UnsupportedOperationException("Method getDataSource() not implemented yet!");
-    }
+	public IDataSource getDataSource()
+	{
+		throw new UnsupportedOperationException(
+				"Method getDataSource() not implemented yet!");
+	}
 
-    public int getId() {
-        throw new UnsupportedOperationException("Method getId() not implemented yet!");
-    }
+	public int getId()
+	{
+		throw new UnsupportedOperationException(
+				"Method getId() not implemented yet!");
+	}
 
-    public String getInfo() {
-        throw new UnsupportedOperationException("Method getInfo() not implemented yet!");
-    }
+	public String getInfo()
+	{
+		throw new UnsupportedOperationException(
+				"Method getInfo() not implemented yet!");
+	}
 
-    public String getName() {
-        throw new UnsupportedOperationException("Method getName() not implemented yet!");
-    }
+	public String getName()
+	{
+		throw new UnsupportedOperationException(
+				"Method getName() not implemented yet!");
+	}
 
-    public INode getRoot() {
-        throw new UnsupportedOperationException("Method getRoot() not implemented yet!");
-    }
+	public INode getRoot()
+	{
+		throw new UnsupportedOperationException(
+				"Method getRoot() not implemented yet!");
+	}
 
 }

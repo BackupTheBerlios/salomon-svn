@@ -40,7 +40,9 @@ import salomon.engine.Messages;
 import salomon.engine.Resources;
 import salomon.engine.Version;
 
-/** * Class represents splash screen. */
+/**
+ * Class represents splash screen.
+ */
 public final class SplashScreen
 {
 	private String _resourcesDir = null;
@@ -176,9 +178,10 @@ public final class SplashScreen
 			g.setFont(newFont);
 			String version = Messages.getString("TIT_VERSION") + ": "
 					+ Messages.getString("VERSION");
-            String revision = Messages.getString("BUILD") + ": "  + Version.getString("REVISION_VERSION");
+			String revision = Messages.getString("BUILD") + ": "
+					+ Version.getString("REVISION_VERSION");
 			g.drawString(version, 255, 260);
-            g.drawString(revision, 255, 290);
+			g.drawString(revision, 255, 290);
 			// setting back old color and font
 			g.setColor(oldColor);
 			g.setFont(oldFont);

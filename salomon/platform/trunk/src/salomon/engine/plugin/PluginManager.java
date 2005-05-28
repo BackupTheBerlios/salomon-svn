@@ -22,7 +22,6 @@
 package salomon.engine.plugin;
 
 import java.sql.ResultSet;
-import java.util.Collection;
 import java.util.LinkedList;
 
 import org.apache.log4j.Logger;
@@ -34,7 +33,9 @@ import salomon.engine.database.queries.SQLSelect;
 import salomon.platform.IUniqueId;
 import salomon.platform.exception.PlatformException;
 
-/** * Class manager available plugins. */
+/**
+ * Class manager available plugins.
+ */
 public final class PluginManager implements IPluginManager
 {
 
@@ -191,7 +192,8 @@ public final class PluginManager implements IPluginManager
 
 	public boolean removeAll() throws PlatformException
 	{
-		throw new UnsupportedOperationException("Method removeAll() not implemented yet!");
+		throw new UnsupportedOperationException(
+				"Method removeAll() not implemented yet!");
 	}
 
 	public void clearPluginList() throws PlatformException
@@ -199,7 +201,8 @@ public final class PluginManager implements IPluginManager
 		_plugins.clear();
 	}
 
-    public DBManager getDBManager() {
-        return _dbManager;
-    }
+	public DBManager getDBManager()
+	{
+		return _dbManager;
+	}
 }

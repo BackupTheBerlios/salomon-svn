@@ -42,7 +42,7 @@ public final class ProjectViewer extends ObjectViewer
 		addColumn("projectId", "project_id");
 		addColumn("name", "project_name");
 		addColumn("info", "project_info");
-		
+
 		addFilteredField("id", "project_id");
 		addFilteredField("name", "project_name");
 		addFilteredField("info", "project_info");

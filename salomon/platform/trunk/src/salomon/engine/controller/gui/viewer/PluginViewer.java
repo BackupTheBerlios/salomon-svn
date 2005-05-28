@@ -23,30 +23,29 @@ package salomon.engine.controller.gui.viewer;
 
 import salomon.engine.database.DBManager;
 import salomon.engine.plugin.PluginInfo;
-import salomon.engine.solution.SolutionInfo;
 
 public class PluginViewer extends ObjectViewer
 {
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    public PluginViewer(DBManager dbManager)
-    {
-        super(dbManager);
-    }
+	public PluginViewer(DBManager dbManager)
+	{
+		super(dbManager);
+	}
 
-    @Override
-    public void initList()
-    {
-        _select.addTable(PluginInfo.TABLE_NAME);
-        addColumn("Id", "plugin_id");
-        addColumn("Name", "plugin_name");
-        addColumn("Info", "plugin_info");
-        addColumn("Location", "location");
-        addColumn("", "lm_date");
+	@Override
+	public void initList()
+	{
+		_select.addTable(PluginInfo.TABLE_NAME);
+		addColumn("Id", "plugin_id");
+		addColumn("Name", "plugin_name");
+		addColumn("Info", "plugin_info");
+		addColumn("Location", "location");
+		addColumn("", "lm_date");
 
-        addFilteredField("id", "solution_id");
-        addFilteredField("name", "solution_name");
-        addFilteredField("info", "solution_info");
-        addFilteredField("location", "location");
-    }
+		addFilteredField("id", "solution_id");
+		addFilteredField("name", "solution_name");
+		addFilteredField("info", "solution_info");
+		addFilteredField("location", "location");
+	}
 }

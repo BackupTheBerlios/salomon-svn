@@ -25,5 +25,5 @@ package salomon.platform.data.rule;
  */
 public interface IRule
 {
-    //TODO: add methods
+	//TODO: add methods
 }

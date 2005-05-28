@@ -21,7 +21,6 @@
 
 package salomon.engine;
 
-import java.sql.SQLException;
 import java.util.MissingResourceException;
 
 import org.apache.log4j.Logger;
@@ -38,7 +37,9 @@ import salomon.util.gui.Utils;
 import salomon.engine.platform.IManagerEngine;
 import salomon.engine.platform.ManagerEngine;
 
-/** * Class starts application execution. */
+/**
+ * Class starts application execution.
+ */
 public final class Starter
 {
 
@@ -55,7 +56,6 @@ public final class Starter
 	 * @uml.associationEnd multiplicity="(0 1)"
 	 */
 	private IManagerEngine _managerEngine;
-
 
 	// private ProjectManager _projectManager = null;
 

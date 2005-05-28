@@ -36,7 +36,6 @@ public final class AddTaskAction extends AbstractTaskAction
 	 */
 	private LocalPlugin _plugin;
 
-	
 	/**
 	 * @param editionManager
 	 */

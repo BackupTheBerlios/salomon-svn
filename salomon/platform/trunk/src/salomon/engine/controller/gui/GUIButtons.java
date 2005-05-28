@@ -34,7 +34,9 @@ import org.apache.log4j.Logger;
 import salomon.engine.Config;
 import salomon.engine.Resources;
 
-/** * Class agregates all buttons used in GUIController. */
+/**
+ * Class agregates all buttons used in GUIController.
+ */
 public final class GUIButtons
 {
 	private JButton _btnAdd = null;
@@ -57,7 +59,6 @@ public final class GUIButtons
 	 * @uml.associationEnd multiplicity="(0 1)"
 	 */
 	private ManipulationListener _manipulationListener = null;
-
 
 	private String _resourcesDir = null;
 
@@ -158,7 +159,8 @@ public final class GUIButtons
 	JButton getBtnRemoveAll()
 	{
 		if (_btnRemoveAll == null) {
-			_btnRemoveAll = createManipulationButton(Resources.getString("ICO_TASK_REMOVEALL"), null); //$NON-NLS-1$
+			_btnRemoveAll = createManipulationButton(
+					Resources.getString("ICO_TASK_REMOVEALL"), null); //$NON-NLS-1$
 		}
 		return _btnRemoveAll;
 	}

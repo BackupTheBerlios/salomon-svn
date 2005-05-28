@@ -33,7 +33,7 @@ import salomon.engine.Starter;
  */
 public final class ExitAction extends AbstractAction
 {
-	
+
 	/**
 	 * Sets an object which method is called in implementation of actionPerformed()
 	 * of method
@@ -42,7 +42,7 @@ public final class ExitAction extends AbstractAction
 	{
 		super();
 	}
-	
+
 	/**
 	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
 	 */
@@ -50,5 +50,5 @@ public final class ExitAction extends AbstractAction
 	{
 		Starter.exit();
 	}
-	
+
 }

@@ -30,11 +30,16 @@ import org.apache.log4j.Logger;
 import salomon.engine.plugin.ILocalPlugin;
 import salomon.engine.plugin.PluginLoader;
 import salomon.engine.task.ITask;
+
 import salomon.platform.exception.PlatformException;
+
 import salomon.plugin.IResult;
 import salomon.plugin.ISettings;
 
-/** * Class representing remote instance of ITask. * @see salomon.engine.task.ITask */
+/**
+ * Class representing remote instance of ITask.
+ * @see salomon.engine.task.ITask
+ */
 public final class RemoteTask extends UnicastRemoteObject
 		implements IRemoteTask
 {
@@ -125,10 +130,10 @@ public final class RemoteTask extends UnicastRemoteObject
 	public void setPlugin(URL plugin) throws RemoteException, PlatformException
 	{
 		try {
-			_task.setPlugin((ILocalPlugin)PluginLoader.loadPlugin(plugin));
+			_task.setPlugin((ILocalPlugin) PluginLoader.loadPlugin(plugin));
 		} catch (Exception e) {
 			LOGGER.fatal("", e);
-            throw new PlatformException(e.getLocalizedMessage());
+			throw new PlatformException(e.getLocalizedMessage());
 		}
 	}
 
@@ -137,7 +142,8 @@ public final class RemoteTask extends UnicastRemoteObject
 	 * 
 	 * @see IRemoteTask#setResult(IResult)
 	 */
-	public void setResult(IResult result) throws RemoteException, PlatformException
+	public void setResult(IResult result) throws RemoteException,
+			PlatformException
 	{
 		_task.setResult(result);
 	}
@@ -145,7 +151,8 @@ public final class RemoteTask extends UnicastRemoteObject
 	/**
 	 * @see IRemoteTask#setSettings(salomon.plugin.ISettings)
 	 */
-	public void setSettings(ISettings settings) throws RemoteException, PlatformException
+	public void setSettings(ISettings settings) throws RemoteException,
+			PlatformException
 	{
 		_task.setSettings(settings);
 	}
@@ -153,7 +160,8 @@ public final class RemoteTask extends UnicastRemoteObject
 	/**
 	 * @see IRemoteTask#setStatus(java.lang.String)
 	 */
-	public void setStatus(String status) throws RemoteException, PlatformException
+	public void setStatus(String status) throws RemoteException,
+			PlatformException
 	{
 		//_task.setStatus(status);
 		throw new UnsupportedOperationException(

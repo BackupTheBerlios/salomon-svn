@@ -41,7 +41,7 @@ public final class EditSolutionAction extends AbstractSolutionAction
 	{
 		super(solutionEditionManager);
 	}
-	
+
 	public void actionPerformed(ActionEvent event)
 	{
 		_solutionEditionManager.editSolution();

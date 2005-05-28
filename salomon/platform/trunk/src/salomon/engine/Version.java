@@ -31,37 +31,37 @@ import org.apache.log4j.Logger;
  */
 public class Version
 {
-    private Version()
-    {
-        // prevent creating an instance
-    }
+	private Version()
+	{
+		// prevent creating an instance
+	}
 
 	/**
 	 * reads specified property
 	 * @param key
 	 * @return String matching the given key
 	 */
-    public static String getString(String key)
-    {
-        try {
-            return RESOURCE_BUNDLE.getString(key);
-        } catch (MissingResourceException e) {
-            LOGGER.fatal("", e);
-            return '!' + key + '!';
-        }
-    }
+	public static String getString(String key)
+	{
+		try {
+			return RESOURCE_BUNDLE.getString(key);
+		} catch (MissingResourceException e) {
+			LOGGER.fatal("", e);
+			return '!' + key + '!';
+		}
+	}
 
-    private static final String BUNDLE_NAME = "version";//$NON-NLS-1$
+	private static final String BUNDLE_NAME = "version";//$NON-NLS-1$
 
-    private static final Logger LOGGER = Logger.getLogger(Version.class);
+	private static final Logger LOGGER = Logger.getLogger(Version.class);
 
-    private static ResourceBundle RESOURCE_BUNDLE;
-    
-    static {
-        try {
-            RESOURCE_BUNDLE = ResourceBundle.getBundle(BUNDLE_NAME);
-        } catch (Exception e) {
-            LOGGER.fatal("", e);
-        }
-    }
+	private static ResourceBundle RESOURCE_BUNDLE;
+
+	static {
+		try {
+			RESOURCE_BUNDLE = ResourceBundle.getBundle(BUNDLE_NAME);
+		} catch (Exception e) {
+			LOGGER.fatal("", e);
+		}
+	}
 }

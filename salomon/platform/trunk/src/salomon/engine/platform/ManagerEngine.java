@@ -35,8 +35,10 @@ import salomon.engine.task.TaskManager;
 
 import salomon.platform.exception.PlatformException;
 
-/** * Class creates and holds all managers used by plugins. They are created only
- * in this class to avoid multiple instances. */
+/**
+ * Class creates and holds all managers used by plugins. They are created only
+ * in this class to avoid multiple instances.
+ */
 public final class ManagerEngine implements IManagerEngine
 {
 
@@ -84,15 +86,16 @@ public final class ManagerEngine implements IManagerEngine
 	{
 		return _dbManager;
 	}
-	
-	public ManagerEngine() throws SQLException, ClassNotFoundException, PlatformException
+
+	public ManagerEngine() throws SQLException, ClassNotFoundException,
+			PlatformException
 	{
 		//TODO: change it after implementing Solution
 		_dbManager = new DBManager();
 		_dbManager.connect();
 		_solutionManager = new SolutionManager(this, _dbManager);
 		_projectManager = new ProjectManager(this, _dbManager);
-		_taskManager = new TaskManager(this, _dbManager);		
+		_taskManager = new TaskManager(this, _dbManager);
 		_pluginManager = new PluginManager(_dbManager);
 	}
 
@@ -125,7 +128,7 @@ public final class ManagerEngine implements IManagerEngine
 	 */
 	public ISolutionManager getSolutionManager()
 	{
-        return _solutionManager;
+		return _solutionManager;
 	}
 
 	public ITaskManager getTasksManager()

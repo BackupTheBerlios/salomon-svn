@@ -62,7 +62,9 @@ import salomon.platform.exception.PlatformException;
 import salomon.engine.platform.IManagerEngine;
 import salomon.engine.platform.ManagerEngine;
 
-/** * Local implementation of IController interface. */
+/**
+ * Local implementation of IController interface.
+ */
 public final class LocalController implements IController
 {
 
@@ -93,7 +95,6 @@ public final class LocalController implements IController
 	 * @uml.associationEnd multiplicity="(0 1)"
 	 */
 	private IManagerEngine _managerEngine;
-
 
 	private JMenuBar _menuBar;
 
@@ -151,7 +152,7 @@ public final class LocalController implements IController
 			_menuBar = new JMenuBar();
 			JMenu solution = new JMenu(Messages.getString("MNU_SOLUTION")); //$NON-NLS-1$
 			solution.add(_guiMenu.getItmNewSolution());
-			solution.add(_guiMenu.getItmOpenSolution());				
+			solution.add(_guiMenu.getItmOpenSolution());
 			solution.add(_guiMenu.getItmSaveSolution());
 			solution.addSeparator();
 			solution.add(_guiMenu.getItmExit());
@@ -161,9 +162,9 @@ public final class LocalController implements IController
 			project.add(_guiMenu.getItmSaveProject());
 			JMenu tools = new JMenu(Messages.getString("MNU_TOOLS")); //$NON-NLS-1$
 			tools.add(_guiMenu.getItmViewProjects());
-            tools.add(_guiMenu.getItmViewSolutions()) ;
-            tools.add(_guiMenu.getItmViewPlugins()) ;
-            tools.add(_guiMenu.getItmViewTasks()) ;
+			tools.add(_guiMenu.getItmViewSolutions());
+			tools.add(_guiMenu.getItmViewPlugins());
+			tools.add(_guiMenu.getItmViewTasks());
 			tools.addSeparator();
 			tools.add(_guiMenu.getItmSQLConsole());
 			JMenu help = new JMenu(Messages.getString("MNU_HELP")); //$NON-NLS-1$           
@@ -192,12 +193,12 @@ public final class LocalController implements IController
 	 */
 	public void start(IManagerEngine managerEngine)
 	{
-		_managerEngine = managerEngine;				
+		_managerEngine = managerEngine;
 		SplashScreen.show();
 		//FIXME: add cascade model support
 		try {
 			_solutionManagerGUI = new SolutionManagerGUI(
-					_managerEngine.getSolutionManager());			
+					_managerEngine.getSolutionManager());
 			_projectManagerGUI = new ProjectManagerGUI(
 					_managerEngine.getProjectManager());
 			_taskManagerGUI = new TaskManagerGUI(
@@ -208,22 +209,22 @@ public final class LocalController implements IController
 			LOGGER.fatal("", e);
 			Utils.showErrorMessage("ERR_CANNOT_SHOW_GUI");
 			return;
-		}		
+		}
 
-		_actionManager = new ActionManager(_solutionManagerGUI, _projectManagerGUI, _taskManagerGUI,
-				_pluginMangerGUI);		
-		
+		_actionManager = new ActionManager(_solutionManagerGUI,
+				_projectManagerGUI, _taskManagerGUI, _pluginMangerGUI);
+
 		_guiMenu = new LocalGUIMenu(_actionManager);
 		ControllerFrame frame = new ControllerFrame();
-		_solutionManagerGUI.setParent(frame);		
+		_solutionManagerGUI.setParent(frame);
 		_projectManagerGUI.setParent(frame);
 		_taskManagerGUI.setParent(frame);
-		
+
 		_solutionManagerGUI.setActionManager(_actionManager);
 		_pluginMangerGUI.setActionManager(_actionManager);
 		_taskManagerGUI.setActionManager(_actionManager);
 		_projectManagerGUI.setTaskManagerGUI(_taskManagerGUI);
-		
+
 		SplashScreen.hide();
 		// choosing solution, add support for exiting application
 		// if user doesn't choose solution
@@ -231,12 +232,12 @@ public final class LocalController implements IController
 		// loading plugins
 		_pluginMangerGUI.refresh();
 		_taskManagerGUI.refresh();
-		
+
 		frame.setContentPane(getJContentPane());
 		frame.setJMenuBar(getJMenuBar());
 		frame.setJToolBar(getToolBar());
 		frame.setControllerPanel(_contentPane);
-		Utils.setParent(getJContentPane());		
+		Utils.setParent(getJContentPane());
 		frame.setVisible(true);
 	}
 
@@ -254,7 +255,7 @@ public final class LocalController implements IController
 		private JButton _btnSaveProject;
 
 		private JButton _btnSaveSolution;
-		
+
 		private JMenuItem _itmAbout;
 
 		private JMenuItem _itmExit;
@@ -270,24 +271,22 @@ public final class LocalController implements IController
 		private JMenuItem _itmSaveProject;
 
 		private JMenuItem _itmSaveSolution;
-		
+
 		private JMenuItem _itmSQLConsole;
-		
+
 		private JMenuItem _itmViewProjects;
-        
-        private JMenuItem _itmViewSolutions;
-        
+
+		private JMenuItem _itmViewSolutions;
+
 		private JPanel _pnlAbout;
 
 		private JComponent _positionComponent;
 
 		private String _resourcesDir;
 
-        private JMenuItem _itmViewTasks;
+		private JMenuItem _itmViewTasks;
 
-        private JMenuItem _itmViewPlugins;
-
-        
+		private JMenuItem _itmViewPlugins;
 
 		/**
 		 * creates LocalGUIMenu
@@ -298,20 +297,24 @@ public final class LocalController implements IController
 			_actionManager = actionManager;
 			_resourcesDir = Config.getString("RESOURCES_DIR");
 		}
+
 		JButton getBtnNewProject()
 		{
 			if (_btnNewProject == null) {
-				_btnNewProject = new JButton(_actionManager.getNewProjectAction());
+				_btnNewProject = new JButton(
+						_actionManager.getNewProjectAction());
 				_btnNewProject.setIcon(new ImageIcon(_resourcesDir
 						+ Config.FILE_SEPARATOR
 						+ Resources.getString("ICO_PROJECT_NEW"))); //$NON-NLS-1$
 			}
 			return _btnNewProject;
 		}
+
 		JButton getBtnNewSolution()
 		{
 			if (_btnNewSolution == null) {
-				_btnNewSolution = new JButton(_actionManager.getNewSolutionAction());
+				_btnNewSolution = new JButton(
+						_actionManager.getNewSolutionAction());
 				_btnNewSolution.setIcon(new ImageIcon(_resourcesDir
 						+ Config.FILE_SEPARATOR
 						+ Resources.getString("ICO_SOLUTION_NEW"))); //$NON-NLS-1$
@@ -322,7 +325,8 @@ public final class LocalController implements IController
 		JButton getBtnOpenProject()
 		{
 			if (_btnOpenProject == null) {
-				_btnOpenProject = new JButton(_actionManager.getOpenProjectAction());
+				_btnOpenProject = new JButton(
+						_actionManager.getOpenProjectAction());
 				_btnOpenProject.setIcon(new ImageIcon(_resourcesDir
 						+ Config.FILE_SEPARATOR
 						+ Resources.getString("ICO_PROJECT_OPEN"))); //$NON-NLS-1$                
@@ -333,7 +337,8 @@ public final class LocalController implements IController
 		JButton getBtnOpenSolution()
 		{
 			if (_btnOpenSolution == null) {
-				_btnOpenSolution = new JButton(_actionManager.getOpenSolutionAction());
+				_btnOpenSolution = new JButton(
+						_actionManager.getOpenSolutionAction());
 				_btnOpenSolution.setIcon(new ImageIcon(_resourcesDir
 						+ Config.FILE_SEPARATOR
 						+ Resources.getString("ICO_SOLUTION_OPEN"))); //$NON-NLS-1$                
@@ -344,7 +349,8 @@ public final class LocalController implements IController
 		JButton getBtnSaveProject()
 		{
 			if (_btnSaveProject == null) {
-				_btnSaveProject = new JButton(_actionManager.getSaveProjectAction());
+				_btnSaveProject = new JButton(
+						_actionManager.getSaveProjectAction());
 				_btnSaveProject.setIcon(new ImageIcon(_resourcesDir
 						+ Config.FILE_SEPARATOR
 						+ Resources.getString("ICO_PROJECT_SAVE"))); //$NON-NLS-1$
@@ -355,7 +361,8 @@ public final class LocalController implements IController
 		JButton getBtnSaveSolution()
 		{
 			if (_btnSaveSolution == null) {
-				_btnSaveSolution = new JButton(_actionManager.getSaveSolutionAction());
+				_btnSaveSolution = new JButton(
+						_actionManager.getSaveSolutionAction());
 				_btnSaveSolution.setIcon(new ImageIcon(_resourcesDir
 						+ Config.FILE_SEPARATOR
 						+ Resources.getString("ICO_SOLUTION_SAVE"))); //$NON-NLS-1$
@@ -377,7 +384,7 @@ public final class LocalController implements IController
 			}
 			return _itmAbout;
 		}
-		
+
 		JMenuItem getItmExit()
 		{
 			if (_itmExit == null) {
@@ -467,7 +474,7 @@ public final class LocalController implements IController
 			}
 			return _itmSQLConsole;
 		}
-		
+
 		JMenuItem getItmViewProjects()
 		{
 			if (_itmViewProjects == null) {
@@ -477,37 +484,37 @@ public final class LocalController implements IController
 			}
 			return _itmViewProjects;
 		}
-        
-        JMenuItem getItmViewSolutions()
-        {
-            if (_itmViewSolutions== null) {
-                _itmViewSolutions = new JMenuItem();
-                _itmViewSolutions.setText(Messages.getString("MNU_SHOW_SOLUTIONS")); //$NON-NLS-1$
-                _itmViewSolutions.addActionListener(_actionManager.getViewSolutionAction());
-            }
-            return _itmViewSolutions;
-        }
 
-        JMenuItem getItmViewTasks()
-        {
-            if (_itmViewTasks== null) {
-                _itmViewTasks = new JMenuItem();
-                _itmViewTasks.setText(Messages.getString("MNU_SHOW_TASKS")); //$NON-NLS-1$
-                _itmViewTasks.addActionListener(_actionManager.getViewTasksAction());
-            }
-            return _itmViewTasks;
-        }
-        
-        JMenuItem getItmViewPlugins()
-        {
-            if (_itmViewPlugins== null) {
-                _itmViewPlugins = new JMenuItem();
-                _itmViewPlugins.setText(Messages.getString("MNU_SHOW_PLUGINS")); //$NON-NLS-1$
-                _itmViewPlugins.addActionListener(_actionManager.getViewPluginsAction());
-            }
-            return _itmViewPlugins;
-        }
-        
+		JMenuItem getItmViewSolutions()
+		{
+			if (_itmViewSolutions == null) {
+				_itmViewSolutions = new JMenuItem();
+				_itmViewSolutions.setText(Messages.getString("MNU_SHOW_SOLUTIONS")); //$NON-NLS-1$
+				_itmViewSolutions.addActionListener(_actionManager.getViewSolutionAction());
+			}
+			return _itmViewSolutions;
+		}
+
+		JMenuItem getItmViewTasks()
+		{
+			if (_itmViewTasks == null) {
+				_itmViewTasks = new JMenuItem();
+				_itmViewTasks.setText(Messages.getString("MNU_SHOW_TASKS")); //$NON-NLS-1$
+				_itmViewTasks.addActionListener(_actionManager.getViewTasksAction());
+			}
+			return _itmViewTasks;
+		}
+
+		JMenuItem getItmViewPlugins()
+		{
+			if (_itmViewPlugins == null) {
+				_itmViewPlugins = new JMenuItem();
+				_itmViewPlugins.setText(Messages.getString("MNU_SHOW_PLUGINS")); //$NON-NLS-1$
+				_itmViewPlugins.addActionListener(_actionManager.getViewPluginsAction());
+			}
+			return _itmViewPlugins;
+		}
+
 		JPanel getPnlAbout()
 		{
 			if (_pnlAbout == null) {
@@ -530,7 +537,7 @@ public final class LocalController implements IController
 		 */
 		void showSQLConsole()
 		{
-			new SQLConsole(((ManagerEngine)_managerEngine).getDbManager());
+			new SQLConsole(((ManagerEngine) _managerEngine).getDbManager());
 		}
 
 		private JPanel getOfficialAbout()

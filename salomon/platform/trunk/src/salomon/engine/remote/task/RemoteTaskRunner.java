@@ -25,9 +25,12 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
 import salomon.engine.task.ITaskRunner;
+
 import salomon.platform.exception.PlatformException;
 
-/** * @see salomon.engine.task.ITaskRunner */
+/**
+ * @see salomon.engine.task.ITaskRunner
+ */
 public final class RemoteTaskRunner extends UnicastRemoteObject
 		implements IRemoteTaskRunner
 {
@@ -39,13 +42,12 @@ public final class RemoteTaskRunner extends UnicastRemoteObject
 	 */
 	private ITaskRunner _taskRunner;
 
-    
-    /**
+	/**
 	 * 
 	 */
 	public RemoteTaskRunner(ITaskRunner taskRunner) throws RemoteException
 	{
-        _taskRunner = taskRunner;
+		_taskRunner = taskRunner;
 	}
 
 	/**
@@ -53,7 +55,7 @@ public final class RemoteTaskRunner extends UnicastRemoteObject
 	 */
 	public void pause() throws PlatformException, RemoteException
 	{
-        _taskRunner.pause();
+		_taskRunner.pause();
 	}
 
 	/**
@@ -61,15 +63,15 @@ public final class RemoteTaskRunner extends UnicastRemoteObject
 	 */
 	public void resume() throws PlatformException, RemoteException
 	{
-        _taskRunner.resume();
+		_taskRunner.resume();
 	}
-    
+
 	/**
 	 * @see salomon.engine.remote.task.IRemoteTaskRunner#start()
 	 */
 	public void start() throws PlatformException, RemoteException
 	{
-        _taskRunner.start();
+		_taskRunner.start();
 	}
 
 	/**
@@ -77,7 +79,7 @@ public final class RemoteTaskRunner extends UnicastRemoteObject
 	 */
 	public void stop() throws PlatformException, RemoteException
 	{
-        _taskRunner.stop();
+		_taskRunner.stop();
 	}
 
 }

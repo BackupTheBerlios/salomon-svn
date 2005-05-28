@@ -26,10 +26,15 @@ import java.rmi.server.UnicastRemoteObject;
 
 import salomon.engine.plugin.ILocalPlugin;
 import salomon.engine.plugin.IPluginManager;
+
 import salomon.platform.exception.PlatformException;
+
 import salomon.plugin.IPlugin;
 
-/** * Class representing remote instance of IPluginManager. * @see salomon.engine.plugin.IPluginManager */
+/**
+ * Class representing remote instance of IPluginManager.
+ * @see salomon.engine.plugin.IPluginManager
+ */
 public final class RemotePluginManager extends UnicastRemoteObject
 		implements IRemotePluginManager
 {
@@ -62,10 +67,10 @@ public final class RemotePluginManager extends UnicastRemoteObject
 	/**
 	 * @see IRemotePluginManager#removePlugin(IPlugin)
 	 */
-	public boolean removePlugin(IPlugin plugin)
-			throws RemoteException, PlatformException
+	public boolean removePlugin(IPlugin plugin) throws RemoteException,
+			PlatformException
 	{
-		return _pluginManager.removePlugin((ILocalPlugin)plugin);
+		return _pluginManager.removePlugin((ILocalPlugin) plugin);
 	}
 
 	/**
@@ -75,7 +80,7 @@ public final class RemotePluginManager extends UnicastRemoteObject
 	public boolean savePlugin(IPlugin plugin) throws RemoteException,
 			PlatformException
 	{
-		return _pluginManager.savePlugin((ILocalPlugin)plugin);
+		return _pluginManager.savePlugin((ILocalPlugin) plugin);
 	}
-    
+
 }

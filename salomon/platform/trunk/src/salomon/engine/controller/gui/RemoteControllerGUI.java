@@ -25,11 +25,15 @@ import java.rmi.RemoteException;
 
 import org.apache.log4j.Logger;
 
-import salomon.engine.platform.IManagerEngine;
 import salomon.engine.remote.IRemoteController;
 import salomon.engine.remote.ManagerEngineProxy;
 
-/** * Class is graphic representation of client controllers connected to server. * It is used to display them on the list of connected clients. */
+import salomon.engine.platform.IManagerEngine;
+
+/**
+ * Class is graphic representation of client controllers connected to server.
+ * It is used to display them on the list of connected clients.
+ */
 public final class RemoteControllerGUI
 {
 
@@ -140,16 +144,16 @@ public final class RemoteControllerGUI
 		}
 		return name;
 	}
-    
-    public void exit()
-    {
-        LOGGER.debug("RemoteController.exit()");
-    	try {
+
+	public void exit()
+	{
+		LOGGER.debug("RemoteController.exit()");
+		try {
 			_remoteController.exit();
 		} catch (RemoteException e) {
 			LOGGER.debug(e.getLocalizedMessage());
 		}
-    }
-	
+	}
+
 	private static final Logger LOGGER = Logger.getLogger(RemoteControllerGUI.class);
 }

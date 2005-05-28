@@ -25,7 +25,9 @@ import javax.swing.AbstractAction;
 
 import salomon.engine.controller.gui.SolutionManagerGUI;
 
-/** * Represents abstract action caused while editing solutions. */
+/**
+ * Represents abstract action caused while editing solutions.
+ */
 abstract class AbstractSolutionAction extends AbstractAction
 {
 

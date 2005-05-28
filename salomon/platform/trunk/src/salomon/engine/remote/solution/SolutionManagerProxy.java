@@ -29,6 +29,7 @@ import org.apache.log4j.Logger;
 
 import salomon.engine.solution.ISolution;
 import salomon.engine.solution.ISolutionManager;
+
 import salomon.platform.IUniqueId;
 import salomon.platform.exception.PlatformException;
 
@@ -109,9 +110,9 @@ public final class SolutionManagerProxy implements ISolutionManager
 		ISolution[] solutions = null;
 		try {
 			IRemoteSolution[] remoteSolutions = _remoteSolutionManager.getSolutions();
-            solutions = new ISolution[remoteSolutions.length];
-            for (int i = 0; i < remoteSolutions.length; i++) {
-                solutions[i] = getSolution(remoteSolutions[i]);				
+			solutions = new ISolution[remoteSolutions.length];
+			for (int i = 0; i < remoteSolutions.length; i++) {
+				solutions[i] = getSolution(remoteSolutions[i]);
 			}
 		} catch (RemoteException e) {
 			LOGGER.error("Remote error!", e);
@@ -136,21 +137,21 @@ public final class SolutionManagerProxy implements ISolutionManager
 
 	private static final Logger LOGGER = Logger.getLogger(SolutionManagerProxy.class);
 
-	public ISolution getSolution(int id) throws PlatformException 
+	public ISolution getSolution(int id) throws PlatformException
 	{
 		throw new UnsupportedOperationException(
-		"Method salomon.engine.remote.solution::SolutionManagerProxy::getSolution()not implemented yet!");
+				"Method salomon.engine.remote.solution::SolutionManagerProxy::getSolution()not implemented yet!");
 	}
 
-	public ISolution getCurrentSolution() throws PlatformException 
+	public ISolution getCurrentSolution() throws PlatformException
 	{
 		throw new UnsupportedOperationException(
-		"Method salomon.engine.remote.solution::SolutionManagerProxy::getCurrentSolution()not implemented yet!");
+				"Method salomon.engine.remote.solution::SolutionManagerProxy::getCurrentSolution()not implemented yet!");
 	}
 
-	public ISolution getSolution(IUniqueId id) throws PlatformException 
+	public ISolution getSolution(IUniqueId id) throws PlatformException
 	{
 		throw new UnsupportedOperationException(
-		"Method salomon.engine.remote.solution::SolutionManagerProxy::getSolution()not implemented yet!");
+				"Method salomon.engine.remote.solution::SolutionManagerProxy::getSolution()not implemented yet!");
 	}
 }

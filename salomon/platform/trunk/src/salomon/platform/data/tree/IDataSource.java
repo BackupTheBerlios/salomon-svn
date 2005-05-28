@@ -25,12 +25,19 @@ import java.util.Date;
 
 import salomon.engine.solution.ISolution;
 
-public interface IDataSource {
-    int getId();
-    String getName();
-    String getInfo();
-    ISolution getSolution();
-    String getDecisionedColumn();
-    String []  getDecioningColumns();
-    Date getCreateDate();
+public interface IDataSource
+{
+	int getId();
+
+	String getName();
+
+	String getInfo();
+
+	ISolution getSolution();
+
+	String getDecisionedColumn();
+
+	String[] getDecioningColumns();
+
+	Date getCreateDate();
 }

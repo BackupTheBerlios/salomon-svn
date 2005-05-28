@@ -41,6 +41,7 @@ public interface IRemoteTaskRunner extends Remote
 	 * @see salomon.engine.task.ITaskRunner#resume() 
 	 */
 	void resume() throws PlatformException, RemoteException;
+
 	/**
 	 * @see salomon.engine.task.ITaskRunner#start() 
 	 */

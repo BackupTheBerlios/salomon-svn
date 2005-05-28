@@ -34,9 +34,13 @@ import salomon.engine.database.queries.SQLDelete;
 import salomon.engine.database.queries.SQLInsert;
 import salomon.engine.database.queries.SQLSelect;
 import salomon.engine.database.queries.SQLUpdate;
+
 import salomon.util.gui.Utils;
 
-/** * Class is responsible for data base operations. It enables executing SQL * queries and transaction managing. */
+/**
+ * Class is responsible for data base operations. It enables executing SQL
+ * queries and transaction managing.
+ */
 public final class DBManager
 {
 	private Connection _connection = null;
@@ -98,12 +102,12 @@ public final class DBManager
 		StringBuilder connectString = new StringBuilder("jdbc:firebirdsql:");
 		if (host == null || "".equals(host)) {
 			connectString.append("embedded:");
-			connectString.append(Config.CURR_DIR);		
+			connectString.append(Config.CURR_DIR);
 			connectString.append(Config.FILE_SEPARATOR);
 		} else {
 			connectString.append(host).append(":");
 		}
-		connectString.append(dataBasePath);	
+		connectString.append(dataBasePath);
 		LOGGER.info("connectString: " + connectString);
 		_connection = DriverManager.getConnection(connectString.toString(),
 				user, passwd);

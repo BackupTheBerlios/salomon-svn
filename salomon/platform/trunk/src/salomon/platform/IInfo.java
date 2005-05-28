@@ -34,7 +34,7 @@ import salomon.platform.exception.PlatformException;
 public interface IInfo extends IUniqueId
 {
 	int getId();
-	
+
 	Date getCreationDate() throws PlatformException;
 
 	String getInfo() throws PlatformException;
@@ -46,7 +46,6 @@ public interface IInfo extends IUniqueId
 	 * @param description the description
 	 */
 	void setInfo(String info) throws PlatformException;
-	
 
 	/**
 	 * Removes itself from database. After successsful finish object should be
@@ -56,6 +55,7 @@ public interface IInfo extends IUniqueId
 	 * @throws SQLException
 	 */
 	boolean delete() throws SQLException, ClassNotFoundException;
+
 	/**
 	 * Initializes itself basing on given row from resultSet.
 	 * 

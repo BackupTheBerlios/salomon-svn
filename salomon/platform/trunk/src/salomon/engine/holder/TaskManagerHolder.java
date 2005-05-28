@@ -21,13 +21,16 @@
 
 package salomon.engine.holder;
 
-
 import salomon.engine.task.ITask;
 import salomon.engine.task.ITaskManager;
 import salomon.engine.task.ITaskRunner;
+
 import salomon.platform.exception.PlatformException;
 
-/** * Holds taskManager of current client. * It is used by ManagerEngineHolder to switch between connected clients. */
+/**
+ * Holds taskManager of current client.
+ * It is used by ManagerEngineHolder to switch between connected clients.
+ */
 final class TaskManagerHolder implements ITaskManager
 {
 
@@ -51,7 +54,7 @@ final class TaskManagerHolder implements ITaskManager
 	 */
 	public void addTask(ITask task) throws PlatformException
 	{
-        _currentTaskManager.addTask(task);
+		_currentTaskManager.addTask(task);
 	}
 
 	/**
@@ -110,7 +113,8 @@ final class TaskManagerHolder implements ITaskManager
 	/**
 	 * @see salomon.engine.task.ITaskManager#addTask(salomon.engine.task.ITask, java.lang.String, java.lang.String)
 	 */
-	public void addTask(ITask task, String pluginUrl, String settings) throws PlatformException
+	public void addTask(ITask task, String pluginUrl, String settings)
+			throws PlatformException
 	{
 		_currentTaskManager.addTask(task, pluginUrl, settings);
 	}

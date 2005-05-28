@@ -30,13 +30,17 @@ import java.rmi.registry.Registry;
 import org.apache.log4j.Logger;
 
 import salomon.engine.Config;
-import salomon.engine.platform.IManagerEngine;
 import salomon.engine.remote.ICentralController;
 import salomon.engine.remote.IRemoteController;
 import salomon.engine.remote.RemoteController;
+
 import salomon.platform.exception.PlatformException;
 
-/** * Class is a client implementation of IController interface. */
+import salomon.engine.platform.IManagerEngine;
+
+/**
+ * Class is a client implementation of IController interface.
+ */
 public final class ServantController implements IController
 {
 
@@ -105,8 +109,7 @@ public final class ServantController implements IController
 			LOGGER.debug("Registry at: " + _serverHost + ", on port: "
 					+ _serverPort);
 			try {
-				_masterController = (ICentralController) registry
-						.lookup("CentralController");
+				_masterController = (ICentralController) registry.lookup("CentralController");
 				_masterController.register(_remoteController);
 			} catch (NotBoundException e) {
 				LOGGER.fatal("", e);
@@ -121,7 +124,6 @@ public final class ServantController implements IController
 		}
 	}
 
-	private static final Logger LOGGER = Logger
-			.getLogger(ServantController.class);
+	private static final Logger LOGGER = Logger.getLogger(ServantController.class);
 
 } // end ClientManager

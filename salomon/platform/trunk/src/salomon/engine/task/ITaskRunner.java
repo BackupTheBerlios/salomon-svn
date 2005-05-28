@@ -29,7 +29,10 @@ import salomon.platform.exception.PlatformException;
 public interface ITaskRunner
 {
 	void start() throws PlatformException;
-    void stop() throws PlatformException;
-    void pause() throws PlatformException;
-    void resume() throws PlatformException;
+
+	void stop() throws PlatformException;
+
+	void pause() throws PlatformException;
+
+	void resume() throws PlatformException;
 }

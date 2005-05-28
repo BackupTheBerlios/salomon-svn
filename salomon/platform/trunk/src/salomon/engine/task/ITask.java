@@ -26,11 +26,12 @@ import salomon.engine.plugin.ILocalPlugin;
 import salomon.platform.IInfo;
 import salomon.platform.exception.PlatformException;
 
-import salomon.plugin.IPlugin;
 import salomon.plugin.IResult;
 import salomon.plugin.ISettings;
 
-/** * Interface for tasks. */
+/**
+ * Interface for tasks.
+ */
 public interface ITask
 {
 	/**

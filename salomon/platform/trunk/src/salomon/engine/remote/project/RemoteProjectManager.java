@@ -28,9 +28,12 @@ import java.util.Map;
 
 import salomon.engine.project.IProject;
 import salomon.engine.project.IProjectManager;
+
 import salomon.platform.exception.PlatformException;
 
-/** * Class representing remote instance of IProjectManager. */
+/**
+ * Class representing remote instance of IProjectManager.
+ */
 public final class RemoteProjectManager extends UnicastRemoteObject
 		implements IRemoteProjectManager
 {

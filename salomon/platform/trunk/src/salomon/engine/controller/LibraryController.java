@@ -24,7 +24,6 @@ package salomon.engine.controller;
 import org.apache.log4j.Logger;
 
 import salomon.engine.platform.IManagerEngine;
-import salomon.engine.platform.ManagerEngine;
 
 public final class LibraryController implements IController
 {

@@ -36,7 +36,10 @@ import org.apache.log4j.Logger;
 
 import salomon.engine.Messages;
 
-/** * Class supply some useful methods used in GUI. All public methods are static * to simplyfy usage. */
+/**
+ * Class supply some useful methods used in GUI. All public methods are static
+ * to simplyfy usage.
+ */
 public final class Utils
 {
 	private JComponent _parent;
@@ -97,7 +100,7 @@ public final class Utils
 			}
 			rowCount++;
 		}
-		
+
 		LOGGER.info("rowCount " + rowCount);
 
 		JTable table = new JTable(data, columnNames);
@@ -115,7 +118,7 @@ public final class Utils
 	public static JTable createResultTable(ResultSet resultSet)
 			throws SQLException
 	{
-		JTable table = createResultTable(getDataFromResultSet(resultSet));		
+		JTable table = createResultTable(getDataFromResultSet(resultSet));
 		return table;
 	}
 
@@ -164,7 +167,7 @@ public final class Utils
 			} else {
 				buffer.append("\n"); //$NON-NLS-1$   
 			}
-			rowCount++;			
+			rowCount++;
 		}
 		LOGGER.info(buffer);
 

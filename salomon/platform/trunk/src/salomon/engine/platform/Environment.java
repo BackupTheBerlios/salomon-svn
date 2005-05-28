@@ -36,7 +36,7 @@ public final class Environment implements IEnvironment
 	public void put(String key, String value)
 	{
 		_environment.put(key, value);
-	} 
+	}
 
 	public String get(String key)
 	{

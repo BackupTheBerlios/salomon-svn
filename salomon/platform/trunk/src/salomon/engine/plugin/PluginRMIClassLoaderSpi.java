@@ -33,8 +33,8 @@ import org.apache.log4j.Logger;
 public final class PluginRMIClassLoaderSpi extends RMIClassLoaderSpi
 {
 	/**
-     * 
-     *
+	 * 
+	 *
 	 */
 	public PluginRMIClassLoaderSpi()
 	{
@@ -90,6 +90,6 @@ public final class PluginRMIClassLoaderSpi extends RMIClassLoaderSpi
 
 		return proxyClass;
 	}
-    
+
 	private static Logger LOGGER = Logger.getLogger(PluginRMIClassLoaderSpi.class);
 }

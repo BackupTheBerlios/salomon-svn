@@ -37,7 +37,7 @@ public final class SQLUpdate
 
 	private String _tableName;
 
-	private List<SQLPair> _values;    
+	private List<SQLPair> _values;
 
 	public SQLUpdate()
 	{
@@ -52,8 +52,8 @@ public final class SQLUpdate
 	public SQLUpdate(String tableName)
 	{
 		_tableName = tableName;
-        _values = new LinkedList<SQLPair>();
-        _conditions = new LinkedList<String>();
+		_values = new LinkedList<SQLPair>();
+		_conditions = new LinkedList<String>();
 	}
 
 	/**
@@ -100,18 +100,18 @@ public final class SQLUpdate
 	public void addCondition(String condition, String value)
 	{
 		SQLHelper.addCondition(_conditions, condition, value);
-	}    
-      
-    /**
+	}
+
+	/**
 	 * Adds value to be inserted.
 	 * 
 	 * @param columnName column name
 	 * @param value value of element correspodning to given column name
 	 */
-    public void addValue(String columnName, Date value)
-    {
-        SQLHelper.addValue(_values, columnName, value);
-    }
+	public void addValue(String columnName, Date value)
+	{
+		SQLHelper.addValue(_values, columnName, value);
+	}
 
 	/**
 	 * Adds value to be updated.
@@ -145,29 +145,28 @@ public final class SQLUpdate
 	{
 		SQLHelper.addValue(_values, columnName, value);
 	}
-    
-    
-    /**
+
+	/**
 	 * Adds value to be inserted.
 	 * 
 	 * @param columnName column name
 	 * @param value value of element correspodning to given column name
 	 */
-    public void addValue(String columnName, Time value)
-    {
-        SQLHelper.addValue(_values, columnName, value);
-    }
-    
-    /**
+	public void addValue(String columnName, Time value)
+	{
+		SQLHelper.addValue(_values, columnName, value);
+	}
+
+	/**
 	 * Adds value to be inserted.
 	 * 
 	 * @param columnName column name
 	 * @param value value of element correspodning to given column name
 	 */
-    public void addValue(String columnName, Timestamp value)
-    {
-        SQLHelper.addValue(_values, columnName, value);
-    }
+	public void addValue(String columnName, Timestamp value)
+	{
+		SQLHelper.addValue(_values, columnName, value);
+	}
 
 	/**
 	 * Method returns UPDATE query.
@@ -176,7 +175,8 @@ public final class SQLUpdate
 	 */
 	public String getQuery()
 	{
-		StringBuilder query = new StringBuilder("UPDATE ").append(_tableName).append(" SET ");
+		StringBuilder query = new StringBuilder("UPDATE ").append(_tableName).append(
+				" SET ");
 
 		Iterator<SQLPair> colIter = _values.iterator();
 		// first column is added without comma
@@ -186,7 +186,8 @@ public final class SQLUpdate
 		// rest of column - with comma
 		while (colIter.hasNext()) {
 			pair = colIter.next();
-			query.append(", ").append(pair.getColumnName()).append(" = ").append(pair.getValue());
+			query.append(", ").append(pair.getColumnName()).append(" = ").append(
+					pair.getValue());
 		}
 
 		// adding conditions
@@ -220,21 +221,19 @@ public final class SQLUpdate
 	public void setTable(String tableName)
 	{
 		_tableName = tableName;
-	}	
+	}
 
-	
 	/**
 	 * Makes SQLInsert object basing on update values.
 	 * 
 	 * @return object representing INSERT query
 	 */
-    public SQLInsert updateToInsert()
-    {
-    	SQLInsert insert = new SQLInsert(_tableName);
-        insert.addAllValues(_values);
-        
-        return insert;
-    }
-	
-}
+	public SQLInsert updateToInsert()
+	{
+		SQLInsert insert = new SQLInsert(_tableName);
+		insert.addAllValues(_values);
 
+		return insert;
+	}
+
+}

@@ -30,9 +30,16 @@ import org.apache.log4j.Logger;
 import salomon.engine.task.ITask;
 import salomon.engine.task.ITaskManager;
 import salomon.engine.task.ITaskRunner;
+
 import salomon.platform.exception.PlatformException;
 
-/** * Class is a sever side wrapper of IRemoteTaskManager object. It implements * ITaskManager interface and delegates methods execution to remote object * catching all RemoteExceptions. *  * @see salomon.engine.remote.task.IRemoteTaskManager */
+/**
+ * Class is a sever side wrapper of IRemoteTaskManager object. It implements
+ * ITaskManager interface and delegates methods execution to remote object
+ * catching all RemoteExceptions.
+ * 
+ * @see salomon.engine.remote.task.IRemoteTaskManager
+ */
 public final class TaskManagerProxy implements ITaskManager
 {
 	private Map<IRemoteTask, ITask> _proxies = new HashMap<IRemoteTask, ITask>();
@@ -59,23 +66,24 @@ public final class TaskManagerProxy implements ITaskManager
 	{
 		_remoteTaskManager = remoteTaskManager;
 	}
+
 	/**
 	 * @see ITaskManager#addTask(ITask)
-     * 
-     * @pre task instanceof TaskProxy 
+	 * 
+	 * @pre task instanceof TaskProxy 
 	 */
 	public void addTask(ITask task) throws PlatformException
-	{        
+	{
 		TaskProxy taskProxy = (TaskProxy) task;
-        IRemoteTask remoteTask = taskProxy.getRemoteTask();
-        try {
-        	_remoteTaskManager.addTask(remoteTask);
-        } catch (RemoteException e) {
-            LOGGER.error("Remote error!", e);
-            throw new PlatformException(e.getLocalizedMessage());
-        }
+		IRemoteTask remoteTask = taskProxy.getRemoteTask();
+		try {
+			_remoteTaskManager.addTask(remoteTask);
+		} catch (RemoteException e) {
+			LOGGER.error("Remote error!", e);
+			throw new PlatformException(e.getLocalizedMessage());
+		}
 	}
-    
+
 	/**
 	 * @see ITaskManager#clearTaskList()
 	 */
@@ -126,17 +134,19 @@ public final class TaskManagerProxy implements ITaskManager
 	 */
 	public ITaskRunner getRunner() throws PlatformException
 	{
-        if (_taskRunnerProxy == null) {
-            try {
-            _taskRunnerProxy = new TaskRunnerProxy(_remoteTaskManager.getRunner());
-            } catch (RemoteException e) {
-            	LOGGER.error("Remote error!", e);
-                throw new PlatformException(e.getLocalizedMessage());
-            }
-        }
-        
-        return _taskRunnerProxy;
+		if (_taskRunnerProxy == null) {
+			try {
+				_taskRunnerProxy = new TaskRunnerProxy(
+						_remoteTaskManager.getRunner());
+			} catch (RemoteException e) {
+				LOGGER.error("Remote error!", e);
+				throw new PlatformException(e.getLocalizedMessage());
+			}
+		}
+
+		return _taskRunnerProxy;
 	}
+
 	/**
 	 * @see ITaskManager#getTasks()
 	 */
@@ -188,11 +198,12 @@ public final class TaskManagerProxy implements ITaskManager
 	/**
 	 * @see salomon.engine.task.ITaskManager#addTask(salomon.engine.task.ITask, java.lang.String, java.lang.String)
 	 */
-	public void addTask(ITask task, String pluginUrl, String settings) throws PlatformException
+	public void addTask(ITask task, String pluginUrl, String settings)
+			throws PlatformException
 	{
 		try {
 			TaskProxy taskProxy = (TaskProxy) task;
-	        IRemoteTask remoteTask = taskProxy.getRemoteTask();
+			IRemoteTask remoteTask = taskProxy.getRemoteTask();
 			_remoteTaskManager.addTask(remoteTask, pluginUrl, settings);
 		} catch (RemoteException e) {
 			LOGGER.error("Remote error!", e);

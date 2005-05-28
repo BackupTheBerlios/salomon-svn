@@ -30,9 +30,14 @@ import org.apache.log4j.Logger;
 
 import salomon.engine.task.ITask;
 import salomon.engine.task.ITaskManager;
+
 import salomon.platform.exception.PlatformException;
 
-/** * Class representing remote instance of ITaskManager. *  * @see salomon.engine.task.ITaskManager */
+/**
+ * Class representing remote instance of ITaskManager.
+ * 
+ * @see salomon.engine.task.ITaskManager
+ */
 public final class RemoteTaskManager extends UnicastRemoteObject
 		implements IRemoteTaskManager
 {
@@ -153,7 +158,8 @@ public final class RemoteTaskManager extends UnicastRemoteObject
 	/**
 	 * @see salomon.engine.remote.task.IRemoteTaskManager#addTask(salomon.engine.remote.task.IRemoteTask, java.lang.String, java.lang.String)
 	 */
-	public void addTask(IRemoteTask remoteTask, String pluginUrl, String settings) throws RemoteException, PlatformException
+	public void addTask(IRemoteTask remoteTask, String pluginUrl,
+			String settings) throws RemoteException, PlatformException
 	{
 		RemoteTask task = (RemoteTask) remoteTask;
 		_taskManager.addTask(task.getTask());

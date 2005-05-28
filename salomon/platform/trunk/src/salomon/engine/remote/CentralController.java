@@ -31,7 +31,6 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import salomon.engine.remote.event.IMasterControllerListener;
 import salomon.engine.remote.event.RemoteControllerEvent;
 
-
 /**
  * Class implements ICentralController interface. It is responsible for
  * establishing connection and disconnecting of remote clients.

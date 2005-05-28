@@ -21,16 +21,27 @@
 
 package salomon.platform.data.tree;
 
-public interface INode {
-    enum Type {COLUMN, VALUE};
-    
-    Type getType();
-    String getValue();
-    String getParentEdge();
-    boolean isRoot();
-    boolean isLeaf();
-    INode getParent();
-    INode getRoot();
-    INode []  getChilds();
-    INode [] getLeafs();
+public interface INode
+{
+	enum Type {
+		COLUMN, VALUE
+	};
+
+	Type getType();
+
+	String getValue();
+
+	String getParentEdge();
+
+	boolean isRoot();
+
+	boolean isLeaf();
+
+	INode getParent();
+
+	INode getRoot();
+
+	INode[] getChilds();
+
+	INode[] getLeafs();
 }

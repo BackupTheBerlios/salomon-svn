@@ -24,15 +24,18 @@ package salomon.engine.remote.project;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
-import com.sun.org.apache.xml.internal.serializer.ToUnknownStream;
-
 import salomon.engine.project.IProject;
 import salomon.engine.remote.task.IRemoteTaskManager;
 import salomon.engine.remote.task.RemoteTaskManager;
+
 import salomon.platform.IInfo;
 import salomon.platform.exception.PlatformException;
 
-/** * Class representing remote instance of IProject. *  * @see salomon.engine.project.IProject */
+/**
+ * Class representing remote instance of IProject.
+ * 
+ * @see salomon.engine.project.IProject
+ */
 public final class RemoteProject extends UnicastRemoteObject
 		implements IRemoteProject
 {
@@ -87,27 +90,33 @@ public final class RemoteProject extends UnicastRemoteObject
 		return _project;
 	}
 
-	public void setInfo(String info) throws RemoteException, PlatformException {
+	public void setInfo(String info) throws RemoteException, PlatformException
+	{
 		throw new UnsupportedOperationException(
 				"Method salomon.engine.remote.project::RemoteProject::setInfo()not implemented yet!");
 	}
 
-	public void setName(String name) throws RemoteException, PlatformException {
+	public void setName(String name) throws RemoteException, PlatformException
+	{
 		throw new UnsupportedOperationException(
 				"Method salomon.engine.remote.project::RemoteProject::setName()not implemented yet!");
 	}
 
-	public void setProjectID(int projectId) throws RemoteException, PlatformException {	
+	public void setProjectID(int projectId) throws RemoteException,
+			PlatformException
+	{
 		throw new UnsupportedOperationException(
 				"Method salomon.engine.remote.project::RemoteProject::setProjectID()not implemented yet!");
 	}
 
-	public String getName() throws RemoteException, PlatformException {
+	public String getName() throws RemoteException, PlatformException
+	{
 		throw new UnsupportedOperationException(
 				"Method salomon.engine.remote.project::RemoteProject::getName()not implemented yet!");
 	}
 
-	public int getProjectID() throws RemoteException, PlatformException {
+	public int getProjectID() throws RemoteException, PlatformException
+	{
 		throw new UnsupportedOperationException(
 				"Method salomon.engine.remote.project::RemoteProject::getProjectID()not implemented yet!");
 	}

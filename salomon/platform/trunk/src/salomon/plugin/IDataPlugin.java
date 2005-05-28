@@ -18,6 +18,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * 
  */
+
 package salomon.plugin;
 
 import salomon.platform.IDataEngine;
@@ -28,8 +29,9 @@ import salomon.platform.IEnvironment;
  */
 public interface IDataPlugin
 {
-    /**
-     * Does plugin job. 
-     */
-	IResult doJob(IDataEngine engine, IEnvironment environment, ISettings settings);
+	/**
+	 * Does plugin job. 
+	 */
+	IResult doJob(IDataEngine engine, IEnvironment environment,
+			ISettings settings);
 }

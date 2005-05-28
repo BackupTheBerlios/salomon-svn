@@ -41,7 +41,9 @@ import org.apache.log4j.Logger;
 import salomon.engine.Messages;
 import salomon.engine.holder.ManagerEngineHolder;
 
-/** * Panel displaying list of connected clients. */
+/**
+ * Panel displaying list of connected clients.
+ */
 public final class RemoteControllerPanel
 {
 
@@ -172,10 +174,10 @@ public final class RemoteControllerPanel
 		public void valueChanged(ListSelectionEvent e)
 		{
 			RemoteControllerGUI controllerGUI = (RemoteControllerGUI) ((JList) e.getSource()).getSelectedValue();
-            if (controllerGUI != null) {
-            	_engineHolder.setCurrentManager(controllerGUI.getManagerEngine());
-            	_parent.refreshGui();
-            }
+			if (controllerGUI != null) {
+				_engineHolder.setCurrentManager(controllerGUI.getManagerEngine());
+				_parent.refreshGui();
+			}
 		}
 
 	}

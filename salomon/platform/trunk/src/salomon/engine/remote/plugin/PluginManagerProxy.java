@@ -30,9 +30,16 @@ import salomon.engine.plugin.IPluginManager;
 
 import salomon.platform.IUniqueId;
 import salomon.platform.exception.PlatformException;
+
 import salomon.plugin.IPlugin;
 
-/** * Class is a sever side wrapper of IRemotePluginManager object. It implements * IPluginManager interface and delegates methods execution to remote object * catching all RemoteExceptions. *  * @see salomon.engine.remote.plugin.IRemotePluginManager */
+/**
+ * Class is a sever side wrapper of IRemotePluginManager object. It implements
+ * IPluginManager interface and delegates methods execution to remote object
+ * catching all RemoteExceptions.
+ * 
+ * @see salomon.engine.remote.plugin.IRemotePluginManager
+ */
 public final class PluginManagerProxy implements IPluginManager
 {
 
@@ -59,17 +66,17 @@ public final class PluginManagerProxy implements IPluginManager
 	{
 		ILocalPlugin[] result = null;
 		try {
-			result = (ILocalPlugin[])_remotePluginManager.getPlugins();
+			result = (ILocalPlugin[]) _remotePluginManager.getPlugins();
 		} catch (RemoteException e) {
-            LOGGER.fatal("Remote error!", e);
-            throw new PlatformException(e.getLocalizedMessage());
+			LOGGER.fatal("Remote error!", e);
+			throw new PlatformException(e.getLocalizedMessage());
 		}
 
 		return result;
 	}
 
 	/**
-     * @see IPluginManager#removePlugin(IPlugin)
+	 * @see IPluginManager#removePlugin(IPlugin)
 	 */
 	public boolean removePlugin(IPlugin plugin) throws PlatformException
 	{
@@ -79,9 +86,9 @@ public final class PluginManagerProxy implements IPluginManager
 			result = _remotePluginManager.removePlugin(plugin);
 		} catch (RemoteException e) {
 			LOGGER.fatal("Remote error!", e);
-            throw new PlatformException(e.getLocalizedMessage());
+			throw new PlatformException(e.getLocalizedMessage());
 		}
-        
+
 		return result;
 	}
 
@@ -94,60 +101,69 @@ public final class PluginManagerProxy implements IPluginManager
 		try {
 			result = _remotePluginManager.savePlugin(plugin);
 		} catch (RemoteException e) {
-            LOGGER.fatal("Remote error!", e);
-            throw new PlatformException(e.getLocalizedMessage());
+			LOGGER.fatal("Remote error!", e);
+			throw new PlatformException(e.getLocalizedMessage());
 		}
-        
+
 		return result;
 	}
 
 	private static final Logger LOGGER = Logger.getLogger(PluginManagerProxy.class);
-
 
 	/**
 	 * @see salomon.engine.plugin.IPluginManager#addPlugin(salomon.plugin.IPlugin)
 	 */
 	public void addPlugin(IPlugin plugin)
 	{
-		throw new UnsupportedOperationException("Method addPlugin() not implemented yet!");
+		throw new UnsupportedOperationException(
+				"Method addPlugin() not implemented yet!");
 	}
 
 	public ILocalPlugin getPlugin(IUniqueId id) throws PlatformException
 	{
-		throw new UnsupportedOperationException("Method getPlugin() not implemented yet!");
+		throw new UnsupportedOperationException(
+				"Method getPlugin() not implemented yet!");
 	}
 
 	public boolean removePlugin(ILocalPlugin plugin) throws PlatformException
 	{
-		throw new UnsupportedOperationException("Method removePlugin() not implemented yet!");
+		throw new UnsupportedOperationException(
+				"Method removePlugin() not implemented yet!");
 	}
 
 	public boolean savePlugin(ILocalPlugin plugin) throws PlatformException
 	{
-		throw new UnsupportedOperationException("Method savePlugin() not implemented yet!");
+		throw new UnsupportedOperationException(
+				"Method savePlugin() not implemented yet!");
 	}
 
 	public void addPlugin(ILocalPlugin plugin) throws PlatformException
 	{
-		throw new UnsupportedOperationException("Method addPlugin() not implemented yet!");
+		throw new UnsupportedOperationException(
+				"Method addPlugin() not implemented yet!");
 	}
 
 	public ILocalPlugin createPlugin() throws PlatformException
 	{
-		throw new UnsupportedOperationException("Method createPlugin() not implemented yet!");
+		throw new UnsupportedOperationException(
+				"Method createPlugin() not implemented yet!");
 	}
 
-	public boolean removeAll() throws PlatformException {
-		boolean result = true ;
-		for (ILocalPlugin p : this.getPlugins()){ 
-			if (!this.removePlugin(p)) result = false ;
+	public boolean removeAll() throws PlatformException
+	{
+		boolean result = true;
+		for (ILocalPlugin p : this.getPlugins()) {
+			if (!this.removePlugin(p))
+				result = false;
 		}
-		
-		return result; 
+
+		return result;
 	}
 
-	public void clearPluginList() throws PlatformException {
-		throw new UnsupportedOperationException("Method clearPluginList() not implemented yet!");
+	public void clearPluginList() throws PlatformException
+	{
+		throw new UnsupportedOperationException(
+				"Method clearPluginList() not implemented yet!");
 	}
 
 }

@@ -53,8 +53,10 @@ import salomon.engine.plugin.IPluginManager;
 import salomon.engine.plugin.LocalPlugin;
 import salomon.engine.plugin.PluginInfo;
 import salomon.engine.plugin.PluginManager;
-import salomon.platform.exception.PlatformException;
+
 import salomon.util.gui.Utils;
+
+import salomon.platform.exception.PlatformException;
 
 public final class PluginMangerGUI
 {
@@ -65,7 +67,6 @@ public final class PluginMangerGUI
 	 * @uml.associationEnd multiplicity="(0 1)"
 	 */
 	private ActionManager _actionManager;
-
 
 	private JComponent _editPluginPanel;
 
@@ -169,7 +170,7 @@ public final class PluginMangerGUI
 
 	public void refresh()
 	{
-		LOGGER.debug("reloading plugins");		
+		LOGGER.debug("reloading plugins");
 
 		ILocalPlugin[] plugins = null;
 		try {
@@ -369,15 +370,18 @@ public final class PluginMangerGUI
 
 	private static final Logger LOGGER = Logger.getLogger(PluginMangerGUI.class);
 
-    private JFrame _pluginsViewerFrame;
+	private JFrame _pluginsViewerFrame;
 
-    public void viewPlugins() {
-        if (_pluginsViewerFrame == null) {
-            _pluginsViewerFrame = new JFrame(Messages.getString("TIT_PLUGINS"));
-            _pluginsViewerFrame.getContentPane().add(new PluginViewer(((PluginManager)_pluginManager).getDBManager()));
-            _pluginsViewerFrame.pack(); 
-        }
-        
-        _pluginsViewerFrame.setVisible(true) ;   
-    }
+	public void viewPlugins()
+	{
+		if (_pluginsViewerFrame == null) {
+			_pluginsViewerFrame = new JFrame(Messages.getString("TIT_PLUGINS"));
+			_pluginsViewerFrame.getContentPane().add(
+					new PluginViewer(
+							((PluginManager) _pluginManager).getDBManager()));
+			_pluginsViewerFrame.pack();
+		}
+
+		_pluginsViewerFrame.setVisible(true);
+	}
 }

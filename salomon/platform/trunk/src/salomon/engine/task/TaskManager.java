@@ -28,7 +28,6 @@ import org.apache.log4j.Logger;
 
 import salomon.engine.database.DBManager;
 import salomon.engine.plugin.ILocalPlugin;
-import salomon.engine.project.IProject;
 
 import salomon.platform.IDataEngine;
 import salomon.platform.exception.PlatformException;
@@ -39,7 +38,10 @@ import salomon.plugin.ISettings;
 import salomon.engine.platform.Environment;
 import salomon.engine.platform.IManagerEngine;
 
-/** * An implemetation of ITaskManager interface. Class manages with tasks editing * and executing. */
+/**
+ * An implemetation of ITaskManager interface. Class manages with tasks editing
+ * and executing.
+ */
 public final class TaskManager implements ITaskManager
 {
 
@@ -64,13 +66,13 @@ public final class TaskManager implements ITaskManager
 	 */
 	private Environment _environment;
 
-/**
- * 
- * @uml.property name="_managerEngine"
- * @uml.associationEnd multiplicity="(0 1)"
- */
-//	private IProject _project;
-private IManagerEngine _managerEngine;
+	/**
+	 * 
+	 * @uml.property name="_managerEngine"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
+	//	private IProject _project;
+	private IManagerEngine _managerEngine;
 
 	/**
 	 * 
@@ -162,13 +164,14 @@ private IManagerEngine _managerEngine;
 	public ITask createTask() throws PlatformException
 	{
 		Task newTask = new Task(_dbManager);
-		newTask.getInfo().setProjectID(_managerEngine.getProjectManager().getCurrentProject().getInfo().getId());
-//		try {
-//			newTask.getInfo().save();
-//		} catch (Exception e) {
-//			LOGGER.fatal("", e);
-//			throw new PlatformException(e.getLocalizedMessage());
-//		}
+		newTask.getInfo().setProjectID(
+				_managerEngine.getProjectManager().getCurrentProject().getInfo().getId());
+		//		try {
+		//			newTask.getInfo().save();
+		//		} catch (Exception e) {
+		//			LOGGER.fatal("", e);
+		//			throw new PlatformException(e.getLocalizedMessage());
+		//		}
 		return newTask;
 	}
 
@@ -279,7 +282,8 @@ private IManagerEngine _managerEngine;
 
 	private static final Logger LOGGER = Logger.getLogger(TaskManager.class);
 
-    public DBManager getDBManager() {
-        return _dbManager;
-    }
+	public DBManager getDBManager()
+	{
+		return _dbManager;
+	}
 }

@@ -71,7 +71,7 @@ public class SimpleArray implements IArray
 	 */
 	public IObject.Types getType()
 	{
-        return IObject.Types.STRING;
+		return IObject.Types.STRING;
 	}
 
 	/**
@@ -79,11 +79,10 @@ public class SimpleArray implements IArray
 	 */
 	public boolean equals(IObject object)
 	{
-        throw new UnsupportedOperationException(
+		throw new UnsupportedOperationException(
 				"Method equals() not implemented yet!");
 		// TODO Auto-generated method stub
 		//return false;
 	}
-    
 
 }

@@ -30,7 +30,7 @@ import salomon.engine.controller.gui.SolutionManagerGUI;
  */
 public final class OpenSolutionAction extends AbstractSolutionAction
 {
-	
+
 	/**
 	 * Sets an object which method is called in implementation of
 	 * actionPerformed() method
@@ -41,10 +41,10 @@ public final class OpenSolutionAction extends AbstractSolutionAction
 	{
 		super(solutionEditionManager);
 	}
-	
+
 	public void actionPerformed(ActionEvent event)
 	{
 		_solutionEditionManager.openSolution();
 	}
-	
+
 }

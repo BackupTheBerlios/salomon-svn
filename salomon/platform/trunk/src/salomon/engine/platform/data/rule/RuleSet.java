@@ -28,5 +28,5 @@ import salomon.platform.data.rule.IRuleSet;
  */
 public class RuleSet implements IRuleSet
 {
-    //TODO: add implementation
+	//TODO: add implementation
 }

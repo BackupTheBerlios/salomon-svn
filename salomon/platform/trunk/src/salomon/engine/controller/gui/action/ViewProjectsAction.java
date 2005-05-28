@@ -33,7 +33,7 @@ public final class ViewProjectsAction extends AbstractProjectAction
 
 	protected ViewProjectsAction(ProjectManagerGUI projectManagerGUI)
 	{
-		super(projectManagerGUI);		
+		super(projectManagerGUI);
 	}
 
 	public void actionPerformed(ActionEvent e)

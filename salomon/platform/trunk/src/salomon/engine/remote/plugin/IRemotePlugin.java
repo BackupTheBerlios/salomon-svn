@@ -26,6 +26,7 @@ import java.rmi.RemoteException;
 
 import salomon.platform.IDataEngine;
 import salomon.platform.IEnvironment;
+
 import salomon.plugin.IResult;
 import salomon.plugin.ISettings;
 
@@ -37,14 +38,14 @@ import salomon.plugin.ISettings;
  */
 public interface IRemotePlugin extends Remote
 {
-    /**
-     * @see salomon.plugin.IDataPlugin#doJob(IDataEngine, IEnvironment, ISettings)
-     * @param engine
-     * @param environment
-     * @param settings
-     * @return The task exect
-     * @throws RemoteException
-     */
-	IResult doJob(IDataEngine engine, IEnvironment environment, ISettings settings)
-			throws RemoteException;
+	/**
+	 * @see salomon.plugin.IDataPlugin#doJob(IDataEngine, IEnvironment, ISettings)
+	 * @param engine
+	 * @param environment
+	 * @param settings
+	 * @return The task exect
+	 * @throws RemoteException
+	 */
+	IResult doJob(IDataEngine engine, IEnvironment environment,
+			ISettings settings) throws RemoteException;
 }

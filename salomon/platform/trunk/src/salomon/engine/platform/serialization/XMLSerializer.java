@@ -94,8 +94,7 @@ public final class XMLSerializer
 		try {
 			Result result = new StreamResult(os);
 			Source source = new DOMSource(document);
-			Transformer writer = TransformerFactory.newInstance()
-					.newTransformer();
+			Transformer writer = TransformerFactory.newInstance().newTransformer();
 			writer.transform(source, result);
 		} catch (Exception e) {
 			LOGGER.error("", e);

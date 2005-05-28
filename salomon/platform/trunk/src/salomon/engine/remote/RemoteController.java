@@ -27,9 +27,15 @@ import java.rmi.server.UnicastRemoteObject;
 import org.apache.log4j.Logger;
 
 import salomon.engine.Starter;
+
 import salomon.engine.platform.IManagerEngine;
 
-/** * An implementation of IRemoteController interface. * Its represents remote IController instance. *  * @see salomon.engine.controller.IController */
+/**
+ * An implementation of IRemoteController interface.
+ * Its represents remote IController instance.
+ * 
+ * @see salomon.engine.controller.IController
+ */
 public final class RemoteController extends UnicastRemoteObject
 		implements IRemoteController
 {

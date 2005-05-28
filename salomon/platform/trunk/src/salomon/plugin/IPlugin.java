@@ -21,7 +21,6 @@
 
 package salomon.plugin;
 
-
 /**
  * Interface implemented by all plugins.
  */

@@ -34,7 +34,10 @@ import salomon.plugin.IPlugin;
 import salomon.plugin.IResult;
 import salomon.plugin.ISettings;
 
-/** * Class is graphic representation of a task. It is used to display them on the * list of tasks. */
+/**
+ * Class is graphic representation of a task. It is used to display them on the
+ * list of tasks.
+ */
 public final class TaskGUI
 {
 	private String _name;
@@ -60,7 +63,6 @@ public final class TaskGUI
 	 */
 	private ISettings _settings;
 
-
 	private String _status;
 
 	/**
@@ -79,7 +81,7 @@ public final class TaskGUI
 
 	public TaskGUI(ITask task)
 	{
-		_task = (Task)task;
+		_task = (Task) task;
 		try {
 			TaskInfo taskInfo = _task.getInfo();
 			_name = taskInfo.getName();
@@ -169,7 +171,7 @@ public final class TaskGUI
 		String status = null;
 		if (isInitialized()) {
 			try {
-				status = ((Task)_task).getInfo().getStatus();
+				status = ((Task) _task).getInfo().getStatus();
 			} catch (PlatformException e) {
 				LOGGER.error("", e);
 				// FIXME
@@ -215,11 +217,11 @@ public final class TaskGUI
 	 * Initializes itself using given task. Class cannot create Task directly,
 	 * to get instance of ITask ITaskManager.createTask() has to be used.
 	 * Task given to the method has already been created.
-     * 
+	 * 
 	 */
 	public void initialize(ITask task)
 	{
-		_task = (Task)task;
+		_task = (Task) task;
 		// important: set first plugin
 		try {
 			_task.setPlugin(_plugin);

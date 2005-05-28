@@ -23,51 +23,61 @@ package salomon.engine.platform.data.tree;
 
 import salomon.platform.data.tree.INode;
 
-public class Node implements INode {
+public class Node implements INode
+{
 
-    public Type getType() {
-        throw new UnsupportedOperationException(
-                "Method getType() not implemented yet!");
-    }
+	public Type getType()
+	{
+		throw new UnsupportedOperationException(
+				"Method getType() not implemented yet!");
+	}
 
-    public String getValue() {
-        throw new UnsupportedOperationException(
-                "Method getValue() not implemented yet!");
-    }
+	public String getValue()
+	{
+		throw new UnsupportedOperationException(
+				"Method getValue() not implemented yet!");
+	}
 
-    public String getParentEdge() {
-        throw new UnsupportedOperationException(
-                "Method getParentEdge() not implemented yet!");
-    }
+	public String getParentEdge()
+	{
+		throw new UnsupportedOperationException(
+				"Method getParentEdge() not implemented yet!");
+	}
 
-    public boolean isRoot() {
-        throw new UnsupportedOperationException(
-                "Method isRoot() not implemented yet!");
-    }
+	public boolean isRoot()
+	{
+		throw new UnsupportedOperationException(
+				"Method isRoot() not implemented yet!");
+	}
 
-    public boolean isLeaf() {
-        throw new UnsupportedOperationException(
-                "Method isLeaf() not implemented yet!");
-    }
+	public boolean isLeaf()
+	{
+		throw new UnsupportedOperationException(
+				"Method isLeaf() not implemented yet!");
+	}
 
-    public INode getParent() {
-        throw new UnsupportedOperationException(
-                "Method getParent() not implemented yet!");
-    }
+	public INode getParent()
+	{
+		throw new UnsupportedOperationException(
+				"Method getParent() not implemented yet!");
+	}
 
-    public INode getRoot() {
-        throw new UnsupportedOperationException(
-                "Method getRoot() not implemented yet!");
-    }
+	public INode getRoot()
+	{
+		throw new UnsupportedOperationException(
+				"Method getRoot() not implemented yet!");
+	}
 
-    public INode[] getChilds() {
-        throw new UnsupportedOperationException(
-                "Method getChilds() not implemented yet!");
-    }
+	public INode[] getChilds()
+	{
+		throw new UnsupportedOperationException(
+				"Method getChilds() not implemented yet!");
+	}
 
-    public INode[] getLeafs() {
-        throw new UnsupportedOperationException(
-                "Method getLeafs() not implemented yet!");
-    }
+	public INode[] getLeafs()
+	{
+		throw new UnsupportedOperationException(
+				"Method getLeafs() not implemented yet!");
+	}
 
 }

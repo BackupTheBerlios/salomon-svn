@@ -204,7 +204,7 @@ class DataSet implements IDataSet
 	 * @throws PlatformException
 	 */
 	public ResultSet selectData(SQLSelect select) throws PlatformException
-			
+
 	{
 		//		SQLSelect selectCopy = (SQLSelect) select.clone();
 		//		// getting all tables used in select and _tableNames

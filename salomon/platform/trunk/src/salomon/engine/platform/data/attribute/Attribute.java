@@ -21,7 +21,9 @@
 
 package salomon.engine.platform.data.attribute;
 
-/** * Not used yet. */
+/**
+ * Not used yet.
+ */
 class Attribute
 {
 	///////////////////////////////////////

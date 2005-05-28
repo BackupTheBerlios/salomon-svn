@@ -44,26 +44,27 @@ import org.apache.log4j.Logger;
 
 import salomon.engine.Messages;
 import salomon.engine.controller.gui.action.ActionManager;
-import salomon.engine.controller.gui.viewer.PluginViewer;
 import salomon.engine.controller.gui.viewer.TaskViewer;
-import salomon.engine.platform.IManagerEngine;
 import salomon.engine.plugin.LocalPlugin;
-import salomon.engine.plugin.PluginManager;
-import salomon.engine.solution.Solution;
 import salomon.engine.task.ITask;
 import salomon.engine.task.ITaskManager;
 import salomon.engine.task.TaskManager;
 
+import salomon.util.gui.Utils;
+
 import salomon.platform.IDataEngine;
 import salomon.platform.exception.PlatformException;
+
 import salomon.plugin.IPlugin;
 import salomon.plugin.IResult;
 import salomon.plugin.IResultComponent;
 import salomon.plugin.ISettingComponent;
 import salomon.plugin.ISettings;
-import salomon.util.gui.Utils;
 
-/** * Class used to manage with tasks editing. It enables creating and configuring * tasks and a queue of tasks. */
+/**
+ * Class used to manage with tasks editing. It enables creating and configuring
+ * tasks and a queue of tasks.
+ */
 public final class TaskManagerGUI
 {
 
@@ -150,7 +151,7 @@ public final class TaskManagerGUI
 	}
 
 	public List getTasks()
-	{ 
+	{
 		return Arrays.asList(_taskListModel.toArray());
 	}
 
@@ -326,15 +327,15 @@ public final class TaskManagerGUI
 		}
 		//FIXME needed by DataSet
 		IDataEngine dataEngine = null;
-//		try 
-//			dataEngine = Solution.getInstance().getDataEngine();
-//		} catch (PlatformException e) {
-//			LOGGER.fatal("", e);
-//		} 
-		Component taskSettings = settingComponent.getComponent(inputSettings, dataEngine);
-		int result = JOptionPane.showConfirmDialog(_positionComponent,				
-				taskSettings, 
-				Messages.getString("TIT_PLUGIN_SETTINGS"), //$NON-NLS-1$
+		//		try 
+		//			dataEngine = Solution.getInstance().getDataEngine();
+		//		} catch (PlatformException e) {
+		//			LOGGER.fatal("", e);
+		//		} 
+		Component taskSettings = settingComponent.getComponent(inputSettings,
+				dataEngine);
+		int result = JOptionPane.showConfirmDialog(_positionComponent,
+				taskSettings, Messages.getString("TIT_PLUGIN_SETTINGS"), //$NON-NLS-1$
 				JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
 		if (result == JOptionPane.OK_OPTION) {
 			ISettings settings = settingComponent.getSettings();
@@ -369,15 +370,17 @@ public final class TaskManagerGUI
 
 	static final Logger LOGGER = Logger.getLogger(TaskManagerGUI.class);
 
-    private JFrame _tasksViewerFrame;
+	private JFrame _tasksViewerFrame;
 
-    public void viewTasks() {
-        if (_tasksViewerFrame == null) {
-            _tasksViewerFrame = new JFrame(Messages.getString("TIT_TASKS"));
-            _tasksViewerFrame.getContentPane().add(new TaskViewer(((TaskManager)_taskManager).getDBManager()));
-            _tasksViewerFrame.pack(); 
-        }
-        
-        _tasksViewerFrame.setVisible(true) ;   
-    }
+	public void viewTasks()
+	{
+		if (_tasksViewerFrame == null) {
+			_tasksViewerFrame = new JFrame(Messages.getString("TIT_TASKS"));
+			_tasksViewerFrame.getContentPane().add(
+					new TaskViewer(((TaskManager) _taskManager).getDBManager()));
+			_tasksViewerFrame.pack();
+		}
+
+		_tasksViewerFrame.setVisible(true);
+	}
 }

@@ -39,7 +39,10 @@ import salomon.engine.Config;
 import salomon.engine.Messages;
 import salomon.engine.controller.gui.action.ActionManager;
 
-/** * Class represents main panel - list of tasks and available plugins, buttons to * manage them. */
+/**
+ * Class represents main panel - list of tasks and available plugins, buttons to
+ * manage them.
+ */
 public final class ControllerPanel extends JPanel
 {
 
@@ -49,7 +52,6 @@ public final class ControllerPanel extends JPanel
 	 * @uml.associationEnd multiplicity="(0 1)"
 	 */
 	private ActionManager _actionManager;
-
 
 	private JButton _btnApply;
 
@@ -64,7 +66,6 @@ public final class ControllerPanel extends JPanel
 	 */
 	private GUIButtons _guiButtons;
 
-	
 	private JList _lstPlugins;
 
 	private JList _lstTasks;
@@ -76,7 +77,6 @@ public final class ControllerPanel extends JPanel
 	 */
 	private PluginMangerGUI _pluginMangerGUI;
 
-
 	private JPanel _pnlInit;
 
 	private JPanel _pnlManagerButtons;
@@ -84,7 +84,7 @@ public final class ControllerPanel extends JPanel
 	private JPanel _pnlPluginButtons;
 
 	private JPanel _pnlPlugins;
-	
+
 	private JPanel _pnlTaskButtons;
 
 	private JPanel _pnlTasks;

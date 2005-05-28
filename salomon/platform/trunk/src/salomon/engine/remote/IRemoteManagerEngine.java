@@ -28,8 +28,8 @@ import salomon.engine.remote.plugin.IRemotePluginManager;
 import salomon.engine.remote.project.IRemoteProjectManager;
 import salomon.engine.remote.solution.IRemoteSolutionManager;
 import salomon.engine.remote.task.IRemoteTaskManager;
-import salomon.platform.exception.PlatformException;
 
+import salomon.platform.exception.PlatformException;
 
 /**
  * Remote version of IManagerEngine interface. It has all methods from
@@ -47,27 +47,31 @@ public interface IRemoteManagerEngine extends Remote
 	 * @pre $none
 	 * @post $result != null
 	 */
-	IRemotePluginManager getPluginManager() throws RemoteException, PlatformException;
+	IRemotePluginManager getPluginManager() throws RemoteException,
+			PlatformException;
 
 	/**
-     * 
-     * @deprecated Use (@link salomon.engine.platform.remote.solution.IRemoteSolution#getProjectManager()}
+	 * 
+	 * @deprecated Use (@link salomon.engine.platform.remote.solution.IRemoteSolution#getProjectManager()}
 	 * @see salomon.engine.platform.IManagerEngine#getProjectManager()
 	 * 
 	 * @return Returns the projectManager.
 	 * @pre $none
 	 * @post $result != null
 	 */
-	IRemoteProjectManager getProjectManager() throws RemoteException, PlatformException;
+	IRemoteProjectManager getProjectManager() throws RemoteException,
+			PlatformException;
 
 	/**
-     * @deprecated Use {@link salomon.engine.remote.project.IRemoteProject#getTaskManager()}
+	 * @deprecated Use {@link salomon.engine.remote.project.IRemoteProject#getTaskManager()}
 	 * @see salomon.engine.platform.IManagerEngine#getTasksManager()
 	 */
-	IRemoteTaskManager getTasksManager() throws RemoteException, PlatformException;
-    
-    /**
-     * @see salomon.engine.platform.IManagerEngine#getSolutionManager()
-     */
-    IRemoteSolutionManager getSolutionManager() throws RemoteException, PlatformException;
+	IRemoteTaskManager getTasksManager() throws RemoteException,
+			PlatformException;
+
+	/**
+	 * @see salomon.engine.platform.IManagerEngine#getSolutionManager()
+	 */
+	IRemoteSolutionManager getSolutionManager() throws RemoteException,
+			PlatformException;
 }

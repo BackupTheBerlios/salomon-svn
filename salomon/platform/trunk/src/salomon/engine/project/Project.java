@@ -23,11 +23,12 @@ package salomon.engine.project;
 
 import salomon.engine.database.DBManager;
 import salomon.engine.task.ITaskManager;
-import salomon.engine.task.TaskManager;
 
 import salomon.platform.exception.PlatformException;
 
-/** * Represents a project, it is an implementation of IProject interface. */
+/**
+ * Represents a project, it is an implementation of IProject interface.
+ */
 public final class Project implements IProject
 {
 

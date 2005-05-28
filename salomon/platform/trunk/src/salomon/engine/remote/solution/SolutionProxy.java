@@ -28,6 +28,7 @@ import org.apache.log4j.Logger;
 import salomon.engine.project.IProjectManager;
 import salomon.engine.remote.project.ProjectManagerProxy;
 import salomon.engine.solution.ISolution;
+
 import salomon.platform.IDataEngine;
 import salomon.platform.IInfo;
 import salomon.platform.exception.PlatformException;
@@ -62,7 +63,8 @@ public final class SolutionProxy implements ISolution
 	 */
 	public IDataEngine getDataEngine() throws PlatformException
 	{
-		throw new UnsupportedOperationException("Method getManagerEngine() not implemented yet!");
+		throw new UnsupportedOperationException(
+				"Method getManagerEngine() not implemented yet!");
 	}
 
 	/**
@@ -90,7 +92,8 @@ public final class SolutionProxy implements ISolution
 
 	private static final Logger LOGGER = Logger.getLogger(SolutionProxy.class);
 
-	public IInfo getInfo() throws PlatformException {
+	public IInfo getInfo() throws PlatformException
+	{
 		throw new UnsupportedOperationException(
 				"Method salomon.engine.remote.solution::SolutionProxy::getInfo()not implemented yet!");
 	}

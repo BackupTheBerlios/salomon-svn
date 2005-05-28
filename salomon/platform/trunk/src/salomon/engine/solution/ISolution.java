@@ -22,10 +22,10 @@
 package salomon.engine.solution;
 
 import salomon.engine.project.IProjectManager;
+
 import salomon.platform.IDataEngine;
 import salomon.platform.IInfo;
 import salomon.platform.exception.PlatformException;
-
 
 /**
  * Represents a solution.
@@ -34,6 +34,8 @@ import salomon.platform.exception.PlatformException;
 public interface ISolution
 {
 	IInfo getInfo() throws PlatformException;
-    IDataEngine getDataEngine() throws PlatformException;
-    IProjectManager getProjectManager() throws PlatformException;
+
+	IDataEngine getDataEngine() throws PlatformException;
+
+	IProjectManager getProjectManager() throws PlatformException;
 }

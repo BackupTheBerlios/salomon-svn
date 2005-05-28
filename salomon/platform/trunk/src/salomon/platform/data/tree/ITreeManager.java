@@ -31,13 +31,24 @@ import salomon.platform.exception.PlatformException;
 public interface ITreeManager
 {
 	ITree[] getAllTrees() throws PlatformException;
-    ITree[] getTrees(ISolution solution) throws PlatformException;
-    ITree getTree(int treeId) throws PlatformException;
-    void addTree(ITree tree) throws PlatformException;
-    void removeTree(ITree tree) throws PlatformException;
-    IDataSource[] getAllTreeDataSources() throws PlatformException;
-    IDataSource[] getTreeDataSources(ISolution solution) throws PlatformException;
-    IDataSource getTreeDataSource(int treeDataSourceId) throws PlatformException;;
-    void addTreeDataSource(IDataSource dataSource) throws PlatformException;;
-    void removeTreeDataSource(IDataSource dataSource) throws PlatformException;;
+
+	ITree[] getTrees(ISolution solution) throws PlatformException;
+
+	ITree getTree(int treeId) throws PlatformException;
+
+	void addTree(ITree tree) throws PlatformException;
+
+	void removeTree(ITree tree) throws PlatformException;
+
+	IDataSource[] getAllTreeDataSources() throws PlatformException;
+
+	IDataSource[] getTreeDataSources(ISolution solution)
+			throws PlatformException;
+
+	IDataSource getTreeDataSource(int treeDataSourceId)
+			throws PlatformException;;
+
+	void addTreeDataSource(IDataSource dataSource) throws PlatformException;;
+
+	void removeTreeDataSource(IDataSource dataSource) throws PlatformException;;
 }

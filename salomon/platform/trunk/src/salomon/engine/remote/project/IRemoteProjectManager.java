@@ -25,6 +25,7 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 
 import salomon.engine.project.IProject;
+
 import salomon.platform.exception.PlatformException;
 
 /**
@@ -73,6 +74,7 @@ public interface IRemoteProjectManager extends Remote
 	 * @post $none
 	 */
 	void saveProject() throws PlatformException, RemoteException;
-    
-    IRemoteProject getCurrentProject() throws PlatformException, RemoteException;
+
+	IRemoteProject getCurrentProject() throws PlatformException,
+			RemoteException;
 }

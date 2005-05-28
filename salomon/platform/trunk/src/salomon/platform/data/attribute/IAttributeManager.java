@@ -28,13 +28,13 @@ import salomon.platform.exception.PlatformException;
  */
 public interface IAttributeManager
 {
-    /**
-     * Returns the array of all attributes with the current solution.
-     * @return The array of attributes
-     * @throws PlatformException
-     * 
-     * @pre $none
-     * @post $result != null
-     */
+	/**
+	 * Returns the array of all attributes with the current solution.
+	 * @return The array of attributes
+	 * @throws PlatformException
+	 * 
+	 * @pre $none
+	 * @post $result != null
+	 */
 	IAttribiute[] getAttributes() throws PlatformException;
 }

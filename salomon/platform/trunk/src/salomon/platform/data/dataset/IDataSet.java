@@ -40,6 +40,7 @@ public interface IDataSet
 	 * @return the data set info
 	 */
 	IInfo getInfo() throws PlatformException;
+
 	/**
 	 * 
 	 * TODO: add comment.
@@ -96,7 +97,7 @@ public interface IDataSet
 	 * @throws PlatformException
 	 */
 	IDataSet union(IDataSet dataSet, IUniqueId id) throws PlatformException;
-	
+
 	ResultSet selectData(SQLSelect select) throws PlatformException;
 
 }

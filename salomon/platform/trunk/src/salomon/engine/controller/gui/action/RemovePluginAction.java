@@ -48,6 +48,4 @@ public final class RemovePluginAction extends AbstractPluginAction
 		_pluginMangerGUI.removePlugin();
 	}
 
-
-
 }

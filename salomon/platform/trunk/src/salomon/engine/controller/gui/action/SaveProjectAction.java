@@ -43,9 +43,9 @@ public final class SaveProjectAction extends AbstractProjectAction
 		super(projectEditionManager);
 	}
 
-    /**
-     * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-     */
+	/**
+	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+	 */
 	public void actionPerformed(ActionEvent e)
 	{
 		_projectEditionManager.saveProject();

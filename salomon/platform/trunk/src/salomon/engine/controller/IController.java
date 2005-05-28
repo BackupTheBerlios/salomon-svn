@@ -34,10 +34,10 @@ public interface IController
 	 * @param managerEngine
 	 */
 	void start(IManagerEngine managerEngine);
-    
-    /**
-     * ends controller
-     */
-    void exit();
+
+	/**
+	 * ends controller
+	 */
+	void exit();
 } // end IManager
 

@@ -56,8 +56,7 @@ class StructDeserializer implements INodeNames
 
 	private static int getIntValue(Node node)
 	{
-		String value = node.getAttributes().getNamedItem(ATTR_VALUE)
-				.getNodeValue();
+		String value = node.getAttributes().getNamedItem(ATTR_VALUE).getNodeValue();
 		int result = 0;
 		try {
 			result = Integer.parseInt(value);
@@ -69,15 +68,13 @@ class StructDeserializer implements INodeNames
 
 	private static String getNodeName(Node node)
 	{
-		String result = node.getAttributes().getNamedItem(ATTR_NAME)
-				.getNodeValue();
+		String result = node.getAttributes().getNamedItem(ATTR_NAME).getNodeValue();
 		return result;
 	}
 
 	private static String getStringValue(Node node)
 	{
-		String result = node.getAttributes().getNamedItem(ATTR_VALUE)
-				.getNodeValue();
+		String result = node.getAttributes().getNamedItem(ATTR_VALUE).getNodeValue();
 		return result;
 	}
 

@@ -29,13 +29,21 @@ import org.apache.log4j.Logger;
 import salomon.engine.plugin.ILocalPlugin;
 import salomon.engine.plugin.PluginLoader;
 import salomon.engine.task.ITask;
+
 import salomon.platform.IInfo;
 import salomon.platform.exception.PlatformException;
+
 import salomon.plugin.IPlugin;
 import salomon.plugin.IResult;
 import salomon.plugin.ISettings;
 
-/** * Class is a sever side wrapper of IRemoteTask object. It implements ITask * interface and delegates methods execution to remote object catching all * RemoteExceptions. *  * @see salomon.engine.remote.task.IRemoteTask */
+/**
+ * Class is a sever side wrapper of IRemoteTask object. It implements ITask
+ * interface and delegates methods execution to remote object catching all
+ * RemoteExceptions.
+ * 
+ * @see salomon.engine.remote.task.IRemoteTask
+ */
 public final class TaskProxy implements ITask
 {
 
@@ -80,7 +88,7 @@ public final class TaskProxy implements ITask
 		try {
 			URL pluginLocation = _remoteTask.getPlugin();
 			try {
-				plugin = (ILocalPlugin)PluginLoader.loadPlugin(pluginLocation);
+				plugin = (ILocalPlugin) PluginLoader.loadPlugin(pluginLocation);
 			} catch (Exception e1) {
 				LOGGER.error("Remote error!", e1);
 			}
@@ -175,7 +183,7 @@ public final class TaskProxy implements ITask
 	public void setPlugin(IPlugin plugin) throws PlatformException
 	{
 		try {
-			_remoteTask.setPlugin(PluginLoader.getPluginLocation((ILocalPlugin)plugin));
+			_remoteTask.setPlugin(PluginLoader.getPluginLocation((ILocalPlugin) plugin));
 		} catch (RemoteException e) {
 			LOGGER.fatal("Remote error!", e);
 			throw new PlatformException(e.getLocalizedMessage());
@@ -234,13 +242,13 @@ public final class TaskProxy implements ITask
 		}
 	}
 
-    /**
-     * Gets the RemoteTask.
-     * @return The RemoteTask
-     * 
-     * @pre $none
-     * @post $result != null
-     */
+	/**
+	 * Gets the RemoteTask.
+	 * @return The RemoteTask
+	 * 
+	 * @pre $none
+	 * @post $result != null
+	 */
 	IRemoteTask getRemoteTask()
 	{
 		return _remoteTask;
@@ -248,13 +256,15 @@ public final class TaskProxy implements ITask
 
 	private static final Logger LOGGER = Logger.getLogger(TaskProxy.class);
 
-	public IInfo getInfo() throws PlatformException {
+	public IInfo getInfo() throws PlatformException
+	{
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public void setPlugin(ILocalPlugin plugin) throws PlatformException {
+	public void setPlugin(ILocalPlugin plugin) throws PlatformException
+	{
 		// TODO Auto-generated method stub
-		
+
 	}
 }

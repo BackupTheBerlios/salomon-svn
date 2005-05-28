@@ -47,7 +47,9 @@ import salomon.engine.database.queries.SQLSelect;
 
 import salomon.util.gui.Utils;
 
-/** * Class represents universal component, which can show table. */
+/**
+ * Class represents universal component, which can show table.
+ */
 abstract class ObjectViewer extends JPanel
 {
 
@@ -57,7 +59,6 @@ abstract class ObjectViewer extends JPanel
 	 * @uml.associationEnd multiplicity="(0 1)"
 	 */
 	protected SQLSelect _select;
-
 
 	private JButton _btnSearch;
 
@@ -101,7 +102,7 @@ abstract class ObjectViewer extends JPanel
 		this.initList();
 		_filterPanel.add(Box.createHorizontalGlue());
 		_filterPanel.add(_btnSearch);
-		this.setPreferredSize(new Dimension(400,400));
+		this.setPreferredSize(new Dimension(400, 400));
 	}
 
 	/**
@@ -151,7 +152,7 @@ abstract class ObjectViewer extends JPanel
 
 		private String _title;
 
-		private JTextField _txtColumn;		
+		private JTextField _txtColumn;
 
 		public FilterField(String title, String columnName)
 		{
@@ -159,16 +160,16 @@ abstract class ObjectViewer extends JPanel
 			_columnName = columnName;
 			_lblTitle = new JLabel(title);
 			_txtColumn = new JTextField();
-			
+
 			Dimension dim = new Dimension(100, 20);
-//			_lblTitle.setMinimumSize(dim);
-//			_lblTitle.setMaximumSize(dim);
+			//			_lblTitle.setMinimumSize(dim);
+			//			_lblTitle.setMaximumSize(dim);
 			_lblTitle.setPreferredSize(dim);
-			
-//			_txtColumn.setMinimumSize(dim);
-//			_txtColumn.setMaximumSize(dim);
+
+			//			_txtColumn.setMinimumSize(dim);
+			//			_txtColumn.setMaximumSize(dim);
 			_txtColumn.setPreferredSize(dim);
-			
+
 			this.setLayout(new GridLayout(2, 1));
 			this.add(_lblTitle);
 			this.add(_txtColumn);

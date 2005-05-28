@@ -36,6 +36,7 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 
 import salomon.engine.Config;
+
 import salomon.plugin.IPlugin;
 
 /**
@@ -72,7 +73,7 @@ public final class PluginLoader
 		PluginClassLoader classLoader = PluginClassLoader.getInstance();
 		classLoader.addUrl(url);
 		// loading appropriate plugin (it has to be in *.jar file
-		plugin = (IPlugin) classLoader.findMainClass(pluginFile).newInstance();		
+		plugin = (IPlugin) classLoader.findMainClass(pluginFile).newInstance();
 		_pluginsLoaded.put(plugin, url);
 
 		return plugin;

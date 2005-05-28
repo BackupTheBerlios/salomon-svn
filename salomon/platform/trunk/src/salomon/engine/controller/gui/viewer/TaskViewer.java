@@ -26,32 +26,31 @@ import salomon.engine.task.TaskInfo;
 
 public class TaskViewer extends ObjectViewer
 {
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    public TaskViewer(DBManager dbManager)
-    {
-        super(dbManager);
-    }
+	public TaskViewer(DBManager dbManager)
+	{
+		super(dbManager);
+	}
 
-    @Override
-    public void initList()
-    {
-        _select.addTable(TaskInfo.TABLE_NAME);
-        addColumn("ProjectId", "project_id");
-        addColumn("PluginId", "plugin_id");
-        addColumn("TaskId", "task_id");               
-        addColumn("Name", "task_name");
-        addColumn("Info", "task_info");
-        addColumn("PluginSettings", "plugin_settings");
-        addColumn("PluginResult", "plugin_result");
-        addColumn("StartTime", "start_time");
-        addColumn("StopTime", "stop_time");
-        addColumn("Status", "status");
-        addColumn("", "lm_date");
+	@Override
+	public void initList()
+	{
+		_select.addTable(TaskInfo.TABLE_NAME);
+		addColumn("ProjectId", "project_id");
+		addColumn("PluginId", "plugin_id");
+		addColumn("TaskId", "task_id");
+		addColumn("Name", "task_name");
+		addColumn("Info", "task_info");
+		addColumn("PluginSettings", "plugin_settings");
+		addColumn("PluginResult", "plugin_result");
+		addColumn("StartTime", "start_time");
+		addColumn("StopTime", "stop_time");
+		addColumn("Status", "status");
+		addColumn("", "lm_date");
 
-        addFilteredField("Task id", "task_id");
-        addFilteredField("Name", "task_name");
-        addFilteredField("Status", "status");
-    }
+		addFilteredField("Task id", "task_id");
+		addFilteredField("Name", "task_name");
+		addFilteredField("Status", "status");
+	}
 }
-

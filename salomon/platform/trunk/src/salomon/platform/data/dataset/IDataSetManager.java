@@ -36,7 +36,7 @@ public interface IDataSetManager
 	 * 
 	 */
 	void add(IDataSet dataSet) throws PlatformException;
-	
+
 	/**
 	 * Removes the given data set from the storage.
 	 * 
@@ -47,7 +47,7 @@ public interface IDataSetManager
 
 	/**
 	 * Creates empty data set.
- 	 * 
+	 * 
 	 * @return the empty data set
 	 */
 	IDataSet createEmpty() throws PlatformException;

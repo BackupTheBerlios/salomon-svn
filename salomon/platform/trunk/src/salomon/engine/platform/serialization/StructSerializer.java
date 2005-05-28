@@ -10,10 +10,11 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
-import salomon.platform.serialization.IObject;
 import salomon.util.serialization.SimpleInteger;
 import salomon.util.serialization.SimpleString;
 import salomon.util.serialization.SimpleStruct;
+
+import salomon.platform.serialization.IObject;
 
 /**
  * 

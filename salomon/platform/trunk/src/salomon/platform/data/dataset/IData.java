@@ -26,5 +26,5 @@ package salomon.platform.data.dataset;
  */
 public interface IData
 {
-    //TODO: add methods
+	//TODO: add methods
 }

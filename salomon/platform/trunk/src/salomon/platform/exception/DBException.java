@@ -31,6 +31,6 @@ public class DBException extends PlatformException
 	 */
 	public DBException(String message)
 	{
-        super(message);
+		super(message);
 	}
 }

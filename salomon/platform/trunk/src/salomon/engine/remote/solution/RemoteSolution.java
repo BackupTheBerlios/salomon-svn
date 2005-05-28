@@ -27,9 +27,12 @@ import java.rmi.server.UnicastRemoteObject;
 import salomon.engine.remote.project.IRemoteProjectManager;
 import salomon.engine.remote.project.RemoteProjectManager;
 import salomon.engine.solution.ISolution;
+
 import salomon.platform.exception.PlatformException;
 
-/** * @see salomon.engine.solution.ISolution */
+/**
+ * @see salomon.engine.solution.ISolution
+ */
 public final class RemoteSolution extends UnicastRemoteObject
 		implements IRemoteSolution
 {
@@ -69,10 +72,10 @@ public final class RemoteSolution extends UnicastRemoteObject
 
 		return _remoteProjectManager;
 	}
-    
-    ISolution getSolution()
-    {
-    	return _solution;
-    }
+
+	ISolution getSolution()
+	{
+		return _solution;
+	}
 
 }

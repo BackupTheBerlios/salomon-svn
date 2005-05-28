@@ -35,7 +35,9 @@ import salomon.engine.database.queries.SQLUpdate;
 import salomon.platform.IInfo;
 import salomon.platform.exception.PlatformException;
 
-/** * Class represents plugin description. */
+/**
+ * Class represents plugin description.
+ */
 public class PluginInfo implements IInfo, Serializable
 {
 
@@ -256,8 +258,7 @@ public class PluginInfo implements IInfo, Serializable
 
 	public String toString()
 	{
-		return "" + _pluginID + "," + _name + "," + _location + ","
-				+ _info;
+		return "" + _pluginID + "," + _name + "," + _location + "," + _info;
 	}
 
 	public static final String TABLE_NAME = "plugins";

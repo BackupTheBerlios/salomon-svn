@@ -30,9 +30,12 @@ import org.apache.log4j.Logger;
 
 import salomon.engine.solution.ISolution;
 import salomon.engine.solution.ISolutionManager;
+
 import salomon.platform.exception.PlatformException;
 
-/** * @see salomon.engine.solution.ISolutionManager */
+/**
+ * @see salomon.engine.solution.ISolutionManager
+ */
 public final class RemoteSolutionManager extends UnicastRemoteObject
 		implements IRemoteSolutionManager
 {
@@ -60,8 +63,8 @@ public final class RemoteSolutionManager extends UnicastRemoteObject
 	public void addSolution(IRemoteSolution solution) throws PlatformException,
 			RemoteException
 	{
-        RemoteSolution remoteSolution = (RemoteSolution) solution;
-        _solutionManager.addSolution(remoteSolution.getSolution());
+		RemoteSolution remoteSolution = (RemoteSolution) solution;
+		_solutionManager.addSolution(remoteSolution.getSolution());
 	}
 
 	/**
