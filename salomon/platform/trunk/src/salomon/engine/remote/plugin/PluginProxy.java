@@ -22,7 +22,6 @@
 package salomon.engine.remote.plugin;
 
 import salomon.engine.plugin.PluginInfo;
-
 import salomon.platform.IDataEngine;
 import salomon.platform.IEnvironment;
 import salomon.plugin.IPlugin;
@@ -41,7 +40,6 @@ public final class PluginProxy implements IPlugin
 	 * @uml.associationEnd multiplicity="(0 1)"
 	 */
 	private IPlugin _localPlugin;
-
 	/**
 	 * 
 	 * @uml.property name="_remotePlugin"
@@ -50,20 +48,12 @@ public final class PluginProxy implements IPlugin
 	private IRemotePlugin _remotePlugin;
 
 	/**
-	 * @see salomon.plugin.IPlugin#destroy()
-	 */
-	public void destroy()
-	{
-		_localPlugin.destroy();
-	}
-
-	/**
 	 * @see salomon.plugin.IDataPlugin#doJob(IDataEngine, IEnvironment, ISettings)
 	 */
 	public IResult doJob(IDataEngine engine, IEnvironment environment,
 			ISettings settings)
 	{
-		//FIXME
+		//FIXME		
 		throw new UnsupportedOperationException(
 				"Method getResultComponent() not implemented yet!");
 	}
@@ -97,21 +87,5 @@ public final class PluginProxy implements IPlugin
 		//FIXME
 		throw new UnsupportedOperationException(
 				"Method getResultComponent() not implemented yet!");
-	}
-
-	/**
-	 * @see salomon.plugin.IPlugin#initizalize()
-	 */
-	public void initizalize()
-	{
-		_localPlugin.initizalize();
-	}
-
-	/**
-	 * @see salomon.plugin.IPlugin#setInfo(salomon.engine.plugin.PluginInfo)
-	 */
-	public void setDescription(PluginInfo description)
-	{
-		_localPlugin.setInfo(description);
 	}
 }

@@ -61,11 +61,11 @@ public class LibraryControllerTest extends TestCase
 		}
 		
 		IProject project = projectManager.createProject();
-		project.setName("testLib");
-		project.setInfo("Created from library controller");
+		//project.setName("testLib");
+		//project.setInfo("Created from library controller");
 		ITaskManager taskManager = controller.getManagerEngine().getTasksManager(); 
 		ITask task = taskManager.createTask();
-		task.setName("testName");
+		//task.setName("testName");
 		
 		StringBuilder builder = new StringBuilder();
 		builder.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");

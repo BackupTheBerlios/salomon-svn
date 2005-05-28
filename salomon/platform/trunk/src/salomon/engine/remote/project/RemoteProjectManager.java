@@ -92,9 +92,11 @@ public final class RemoteProjectManager extends UnicastRemoteObject
 	public IRemoteProject getProject(int projectID) throws PlatformException,
 			RemoteException
 	{
-		IProject project = _projectManager.getProject(projectID);
+		//IProject project = _projectManager.getProject(projectID);
 
-		return getRemoteProject(project);
+		//return getRemoteProject(project);
+		throw new UnsupportedOperationException(
+				"Method salomon.engine.remote.project::RemoteProjectManager::getProject()not implemented yet!");
 	}
 
 	/**

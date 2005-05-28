@@ -27,6 +27,7 @@ import java.rmi.server.UnicastRemoteObject;
 
 import org.apache.log4j.Logger;
 
+import salomon.engine.plugin.ILocalPlugin;
 import salomon.engine.plugin.PluginLoader;
 import salomon.engine.task.ITask;
 import salomon.platform.exception.PlatformException;
@@ -59,7 +60,9 @@ public final class RemoteTask extends UnicastRemoteObject
 	 */
 	public String getName() throws RemoteException, PlatformException
 	{
-		return _task.getName();
+		//return _task.getName();
+		throw new UnsupportedOperationException(
+				"Method salomon.engine.remote.task::RemoteTask::getName()not implemented yet!");
 	}
 
 	/**
@@ -91,7 +94,9 @@ public final class RemoteTask extends UnicastRemoteObject
 	 */
 	public String getStatus() throws RemoteException, PlatformException
 	{
-		return _task.getStatus();
+		//return _task.getStatus();
+		throw new UnsupportedOperationException(
+				"Method salomon.engine.remote.task::RemoteTask::getStatus()not implemented yet!");
 	}
 
 	/**
@@ -99,7 +104,9 @@ public final class RemoteTask extends UnicastRemoteObject
 	 */
 	public int getTaskId() throws RemoteException, PlatformException
 	{
-		return _task.getTaskId();
+		///return _task.getTaskId();
+		throw new UnsupportedOperationException(
+				"Method salomon.engine.remote.task::RemoteTask::getTaskId()not implemented yet!");
 	}
 
 	/**
@@ -107,7 +114,9 @@ public final class RemoteTask extends UnicastRemoteObject
 	 */
 	public void setName(String name) throws RemoteException, PlatformException
 	{
-		_task.setName(name);
+		//_task.setName(name);
+		throw new UnsupportedOperationException(
+				"Method salomon.engine.remote.task::RemoteTask::enclosing_method()not implemented yet!");
 	}
 
 	/**
@@ -116,7 +125,7 @@ public final class RemoteTask extends UnicastRemoteObject
 	public void setPlugin(URL plugin) throws RemoteException, PlatformException
 	{
 		try {
-			_task.setPlugin(PluginLoader.loadPlugin(plugin));
+			_task.setPlugin((ILocalPlugin)PluginLoader.loadPlugin(plugin));
 		} catch (Exception e) {
 			LOGGER.fatal("", e);
             throw new PlatformException(e.getLocalizedMessage());
@@ -146,7 +155,9 @@ public final class RemoteTask extends UnicastRemoteObject
 	 */
 	public void setStatus(String status) throws RemoteException, PlatformException
 	{
-		_task.setStatus(status);
+		//_task.setStatus(status);
+		throw new UnsupportedOperationException(
+				"Method salomon.engine.remote.task::RemoteTask::setStatus() not implemented yet!");
 	}
 
 	/**
@@ -154,7 +165,9 @@ public final class RemoteTask extends UnicastRemoteObject
 	 */
 	public void setTaskId(int taskId) throws RemoteException, PlatformException
 	{
-		_task.setTaskId(taskId);
+		//_task.setTaskId(taskId);
+		throw new UnsupportedOperationException(
+				"Method salomon.engine.remote.task::RemoteTask::setTaskId()not implemented yet!");
 	}
 
 	ITask getTask()

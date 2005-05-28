@@ -25,6 +25,7 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 
 import salomon.engine.remote.task.IRemoteTaskManager;
+import salomon.platform.IInfo;
 import salomon.platform.exception.PlatformException;
 
 /** * Remote version of <code>IProject</code> interface. * It has all methods from IProject interface,  * but adds throwing RemoteException declaration to each of methods. *  * @see salomon.engine.project.IProject */
@@ -40,7 +41,7 @@ public interface IRemoteProject extends Remote
 	 * 
 	 * @uml.property name="info"
 	 */
-	String getInfo() throws RemoteException, PlatformException;
+	IInfo getInfo() throws RemoteException, PlatformException;
 
 	/**
 	 * @see salomon.engine.project.IProject#getName()

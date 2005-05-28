@@ -55,11 +55,11 @@ public final class PluginManagerProxy implements IPluginManager
 	/**
 	 * @see IPluginManager#getPlugins()
 	 */
-	public IPlugin[] getPlugins() throws PlatformException
+	public ILocalPlugin[] getPlugins() throws PlatformException
 	{
-		IPlugin[] result = null;
+		ILocalPlugin[] result = null;
 		try {
-			result = _remotePluginManager.getPlugins();
+			result = (ILocalPlugin[])_remotePluginManager.getPlugins();
 		} catch (RemoteException e) {
             LOGGER.fatal("Remote error!", e);
             throw new PlatformException(e.getLocalizedMessage());
@@ -135,6 +135,19 @@ public final class PluginManagerProxy implements IPluginManager
 	public ILocalPlugin createPlugin() throws PlatformException
 	{
 		throw new UnsupportedOperationException("Method createPlugin() not implemented yet!");
+	}
+
+	public boolean removeAll() throws PlatformException {
+		boolean result = true ;
+		for (ILocalPlugin p : this.getPlugins()){ 
+			if (!this.removePlugin(p)) result = false ;
+		}
+		
+		return result; 
+	}
+
+	public void clearPluginList() throws PlatformException {
+		throw new UnsupportedOperationException("Method clearPluginList() not implemented yet!");
 	}
 
 }

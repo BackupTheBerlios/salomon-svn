@@ -60,7 +60,7 @@ public class SolutionTest extends TestCase
 	protected void setUp() throws Exception
 	{
 		super.setUp();
-		_solution = (Solution) Solution.getInstance();
+		//_solution = (Solution) Solution.getInstance();
 		PropertyConfigurator.configure("log.conf");
 	}
 

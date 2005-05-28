@@ -24,9 +24,12 @@ package salomon.engine.remote.project;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
+import com.sun.org.apache.xml.internal.serializer.ToUnknownStream;
+
 import salomon.engine.project.IProject;
 import salomon.engine.remote.task.IRemoteTaskManager;
 import salomon.engine.remote.task.RemoteTaskManager;
+import salomon.platform.IInfo;
 import salomon.platform.exception.PlatformException;
 
 /** * Class representing remote instance of IProject. *  * @see salomon.engine.project.IProject */
@@ -60,25 +63,9 @@ public final class RemoteProject extends UnicastRemoteObject
 	/**
 	 * @see IRemoteProject#getInfo()
 	 */
-	public String getInfo() throws RemoteException, PlatformException
+	public IInfo getInfo() throws RemoteException, PlatformException
 	{
 		return _project.getInfo();
-	}
-
-	/**
-	 * @see IRemoteProject#getName()
-	 */
-	public String getName() throws RemoteException, PlatformException
-	{
-		return _project.getName();
-	}
-
-	/**
-	 * @see IRemoteProject#getProjectID()
-	 */
-	public int getProjectID() throws RemoteException, PlatformException
-	{
-		return _project.getProjectID();
 	}
 
 	/**
@@ -95,33 +82,33 @@ public final class RemoteProject extends UnicastRemoteObject
 		return _remoteTaskManager;
 	}
 
-	/**
-	 * @see IRemoteProject#setInfo(java.lang.String)
-	 */
-	public void setInfo(String info) throws RemoteException, PlatformException
-	{
-		_project.setInfo(info);
-	}
-
-	/**
-	 * @see IRemoteProject#setName(java.lang.String)
-	 */
-	public void setName(String name) throws RemoteException, PlatformException
-	{
-		_project.setName(name);
-	}
-
-	/**
-	 * @see IRemoteProject#setProjectID(int)
-	 */
-	public void setProjectID(int projectId) throws RemoteException,
-			PlatformException
-	{
-		_project.setProjectID(projectId);
-	}
-
 	IProject getProject()
 	{
 		return _project;
+	}
+
+	public void setInfo(String info) throws RemoteException, PlatformException {
+		throw new UnsupportedOperationException(
+				"Method salomon.engine.remote.project::RemoteProject::setInfo()not implemented yet!");
+	}
+
+	public void setName(String name) throws RemoteException, PlatformException {
+		throw new UnsupportedOperationException(
+				"Method salomon.engine.remote.project::RemoteProject::setName()not implemented yet!");
+	}
+
+	public void setProjectID(int projectId) throws RemoteException, PlatformException {	
+		throw new UnsupportedOperationException(
+				"Method salomon.engine.remote.project::RemoteProject::setProjectID()not implemented yet!");
+	}
+
+	public String getName() throws RemoteException, PlatformException {
+		throw new UnsupportedOperationException(
+				"Method salomon.engine.remote.project::RemoteProject::getName()not implemented yet!");
+	}
+
+	public int getProjectID() throws RemoteException, PlatformException {
+		throw new UnsupportedOperationException(
+				"Method salomon.engine.remote.project::RemoteProject::getProjectID()not implemented yet!");
 	}
 }

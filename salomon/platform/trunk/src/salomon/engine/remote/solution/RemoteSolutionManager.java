@@ -79,7 +79,9 @@ public final class RemoteSolutionManager extends UnicastRemoteObject
 	public IRemoteSolution getSolution(String name) throws PlatformException,
 			RemoteException
 	{
-		return getRemoteSolution(_solutionManager.getSolution(name));
+		//return getRemoteSolution(_solutionManager.getSolution(name));
+		throw new UnsupportedOperationException(
+				"Method salomon.engine.remote.solution::RemoteSolutionManager::getSolution()not implemented yet!");
 	}
 
 	/**

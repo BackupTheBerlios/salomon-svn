@@ -68,9 +68,9 @@ public class SolutionManagerTest extends TestCase {
     public void testGetAddSolution() {
         LOGGER.info("SolutionManager.testGetAddSolution()");
         
-        boolean result = false ; 
-        ISolution solution = Solution.getInstance() ;
-        _solutionManager.addSolution(solution) ;
+        //boolean result = false ; 
+        //ISolution solution = Solution.getInstance() ;
+        //_solutionManager.addSolution(solution) ;
         
         ISolution solutions[] = _solutionManager.getSolutions() ;
         assertNotNull(solutions) ;
@@ -96,8 +96,8 @@ public class SolutionManagerTest extends TestCase {
        ISolution solution = _solutionManager.createSolution() ;
        assertTrue("TEST AWAITING FOR Solution INTERFACE", false) ;
  
-       ISolution gotsolution = _solutionManager.getSolution(null) ;
-       assertNotNull(gotsolution) ;
+       //ISolution gotsolution = _solutionManager.getSolution(null) ;
+       //assertNotNull(gotsolution) ;
 
     }
     

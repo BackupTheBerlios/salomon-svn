@@ -195,7 +195,8 @@ public class DataSetTest extends TestCase
 	protected void setUp() throws Exception
 	{
 		PropertyConfigurator.configure("log.conf"); //$NON-NLS-1$   
-		_manager = DBManager.getInstance(); 
+		_manager = new DBManager() ; 
+		_manager.connect(); 
 	}
 	private static final Logger LOGGER = Logger.getLogger(DataSetTest.class);
 

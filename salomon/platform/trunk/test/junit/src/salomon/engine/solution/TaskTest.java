@@ -55,17 +55,17 @@ public class TaskTest extends TestCase {
      */
     public void testCreateTask() {
         LOGGER.info("TaskTest.testCreateTask");
-        Task result = new Task();
-        result.setName("test task") ;
-        result.setStatus(Task.FINISHED) ;
-        result.setProjectID(0xCAFE) ;
-        result.setTaskId(0xF00D);
+        //Task result = new Task();
+        //result.setName("test task") ;
+        //result.setStatus(Task.FINISHED) ;
+        //result.setProjectID(0xCAFE) ;
+        //result.setTaskId(0xF00D);
         
         // Need this if we wanna realy test sth 
         //result.setPlugin(null) ; 
         //result.setSettings(null) ;
         //result.setResult(null);
-        _Task = result ;
+        //_Task = result ;
     }
     
     /* (non-Javadoc)
@@ -73,7 +73,7 @@ public class TaskTest extends TestCase {
      */
     protected void tearDown() throws Exception {
         super.tearDown();
-        _Task.delete() ;
+        //_Task.delete() ;
     }
 
     private static Logger LOGGER = Logger.getLogger(TaskTest.class);

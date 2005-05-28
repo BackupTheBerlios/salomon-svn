@@ -59,13 +59,13 @@ public class ProjectManagerTest extends TestCase
 	{
 		LOGGER.info("ProjectManagerTest.testGetProject()");
 		boolean success = false;
-		try {
-			_projectManager.getProject(10);
-			success = true;
-		} catch (Exception e) {
-			LOGGER.fatal("", e);
-            throw e ;
-		}
+		//try {
+		///	_projectManager.getProject(10);
+		//	success = true;
+		//} catch (Exception e) {
+		//	LOGGER.fatal("", e);
+        //    throw e ;
+		//}
 		assertTrue(success);
 	}
 
@@ -95,7 +95,7 @@ public class ProjectManagerTest extends TestCase
 		PropertyConfigurator.configure("log.conf"); //$NON-NLS-1$           
         
         try {
-            DBManager.getInstance();
+            new DBManager().connect();
         } catch (SQLException e) {
             LOGGER.fatal("", e);
         } catch (ClassNotFoundException e) {

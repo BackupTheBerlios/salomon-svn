@@ -50,10 +50,10 @@ public class DescriptionTest extends TestCase
 	{
 		LOGGER.debug("DescriptionTest.testDelete()");
 		boolean success = false;
-		PluginInfo desc = new PluginInfo();
-		desc.setPluginID(40);
+		//PluginInfo desc = new PluginInfo();
+		//desc.setPluginID(40);
 		try {
-			desc.delete();
+			//desc.delete();
 			success = true;
 			_manager.commit();
 		} catch (Exception e) {
@@ -80,10 +80,10 @@ public class DescriptionTest extends TestCase
 		}
 		assertTrue(success);
 		success = false;
-		PluginInfo desc = new PluginInfo();
+		//PluginInfo desc = new PluginInfo();
 		try {
 			if (resultSet.next()) {
-				desc.load(resultSet);
+				//desc.load(resultSet);
 				success = true;
 			} else {
 				LOGGER.debug("No data found");
@@ -99,25 +99,25 @@ public class DescriptionTest extends TestCase
 			}
 		}
 		assertTrue(success);
-		LOGGER.debug(desc);
+		//LOGGER.debug(desc);
 	}
 
 	public void testSave()
 	{
 		LOGGER.debug("DescriptionTest.testSave()");
 		boolean success = false;
-		PluginInfo desc = new PluginInfo();
-		desc.setName("test_plugin");
-		try {
-			desc.setLocation(new URL("http://www.test_description.pl"));
-			success = true;
-		} catch (MalformedURLException e) {
-			LOGGER.fatal("", e);
-		}
+		//PluginInfo desc = new PluginInfo();
+		//desc.setName("test_plugin");
+		//try {
+			//desc.setLocation(new URL("http://www.test_description.pl"));
+		//	success = true;
+		//} catch (MalformedURLException e) {
+		//	LOGGER.fatal("", e);
+		//}
 		assertTrue(success);
 		success = false;
 		try {
-			desc.save();
+			//desc.save();
 			_manager.commit();
 			success = true;
 		} catch (Exception e) {
@@ -130,7 +130,8 @@ public class DescriptionTest extends TestCase
 	protected void setUp() throws Exception
 	{
 		PropertyConfigurator.configure("log.conf"); //$NON-NLS-1$   
-		_manager = DBManager.getInstance();
+		_manager = new DBManager();
+		_manager.connect() ;
 	}
 
 	private static Logger LOGGER = Logger.getLogger(DescriptionTest.class);

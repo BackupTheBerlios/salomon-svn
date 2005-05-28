@@ -47,10 +47,10 @@ public class ProjectTest extends TestCase
 	{
 		LOGGER.debug("ProjectTest.testDelete()");
 		boolean success = false;
-		Project project = new Project();
-		project.setProjectID(2);
+//		Project project = new Project();
+//		project.setProjectID(2);
 		try {
-			project.delete();
+//			project.delete();
 			success = true;
 			// _manager.commit();
 		} catch (Exception e) {
@@ -65,7 +65,7 @@ public class ProjectTest extends TestCase
 		LOGGER.debug("ProjectTest.testLoad()");
 		boolean success = false;
 		SQLSelect select = new SQLSelect();
-		select.addTable(Project.TABLE_NAME);
+		select.addTable(ProjectInfo.TABLE_NAME);
 		select.addCondition("project_id =", 3);
 		ResultSet resultSet = null;
 		try {
@@ -78,10 +78,10 @@ public class ProjectTest extends TestCase
 		assertTrue(success);
 		success = false;
 
-		Project project = new Project();
+//		Project project = new Project();
 		try {
 			if (resultSet.next()) {
-				project.load(resultSet);
+//				project.load(resultSet);
 				success = true;
 			} else {
 				LOGGER.debug("No data found");
@@ -97,17 +97,17 @@ public class ProjectTest extends TestCase
 			}
 		}
 		assertTrue(success);
-		LOGGER.debug(project);
+//		LOGGER.debug(project);
 	}
 
 	public void testSave()
 	{
 		LOGGER.debug("ProjectTest.testSave()");
 		boolean success = false;
-		Project project = new Project();
-		project.setName("test_project");
+//		Project project = new Project();
+//		project.setName("test_project");
 		try {
-			project.save();
+//			project.save();
 			_manager.commit();
 			success = true;
 		} catch (Exception e) {
@@ -122,14 +122,15 @@ public class ProjectTest extends TestCase
 		PropertyConfigurator.configure("log.conf"); //$NON-NLS-1$   
         
         try {
-            DBManager.getInstance();
+    		_manager = new DBManager();
+    		_manager.connect() ;   
         } catch (SQLException e) {
             LOGGER.fatal("", e);
         } catch (ClassNotFoundException e) {
             LOGGER.error("", e);
         }
         
-		_manager = DBManager.getInstance();
+
 	}
 
 	private static Logger LOGGER = Logger.getLogger(DescriptionTest.class);

@@ -29,6 +29,9 @@ import org.apache.log4j.Logger;
 
 import salomon.engine.project.IProject;
 import salomon.engine.project.IProjectManager;
+import salomon.engine.solution.ISolution;
+import salomon.engine.solution.SolutionManager;
+import salomon.platform.IUniqueId;
 import salomon.platform.exception.PlatformException;
 
 /** * Class is a sever side wrapper of IRemoteProjectManager object. It implements * IProjectManager interface and delegates methods execution to remote object * catching all RemoteExceptions. *  * @see salomon.engine.remote.project.IRemoteProjectManager */
@@ -167,5 +170,22 @@ public final class ProjectManagerProxy implements IProjectManager
 	}
 
 	private static final Logger LOGGER = Logger.getLogger(ProjectManagerProxy.class);
+
+	public ISolution getSolution() throws PlatformException {	
+		throw new UnsupportedOperationException("Method getSolution() not implemented yet!");
+	}
+
+	public boolean removeProject(IProject project) throws PlatformException {
+		throw new UnsupportedOperationException("Method removeProject(IProject project) not implemented yet!");
+	}
+
+	public boolean removeAll() throws PlatformException {
+		throw new UnsupportedOperationException("Method  removeAll()  not implemented yet!");
+	}
+
+	public IProject getProject(IUniqueId projectID) throws PlatformException {
+		throw new UnsupportedOperationException(
+				"Method salomon.engine.remote.project::ProjectManagerProxy::getProject()not implemented yet!");
+	}
 
 }

@@ -26,8 +26,10 @@ import java.rmi.RemoteException;
 
 import org.apache.log4j.Logger;
 
+import salomon.engine.plugin.ILocalPlugin;
 import salomon.engine.plugin.PluginLoader;
 import salomon.engine.task.ITask;
+import salomon.platform.IInfo;
 import salomon.platform.exception.PlatformException;
 import salomon.plugin.IPlugin;
 import salomon.plugin.IResult;
@@ -72,13 +74,13 @@ public final class TaskProxy implements ITask
 	/**
 	 * @see ITask#getPlugin()
 	 */
-	public IPlugin getPlugin() throws PlatformException
+	public ILocalPlugin getPlugin() throws PlatformException
 	{
-		IPlugin plugin = null;
+		ILocalPlugin plugin = null;
 		try {
 			URL pluginLocation = _remoteTask.getPlugin();
 			try {
-				plugin = PluginLoader.loadPlugin(pluginLocation);
+				plugin = (ILocalPlugin)PluginLoader.loadPlugin(pluginLocation);
 			} catch (Exception e1) {
 				LOGGER.error("Remote error!", e1);
 			}
@@ -173,7 +175,7 @@ public final class TaskProxy implements ITask
 	public void setPlugin(IPlugin plugin) throws PlatformException
 	{
 		try {
-			_remoteTask.setPlugin(PluginLoader.getPluginLocation(plugin));
+			_remoteTask.setPlugin(PluginLoader.getPluginLocation((ILocalPlugin)plugin));
 		} catch (RemoteException e) {
 			LOGGER.fatal("Remote error!", e);
 			throw new PlatformException(e.getLocalizedMessage());
@@ -245,4 +247,14 @@ public final class TaskProxy implements ITask
 	}
 
 	private static final Logger LOGGER = Logger.getLogger(TaskProxy.class);
+
+	public IInfo getInfo() throws PlatformException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void setPlugin(ILocalPlugin plugin) throws PlatformException {
+		// TODO Auto-generated method stub
+		
+	}
 }

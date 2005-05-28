@@ -141,7 +141,8 @@ public class SQLSelectTest extends TestCase
     protected void setUp() throws Exception
     {
         PropertyConfigurator.configure("log.conf"); //$NON-NLS-1$      
-        _manager = DBManager.getInstance();
+        _manager = new DBManager();
+        _manager.connect() ;
     }
 
     private static Logger _logger = Logger.getLogger(SQLSelectTest.class);

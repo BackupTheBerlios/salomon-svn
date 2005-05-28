@@ -32,7 +32,6 @@ import salomon.engine.database.DBManager;
 
 public class SQLInsertTest extends TestCase
 {
-
 	/**
 	 * 
 	 * @uml.property name="_manager"
@@ -145,7 +144,7 @@ public class SQLInsertTest extends TestCase
     protected void setUp() throws Exception
     {
         PropertyConfigurator.configure("log.conf"); //$NON-NLS-1$      
-        _manager = DBManager.getInstance();
+        //_manager = DBManager.getInstance();
     }
 
     private static Logger _logger = Logger.getLogger(SQLInsertTest.class);
