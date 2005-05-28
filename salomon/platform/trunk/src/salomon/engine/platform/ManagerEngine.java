@@ -21,7 +21,7 @@
 
 package salomon.engine.platform;
 
-import java.sql.SQLException;
+import org.apache.log4j.Logger;
 
 import salomon.engine.database.DBManager;
 import salomon.engine.plugin.IPluginManager;
@@ -41,6 +41,12 @@ import salomon.platform.exception.PlatformException;
  */
 public final class ManagerEngine implements IManagerEngine
 {
+	/**
+	 * 
+	 * @uml.property name="_dbManager"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
+	private DBManager _dbManager;
 
 	/**
 	 * 
@@ -58,13 +64,6 @@ public final class ManagerEngine implements IManagerEngine
 
 	/**
 	 * 
-	 * @uml.property name="_taskManager"
-	 * @uml.associationEnd multiplicity="(0 1)"
-	 */
-	private ITaskManager _taskManager;
-
-	/**
-	 * 
 	 * @uml.property name="_solutionManager"
 	 * @uml.associationEnd multiplicity="(0 1)"
 	 */
@@ -72,27 +71,20 @@ public final class ManagerEngine implements IManagerEngine
 
 	/**
 	 * 
-	 * @uml.property name="_dbManager"
+	 * @uml.property name="_taskManager"
 	 * @uml.associationEnd multiplicity="(0 1)"
 	 */
-	private DBManager _dbManager;
+	private ITaskManager _taskManager;
 
-	/**
-	 * Method used only to support SQLConsole 
-	 * 
-	 * @return
-	 */
-	public DBManager getDbManager()
+	public ManagerEngine() throws PlatformException
 	{
-		return _dbManager;
-	}
-
-	public ManagerEngine() throws SQLException, ClassNotFoundException,
-			PlatformException
-	{
-		//TODO: change it after implementing Solution
 		_dbManager = new DBManager();
-		_dbManager.connect();
+		try {
+			_dbManager.connect();
+		} catch (Exception e) {
+			LOGGER.fatal("Cannot create connection to data base", e);
+			throw new PlatformException(e.getLocalizedMessage());
+		}
 		_solutionManager = new SolutionManager(this, _dbManager);
 		_projectManager = new ProjectManager(this, _dbManager);
 		_taskManager = new TaskManager(this, _dbManager);
@@ -105,6 +97,16 @@ public final class ManagerEngine implements IManagerEngine
 		_taskManager = taskManager;
 		_projectManager = projectManager;
 		_pluginManager = pluginManager;
+	}
+
+	/**
+	 * Method used only to support SQLConsole 
+	 * 
+	 * @return
+	 */
+	public DBManager getDbManager()
+	{
+		return _dbManager;
 	}
 
 	/**
@@ -135,4 +137,6 @@ public final class ManagerEngine implements IManagerEngine
 	{
 		return _taskManager;
 	}
+
+	private static final Logger LOGGER = Logger.getLogger(ManagerEngine.class);
 } // end ManagerEngine

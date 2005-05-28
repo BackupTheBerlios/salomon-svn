@@ -83,17 +83,11 @@ public final class TaskManager implements ITaskManager
 
 	private LinkedList<ITask> _tasks;
 
-	public TaskManager(IManagerEngine project, DBManager manager)
+	public TaskManager(IManagerEngine managerEngine, DBManager manager)
 	{
-		_managerEngine = project;
+		_managerEngine = managerEngine;
 		_dbManager = manager;
 		_tasks = new LinkedList<ITask>();
-		// FIXME needed by DataSet
-		//		try {
-		//			_dataEngine = project.getSolution().getDataEngine();
-		//		} catch (PlatformException e) {
-		//			LOGGER.fatal("", e);
-		//		}
 		_taskEngine = new TaskEngine();
 		// TODO: where it should be created?
 		_environment = new Environment();
@@ -112,48 +106,6 @@ public final class TaskManager implements ITaskManager
 	public void addTask(ITask task)
 	{
 		_tasks.add(task);
-	}
-
-	/**
-	 * @see salomon.engine.task.ITaskManager#addTask(salomon.engine.task.ITask,
-	 *      java.lang.String, java.lang.String)
-	 */
-	//FIXME: is it called anywhere??
-	public void addTask(ITask task, String pluginUrl, String settings)
-			throws PlatformException
-	{
-		//		try {
-		//			LOGGER.debug("TaskManager.addTask()");
-		//			LOGGER.debug("pluginURL: " + pluginUrl);
-		//			LOGGER.debug("settings: " + settings);
-		//			IPlugin plugin = null;
-		//			URL url = null;
-		//
-		//			url = new URL(pluginUrl);
-		//
-		//			plugin = PluginLoader.loadPlugin(url);
-		//			PluginInfo desc = new PluginInfo();
-		//
-		//			desc.setLocation(url);
-		//
-		//			desc.setPluginID(67);
-		//			plugin.setDescription(desc);
-		//
-		//			ByteArrayInputStream bis = new ByteArrayInputStream(
-		//					settings.getBytes());
-		//			IStruct struct = XMLSerializer.deserialize(bis);
-		//
-		//			ISettings set = plugin.getSettingComponent().getDefaultSettings();
-		//			set.init(struct);
-		//			task.setSettings(set);
-		//			task.setPlugin(plugin);
-		//			addTask(task);
-		//		} catch (Exception e) {
-		//			LOGGER.fatal("", e);
-		//			throw new PlatformException(e.getLocalizedMessage());
-		//		}
-		throw new UnsupportedOperationException(
-				"Method addTask() not implemented yet!");
 	}
 
 	public void clearTaskList()
@@ -198,9 +150,12 @@ public final class TaskManager implements ITaskManager
 		return _tasks.toArray(new ITask[_tasks.size()]);
 	}
 
-	public void start()
+	public void start() throws PlatformException
 	{
-		// _taskEngine.start();
+		// initializing data engine if it is not initialized yet
+		if (_dataEngine == null) {
+			_dataEngine = _managerEngine.getSolutionManager().getCurrentSolution().getDataEngine();
+		}
 		new TaskEngine().start();
 	}
 

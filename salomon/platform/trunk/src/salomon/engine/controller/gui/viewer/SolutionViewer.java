@@ -37,14 +37,18 @@ public class SolutionViewer extends ObjectViewer
 	public void initList()
 	{
 		_select.addTable(SolutionInfo.TABLE_NAME);
-		addColumn("solutionId", "SOLUTION_ID");
-		addColumn("name", "SOLUTION_NAME");
-		addColumn("info", "SOLUTION_INFO");
-		addColumn("", "LM_DATE");
+		addColumn("SolutionId", "SOLUTION_ID");
+		addColumn("Name", "SOLUTION_NAME");
+		addColumn("Info", "SOLUTION_INFO");
+		addColumn("Hostname", "HOSTNAME");
+		addColumn("DbPath", "DB_PATH");
+		addColumn("UserName", "USERNAME");
+		addColumn("Passwd", "PASSWD");
+		addColumn("LmDate", "LM_DATE");
 
-		addFilteredField("id", "SOLUTION_ID");
-		addFilteredField("name", "SOLUTION_NAME");
-		addFilteredField("info", "SOLUTION_INFO");
+		addFilteredField("Id", "SOLUTION_ID");
+		addFilteredField("Name", "SOLUTION_NAME");
+		addFilteredField("Info", "SOLUTION_INFO");
 		addFilteredField("Date", "LM_DATE");
 	}
 }

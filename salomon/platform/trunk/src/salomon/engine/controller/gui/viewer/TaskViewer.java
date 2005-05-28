@@ -47,9 +47,11 @@ public class TaskViewer extends ObjectViewer
 		addColumn("StartTime", "start_time");
 		addColumn("StopTime", "stop_time");
 		addColumn("Status", "status");
-		addColumn("", "lm_date");
+		addColumn("LmDate", "lm_date");
 
 		addFilteredField("Task id", "task_id");
+		addFilteredField("ProjectId", "project_id");
+		addFilteredField("PluginId", "plugin_id");
 		addFilteredField("Name", "task_name");
 		addFilteredField("Status", "status");
 	}

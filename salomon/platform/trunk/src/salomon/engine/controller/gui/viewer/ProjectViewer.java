@@ -39,12 +39,14 @@ public final class ProjectViewer extends ObjectViewer
 	public void initList()
 	{
 		_select.addTable(ProjectInfo.TABLE_NAME);
-		addColumn("projectId", "project_id");
-		addColumn("name", "project_name");
-		addColumn("info", "project_info");
+		addColumn("ProjectId", "project_id");
+		addColumn("SolutionId", "solution_id");
+		addColumn("Name", "project_name");
+		addColumn("Info", "project_info");
+		addColumn("LmDate", "lm_date");
 
-		addFilteredField("id", "project_id");
-		addFilteredField("name", "project_name");
-		addFilteredField("info", "project_info");
+		addFilteredField("Id", "project_id");
+		addFilteredField("Name", "project_name");
+		addFilteredField("Info", "project_info");
 	}
 }

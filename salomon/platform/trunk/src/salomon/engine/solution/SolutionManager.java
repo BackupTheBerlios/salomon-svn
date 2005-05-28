@@ -143,7 +143,11 @@ public final class SolutionManager implements ISolutionManager
 
 		LOGGER.debug("solution: " + solution);
 		LOGGER.info("Solution successfully loaded.");
-
+		
+		// forcing connecting do external data base
+		solution.getDataEngine();		
+		LOGGER.info("Connected to external data base");
+		
 		// setting current solution
 		_currentSolution = solution;
 		return _currentSolution;

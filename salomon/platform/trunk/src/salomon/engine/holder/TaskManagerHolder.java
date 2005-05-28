@@ -109,13 +109,4 @@ final class TaskManagerHolder implements ITaskManager
 	{
 		_currentTaskManager = taskManager;
 	}
-
-	/**
-	 * @see salomon.engine.task.ITaskManager#addTask(salomon.engine.task.ITask, java.lang.String, java.lang.String)
-	 */
-	public void addTask(ITask task, String pluginUrl, String settings)
-			throws PlatformException
-	{
-		_currentTaskManager.addTask(task, pluginUrl, settings);
-	}
 }
