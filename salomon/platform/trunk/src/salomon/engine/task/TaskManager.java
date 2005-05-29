@@ -29,7 +29,10 @@ import org.apache.log4j.Logger;
 import salomon.engine.database.DBManager;
 import salomon.engine.plugin.ILocalPlugin;
 
+import salomon.util.serialization.SimpleString;
+
 import salomon.platform.IDataEngine;
+import salomon.platform.IVariable;
 import salomon.platform.exception.PlatformException;
 
 import salomon.plugin.IResult;
@@ -92,7 +95,15 @@ public final class TaskManager implements ITaskManager
 		// TODO: where it should be created?
 		_environment = new Environment();
 		// TODO: temporary
-		_environment.put("CURRENT_DATA_SET", "all_data");
+		// TODO: temporary
+		IVariable variable;
+		try {
+			variable = _environment.createEmpty("CURRENT_DATA_SET");
+			variable.setValue(new SimpleString("all_data"));
+			_environment.add(variable);
+		} catch (PlatformException e) {
+			LOGGER.fatal("Exception was thrown!", e);
+		}
 	}
 
 	public void addAllTasks(Collection<ITask> tasks)
@@ -132,6 +143,11 @@ public final class TaskManager implements ITaskManager
 		throw new UnsupportedOperationException(
 				"Method getCurrentTask() not implemented yet!");
 	} // end getCurrentTask
+
+	public DBManager getDBManager()
+	{
+		return _dbManager;
+	}
 
 	/**
 	 * @see salomon.engine.task.ITaskManager#getRunner()
@@ -236,9 +252,4 @@ public final class TaskManager implements ITaskManager
 	}
 
 	private static final Logger LOGGER = Logger.getLogger(TaskManager.class);
-
-	public DBManager getDBManager()
-	{
-		return _dbManager;
-	}
 }

@@ -21,12 +21,49 @@
 
 package salomon.platform;
 
+import salomon.platform.exception.PlatformException;
+
 /**
  * 
  */
 public interface IEnvironment
 {
-	void put(String key, String value);
+	/**
+	 * Adds the variable to the environment.
+	 * 
+	 * @param variable the variable to add
+	 * 
+	 */
+	void add(IVariable variable) throws PlatformException;
 
-	String get(String key);
+	/**
+	 * Creates empty variable.
+	 * 
+	 * @return the empty variable
+	 */
+	IVariable createEmpty(String name) throws PlatformException;
+
+	/**
+	 * Gets all variables.
+	 * 
+	 * @return the all variables
+	 */
+	IVariable[] getAll() throws PlatformException;
+
+	/**
+	 * Gets a variable with the given name. 
+	 * 
+	 * @param name the variable name
+	 * @return wanted variable
+	 */
+	IVariable getVariable(String name) throws PlatformException;
+
+	/**
+	 * Removes the given variable from the environment.
+	 * 
+	 * @param variable the variable to remove
+	 * @throws PlatformException
+	 */
+	void remove(IVariable variable) throws PlatformException;
+
 }

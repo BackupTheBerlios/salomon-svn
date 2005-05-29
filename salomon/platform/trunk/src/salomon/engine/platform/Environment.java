@@ -25,21 +25,39 @@ import java.util.HashMap;
 import java.util.Map;
 
 import salomon.platform.IEnvironment;
+import salomon.platform.IVariable;
+import salomon.platform.exception.PlatformException;
 
 /**
  *  Class represents environment of task execution.
  */
 public final class Environment implements IEnvironment
 {
-	private Map<String, String> _environment = new HashMap<String, String>();
+	private Map<String, IVariable> _variables = new HashMap<String, IVariable>();
 
-	public void put(String key, String value)
+	public void add(IVariable variable) throws PlatformException
 	{
-		_environment.put(key, value);
+		_variables.put(variable.getName(), variable);
 	}
 
-	public String get(String key)
+	public IVariable createEmpty(String name) throws PlatformException
 	{
-		return _environment.get(key);
+		throw new UnsupportedOperationException("Method Environment.createEmpty() not implemented yet!");
 	}
+
+	public IVariable[] getAll() throws PlatformException
+	{
+		return _variables.values().toArray(new IVariable[_variables.size()]);
+	}
+
+	public IVariable getVariable(String name) throws PlatformException
+	{
+		return _variables.get(name);
+	}
+
+	public void remove(IVariable variable) throws PlatformException
+	{
+		_variables.remove(variable.getName());
+	}
+
 } // class Environment
