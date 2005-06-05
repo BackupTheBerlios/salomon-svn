@@ -1,13 +1,18 @@
 \documentclass[a4paper,12pt]{article}
-\usepackage[english]{babel}
+\usepackage[polish]{babel}
+\usepackage[cp1250]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage[dvips]{graphicx}
+\usepackage{fancyvrb}
+
+\usepackage[urlcolor=blue, colorlinks=true, bookmarks=true, bookmarksnumbered=true]{hyperref}
+\usepackage{indentfirst}
 \usepackage{times}
 \usepackage{epsfig}
 \usepackage{color}
-\usepackage[urlcolor=blue, colorlinks=true, bookmarks=true, bookmarksnumbered=true]{hyperref}
 
 \usepackage{fancyhdr} 
+
 \pagestyle{fancy} 
 
 \rfoot{SALOMON}
@@ -15,24 +20,22 @@
 
 %ustawienie wielkosci akapitu
 %\setlength{\parindent}{0mm}
-%%odstÓp miÓdzy akapitami
+%%odstep miedzy akapitami
 %\setlength{\parskip}{2mm}
 
 %ustawienia rozmiaru tekstu
-    \textwidth 16cm
-    \textheight 24cm 
-    \topmargin -15mm
-    \evensidemargin-3mm
-    \oddsidemargin -3mm
-    
+%    \textwidth 16cm
+%    \textheight 24cm 
+%    \topmargin -15mm
+%    \evensidemargin-3mm
+%    \oddsidemargin -3mm   
 
-
-\title{Introduction to Salomon}
+\title{Salomon}
 
 \author{Nikodem Jura \emph{(nico@icslab.agh.edu.pl)}
         \\
         Krzysztof Rajda \emph{(krzycho@student.uci.agh.edu.pl)}
-        }                     
+				}                       
 
 \begin{document}
 
@@ -41,96 +44,40 @@
 \thispagestyle{empty}
 
 \begin{center}
-\href{http://salomon.iisg.agh.edu.pl}{http://salomon.iisg.agh.edu.pl}
+\textcolor{blue}{\href{http://salomon.iisg.agh.edu.pl}{http://salomon.iisg.agh.edu.pl}}
 \end{center}
 
-\pagebreak
-\section{Intro}
+\begin{center}
+Prowadz¹cy: dr in¿. Marek Kisiel-Dorohinicki
+\end{center}
 
-Salomon is a system for extracting knowledge out of data using \emph{Knowledge Mining} methodology.
-
-\subsection{Goal}
-
-The goal of this project is to create a friendly environment for creating, controlling and effective performing of tasks and storing collected knowledge.
-
-\subsection{Assumptions}
-
-Basic design objectives:
-\begin{itemize}
-	\item \textbf{all functionality in plug-ins.}
-	
-	The core of the system should be as light as possible. Its goal is to create an environment for realizing the functionality provided with the plug-ins.
-	
-	\item \textbf{open architecture.}
-	
-	Inserting a middle tier between database and plug-ins. Its goal is to hide the details of how the data is organized. Architecture openness gives the possibility to extend this tier.
-	
-	\item \textbf{platform independence.}
-	
-	System should be platform independent and easily portable. Thus each part of the system can be run on different operating systems.
-	\item \textbf{possibility of using the results of some task by consequent tasks.}
-	\item \textbf{ easy adaptation of the functionality contained in \emph{Vinlen}.}
-	
-	Project has been originally designed to be a platform for running the logics implemented in \emph{Vinlen} program,
-	created under supervision of Prof. Ryszard Michalski
-	
-\end{itemize}
-
-\begin{figure}[ht]
-	\centering
-		\includegraphics[width=0.70\textwidth]{../documentation/img/uml/arch.jpg}
-	\caption{System architecture}
-\end{figure}
+%spis tresci
+%\tableofcontents
+%\newpage
 
 \newpage
-\section{Knowledge processing}
+Dziedzina baz danych znajduje siê obecnie w fazie niespotykanego rozwoju -- staj¹ siê one nie tylko wszechobecne, ale i~globalnie po³¹czone. W zwi¹zku z tym pojawi³o siê wiele nowych kierunków ich rozwoju, jednym z nich jest \emph{Data Mining}.
 
-\subsection{Graph}
+\emph{Data Mining} to dziedzina nauki, zajmuj¹ca siê przetwarzaniem danych zmagazynowanych w bazach danych w celu wydobycia z nich wiedzy. W przeciwieñstwie do konwencjonalnych baz danych, wiedza ta umo¿liwia znalezienie odpowiedzi nie tylko na pytania, na które odpowiedzi znajduj¹ siê bezpoœrednio w bazie, ale pozwala na jej udzielenie tak¿e w przypadkach wymagaj¹cych po³¹czenia faktów zapisanych w danych ze sob¹ lub wczeœniej wygenerowan¹ wiedz¹. \emph{Data Minig} znajduje bardzo szerokie zastosowania w wielu dziedzinach, pocz¹wszy od handlu elektronicznego, przez analizê trendów na rynkach finansowych, po diagnostykê medyczn¹.
 
-Discovering knowledge is an iterative, divided into stages, process. Stages can form cycles. 
-During each stage the knowledge is processed. Knowledge discovering process can be directed according to the user's preferences. Each stage forms a closed whole. Some stages are separate, so they can be performed concurrently. Salomon's architecture enables support for distributed (and this implies concurrent) processing of those stages and synchronizing their results.
+Jednym z naukowców zajmuj¹cych siê dziedzin¹ Data Miningu jest prof. Ryszard S. Michalski. Wraz z innymi naukowcami z \emph{George Mason University (USA)} stworzy³ on system \emph{Vinlen}, którego zadaniem jest realizowanie zadañ \emph{Data Miningu}. 
+W systemie \emph{Vinlen} standardowe operatory relacyjne definiowane przez  \emph{SQL} s¹ wykorzystywane do poprzez utworzenie nowych typów operatorów, zwanych \emph{operatorami generowania wiedzy} (ang. \emph{knowledge generation operators (KGO)}). Operatory te dzia³aj¹ na segmentach wiedzy, stanowi¹cych po³¹czenie jednej lub wiêkszej iloœci tabel z relacyjnej bazy danych oraz wiedzy przechowywanej w bazie wiedzy. Operatory te na podstawie kilku segmentów wejœciowych generuj¹ nowy segment wyjœciowy, który mo¿e byæ zapisany w bazie wiedzy.
 
-The representation of the stage in Salomon is a \emph{task}. Each task may have a few predecessors and consequents. Simply speaking, tasks can be organized in a form of a graph.
-
-The task is defined as a triple:
+U podstaw tworzenia operatorów generowania wiedzy leg³y dwie zasady:
 \begin{itemize}
-	\item algorithm (provided in a form of a plug-in)
-	\item data which controls the algorithm
-	\item entry data, out of which the algorithm extracts the knowledge
+	\item rezultaty ich dzia³ania musz¹ byæ przedstawiane w formie ³atwej do zrozumienia przez u¿ytkowników systemu
+	\item wiedza generowana przy ich u¿yciu musi byæ wyra¿ona w sposób mo¿liwie zwarty i efektywny
 \end{itemize}
 
-\begin{figure}[ht]
-	\centering
-		\includegraphics[height=0.4\textheight]{../documentation/img/concept/WorkflowGraph.jpg}
-	\caption{General workflow}
-	\label{fig:WorkflowGraph}
-\end{figure}
+Te zasady zosta³y spe³nione poprzez zastosowanie metod dedukcji, w których sposób tworzenia opisu danych jest jak najbardziej naturalny dla cz³owieka -- dane te zapisywane s¹ w jêzyku atrybutywnym. Jêzyk atrybutywny to system logiczny, który ³¹czy elementy logiki \texttt{klasycznej, rachunku pierwszego rzêdu, oraz logiki wielowartoœciowej??}. S³u¿y on zarówno jako system wnioskowania, jak i jako jêzyk reprezentacji wiedzy.
 
-\subsection{Task}
+Regu³y atrybutywne, podstawowy sposób reprezentacji wiedzy w systemie \emph{Vinlen} s¹ znaczenie bardziej u¿yteczne ni¿ konwencjonalne regu³y decyzyjne oparte na warunkach postaci <atrybut-relacja-wartoœæ>.
 
-The task does not have to be limited to the data, provided by the previous task. Each task has access to the whole currently gathered knowledge and to all data. 
 
-In the output or input of each task there can be data (in case of algorithms, which filters and organize data), knowledge or both of these at the same time.
 \begin{itemize}
-	\item data \begin{math}\Rightarrow \end{math} data - this case occurs most often when we want to create training or test sets
-	\item data \begin{math}\Rightarrow \end{math} knowledge - typical example of knowledge mining: we are given with data, and return knowledge
-	\item data + knowledge \begin{math}\Rightarrow \end{math} data - this case occurs when we want to use collected knowledge on the given data
-	\item knowledge \begin{math}\Rightarrow \end{math} knowledge
+	\item \href{www.mli.gmu.edu/papers/2003-2004/ Kaufman-Michalski-IIS03-final.pdf}{www.mli.gmu.edu/papers/2003-2004/ Kaufman-Michalski-IIS03-final.pdf}
+	\item \href{http://www.mli.gmu.edu/papers/96-2000/98-5.pdf}{http://www.mli.gmu.edu/papers/96-2000/98-5.pdf}
 \end{itemize}
 
-\subsection{Differences to Vinlen}
-
-Salomon is meant to eliminate the limits of original \emph{Vinlen} by introducing:
-\begin{itemize}
-	\item queuing of tasks
-	\item distribution
-	\item concurrency
-	\item extendability (plug-ins mechanism)
-	\item portability (Java\texttrademark, Firebird)
-\end{itemize}
-
-\section{Acknowledgments}
-
-	Inspiration for creating project ,,Salomon,, was the presentation shown by Prof. Ryszard Michalski, which concerned the system \emph{Vinlen}. 
 
 \end{document}
