@@ -42,7 +42,7 @@ public final class Environment implements IEnvironment
 
 	public IVariable createEmpty(String name) throws PlatformException
 	{
-		throw new UnsupportedOperationException("Method Environment.createEmpty() not implemented yet!");
+		return new Variable(name);
 	}
 
 	public IVariable[] getAll() throws PlatformException
