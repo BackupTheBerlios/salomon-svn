@@ -56,8 +56,9 @@ przyjazny dla cz³owieka, np. za pomoc¹ jêzyka zbli¿onego do jêzyka naturalnego, 
 Jednym z naukowców zajmuj¹cych siê dziedzin¹ \emph{Knowledge Mining} jest \emph{prof. Ryszard S. Michalski}. Wraz z innymi naukowcami z \emph{George Mason University (USA)} stworzy³ on system \emph{Vinlen}, którego zadaniem jest realizowanie zadañ metodologii \emph{Knowledge Mining} wykorzystuj¹c indukcyjne bazy danych. Celem tego projektu jest integracja wielu istniej¹cych metod wydobywania wiedzy takich jak np. \emph{AQ} (algorytm generacji regu³ atrybutowych), czy metod konceptualnego klastrowania. W systemie zosta³y równie¿ zawarte mechanizmy zarz¹dzania danymi, operatory wizualizacji wiedzy (ITG) oraz tworzenie grafów powi¹zañ. W celu ³atwego u¿ytkowania systemu zosta³ on wyposa¿ony w przyjazny graficzny interfejs u¿ytkownika.
 
 Z zwi¹zku z pewnymi ograniczeniami architektury \emph{VINLEN} powsta³ projekt maj¹cy na celu stworzenie dla niej alternatywy pozbawionej tych ograniczeñ.
+
 \begin{itemize}
-	\item \textbf{Ca³a funkcjonaloœæ umiszczona we wtyczkach.}
+	\item \textbf{Ca³a funkcjonalnoœæ umieszczona we wtyczkach.}
 	Silnik programu powinnen byæ tak lekki jak tylko to mo¿liwe. Jego zdaniem jest dostarczenie przyjaznego œrodowiska do realizacji funkcjonalnoœci zawartej we wtyczkach.
 	
 	\item \textbf{Otwarta architektura}
@@ -70,27 +71,34 @@ Z zwi¹zku z pewnymi ograniczeniami architektury \emph{VINLEN} powsta³ projekt ma
 	
 \end{itemize}
 
-\section{Przetwarzanie wiedzy}
-
-\subsection{Graf}
 Ekstrakcja wiedzy to proces iteracyjny podzielony na etapy, które mog¹ tworzyæ cykle.
 
-Discovering knowledge is an iterative, divided into stages, process. Stages can form cycles. 
-Podczas ka¿dego etapu wiedza jest przetwarzana 
-During each stage the knowledge is processed. Knowledge discovering process can be directed according to the user's preferences. Each stage forms a closed whole. Some stages are separate, so they can be performed concurrently. Salomon's architecture enables support for distributed (and this implies concurrent) processing of those stages and synchronizing their results.
+W ka¿dym tym etapie wiedza jest poddawana obróbce. Na ka¿dym takim etapie proces odkrywania mo¿e byæ ukierunkowany zgodnie
+z wymaganiami u¿ytkownika. Ka¿dy etap tworzy odrêbn¹ ca³oœæ. Czêœæ etapów jest roz³¹czna, zatem mog¹ byæ wykonywane wspó³bie¿nie. Architektura Salomona pozwala na rozproszenie, a co za tym idzie -- zrównoleglenie, wykonywania takich roz³¹cznych etapów oraz na synchronizacjê ich wyników.
 
-The representation of the stage in Salomon is a \emph{task}. Each task may have a few predecessors and consequents. Simply speaking, tasks can be organized in a form of a graph.
+W Salomonie reprezentacj¹ etapu jest \emph{zadanie} (Task). Ka¿de zadanie mo¿e posiadaæ kilka nastêpników i kilka
+poprzedników. Ujmuj¹c rzecz proœciej, zadania mog¹ byæ zorganizowane w postaci grafu. 
 
-The task is defined as a triple:
+Zadanie zdefiniowane jest jako trójka:
 \begin{itemize}
-	\item algorithm (provided in a form of a plug-in)
-	\item data which controls the algorithm
-	\item entry data, out of which the algorithm extracts the knowledge
+	\item algorytm(dostarczany w postaci wtyczki, czyli \emph{pluginu}))
+	\item dane steruj¹ce algorytmem
+	\item dane wejœciowe, z których algorytm bêdzie wydobywaæ wiedzê
 \end{itemize}
 
+Na wejœciu lub wyjœciu ka¿dego zadania mog¹ pojawiæ siê dane (w przypadku algorytmów, które
+dokonuj¹ selekcji/segregacji danych), wiedza lub obie te rzeczy naraz.
 
+Salomon sk³ada siê z dwóch zasadniczych czêœci (Rys \ref{fig:Achitecture}). Pierwsz¹ z nich
+stanowi platforma. Tworz¹ j¹:
+\begin{itemize}
+	\item silnik, którego zadaniem jest zarz¹dzanie i~uruchamianie
+zadañ
+	\item magazyn s³u¿¹cy do przechowywania wiedzy
+\end{itemize}
 
-
+Druga czêœæ to zbiór wtyczek, dostarczaj¹cych logikê potrzebn¹ do skonfigurowania, wykonania i~wyœwietlenia rezultatów
+zadania. System jest otwarty - oznacza to, ¿e jego funkcjonalnoœæ mo¿e byæ w ³atwy sposób rozszerzana poprzez dostarczenie nowych wtyczek.
 
 
 %spis tresci
