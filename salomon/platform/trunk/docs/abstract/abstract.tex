@@ -30,7 +30,7 @@
 %    \evensidemargin-3mm
 %    \oddsidemargin -3mm   
 
-\title{Salomon}
+\title{\emph{Salomon} extended abstract}
 
 \author{Nikodem Jura \emph{(nico@icslab.agh.edu.pl)}
         \\
@@ -50,33 +50,95 @@
 \begin{center}
 Prowadz¹cy: dr in¿. Marek Kisiel-Dorohinicki
 \end{center}
+\emph{Knowledge Mining} to nowo rozwijana metodologia, która pozwala wydobywaæ u¿yteczn¹ wiedzê zarówno z danych jak i z wiedzy ogólnej. W metodologii tej bardzo du¿y nacisk k³adziony jest na prezentacjê wyników w sposób
+przyjazny dla cz³owieka, np. za pomoc¹ jêzyka zbli¿onego do jêzyka naturalnego, oraz za pomoc¹ ró¿norodnych graficznych reprezentacji. Pozwala one na generowanie wiedzy zarówno z wielkich systemów bazodanowych gdzie dane mog¹ byæ niekompletnych a nawet czêœciowo b³êdne.
+
+Jednym z naukowców zajmuj¹cych siê dziedzin¹ \emph{Knowledge Mining} jest \emph{prof. Ryszard S. Michalski}. Wraz z innymi naukowcami z \emph{George Mason University (USA)} stworzy³ on system \emph{Vinlen}, którego zadaniem jest realizowanie zadañ metodologii \emph{Knowledge Mining} wykorzystuj¹c indukcyjne bazy danych. Celem tego projektu jest integracja wielu istniej¹cych metod wydobywania wiedzy takich jak np. \emph{AQ} (algorytm generacji regu³ atrybutowych), czy metod konceptualnego klastrowania. W systemie zosta³y równie¿ zawarte mechanizmy zarz¹dzania danymi, operatory wizualizacji wiedzy (ITG) oraz tworzenie grafów powi¹zañ. W celu ³atwego u¿ytkowania systemu zosta³ on wyposa¿ony w przyjazny graficzny interfejs u¿ytkownika.
+
+Z zwi¹zku z pewnymi ograniczeniami architektury \emph{VINLEN} powsta³ projekt maj¹cy na celu stworzenie dla niej alternatywy pozbawionej tych ograniczeñ.
+\begin{itemize}
+	\item \textbf{Ca³a funkcjonaloœæ umiszczona we wtyczkach.}
+	Silnik programu powinnen byæ tak lekki jak tylko to mo¿liwe. Jego zdaniem jest dostarczenie przyjaznego œrodowiska do realizacji funkcjonalnoœci zawartej we wtyczkach.
+	
+	\item \textbf{Otwarta architektura}
+	Wprowadzenie warstwy izoluj¹cej wtyczyki od bazy danych. Otwarta architektura pozwala na wygodne rozszerzanie tej warstwy.
+	
+	\item \textbf{Niezale¿noœæ od platformy}
+	System powinnen byæ niezale¿ny od platformy. Powinna byæ mo¿liwoœæ pracy w rozproszonychh hetegeronicznym œrodowisku.
+	\item \textbf{Mo¿liwoœæ definowania przep³ywu sterowania}
+	\item \textbf{£atwoœæ adaptowania funkcjonalnoœci zawartej w systemie \emph{VINLEN}}
+	
+\end{itemize}
+
+\section{Przetwarzanie wiedzy}
+
+\subsection{Graf}
+Ekstrakcja wiedzy to proces iteracyjny podzielony na etapy, które mog¹ tworzyæ cykle.
+
+Discovering knowledge is an iterative, divided into stages, process. Stages can form cycles. 
+Podczas ka¿dego etapu wiedza jest przetwarzana 
+During each stage the knowledge is processed. Knowledge discovering process can be directed according to the user's preferences. Each stage forms a closed whole. Some stages are separate, so they can be performed concurrently. Salomon's architecture enables support for distributed (and this implies concurrent) processing of those stages and synchronizing their results.
+
+The representation of the stage in Salomon is a \emph{task}. Each task may have a few predecessors and consequents. Simply speaking, tasks can be organized in a form of a graph.
+
+The task is defined as a triple:
+\begin{itemize}
+	\item algorithm (provided in a form of a plug-in)
+	\item data which controls the algorithm
+	\item entry data, out of which the algorithm extracts the knowledge
+\end{itemize}
+
+
+
+
+
 
 %spis tresci
 %\tableofcontents
 %\newpage
+%VINLEN inductive database system is brie
+%y
+%reviewed and illustrated by selected results. The goal of research on VINLEN is to
+%develop a methodology for deeply integrating a wide range of knowledge generation
+%operators with a relational database and a knowledge base. The current system
+%has already integrated an AQ learning system for generating attributional rules in
+%two modes: theory formation, in which generated rules are consistent and complete
+%with regard to data, and pattern discovery, in which generated rules represent strong
+%patterns, not necessarily consistent or complete. It also has integrated a conceptual
+%clustering module for splitting data into conceptual classes, and providing descrip-
+%tions of those classes. Preliminary data management and knowledge visualization
+%operators, such as the intelligent target data generator (ITG) and concept asso-
+%ciation graph display, have also been integrated. To facilitate an easy interaction
+%with the system, a user-oriented visual interface has been implemented. An exam-
+%ple of results from applying VINLEN to a medical problem domain is presented to
+%illustrate VINLEN knowledge discovery and representation capabilities.
 
-\newpage
-Dziedzina baz danych znajduje siê obecnie w fazie niespotykanego rozwoju -- staj¹ siê one nie tylko wszechobecne, ale i~globalnie po³¹czone. W zwi¹zku z tym pojawi³o siê wiele nowych kierunków ich rozwoju, jednym z nich jest \emph{Data Mining}.
 
-\emph{Data Mining} to dziedzina nauki, zajmuj¹ca siê przetwarzaniem danych zmagazynowanych w bazach danych w celu wydobycia z nich wiedzy. W przeciwieñstwie do konwencjonalnych baz danych, wiedza ta umo¿liwia znalezienie odpowiedzi nie tylko na pytania, na które odpowiedzi znajduj¹ siê bezpoœrednio w bazie, ale pozwala na jej udzielenie tak¿e w przypadkach wymagaj¹cych po³¹czenia faktów zapisanych w danych ze sob¹ lub wczeœniej wygenerowan¹ wiedz¹. \emph{Data Minig} znajduje bardzo szerokie zastosowania w wielu dziedzinach, pocz¹wszy od handlu elektronicznego, przez analizê trendów na rynkach finansowych, po diagnostykê medyczn¹.
 
-Jednym z naukowców zajmuj¹cych siê dziedzin¹ Data Miningu jest prof. Ryszard S. Michalski. Wraz z innymi naukowcami z \emph{George Mason University (USA)} stworzy³ on system \emph{Vinlen}, którego zadaniem jest realizowanie zadañ \emph{Data Miningu}. 
-W systemie \emph{Vinlen} standardowe operatory relacyjne definiowane przez  \emph{SQL} s¹ wykorzystywane do poprzez utworzenie nowych typów operatorów, zwanych \emph{operatorami generowania wiedzy} (ang. \emph{knowledge generation operators (KGO)}). Operatory te dzia³aj¹ na segmentach wiedzy, stanowi¹cych po³¹czenie jednej lub wiêkszej iloœci tabel z relacyjnej bazy danych oraz wiedzy przechowywanej w bazie wiedzy. Operatory te na podstawie kilku segmentów wejœciowych generuj¹ nowy segment wyjœciowy, który mo¿e byæ zapisany w bazie wiedzy.
+%\newpage
+%Dziedzina baz danych znajduje siê obecnie w fazie niespotykanego rozwoju -- staj¹ siê one nie tylko wszechobecne, ale i~globalnie po³¹czone. W zwi¹zku z tym pojawi³o siê wiele nowych kierunków ich rozwoju, jednym z nich jest \emph{Data Mining}.
+%
+%\emph{Data Mining} to dziedzina nauki, zajmuj¹ca siê przetwarzaniem danych zmagazynowanych w bazach danych w celu wydobycia z nich wiedzy. W przeciwieñstwie do konwencjonalnych baz danych, wiedza ta umo¿liwia znalezienie odpowiedzi nie tylko na pytania, na które odpowiedzi znajduj¹ siê bezpoœrednio w bazie, ale pozwala na jej udzielenie tak¿e w przypadkach wymagaj¹cych po³¹czenia faktów zapisanych w danych ze sob¹ lub wczeœniej wygenerowan¹ wiedz¹. \emph{Data Minig} znajduje bardzo szerokie zastosowania w wielu dziedzinach, pocz¹wszy od handlu elektronicznego, przez analizê trendów na rynkach finansowych, po diagnostykê medyczn¹.
+%
+%Jednym z naukowców zajmuj¹cych siê dziedzin¹ Data Miningu jest prof. Ryszard S. Michalski. Wraz z innymi naukowcami z \emph{George Mason University (USA)} stworzy³ on system \emph{Vinlen}, którego zadaniem jest realizowanie zadañ \emph{Data Miningu}. 
+%W systemie \emph{Vinlen} standardowe operatory relacyjne definiowane przez  \emph{SQL} s¹ wykorzystywane do poprzez utworzenie nowych typów operatorów, zwanych \emph{operatorami generowania wiedzy} (ang. \emph{knowledge generation operators (KGO)}). Operatory te dzia³aj¹ na segmentach wiedzy, stanowi¹cych po³¹czenie jednej lub wiêkszej iloœci tabel z relacyjnej bazy danych oraz wiedzy przechowywanej w bazie wiedzy. Operatory te na podstawie kilku segmentów wejœciowych generuj¹ nowy segment wyjœciowy, który mo¿e byæ zapisany w bazie wiedzy.
+%
+%U podstaw tworzenia operatorów generowania wiedzy leg³y dwie zasady:
+%\begin{itemize}
+%	\item rezultaty ich dzia³ania musz¹ byæ przedstawiane w formie ³atwej do zrozumienia przez u¿ytkowników systemu
+%	\item wiedza generowana przy ich u¿yciu musi byæ wyra¿ona w sposób mo¿liwie zwarty i efektywny
+%\end{itemize}
+%
+%Te zasady zosta³y spe³nione poprzez zastosowanie metod dedukcji, w których sposób tworzenia opisu danych jest jak najbardziej naturalny dla cz³owieka -- dane te zapisywane s¹ w jêzyku atrybutywnym. Jêzyk atrybutywny to system logiczny, który ³¹czy elementy logiki \texttt{klasycznej, rachunku pierwszego rzêdu, oraz logiki wielowartoœciowej??}. S³u¿y on zarówno jako system wnioskowania, jak i jako jêzyk reprezentacji wiedzy.
+%
+%Regu³y atrybutywne, podstawowy sposób reprezentacji wiedzy w systemie \emph{Vinlen} s¹ znaczenie bardziej u¿yteczne ni¿ konwencjonalne regu³y decyzyjne oparte na warunkach postaci <atrybut-relacja-wartoœæ>.
 
-U podstaw tworzenia operatorów generowania wiedzy leg³y dwie zasady:
+
 \begin{itemize}
-	\item rezultaty ich dzia³ania musz¹ byæ przedstawiane w formie ³atwej do zrozumienia przez u¿ytkowników systemu
-	\item wiedza generowana przy ich u¿yciu musi byæ wyra¿ona w sposób mo¿liwie zwarty i efektywny
-\end{itemize}
-
-Te zasady zosta³y spe³nione poprzez zastosowanie metod dedukcji, w których sposób tworzenia opisu danych jest jak najbardziej naturalny dla cz³owieka -- dane te zapisywane s¹ w jêzyku atrybutywnym. Jêzyk atrybutywny to system logiczny, który ³¹czy elementy logiki \texttt{klasycznej, rachunku pierwszego rzêdu, oraz logiki wielowartoœciowej??}. S³u¿y on zarówno jako system wnioskowania, jak i jako jêzyk reprezentacji wiedzy.
-
-Regu³y atrybutywne, podstawowy sposób reprezentacji wiedzy w systemie \emph{Vinlen} s¹ znaczenie bardziej u¿yteczne ni¿ konwencjonalne regu³y decyzyjne oparte na warunkach postaci <atrybut-relacja-wartoœæ>.
-
-
-\begin{itemize}
-	\item \href{www.mli.gmu.edu/papers/2003-2004/ Kaufman-Michalski-IIS03-final.pdf}{www.mli.gmu.edu/papers/2003-2004/ Kaufman-Michalski-IIS03-final.pdf}
+	\item \href{http://www.mli.gmu.edu/papers/2003-2004/Kaufman-Michalski-IIS03-final.pdf}{http://www.mli.gmu.edu/papers/2003-2004/Kaufman-Michalski-IIS03-final.pdf}
 	\item \href{http://www.mli.gmu.edu/papers/96-2000/98-5.pdf}{http://www.mli.gmu.edu/papers/96-2000/98-5.pdf}
+	
+	\item \href{http://www.galaxy.gmu.edu/stats/colloquia/AbstractsFall2004/CollSept17.html}{http://www.galaxy.gmu.edu/stats/colloquia/AbstractsFall2004/CollSept17.html}
 \end{itemize}
 
 
