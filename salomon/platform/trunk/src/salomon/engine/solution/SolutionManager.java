@@ -23,6 +23,7 @@ package salomon.engine.solution;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
@@ -143,11 +144,11 @@ public final class SolutionManager implements ISolutionManager
 
 		LOGGER.debug("solution: " + solution);
 		LOGGER.info("Solution successfully loaded.");
-		
+
 		// forcing connecting do external data base
-		solution.getDataEngine();		
+		solution.getDataEngine();
 		LOGGER.info("Connected to external data base");
-		
+
 		// setting current solution
 		_currentSolution = solution;
 		return _currentSolution;
@@ -175,12 +176,44 @@ public final class SolutionManager implements ISolutionManager
 	}
 
 	/**
+	 * @throws PlatformException 
 	 * @see salomon.engine.solution.ISolutionManager#getSolutions()
 	 */
-	public ISolution[] getSolutions()
+	public ISolution[] getSolutions() throws PlatformException
 	{
-		throw new UnsupportedOperationException(
-				"Method getSolutions() not implemented yet!");
+
+		SQLSelect select = new SQLSelect();
+		select.addTable(SolutionInfo.TABLE_NAME);
+		// executing query
+		ResultSet resultSet = null;
+
+		ArrayList<ISolution> solutionsArrayList = new ArrayList<ISolution>();
+		
+		int i = 0;
+		
+		try {
+
+			resultSet = _dbManager.select(select);
+			resultSet.next();
+			while (!resultSet.isAfterLast()) {
+
+				solutionsArrayList.add(new Solution((ManagerEngine) _managerEngine,
+						_dbManager));
+				((Solution) solutionsArrayList.get(i++)).getInfo().load(resultSet);
+				resultSet.next();
+			}
+		} catch (SQLException e) {
+			LOGGER.fatal("", e);
+			throw new DBException(e.getLocalizedMessage());
+		}
+
+		Solution[] solutionsArray = new Solution[solutionsArrayList.size()];
+		
+		for( i= 0 ; i< solutionsArray.length ; i++ )
+			solutionsArray[i] = (Solution) solutionsArrayList.get(i);
+		
+		return solutionsArray ;
+
 	}
 
 	/**
