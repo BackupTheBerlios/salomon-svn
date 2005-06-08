@@ -91,8 +91,16 @@ Zadanie to podstawowa jednostka reprezentuj¹ca obliczenia. Zdefiniowane jest jak
 Na wejœciu lub wyjœciu ka¿dego zadania mog¹ pojawiæ siê dane (w przypadku algorytmów, które
 dokonuj¹ selekcji/segregacji danych), wiedza lub obie te rzeczy naraz.
 
-Salomon sk³ada siê z dwóch zasadniczych czêœci (Rys \ref{fig:Achitecture}). Pierwsz¹ z nich
-stanowi platforma. Tworz¹ j¹:
+Salomon sk³ada siê z dwóch zasadniczych czêœci (Rys \ref{fig:architecture}). Pierwsz¹ z nich stanowi platforma. 
+
+\begin{figure}[h]
+	\centering
+		\includegraphics[width=0.90\textwidth]{../documentation/img/concept/architecture.png}
+	\caption{Architektura systemu}	
+	\label{fig:architecture}
+\end{figure}		
+
+Tworz¹ j¹:
 \begin{itemize}
 	\item silnik, którego zadaniem jest zarz¹dzanie i~uruchamianie
 zadañ
@@ -101,6 +109,8 @@ zadañ
 
 Druga czêœæ to zbiór wtyczek, dostarczaj¹cych logikê potrzebn¹ do skonfigurowania, wykonania i~wyœwietlenia rezultatów
 zadania. System jest otwarty -- oznacza to, ¿e jego funkcjonalnoœæ mo¿e byæ w ³atwy sposób rozszerzana poprzez dostarczenie nowych wtyczek.
+
+
 
 
 %spis tresci
