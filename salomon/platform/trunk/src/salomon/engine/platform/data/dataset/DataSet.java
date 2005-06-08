@@ -203,9 +203,9 @@ class DataSet implements IDataSet
 	 * @param select SELECT query
 	 * @throws PlatformException
 	 */
-	public ResultSet selectData(SQLSelect select) throws PlatformException
-
-	{
+//	public ResultSet selectData(SQLSelect select) throws PlatformException
+//
+//	{
 		//		SQLSelect selectCopy = (SQLSelect) select.clone();
 		//		// getting all tables used in select and _tableNames
 		//		// (intersection of these sets)
@@ -229,15 +229,15 @@ class DataSet implements IDataSet
 		//		LOGGER.debug("selectCopy: " + selectCopy.getQuery());
 		//		return DBManager.getInstance().select(selectCopy);
 		//FIXME: use conditions
-		ResultSet resultSet = null;
-		try {
-			resultSet = _externalDBManager.select(select);
-		} catch (SQLException e) {
-			LOGGER.fatal("", e);
-			throw new PlatformException(e.getLocalizedMessage());
-		}
-		return resultSet;
-	}
+//		ResultSet resultSet = null;
+//		try {
+//			resultSet = _externalDBManager.select(select);
+//		} catch (SQLException e) {
+//			LOGGER.fatal("", e);
+//			throw new PlatformException(e.getLocalizedMessage());
+//		}
+//		return resultSet;
+//	}
 
 	/**
 	 * Method returns ResultSet basing on given query. Query is modified - all

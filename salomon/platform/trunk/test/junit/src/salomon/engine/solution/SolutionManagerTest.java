@@ -136,17 +136,17 @@ public class SolutionManagerTest extends TestCase
 			LOGGER.fatal("", e);
 		}
 		assertNotNull(dataSet);
-		SQLSelect select = new SQLSelect();
-		select.addTable("persons");
-		ResultSet resultSet = null;
-		try {
-			resultSet = dataSet.selectData(select);
-			Utils.createResultTable(resultSet);
-		} catch (PlatformException e) {
-			LOGGER.fatal("", e);
-		} catch (SQLException e) {
-			LOGGER.fatal("", e);
-		}
+//		SQLSelect select = new SQLSelect();
+//		select.addTable("persons");
+//		ResultSet resultSet = null;
+//		try {
+////			resultSet = dataSet.selectData(select);
+//			Utils.createResultTable(resultSet);
+//		} catch (PlatformException e) {
+//			LOGGER.fatal("", e);
+//		} catch (SQLException e) {
+//			LOGGER.fatal("", e);
+//		}
 	}
 
 	/**
