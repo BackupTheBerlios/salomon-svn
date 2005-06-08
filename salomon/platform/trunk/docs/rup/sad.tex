@@ -32,7 +32,7 @@ System przetwarzania wiedzy\\}
 
 
 \begin{flushright}
-{\Large \emph{Vision, ver 1.0} }
+{\Large \emph{Vision, ver 1.1} }
 \end{flushright}
 
 %\vspace{7cm}
@@ -44,6 +44,8 @@ System przetwarzania wiedzy\\}
   Data & Wersja & Opis & Autor \\
   \hline \hline
   17.05.2005 & 1.0 & Utworzenie & Nikodem Jura \\
+  \hline \hline
+  31.05.2005 & 1.1 & Dodanie diagramu przypadków u¿ycia, drobne poprawki & Nikodem Jura \\
   \hline
 \end{tabular}
 \end{flushleft}
@@ -57,9 +59,26 @@ Celem dokumentu SAD jest sprecyzowanie architektury systemu uwzglêdniaj¹cej now¹
 
 W ramach platformy pojawi siê nowa warstwa -- \emph{Solution} -- odpowiedzialna za udostêpnienie zewnêtrznych baz danych. Bêdzie ona warstw¹ nadrzêdn¹ w stosunku do obecnie istniej¹cej warstwy j¹dra systemu (menad¿erów Projektów i Tasków). W ramach jednego \emph{Solutiona} zgrupowane bêd¹ projekty dotycz¹ce tej samej problematyki, korzystaj¹ce z tej samej zewnêtrznej bazy danych.
 
+\subsection{Przypadki u¿ycia}
+Poni¿szy diagram przedstawia przyk³adowe wykorzystanie nowej warstwy. Najpierw tworzony jest nowy \emph{Solution}. G³ównym etapem jego tworzenia jest skonfigurowanie po³¹czenia z zewnêtrzn¹ baz¹ danych, na której bêd¹ operowaæ wtyczki. Po utworzeniu obiektu \emph{Solution} mo¿liwa jest dalsza praca z platform¹ -- utworzenie projektu i definiowanie zadañ do wykonania.
+
+\begin{figure}[h]
+	\centering
+		\includegraphics[width=0.80\textwidth]{../documentation/img/uml/use_case_1.png}
+	\caption{Przypadki u¿ycia}
+	\label{fig:use_case_1}
+\end{figure}
+
+\newpage
 \subsection{Model logiczny}
 
 Warstwa \emph{Solution} bêdzie reprezentowana przez nowy modu³, który ³¹czy siê z istniej¹cymi klasami zarz¹dzaj¹cymi jak przedstawiono na rysunku:
+
+\begin{figure}[h]
+	\includegraphics[width=0.70\textheight]{../documentation/img/uml/manager_engine.png}
+	\caption{Warstwa Solution i inne modu³y}
+	\label{fig:manager_engine}
+\end{figure}
 
 \newpage
 \subsection{Model implementacyjny}
@@ -69,10 +88,11 @@ Modu³ odpowiedzialny za obs³ugê warstwy \emph{Solution} grupuje projekty dotycz¹
 \begin{figure}[h]
 	\centering
 		\includegraphics[height=0.70\textheight]{img/solution.png}
-	\caption{Solution}
+	\caption{}
 	\label{fig:solution}
 \end{figure}
 
+\newpage
 \subsection{Model danych}
 
 Do modelu bazy danych zostanie dodana nowa tabela \emph{Solutions}.
@@ -93,7 +113,8 @@ Powi¹zania z pozosta³ymi tabelami przedstawia poni¿szy rysunek (Rys \ref{fig:sal
 
 \begin{figure}[h]
 	\centering
-		\includegraphics[width=1.00\textwidth]{../documentation/img/concept/salomon_db.png}
+		\includegraphics[width=0.90\textwidth]{../documentation/img/concept/salomon_db.png}
+	\caption{Zapis warstwy Solution w bazie danych}
 	\label{fig:salomon_db}
 \end{figure}
 
