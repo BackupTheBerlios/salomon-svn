@@ -239,7 +239,6 @@ public final class LocalController implements IController
 		frame.setJToolBar(getToolBar());
 		frame.setControllerPanel(_contentPane);
 		Utils.setParent(getJContentPane());
-		frame.setVisible(true);
 	}
 
 	private final class LocalGUIMenu

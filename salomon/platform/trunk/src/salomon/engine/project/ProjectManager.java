@@ -107,6 +107,7 @@ public final class ProjectManager implements IProjectManager
 			throw new PlatformException(e.getLocalizedMessage());
 		}
 		_currentProject = project;
+		LOGGER.info("nowy project " + _currentProject.getInfo().getInfo());
 	}
 
 	/**
@@ -124,8 +125,7 @@ public final class ProjectManager implements IProjectManager
 		// FIXME - after cascade model adding, method _solution.getInfo().getSolutionID()
 		// should be used instead
 		Solution solution = (Solution) _managerEngine.getSolutionManager().getCurrentSolution();
-		((Project) _currentProject).getInfo().setSolutionID(
-				solution.getInfo().getId());
+		((Project) _currentProject).getInfo().setSolutionID(solution.getInfo().getId());
 		return _currentProject;
 	}
 
@@ -203,6 +203,10 @@ public final class ProjectManager implements IProjectManager
 		Collection projects = null;
 		SQLSelect select = new SQLSelect();
 		select.addTable(ProjectInfo.TABLE_NAME);
+		//select.addCondition("SOLUTION_ID");
+		LOGGER.info("Zly _currentProject = " + _currentProject);
+		LOGGER.info("Zly _currentProject name = " + _currentProject.getInfo().getInfo());
+		select.addCondition("solution_id =", ((Project)_currentProject).getInfo().getSolutionID() );
 		// executing query
 		ResultSet resultSet = null;
 
