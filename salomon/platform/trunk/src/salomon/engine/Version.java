@@ -51,7 +51,7 @@ public class Version
 		}
 	}
 
-	private static final String BUNDLE_NAME = "version";//$NON-NLS-1$
+	private static final String BUNDLE_NAME = "messages";//$NON-NLS-1$
 
 	private static final Logger LOGGER = Logger.getLogger(Version.class);
 

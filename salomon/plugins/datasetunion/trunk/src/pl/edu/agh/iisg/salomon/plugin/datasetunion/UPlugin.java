@@ -21,19 +21,17 @@
 
 package pl.edu.agh.iisg.salomon.plugin.datasetunion;
 
-import salomon.util.serialization.SimpleString;
-
 import salomon.platform.IDataEngine;
 import salomon.platform.IEnvironment;
 import salomon.platform.data.dataset.IDataSet;
 import salomon.platform.data.dataset.IDataSetManager;
 import salomon.platform.serialization.IObject;
-
 import salomon.plugin.IPlugin;
 import salomon.plugin.IResult;
 import salomon.plugin.IResultComponent;
 import salomon.plugin.ISettingComponent;
 import salomon.plugin.ISettings;
+import salomon.util.serialization.SimpleString;
 
 /**
  * 
@@ -47,6 +45,7 @@ public final class UPlugin implements IPlugin
 	 */
 	public UPlugin()
 	{
+		System.out.println("sssss");
 	}
 
 	/**
