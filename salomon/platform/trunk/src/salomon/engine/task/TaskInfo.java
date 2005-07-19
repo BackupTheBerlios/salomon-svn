@@ -61,6 +61,8 @@ public final class TaskInfo implements IInfo
 
 	private int _taskID;
 
+	private int _taskNr;
+
 	public TaskInfo(DBManager dbManager)
 	{
 		_dbManager = dbManager;
@@ -140,6 +142,15 @@ public final class TaskInfo implements IInfo
 	}
 
 	/**
+	 * Returns the taskNr.
+	 * @return The taskNr
+	 */
+	public int getTaskNr()
+	{
+		return _taskNr;
+	}
+
+	/**
 	 * Initializes itself basing on given row from resultSet. Before calling
 	 * this method ISettings object must be set.
 	 * 
@@ -151,6 +162,7 @@ public final class TaskInfo implements IInfo
 		_taskID = resultSet.getInt("task_id");
 		_projectID = resultSet.getInt("project_id");
 		// it is not neccessery to set plugin id
+		_taskNr = resultSet.getInt("task_nr");
 		_name = resultSet.getString("task_name");
 		_info = resultSet.getString("task_info");
 		// setting has to be set
@@ -183,6 +195,7 @@ public final class TaskInfo implements IInfo
 		SQLUpdate update = new SQLUpdate(TABLE_NAME);
 		update.addValue("project_id", _projectID);
 		update.addValue("plugin_id", _pluginID);
+		update.addValue("task_nr", _taskNr);
 		update.addValue("task_name", _name);
 		if (_info != null) {
 			update.addValue("task_info", _info);
@@ -256,6 +269,15 @@ public final class TaskInfo implements IInfo
 	public void setTaskId(int taskId)
 	{
 		_taskID = taskId;
+	}
+
+	/**
+	 * Set the value of taskNr field.
+	 * @param taskNr The taskNr to set
+	 */
+	public void setTaskNr(int taskNr)
+	{
+		_taskNr = taskNr;
 	}
 
 	public static final String ACTIVE = "AC";
