@@ -39,6 +39,8 @@ public final class SQLSelect implements Cloneable
 
 	private Collection<String> _conditions;
 
+	private Collection<String> _orderBy;
+
 	private Collection<String> _tables;
 
 	public SQLSelect()
@@ -46,6 +48,7 @@ public final class SQLSelect implements Cloneable
 		_columns = new LinkedList<String>();
 		_tables = new HashSet<String>();
 		_conditions = new HashSet<String>();
+		_orderBy = new LinkedList<String>();
 	}
 
 	public void addColumn(String columnName)
@@ -97,6 +100,16 @@ public final class SQLSelect implements Cloneable
 	public void addCondition(String condition, String value)
 	{
 		SQLHelper.addCondition(_conditions, condition, value);
+	}
+
+	/**
+	 * Method adds column to ORDER BY statement.
+	 * 
+	 * @param orderColumn column to be added
+	 */
+	public void addOrderBy(String orderColumn)
+	{
+		_orderBy.add(orderColumn);
 	}
 
 	public void addTable(String tableName)
@@ -169,6 +182,16 @@ public final class SQLSelect implements Cloneable
 			query.append(condIter.next());
 			while (condIter.hasNext()) {
 				query.append(" AND ").append(condIter.next());
+			}
+		}
+
+		// adding ORDER BY
+		if (!_orderBy.isEmpty()) {
+			query.append(" ORDER BY "); //$NON-NLS-1$
+			Iterator<String> orderIter = _orderBy.iterator();
+			query.append(orderIter.next());
+			while (orderIter.hasNext()) {
+				query.append(", ").append(orderIter.next());
 			}
 		}
 

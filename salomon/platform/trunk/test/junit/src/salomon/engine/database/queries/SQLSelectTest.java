@@ -79,6 +79,8 @@ public class SQLSelectTest extends TestCase
 		sel.addCondition("p.plugin_name =", "SQLConsole");
 		sel.addCondition("t.plugin_id = p.plugin_id");
 		sel.addCondition("task_name =", "Jacks' task''");
+		sel.addOrderBy("t.task_nr");
+		sel.addOrderBy("t.lm_date");
 
 		try {
 
