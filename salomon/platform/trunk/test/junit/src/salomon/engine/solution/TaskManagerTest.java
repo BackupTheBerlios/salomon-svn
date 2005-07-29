@@ -107,7 +107,7 @@ public class TaskManagerTest extends TestCase
 
 	public void testClearTasks()
 	{
-		_taskManager.clearTaskList();
+		_taskManager.clearTasks();
 	}
 
 	public void testGetCurrentTask()
