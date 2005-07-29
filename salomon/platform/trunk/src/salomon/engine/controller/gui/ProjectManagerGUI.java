@@ -199,7 +199,7 @@ public final class ProjectManagerGUI
 			ITaskManager taskManager;
 			try {
 				taskManager = _projectManager.getCurrentProject().getTaskManager();
-				taskManager.clearTaskList();
+				taskManager.clearTasks();
 				for (TaskGUI taskGUI : taskList) {
 					ITask task = taskManager.createTask();
 					taskGUI.initialize(task);

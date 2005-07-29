@@ -21,13 +21,20 @@
 
 package salomon.engine.task;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Collection;
 import java.util.LinkedList;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 
 import salomon.engine.database.DBManager;
+import salomon.engine.database.queries.SQLSelect;
 import salomon.engine.plugin.ILocalPlugin;
+import salomon.engine.plugin.LocalPlugin;
+import salomon.engine.plugin.PluginInfo;
+import salomon.engine.project.IProject;
 
 import salomon.util.serialization.SimpleString;
 
@@ -47,7 +54,6 @@ import salomon.engine.platform.IManagerEngine;
  */
 public final class TaskManager implements ITaskManager
 {
-
 	/**
 	 * 
 	 * @uml.property name="_dataEngine"
@@ -119,7 +125,7 @@ public final class TaskManager implements ITaskManager
 		_tasks.add(task);
 	}
 
-	public void clearTaskList()
+	public void clearTasks()
 	{
 		_tasks.clear();
 	}
@@ -129,12 +135,6 @@ public final class TaskManager implements ITaskManager
 		Task newTask = new Task(_dbManager);
 		newTask.getInfo().setProjectID(
 				_managerEngine.getProjectManager().getCurrentProject().getInfo().getId());
-		//		try {
-		//			newTask.getInfo().save();
-		//		} catch (Exception e) {
-		//			LOGGER.fatal("", e);
-		//			throw new PlatformException(e.getLocalizedMessage());
-		//		}
 		return newTask;
 	}
 
@@ -142,7 +142,7 @@ public final class TaskManager implements ITaskManager
 	{
 		throw new UnsupportedOperationException(
 				"Method getCurrentTask() not implemented yet!");
-	} // end getCurrentTask
+	}
 
 	public DBManager getDBManager()
 	{
@@ -158,12 +158,88 @@ public final class TaskManager implements ITaskManager
 				"Method getRunner() not implemented yet!");
 	}
 
-	public ITask[] getTasks()
+	public ITask[] getTasks() throws PlatformException
 	{
-		if (_tasks.size() == 0) {
-			// load tasks from data base
+		List<ITask> tasks = new LinkedList<ITask>();
+		// TODO: use _project in stead of it
+		IProject currProject = _managerEngine.getProjectManager().getCurrentProject();		
+		if (_tasks.isEmpty() && currProject != null) {
+			SQLSelect select = new SQLSelect();
+			select.addTable(TaskInfo.TABLE_NAME + " t");
+			select.addTable(PluginInfo.TABLE_NAME + " p");
+			select.addColumn("t.task_id");
+			select.addColumn("t.project_id");
+			select.addColumn("t.task_name");
+			select.addColumn("t.task_info");
+			select.addColumn("t.status");
+			select.addColumn("t.plugin_settings");
+			select.addColumn("t.plugin_result");
+			select.addColumn("p.plugin_id");
+			select.addColumn("p.plugin_name");
+			select.addColumn("p.plugin_info");
+			select.addColumn("p.location");
+			int projectID = currProject.getInfo().getId();
+			select.addCondition("t.project_id =", projectID);
+			select.addCondition("t.plugin_id = p.plugin_id");
+
+			// executing query
+			ResultSet resultSet = null;
+			try {
+				resultSet = _dbManager.select(select);
+				while (resultSet.next()) {
+					// TODO: Plugin info shoul not be instantied from outside of pluginManger :-/
+					PluginInfo pluginInfo = new PluginInfo(_dbManager);
+					pluginInfo.load(resultSet);
+					LocalPlugin localPlugin = (LocalPlugin) _managerEngine.getPluginManager().getPlugin(
+							pluginInfo);
+					//FIXME: real settings should be loaded
+					ISettings pluginSettings = localPlugin.getSettingComponent().getDefaultSettings();
+
+					Task task = (Task) this.createTask();
+					task.setSettings(pluginSettings);
+					task.setPlugin(localPlugin);
+					// loading task
+					task.getInfo().load(resultSet);
+					this.addTask(task);
+					tasks.add(task);
+				}
+				resultSet.close();
+			} catch (Exception e) {
+				LOGGER.fatal("", e);
+				try {
+					resultSet.close();
+				} catch (SQLException ex) {
+					LOGGER.fatal("", ex);
+				}
+				throw new PlatformException(e.getLocalizedMessage());
+			}
 		}
-		return _tasks.toArray(new ITask[_tasks.size()]);
+		ITask[] tasksArr = new ITask[tasks.size()];
+		return tasks.toArray(tasksArr);
+	}
+
+	public boolean removeAll() throws PlatformException
+	{
+		throw new UnsupportedOperationException(
+				"Method removeAll() not implemented yet!");
+	}
+
+	public boolean removeTask(ITask task) throws PlatformException
+	{
+		throw new UnsupportedOperationException(
+				"Method removeTask() not implemented yet!");
+	}
+
+	public void saveTasks() throws PlatformException
+	{
+		try {
+			for (ITask task : _tasks) {
+				((Task) task).getInfo().save();
+			}
+		} catch (Exception e) {
+			LOGGER.fatal("", e);
+			throw new PlatformException(e.getLocalizedMessage());
+		}
 	}
 
 	public void start() throws PlatformException

@@ -75,11 +75,21 @@ public final class RemoteTaskManager extends UnicastRemoteObject
 	}
 
 	/**
-	 * @see IRemoteTaskManager#clearTaskList()
+	 * @see salomon.engine.remote.task.IRemoteTaskManager#addTask(salomon.engine.remote.task.IRemoteTask, java.lang.String, java.lang.String)
 	 */
-	public void clearTaskList() throws RemoteException, PlatformException
+	public void addTask(IRemoteTask remoteTask, String pluginUrl,
+			String settings) throws RemoteException, PlatformException
 	{
-		_taskManager.clearTaskList();
+		RemoteTask task = (RemoteTask) remoteTask;
+		_taskManager.addTask(task.getTask());
+	}
+
+	/**
+	 * @see IRemoteTaskManager#clearTasks()
+	 */
+	public void clearTasks() throws RemoteException, PlatformException
+	{
+		_taskManager.clearTasks();
 	}
 
 	/**
@@ -131,6 +141,11 @@ public final class RemoteTaskManager extends UnicastRemoteObject
 		return remoteTasks;
 	}
 
+	public void saveTasks() throws RemoteException, PlatformException
+	{
+		_taskManager.saveTasks();
+	}
+
 	/**
 	 * @see IRemoteTaskManager#start()
 	 */
@@ -154,14 +169,4 @@ public final class RemoteTaskManager extends UnicastRemoteObject
 	}
 
 	private static final Logger LOGGER = Logger.getLogger(RemoteTaskManager.class);
-
-	/**
-	 * @see salomon.engine.remote.task.IRemoteTaskManager#addTask(salomon.engine.remote.task.IRemoteTask, java.lang.String, java.lang.String)
-	 */
-	public void addTask(IRemoteTask remoteTask, String pluginUrl,
-			String settings) throws RemoteException, PlatformException
-	{
-		RemoteTask task = (RemoteTask) remoteTask;
-		_taskManager.addTask(task.getTask());
-	}
 }

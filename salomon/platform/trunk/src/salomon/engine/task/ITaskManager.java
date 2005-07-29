@@ -32,8 +32,9 @@ public interface ITaskManager
 
 	/**
 	 * Clear list of created tasks.
-	 */
-	void clearTaskList() throws PlatformException;
+	 * It is used to refresh GUI after change of current project. 
+	 */	
+	void clearTasks() throws PlatformException;
 
 	/**
 	 * Creates new task.
@@ -61,6 +62,30 @@ public interface ITaskManager
 	 */
 	ITask[] getTasks() throws PlatformException;
 
+	/**
+	 * Removes task from the task list.
+	 * 
+	 * @param task to be removed
+	 * @return
+	 * @throws PlatformException
+	 */
+	boolean removeTask(ITask task) throws PlatformException;
+	
+	/**
+	 * Removes all tasks.
+	 * 
+	 * @return
+	 * @throws PlatformException
+	 */
+	boolean removeAll() throws PlatformException;
+	
+	/**
+	 * Saves tasks list in data base.
+	 * 
+	 * @throws PlatformException
+	 */
+	void saveTasks() throws PlatformException;
+	
 	/**
 	 * Starts tasks execution.
 	 * @see ITaskRunner

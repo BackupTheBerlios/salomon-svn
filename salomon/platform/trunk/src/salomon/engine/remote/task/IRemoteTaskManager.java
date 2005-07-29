@@ -56,12 +56,12 @@ public interface IRemoteTaskManager extends Remote
 			throws RemoteException, PlatformException;
 
 	/**
-	 * @see salomon.engine.task.ITaskManager#clearTaskList()
+	 * @see salomon.engine.task.ITaskManager#clearTasks()
 	 * 
 	 * @throws RemoteException
 	 * @throws PlatformException
 	 */
-	void clearTaskList() throws RemoteException, PlatformException;
+	void clearTasks() throws RemoteException, PlatformException;
 
 	/**
 	 * @see salomon.engine.task.ITaskManager#createTask()
@@ -82,6 +82,14 @@ public interface IRemoteTaskManager extends Remote
 	 * @see salomon.engine.task.ITaskManager#getTasks()
 	 */
 	IRemoteTask[] getTasks() throws RemoteException, PlatformException;
+
+	/**
+	 * @see salomon.engine.task.ITaskManager#saveTasks()
+	 * 
+	 * @throws RemoteException
+	 * @throws PlatformException
+	 */
+	void saveTasks() throws RemoteException, PlatformException;
 
 	/**
 	 * @see salomon.engine.task.ITaskManager#start()

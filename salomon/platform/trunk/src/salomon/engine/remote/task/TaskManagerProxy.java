@@ -85,12 +85,28 @@ public final class TaskManagerProxy implements ITaskManager
 	}
 
 	/**
-	 * @see ITaskManager#clearTaskList()
+	 * @see salomon.engine.task.ITaskManager#addTask(salomon.engine.task.ITask, java.lang.String, java.lang.String)
 	 */
-	public void clearTaskList() throws PlatformException
+	public void addTask(ITask task, String pluginUrl, String settings)
+			throws PlatformException
 	{
 		try {
-			_remoteTaskManager.clearTaskList();
+			TaskProxy taskProxy = (TaskProxy) task;
+			IRemoteTask remoteTask = taskProxy.getRemoteTask();
+			_remoteTaskManager.addTask(remoteTask, pluginUrl, settings);
+		} catch (RemoteException e) {
+			LOGGER.error("Remote error!", e);
+			throw new PlatformException(e.getLocalizedMessage());
+		}
+	}
+
+	/**
+	 * @see ITaskManager#clearTasks()
+	 */
+	public void clearTasks() throws PlatformException
+	{
+		try {
+			_remoteTaskManager.clearTasks();
 		} catch (RemoteException e) {
 			LOGGER.error("Remote error!", e);
 			throw new PlatformException(e.getLocalizedMessage());
@@ -167,6 +183,28 @@ public final class TaskManagerProxy implements ITaskManager
 		return tasks;
 	}
 
+	public boolean removeAll() throws PlatformException
+	{
+		throw new UnsupportedOperationException(
+				"Method removeAll() not implemented yet!");
+	}
+
+	public boolean removeTask(ITask task) throws PlatformException
+	{
+		throw new UnsupportedOperationException(
+				"Method removeTask() not implemented yet!");
+	}
+
+	public void saveTasks() throws PlatformException
+	{
+		try {
+			_remoteTaskManager.saveTasks();
+		} catch (RemoteException e) {
+			LOGGER.error("Remote error!", e);
+			throw new PlatformException(e.getLocalizedMessage());
+		}
+	}
+
 	/**
 	 * @see ITaskManager#start()
 	 */
@@ -194,20 +232,4 @@ public final class TaskManagerProxy implements ITaskManager
 	}
 
 	private static final Logger LOGGER = Logger.getLogger(TaskManagerProxy.class);
-
-	/**
-	 * @see salomon.engine.task.ITaskManager#addTask(salomon.engine.task.ITask, java.lang.String, java.lang.String)
-	 */
-	public void addTask(ITask task, String pluginUrl, String settings)
-			throws PlatformException
-	{
-		try {
-			TaskProxy taskProxy = (TaskProxy) task;
-			IRemoteTask remoteTask = taskProxy.getRemoteTask();
-			_remoteTaskManager.addTask(remoteTask, pluginUrl, settings);
-		} catch (RemoteException e) {
-			LOGGER.error("Remote error!", e);
-			throw new PlatformException(e.getLocalizedMessage());
-		}
-	}
 }

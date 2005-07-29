@@ -24,29 +24,20 @@ package salomon.engine.project;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collection;
-import java.util.LinkedList;
-import java.util.List;
 
 import org.apache.log4j.Logger;
 
 import salomon.engine.database.DBManager;
 import salomon.engine.database.queries.SQLSelect;
-import salomon.engine.plugin.LocalPlugin;
-import salomon.engine.plugin.PluginInfo;
 import salomon.engine.solution.ISolution;
 import salomon.engine.solution.Solution;
 import salomon.engine.task.ITask;
-import salomon.engine.task.Task;
-import salomon.engine.task.TaskInfo;
-import salomon.engine.task.TaskManager;
 
 import salomon.util.gui.Utils;
 
 import salomon.platform.IUniqueId;
 import salomon.platform.exception.DBException;
 import salomon.platform.exception.PlatformException;
-
-import salomon.plugin.ISettings;
 
 import salomon.engine.platform.IManagerEngine;
 
@@ -117,7 +108,7 @@ public final class ProjectManager implements IProjectManager
 	{
 		// clearing old tasks
 		if (_currentProject != null) {
-			_currentProject.getTaskManager().clearTaskList();
+			_currentProject.getTaskManager().clearTasks();
 		}
 		// FIXME workaround - getCurrentProject method should be removed.
 		_currentProject = new Project(_managerEngine.getTasksManager(),
@@ -125,7 +116,8 @@ public final class ProjectManager implements IProjectManager
 		// FIXME - after cascade model adding, method _solution.getInfo().getSolutionID()
 		// should be used instead
 		Solution solution = (Solution) _managerEngine.getSolutionManager().getCurrentSolution();
-		((Project) _currentProject).getInfo().setSolutionID(solution.getInfo().getId());
+		((Project) _currentProject).getInfo().setSolutionID(
+				solution.getInfo().getId());
 		return _currentProject;
 	}
 
@@ -173,20 +165,11 @@ public final class ProjectManager implements IProjectManager
 			}
 			resultSet.close();
 
-			// adding tasks
-			tasks = getTasksForProject(projectID.getId());
+			// loading tasks
+			_managerEngine.getTasksManager().getTasks();
 		} catch (Exception e) {
 			LOGGER.fatal("", e);
 			throw new DBException(e.getLocalizedMessage());
-		}
-		//FIXME move it to TaskManager
-		// clearing old tasks
-		TaskManager taskManager = (TaskManager) _managerEngine.getTasksManager();
-		taskManager.clearTaskList();
-		taskManager.addAllTasks(tasks);
-		LOGGER.debug("project: " + project);
-		for (ITask task : taskManager.getTasks()) {
-			LOGGER.debug("tasks: " + task);
 		}
 		LOGGER.info("Project successfully loaded.");
 
@@ -205,8 +188,10 @@ public final class ProjectManager implements IProjectManager
 		select.addTable(ProjectInfo.TABLE_NAME);
 		//select.addCondition("SOLUTION_ID");
 		LOGGER.info("Zly _currentProject = " + _currentProject);
-		LOGGER.info("Zly _currentProject name = " + _currentProject.getInfo().getInfo());
-		select.addCondition("solution_id =", ((Project)_currentProject).getInfo().getSolutionID() );
+		LOGGER.info("Zly _currentProject name = "
+				+ _currentProject.getInfo().getInfo());
+		select.addCondition("solution_id =",
+				((Project) _currentProject).getInfo().getSolutionID());
 		// executing query
 		ResultSet resultSet = null;
 
@@ -277,75 +262,6 @@ public final class ProjectManager implements IProjectManager
 	}
 
 	/**
-	 * Method selects tasks for given project id
-	 * 
-	 * @param projectID
-	 * @return
-	 * @throws ClassNotFoundException
-	 * @throws Exception
-	 */
-	private List<ITask> getTasksForProject(int projectID) throws Exception
-	{
-		List<ITask> tasks = new LinkedList<ITask>();
-		SQLSelect select = new SQLSelect();
-		select.addTable(TaskInfo.TABLE_NAME + " t");
-		select.addTable(PluginInfo.TABLE_NAME + " p");
-		select.addColumn("t.task_id");
-		select.addColumn("t.project_id");
-		select.addColumn("t.task_name");
-		select.addColumn("t.task_info");
-		select.addColumn("t.status");
-		select.addColumn("t.plugin_settings");
-		select.addColumn("t.plugin_result");
-		select.addColumn("p.plugin_id");
-		select.addColumn("p.plugin_name");
-		select.addColumn("p.plugin_info");
-		select.addColumn("p.location");
-		select.addCondition("t.project_id =", projectID);
-		select.addCondition("t.plugin_id = p.plugin_id");
-
-		// executing query
-		ResultSet resultSet = null;
-		resultSet = _dbManager.select(select);
-		TaskManager taskManager = (TaskManager) _currentProject.getTaskManager();
-		try {
-			while (resultSet.next()) {
-				// TODO: move task loading to task manager ?
-				//				PluginInfo description = new PluginInfo();
-				//				// loading plugin description
-				//				description.load(resultSet);
-				//				IPlugin plugin = PluginLoader.loadPlugin(description
-				//						.getLocation());
-				//				ISettings pluginSettings = plugin.getSettingComponent()
-				//						.getDefaultSettings();				
-
-				// TODO: Plugin info shoul not be instantied from outside of pluginManger :-/
-				PluginInfo pluginInfo = new PluginInfo(_dbManager);
-				pluginInfo.load(resultSet);
-				LocalPlugin localPlugin = (LocalPlugin) _managerEngine.getPluginManager().getPlugin(
-						pluginInfo);
-				//FIXME: real settings should be loaded
-				ISettings pluginSettings = localPlugin.getSettingComponent().getDefaultSettings();
-
-				Task task = (Task) taskManager.createTask();
-				task.setSettings(pluginSettings);
-				task.setPlugin(localPlugin);
-				// loading task
-				task.getInfo().load(resultSet);
-				taskManager.addTask(task);
-				tasks.add(task);
-			}
-		} catch (Exception e) {
-			LOGGER.fatal("", e);
-			resultSet.close();
-			throw e;
-		}
-		resultSet.close();
-
-		return tasks;
-	}
-
-	/**
 	 * Method saves tasks for given project.
 	 * 
 	 * @param project
@@ -354,10 +270,7 @@ public final class ProjectManager implements IProjectManager
 	private void saveTasks(int projectID) throws Exception
 	{
 		// saving tasks
-		ITask[] tasks = _managerEngine.getTasksManager().getTasks();
-		for (ITask task : tasks) {
-			((Task) task).getInfo().save();
-		}
+		_managerEngine.getTasksManager().saveTasks();
 	}
 
 	private static final Logger LOGGER = Logger.getLogger(ProjectManager.class);

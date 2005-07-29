@@ -58,11 +58,11 @@ final class TaskManagerHolder implements ITaskManager
 	}
 
 	/**
-	 * @see ITaskManager#clearTaskList()
+	 * @see ITaskManager#clearTasks()
 	 */
-	public void clearTaskList() throws PlatformException
+	public void clearTasks() throws PlatformException
 	{
-		_currentTaskManager.clearTaskList();
+		_currentTaskManager.clearTasks();
 	}
 
 	/**
@@ -95,6 +95,23 @@ final class TaskManagerHolder implements ITaskManager
 	public ITask[] getTasks() throws PlatformException
 	{
 		return _currentTaskManager.getTasks();
+	}
+
+	public boolean removeAll() throws PlatformException
+	{
+		throw new UnsupportedOperationException(
+				"Method removeAll() not implemented yet!");
+	}
+
+	public boolean removeTask(ITask task) throws PlatformException
+	{
+		throw new UnsupportedOperationException(
+				"Method removeTask() not implemented yet!");
+	}
+
+	public void saveTasks() throws PlatformException
+	{
+		_currentTaskManager.saveTasks();
 	}
 
 	/**
