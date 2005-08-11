@@ -112,6 +112,7 @@ public final class TaskManager implements ITaskManager
 		}
 	}
 
+	@Deprecated
 	public void addAllTasks(Collection<ITask> tasks)
 	{
 		_tasks.addAll(tasks);
@@ -120,8 +121,14 @@ public final class TaskManager implements ITaskManager
 	/**
 	 * @see salomon.engine.task.ITaskManager#addTask(salomon.platform.task.ITask)
 	 */
-	public void addTask(ITask task)
+	public void addTask(ITask task) throws PlatformException
 	{
+		try {
+			task.getInfo().save();
+		} catch (Exception e) {
+			LOGGER.fatal("", e);
+			throw new PlatformException(e.getLocalizedMessage());
+		}
 		_tasks.add(task);
 	}
 
@@ -135,6 +142,7 @@ public final class TaskManager implements ITaskManager
 		Task newTask = new Task(_dbManager);
 		newTask.getInfo().setProjectID(
 				_managerEngine.getProjectManager().getCurrentProject().getInfo().getId());
+		newTask.getInfo().setTaskNr(_tasks.size() + 1);
 		return newTask;
 	}
 
@@ -160,14 +168,15 @@ public final class TaskManager implements ITaskManager
 
 	public ITask[] getTasks() throws PlatformException
 	{
-		List<ITask> tasks = new LinkedList<ITask>();
+		LinkedList<ITask> tasks = new LinkedList<ITask>();
 		// TODO: use _project in stead of it
-		IProject currProject = _managerEngine.getProjectManager().getCurrentProject();		
+		IProject currProject = _managerEngine.getProjectManager().getCurrentProject();
 		if (_tasks.isEmpty() && currProject != null) {
 			SQLSelect select = new SQLSelect();
 			select.addTable(TaskInfo.TABLE_NAME + " t");
 			select.addTable(PluginInfo.TABLE_NAME + " p");
 			select.addColumn("t.task_id");
+			select.addColumn("t.task_nr");
 			select.addColumn("t.project_id");
 			select.addColumn("t.task_name");
 			select.addColumn("t.task_info");
@@ -192,6 +201,7 @@ public final class TaskManager implements ITaskManager
 					pluginInfo.load(resultSet);
 					LocalPlugin localPlugin = (LocalPlugin) _managerEngine.getPluginManager().getPlugin(
 							pluginInfo);
+					localPlugin.load();
 					//FIXME: real settings should be loaded
 					ISettings pluginSettings = localPlugin.getSettingComponent().getDefaultSettings();
 
@@ -199,11 +209,13 @@ public final class TaskManager implements ITaskManager
 					task.setSettings(pluginSettings);
 					task.setPlugin(localPlugin);
 					// loading task
-					task.getInfo().load(resultSet);
-					this.addTask(task);
-					tasks.add(task);
+					task.getInfo().load(resultSet);					
+					tasks.add(task);					
 				}
 				resultSet.close();
+				// if everything is OK, then loaded tasks list is assigned
+				// to manager's tasks list
+				_tasks = tasks;
 			} catch (Exception e) {
 				LOGGER.fatal("", e);
 				try {
@@ -214,8 +226,8 @@ public final class TaskManager implements ITaskManager
 				throw new PlatformException(e.getLocalizedMessage());
 			}
 		}
-		ITask[] tasksArr = new ITask[tasks.size()];
-		return tasks.toArray(tasksArr);
+		ITask[] tasksArr = new ITask[_tasks.size()];
+		return _tasks.toArray(tasksArr);
 	}
 
 	public boolean removeAll() throws PlatformException

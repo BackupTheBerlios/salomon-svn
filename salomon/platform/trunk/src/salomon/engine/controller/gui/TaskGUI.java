@@ -23,48 +23,17 @@ package salomon.engine.controller.gui;
 
 import org.apache.log4j.Logger;
 
-import salomon.engine.plugin.ILocalPlugin;
 import salomon.engine.task.ITask;
 import salomon.engine.task.Task;
-import salomon.engine.task.TaskInfo;
 
 import salomon.platform.exception.PlatformException;
 
-import salomon.plugin.IPlugin;
-import salomon.plugin.IResult;
-import salomon.plugin.ISettings;
-
 /**
  * Class is graphic representation of a task. It is used to display them on the
- * list of tasks.
+ * list of tasks. This class is designed for future use of graphical task representation.
  */
 public final class TaskGUI
 {
-	private String _name;
-
-	/**
-	 * 
-	 * @uml.property name="_plugin"
-	 * @uml.associationEnd multiplicity="(0 1)"
-	 */
-	private ILocalPlugin _plugin;
-
-	/**
-	 * 
-	 * @uml.property name="_result"
-	 * @uml.associationEnd multiplicity="(0 1)"
-	 */
-	private IResult _result;
-
-	/**
-	 * 
-	 * @uml.property name="_settings"
-	 * @uml.associationEnd multiplicity="(0 1)"
-	 */
-	private ISettings _settings;
-
-	private String _status;
-
 	/**
 	 * 
 	 * @uml.property name="_task"
@@ -72,222 +41,19 @@ public final class TaskGUI
 	 */
 	private Task _task;
 
-	private int _taskId;
-
-	public TaskGUI()
-	{
-		_taskId = 0;
-	}
-
 	public TaskGUI(ITask task)
 	{
 		_task = (Task) task;
-		try {
-			TaskInfo taskInfo = _task.getInfo();
-			_name = taskInfo.getName();
-			_plugin = _task.getPlugin();
-			_result = _task.getResult();
-			_settings = _task.getSettings();
-			_status = taskInfo.getStatus();
-			_taskId = taskInfo.getId();
-		} catch (PlatformException e) {
-			LOGGER.fatal("", e);
-		}
 	}
 
 	/**
-	 * @return Returns the name.
+	 * Returns the task.
+	 * @return The task
 	 */
-	public String getName()
+	public Task getTask()
 	{
-		return _name;
+		return _task;
 	}
-
-	/**
-	 * @return Returns the _plugin.
-	 */
-	public IPlugin getPlugin()
-	{
-		IPlugin plugin = null;
-		if (isInitialized()) {
-			try {
-				plugin = _task.getPlugin();
-			} catch (PlatformException e) {
-				LOGGER.error("", e);
-				// FIXME
-			}
-		} else {
-			plugin = _plugin;
-		}
-
-		return plugin;
-	}
-
-	/**
-	 * @return Returns the _result.
-	 */
-	public IResult getResult()
-	{
-		IResult result = null;
-		if (isInitialized()) {
-			try {
-				result = _task.getResult();
-			} catch (PlatformException e) {
-				LOGGER.error("", e);
-				// FIXME
-			}
-		} else {
-			result = _result;
-		}
-
-		return result;
-	}
-
-	/**
-	 * @return Returns the _settings.
-	 */
-	public ISettings getSettings()
-	{
-		ISettings settings = null;
-		if (isInitialized()) {
-			try {
-				settings = _task.getSettings();
-			} catch (PlatformException e) {
-				LOGGER.error("", e);
-				// FIXME
-			}
-		} else {
-			settings = _settings;
-		}
-
-		return settings;
-	}
-
-	/**
-	 * @return Returns the status.
-	 */
-	public String getStatus()
-	{
-		String status = null;
-		if (isInitialized()) {
-			try {
-				status = ((Task) _task).getInfo().getStatus();
-			} catch (PlatformException e) {
-				LOGGER.error("", e);
-				// FIXME
-			}
-		} else {
-			status = _status;
-		}
-
-		return status;
-	}
-
-	/**
-	 * @return Returns the taksId.
-	 */
-	public int getTaskId()
-	{
-		int taskId = -1;
-		if (isInitialized()) {
-			try {
-				taskId = _task.getInfo().getId();
-			} catch (PlatformException e) {
-				LOGGER.error("", e);
-				// FIXME
-			}
-		} else {
-			taskId = _taskId;
-		}
-
-		return taskId;
-	}
-
-	public boolean isInitialized()
-	{
-		return _task != null;
-	}
-
-	// public void save()
-	// {
-	// save(_task);
-	// }
-	//
-	/**
-	 * Initializes itself using given task. Class cannot create Task directly,
-	 * to get instance of ITask ITaskManager.createTask() has to be used.
-	 * Task given to the method has already been created.
-	 * 
-	 */
-	public void initialize(ITask task)
-	{
-		_task = (Task) task;
-		// important: set first plugin
-		try {
-			_task.setPlugin(_plugin);
-			_task.setSettings(_settings);
-			_task.getInfo().setName(_name);
-		} catch (PlatformException e) {
-			LOGGER.error("", e);
-			// FIXME
-		}
-	}
-
-	/**
-	 * @param name The name to set.
-	 */
-	public void setName(String name)
-	{
-		this._name = name;
-	}
-
-	/**
-	 * @param plugin The plugin to set.
-	 */
-	public void setPlugin(ILocalPlugin plugin)
-	{
-		_plugin = plugin;
-	}
-
-	// /**
-	// * @param _result
-	// * The _result to set.
-	// */
-	// public void setResult(IResult result)
-	// {
-	// _result = result;
-	// if (_result.isSuccessful()) {
-	// _status = Task.FINISHED;
-	// } else {
-	// _status = Task.ERROR;
-	// }
-	// }
-
-	/**
-	 * @param settings The settings to set.
-	 */
-	public void setSettings(ISettings settings)
-	{
-		_settings = settings;
-	}
-
-	// /**
-	// * @param status
-	// * The status to set.
-	// */
-	// public void setStatus(String status)
-	// {
-	// this._status = status;
-	// }
-
-	// /**
-	// * @param taksId
-	// * The taksId to set.
-	// */
-	// public void setTaskId(int taskId)
-	// {
-	// _taskId = taskId;
-	// }
 
 	/*
 	 * (non-Javadoc)
@@ -296,7 +62,20 @@ public final class TaskGUI
 	 */
 	public String toString()
 	{
-		return _name + " [" + _plugin + "]";
+		String name = "";
+		try {
+			name = _task.getInfo().getName();
+		} catch (PlatformException e) {
+			LOGGER.fatal("", e);
+		}
+		// plugin cannot be NULL!
+		String plugin = "ERROR";
+		try {
+			plugin = _task.getPlugin().toString();
+		} catch (PlatformException e) {
+			LOGGER.fatal("", e);
+		}
+		return (name != null ? name : "") + " [" + plugin + "]";
 	}
 
 	private static final Logger LOGGER = Logger.getLogger(TaskGUI.class);

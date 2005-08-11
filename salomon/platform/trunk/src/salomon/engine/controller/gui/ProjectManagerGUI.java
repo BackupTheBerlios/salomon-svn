@@ -139,7 +139,7 @@ public final class ProjectManagerGUI
 			Utils.showErrorMessage("Cannot load project.");
 		}
 	}
-
+	
 	public void saveProject()
 	{
 		try {
@@ -152,65 +152,11 @@ public final class ProjectManagerGUI
 				setProjectProperties(project);
 			}
 
-			List<TaskGUI> taskList = _taskManagerGUI.getTasks();
-			LOGGER.info("taskList = " + taskList);
-			//
-			// task list cannot be empty
-			//
-			if (taskList.isEmpty()) {
-				Utils.showErrorMessage("WRN_NO_TASK_TO_SAVE");
-				return;
-			}
-			//
-			// checking if all tasks have settings set
-			// if not - question to user, if he agrees
-			// default settings will be set and project will be saved
-			//
-			List<TaskGUI> incorrectTasks = new LinkedList<TaskGUI>();
-			for (TaskGUI task : taskList) {
-				if (task.getSettings() == null) {
-					incorrectTasks.add(task);
-				}
-			}
-			if (!incorrectTasks.isEmpty()) {
-				String message = "There are tasks with settings not set:\n";
-				for (TaskGUI task : incorrectTasks) {
-					message += task.getName() + "\n";
-				}
-				message += "Do you want to use default settings?";
-				if (Utils.showWarningMessage(message)) {
-					// getting default settings
-					LOGGER.debug("getting default settings");
-					for (TaskGUI task : incorrectTasks) {
-						ISettings defaultSettings = task.getPlugin().getSettingComponent().getDefaultSettings();
-						task.setSettings(defaultSettings);
-					}
-				} else {
-					return;
-				}
-			}
-			//
-			// saving project
-			//
-
-			//
-			// removing old tasks
-			//
-			ITaskManager taskManager;
-			try {
-				taskManager = _projectManager.getCurrentProject().getTaskManager();
-				taskManager.clearTasks();
-				for (TaskGUI taskGUI : taskList) {
-					ITask task = taskManager.createTask();
-					taskGUI.initialize(task);
-					taskManager.addTask(task);
-				}
-				// saving project
+			if (_taskManagerGUI.saveTasks()) {		
 				_projectManager.saveProject();
 				Utils.showInfoMessage("Project saved successfully");
-			} catch (Exception e1) {
-				LOGGER.fatal("", e1);
-				Utils.showErrorMessage("Could not save project.");
+			} else {
+				Utils.showErrorMessage("ERR_CANNOT_SAVE_PROJECT");
 			}
 		} catch (PlatformException e) {
 			LOGGER.fatal("", e);

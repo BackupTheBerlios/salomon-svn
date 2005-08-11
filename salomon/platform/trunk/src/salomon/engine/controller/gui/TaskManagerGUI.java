@@ -29,6 +29,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.swing.DefaultListModel;
@@ -77,13 +78,6 @@ public final class TaskManagerGUI
 
 	/**
 	 * 
-	 * @uml.property name="_taskManager"
-	 * @uml.associationEnd multiplicity="(0 1)"
-	 */
-	private ITaskManager _taskManager;
-
-	/**
-	 * 
 	 * @uml.property name="_parent"
 	 * @uml.associationEnd multiplicity="(0 1)"
 	 */
@@ -99,7 +93,16 @@ public final class TaskManagerGUI
 
 	private DefaultListModel _taskListModel;
 
+	/**
+	 * 
+	 * @uml.property name="_taskManager"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
+	private ITaskManager _taskManager;
+
 	private JPopupMenu _taskPopup;
+
+	private JFrame _tasksViewerFrame;
 
 	public TaskManagerGUI(ITaskManager taskManager)
 	{
@@ -123,12 +126,21 @@ public final class TaskManagerGUI
 		}
 
 		try {
-			// loading plugin
+			// loading plugin			
 			localPlugin.load();
-			TaskGUI taskGUI = new TaskGUI();
-			taskGUI.setPlugin(localPlugin);
-			taskGUI.setName(getTaskName());
+
+			// creating task
+			ITask task = _taskManager.createTask();
+
+			// setting some params from GUI
+			TaskGUI taskGUI = new TaskGUI(task);
+			taskGUI.getTask().getInfo().setName(getTaskName());
+			taskGUI.getTask().setPlugin(localPlugin);
+
+			// adding task to managers
+			_taskManager.addTask(task);
 			_taskListModel.addElement(taskGUI);
+
 		} catch (Exception e) {
 			LOGGER.fatal("", e); //$NON-NLS-1$				
 			Utils.showErrorMessage(Messages.getString("ERR_CANNOT_LOAD_PLUGIN"));
@@ -242,6 +254,55 @@ public final class TaskManagerGUI
 		}
 	}
 
+	public boolean saveTasks()
+	{
+
+		// task list cannot be empty		
+		if (_taskListModel.isEmpty()) {
+			Utils.showErrorMessage("WRN_NO_TASK_TO_SAVE");
+			return false;
+		}
+
+		// checking if all tasks have settings set
+		// if not - question to user, if he agrees
+		// default settings will be set and project will be saved
+
+		TaskGUI[] tasks = new TaskGUI[_taskListModel.size()];
+		_taskListModel.copyInto(tasks);
+
+		List<TaskGUI> incorrectTasks = new LinkedList<TaskGUI>();
+
+		try {
+			for (TaskGUI taskGUI : tasks) {
+				if (taskGUI.getTask().getSettings() == null) {
+					incorrectTasks.add(taskGUI);
+				}
+			}
+			if (!incorrectTasks.isEmpty()) {
+				String message = "There are tasks with settings not set:\n";
+				for (TaskGUI taskGUI : incorrectTasks) {
+					message += taskGUI.getTask().getInfo().getName() + "\n";
+				}
+				message += "Do you want to use default settings?";
+				if (Utils.showWarningMessage(message)) {
+					// getting default settings
+					LOGGER.debug("getting default settings");
+					for (TaskGUI task : incorrectTasks) {
+						ISettings defaultSettings = task.getTask().getPlugin().getSettingComponent().getDefaultSettings();
+						task.getTask().setSettings(defaultSettings);
+					}
+				} else {
+					return false;
+				}
+			}
+		} catch (PlatformException e) {
+			LOGGER.fatal("", e);
+			return false;
+		}
+
+		return true;
+	}
+
 	public void setActionManager(ActionManager actionManager)
 	{
 		_actionManager = actionManager;
@@ -253,6 +314,18 @@ public final class TaskManagerGUI
 	public void setParent(ControllerFrame parent)
 	{
 		_parent = parent;
+	}
+
+	public void viewTasks()
+	{
+		if (_tasksViewerFrame == null) {
+			_tasksViewerFrame = new JFrame(Messages.getString("TIT_TASKS"));
+			_tasksViewerFrame.getContentPane().add(
+					new TaskViewer(((TaskManager) _taskManager).getDBManager()));
+			_tasksViewerFrame.pack();
+		}
+
+		_tasksViewerFrame.setVisible(true);
 	}
 
 	private String getTaskName()
@@ -296,10 +369,21 @@ public final class TaskManagerGUI
 	private void showResultPanel()
 	{
 		TaskGUI currentTask = (TaskGUI) _taskListModel.get(_selectedItem);
-		IPlugin plugin = currentTask.getPlugin();
-		IResultComponent resultComponent = plugin.getResultComponent();
-		IResult result = currentTask.getResult();
-		Component comp = resultComponent.getComponent(result);
+
+		IPlugin plugin = null;
+		IResult result = null;
+		Component comp = null;
+		try {
+			plugin = currentTask.getTask().getPlugin();
+			IResultComponent resultComponent = plugin.getResultComponent();
+			result = currentTask.getTask().getResult();
+			comp = resultComponent.getComponent(result);
+		} catch (PlatformException e) {
+			LOGGER.fatal("", e);
+			Utils.showErrorMessage("ERR_CANNOT_SHOW_TASK_RESULT");
+			return;
+		}
+
 		Dimension maxDim = new Dimension(400, 300);
 		Dimension prefDim = comp.getPreferredSize();
 		// setting maximum size
@@ -319,9 +403,18 @@ public final class TaskManagerGUI
 	private void showSettingsPanel()
 	{
 		TaskGUI currentTask = (TaskGUI) _taskListModel.get(_selectedItem);
-		IPlugin plugin = currentTask.getPlugin();
-		ISettingComponent settingComponent = plugin.getSettingComponent();
-		ISettings inputSettings = currentTask.getSettings();
+		IPlugin plugin = null;
+		ISettingComponent settingComponent = null;
+		ISettings inputSettings = null;
+		try {
+			plugin = currentTask.getTask().getPlugin();
+			settingComponent = plugin.getSettingComponent();
+			inputSettings = currentTask.getTask().getSettings();
+		} catch (PlatformException e1) {
+			LOGGER.fatal("", e1);
+			Utils.showErrorMessage("ERR_CANNOT_SHOW_TASK_SETTINGS");
+			return;
+		}
 		if (inputSettings == null) {
 			inputSettings = plugin.getSettingComponent().getDefaultSettings();
 		}
@@ -340,7 +433,12 @@ public final class TaskManagerGUI
 		if (result == JOptionPane.OK_OPTION) {
 			ISettings settings = settingComponent.getSettings();
 			LOGGER.info("settings: " + settings); //$NON-NLS-1$
-			currentTask.setSettings(settings);
+			try {
+				currentTask.getTask().setSettings(settings);
+			} catch (PlatformException e) {
+				LOGGER.fatal("", e);
+				Utils.showErrorMessage("ERR_CANNOT_SET_TASK_SETTINGS");
+			}
 		}
 	}
 
@@ -369,18 +467,4 @@ public final class TaskManagerGUI
 	}
 
 	static final Logger LOGGER = Logger.getLogger(TaskManagerGUI.class);
-
-	private JFrame _tasksViewerFrame;
-
-	public void viewTasks()
-	{
-		if (_tasksViewerFrame == null) {
-			_tasksViewerFrame = new JFrame(Messages.getString("TIT_TASKS"));
-			_tasksViewerFrame.getContentPane().add(
-					new TaskViewer(((TaskManager) _taskManager).getDBManager()));
-			_tasksViewerFrame.pack();
-		}
-
-		_tasksViewerFrame.setVisible(true);
-	}
 }
