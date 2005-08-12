@@ -48,7 +48,9 @@ import salomon.engine.database.queries.SQLSelect;
 import salomon.util.gui.Utils;
 
 /**
- * Class represents universal component, which can show table.
+ * Class represents an universal component, which can show table.
+ * It allows to define columns to display values from DB 
+ * and filters, to simplify searching.
  */
 abstract class ObjectViewer extends JPanel
 {
