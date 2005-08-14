@@ -21,9 +21,16 @@
 
 package salomon.engine.platform.data.tree;
 
-import salomon.engine.database.DBManager;
-import salomon.engine.solution.ISolution;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Collection;
 
+import org.apache.log4j.Logger;
+
+import salomon.engine.database.DBManager;
+import salomon.engine.database.ExternalDBManager;
+import salomon.engine.database.queries.SQLSelect;
+import salomon.engine.solution.ISolution;
 import salomon.platform.data.tree.IDataSource;
 import salomon.platform.data.tree.ITree;
 import salomon.platform.data.tree.ITreeManager;
@@ -35,12 +42,32 @@ import salomon.platform.exception.PlatformException;
 public final class TreeManager implements ITreeManager
 {
 	private DBManager _dbManager;
-
-	public TreeManager(DBManager dbManager)
+	private ExternalDBManager _externalDBManager;
+	private static final Logger LOGGER = Logger.getLogger(TreeManager.class);
+	
+	
+	public TreeManager(DBManager dbManager,ExternalDBManager externalDBManager)
 	{
 		_dbManager = dbManager;
+		_externalDBManager = externalDBManager;
 	}
 
+	public boolean checkTableAndColumns(String tableName, Collection<String> columnNames) throws PlatformException {
+		SQLSelect select = new SQLSelect();
+		select.addTable(tableName);
+		for (String columnName : columnNames) select.addColumn(columnName);
+		ResultSet resultSet = null;
+		try {
+			resultSet =_externalDBManager.select(select);
+		if (!resultSet.next()) return false;
+		} catch (SQLException e) {
+			throw new PlatformException("Select: "+select.getQuery()+" has errors: "+e.getLocalizedMessage());
+		} finally {
+			try {_externalDBManager.disconnect();} catch (SQLException e1) {};
+		}
+		return true;
+	}
+	
 	public void addTree(ITree tree) throws PlatformException
 	{
 		throw new UnsupportedOperationException(

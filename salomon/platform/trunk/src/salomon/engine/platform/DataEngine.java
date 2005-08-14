@@ -33,7 +33,7 @@ import salomon.engine.platform.data.rule.RuleSetManager;
 import salomon.engine.platform.data.tree.TreeManager;
 
 /**
- * Class holds  DataSetManager, RuleSetManager and AttributeManager instances.
+ * Class holds  TreeManager, DataSetManager, RuleSetManager and AttributeManager instances.
  */
 public final class DataEngine implements IDataEngine
 {
@@ -70,7 +70,7 @@ public final class DataEngine implements IDataEngine
 		_attributeManager = new AttributeManager(dbManager);
 		_dataSetManager = new DataSetManager(dbManager, externalDBManager);
 		_ruleSetManager = new RuleSetManager(dbManager);
-		_treeManager = new TreeManager(dbManager);
+		_treeManager = new TreeManager(dbManager, externalDBManager);
 	}
 
 	/**

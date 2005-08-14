@@ -21,8 +21,9 @@
 
 package salomon.platform.data.tree;
 
-import salomon.engine.solution.ISolution;
+import java.util.Collection;
 
+import salomon.engine.solution.ISolution;
 import salomon.platform.exception.PlatformException;
 
 /**
@@ -30,6 +31,8 @@ import salomon.platform.exception.PlatformException;
  */
 public interface ITreeManager
 {
+	boolean checkTableAndColumns(String tableName, Collection<String> columnNames) throws PlatformException;
+	
 	ITree[] getAllTrees() throws PlatformException;
 
 	ITree[] getTrees(ISolution solution) throws PlatformException;
