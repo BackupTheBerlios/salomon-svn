@@ -25,7 +25,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collection;
 import java.util.LinkedList;
-import java.util.List;
 
 import org.apache.log4j.Logger;
 
@@ -157,6 +156,12 @@ public final class TaskManager implements ITaskManager
 		return _dbManager;
 	}
 
+	public IProject getProject() throws PlatformException
+	{
+		//FIXME: change it - implement cascade model support 
+		return _managerEngine.getProjectManager().getCurrentProject();
+	}
+
 	/**
 	 * @see salomon.engine.task.ITaskManager#getRunner()
 	 */
@@ -209,8 +214,8 @@ public final class TaskManager implements ITaskManager
 					task.setSettings(pluginSettings);
 					task.setPlugin(localPlugin);
 					// loading task
-					task.getInfo().load(resultSet);					
-					tasks.add(task);					
+					task.getInfo().load(resultSet);
+					tasks.add(task);
 				}
 				resultSet.close();
 				// if everything is OK, then loaded tasks list is assigned
@@ -256,11 +261,18 @@ public final class TaskManager implements ITaskManager
 
 	public void start() throws PlatformException
 	{
-		// initializing data engine if it is not initialized yet
+		new TaskEngine().start();
+	}
+
+	/**
+	 * Method used only in this package.
+	 */
+	IDataEngine getDataEngine() throws PlatformException
+	{
 		if (_dataEngine == null) {
 			_dataEngine = _managerEngine.getSolutionManager().getCurrentSolution().getDataEngine();
 		}
-		new TaskEngine().start();
+		return _dataEngine;
 	}
 
 	private final class TaskEngine extends Thread
@@ -289,8 +301,8 @@ public final class TaskManager implements ITaskManager
 					ILocalPlugin plugin = task.getPlugin();
 					LOGGER.debug("plugin: " + plugin + " id: "
 							+ plugin.getInfo().getId());
-					IResult result = plugin.doJob(_dataEngine, _environment,
-							settings);
+					IResult result = plugin.doJob(getDataEngine(),
+							_environment, settings);
 					//
 					// saving result of its execution
 					//

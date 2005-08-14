@@ -26,6 +26,7 @@ import java.rmi.RemoteException;
 import org.apache.log4j.Logger;
 
 import salomon.engine.project.IProject;
+import salomon.engine.project.IProjectManager;
 import salomon.engine.remote.task.TaskManagerProxy;
 import salomon.engine.task.ITaskManager;
 
@@ -177,5 +178,10 @@ public final class ProjectProxy implements IProject
 	}
 
 	private static final Logger LOGGER = Logger.getLogger(ProjectProxy.class);
+
+	public IProjectManager getProjectManager() throws PlatformException
+	{
+		throw new UnsupportedOperationException("Method getProjectManager() not implemented yet!");
+	}
 
 }

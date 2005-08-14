@@ -21,6 +21,8 @@
 
 package salomon.engine.task;
 
+import salomon.engine.project.IProject;
+
 import salomon.platform.exception.PlatformException;
 
 /**
@@ -85,6 +87,14 @@ public interface ITaskManager
 	 * @throws PlatformException
 	 */
 	void saveTasks() throws PlatformException;
+	
+	/**
+	 * Returns project holding TaskManager instance.
+	 * 
+	 * @return
+	 * @throws PlatformException
+	 */
+	IProject getProject() throws PlatformException; 
 	
 	/**
 	 * Starts tasks execution.

@@ -28,6 +28,7 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 
+import salomon.engine.remote.project.IRemoteProject;
 import salomon.engine.task.ITask;
 import salomon.engine.task.ITaskManager;
 
@@ -169,4 +170,9 @@ public final class RemoteTaskManager extends UnicastRemoteObject
 	}
 
 	private static final Logger LOGGER = Logger.getLogger(RemoteTaskManager.class);
+
+	public IRemoteProject getProject() throws RemoteException, PlatformException
+	{
+		throw new UnsupportedOperationException("Method getProject() not implemented yet!");
+	}
 }

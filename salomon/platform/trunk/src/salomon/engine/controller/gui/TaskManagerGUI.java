@@ -418,13 +418,15 @@ public final class TaskManagerGUI
 		if (inputSettings == null) {
 			inputSettings = plugin.getSettingComponent().getDefaultSettings();
 		}
-		//FIXME needed by DataSet
+		//FIXME needed by DataSet		
 		IDataEngine dataEngine = null;
-		//		try 
-		//			dataEngine = Solution.getInstance().getDataEngine();
-		//		} catch (PlatformException e) {
-		//			LOGGER.fatal("", e);
-		//		} 
+		try {
+			dataEngine = _taskManager.getProject().getProjectManager().getSolution().getDataEngine();
+		} catch (PlatformException e) {
+			LOGGER.fatal("", e);
+			Utils.showErrorMessage("ERR_CANNOT_SHOW_TASK_SETTINGS");
+			return;
+		}
 		Component taskSettings = settingComponent.getComponent(inputSettings,
 				dataEngine);
 		int result = JOptionPane.showConfirmDialog(_positionComponent,

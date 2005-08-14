@@ -24,6 +24,7 @@ package salomon.engine.remote.task;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
+import salomon.engine.remote.project.IRemoteProject;
 import salomon.engine.task.ITask;
 
 import salomon.platform.exception.PlatformException;
@@ -74,6 +75,11 @@ public interface IRemoteTaskManager extends Remote
 	IRemoteTask getCurrentTask() throws RemoteException, PlatformException;
 
 	/**
+	 * @see salomon.engine.task.ITaskManager#getProject()
+	 */
+	IRemoteProject getProject() throws RemoteException, PlatformException;
+
+	/**
 	 * @see salomon.engine.task.ITaskManager#getRunner()
 	 */
 	IRemoteTaskRunner getRunner() throws RemoteException, PlatformException;
@@ -90,9 +96,10 @@ public interface IRemoteTaskManager extends Remote
 	 * @throws PlatformException
 	 */
 	void saveTasks() throws RemoteException, PlatformException;
-
+	
 	/**
 	 * @see salomon.engine.task.ITaskManager#start()
 	 */
 	void start() throws RemoteException, PlatformException;
+	
 }

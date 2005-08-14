@@ -50,6 +50,14 @@ public final class ProjectManager implements IProjectManager
 
 	/**
 	 * 
+	 * @uml.property name="_managerEngine"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
+	//FIXME: change it afeter implementing cascade model 
+	IManagerEngine _managerEngine = null;
+
+	/**
+	 * 
 	 * @uml.property name="_currentProject"
 	 * @uml.associationEnd multiplicity="(0 1)"
 	 */
@@ -64,13 +72,6 @@ public final class ProjectManager implements IProjectManager
 	 * @uml.associationEnd multiplicity="(0 1)"
 	 */
 	private DBManager _dbManager;
-
-	/**
-	 * 
-	 * @uml.property name="_managerEngine"
-	 * @uml.associationEnd multiplicity="(0 1)"
-	 */
-	private IManagerEngine _managerEngine = null;
 
 	/**
 	 * 
@@ -111,8 +112,7 @@ public final class ProjectManager implements IProjectManager
 			_currentProject.getTaskManager().clearTasks();
 		}
 		// FIXME workaround - getCurrentProject method should be removed.
-		_currentProject = new Project(_managerEngine.getTasksManager(),
-				_dbManager);
+		_currentProject = new Project(_managerEngine, _dbManager);
 		// FIXME - after cascade model adding, method _solution.getInfo().getSolutionID()
 		// should be used instead
 		Solution solution = (Solution) _managerEngine.getSolutionManager().getCurrentSolution();
@@ -216,8 +216,7 @@ public final class ProjectManager implements IProjectManager
 
 	public ISolution getSolution() throws PlatformException
 	{
-		throw new UnsupportedOperationException(
-				"Method getSolution() not implemented yet!");
+		return _managerEngine.getSolutionManager().getCurrentSolution();
 	}
 
 	public boolean removeAll() throws PlatformException

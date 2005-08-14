@@ -26,12 +26,13 @@ import salomon.engine.task.ITaskManager;
 
 import salomon.platform.exception.PlatformException;
 
+import salomon.engine.platform.IManagerEngine;
+
 /**
  * Represents a project, it is an implementation of IProject interface.
  */
 public final class Project implements IProject
 {
-
 	/**
 	 * 
 	 * @uml.property name="_dbManager"
@@ -52,10 +53,13 @@ public final class Project implements IProject
 	 * @uml.associationEnd multiplicity="(0 1)"
 	 */
 	private ITaskManager _taskManager;
+	
+	private IProjectManager _projectManager;
 
-	protected Project(ITaskManager taskManager, DBManager manager)
+	protected Project(IManagerEngine managerEngine, DBManager manager) throws PlatformException
 	{
-		_taskManager = taskManager;
+		_taskManager = managerEngine.getTasksManager();
+		_projectManager = managerEngine.getProjectManager();
 		_dbManager = manager;
 		_projectInfo = new ProjectInfo(manager);
 	}
@@ -63,6 +67,12 @@ public final class Project implements IProject
 	public ProjectInfo getInfo()
 	{
 		return _projectInfo;
+	}
+
+	public IProjectManager getProjectManager() throws PlatformException
+	{
+		//FIXME: change it after implementing cascade model
+		return _projectManager;
 	}
 
 	/**

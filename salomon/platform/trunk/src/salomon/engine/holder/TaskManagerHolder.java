@@ -21,6 +21,7 @@
 
 package salomon.engine.holder;
 
+import salomon.engine.project.IProject;
 import salomon.engine.task.ITask;
 import salomon.engine.task.ITaskManager;
 import salomon.engine.task.ITaskRunner;
@@ -79,6 +80,11 @@ final class TaskManagerHolder implements ITaskManager
 	public ITask getCurrentTask() throws PlatformException
 	{
 		return _currentTaskManager.getCurrentTask();
+	}
+
+	public IProject getProject() throws PlatformException
+	{
+		return _currentTaskManager.getProject();
 	}
 
 	/**

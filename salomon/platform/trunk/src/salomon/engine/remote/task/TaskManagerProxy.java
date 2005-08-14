@@ -27,6 +27,7 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 
+import salomon.engine.project.IProject;
 import salomon.engine.task.ITask;
 import salomon.engine.task.ITaskManager;
 import salomon.engine.task.ITaskRunner;
@@ -143,6 +144,12 @@ public final class TaskManagerProxy implements ITaskManager
 		}
 
 		return task;
+	}
+
+	public IProject getProject() throws PlatformException
+	{
+		throw new UnsupportedOperationException(
+				"Method getProject() not implemented yet!");
 	}
 
 	/**
