@@ -160,7 +160,7 @@ public final class GUIButtons
 	{
 		if (_btnRemoveAll == null) {
 			_btnRemoveAll = createManipulationButton(
-					Resources.getString("ICO_TASK_REMOVEALL"), null); //$NON-NLS-1$
+					Resources.getString("ICO_TASK_REMOVEALL"), _taskManagerGUI.getActionManager().getRemoveAllTasksAction()); //$NON-NLS-1$
 		}
 		return _btnRemoveAll;
 	}
@@ -212,9 +212,7 @@ public final class GUIButtons
 		public void actionPerformed(ActionEvent e)
 		{
 			Object object = e.getSource();
-			if (object == _btnRemoveAll) {
-				// TODO:
-			} else if (object == _btnUp) {
+			if (object == _btnUp) {
 				_taskManagerGUI.moveUp();
 			} else if (object == _btnDown) {
 				_taskManagerGUI.moveDown();

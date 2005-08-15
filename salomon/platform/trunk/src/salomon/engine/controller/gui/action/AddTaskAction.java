@@ -49,7 +49,7 @@ public final class AddTaskAction extends AbstractTaskAction
 	 */
 	public void actionPerformed(ActionEvent e)
 	{
-		_taskEditionManager.addTask(_plugin);
+		_taskManagerGUI.addTask(_plugin);
 	}
 
 	public void setPlugin(LocalPlugin plugin)

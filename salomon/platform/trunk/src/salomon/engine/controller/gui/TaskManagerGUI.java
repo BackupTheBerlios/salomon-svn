@@ -49,6 +49,7 @@ import salomon.engine.controller.gui.viewer.TaskViewer;
 import salomon.engine.plugin.LocalPlugin;
 import salomon.engine.task.ITask;
 import salomon.engine.task.ITaskManager;
+import salomon.engine.task.Task;
 import salomon.engine.task.TaskManager;
 
 import salomon.util.gui.Utils;
@@ -179,6 +180,14 @@ public final class TaskManagerGUI
 				Object task = _taskListModel.remove(index);
 				_taskListModel.add(index + 1, task);
 				_taskList.setSelectedIndex(index + 1);
+				try {
+					// this method should be remote in TaskManager??
+					synchronizeTaskOrder();
+					_taskManager.saveTasks();
+				} catch (PlatformException e) {
+					LOGGER.fatal("", e);
+					Utils.showErrorMessage("ERR_CANNOT_MOVE_TASK");
+				}
 			} else {
 				LOGGER.warn("Nothing or wrong index selected"); //$NON-NLS-1$
 			}
@@ -197,6 +206,14 @@ public final class TaskManagerGUI
 				Object task = _taskListModel.remove(index);
 				_taskListModel.add(index - 1, task);
 				_taskList.setSelectedIndex(index - 1);
+				try {
+					// this method should be remote in TaskManager??
+					synchronizeTaskOrder();
+					_taskManager.saveTasks();
+				} catch (PlatformException e) {
+					LOGGER.fatal("", e);
+					Utils.showErrorMessage("ERR_CANNOT_MOVE_TASK");
+				}
 			} else {
 				LOGGER.warn("Nothing or wrong index selected"); //$NON-NLS-1$
 			}
@@ -225,17 +242,34 @@ public final class TaskManagerGUI
 		}
 	}
 
+	public void removeAllTasks()
+	{
+		try {
+			_taskManager.removeAll();
+			_taskListModel.clear();
+		} catch (PlatformException e) {
+			LOGGER.fatal("", e);
+			Utils.showErrorMessage("ERR_CANNOT_REMOVE_TASK");
+		}
+	}
+
 	/**
-	 * Removes plugin from list of tasks and adds it to available plugins list
-	 * (?)
-	 * 
+	 * Removes task from tasks list. 
 	 */
 	public void removeTask()
 	{
 		int index = _taskList.getSelectedIndex();
 		if (index >= 0) {
 			TaskGUI task = (TaskGUI) _taskListModel.remove(index);
-			LOGGER.debug("plugin = " + task); //$NON-NLS-1$
+			LOGGER.debug("task = " + task); //$NON-NLS-1$
+			try {
+				_taskManager.removeTask(task.getTask());
+				synchronizeTaskOrder();
+				_taskManager.saveTasks();
+			} catch (PlatformException e) {
+				LOGGER.fatal("", e);
+				Utils.showErrorMessage("ERR_CANNOT_REMOVE_TASK");
+			}
 		} else {
 			LOGGER.warn("Invalid index. Wrong list selected?"); //$NON-NLS-1$
 		}
@@ -256,7 +290,6 @@ public final class TaskManagerGUI
 
 	public boolean saveTasks()
 	{
-
 		// task list cannot be empty		
 		if (_taskListModel.isEmpty()) {
 			Utils.showErrorMessage("WRN_NO_TASK_TO_SAVE");
@@ -440,6 +473,34 @@ public final class TaskManagerGUI
 			} catch (PlatformException e) {
 				LOGGER.fatal("", e);
 				Utils.showErrorMessage("ERR_CANNOT_SET_TASK_SETTINGS");
+			}
+		}
+	}
+
+	/**
+	 * Method changes task_nr from each task from the list.
+	 * Task_nr is set according to order in _taskListModel.
+	 * 
+	 * @throws PlatformException 
+	 * 
+	 */
+	private void synchronizeTaskOrder() throws PlatformException
+	{
+		Object[] arrTaskGUI = _taskListModel.toArray();
+		ITask[] tasks = _taskManager.getTasks();
+		for (int i = 0; i < arrTaskGUI.length; ++i) {
+			for (int j = 0; j < tasks.length; ++j) {
+				// if this is the same instance of task, its number should be
+				// synchronized with the order number in tasks list i GUI
+				Task task = ((TaskGUI) arrTaskGUI[i]).getTask();
+				if (((TaskGUI) arrTaskGUI[i]).getTask() == tasks[j]) {
+					LOGGER.debug("renumbering task");
+					// task_nr starts with 1
+					if (task.getInfo().getTaskNr() != (i + 1)) {
+						task.getInfo().setTaskNr(i + 1);
+					}
+					break;
+				}
 			}
 		}
 	}

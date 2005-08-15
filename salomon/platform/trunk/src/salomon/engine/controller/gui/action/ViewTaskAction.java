@@ -15,7 +15,7 @@ public class ViewTaskAction extends AbstractTaskAction
 
 	public void actionPerformed(ActionEvent arg0)
 	{
-		_taskEditionManager.viewTasks();
+		_taskManagerGUI.viewTasks();
 	}
 
 }

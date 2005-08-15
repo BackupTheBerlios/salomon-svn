@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004 Salomon Team
+ * Copyright (C) 2005 Salomon Team
  *
  * This file is part of Salomon.
  *
@@ -25,18 +25,15 @@ import java.awt.event.ActionEvent;
 
 import salomon.engine.controller.gui.TaskManagerGUI;
 
-/**
- * 
- */
-public final class RemoveTaskAction extends AbstractTaskAction
+public class RemoveAllTasksAction extends AbstractTaskAction
 {
 
 	/**
 	 * @param editionManager
 	 */
-	protected RemoveTaskAction(TaskManagerGUI editionManager)
+	protected RemoveAllTasksAction(TaskManagerGUI taskManagerGUI)
 	{
-		super(editionManager);
+		super(taskManagerGUI);
 		// TODO Auto-generated constructor stub
 	}
 
@@ -45,7 +42,6 @@ public final class RemoveTaskAction extends AbstractTaskAction
 	 */
 	public void actionPerformed(ActionEvent e)
 	{
-		_taskManagerGUI.removeTask();
+		_taskManagerGUI.removeAllTasks();
 	}
-
 }

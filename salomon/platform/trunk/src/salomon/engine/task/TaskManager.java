@@ -29,6 +29,7 @@ import java.util.LinkedList;
 import org.apache.log4j.Logger;
 
 import salomon.engine.database.DBManager;
+import salomon.engine.database.queries.SQLDelete;
 import salomon.engine.database.queries.SQLSelect;
 import salomon.engine.plugin.ILocalPlugin;
 import salomon.engine.plugin.LocalPlugin;
@@ -124,8 +125,10 @@ public final class TaskManager implements ITaskManager
 	{
 		try {
 			task.getInfo().save();
+			_dbManager.commit();
 		} catch (Exception e) {
-			LOGGER.fatal("", e);
+			_dbManager.rollback();
+			LOGGER.fatal("", e);			
 			throw new PlatformException(e.getLocalizedMessage());
 		}
 		_tasks.add(task);
@@ -171,12 +174,19 @@ public final class TaskManager implements ITaskManager
 				"Method getRunner() not implemented yet!");
 	}
 
+	/**
+	 * Returns tasks associated with current project.
+	 * They are returned sorted by task_nr.
+	 * 
+	 * @see salomon.engine.task.ITaskManager#getTasks()
+	 */
 	public ITask[] getTasks() throws PlatformException
 	{
-		LinkedList<ITask> tasks = new LinkedList<ITask>();
+		LinkedList<ITask> tasks = null;
 		// TODO: use _project in stead of it
 		IProject currProject = _managerEngine.getProjectManager().getCurrentProject();
 		if (_tasks.isEmpty() && currProject != null) {
+			tasks = new LinkedList<ITask>();			
 			SQLSelect select = new SQLSelect();
 			select.addTable(TaskInfo.TABLE_NAME + " t");
 			select.addTable(PluginInfo.TABLE_NAME + " p");
@@ -195,6 +205,8 @@ public final class TaskManager implements ITaskManager
 			int projectID = currProject.getInfo().getId();
 			select.addCondition("t.project_id =", projectID);
 			select.addCondition("t.plugin_id = p.plugin_id");
+			// tasks are sorted by task_nr
+			select.addOrderBy("t.task_nr");
 
 			// executing query
 			ResultSet resultSet = null;
@@ -234,17 +246,57 @@ public final class TaskManager implements ITaskManager
 		ITask[] tasksArr = new ITask[_tasks.size()];
 		return _tasks.toArray(tasksArr);
 	}
-
+	/**
+	 * Removes all tasks for current project.
+	 * 
+	 * @see salomon.engine.task.ITaskManager#removeAll()
+	 */
 	public boolean removeAll() throws PlatformException
 	{
-		throw new UnsupportedOperationException(
-				"Method removeAll() not implemented yet!");
+		SQLDelete delete = new SQLDelete(TaskInfo.TABLE_NAME);;
+		IProject currProject = _managerEngine.getProjectManager().getCurrentProject();
+		delete.addCondition("project_id =", currProject.getInfo().getId());
+		boolean retVal = false;
+		int deletedRows = 0;
+		try {
+			deletedRows = _dbManager.delete(delete);
+			_dbManager.commit();
+			// removing from list
+			_tasks.clear();
+			retVal = (deletedRows > 0);
+		} catch (SQLException e) {
+			_dbManager.rollback();
+			LOGGER.fatal("", e);
+			throw new PlatformException(e.getLocalizedMessage());
+		}		
+		return retVal;
 	}
 
+	/**
+	 * Removes given tasks.
+	 * 
+	 * @see salomon.engine.task.ITaskManager#removeTask(salomon.engine.task.ITask)
+	 */
 	public boolean removeTask(ITask task) throws PlatformException
 	{
-		throw new UnsupportedOperationException(
-				"Method removeTask() not implemented yet!");
+		SQLDelete delete = new SQLDelete(TaskInfo.TABLE_NAME);
+		IProject currProject = _managerEngine.getProjectManager().getCurrentProject();
+		delete.addCondition("project_id =", currProject.getInfo().getId());
+		delete.addCondition("task_id = ", task.getInfo().getId());
+		boolean retVal = false;
+		int deletedRows = 0;
+		try {
+			deletedRows = _dbManager.delete(delete);
+			_dbManager.commit();
+			// removing from list
+			_tasks.remove(task);
+			retVal = (deletedRows > 0);
+		} catch (SQLException e) {
+			_dbManager.rollback();
+			LOGGER.fatal("", e);
+			throw new PlatformException(e.getLocalizedMessage());
+		}		
+		return retVal;
 	}
 
 	public void saveTasks() throws PlatformException
@@ -253,7 +305,9 @@ public final class TaskManager implements ITaskManager
 			for (ITask task : _tasks) {
 				((Task) task).getInfo().save();
 			}
+			_dbManager.commit();
 		} catch (Exception e) {
+			_dbManager.rollback();
 			LOGGER.fatal("", e);
 			throw new PlatformException(e.getLocalizedMessage());
 		}
@@ -323,8 +377,7 @@ public final class TaskManager implements ITaskManager
 					}
 					_dbManager.commit();
 				}
-			}
-			// _tasks.clear();
+			}			
 		}
 
 		private ITask getTask()

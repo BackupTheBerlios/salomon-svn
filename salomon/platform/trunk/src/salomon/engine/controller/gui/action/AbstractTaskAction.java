@@ -35,13 +35,13 @@ abstract class AbstractTaskAction extends AbstractAction
 	 * an object which method are called in implementation of actionPerformed()
 	 * method
 	 * 
-	 * @uml.property name="_taskEditionManager"
+	 * @uml.property name="_taskManagerGUI"
 	 * @uml.associationEnd multiplicity="(0 1)"
 	 */
-	protected TaskManagerGUI _taskEditionManager = null;
+	protected TaskManagerGUI _taskManagerGUI = null;
 
-	protected AbstractTaskAction(TaskManagerGUI editionManager)
+	protected AbstractTaskAction(TaskManagerGUI taskManagerGUI)
 	{
-		_taskEditionManager = editionManager;
+		_taskManagerGUI = taskManagerGUI;
 	}
 }

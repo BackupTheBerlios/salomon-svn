@@ -48,6 +48,6 @@ public final class RunTaskAction extends AbstractTaskAction
 	 */
 	public void actionPerformed(ActionEvent event)
 	{
-		_taskEditionManager.runTasks();
+		_taskManagerGUI.runTasks();
 	}
 }

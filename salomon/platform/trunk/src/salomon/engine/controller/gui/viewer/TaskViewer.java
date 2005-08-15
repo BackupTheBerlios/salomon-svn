@@ -40,6 +40,7 @@ public class TaskViewer extends ObjectViewer
 		addColumn("ProjectId", "project_id");
 		addColumn("PluginId", "plugin_id");
 		addColumn("TaskId", "task_id");
+		addColumn("TaskNr", "task_nr");
 		addColumn("Name", "task_name");
 		addColumn("Info", "task_info");
 		addColumn("PluginSettings", "plugin_settings");

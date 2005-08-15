@@ -103,6 +103,8 @@ public final class ActionManager
 	 */
 	private ProjectManagerGUI _projectManagerGUI;
 
+	private RemoveAllTasksAction _removeAllTasksAction;
+
 	/**
 	 * 
 	 * @uml.property name="_removePluginAction"
@@ -161,6 +163,13 @@ public final class ActionManager
 
 	/**
 	 * 
+	 * @uml.property name="_viewPluginsAction"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
+	private ViewPluginsAction _viewPluginsAction;
+
+	/**
+	 * 
 	 * @uml.property name="_viewProjectsAction"
 	 * @uml.associationEnd multiplicity="(0 1)"
 	 */
@@ -172,13 +181,6 @@ public final class ActionManager
 	 * @uml.associationEnd multiplicity="(0 1)"
 	 */
 	private ViewSolutionAction _viewSolutionAction;
-
-	/**
-	 * 
-	 * @uml.property name="_viewPluginsAction"
-	 * @uml.associationEnd multiplicity="(0 1)"
-	 */
-	private ViewPluginsAction _viewPluginsAction;
 
 	/**
 	 * 
@@ -317,6 +319,14 @@ public final class ActionManager
 		return _openSolutionAction;
 	}
 
+	public RemoveAllTasksAction getRemoveAllTasksAction()
+	{
+		if (_removeAllTasksAction == null) {
+			_removeAllTasksAction = new RemoveAllTasksAction(_taskManagerGUI);
+		}
+		return _removeAllTasksAction;
+	}
+
 	/**
 	 * Returns an instance of RemovePluginAction.
 	 * 
@@ -390,6 +400,14 @@ public final class ActionManager
 		return _saveSolutionAction;
 	}
 
+	public ViewPluginsAction getViewPluginsAction()
+	{
+		if (_viewPluginsAction == null) {
+			_viewPluginsAction = new ViewPluginsAction(_pluginMangerGUI);
+		}
+		return _viewPluginsAction;
+	}
+
 	public ViewProjectsAction getViewProjectsAction()
 	{
 		if (_viewProjectsAction == null) {
@@ -404,14 +422,6 @@ public final class ActionManager
 			_viewSolutionAction = new ViewSolutionAction(_solutionManagerGUI);
 		}
 		return _viewSolutionAction;
-	}
-
-	public ViewPluginsAction getViewPluginsAction()
-	{
-		if (_viewPluginsAction == null) {
-			_viewPluginsAction = new ViewPluginsAction(_pluginMangerGUI);
-		}
-		return _viewPluginsAction;
 	}
 
 	public ViewTaskAction getViewTasksAction()
