@@ -181,7 +181,8 @@ public final class ProjectProxy implements IProject
 
 	public IProjectManager getProjectManager() throws PlatformException
 	{
-		throw new UnsupportedOperationException("Method getProjectManager() not implemented yet!");
+		throw new UnsupportedOperationException(
+				"Method getProjectManager() not implemented yet!");
 	}
 
 }

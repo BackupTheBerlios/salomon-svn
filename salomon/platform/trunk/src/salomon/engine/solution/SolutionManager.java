@@ -48,34 +48,34 @@ import salomon.engine.platform.ManagerEngine;
 
 public final class SolutionManager implements ISolutionManager
 {
-	
+
 	/**
 	 * 
 	 * @uml.property name="_currentSolution"
 	 * @uml.associationEnd multiplicity="(0 1)"
 	 */
 	private ISolution _currentSolution;
-	
+
 	/**
 	 * 
 	 * @uml.property name="_dbManager"
 	 * @uml.associationEnd multiplicity="(0 1)"
 	 */
 	private DBManager _dbManager;
-	
+
 	/**
 	 * 
 	 * @uml.property name="_managerEngine"
 	 * @uml.associationEnd multiplicity="(0 1)"
 	 */
 	private IManagerEngine _managerEngine;
-	
+
 	public SolutionManager(IManagerEngine managerEngine, DBManager manager)
 	{
 		_managerEngine = managerEngine;
 		_dbManager = manager;
 	}
-	
+
 	/**
 	 * @throws PlatformException 
 	 * @see salomon.engine.solution.ISolutionManager#addSolution(salomon.platform.solution.ISolution)
@@ -91,7 +91,7 @@ public final class SolutionManager implements ISolutionManager
 		}
 		_currentSolution = solution;
 	}
-	
+
 	/**
 	 * @see salomon.engine.solution.ISolutionManager#createSolution()
 	 */
@@ -102,17 +102,17 @@ public final class SolutionManager implements ISolutionManager
 		_currentSolution = result;
 		return result;
 	}
-	
+
 	public ISolution getCurrentSolution() throws PlatformException
 	{
 		return _currentSolution;
 	}
-	
+
 	public DBManager getDBManager()
 	{
 		return _dbManager;
 	}
-	
+
 	/**
 	 * @throws PlatformException 
 	 * @see salomon.engine.solution.ISolutionManager#getSolution(java.lang.String)
@@ -131,7 +131,7 @@ public final class SolutionManager implements ISolutionManager
 			resultSet.next();
 			// loading solution
 			((Solution) solution).getInfo().load(resultSet);
-			
+
 			// one row should be found, if found more, the first is got
 			if (resultSet.next()) {
 				LOGGER.warn("TOO MANY ROWS");
@@ -141,11 +141,11 @@ public final class SolutionManager implements ISolutionManager
 			LOGGER.fatal("", e);
 			throw new DBException(e.getLocalizedMessage());
 		}
-		
+
 		LOGGER.debug("solution: " + solution);
 		LOGGER.info("Solution successfully loaded.");
-		
-		try{
+
+		try {
 			// forcing connecting do external data base
 			solution.getDataEngine();
 		} catch (Exception e) {
@@ -154,15 +154,15 @@ public final class SolutionManager implements ISolutionManager
 			throw new DBException(e.getLocalizedMessage());
 		}
 		LOGGER.info("Connected to external data base");
-		
+
 		// setting current solution
 		_currentSolution = solution;
 		return _currentSolution;
 	}
-	
+
 	// FIXME this method has to be removed but after implementing
 	// component to show table
-	
+
 	public Collection getSolutionList() throws PlatformException
 	{
 		Collection solutions = null;
@@ -170,7 +170,7 @@ public final class SolutionManager implements ISolutionManager
 		select.addTable(SolutionInfo.TABLE_NAME);
 		// executing query
 		ResultSet resultSet = null;
-		
+
 		try {
 			resultSet = _dbManager.select(select);
 			solutions = Utils.getDataFromResultSet(resultSet);
@@ -180,48 +180,49 @@ public final class SolutionManager implements ISolutionManager
 		}
 		return solutions;
 	}
-	
+
 	/**
 	 * @throws PlatformException 
 	 * @see salomon.engine.solution.ISolutionManager#getSolutions()
 	 */
 	public ISolution[] getSolutions() throws PlatformException
 	{
-		
+
 		SQLSelect select = new SQLSelect();
 		select.addTable(SolutionInfo.TABLE_NAME);
 		// executing query
 		ResultSet resultSet = null;
-		
+
 		ArrayList<ISolution> solutionsArrayList = new ArrayList<ISolution>();
-		
+
 		int i = 0;
-		
+
 		try {
-			
+
 			resultSet = _dbManager.select(select);
 			resultSet.next();
 			while (!resultSet.isAfterLast()) {
-				
-				solutionsArrayList.add(new Solution((ManagerEngine) _managerEngine,
-						_dbManager));
-				((Solution) solutionsArrayList.get(i++)).getInfo().load(resultSet);
+
+				solutionsArrayList.add(new Solution(
+						(ManagerEngine) _managerEngine, _dbManager));
+				((Solution) solutionsArrayList.get(i++)).getInfo().load(
+						resultSet);
 				resultSet.next();
 			}
 		} catch (SQLException e) {
 			LOGGER.fatal("", e);
 			throw new DBException(e.getLocalizedMessage());
 		}
-		
+
 		Solution[] solutionsArray = new Solution[solutionsArrayList.size()];
-		
-		for( i= 0 ; i< solutionsArray.length ; i++ )
+
+		for (i = 0; i < solutionsArray.length; i++)
 			solutionsArray[i] = (Solution) solutionsArrayList.get(i);
-		
-		return solutionsArray ;
-		
+
+		return solutionsArray;
+
 	}
-	
+
 	/**
 	 * Method selects projects for given solution id
 	 * 
@@ -231,7 +232,7 @@ public final class SolutionManager implements ISolutionManager
 	 * @throws Exception
 	 */
 	private List<IProject> getProjectsForSolution(int solutionID)
-	throws Exception
+			throws Exception
 	{
 		List<IProject> projects = new LinkedList<IProject>();
 		SQLSelect select = new SQLSelect();
@@ -242,7 +243,7 @@ public final class SolutionManager implements ISolutionManager
 		select.addColumn("project_info");
 		select.addColumn("lm_date");
 		select.addCondition("solution_id =", solutionID);
-		
+
 		// executing query
 		ResultSet resultSet = null;
 		resultSet = _dbManager.select(select);
@@ -261,10 +262,10 @@ public final class SolutionManager implements ISolutionManager
 			throw e;
 		}
 		resultSet.close();
-		
+
 		return projects;
 	}
-	
+
 	private static final Logger LOGGER = Logger.getLogger(SolutionManager.class);
-	
+
 }

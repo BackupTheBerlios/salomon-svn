@@ -93,7 +93,7 @@ public class LibraryControllerTest extends TestCase
 		 */
 		String pluginUrl = "http://location.org/datasetunion.jar";
 		// this method is not supported now
-//		taskManager.addTask(task, pluginUrl, builder.toString());
+		//		taskManager.addTask(task, pluginUrl, builder.toString());
 		projectManager.saveProject();
 		taskManager.start();
 		LOGGER.debug("task result:" + task.getResult());

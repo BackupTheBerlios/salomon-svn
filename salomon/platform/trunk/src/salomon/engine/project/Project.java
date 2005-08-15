@@ -53,10 +53,11 @@ public final class Project implements IProject
 	 * @uml.associationEnd multiplicity="(0 1)"
 	 */
 	private ITaskManager _taskManager;
-	
+
 	private IProjectManager _projectManager;
 
-	protected Project(IManagerEngine managerEngine, DBManager manager) throws PlatformException
+	protected Project(IManagerEngine managerEngine, DBManager manager)
+			throws PlatformException
 	{
 		_taskManager = managerEngine.getTasksManager();
 		_projectManager = managerEngine.getProjectManager();

@@ -94,6 +94,6 @@ public interface IDataSet
 	 */
 	IDataSet union(IDataSet dataSet, IUniqueId id) throws PlatformException;
 
-//	ResultSet selectData(SQLSelect select) throws PlatformException;
+	//	ResultSet selectData(SQLSelect select) throws PlatformException;
 
 }

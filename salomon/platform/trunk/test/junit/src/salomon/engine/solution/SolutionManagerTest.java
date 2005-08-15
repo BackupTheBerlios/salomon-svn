@@ -21,17 +21,10 @@
 
 package salomon.engine.solution;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
 import junit.framework.TestCase;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
-
-import salomon.engine.database.queries.SQLSelect;
-
-import salomon.util.gui.Utils;
 
 import salomon.platform.IDataEngine;
 import salomon.platform.IUniqueId;
@@ -136,17 +129,17 @@ public class SolutionManagerTest extends TestCase
 			LOGGER.fatal("", e);
 		}
 		assertNotNull(dataSet);
-//		SQLSelect select = new SQLSelect();
-//		select.addTable("persons");
-//		ResultSet resultSet = null;
-//		try {
-////			resultSet = dataSet.selectData(select);
-//			Utils.createResultTable(resultSet);
-//		} catch (PlatformException e) {
-//			LOGGER.fatal("", e);
-//		} catch (SQLException e) {
-//			LOGGER.fatal("", e);
-//		}
+		//		SQLSelect select = new SQLSelect();
+		//		select.addTable("persons");
+		//		ResultSet resultSet = null;
+		//		try {
+		////			resultSet = dataSet.selectData(select);
+		//			Utils.createResultTable(resultSet);
+		//		} catch (PlatformException e) {
+		//			LOGGER.fatal("", e);
+		//		} catch (SQLException e) {
+		//			LOGGER.fatal("", e);
+		//		}
 	}
 
 	/**

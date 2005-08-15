@@ -171,8 +171,10 @@ public final class RemoteTaskManager extends UnicastRemoteObject
 
 	private static final Logger LOGGER = Logger.getLogger(RemoteTaskManager.class);
 
-	public IRemoteProject getProject() throws RemoteException, PlatformException
+	public IRemoteProject getProject() throws RemoteException,
+			PlatformException
 	{
-		throw new UnsupportedOperationException("Method getProject() not implemented yet!");
+		throw new UnsupportedOperationException(
+				"Method getProject() not implemented yet!");
 	}
 }

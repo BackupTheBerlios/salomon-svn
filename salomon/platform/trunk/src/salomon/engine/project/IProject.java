@@ -45,7 +45,7 @@ public interface IProject
 	 * @post $result != null
 	 */
 	ITaskManager getTaskManager() throws PlatformException;
-	
+
 	/**
 	 * Returns ProjectManager managing this project.
 	 * 

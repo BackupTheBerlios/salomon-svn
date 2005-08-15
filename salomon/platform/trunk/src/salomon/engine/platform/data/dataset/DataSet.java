@@ -34,7 +34,6 @@ import org.apache.log4j.Logger;
 
 import salomon.engine.database.DBManager;
 import salomon.engine.database.ExternalDBManager;
-import salomon.engine.database.queries.SQLSelect;
 
 import salomon.platform.IInfo;
 import salomon.platform.IUniqueId;
@@ -203,42 +202,41 @@ class DataSet implements IDataSet
 	 * @param select SELECT query
 	 * @throws PlatformException
 	 */
-//	public ResultSet selectData(SQLSelect select) throws PlatformException
-//
-//	{
-		//		SQLSelect selectCopy = (SQLSelect) select.clone();
-		//		// getting all tables used in select and _tableNames
-		//		// (intersection of these sets)
-		//		// These tables are needed to add conditions determinating dataset
-		//		Collection<String> commonTables = selectCopy.getTables();
-		//		commonTables.retainAll(_conditions.keySet());
-		//
-		//		if (_conditions.size() > 0) {
-		//			// preparing conditions
-		//			for (String commonTable : commonTables) {
-		//				for (String condition : _conditions.get(commonTable)) {
-		//					selectCopy.addCondition(condition);
-		//				}
-		//			}
-		//		}
-		//		// adding tables from original select
-		//		for (String tableName : select.getTables()) {
-		//			selectCopy.addTable(tableName);
-		//		}
-		//
-		//		LOGGER.debug("selectCopy: " + selectCopy.getQuery());
-		//		return DBManager.getInstance().select(selectCopy);
-		//FIXME: use conditions
-//		ResultSet resultSet = null;
-//		try {
-//			resultSet = _externalDBManager.select(select);
-//		} catch (SQLException e) {
-//			LOGGER.fatal("", e);
-//			throw new PlatformException(e.getLocalizedMessage());
-//		}
-//		return resultSet;
-//	}
-
+	//	public ResultSet selectData(SQLSelect select) throws PlatformException
+	//
+	//	{
+	//		SQLSelect selectCopy = (SQLSelect) select.clone();
+	//		// getting all tables used in select and _tableNames
+	//		// (intersection of these sets)
+	//		// These tables are needed to add conditions determinating dataset
+	//		Collection<String> commonTables = selectCopy.getTables();
+	//		commonTables.retainAll(_conditions.keySet());
+	//
+	//		if (_conditions.size() > 0) {
+	//			// preparing conditions
+	//			for (String commonTable : commonTables) {
+	//				for (String condition : _conditions.get(commonTable)) {
+	//					selectCopy.addCondition(condition);
+	//				}
+	//			}
+	//		}
+	//		// adding tables from original select
+	//		for (String tableName : select.getTables()) {
+	//			selectCopy.addTable(tableName);
+	//		}
+	//
+	//		LOGGER.debug("selectCopy: " + selectCopy.getQuery());
+	//		return DBManager.getInstance().select(selectCopy);
+	//FIXME: use conditions
+	//		ResultSet resultSet = null;
+	//		try {
+	//			resultSet = _externalDBManager.select(select);
+	//		} catch (SQLException e) {
+	//			LOGGER.fatal("", e);
+	//			throw new PlatformException(e.getLocalizedMessage());
+	//		}
+	//		return resultSet;
+	//	}
 	/**
 	 * Method returns ResultSet basing on given query. Query is modified - all
 	 * conditions determinating data set are concatenated to the query; TODO:

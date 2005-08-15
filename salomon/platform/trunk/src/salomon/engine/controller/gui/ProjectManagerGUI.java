@@ -23,8 +23,6 @@ package salomon.engine.controller.gui;
 
 import java.awt.GridLayout;
 import java.util.Collection;
-import java.util.LinkedList;
-import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -42,15 +40,11 @@ import salomon.engine.project.IProject;
 import salomon.engine.project.IProjectManager;
 import salomon.engine.project.Project;
 import salomon.engine.project.ProjectManager;
-import salomon.engine.task.ITask;
-import salomon.engine.task.ITaskManager;
 
 import salomon.util.gui.Utils;
 
 import salomon.platform.IUniqueId;
 import salomon.platform.exception.PlatformException;
-
-import salomon.plugin.ISettings;
 
 /**
  * Class used to manage with projects editing.
@@ -139,7 +133,7 @@ public final class ProjectManagerGUI
 			Utils.showErrorMessage("Cannot load project.");
 		}
 	}
-	
+
 	public void saveProject()
 	{
 		try {
@@ -152,7 +146,7 @@ public final class ProjectManagerGUI
 				setProjectProperties(project);
 			}
 
-			if (_taskManagerGUI.saveTasks()) {		
+			if (_taskManagerGUI.saveTasks()) {
 				_projectManager.saveProject();
 				Utils.showInfoMessage("Project saved successfully");
 			} else {

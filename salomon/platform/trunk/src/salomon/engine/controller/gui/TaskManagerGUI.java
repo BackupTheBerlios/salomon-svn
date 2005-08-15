@@ -176,10 +176,55 @@ public final class TaskManagerGUI
 	{
 		if (_taskListModel.size() > 1) {
 			int index = _taskList.getSelectedIndex();
-			if (index >= 0 && index < _taskListModel.getSize() - 1) {
+			if (index >= 0 && index < _taskListModel.size() - 1) {
 				Object task = _taskListModel.remove(index);
 				_taskListModel.add(index + 1, task);
 				_taskList.setSelectedIndex(index + 1);
+				try {
+					// this method should be remote in TaskManager??
+					synchronizeTaskOrder();
+					_taskManager.saveTasks();
+				} catch (PlatformException e) {
+					LOGGER.fatal("", e);
+					Utils.showErrorMessage("ERR_CANNOT_MOVE_TASK");
+				}
+			} else {
+				LOGGER.warn("Nothing or wrong index selected"); //$NON-NLS-1$
+			}
+		}
+	}
+
+	public void moveFirst()
+	{
+		if (_taskListModel.size() > 1) {
+			int index = _taskList.getSelectedIndex();
+			if (index >= 1) {
+				Object task = _taskListModel.remove(index);
+				_taskListModel.add(0, task);
+				_taskList.setSelectedIndex(0);
+				try {
+					// this method should be remote in TaskManager??
+					synchronizeTaskOrder();
+					_taskManager.saveTasks();
+				} catch (PlatformException e) {
+					LOGGER.fatal("", e);
+					Utils.showErrorMessage("ERR_CANNOT_MOVE_TASK");
+				}
+			} else {
+				LOGGER.warn("Nothing or wrong index selected"); //$NON-NLS-1$
+			}
+		}
+	}
+
+	public void moveLast()
+	{
+		if (_taskListModel.size() > 1) {
+			int index = _taskList.getSelectedIndex();
+			int size = _taskListModel.size();
+			if (index >= 0 && index < size - 1) {
+				Object task = _taskListModel.remove(index);
+				_taskListModel.add(size - 1, task);
+				_taskList.setSelectedIndex(size - 1);
 				try {
 					// this method should be remote in TaskManager??
 					synchronizeTaskOrder();
@@ -290,10 +335,9 @@ public final class TaskManagerGUI
 
 	public boolean saveTasks()
 	{
-		// task list cannot be empty		
+		// if tasks list is empty then method does nothing		
 		if (_taskListModel.isEmpty()) {
-			Utils.showErrorMessage("WRN_NO_TASK_TO_SAVE");
-			return false;
+			return true;
 		}
 
 		// checking if all tasks have settings set
@@ -470,7 +514,8 @@ public final class TaskManagerGUI
 			LOGGER.info("settings: " + settings); //$NON-NLS-1$
 			try {
 				currentTask.getTask().setSettings(settings);
-			} catch (PlatformException e) {
+				currentTask.getTask().getInfo().save();
+			} catch (Exception e) {
 				LOGGER.fatal("", e);
 				Utils.showErrorMessage("ERR_CANNOT_SET_TASK_SETTINGS");
 			}

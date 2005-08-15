@@ -217,9 +217,9 @@ public final class GUIButtons
 			} else if (object == _btnDown) {
 				_taskManagerGUI.moveDown();
 			} else if (object == _btnFirst) {
-				// TODO:
+				_taskManagerGUI.moveFirst();
 			} else if (object == _btnLast) {
-				// TODO:
+				_taskManagerGUI.moveLast();
 			} else {
 				LOGGER.error("Not supported button: " + object); //$NON-NLS-1$
 			}
