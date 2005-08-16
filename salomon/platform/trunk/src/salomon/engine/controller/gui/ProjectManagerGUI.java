@@ -94,8 +94,7 @@ public final class ProjectManagerGUI
 
 		try {
 			Project project = (Project) _projectManager.getCurrentProject();
-			setProjectProperties(project);
-
+			
 			// saving project
 			this.saveProject(project);
 
@@ -110,9 +109,10 @@ public final class ProjectManagerGUI
 
 		try {
 			Project project = (Project) _projectManager.createProject();
-			setProjectProperties(project);
+			
 			// saving project
 			this.saveProject(project);
+			
 		} catch (PlatformException e) {
 			LOGGER.fatal("", e);
 			Utils.showErrorMessage("ERR_CANNOT_CREATE_PROJECT");
@@ -145,12 +145,6 @@ public final class ProjectManagerGUI
 		try {
 			Project project = (Project) _projectManager.getCurrentProject();
 
-			// setting project name if neccessary
-			// TODO: remove this checking, make user to enter project name while
-			// creating it
-			if (project.getInfo().getName() == null) {
-				setProjectProperties(project);
-			}
 			// saving project
 			this.saveProject(project);
 
@@ -173,8 +167,10 @@ public final class ProjectManagerGUI
 	 * 
 	 * @param project
 	 */
-	public void setProjectProperties(IProject iProject)
+	public boolean setProjectProperties(IProject iProject)
 	{
+		boolean approved = false;
+
 		Project project = (Project) iProject;
 		if (_pnlProjectProperties == null) {
 			_pnlProjectProperties = new JPanel();
@@ -192,11 +188,16 @@ public final class ProjectManagerGUI
 		_txtProjectName.setText(name == null ? "" : name);
 		_txtProjectInfo.setText(info == null ? "" : info);
 		// TODO:
-		JOptionPane.showMessageDialog(_parent, _pnlProjectProperties,
-				"Enter project properties", JOptionPane.INFORMATION_MESSAGE);
-		project.getInfo().setName(_txtProjectName.getText());
-		project.getInfo().setInfo(_txtProjectInfo.getText());
-		_statusBar.setItem(SB_CUR_PROJECT, _txtProjectName.getText());
+		int retVal = JOptionPane.showConfirmDialog(_parent,
+				_pnlProjectProperties, "Enter project properties",
+				JOptionPane.YES_NO_OPTION);
+		if (retVal == JOptionPane.YES_OPTION) {
+			project.getInfo().setName(_txtProjectName.getText());
+			project.getInfo().setInfo(_txtProjectInfo.getText());
+			_statusBar.setItem(SB_CUR_PROJECT, _txtProjectName.getText());
+			approved = true;
+		}
+		return approved;
 	}
 
 	/**
@@ -246,16 +247,18 @@ public final class ProjectManagerGUI
 
 	private void saveProject(Project project) throws PlatformException
 	{
-		if (_taskManagerGUI.saveTasks()) {
-			_projectManager.saveProject();
-			Utils.showInfoMessage("Project saved successfully");
-		} else {
-			Utils.showErrorMessage("ERR_CANNOT_SAVE_PROJECT");
-			return;
+		if (setProjectProperties(project)) {
+			if (_taskManagerGUI.saveTasks()) {
+				_projectManager.saveProject();
+				Utils.showInfoMessage("Project saved successfully");
+			} else {
+				Utils.showErrorMessage("ERR_CANNOT_SAVE_PROJECT");
+				return;
+			}
+			_statusBar.setItem(SB_CUR_PROJECT,
+					((Project) project).getInfo().getName());
+			_parent.refreshGui();
 		}
-		_statusBar.setItem(SB_CUR_PROJECT,
-				((Project) project).getInfo().getName());
-		_parent.refreshGui();
 	}
 
 	private int showProjectList(JTable table)
