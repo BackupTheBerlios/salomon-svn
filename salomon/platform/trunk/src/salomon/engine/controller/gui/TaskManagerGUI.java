@@ -328,7 +328,12 @@ public final class TaskManagerGUI
 	public void runTasks()
 	{
 		try {
-			_taskManager.start();
+			// saving tasks before execution
+			if (saveTasks()) {
+				_taskManager.start();
+			} else {
+				Utils.showErrorMessage("ERR_CANNOT_RUN_TASKS");
+			}
 		} catch (PlatformException e) {
 			LOGGER.fatal("", e);
 			Utils.showErrorMessage("ERR_CANNOT_RUN_TASKS");
