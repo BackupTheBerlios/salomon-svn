@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004 Salomon Team
+ * Copyright (C) 2005 Salomon Team
  *
  * This file is part of Salomon.
  *
@@ -26,10 +26,10 @@ import java.awt.event.ActionEvent;
 import salomon.engine.controller.gui.ProjectManagerGUI;
 
 /**
- * Class represents action fired while creating a new project.
+ * Class represents action fired while editing a project.
  *  
  */
-public final class NewProjectAction extends AbstractProjectAction
+public class EditProjectAction extends AbstractProjectAction
 {
 	/**
 	 * Sets an object which method is called in implementation of
@@ -37,13 +37,13 @@ public final class NewProjectAction extends AbstractProjectAction
 	 * 
 	 * @param projectEditionManager an instance of ProjectManagerGUI
 	 */
-	public NewProjectAction(ProjectManagerGUI projectManagerGUI)
+	public EditProjectAction(ProjectManagerGUI projectManagerGUI)
 	{
 		super(projectManagerGUI);
 	}
 
 	public void actionPerformed(ActionEvent event)
 	{
-		_projectEditionManager.newProject();
+		_projectEditionManager.editProject();
 	}
 }

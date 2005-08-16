@@ -89,18 +89,33 @@ public final class ProjectManagerGUI
 		_projectManager = projectManager;
 	}
 
+	public void editProject()
+	{
+
+		try {
+			Project project = (Project) _projectManager.getCurrentProject();
+			setProjectProperties(project);
+
+			// saving project
+			this.saveProject(project);
+
+		} catch (PlatformException e) {
+			LOGGER.fatal("", e);
+			Utils.showErrorMessage("ERR_CANNOT_SAVE_PROJECT");
+		}
+	}
+
 	public void newProject()
 	{
 
 		try {
-			IProject project = _projectManager.createProject();
+			Project project = (Project) _projectManager.createProject();
 			setProjectProperties(project);
-			_projectManager.addProject(project);
-			_statusBar.setItem(SB_CUR_PROJECT, ((Project)project).getInfo().getName());
-			_parent.refreshGui();
+			// saving project
+			this.saveProject(project);
 		} catch (PlatformException e) {
 			LOGGER.fatal("", e);
-			Utils.showErrorMessage("Cannot create project");
+			Utils.showErrorMessage("ERR_CANNOT_CREATE_PROJECT");
 		}
 	}
 
@@ -109,14 +124,14 @@ public final class ProjectManagerGUI
 		try {
 			final int projectId = chooseProject();
 			if (projectId > 0) {
-				IProject project =  _projectManager.getProject(new IUniqueId() {
+				IProject project = _projectManager.getProject(new IUniqueId() {
 					public int getId()
 					{
 						return projectId;
 					}
 				});
-				// FIXME:_taskManagerGUI.reload();
-				_statusBar.setItem(SB_CUR_PROJECT, ((Project)project).getInfo().getName());
+				_statusBar.setItem(SB_CUR_PROJECT,
+						((Project) project).getInfo().getName());
 				_parent.refreshGui();
 			}
 		} catch (Exception e) {
@@ -136,13 +151,9 @@ public final class ProjectManagerGUI
 			if (project.getInfo().getName() == null) {
 				setProjectProperties(project);
 			}
+			// saving project
+			this.saveProject(project);
 
-			if (_taskManagerGUI.saveTasks()) {
-				_projectManager.saveProject();
-				Utils.showInfoMessage("Project saved successfully");
-			} else {
-				Utils.showErrorMessage("ERR_CANNOT_SAVE_PROJECT");
-			}
 		} catch (PlatformException e) {
 			LOGGER.fatal("", e);
 			Utils.showErrorMessage("ERR_CANNOT_SAVE_PROJECT");
@@ -231,6 +242,20 @@ public final class ProjectManagerGUI
 		}
 
 		return projectID;
+	}
+
+	private void saveProject(Project project) throws PlatformException
+	{
+		if (_taskManagerGUI.saveTasks()) {
+			_projectManager.saveProject();
+			Utils.showInfoMessage("Project saved successfully");
+		} else {
+			Utils.showErrorMessage("ERR_CANNOT_SAVE_PROJECT");
+			return;
+		}
+		_statusBar.setItem(SB_CUR_PROJECT,
+				((Project) project).getInfo().getName());
+		_parent.refreshGui();
 	}
 
 	private int showProjectList(JTable table)

@@ -47,6 +47,8 @@ public final class ActionManager
 	 */
 	private AddTaskAction _addTaskAction;
 
+	private EditProjectAction _editProjectAction;
+
 	/**
 	 * 
 	 * @uml.property name="_editSolutionAction"
@@ -239,6 +241,18 @@ public final class ActionManager
 			_addTaskAction = new AddTaskAction(_taskManagerGUI);
 		}
 		return _addTaskAction;
+	}
+
+	/**
+	 * Returns the editProjectAction.
+	 * @return The editProjectAction
+	 */
+	public EditProjectAction getEditProjectAction()
+	{
+		if (_editProjectAction == null) {
+			_editProjectAction = new EditProjectAction(_projectManagerGUI);
+		}
+		return _editProjectAction;
 	}
 
 	/**

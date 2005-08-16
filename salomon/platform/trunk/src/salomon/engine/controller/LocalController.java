@@ -161,6 +161,7 @@ public final class LocalController implements IController
 			JMenu project = new JMenu(Messages.getString("MNU_PROJECT")); //$NON-NLS-1$
 			project.add(_guiMenu.getItmNewProject());
 			project.add(_guiMenu.getItmOpenProject());
+			project.add(_guiMenu.getItmEditProject());
 			project.add(_guiMenu.getItmSaveProject());
 			JMenu tools = new JMenu(Messages.getString("MNU_TOOLS")); //$NON-NLS-1$
 			tools.add(_guiMenu.getItmViewProjects());
@@ -258,6 +259,8 @@ public final class LocalController implements IController
 		private JButton _btnSaveSolution;
 
 		private JMenuItem _itmAbout;
+
+		private JMenuItem _itmEditProject;
 
 		private JMenuItem _itmExit;
 
@@ -386,6 +389,16 @@ public final class LocalController implements IController
 			return _itmAbout;
 		}
 
+		JMenuItem getItmEditProject()
+		{
+			if (_itmEditProject == null) {
+				_itmEditProject = new JMenuItem();
+				_itmEditProject.setText(Messages.getString("MNU_EDIT")); //$NON-NLS-1$
+				_itmEditProject.addActionListener(_actionManager.getEditProjectAction());
+			}
+			return _itmEditProject;
+		}
+
 		JMenuItem getItmExit()
 		{
 			if (_itmExit == null) {
@@ -410,6 +423,7 @@ public final class LocalController implements IController
 			}
 			return _itmNewProject;
 		}
+	
 
 		JMenuItem getItmNewSolution()
 		{
