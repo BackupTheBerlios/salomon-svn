@@ -187,7 +187,8 @@ public final class MasterController implements IController
 			_remoteControllerPanel = new RemoteControllerPanel(
 					_managerEngineHolder);
 			_splitPane.setLeftComponent(_remoteControllerPanel.getControllerPanel());
-			_controllerPanel = new ControllerPanel(_taskManagerGUI,
+			//FIXME: create solutionManagerGUI in correct way
+			_controllerPanel = new ControllerPanel(null, _projectManagerGUI, _taskManagerGUI,
 					_pluginMangerGUI, _actionManager);
 			_splitPane.setRightComponent(_controllerPanel);
 			_contentPane.add(_splitPane);

@@ -141,8 +141,9 @@ public final class LocalController implements IController
 	public JComponent getJContentPane()
 	{
 		if (_contentPane == null) {
-			_contentPane = new ControllerPanel(_taskManagerGUI,
-					_pluginMangerGUI, _actionManager);
+			_contentPane = new ControllerPanel(_solutionManagerGUI,
+					_projectManagerGUI, _taskManagerGUI, _pluginMangerGUI,
+					_actionManager);
 		}
 		return _contentPane;
 	}

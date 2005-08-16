@@ -90,6 +90,8 @@ public final class TaskManagerGUI
 
 	private int _selectedItem;
 
+	private StatusBar _statusBar;
+
 	private JList _taskList;
 
 	private DefaultListModel _taskListModel;
@@ -391,6 +393,15 @@ public final class TaskManagerGUI
 	public void setParent(ControllerFrame parent)
 	{
 		_parent = parent;
+	}
+
+	/**
+	 * Set the value of statusBar field.
+	 * @param statusBar The statusBar to set
+	 */
+	public void setStatusBar(StatusBar statusBar)
+	{
+		_statusBar = statusBar;
 	}
 
 	public void viewTasks()

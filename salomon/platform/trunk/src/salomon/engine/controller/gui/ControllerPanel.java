@@ -55,8 +55,6 @@ public final class ControllerPanel extends JPanel
 
 	private JButton _btnApply;
 
-	private JButton _btnRun;
-
 	private JPanel _contentPane;
 
 	/**
@@ -89,7 +87,13 @@ public final class ControllerPanel extends JPanel
 
 	private JPanel _pnlTasks;
 
+	private ProjectManagerGUI _projectManagerGUI;
+
 	private String _resourcesDir;
+
+	private SolutionManagerGUI _solutionManagerGUI;
+
+	private StatusBar _statusBar;
 
 	private int _strutHeight = 10;
 
@@ -102,17 +106,27 @@ public final class ControllerPanel extends JPanel
 	 */
 	private TaskManagerGUI _taskManagerGUI;
 
-	public ControllerPanel(TaskManagerGUI taskManagerGUI,
+	public ControllerPanel(SolutionManagerGUI solutionManagerGUI,
+			ProjectManagerGUI projectManagerGUI, TaskManagerGUI taskManagerGUI,
 			PluginMangerGUI pluginMangerGUI, ActionManager actionManager)
 	{
-		super();
 		_actionManager = actionManager;
+		_solutionManagerGUI = solutionManagerGUI;
+		_projectManagerGUI = projectManagerGUI;
 		_taskManagerGUI = taskManagerGUI;
 		_pluginMangerGUI = pluginMangerGUI;
 		_resourcesDir = Config.getString("RESOURCES_DIR");
 		_guiButtons = new GUIButtons(_taskManagerGUI);
+		_statusBar = new StatusBar();
+
+		_solutionManagerGUI.setStatusBar(_statusBar);
+		_projectManagerGUI.setStatusBar(_statusBar);
+		_taskManagerGUI.setStatusBar(_statusBar);
+		_pluginMangerGUI.setStatusBar(_statusBar);
+
 		this.setLayout(new BorderLayout());
-		this.add(getPnlManagerButtons(), BorderLayout.SOUTH);
+		//this.add(getPnlManagerButtons(), BorderLayout.SOUTH);
+		this.add(_statusBar.getStatusPanel(), BorderLayout.SOUTH);
 		this.add(getPnlInit(), BorderLayout.CENTER);
 	}
 
@@ -138,34 +152,6 @@ public final class ControllerPanel extends JPanel
 	public void setTaskEditionManager(TaskManagerGUI taskEditionManager)
 	{
 		_taskManagerGUI = taskEditionManager;
-	}
-
-	/**
-	 * This method initializes _btnRun
-	 * 
-	 * @return JButton
-	 */
-	JButton getBtnRun()
-	{
-		if (_btnRun == null) {
-			_btnRun = new JButton(_actionManager.getRunTaskAction());
-			_btnRun.setText(Messages.getString("BTN_RUN")); //$NON-NLS-1$
-		}
-		return _btnRun;
-	}
-
-	/**
-	 * This method initializes _btnApply
-	 * 
-	 * @return JButton
-	 */
-	private JButton getBtnApply()
-	{
-		if (_btnApply == null) {
-			_btnApply = new JButton(_actionManager.getSaveProjectAction());
-			_btnApply.setText(Messages.getString("BTN_APPLY")); //$NON-NLS-1$
-		}
-		return _btnApply;
 	}
 
 	/**
@@ -207,26 +193,6 @@ public final class ControllerPanel extends JPanel
 			_pnlInit.add(getPnlTasks());
 		}
 		return _pnlInit;
-	}
-
-	/**
-	 * This method initializes _pnlManagerButtons
-	 * 
-	 * @return JPanel
-	 */
-	private JPanel getPnlManagerButtons()
-	{
-		if (_pnlManagerButtons == null) {
-			_pnlManagerButtons = new JPanel();
-			_pnlManagerButtons.setLayout(new BoxLayout(_pnlManagerButtons,
-					BoxLayout.X_AXIS));
-			_pnlManagerButtons.add(Box.createHorizontalGlue());
-			_pnlManagerButtons.add(getBtnApply());
-			_pnlManagerButtons.add(Box.createHorizontalStrut(_strutWidth));
-			_pnlManagerButtons.add(getBtnRun());
-			_pnlManagerButtons.add(Box.createHorizontalGlue());
-		}
-		return _pnlManagerButtons;
 	}
 
 	/**
@@ -291,6 +257,7 @@ public final class ControllerPanel extends JPanel
 			_pnlTaskButtons.add(Box.createVerticalStrut(_strutHeight));
 			_pnlTaskButtons.add(_guiButtons.getBtnLast());
 			_pnlTaskButtons.add(Box.createVerticalGlue());
+			_pnlTaskButtons.add(_guiButtons.getBtnRun());
 		}
 		return _pnlTaskButtons;
 	}

@@ -51,14 +51,6 @@ import salomon.platform.exception.PlatformException;
  */
 public final class ProjectManagerGUI
 {
-
-	/**
-	 * 
-	 * @uml.property name="_projectManager"
-	 * @uml.associationEnd multiplicity="(0 1)"
-	 */
-	private IProjectManager _projectManager;
-
 	/**
 	 * 
 	 * @uml.property name="_parent"
@@ -70,6 +62,17 @@ public final class ProjectManagerGUI
 
 	/**
 	 * 
+	 * @uml.property name="_projectManager"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
+	private IProjectManager _projectManager;
+
+	private JFrame _projectViewerFrame;
+
+	private StatusBar _statusBar;
+
+	/**
+	 * 
 	 * @uml.property name="_taskManagerGUI"
 	 * @uml.associationEnd multiplicity="(0 1)"
 	 */
@@ -78,8 +81,6 @@ public final class ProjectManagerGUI
 	private JTextField _txtProjectInfo;
 
 	private JTextField _txtProjectName;
-
-	private JFrame _projectViewerFrame;
 
 	/**
 	 */
@@ -95,6 +96,7 @@ public final class ProjectManagerGUI
 			IProject project = _projectManager.createProject();
 			setProjectProperties(project);
 			_projectManager.addProject(project);
+			_statusBar.setItem(SB_CUR_PROJECT, ((Project)project).getInfo().getName());
 			_parent.refreshGui();
 		} catch (PlatformException e) {
 			LOGGER.fatal("", e);
@@ -102,30 +104,19 @@ public final class ProjectManagerGUI
 		}
 	}
 
-	public void viewProjects()
-	{
-		if (_projectViewerFrame == null) {
-			_projectViewerFrame = new JFrame(Messages.getString("TIT_PROJECTS"));
-			_projectViewerFrame.getContentPane().add(
-					new ProjectViewer(
-							((ProjectManager) _projectManager).getDbManager()));
-			_projectViewerFrame.pack();
-		}
-		_projectViewerFrame.setVisible(true);
-	}
-
 	public void openProject()
 	{
 		try {
 			final int projectId = chooseProject();
 			if (projectId > 0) {
-				_projectManager.getProject(new IUniqueId() {
+				IProject project =  _projectManager.getProject(new IUniqueId() {
 					public int getId()
 					{
 						return projectId;
 					}
 				});
 				// FIXME:_taskManagerGUI.reload();
+				_statusBar.setItem(SB_CUR_PROJECT, ((Project)project).getInfo().getName());
 				_parent.refreshGui();
 			}
 		} catch (Exception e) {
@@ -194,12 +185,34 @@ public final class ProjectManagerGUI
 				"Enter project properties", JOptionPane.INFORMATION_MESSAGE);
 		project.getInfo().setName(_txtProjectName.getText());
 		project.getInfo().setInfo(_txtProjectInfo.getText());
+		_statusBar.setItem(SB_CUR_PROJECT, _txtProjectName.getText());
+	}
 
+	/**
+	 * Set the value of statusBar field.
+	 * @param statusBar The statusBar to set
+	 */
+	public void setStatusBar(StatusBar statusBar)
+	{
+		_statusBar = statusBar;
+		_statusBar.addItem(SB_CUR_PROJECT);
 	}
 
 	public void setTaskManagerGUI(TaskManagerGUI taskManagerGUI)
 	{
 		_taskManagerGUI = taskManagerGUI;
+	}
+
+	public void viewProjects()
+	{
+		if (_projectViewerFrame == null) {
+			_projectViewerFrame = new JFrame(Messages.getString("TIT_PROJECTS"));
+			_projectViewerFrame.getContentPane().add(
+					new ProjectViewer(
+							((ProjectManager) _projectManager).getDbManager()));
+			_projectViewerFrame.pack();
+		}
+		_projectViewerFrame.setVisible(true);
 	}
 
 	private int chooseProject()
@@ -243,4 +256,6 @@ public final class ProjectManagerGUI
 	}
 
 	private static final Logger LOGGER = Logger.getLogger(ProjectManagerGUI.class);
+
+	private static final String SB_CUR_PROJECT = "TT_CURRENT_PROJECT";
 }

@@ -32,6 +32,7 @@ import javax.swing.JButton;
 import org.apache.log4j.Logger;
 
 import salomon.engine.Config;
+import salomon.engine.Messages;
 import salomon.engine.Resources;
 
 /**
@@ -50,6 +51,8 @@ public final class GUIButtons
 	private JButton _btnRemove = null;
 
 	private JButton _btnRemoveAll = null;
+
+	private JButton _btnRun;
 
 	private JButton _btnUp = null;
 
@@ -163,6 +166,21 @@ public final class GUIButtons
 					Resources.getString("ICO_TASK_REMOVEALL"), _taskManagerGUI.getActionManager().getRemoveAllTasksAction()); //$NON-NLS-1$
 		}
 		return _btnRemoveAll;
+	}
+
+	/**
+	 * This method initializes _btnRun
+	 * 
+	 * @return JButton
+	 */
+	JButton getBtnRun()
+	{
+		if (_btnRun == null) {
+			_btnRun = new JButton(
+					_taskManagerGUI.getActionManager().getRunTaskAction());
+			_btnRun.setText(Messages.getString("BTN_RUN")); //$NON-NLS-1$
+		}
+		return _btnRun;
 	}
 
 	/**

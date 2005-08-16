@@ -72,13 +72,6 @@ public final class PluginMangerGUI
 
 	/**
 	 * 
-	 * @uml.property name="_pluginManager"
-	 * @uml.associationEnd multiplicity="(0 1)"
-	 */
-	private IPluginManager _pluginManager;
-
-	/**
-	 * 
 	 * @uml.property name="_parent"
 	 * @uml.associationEnd multiplicity="(0 1)"
 	 */
@@ -88,11 +81,22 @@ public final class PluginMangerGUI
 
 	private DefaultListModel _pluginListModel;
 
+	/**
+	 * 
+	 * @uml.property name="_pluginManager"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
+	private IPluginManager _pluginManager;
+
 	private JPopupMenu _pluginPopup;
+
+	private JFrame _pluginsViewerFrame;
 
 	private MouseListener _popupListener;
 
 	private int _selectedItem;
+
+	private StatusBar _statusBar;
 
 	private JTextField _txtPluginDescription;
 
@@ -264,6 +268,28 @@ public final class PluginMangerGUI
 		_actionManager = actionManager;
 	}
 
+	/**
+	 * Set the value of statusBar field.
+	 * @param statusBar The statusBar to set
+	 */
+	public void setStatusBar(StatusBar statusBar)
+	{
+		_statusBar = statusBar;
+	}
+
+	public void viewPlugins()
+	{
+		if (_pluginsViewerFrame == null) {
+			_pluginsViewerFrame = new JFrame(Messages.getString("TIT_PLUGINS"));
+			_pluginsViewerFrame.getContentPane().add(
+					new PluginViewer(
+							((PluginManager) _pluginManager).getDBManager()));
+			_pluginsViewerFrame.pack();
+		}
+
+		_pluginsViewerFrame.setVisible(true);
+	}
+
 	private JComponent getEditPluginPanel()
 	{
 		if (_editPluginPanel == null) {
@@ -293,16 +319,6 @@ public final class PluginMangerGUI
 			_pluginPopup.add(itmRemove);
 		}
 		return _pluginPopup;
-	}
-
-	private final class PluginSelectionListener
-			implements ListSelectionListener
-	{
-		public void valueChanged(ListSelectionEvent e)
-		{
-			_actionManager.getAddTaskAction().setPlugin(
-					(LocalPlugin) ((JList) e.getSource()).getSelectedValue());
-		}
 	}
 
 	private final class PluginEditPanel extends JPanel
@@ -344,6 +360,16 @@ public final class PluginMangerGUI
 		}
 	}
 
+	private final class PluginSelectionListener
+			implements ListSelectionListener
+	{
+		public void valueChanged(ListSelectionEvent e)
+		{
+			_actionManager.getAddTaskAction().setPlugin(
+					(LocalPlugin) ((JList) e.getSource()).getSelectedValue());
+		}
+	}
+
 	private final class PopupListener extends MouseAdapter
 	{
 		public void mousePressed(MouseEvent e)
@@ -369,19 +395,4 @@ public final class PluginMangerGUI
 	}
 
 	private static final Logger LOGGER = Logger.getLogger(PluginMangerGUI.class);
-
-	private JFrame _pluginsViewerFrame;
-
-	public void viewPlugins()
-	{
-		if (_pluginsViewerFrame == null) {
-			_pluginsViewerFrame = new JFrame(Messages.getString("TIT_PLUGINS"));
-			_pluginsViewerFrame.getContentPane().add(
-					new PluginViewer(
-							((PluginManager) _pluginManager).getDBManager()));
-			_pluginsViewerFrame.pack();
-		}
-
-		_pluginsViewerFrame.setVisible(true);
-	}
 }

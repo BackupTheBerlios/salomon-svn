@@ -77,6 +77,8 @@ public final class SolutionManagerGUI
 
 	private JButton _btnOpen;
 
+	private JComboBox _comboSolutionList;
+
 	private JFrame _parent;
 
 	private JPanel _pnlManagerButtons;
@@ -85,6 +87,8 @@ public final class SolutionManagerGUI
 
 	private JPanel _pnlSolutionProperties;
 
+	private JFrame _solutionChooserFrame;
+
 	/**
 	 * 
 	 * @uml.property name="_solutionManager"
@@ -92,7 +96,11 @@ public final class SolutionManagerGUI
 	 */
 	private ISolutionManager _solutionManager;
 
-	private JComboBox _comboSolutionList;
+	private Solution[] _solutions;
+
+	private JFrame _solutionViewerFrame;
+
+	private StatusBar _statusBar;
 
 	private JTextField _txtDBPath;
 
@@ -105,12 +113,6 @@ public final class SolutionManagerGUI
 	private JTextField _txtSolutionName;
 
 	private JTextField _txtUsername;
-
-	private JFrame _solutionViewerFrame;
-
-	private JFrame _solutionChooserFrame;
-
-	private Solution[] _solutions;
 
 	/**
 	 */
@@ -242,8 +244,9 @@ public final class SolutionManagerGUI
 			Utils.showErrorMessage("ERR_CANNOT_CREATE_PROJECT");
 			return;
 		}
-		_solutionChooserFrame.setVisible(false);
-		_parent.setVisible(true);
+		_statusBar.setItem(SB_CUR_SOLUTION, solution.getInfo().getName());
+		_solutionChooserFrame.setVisible(false);		
+		_parent.setVisible(true);		
 	}
 
 	public void saveSolution()
@@ -335,7 +338,33 @@ public final class SolutionManagerGUI
 			solution.getInfo().setUser(_txtUsername.getText());
 			solution.getInfo().setPasswd(_txtPasswd.getText());
 			_solutionManager.addSolution(iSolution);
+			_statusBar.setItem(SB_CUR_SOLUTION, solution.getInfo().getName());
 		}
+	}
+
+	/**
+	 * Set the value of statusBar field.
+	 * @param statusBar The statusBar to set
+	 */
+	public void setStatusBar(StatusBar statusBar)
+	{
+		_statusBar = statusBar;
+		_statusBar.addItem(SB_CUR_SOLUTION);
+	}
+
+	public void viewSolutionList()
+	{
+
+		if (_solutionViewerFrame == null) {
+			_solutionViewerFrame = new JFrame(
+					Messages.getString("TIT_SOLUTIONS"));
+			_solutionViewerFrame.getContentPane().add(
+					new SolutionViewer(
+							((SolutionManager) _solutionManager).getDBManager()));
+			_solutionViewerFrame.pack();
+		}
+
+		_solutionViewerFrame.setVisible(true);
 	}
 
 	/**
@@ -458,20 +487,7 @@ public final class SolutionManagerGUI
 		return solutionID;
 	}
 
-	public void viewSolutionList()
-	{
-
-		if (_solutionViewerFrame == null) {
-			_solutionViewerFrame = new JFrame(
-					Messages.getString("TIT_SOLUTIONS"));
-			_solutionViewerFrame.getContentPane().add(
-					new SolutionViewer(
-							((SolutionManager) _solutionManager).getDBManager()));
-			_solutionViewerFrame.pack();
-		}
-
-		_solutionViewerFrame.setVisible(true);
-	}
-
 	private static final Logger LOGGER = Logger.getLogger(SolutionManagerGUI.class);
+
+	private static final String SB_CUR_SOLUTION = "TT_CURRENT_SOLUTION";
 }
