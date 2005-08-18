@@ -6,13 +6,13 @@
 	<property name="lib_dir" value="lib"/>	
 	<property name="doc_dir" value="docs"/>	
 	<property name="dist_dir" value="dist"/>	
-
+    <property name="ext_dir" value="ext"/>
 	
 	<path id="project.class.path">
-		<fileset dir="${lib}">
+		<fileset dir="${lib_dir}">
 			<include name="**/*.jar"/>
 		</fileset>
-		<fileset dir="${ext}">
+		<fileset dir="${ext_dir}">
 			<include name="**/*.jar"/>
 		</fileset>
 		<pathelement location="${build}"/>
@@ -22,10 +22,7 @@
 	
 	<target name="compile" depends="init">
 		<echo message="Building project"/>
-		<javac srcdir="${src_dir}/" 
-		       includes="**.java">
-			<classpath refid="project.class.path"/>
-		</javac>
+        <javac srcdir="${src_dir}/" classpathref="project.class.path" destdir="${bin_dir}" source="1.5" debug="true"/>
 	</target>
 	
 	<target name="init">
