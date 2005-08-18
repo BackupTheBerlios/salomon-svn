@@ -42,6 +42,8 @@ public final class ProjectInfo implements IInfo
 	 */
 	private DBManager _dbManager;
 
+	private String _environment;
+
 	private String _info;
 
 	private String _name;
@@ -73,6 +75,15 @@ public final class ProjectInfo implements IInfo
 	{
 		throw new UnsupportedOperationException(
 				"Method getCreationDate() not implemented yet!");
+	}
+
+	/**
+	 * Returns the environment.
+	 * @return The environment
+	 */
+	public String getEnvironment()
+	{
+		return _environment;
 	}
 
 	/**
@@ -122,6 +133,7 @@ public final class ProjectInfo implements IInfo
 		_solutionID = resultSet.getInt("solution_id");
 		_name = resultSet.getString("project_name");
 		_info = resultSet.getString("project_info");
+		_environment = resultSet.getString("env");
 	}
 
 	/**
@@ -143,10 +155,22 @@ public final class ProjectInfo implements IInfo
 		if (_info != null) {
 			update.addValue("project_info", _info);
 		}
+		if (_environment != null) {
+			update.addValue("env", _environment);
+		}
 		update.addValue("lm_date", new Date(System.currentTimeMillis()));
 		_projectID = _dbManager.insertOrUpdate(update, "project_id",
 				_projectID, GEN_NAME);
 		return _projectID;
+	}
+
+	/**
+	 * Set the value of environemnt field.
+	 * @param environment The environment to set
+	 */
+	public void setEnvironment(String environment)
+	{
+		_environment = environment;
 	}
 
 	/**

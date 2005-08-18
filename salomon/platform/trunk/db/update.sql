@@ -1,4 +1,4 @@
-/* 19.07.2005, nico */
+/* 19.07.2005 nico adding tasks.task_nr field */
 
 -- before adding not null column
 DELETE FROM TASKS;
@@ -36,4 +36,15 @@ alter table TASKS
 alter STATUS position 11;
 alter table TASKS
 alter LM_DATE position 12;
+
+
+/* 18.08.2005 nico adding projects.env field */
+
+ALTER TABLE PROJECTS
+ADD ENV VARCHAR(1000);
+
+-- setting columns order
+alter table PROJECTS
+alter LM_DATE position 6;
+
 

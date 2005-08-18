@@ -31,8 +31,14 @@ import org.apache.log4j.PropertyConfigurator;
 
 import salomon.engine.database.DBManager;
 import salomon.engine.database.queries.SQLSelect;
+import salomon.engine.solution.Solution;
+import salomon.engine.solution.SolutionManager;
+
+import salomon.platform.IUniqueId;
 
 import salomon.plugin.DescriptionTest;
+
+import salomon.engine.platform.ManagerEngine;
 
 public class ProjectTest extends TestCase
 {
@@ -44,16 +50,34 @@ public class ProjectTest extends TestCase
 	 */
 	private DBManager _manager;
 
+	private ProjectManager _projectManager;
+
+	private SolutionManager _solutionManager;
+
 	public void testDelete()
 	{
 		LOGGER.debug("ProjectTest.testDelete()");
 		boolean success = false;
-		//		Project project = new Project();
-		//		project.setProjectID(2);
 		try {
-			//			project.delete();
+			_solutionManager.getSolution(new IUniqueId() {
+				public int getId()
+				{
+					return 1;
+				}
+			});
+
+			Project project = (Project) _projectManager.getProject(new IUniqueId() {
+				public int getId()
+				{
+					return 65;
+				}
+			});
+
+			// constraint - FIXME - add cascade delete for projects
+			//project.getInfo().delete();
 			success = true;
-			// _manager.commit();
+			// to keep DB anaffected
+			_manager.rollback();
 		} catch (Exception e) {
 			LOGGER.fatal("", e);
 			_manager.rollback();
@@ -61,56 +85,29 @@ public class ProjectTest extends TestCase
 		assertTrue(success);
 	}
 
-	public void testLoad()
-	{
-		LOGGER.debug("ProjectTest.testLoad()");
-		boolean success = false;
-		SQLSelect select = new SQLSelect();
-		select.addTable(ProjectInfo.TABLE_NAME);
-		select.addCondition("project_id =", 3);
-		ResultSet resultSet = null;
-		try {
-			resultSet = _manager.select(select);
-			assertNotNull(resultSet);
-			success = true;
-		} catch (SQLException e) {
-			LOGGER.fatal("", e);
-		}
-		assertTrue(success);
-		success = false;
-
-		//		Project project = new Project();
-		try {
-			if (resultSet.next()) {
-				//				project.load(resultSet);
-				success = true;
-			} else {
-				LOGGER.debug("No data found");
-				success = true;
-			}
-		} catch (Exception e) {
-			LOGGER.fatal("", e);
-		} finally {
-			try {
-				resultSet.close();
-			} catch (SQLException ex) {
-				LOGGER.fatal("", ex);
-			}
-		}
-		assertTrue(success);
-		//		LOGGER.debug(project);
-	}
-
 	public void testSave()
 	{
 		LOGGER.debug("ProjectTest.testSave()");
 		boolean success = false;
-		//		Project project = new Project();
-		//		project.setName("test_project");
 		try {
-			//			project.save();
-			_manager.commit();
+			_solutionManager.getSolution(new IUniqueId() {
+				public int getId()
+				{
+					return 1;
+				}
+			});			
+			
+			Project project = (Project) _projectManager.getProject(new IUniqueId() {
+				public int getId()
+				{
+					return 65;
+				}
+			});
+			project.getInfo().setEnvironment("test env");
+			project.getInfo().save();
 			success = true;
+			// to keep DB anaffected
+			_manager.rollback();
 		} catch (Exception e) {
 			LOGGER.fatal("", e);
 			_manager.rollback();
@@ -122,14 +119,13 @@ public class ProjectTest extends TestCase
 	{
 		PropertyConfigurator.configure("log.conf"); //$NON-NLS-1$   
 
-		try {
-			_manager = new DBManager();
-			_manager.connect();
-		} catch (SQLException e) {
-			LOGGER.fatal("", e);
-		} catch (ClassNotFoundException e) {
-			LOGGER.error("", e);
-		}
+		ManagerEngine managerEngine = new ManagerEngine();
+		_solutionManager = (SolutionManager) managerEngine.getSolutionManager();
+		_projectManager = (ProjectManager) managerEngine.getProjectManager();
+		// to force plugin loading - FIXME - fix loading tasks without loaded plugins
+		// to see this error - comment out the line below
+		managerEngine.getPluginManager().getPlugins();
+		_manager = managerEngine.getDbManager();
 
 	}
 

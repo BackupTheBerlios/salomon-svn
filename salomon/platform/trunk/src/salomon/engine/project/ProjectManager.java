@@ -274,4 +274,4 @@ public final class ProjectManager implements IProjectManager
 
 	private static final Logger LOGGER = Logger.getLogger(ProjectManager.class);
 
-} // end KnowledgeSystemManager
+} 
