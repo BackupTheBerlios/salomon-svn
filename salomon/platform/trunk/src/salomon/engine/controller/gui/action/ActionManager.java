@@ -21,6 +21,8 @@
 
 package salomon.engine.controller.gui.action;
 
+import java.awt.event.ActionListener;
+
 import salomon.engine.controller.gui.PluginMangerGUI;
 import salomon.engine.controller.gui.ProjectManagerGUI;
 import salomon.engine.controller.gui.SolutionManagerGUI;
@@ -190,6 +192,13 @@ public final class ActionManager
 	 * @uml.associationEnd multiplicity="(0 1)"
 	 */
 	private ViewTaskAction _viewTaskAction;
+	
+	/**
+	 * 
+	 * @uml.property name="_editTaskAction"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
+	private EditTaskAction _editTaskAction;
 
 	/**
 	 * Sets object used to create actions.
@@ -444,5 +453,12 @@ public final class ActionManager
 			_viewTaskAction = new ViewTaskAction(_taskManagerGUI);
 		}
 		return _viewTaskAction;
+	}
+
+	public EditTaskAction getEditTaskAction() {
+		if (_editTaskAction == null) {
+			_editTaskAction = new EditTaskAction(_taskManagerGUI);
+		}
+		return _editTaskAction;
 	}
 }
