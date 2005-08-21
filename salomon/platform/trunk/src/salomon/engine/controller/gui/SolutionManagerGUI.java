@@ -25,6 +25,8 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.Point;
 import java.awt.Toolkit;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 
@@ -43,6 +45,7 @@ import javax.swing.SwingUtilities;
 import org.apache.log4j.Logger;
 
 import salomon.engine.Messages;
+import salomon.engine.Starter;
 import salomon.engine.controller.gui.action.ActionManager;
 import salomon.engine.controller.gui.viewer.SolutionViewer;
 import salomon.engine.project.IProject;
@@ -222,9 +225,11 @@ public final class SolutionManagerGUI
 
 	public void openSolution()
 	{
+		
 		if (!_solutionChooserFrame.isVisible()) {
 			_solutionChooserFrame.setVisible(true);
 		}
+
 		int selectedRow = _comboSolutionList.getSelectedIndex();
 		final int solutionID = _solutions[selectedRow].getInfo().getId();
 		LOGGER.info("chosen solution: " + solutionID);
@@ -460,7 +465,9 @@ public final class SolutionManagerGUI
 			_solutionChooserFrame.setLocation(location);
 			_solutionChooserFrame.getContentPane().add(_pnlSolutionController);
 			_solutionChooserFrame.pack();
-			_solutionChooserFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			_solutionChooserFrame.addWindowListener( new WindowAdapter(){
+				  public void windowClosing(WindowEvent e) {Starter.exit();}
+			});
 		}
 		return _solutionChooserFrame;
 	}
@@ -483,6 +490,10 @@ public final class SolutionManagerGUI
 			_solutionChooserFrame.setLocation(location);
 			_solutionChooserFrame.getContentPane().add(_pnlSolutionController);
 			_solutionChooserFrame.pack();
+			_solutionChooserFrame.addWindowListener( new WindowAdapter(){
+				  public void windowClosing(WindowEvent e) {Starter.exit();}
+			});
+			
 		}
 		return solutionID;
 	}
