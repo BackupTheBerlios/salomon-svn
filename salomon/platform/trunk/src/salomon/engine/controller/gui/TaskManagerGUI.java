@@ -482,6 +482,7 @@ public final class TaskManagerGUI
 			itmEdit.addActionListener(_actionManager.getEditTaskAction());
 			
 			_taskPopup.add(itmEdit) ;  
+			_taskPopup.addSeparator();
 			_taskPopup.add(itmSettings);
 			_taskPopup.add(itmResult);
 		}
