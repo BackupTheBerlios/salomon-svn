@@ -22,7 +22,10 @@
 package salomon.engine.controller.gui;
 
 import java.awt.GridLayout;
+import java.text.DateFormat;
 import java.util.Collection;
+import java.util.Date;
+import java.util.Locale;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -81,6 +84,8 @@ public final class ProjectManagerGUI
 	private JTextField _txtProjectInfo;
 
 	private JTextField _txtProjectName;
+
+	private JTextField _txtProjectLastModDate;
 
 	/**
 	 */
@@ -177,16 +182,25 @@ public final class ProjectManagerGUI
 			_pnlProjectProperties.setLayout(new GridLayout(0, 2));
 			_txtProjectName = new JTextField();
 			_txtProjectInfo = new JTextField();
+			_txtProjectLastModDate = new JTextField() ; 
+			_txtProjectLastModDate.setEnabled(false) ;
 			_pnlProjectProperties.add(new JLabel("Project name"));
 			_pnlProjectProperties.add(_txtProjectName);
 			_pnlProjectProperties.add(new JLabel("Project info"));
 			_pnlProjectProperties.add(_txtProjectInfo);
+			_pnlProjectProperties.add(new JLabel("Last Modification Date"));
+			_pnlProjectProperties.add(_txtProjectLastModDate);
+			
 		}
 
 		String name = project.getInfo().getName();
 		String info = project.getInfo().getInfo();
+		Date dmdate = new Date() ; //TODO: NYI 
+		String lmoddate = DateFormat.getDateInstance().format(dmdate) + " " +DateFormat.getTimeInstance().format(dmdate) ;
 		_txtProjectName.setText(name == null ? "" : name);
 		_txtProjectInfo.setText(info == null ? "" : info);
+		_txtProjectLastModDate.setText(lmoddate == null ? "" : lmoddate) ;
+		
 		// TODO:
 		int retVal = JOptionPane.showConfirmDialog(_parent,
 				_pnlProjectProperties, "Enter project properties",
