@@ -22,6 +22,7 @@
 package salomon.engine.database;
 
 import java.sql.Connection;
+import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -43,13 +44,15 @@ import salomon.util.gui.Utils;
  */
 public final class DBManager
 {
-	private Connection _connection = null;
+	private Connection _connection;
 
-	private Statement _statement = null;
+	private DBMetaData _metaData;
+
+	private Statement _statement;
 
 	public DBManager()
 	{
-
+		//empty body
 	}
 
 	/**
@@ -156,6 +159,21 @@ public final class DBManager
 	{
 		LOGGER.info("Executing query = " + query); //$NON-NLS-1$
 		return _statement.execute(query);
+	}
+
+	/**
+	 * Returns DBMetaData object.
+	 * 
+	 * @return
+	 * @throws SQLException
+	 */
+	public DBMetaData getMetaData() throws SQLException
+	{
+		if (_metaData == null) {
+			_metaData = new DBMetaData(this);
+			_metaData.init();
+		}
+		return _metaData;
 	}
 
 	/**
@@ -351,6 +369,11 @@ public final class DBManager
 		return _statement.executeUpdate(query);
 	}
 
+	DatabaseMetaData getDatabaseMetaData() throws SQLException
+	{
+		return _connection.getMetaData();
+	}
+
 	/**
 	 * Updates record if exists in data base.
 	 * 
@@ -387,29 +410,6 @@ public final class DBManager
 
 		return foundID;
 	}
-
-	/**
-	 * Method returns instance of DBManager. It ensures that exactly one
-	 * instance of class will be created.
-	 * 
-	 * @return <code>DBManager</code> instance
-	 * @throws SQLException
-	 * @throws ClassNotFoundException
-	 * 
-	 * @uml.property name="_instance"
-	 * @uml.associationEnd multiplicity="(0 1)"
-	 */
-	//	public static DBManager getInstance() throws SQLException,
-	//			ClassNotFoundException
-	//	{
-	//		if (_instance == null) {
-	//			_instance = new DBManager();
-	//			//_instance.connect();
-	//		}
-	//
-	//		return _instance;
-	//	}
-	private static DBManager _instance = null;
 
 	private static final Logger LOGGER = Logger.getLogger(DBManager.class);
 }
