@@ -28,6 +28,7 @@ import org.apache.log4j.Logger;
 
 import salomon.engine.database.DBManager;
 import salomon.engine.database.ExternalDBManager;
+import salomon.engine.solution.ShortSolutionInfo;
 
 import salomon.platform.IUniqueId;
 import salomon.platform.data.dataset.IDataSet;
@@ -42,12 +43,15 @@ public final class DataSetManager implements IDataSetManager
 	private ExternalDBManager _externalDBManager;
 
 	private DBManager _dbManager;
+	
+	private ShortSolutionInfo _solutionInfo;
 
-	public DataSetManager(DBManager dbManager,
+	public DataSetManager(DBManager dbManager, ShortSolutionInfo solutionInfo,
 			ExternalDBManager externalDBManager)
 	{
 		_dbManager = dbManager;
 		_externalDBManager = externalDBManager;
+		_solutionInfo = solutionInfo;
 	}
 
 	/**

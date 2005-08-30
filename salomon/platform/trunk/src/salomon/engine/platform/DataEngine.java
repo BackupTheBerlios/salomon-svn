@@ -23,6 +23,7 @@ package salomon.engine.platform;
 
 import salomon.engine.database.DBManager;
 import salomon.engine.database.ExternalDBManager;
+import salomon.engine.solution.ShortSolutionInfo;
 
 import salomon.platform.IDataEngine;
 import salomon.platform.data.tree.ITreeManager;
@@ -65,12 +66,12 @@ public final class DataEngine implements IDataEngine
 	 */
 	private TreeManager _treeManager;
 
-	public DataEngine(DBManager dbManager, ExternalDBManager externalDBManager)
+	public DataEngine(DBManager dbManager, ExternalDBManager externalDBManager, ShortSolutionInfo solutionInfo)
 	{
-		_attributeManager = new AttributeManager(dbManager);
-		_dataSetManager = new DataSetManager(dbManager, externalDBManager);
-		_ruleSetManager = new RuleSetManager(dbManager);
-		_treeManager = new TreeManager(dbManager, externalDBManager);
+		_attributeManager = new AttributeManager(dbManager, solutionInfo);
+		_dataSetManager = new DataSetManager(dbManager, solutionInfo, externalDBManager);
+		_ruleSetManager = new RuleSetManager(dbManager, solutionInfo);
+		_treeManager = new TreeManager(dbManager, solutionInfo, externalDBManager);
 	}
 
 	/**

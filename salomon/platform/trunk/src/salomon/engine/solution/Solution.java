@@ -123,7 +123,8 @@ public final class Solution implements ISolution
 			LOGGER.fatal("", e);
 			throw new PlatformException(e.getLocalizedMessage());
 		}
-		IDataEngine dataEngine = new DataEngine(_dbManager, externalDBManager);
+		IDataEngine dataEngine = new DataEngine(_dbManager, externalDBManager,
+				new ShortSolutionInfo(_solutionInfo.getId()));
 		return dataEngine;
 	}
 

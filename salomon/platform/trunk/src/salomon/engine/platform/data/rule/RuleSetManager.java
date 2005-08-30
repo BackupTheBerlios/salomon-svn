@@ -22,6 +22,7 @@
 package salomon.engine.platform.data.rule;
 
 import salomon.engine.database.DBManager;
+import salomon.engine.solution.ShortSolutionInfo;
 
 import salomon.platform.data.rule.IRuleSet;
 import salomon.platform.data.rule.IRuleSetManager;
@@ -33,10 +34,13 @@ import salomon.platform.exception.PlatformException;
 public final class RuleSetManager implements IRuleSetManager
 {
 	private DBManager _dbManager;
+	
+	private ShortSolutionInfo _solutioInfo;
 
-	public RuleSetManager(DBManager dbManager)
+	public RuleSetManager(DBManager dbManager, ShortSolutionInfo solutionInfo)
 	{
 		_dbManager = dbManager;
+		_solutioInfo = solutionInfo;
 	}
 
 	/**

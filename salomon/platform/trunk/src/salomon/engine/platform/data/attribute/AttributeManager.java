@@ -22,6 +22,8 @@
 package salomon.engine.platform.data.attribute;
 
 import salomon.engine.database.DBManager;
+import salomon.engine.solution.ShortSolutionInfo;
+import salomon.engine.solution.SolutionInfo;
 
 import salomon.platform.data.attribute.IAttribiute;
 import salomon.platform.data.attribute.IAttributeManager;
@@ -33,10 +35,12 @@ import salomon.platform.exception.PlatformException;
 public final class AttributeManager implements IAttributeManager
 {
 	private DBManager _dbManager;
+	private ShortSolutionInfo _solutionInfo;
 
-	public AttributeManager(DBManager dbManager)
+	public AttributeManager(DBManager dbManager, ShortSolutionInfo solutionInfo)
 	{
 		_dbManager = dbManager;
+		_solutionInfo = solutionInfo;
 	}
 
 	/**
