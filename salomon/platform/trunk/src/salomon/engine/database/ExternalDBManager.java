@@ -61,4 +61,9 @@ public final class ExternalDBManager
 	{
 		return _externalManager.select(selectObject);
 	}
+	
+	
+	public DBManager getManager(){
+		return _externalManager;
+	}
 }

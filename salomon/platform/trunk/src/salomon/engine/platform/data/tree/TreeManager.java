@@ -21,18 +21,17 @@
 
 package salomon.engine.platform.data.tree;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Collection;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 
 import salomon.engine.database.DBManager;
+import salomon.engine.database.DBMetaData;
+import salomon.engine.database.DBTable;
 import salomon.engine.database.ExternalDBManager;
-import salomon.engine.database.queries.SQLSelect;
 import salomon.engine.solution.ISolution;
 import salomon.engine.solution.ShortSolutionInfo;
-
 import salomon.platform.data.tree.IDataSource;
 import salomon.platform.data.tree.ITree;
 import salomon.platform.data.tree.ITreeManager;
@@ -44,11 +43,10 @@ import salomon.platform.exception.PlatformException;
 public final class TreeManager implements ITreeManager
 {
 	private DBManager _dbManager;
-
 	private ExternalDBManager _externalDBManager;
-
 	private ShortSolutionInfo _solutionInfo;
-
+	private static final Logger LOGGER = Logger.getLogger(TreeManager.class);
+	
 	public TreeManager(DBManager dbManager, ShortSolutionInfo solutionInfo,
 			ExternalDBManager externalDBManager)
 	{
@@ -56,6 +54,65 @@ public final class TreeManager implements ITreeManager
 		_solutionInfo = solutionInfo;
 		_externalDBManager = externalDBManager;
 	}
+
+	
+	
+	
+	public DBTable[] getAllTables() throws PlatformException{
+		DBMetaData metaData = null;
+		try {
+			metaData = _externalDBManager.getManager().getMetaData();
+		} catch (SQLException e) {
+			throw new PlatformException("Error while getting external db metadata.");
+		}
+		return metaData.getTables();
+	}
+
+	public List<List<Object>> getTreeDataSourceData(IDataSource dataSource){
+		return null;
+	}
+	/*	public boolean checkTableAndColumns(String tableName,
+		Collection<String> columnNames) throws PlatformException
+	{
+	DBMetaData metaData = null;
+	try {
+		metaData = _externalDBManager.getManager().getMetaData();
+	} catch (SQLException e2) {
+		e2.printStackTrace();
+	}
+	DBTable [] tables = metaData.getTables();
+	
+	SQLSelect select = new SQLSelect();
+	select.addTable(tableName);
+	for (String columnName : columnNames)
+		select.addColumn(columnName);
+	ResultSet resultSet = null;
+	try {
+		resultSet = _externalDBManager.select(select);
+		if (!resultSet.next())
+			return false;
+	} catch (SQLException e) {
+		throw new PlatformException("Select: " + select.getQuery()
+				+ " has errors: " + e.getLocalizedMessage());
+	} finally {
+		try {
+			_externalDBManager.disconnect();
+		} catch (SQLException e1) {
+			// do nothing
+		};
+	}
+	return true;
+	}
+	*/
+
+
+	public IDataSource createTreeDataSource() throws PlatformException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
 
 	public void addTree(ITree tree) throws PlatformException
 	{
@@ -70,30 +127,6 @@ public final class TreeManager implements ITreeManager
 				"Method addTreeDataSource() not implemented yet!");
 	}
 
-	public boolean checkTableAndColumns(String tableName,
-			Collection<String> columnNames) throws PlatformException
-	{
-		SQLSelect select = new SQLSelect();
-		select.addTable(tableName);
-		for (String columnName : columnNames)
-			select.addColumn(columnName);
-		ResultSet resultSet = null;
-		try {
-			resultSet = _externalDBManager.select(select);
-			if (!resultSet.next())
-				return false;
-		} catch (SQLException e) {
-			throw new PlatformException("Select: " + select.getQuery()
-					+ " has errors: " + e.getLocalizedMessage());
-		} finally {
-			try {
-				_externalDBManager.disconnect();
-			} catch (SQLException e1) {
-				// do nothing
-			};
-		}
-		return true;
-	}
 
 	public IDataSource[] getAllTreeDataSources() throws PlatformException
 	{
@@ -146,6 +179,6 @@ public final class TreeManager implements ITreeManager
 				"Method removeTreeDataSource() not implemented yet!");
 	}
 
-	private static final Logger LOGGER = Logger.getLogger(TreeManager.class);
+
 
 }

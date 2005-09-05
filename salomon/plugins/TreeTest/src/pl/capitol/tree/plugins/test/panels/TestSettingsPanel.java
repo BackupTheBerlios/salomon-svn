@@ -95,14 +95,7 @@ public class TestSettingsPanel extends JPanel {
 	private JTextField getTableNameText() {
 		if (tableNameText == null) {
 			tableNameText = new JTextField();
-			tableNameText.setBounds(90, 23, 152, 20);
-			tableNameText.addInputMethodListener(new java.awt.event.InputMethodListener() { 
-				public void inputMethodTextChanged(java.awt.event.InputMethodEvent e) {    
-					//tableNameText.getText();
-					//dataEngine.getTreeManager().
-				}
-				public void caretPositionChanged(java.awt.event.InputMethodEvent e) {} 
-			});
+			tableNameText.setBounds(90, 23, 152, 20);;
 		}
 		return tableNameText;
 	}
@@ -167,6 +160,7 @@ public class TestSettingsPanel extends JPanel {
 		return decisioning3Text;
 	}
 	public ISettings getSettings() {
+		//TODO umiescic z pol settingsy dla doJob()
 		return settings;
 	}
 	public void setSettings(ISettings settings) {

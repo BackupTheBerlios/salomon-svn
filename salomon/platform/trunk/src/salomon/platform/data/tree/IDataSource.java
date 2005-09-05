@@ -23,7 +23,7 @@ package salomon.platform.data.tree;
 
 import java.util.Date;
 
-import salomon.engine.solution.ISolution;
+import salomon.engine.solution.ShortSolutionInfo;
 
 public interface IDataSource
 {
@@ -33,7 +33,7 @@ public interface IDataSource
 
 	String getInfo();
 
-	ISolution getSolution();
+	ShortSolutionInfo getSolution();
 
 	String getDecisionedColumn();
 

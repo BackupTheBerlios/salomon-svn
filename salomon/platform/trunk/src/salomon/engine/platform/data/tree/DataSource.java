@@ -23,53 +23,138 @@ package salomon.engine.platform.data.tree;
 
 import java.util.Date;
 
-import salomon.engine.solution.ISolution;
-
+import salomon.engine.solution.ShortSolutionInfo;
 import salomon.platform.data.tree.IDataSource;
 
 public class DataSource implements IDataSource
 {
-
-	public int getId()
-	{
-		throw new UnsupportedOperationException(
-				"Method getId() not implemented yet!");
+	private int id;
+	private String name;
+	private String info;
+	private ShortSolutionInfo solution;
+	private String decisionedColumn;
+	private String[] decioningColumns;
+	private Date createDate;
+	
+	
+	/**
+	 * @param date
+	 * @param columns
+	 * @param column
+	 * @param id
+	 * @param info
+	 * @param name
+	 * @param solution
+	 */
+	public DataSource(Date date, String[] columns, String column, int id, String info, String name, ShortSolutionInfo solution) {
+		createDate = date;
+		decioningColumns = columns;
+		decisionedColumn = column;
+		this.id = id;
+		this.info = info;
+		this.name = name;
+		this.solution = solution;
+	}
+	
+	
+	
+	
+	/**
+	 * @param solution
+	 */
+	public DataSource(ShortSolutionInfo solution) {
+		this.solution = solution;
 	}
 
-	public String getName()
-	{
-		throw new UnsupportedOperationException(
-				"Method getName() not implemented yet!");
+
+
+
+	/**
+	 * @param id The id to set.
+	 */
+	public void setId(int id) {
+		this.id = id;
+	}
+	/**
+	 * @return Returns the createDate.
+	 */
+	public Date getCreateDate() {
+		return createDate;
+	}
+	/**
+	 * @param createDate The createDate to set.
+	 */
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
+	}
+	/**
+	 * @return Returns the decioningColumns.
+	 */
+	public String[] getDecioningColumns() {
+		return decioningColumns;
+	}
+	/**
+	 * @param decioningColumns The decioningColumns to set.
+	 */
+	public void setDecioningColumns(String[] decioningColumns) {
+		this.decioningColumns = decioningColumns;
+	}
+	/**
+	 * @return Returns the decisionedColumn.
+	 */
+	public String getDecisionedColumn() {
+		return decisionedColumn;
+	}
+	/**
+	 * @param decisionedColumn The decisionedColumn to set.
+	 */
+	public void setDecisionedColumn(String decisionedColumn) {
+		this.decisionedColumn = decisionedColumn;
+	}
+	/**
+	 * @return Returns the id.
+	 */
+	public int getId() {
+		return id;
 	}
 
-	public String getInfo()
-	{
-		throw new UnsupportedOperationException(
-				"Method getInfo() not implemented yet!");
+	/**
+	 * @return Returns the info.
+	 */
+	public String getInfo() {
+		return info;
 	}
+	/**
+	 * @param info The info to set.
+	 */
+	public void setInfo(String info) {
+		this.info = info;
+	}
+	/**
+	 * @return Returns the name.
+	 */
+	public String getName() {
+		return name;
+	}
+	/**
+	 * @param name The name to set.
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
+	/**
+	 * @return Returns the solution.
+	 */
+	public ShortSolutionInfo getSolution() {
+		return solution;
+	}
+	/**
+	 * @param solution The solution to set.
+	 */
+	public void setSolution(ShortSolutionInfo solution) {
+		this.solution = solution;
+	}
+	
 
-	public ISolution getSolution()
-	{
-		throw new UnsupportedOperationException(
-				"Method getSolution() not implemented yet!");
-	}
-
-	public String getDecisionedColumn()
-	{
-		throw new UnsupportedOperationException(
-				"Method getDecisionedColumn() not implemented yet!");
-	}
-
-	public String[] getDecioningColumns()
-	{
-		throw new UnsupportedOperationException(
-				"Method getDecioningColumns() not implemented yet!");
-	}
-
-	public Date getCreateDate()
-	{
-		throw new UnsupportedOperationException(
-				"Method getCreateDate() not implemented yet!");
-	}
 
 }

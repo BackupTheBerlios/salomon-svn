@@ -12,10 +12,16 @@ public class TestSettingComponent implements ISettingComponent {
 	
 	private TestSettingsPanel panel;
 	
+	/**
+	 * Ta metoda zwraca settingsy i przekazuje je do doJob() w pluginie.
+	 */
 	public ISettings getSettings() {
-		return new TreeSettings();
+		return panel.getSettings();
 	}
 
+	/**
+	 * Ta metoda zwraca obiek przekazywany pozniej do getComponent() podczas pokazywania okna z settingsami
+	 */
 	public ISettings getDefaultSettings() {
 		return new TreeSettings();
 	}
