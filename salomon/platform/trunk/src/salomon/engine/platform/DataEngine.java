@@ -21,13 +21,17 @@
 
 package salomon.engine.platform;
 
+import java.sql.SQLException;
+
 import salomon.engine.database.DBManager;
 import salomon.engine.database.ExternalDBManager;
 import salomon.engine.solution.ShortSolutionInfo;
 
 import salomon.platform.IDataEngine;
+import salomon.platform.data.IMetaData;
 import salomon.platform.data.tree.ITreeManager;
 
+import salomon.engine.platform.data.DBMetaData;
 import salomon.engine.platform.data.attribute.AttributeManager;
 import salomon.engine.platform.data.dataset.DataSetManager;
 import salomon.engine.platform.data.rule.RuleSetManager;
@@ -65,13 +69,16 @@ public final class DataEngine implements IDataEngine
 	 * @uml.associationEnd multiplicity="(0 1)"
 	 */
 	private TreeManager _treeManager;
+	
+	private DBMetaData _metaData;
 
-	public DataEngine(DBManager dbManager, ExternalDBManager externalDBManager, ShortSolutionInfo solutionInfo)
+	public DataEngine(DBManager dbManager, ExternalDBManager externalDBManager, ShortSolutionInfo solutionInfo) throws SQLException
 	{
 		_attributeManager = new AttributeManager(dbManager, solutionInfo);
 		_dataSetManager = new DataSetManager(dbManager, solutionInfo, externalDBManager);
 		_ruleSetManager = new RuleSetManager(dbManager, solutionInfo);
 		_treeManager = new TreeManager(dbManager, solutionInfo, externalDBManager);
+		_metaData = externalDBManager.getMetaData();
 	}
 
 	/**
@@ -104,5 +111,10 @@ public final class DataEngine implements IDataEngine
 	public ITreeManager getTreeManager()
 	{
 		return _treeManager;
+	}
+
+	public IMetaData getMetaData()
+	{
+		return _metaData;
 	}
 }

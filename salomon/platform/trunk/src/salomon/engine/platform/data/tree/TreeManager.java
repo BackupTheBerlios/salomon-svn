@@ -29,8 +29,6 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import salomon.engine.database.DBManager;
-import salomon.engine.database.DBMetaData;
-import salomon.engine.database.DBTable;
 import salomon.engine.database.ExternalDBManager;
 import salomon.engine.database.queries.SQLInsert;
 import salomon.engine.database.queries.SQLSelect;
@@ -40,6 +38,9 @@ import salomon.platform.data.tree.IDataSource;
 import salomon.platform.data.tree.ITree;
 import salomon.platform.data.tree.ITreeManager;
 import salomon.platform.exception.PlatformException;
+
+import salomon.engine.platform.data.DBMetaData;
+import salomon.engine.platform.data.DBTable;
 
 /**
  * 
@@ -65,7 +66,7 @@ public final class TreeManager implements ITreeManager
 	public DBTable[] getAllTables() throws PlatformException{
 		DBMetaData metaData = null;
 		try {
-			metaData = _externalDBManager.getManager().getMetaData();
+			metaData = _externalDBManager.getMetaData();
 		} catch (SQLException e) {
 			throw new PlatformException("Error while getting external db metadata.");
 		}

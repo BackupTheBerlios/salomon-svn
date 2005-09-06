@@ -123,8 +123,14 @@ public final class Solution implements ISolution
 			LOGGER.fatal("", e);
 			throw new PlatformException(e.getLocalizedMessage());
 		}
-		IDataEngine dataEngine = new DataEngine(_dbManager, externalDBManager,
-				new ShortSolutionInfo(_solutionInfo.getId()));
+		IDataEngine dataEngine = null;
+		try {
+			dataEngine = new DataEngine(_dbManager, externalDBManager,
+					new ShortSolutionInfo(_solutionInfo.getId()));
+		} catch (SQLException e) {
+			LOGGER.fatal("Cannot get MetaData", e);
+			throw new PlatformException(e.getLocalizedMessage());
+		}
 		return dataEngine;
 	}
 

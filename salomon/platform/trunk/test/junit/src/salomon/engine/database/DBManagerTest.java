@@ -33,6 +33,12 @@ import salomon.engine.database.queries.SQLSelect;
 
 import salomon.util.gui.Utils;
 
+import salomon.platform.data.IColumn;
+import salomon.platform.data.IMetaData;
+import salomon.platform.data.ITable;
+
+import salomon.engine.platform.data.DBTable;
+
 public class DBManagerTest extends TestCase
 {
 
@@ -92,12 +98,12 @@ public class DBManagerTest extends TestCase
 			manager.connect("", "\\db\\salomon.gdb", "sysdba", "masterkey");
 			LOGGER.info("CONNECTED");
 			
-			DBMetaData metaData = manager.getMetaData();
+			IMetaData metaData = manager.getMetaData();
 			
-			DBTable[] tables = metaData.getTables();
-			for (DBTable table : tables) {
+			ITable[] tables = metaData.getTables();
+			for (ITable table : tables) {
 				LOGGER.debug("table: " + table);
-				DBColumn[] columns = table.getColumns();
+				IColumn[] columns = table.getColumns();
 				for (int i = 0; i < columns.length; ++i) {
 					LOGGER.debug(columns[i]);
 				}

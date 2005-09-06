@@ -26,6 +26,8 @@ import java.sql.SQLException;
 
 import salomon.engine.database.queries.SQLSelect;
 
+import salomon.engine.platform.data.DBMetaData;
+
 /**
  * 
  */
@@ -49,6 +51,11 @@ public final class ExternalDBManager
 		_externalManager.disconnect();
 	}
 
+	public DBMetaData getMetaData() throws SQLException
+	{
+		return _externalManager.getMetaData();
+	}
+
 	/**
 	 * Method selects data from data base getting query from given SQLInsert
 	 * object.
@@ -60,10 +67,5 @@ public final class ExternalDBManager
 	public ResultSet select(SQLSelect selectObject) throws SQLException
 	{
 		return _externalManager.select(selectObject);
-	}
-	
-	
-	public DBManager getManager(){
-		return _externalManager;
 	}
 }

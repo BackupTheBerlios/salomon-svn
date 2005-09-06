@@ -19,12 +19,15 @@
  * 
  */
 
-package salomon.engine.database;
+package salomon.engine.platform.data;
+
+import salomon.platform.data.IColumn;
+import salomon.platform.data.ITable;
 
 /**
  * 
  */
-public final class DBTable
+public final class DBTable implements ITable
 {
 	private DBColumn[] _columns;
 
@@ -41,7 +44,7 @@ public final class DBTable
 	 * @param name column name
 	 * @return
 	 */
-	public DBColumn getColumn(String name)
+	public IColumn getColumn(String name)
 	{
 		DBColumn column = null;
 		for (DBColumn col : _columns) {
@@ -58,7 +61,7 @@ public final class DBTable
 	 * 
 	 * @return The columns
 	 */
-	public DBColumn[] getColumns()
+	public IColumn[] getColumns()
 	{
 		return _columns;
 	}

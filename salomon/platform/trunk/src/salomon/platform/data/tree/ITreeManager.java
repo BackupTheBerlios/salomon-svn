@@ -23,9 +23,10 @@ package salomon.platform.data.tree;
 
 import java.util.List;
 
-import salomon.engine.database.DBTable;
 import salomon.engine.solution.ISolution;
 import salomon.platform.exception.PlatformException;
+
+import salomon.engine.platform.data.DBTable;
 
 /**
  * 

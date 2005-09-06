@@ -38,6 +38,8 @@ import salomon.engine.database.queries.SQLUpdate;
 
 import salomon.util.gui.Utils;
 
+import salomon.engine.platform.data.DBMetaData;
+
 /**
  * Class is responsible for data base operations. It enables executing SQL
  * queries and transaction managing.
@@ -159,6 +161,11 @@ public final class DBManager
 	{
 		LOGGER.info("Executing query = " + query); //$NON-NLS-1$
 		return _statement.execute(query);
+	}
+
+	public DatabaseMetaData getDatabaseMetaData() throws SQLException
+	{
+		return _connection.getMetaData();
 	}
 
 	/**
@@ -367,11 +374,6 @@ public final class DBManager
 		LOGGER.info("query = " + query); //$NON-NLS-1$
 
 		return _statement.executeUpdate(query);
-	}
-
-	DatabaseMetaData getDatabaseMetaData() throws SQLException
-	{
-		return _connection.getMetaData();
 	}
 
 	/**

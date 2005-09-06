@@ -19,48 +19,12 @@
  * 
  */
 
-package salomon.engine.database;
+package salomon.platform.data;
 
 /**
  * 
  */
-public final class DBColumn
+public interface IMetaData
 {
-	private String _name;
-
-	private String _type;
-
-	/**
-	 * @param name
-	 * @param type
-	 */
-	public DBColumn(String name, String type)
-	{
-		_name = name;
-		_type = type;
-	}
-
-	/**
-	 * Returns the name.
-	 * @return The name
-	 */
-	public String getName()
-	{
-		return _name;
-	}
-
-	/**
-	 * Returns the type.
-	 * @return The type
-	 */
-	public String getType()
-	{
-		return _type;
-	}
-
-	@Override
-	public String toString()
-	{
-		return _name + " (" + _type + ")";
-	}
+	public ITable[] getTables();
 }

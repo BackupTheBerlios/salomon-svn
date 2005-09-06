@@ -19,26 +19,30 @@
  * 
  */
 
-package salomon.engine.database;
+package salomon.engine.platform.data;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedList;
 
+import salomon.engine.database.DBManager;
+
+import salomon.platform.data.IMetaData;
+
 /**
  * 
  */
-public final class DBMetaData
+public final class DBMetaData implements IMetaData
 {
-	private DBTable[] _tables;
-	
 	private DBManager _manager;
+
+	private DBTable[] _tables;
 
 	public DBMetaData(DBManager manager)
 	{
 		_manager = manager;
 	}
-	
+
 	/**
 	 * Returns the tables.
 	 * @return The tables
@@ -47,41 +51,43 @@ public final class DBMetaData
 	{
 		return _tables;
 	}
-	
-	void init() throws SQLException
+
+	public void init() throws SQLException
 	{
 		// getting table names		
-		String[] types = {"TABLE"};		
-		ResultSet resultSet = null; 
-		resultSet = _manager.getDatabaseMetaData().getTables(null, null, null, types);
-		LinkedList<String> tables = new LinkedList<String>();		
-		while (resultSet.next()) {						
+		String[] types = {"TABLE"};
+		ResultSet resultSet = null;
+		resultSet = _manager.getDatabaseMetaData().getTables(null, null, null,
+				types);
+		LinkedList<String> tables = new LinkedList<String>();
+		while (resultSet.next()) {
 			tables.add(resultSet.getString("table_name"));
 		}
-		resultSet.close();			
-		
+		resultSet.close();
+
 		_tables = new DBTable[tables.size()];
-		
+
 		// getting column for tables
 		int i = 0;
 		LinkedList<DBColumn> columns = new LinkedList<DBColumn>();
 		for (String tableName : tables) {
 			_tables[i] = new DBTable(tableName);
 			columns.clear();
-			resultSet = _manager.getDatabaseMetaData().getColumns(null, null, tableName, null);
+			resultSet = _manager.getDatabaseMetaData().getColumns(null, null,
+					tableName, null);
 			while (resultSet.next()) {
 				String colName = resultSet.getString("column_name");
 				String colType = resultSet.getString("type_name");
 				DBColumn column = new DBColumn(colName, colType);
 				columns.add(column);
-			}			
+			}
 			resultSet.close();
-			
+
 			DBColumn[] colArray = new DBColumn[columns.size()];
-			colArray = columns.toArray(colArray);			
+			colArray = columns.toArray(colArray);
 			_tables[i].setColumns(colArray);
 			++i;
-		}		
+		}
 	}
-	
+
 }

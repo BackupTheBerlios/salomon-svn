@@ -21,6 +21,7 @@
 
 package salomon.platform;
 
+import salomon.platform.data.IMetaData;
 import salomon.platform.data.attribute.IAttributeManager;
 import salomon.platform.data.dataset.IDataSetManager;
 import salomon.platform.data.rule.IRuleSetManager;
@@ -66,4 +67,11 @@ public interface IDataEngine
 	 * @post $result != null
 	 */
 	IAttributeManager getAttributeManager();
+	
+	/**
+	 * Returns the IMetaData object.
+	 * 
+	 * @return the IMetaData
+	 */
+	IMetaData getMetaData();
 }
