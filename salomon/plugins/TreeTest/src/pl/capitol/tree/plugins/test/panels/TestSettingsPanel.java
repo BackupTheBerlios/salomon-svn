@@ -194,12 +194,13 @@ public class TestSettingsPanel extends JPanel {
 					
 					try{
 						ITreeManager manager = dataEngine.getTreeManager();
-						boolean b = manager.checkTableAndColumns(tableName,columns);
+						//manager.getAll
+						/*boolean b = manager.checkTableAndColumns(tableName,columns);
 						if (b) {
 							getTestText().setText("Table and columns existed");
 						} else {
 							getTestText().setText("Table and columns not  existed");
-						}
+						}*/
 					}catch(Throwable e1) {
 						getTestText().setText(e1.getMessage());
 					}
