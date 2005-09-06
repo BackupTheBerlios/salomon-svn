@@ -46,7 +46,7 @@ public interface ITreeManager
 	 * @param dataSource
 	 * @return
 	 */
-	List<List<Object>> getTreeDataSourceData(IDataSource dataSource) throws PlatformException;
+	List<Object []> getTreeDataSourceData(IDataSource dataSource) throws PlatformException;
 	/**
 	 * Tworzy instancje IDataSource
 	 * @return

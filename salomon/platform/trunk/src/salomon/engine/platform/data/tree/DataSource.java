@@ -32,6 +32,7 @@ public class DataSource implements IDataSource
 	private String name;
 	private String info;
 	private ShortSolutionInfo solution;
+	private String tableName;
 	private String decisionedColumn;
 	private String[] decioningColumns;
 	private Date createDate;
@@ -69,6 +70,18 @@ public class DataSource implements IDataSource
 
 
 
+	/**
+	 * @return Returns the tableName.
+	 */
+	public String getTableName() {
+		return tableName;
+	}
+	/**
+	 * @param tableName The tableName to set.
+	 */
+	public void setTableName(String tableName) {
+		this.tableName = tableName;
+	}
 	/**
 	 * @param id The id to set.
 	 */

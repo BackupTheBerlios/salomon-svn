@@ -35,6 +35,8 @@ public interface IDataSource
 
 	ShortSolutionInfo getSolution();
 
+	String getTableName();
+	
 	String getDecisionedColumn();
 
 	String[] getDecioningColumns();

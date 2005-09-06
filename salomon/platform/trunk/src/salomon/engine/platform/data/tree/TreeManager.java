@@ -21,7 +21,9 @@
 
 package salomon.engine.platform.data.tree;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -30,6 +32,8 @@ import salomon.engine.database.DBManager;
 import salomon.engine.database.DBMetaData;
 import salomon.engine.database.DBTable;
 import salomon.engine.database.ExternalDBManager;
+import salomon.engine.database.queries.SQLInsert;
+import salomon.engine.database.queries.SQLSelect;
 import salomon.engine.solution.ISolution;
 import salomon.engine.solution.ShortSolutionInfo;
 import salomon.platform.data.tree.IDataSource;
@@ -68,9 +72,56 @@ public final class TreeManager implements ITreeManager
 		return metaData.getTables();
 	}
 
-	public List<List<Object>> getTreeDataSourceData(IDataSource dataSource){
-		return null;
+	public IDataSource createTreeDataSource() throws PlatformException {
+		return new DataSource(_solutionInfo);
 	}
+	
+	
+	public void addTreeDataSource(IDataSource dataSource)throws PlatformException
+	{
+		SQLInsert insert = new SQLInsert("TREE_DATA_SOURCES");
+		insert.addValue("TDS_NAME",dataSource.getName());
+		insert.addValue("TDS_INFO",dataSource.getInfo());
+		insert.addValue("TDS_SOLUTION_ID",dataSource.getSolution().getId());
+		insert.addValue("TDS_TABLE ",dataSource.getTableName());
+		insert.addValue("TDS_DECISIONED_COLUMN",dataSource.getDecisionedColumn());
+		StringBuffer buff = new StringBuffer();
+		for (String item : dataSource.getDecioningColumns()) buff.append(item+",");
+		if (buff.length() == 0) throw new PlatformException("Decisioning columns are empty.");
+		insert.addValue("TDS_DECISIONING_COLUMNS",buff.substring(0,buff.length()-1));
+		//_dbManager.connect();
+		
+
+	}
+	
+	public List<Object []> getTreeDataSourceData(IDataSource dataSource) throws PlatformException {
+		List<Object []> returnList = new ArrayList<Object []>(100);
+		int columns = dataSource.getDecisionedColumn().length()+1;
+		List<Object> row = null;
+		SQLSelect select = new SQLSelect();
+		select.addTable(dataSource.getTableName());
+		select.addColumn(dataSource.getDecisionedColumn());
+		for (String columnName : dataSource.getDecioningColumns()) select.addColumn(columnName);
+		try {
+			//TODO jakis connect, chyba ze to sam select zrobi
+			ResultSet resultSet = _externalDBManager.select(select);
+			while (resultSet.next()) {
+				row = new ArrayList<Object>(columns);
+				for (int i=1;i<=columns;i++) row.add(resultSet.getObject(i));
+				returnList.add(row.toArray(new Object [row.size()]));
+			}
+		} catch (SQLException e) {
+			throw new PlatformException("Metoda getTreeDataSourceData() failed quering: " + select.getQuery()
+					+ " Errors: " + e.getLocalizedMessage());
+		} finally {
+			//TODO ten disconnect ewidentnie trza poprawic :P
+			try {_externalDBManager.disconnect();} catch (SQLException e1) {};
+		}
+		
+		return returnList;
+	}
+	
+	
 	/*	public boolean checkTableAndColumns(String tableName,
 		Collection<String> columnNames) throws PlatformException
 	{
@@ -106,10 +157,7 @@ public final class TreeManager implements ITreeManager
 	*/
 
 
-	public IDataSource createTreeDataSource() throws PlatformException {
-		// TODO Auto-generated method stub
-		return null;
-	}
+
 
 
 
@@ -120,12 +168,7 @@ public final class TreeManager implements ITreeManager
 				"Method addTree() not implemented yet!");
 	}
 
-	public void addTreeDataSource(IDataSource dataSource)
-			throws PlatformException
-	{
-		throw new UnsupportedOperationException(
-				"Method addTreeDataSource() not implemented yet!");
-	}
+
 
 
 	public IDataSource[] getAllTreeDataSources() throws PlatformException
