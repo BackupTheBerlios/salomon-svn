@@ -194,6 +194,7 @@ public class TestSettingsPanel extends JPanel {
 					
 					try{
 						ITreeManager manager = dataEngine.getTreeManager();
+						
 						//manager.getAll
 						/*boolean b = manager.checkTableAndColumns(tableName,columns);
 						if (b) {

@@ -26,19 +26,12 @@ import java.util.List;
 import salomon.engine.solution.ISolution;
 import salomon.platform.exception.PlatformException;
 
-import salomon.engine.platform.data.DBTable;
-
 /**
  * 
  */
 public interface ITreeManager
 {
 
-	/**
-	 * Zwraca tablice wszystkich tabel w zewnetrzenej bazie danych
-	 * @return
-	 */
-	DBTable [] getAllTables() throws PlatformException;
 
 	/**
 	 * Metoda zwraca liste wierszy bedacych wynikiem pobrania danych z zewnetrznej bazy
@@ -62,11 +55,24 @@ public interface ITreeManager
 	 */
 	void addTreeDataSource(IDataSource dataSource) throws PlatformException;;
 	
-	IDataSource[] getAllTreeDataSources() throws PlatformException;
+	/**
+	 * Zwraca liste poprawnych DataSourcow dla aktualnego solutiona
+	 * @return
+	 * @throws PlatformException
+	 */
+	IDataSource[] getTreeDataSources() throws PlatformException;
+
+	/**
+	 * Zwraca IDataSource o podanym id pod warunkiem ze nalezy do obecnego solutiona
+	 * @param treeDataSourceId
+	 * @return
+	 * @throws PlatformException
+	 */
+	IDataSource getTreeDataSource(int treeDataSourceId)	throws PlatformException;;
+
+	
 	
 	void removeTreeDataSource(IDataSource dataSource) throws PlatformException;
-	
-	
 	
 	ITree[] getAllTrees() throws PlatformException;
 
@@ -77,15 +83,4 @@ public interface ITreeManager
 	void addTree(ITree tree) throws PlatformException;
 
 	void removeTree(ITree tree) throws PlatformException;
-
-	
-	IDataSource[] getTreeDataSources(ISolution solution)
-			throws PlatformException;
-
-	IDataSource getTreeDataSource(int treeDataSourceId)
-			throws PlatformException;;
-
-	
-
-	
 }

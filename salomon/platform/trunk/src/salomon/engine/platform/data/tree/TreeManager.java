@@ -24,12 +24,12 @@ package salomon.engine.platform.data.tree;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
-
-import org.apache.log4j.Logger;
 
 import salomon.engine.database.DBManager;
 import salomon.engine.database.ExternalDBManager;
+import salomon.engine.database.queries.SQLDelete;
 import salomon.engine.database.queries.SQLInsert;
 import salomon.engine.database.queries.SQLSelect;
 import salomon.engine.solution.ISolution;
@@ -39,9 +39,6 @@ import salomon.platform.data.tree.ITree;
 import salomon.platform.data.tree.ITreeManager;
 import salomon.platform.exception.PlatformException;
 
-import salomon.engine.platform.data.DBMetaData;
-import salomon.engine.platform.data.DBTable;
-
 /**
  * 
  */
@@ -50,7 +47,6 @@ public final class TreeManager implements ITreeManager
 	private DBManager _dbManager;
 	private ExternalDBManager _externalDBManager;
 	private ShortSolutionInfo _solutionInfo;
-	private static final Logger LOGGER = Logger.getLogger(TreeManager.class);
 	
 	public TreeManager(DBManager dbManager, ShortSolutionInfo solutionInfo,
 			ExternalDBManager externalDBManager)
@@ -63,16 +59,6 @@ public final class TreeManager implements ITreeManager
 	
 	
 	
-	public DBTable[] getAllTables() throws PlatformException{
-		DBMetaData metaData = null;
-		try {
-			metaData = _externalDBManager.getMetaData();
-		} catch (SQLException e) {
-			throw new PlatformException("Error while getting external db metadata.");
-		}
-		return metaData.getTables();
-	}
-
 	public IDataSource createTreeDataSource() throws PlatformException {
 		return new DataSource(_solutionInfo);
 	}
@@ -90,9 +76,13 @@ public final class TreeManager implements ITreeManager
 		for (String item : dataSource.getDecioningColumns()) buff.append(item+",");
 		if (buff.length() == 0) throw new PlatformException("Decisioning columns are empty.");
 		insert.addValue("TDS_DECISIONING_COLUMNS",buff.substring(0,buff.length()-1));
-		//_dbManager.connect();
-		
-
+		try {
+			_dbManager.insert(insert);
+			_dbManager.commit();
+		} catch (SQLException e) {
+			_dbManager.rollback();
+			throw new PlatformException("Insert "+insert.getQuery()+" has errors: "+e.getLocalizedMessage());
+		}
 	}
 	
 	public List<Object []> getTreeDataSourceData(IDataSource dataSource) throws PlatformException {
@@ -103,9 +93,9 @@ public final class TreeManager implements ITreeManager
 		select.addTable(dataSource.getTableName());
 		select.addColumn(dataSource.getDecisionedColumn());
 		for (String columnName : dataSource.getDecioningColumns()) select.addColumn(columnName);
+		ResultSet resultSet = null;
 		try {
-			//TODO jakis connect, chyba ze to sam select zrobi
-			ResultSet resultSet = _externalDBManager.select(select);
+			resultSet = _externalDBManager.select(select);
 			while (resultSet.next()) {
 				row = new ArrayList<Object>(columns);
 				for (int i=1;i<=columns;i++) row.add(resultSet.getObject(i));
@@ -115,54 +105,109 @@ public final class TreeManager implements ITreeManager
 			throw new PlatformException("Metoda getTreeDataSourceData() failed quering: " + select.getQuery()
 					+ " Errors: " + e.getLocalizedMessage());
 		} finally {
-			//TODO ten disconnect ewidentnie trza poprawic :P
-			try {_externalDBManager.disconnect();} catch (SQLException e1) {};
+			//try {_externalDBManager.disconnect();} catch (SQLException e1) {};
+			try {if (resultSet != null) resultSet.close();}catch (SQLException e1) {};
 		}
 		
 		return returnList;
 	}
 	
-	
-	/*	public boolean checkTableAndColumns(String tableName,
-		Collection<String> columnNames) throws PlatformException
+	public IDataSource[] getTreeDataSources() throws PlatformException
 	{
-	DBMetaData metaData = null;
-	try {
-		metaData = _externalDBManager.getManager().getMetaData();
-	} catch (SQLException e2) {
-		e2.printStackTrace();
-	}
-	DBTable [] tables = metaData.getTables();
-	
-	SQLSelect select = new SQLSelect();
-	select.addTable(tableName);
-	for (String columnName : columnNames)
-		select.addColumn(columnName);
-	ResultSet resultSet = null;
-	try {
-		resultSet = _externalDBManager.select(select);
-		if (!resultSet.next())
-			return false;
-	} catch (SQLException e) {
-		throw new PlatformException("Select: " + select.getQuery()
-				+ " has errors: " + e.getLocalizedMessage());
-	} finally {
+		List<IDataSource> dataSources = new LinkedList<IDataSource>();
+		SQLSelect select = new SQLSelect();
+		select.addTable("TREE_DATA_SOURCES");
+		select.addColumn("TDS_ID");
+		select.addColumn("TDS_NAME");
+		select.addColumn("TDS_INFO");
+		select.addColumn("TDS_TABLE");
+		select.addColumn("TDS_DECISIONED_COLUMN");
+		select.addColumn("TDS_DECISIONING_COLUMNS");
+		select.addColumn("TDS_CREATE_DATE");
+		select.addCondition("TDS_SOLUTION_ID = ",_solutionInfo.getId());
+		ResultSet resultSet = null;
 		try {
-			_externalDBManager.disconnect();
-		} catch (SQLException e1) {
-			// do nothing
-		};
+			resultSet = _externalDBManager.select(select);
+			while (resultSet.next()) {
+				int i = 1;
+				DataSource dataSource = new DataSource(_solutionInfo);
+				dataSource.setId(resultSet.getInt(i++));
+				dataSource.setName(resultSet.getString(i++));
+				dataSource.setInfo(resultSet.getString(i++));
+				dataSource.setTableName(resultSet.getString(i++));
+				dataSource.setDecisionedColumn(resultSet.getString(i++));
+				dataSource.setDecioningColumns(resultSet.getString(i++).split(","));
+				dataSource.setCreateDate(resultSet.getDate(i++));
+				dataSources.add(dataSource);
+			}
+		} catch (SQLException e) {
+			throw new PlatformException("Metoda getTreeDataSources() failed quering: " + select.getQuery()
+					+ " Errors: " + e.getLocalizedMessage());
+		} finally {
+			try {if (resultSet != null) resultSet.close();}catch (SQLException e1) {};
+		}
+		return dataSources.toArray(new IDataSource[dataSources.size()]);
 	}
-	return true;
+	
+	
+	public IDataSource getTreeDataSource(int treeDataSourceId)throws PlatformException
+	{
+		SQLSelect select = new SQLSelect();
+		IDataSource returnDataSource = null;
+		select.addTable("TREE_DATA_SOURCES");
+		select.addColumn("TDS_ID");
+		select.addColumn("TDS_NAME");
+		select.addColumn("TDS_INFO");
+		select.addColumn("TDS_TABLE");
+		select.addColumn("TDS_DECISIONED_COLUMN");
+		select.addColumn("TDS_DECISIONING_COLUMNS");
+		select.addColumn("TDS_CREATE_DATE");
+		select.addCondition("TDS_SOLUTION_ID = ",_solutionInfo.getId());
+		select.addCondition("TDS_ID = ",treeDataSourceId);
+		ResultSet resultSet = null;
+		try {
+			resultSet = _externalDBManager.select(select);
+			if(resultSet.next()) {
+				int i = 1;
+				DataSource dataSource = new DataSource(_solutionInfo);
+				dataSource.setId(resultSet.getInt(i++));
+				dataSource.setName(resultSet.getString(i++));
+				dataSource.setInfo(resultSet.getString(i++));
+				dataSource.setTableName(resultSet.getString(i++));
+				dataSource.setDecisionedColumn(resultSet.getString(i++));
+				dataSource.setDecioningColumns(resultSet.getString(i++).split(","));
+				dataSource.setCreateDate(resultSet.getDate(i++));
+				returnDataSource = dataSource;
+			}
+		} catch (SQLException e) {
+			throw new PlatformException("Metoda getTreeDataSource() failed quering: " + select.getQuery()
+					+ " Errors: " + e.getLocalizedMessage());
+		} finally {
+			try {if (resultSet != null) resultSet.close();}catch (SQLException e1) {};
+		}
+		return returnDataSource;
 	}
-	*/
-
-
-
-
-
-
-
+	
+	
+	public void removeTreeDataSource(IDataSource dataSource) throws PlatformException
+	{
+		SQLDelete delete = new SQLDelete("TREE_DATA_SOURCES");
+		delete.addCondition("TDS_SOLUTION_ID = ",_solutionInfo.getId());
+		delete.addCondition("TDS_ID = ",dataSource.getId());
+		try {
+			_dbManager.delete(delete);
+			_dbManager.commit();
+		} catch (SQLException e) {
+			_dbManager.rollback();
+			throw new PlatformException("Delete "+delete.getQuery()+" has errors: "+e.getLocalizedMessage());
+		}
+		
+	}
+	
+	public ITree createTree() throws PlatformException {
+		return null;
+	}
+	
 	public void addTree(ITree tree) throws PlatformException
 	{
 		throw new UnsupportedOperationException(
@@ -171,12 +216,6 @@ public final class TreeManager implements ITreeManager
 
 
 
-
-	public IDataSource[] getAllTreeDataSources() throws PlatformException
-	{
-		throw new UnsupportedOperationException(
-				"Method getAllTreeDataSources() not implemented yet!");
-	}
 
 	public ITree[] getAllTrees() throws PlatformException
 	{
@@ -190,19 +229,9 @@ public final class TreeManager implements ITreeManager
 				"Method getTree() not implemented yet!");
 	}
 
-	public IDataSource getTreeDataSource(int treeDataSourceId)
-			throws PlatformException
-	{
-		throw new UnsupportedOperationException(
-				"Method getTreeDataSource() not implemented yet!");
-	}
 
-	public IDataSource[] getTreeDataSources(ISolution solution)
-			throws PlatformException
-	{
-		throw new UnsupportedOperationException(
-				"Method getTreeDataSources() not implemented yet!");
-	}
+
+
 
 	public ITree[] getTrees(ISolution solution) throws PlatformException
 	{
@@ -214,13 +243,6 @@ public final class TreeManager implements ITreeManager
 	{
 		throw new UnsupportedOperationException(
 				"Method removeTree() not implemented yet!");
-	}
-
-	public void removeTreeDataSource(IDataSource dataSource)
-			throws PlatformException
-	{
-		throw new UnsupportedOperationException(
-				"Method removeTreeDataSource() not implemented yet!");
 	}
 
 
