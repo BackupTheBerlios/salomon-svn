@@ -34,7 +34,7 @@ import salomon.platform.data.tree.INode;
  */
 public class Node implements INode
 {
-
+	private int id;
 	private Type type;
 	private String value;
 	private String parentEdge;
@@ -42,7 +42,18 @@ public class Node implements INode
 	private INode[] children;
 	
 	
-	
+	/**
+	 * 
+	 * @param id
+	 * @param parent
+	 * @param edge
+	 * @param type
+	 * @param value
+	 */
+	public Node(int id,INode parent, String edge, Type type, String value){
+		this(parent,edge,type,value);
+		this.id = id;
+	}
 	/**
 	 * @param parent
 	 * @param edge
@@ -168,6 +179,20 @@ public class Node implements INode
 	 */
 	public void setValue(String value) {
 		this.value = value;
+	}
+
+	/**
+	 * @return Returns the id.
+	 */
+	public int getId() {
+		return id;
+	}
+
+	/**
+	 * @param id The id to set.
+	 */
+	public void setId(int id) {
+		this.id = id;
 	}
 	
 	

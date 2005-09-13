@@ -24,6 +24,8 @@ package salomon.engine.platform.data.tree;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -110,7 +112,6 @@ public final class TreeManager implements ITreeManager
 			throw new PlatformException("Metoda getTreeDataSourceData() failed quering: " + select.getQuery()
 					+ " Errors: " + e.getLocalizedMessage());
 		} finally {
-			//try {_externalDBManager.disconnect();} catch (SQLException e1) {};
 			try {if (resultSet != null) resultSet.close();}catch (SQLException e1) {};
 		}
 		
@@ -194,9 +195,9 @@ public final class TreeManager implements ITreeManager
 	}
 	
 	
-	public void removeTreeDataSource(IDataSource dataSource) throws PlatformException
+	public void removeTreeDataSource(int dataSourceId) throws PlatformException
 	{
-		if (dataSource != null ){
+			IDataSource dataSource = this.getTreeDataSource(dataSourceId);
 			SQLDelete delete = new SQLDelete("TREE_DATA_SOURCES");
 			delete.addCondition("TDS_SOLUTION_ID = ",_solutionInfo.getId());
 			delete.addCondition("TDS_ID = ",dataSource.getId());
@@ -207,7 +208,6 @@ public final class TreeManager implements ITreeManager
 				_dbManager.rollback();
 				throw new PlatformException("Delete "+delete.getQuery()+" has errors: "+e.getLocalizedMessage());
 			}
-		}
 	}
 	
 	public ITree createTree() throws PlatformException {
@@ -292,6 +292,8 @@ public final class TreeManager implements ITreeManager
 		select.addCondition("TDS_SOLUTION_ID = ",_solutionInfo.getId());
 		ResultSet resultSet = null;
 		try {
+			List<Integer> rootIds = new LinkedList<Integer>();
+			List<Integer> tdsIds = new LinkedList<Integer>();
 			resultSet = _dbManager.select(select);
 			while (resultSet.next()) {
 				int i = 1;
@@ -299,11 +301,21 @@ public final class TreeManager implements ITreeManager
 				tree.setId(resultSet.getInt(i++));
 				tree.setName(resultSet.getString(i++));
 				tree.setInfo(resultSet.getString(i++));
-				tree.setDataSource(this.getTreeDataSource(resultSet.getInt(i++)));
-				//TODO
-				//tree.setRoot());
+				tdsIds.add(resultSet.getInt(i++)); // potem sciagam dane data sourca, pomysl chlopakow z jednym connectionem + statementem ogranicza jak cholera :[
+				rootIds.add(resultSet.getInt(i++)); // potem tworze same drzewo
+				tree.setCreateDate(resultSet.getDate(i++));
 				trees.add(tree);
 			}
+			resultSet.close();
+			Iterator<Integer> tdsIt = tdsIds.iterator();
+			Iterator<Integer> rootIt = rootIds.iterator();
+			for(ITree tree : trees){
+				int rootId = rootIt.next();
+				int tdsId = tdsIt.next();
+				tree.setRoot(getTreeNodes(rootId));
+				tree.setDataSource(getTreeDataSource(tdsId));
+			}
+			
 		} catch (SQLException e) {
 			throw new PlatformException("Metoda getTrees() failed quering: " + select.getQuery()
 					+ " Errors: " + e.getLocalizedMessage());
@@ -314,30 +326,129 @@ public final class TreeManager implements ITreeManager
 	}
 	
 	/**
-	 * 
+	 * Sciaga cale drzewo dla podanego id node`a ktory jest korzeniem
 	 * @param rootId
 	 * @return
 	 */
-	protected INode getTreeNodes(int rootId){
-		
-		return null;
+	protected INode getTreeNodes(int rootId) throws PlatformException{
+		INode rootNode = null;
+		SQLSelect tselect = new SQLSelect();
+		tselect.addTable("TREE_NODES");
+		tselect.addColumn("TRN_TYPE");
+		tselect.addColumn("TRN_VALUE");
+		tselect.addCondition("TRN_ID =",rootId);
+		try {
+			ResultSet resultSet = _dbManager.select(tselect);
+			if (resultSet.next()){
+				int i = 1;
+				Type type = (resultSet.getString(i++).equals("C") ? Type.COLUMN : Type.VALUE);
+				String value = resultSet.getString(i++);
+				rootNode = new Node(rootId,null,null,type,value);
+				setChildren(rootNode);
+			}else throw new PlatformException("Cannot find root with id: "+rootId);
+		} catch (SQLException e) {
+			throw new PlatformException("Metoda getTreeNodes() failed quering: " + tselect.getQuery()
+					+ " Errors: " + e.getLocalizedMessage());
+		}
+		return rootNode;
 	}
 	
+	/**
+	 * Sciaga z bazy cale drzewo dzieci dla podanego noda
+	 * @param root
+	 * @throws PlatformException
+	 */
+	protected void setChildren(INode root) throws PlatformException{
+		SQLSelect tselect = new SQLSelect();
+		tselect.addTable("TREE_NODES");
+		tselect.addColumn("TRN_ID");
+		tselect.addColumn("TRN_PARENT_EDGE");
+		tselect.addColumn("TRN_TYPE");
+		tselect.addColumn("TRN_VALUE");
+		tselect.addCondition("TRN_PARENT_NODE_ID = ",root.getId());
+		try {
+			ResultSet resultSet = _dbManager.select(tselect);
+			List<INode> childs = new ArrayList<INode>();
+			while (resultSet.next()){
+				int i = 1;
+				int id = resultSet.getInt(i++);
+				String parentEdge = resultSet.getString(i++);
+				Type type = (resultSet.getString(i++).equals("C") ? Type.COLUMN : Type.VALUE);
+				String value = resultSet.getString(i++);
+				childs.add(new Node(id,root,parentEdge,type,value));
+			}
+			resultSet.close();
+			for(INode child : childs){
+				this.setChildren(child);
+			}
+		} catch (SQLException e) {
+			throw new PlatformException("Metoda getTreeNodes() failed quering: " + tselect.getQuery()
+					+ " Errors: " + e.getLocalizedMessage());
+		}
+	
+	}
 	
 	
 	public ITree getTree(int treeId) throws PlatformException
 	{
-		throw new UnsupportedOperationException(
-				"Method getTree() not implemented yet!");
+		ITree returnTree = null;
+		SQLSelect select = new SQLSelect();
+		select.addTable("TREES");
+		select.addTable("TREE_DATA_SOURCES");
+		select.addColumn("TRE_NAME");
+		select.addColumn("TRE_INFO");
+		select.addColumn("TRE_TDS_ID");
+		select.addColumn("TRE_TRN_ID");
+		select.addColumn("TRE_CREATE_DATE");
+		select.addColumn("TRE_MODIFY_DATE");
+		select.addCondition("TRE_TDS_ID = TDS_ID");
+		select.addCondition("TDS_SOLUTION_ID = ",_solutionInfo.getId());
+		select.addCondition("TRE_ID = ",treeId);
+		ResultSet resultSet = null;
+		try {
+			resultSet = _dbManager.select(select);
+			String name;
+			String info;
+			int tdsId;
+			int rootNodeId;
+			Date createDate;
+			
+			if (resultSet.next()) {
+				int i = 1;
+				name = resultSet.getString(i++);
+				info = resultSet.getString(i++);
+				tdsId = resultSet.getInt(i++); 
+				rootNodeId = resultSet.getInt(i++);
+				createDate = resultSet.getDate(i++);
+			} else throw new PlatformException("Nie znaleziona drzewka o id:"+treeId+" ktore jest zwiazane z aktualnym rozwiazaniem o id: "+_solutionInfo.getId());
+			resultSet.close();
+			returnTree = new Tree(treeId,createDate,getTreeDataSource(tdsId),info,name,getTreeNodes(rootNodeId));
+		
+		} catch (SQLException e) {
+			throw new PlatformException("Metoda getTrees() failed quering: " + select.getQuery()
+					+ " Errors: " + e.getLocalizedMessage());
+		} finally {
+			try {if (resultSet != null) resultSet.close();}catch (SQLException e1) {};
+		}
+		return returnTree;	
 	}
 
 
 
 
-	public void removeTree(ITree tree) throws PlatformException
+	public void removeTree(int treeId) throws PlatformException
 	{
-		throw new UnsupportedOperationException(
-				"Method removeTree() not implemented yet!");
+			ITree tree = this.getTree(treeId); 
+			int rootId = tree.getRoot().getId();
+			SQLDelete delete = new SQLDelete("TREE_NODES");
+			delete.addCondition("TRN_ID = ",rootId);
+			try {
+				_dbManager.delete(delete);
+				_dbManager.commit();
+			} catch (SQLException e) {
+				_dbManager.rollback();
+				throw new PlatformException("Delete "+delete.getQuery()+" has errors: "+e.getLocalizedMessage());
+			}
 	}
 
 

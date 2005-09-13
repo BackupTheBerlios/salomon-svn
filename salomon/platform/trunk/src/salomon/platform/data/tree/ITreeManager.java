@@ -74,11 +74,11 @@ public interface ITreeManager
 
 	
 	/**
-	 * Usuwa z bazy danych podane zrodlo danych 
-	 * @param dataSource
+	 * Usuwa z bazy danych  zrodlo danych o danym id 
+	 * @param dataSourceId
 	 * @throws PlatformException
 	 */
-	void removeTreeDataSource(IDataSource dataSource) throws PlatformException;
+	void removeTreeDataSource(int dataSourceId) throws PlatformException;
 	
 	/**
 	 * Tworzy puste drzewo. Przed zapisem do bazy nalezy je zainicjowac korzeniem 
@@ -116,7 +116,6 @@ public interface ITreeManager
 	void addTree(ITree tree) throws PlatformException;
 
 	
-	//TODO
 	
 	/**
 	 * Zwraca drzewa zwiazane z danym solutionem
@@ -125,9 +124,19 @@ public interface ITreeManager
 	 */
 	ITree[] getTrees() throws PlatformException;
 
+	/**
+	 * Zwraca drzewo zwiazane z obecnym solutionem i posiadajace podane id. W przeciwnym razie rzuca PlatformException
+	 * @param treeId
+	 * @return
+	 * @throws PlatformException
+	 */
 	ITree getTree(int treeId) throws PlatformException;
 
 
-
-	void removeTree(ITree tree) throws PlatformException;
+	/**
+	 * Usuwa drzewo o podanym id z bazy danych.
+	 * @param treeId
+	 * @throws PlatformException
+	 */
+	void removeTree(int treeId) throws PlatformException;
 }

@@ -37,6 +37,7 @@ public interface ITree
 	String getInfo();
 	void setInfo(String info);
 	Date getCreateDate();
+	void setCreateDate(Date createDate);
 	IDataSource getDataSource();
 	void setDataSource(IDataSource dataSource);
 	INode getRoot();

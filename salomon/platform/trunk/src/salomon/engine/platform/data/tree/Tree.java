@@ -75,6 +75,18 @@ public class Tree implements ITree
 		this.root = root;
 	}
 
+	
+	
+
+	public Tree(int id, Date date, IDataSource source, String info, String name, INode root) {
+		createDate = date;
+		dataSource = source;
+		this.id = id;
+		this.info = info;
+		this.name = name;
+		this.root = root;
+	}
+
 
 	/**
 	 * @return Returns the dataSource.
@@ -141,6 +153,14 @@ public class Tree implements ITree
 	 */
 	public Date getCreateDate() {
 		return createDate;
+	}
+
+
+	/**
+	 * @param createDate The createDate to set.
+	 */
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
 	}
 
 	
