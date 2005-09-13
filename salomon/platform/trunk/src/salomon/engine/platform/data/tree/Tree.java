@@ -60,6 +60,21 @@ public class Tree implements ITree
 		dataSource = source;
 	}
 
+	
+
+	/**
+	 * @param source
+	 * @param info
+	 * @param name
+	 * @param root
+	 */
+	public Tree(IDataSource source, String info, String name, INode root) {
+		dataSource = source;
+		this.info = info;
+		this.name = name;
+		this.root = root;
+	}
+
 
 	/**
 	 * @return Returns the dataSource.

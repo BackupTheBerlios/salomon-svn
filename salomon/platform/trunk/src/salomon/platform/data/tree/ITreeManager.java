@@ -81,7 +81,7 @@ public interface ITreeManager
 	void removeTreeDataSource(IDataSource dataSource) throws PlatformException;
 	
 	/**
-	 * Tworze puste drzewo. Przed zapisem do bazy nalezy je zainicjowac korzeniem 
+	 * Tworzy puste drzewo. Przed zapisem do bazy nalezy je zainicjowac korzeniem 
 	 * oraz zrodlem danych z ktorego powstalo.
 	 * @return
 	 * @throws PlatformException
@@ -89,12 +89,15 @@ public interface ITreeManager
 	public ITree createTree() throws PlatformException;
 
 	/**
-	 * Tworze puste drzewo. Przed zapisem do bazy nalezy je zainicjowac korzeniem.
-	 * @param dataSourceId id dataSource dla ktorego to drzewo powstaje
+	 * Tworzy puste drzewo
+	 * @param dataSourceId -id data sourca, jesli nie istnieje rzuca wyjatek
+	 * @param info - info
+	 * @param name - nazwa drzewka
+	 * @param root - korzen drzewa, nie moze byc nullem
 	 * @return
 	 * @throws PlatformException
 	 */
-	public ITree createTree(int dataSourceId) throws PlatformException;
+	public ITree createTree(int dataSourceId, String info, String name, INode root) throws PlatformException;
 	
 	/**
 	 * Tworzy node dla drzewa. Nalezy dodawac dzieci metoda addChild(ren), setChildren na nodach
@@ -106,12 +109,15 @@ public interface ITreeManager
 	 */
 	public INode createNode(INode parentNode, String edge, Type type, String value);
 	
-	//TODO 
-	
-	void addTree(ITree tree) throws PlatformException;
-	
-	ITree[] getAllTrees() throws PlatformException;
 
+	/**
+	 * Dodaje drzewo do bazy danych
+	 */
+	void addTree(ITree tree) throws PlatformException;
+
+	
+	//TODO
+	
 	/**
 	 * Zwraca drzewa zwiazane z danym solutionem
 	 * @return

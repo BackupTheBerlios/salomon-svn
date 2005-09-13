@@ -53,27 +53,28 @@ public class Node implements INode
 		this.type = type;
 		this.value = value;
 		this.children = new INode[0];
-		if (this.parent != null) {
+		if (parent != null) {
 			this.parentEdge = edge;
-			parent.addChild(this);
+			this.setParent(parent);
 		}
 	}
 
 	public void setParent(INode parent) {
 		this.parent = parent;
+		for (INode node :parent.getChildren()) if (node.equals(this)) return; 
 		parent.addChild(this);
 	}
 	
 	
 	public void addChild(INode child){
-		List<INode> childs = Arrays.asList(children);
+		List<INode> childs = new ArrayList<INode>(Arrays.asList(children));
 		childs.add(child);
-		child.setParent(this);
 		this.children = childs.toArray(new INode[childs.size()]);
+		child.setParent(this);
 	}
 	
 	public void addChildren(INode[] ch){
-		List<INode> childs = Arrays.asList(children);
+		List<INode> childs =  new ArrayList<INode>(Arrays.asList(children));
 		childs.addAll(Arrays.asList(ch));
 		for(INode child : ch){
 			child.setParent(this);
