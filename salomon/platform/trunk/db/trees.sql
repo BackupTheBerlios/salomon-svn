@@ -26,6 +26,8 @@ alter table TREE_NODES
 add constraint FK_SELF_TRN_ID
 foreign key (TRN_PARENT_NODE_ID)
 references TREE_NODES(TRN_ID)
+on delete CASCADE
+using index FK_SELF_TRN_ID
 
 -- TREE_DATA_SOURCES
 
@@ -65,7 +67,6 @@ CREATE TABLE TREES (
     TRE_ID INTEGER NOT NULL,
     TRE_NAME VARCHAR(50) NOT NULL,
     TRE_INFO VARCHAR(200),
-    TRE_TASK_ID INTEGER NOT NULL,
     TRE_TDS_ID INTEGER NOT NULL,
     TRE_TRN_ID INTEGER NOT NULL,
     TRE_CREATE_DATE TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP NOT NULL,
@@ -76,7 +77,6 @@ primary key (TRE_ID);
 DESCRIBE FIELD TRE_ID TABLE TREES 'tree id';
 DESCRIBE FIELD TRE_NAME TABLE TREES 'tree name';
 DESCRIBE FIELD TRE_INFO TABLE TREES 'tree info';
-DESCRIBE FIELD TRE_TASK_ID TABLE TREES 'task id, describing plugin and project parameters';
 DESCRIBE FIELD TRE_TDS_ID TABLE TREES 'data source id';
 DESCRIBE FIELD TRE_TRN_ID TABLE TREES 'root node id';
 DESCRIBE FIELD TRE_CREATE_DATE TABLE TREES 'audit create date';
@@ -86,10 +86,6 @@ SET GENERATOR GEN_TREES_ID TO 1;
 
 
 -- Foreign keys for TREES
-alter table TREES
-add constraint FK_TREES_TASK_ID
-foreign key (TRE_TASK_ID)
-references TASKS(TASK_ID);
 
 alter table TREES
 add constraint FK_TREES_TDS_ID
@@ -99,5 +95,7 @@ references TREE_DATA_SOURCES(TDS_ID);
 alter table TREES
 add constraint FK_TREES_TRN_ID
 foreign key (TRE_TRN_ID)
-references TREE_NODES(TRN_ID);
+references TREE_NODES(TRN_ID)
+on delete CASCADE
+using index FK_TREES_TRN_ID
 
