@@ -25,19 +25,20 @@ import java.util.Date;
 
 /**
  * 
+ * @author Mateusz Nowakowski
+ *
  */
 public interface ITree
 {
 	int getId();
-
+	void setId(int id);
 	String getName();
-
+	void setName(String name);
 	String getInfo();
-
+	void setInfo(String info);
 	Date getCreateDate();
-
 	IDataSource getDataSource();
-
+	void setDataSource(IDataSource dataSource);
 	INode getRoot();
-
+	void setRoot(INode root);
 }

@@ -26,6 +26,11 @@ import java.util.Date;
 import salomon.engine.solution.ShortSolutionInfo;
 import salomon.platform.data.tree.IDataSource;
 
+/**
+ * 
+ * @author Mateusz Nowakowski
+ *
+ */
 public class DataSource implements IDataSource
 {
 	private int id;

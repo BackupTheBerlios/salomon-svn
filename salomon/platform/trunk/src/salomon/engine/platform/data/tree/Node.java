@@ -21,63 +21,155 @@
 
 package salomon.engine.platform.data.tree;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import salomon.platform.data.tree.INode;
 
+/**
+ * 
+ * @author Mateusz Nowakowski
+ *
+ */
 public class Node implements INode
 {
 
-	public Type getType()
-	{
-		throw new UnsupportedOperationException(
-				"Method getType() not implemented yet!");
+	private Type type;
+	private String value;
+	private String parentEdge;
+	private INode parent;
+	private INode[] children;
+	
+	
+	
+	/**
+	 * @param parent
+	 * @param edge
+	 * @param type
+	 * @param value
+	 */
+	public Node(INode parent, String edge, Type type, String value){
+		this.type = type;
+		this.value = value;
+		this.children = new INode[0];
+		if (this.parent != null) {
+			this.parentEdge = edge;
+			parent.addChild(this);
+		}
 	}
 
-	public String getValue()
-	{
-		throw new UnsupportedOperationException(
-				"Method getValue() not implemented yet!");
+	public void setParent(INode parent) {
+		this.parent = parent;
+		parent.addChild(this);
+	}
+	
+	
+	public void addChild(INode child){
+		List<INode> childs = Arrays.asList(children);
+		childs.add(child);
+		child.setParent(this);
+		this.children = childs.toArray(new INode[childs.size()]);
+	}
+	
+	public void addChildren(INode[] ch){
+		List<INode> childs = Arrays.asList(children);
+		childs.addAll(Arrays.asList(ch));
+		for(INode child : ch){
+			child.setParent(this);
+		}
+		this.children = childs.toArray(new INode[childs.size()]);
 	}
 
-	public String getParentEdge()
-	{
-		throw new UnsupportedOperationException(
-				"Method getParentEdge() not implemented yet!");
+	public void setChildren(INode[] children) {
+		this.children = children;
+		for(INode child : children){
+			child.setParent(this);
+		}
+	}
+	
+	
+	/* (non-Javadoc)
+	 * @see salomon.platform.data.tree.INode#getLeafs()
+	 */
+	public INode[] getLeafs() {
+		if (this.isLeaf()) return new INode[]{this};
+		List<INode> leafs = new ArrayList<INode>();
+		for (INode child : children) leafs.addAll(Arrays.asList(child.getLeafs()));
+		return leafs.toArray(new INode[leafs.size()]);
+	}
+	
+	/* (non-Javadoc)
+	 * @see salomon.platform.data.tree.INode#getRoot()
+	 */
+	public INode getRoot() {
+		if (this.isRoot()) return this;
+		else return getParent().getRoot();
+	}
+	
+	/* (non-Javadoc)
+	 * @see salomon.platform.data.tree.INode#isLeaf()
+	 */
+	public boolean isLeaf() {
+		return ((children == null)||(children.length == 0));
+	}
+	/* (non-Javadoc)
+	 * @see salomon.platform.data.tree.INode#isRoot()
+	 */
+	public boolean isRoot() {
+		return (parent == null);
+	}
+	/**
+	 * @return Returns the children.
+	 */
+	public INode[] getChildren() {
+		return children;
 	}
 
-	public boolean isRoot()
-	{
-		throw new UnsupportedOperationException(
-				"Method isRoot() not implemented yet!");
+	/**
+	 * @return Returns the parent.
+	 */
+	public INode getParent() {
+		return parent;
 	}
+	/**
+	 * @return Returns the parentEdge.
+	 */
+	public String getParentEdge() {
+		return parentEdge;
+	}
+	/**
+	 * @param parentEdge The parentEdge to set.
+	 */
+	public void setParentEdge(String parentEdge) {
+		this.parentEdge = parentEdge;
+	}
+	/**
+	 * @return Returns the type.
+	 */
+	public Type getType() {
+		return type;
+	}
+	/**
+	 * @param type The type to set.
+	 */
+	public void setType(Type type) {
+		this.type = type;
+	}
+	/**
+	 * @return Returns the value.
+	 */
+	public String getValue() {
+		return value;
+	}
+	/**
+	 * @param value The value to set.
+	 */
+	public void setValue(String value) {
+		this.value = value;
+	}
+	
+	
 
-	public boolean isLeaf()
-	{
-		throw new UnsupportedOperationException(
-				"Method isLeaf() not implemented yet!");
-	}
-
-	public INode getParent()
-	{
-		throw new UnsupportedOperationException(
-				"Method getParent() not implemented yet!");
-	}
-
-	public INode getRoot()
-	{
-		throw new UnsupportedOperationException(
-				"Method getRoot() not implemented yet!");
-	}
-
-	public INode[] getChilds()
-	{
-		throw new UnsupportedOperationException(
-				"Method getChilds() not implemented yet!");
-	}
-
-	public INode[] getLeafs()
-	{
-		throw new UnsupportedOperationException(
-				"Method getLeafs() not implemented yet!");
-	}
 
 }

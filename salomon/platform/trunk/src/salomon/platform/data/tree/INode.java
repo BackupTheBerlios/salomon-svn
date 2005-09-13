@@ -21,6 +21,11 @@
 
 package salomon.platform.data.tree;
 
+/**
+ * Element drzewa. Komentarze nie potrzebne, chyba ze ktos nie wie co to drzewo...
+ * @author Mateusz Nowakowski
+ *
+ */
 public interface INode
 {
 	enum Type {
@@ -28,20 +33,27 @@ public interface INode
 	};
 
 	Type getType();
-
+	void setType(Type type);
+	
 	String getValue();
-
+	void setValue(String value);
+	
 	String getParentEdge();
-
+	void setParentEdge(String parentEdge);
+	
+	
 	boolean isRoot();
-
-	boolean isLeaf();
-
-	INode getParent();
-
 	INode getRoot();
+	INode getParent();
+	void setParent(INode parent);
+	
 
-	INode[] getChilds();
-
+	INode[] getChildren();
+	void setChildren(INode[] children);
+	void addChild(INode child);
+	void addChildren(INode[] child);
 	INode[] getLeafs();
+	boolean isLeaf();
+	
+
 }

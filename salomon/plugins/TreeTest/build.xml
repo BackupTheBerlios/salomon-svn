@@ -13,7 +13,9 @@
 	
 	<path id="project.class.path">
 		<fileset dir="${lib_dir}">
-			<include name="**/*.jar"/>
+			<include name="**/platform.jar"/>
+			<include name="**/plugin.jar"/>
+			<include name="**/util.jar"/>
 		</fileset>
 	</path>
 

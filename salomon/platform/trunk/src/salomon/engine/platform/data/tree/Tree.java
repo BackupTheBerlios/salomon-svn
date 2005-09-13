@@ -29,44 +29,106 @@ import salomon.platform.data.tree.ITree;
 
 /**
  * 
+ * @author Mateusz Nowakowski
+ *
  */
 public class Tree implements ITree
 {
 
-	public Date getCreateDate()
-	{
-		throw new UnsupportedOperationException(
-				"Method getCreateDate() not implemented yet!");
+	private int id;
+	private String name;
+	private String info;
+	private IDataSource dataSource;
+	private INode root;
+	private Date createDate;
+	
+	
+	
+	
+	
+	/**
+	 * Empty constructor 
+	 */
+	public Tree() {
+	}
+	
+			
+	/**
+	 * @param source
+	 */
+	public Tree(IDataSource source) {
+		dataSource = source;
 	}
 
-	public IDataSource getDataSource()
-	{
-		throw new UnsupportedOperationException(
-				"Method getDataSource() not implemented yet!");
+
+	/**
+	 * @return Returns the dataSource.
+	 */
+	public IDataSource getDataSource() {
+		return dataSource;
+	}
+	/**
+	 * @param dataSource The dataSource to set.
+	 */
+	public void setDataSource(IDataSource dataSource) {
+		this.dataSource = dataSource;
+	}
+	/**
+	 * @return Returns the id.
+	 */
+	public int getId() {
+		return id;
+	}
+	/**
+	 * @param id The id to set.
+	 */
+	public void setId(int id) {
+		this.id = id;
+	}
+	/**
+	 * @return Returns the info.
+	 */
+	public String getInfo() {
+		return info;
+	}
+	/**
+	 * @param info The info to set.
+	 */
+	public void setInfo(String info) {
+		this.info = info;
+	}
+	/**
+	 * @return Returns the name.
+	 */
+	public String getName() {
+		return name;
+	}
+	/**
+	 * @param name The name to set.
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
+	/**
+	 * @return Returns the root.
+	 */
+	public INode getRoot() {
+		return root;
+	}
+	/**
+	 * @param root The root to set.
+	 */
+	public void setRoot(INode root) {
+		this.root = root;
+	}
+	/**
+	 * @return Returns the createDate.
+	 */
+	public Date getCreateDate() {
+		return createDate;
 	}
 
-	public int getId()
-	{
-		throw new UnsupportedOperationException(
-				"Method getId() not implemented yet!");
-	}
+	
 
-	public String getInfo()
-	{
-		throw new UnsupportedOperationException(
-				"Method getInfo() not implemented yet!");
-	}
-
-	public String getName()
-	{
-		throw new UnsupportedOperationException(
-				"Method getName() not implemented yet!");
-	}
-
-	public INode getRoot()
-	{
-		throw new UnsupportedOperationException(
-				"Method getRoot() not implemented yet!");
-	}
 
 }

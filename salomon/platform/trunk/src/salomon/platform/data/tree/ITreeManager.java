@@ -23,11 +23,13 @@ package salomon.platform.data.tree;
 
 import java.util.List;
 
-import salomon.engine.solution.ISolution;
+import salomon.platform.data.tree.INode.Type;
 import salomon.platform.exception.PlatformException;
 
 /**
  * 
+ * @author Mateusz Nowakowski
+ *
  */
 public interface ITreeManager
 {
@@ -71,16 +73,55 @@ public interface ITreeManager
 	IDataSource getTreeDataSource(int treeDataSourceId)	throws PlatformException;;
 
 	
-	
+	/**
+	 * Usuwa z bazy danych podane zrodlo danych 
+	 * @param dataSource
+	 * @throws PlatformException
+	 */
 	void removeTreeDataSource(IDataSource dataSource) throws PlatformException;
+	
+	/**
+	 * Tworze puste drzewo. Przed zapisem do bazy nalezy je zainicjowac korzeniem 
+	 * oraz zrodlem danych z ktorego powstalo.
+	 * @return
+	 * @throws PlatformException
+	 */
+	public ITree createTree() throws PlatformException;
+
+	/**
+	 * Tworze puste drzewo. Przed zapisem do bazy nalezy je zainicjowac korzeniem.
+	 * @param dataSourceId id dataSource dla ktorego to drzewo powstaje
+	 * @return
+	 * @throws PlatformException
+	 */
+	public ITree createTree(int dataSourceId) throws PlatformException;
+	
+	/**
+	 * Tworzy node dla drzewa. Nalezy dodawac dzieci metoda addChild(ren), setChildren na nodach
+	 * @param parentNode - null oznacza ze jest pusty
+	 * @param edge - w przypadku korzenia ignorowane
+	 * @param type - jesli docelowo bedzie to node bedacy lisciem to nalezy ustawic typ V
+	 * @param value
+	 * @return
+	 */
+	public INode createNode(INode parentNode, String edge, Type type, String value);
+	
+	//TODO 
+	
+	void addTree(ITree tree) throws PlatformException;
 	
 	ITree[] getAllTrees() throws PlatformException;
 
-	ITree[] getTrees(ISolution solution) throws PlatformException;
+	/**
+	 * Zwraca drzewa zwiazane z danym solutionem
+	 * @return
+	 * @throws PlatformException
+	 */
+	ITree[] getTrees() throws PlatformException;
 
 	ITree getTree(int treeId) throws PlatformException;
 
-	void addTree(ITree tree) throws PlatformException;
+
 
 	void removeTree(ITree tree) throws PlatformException;
 }

@@ -32,15 +32,18 @@ import salomon.engine.database.ExternalDBManager;
 import salomon.engine.database.queries.SQLDelete;
 import salomon.engine.database.queries.SQLInsert;
 import salomon.engine.database.queries.SQLSelect;
-import salomon.engine.solution.ISolution;
 import salomon.engine.solution.ShortSolutionInfo;
 import salomon.platform.data.tree.IDataSource;
+import salomon.platform.data.tree.INode;
 import salomon.platform.data.tree.ITree;
 import salomon.platform.data.tree.ITreeManager;
+import salomon.platform.data.tree.INode.Type;
 import salomon.platform.exception.PlatformException;
 
 /**
  * 
+ * @author Mateusz Nowakowski
+ *
  */
 public final class TreeManager implements ITreeManager
 {
@@ -77,7 +80,7 @@ public final class TreeManager implements ITreeManager
 		if (buff.length() == 0) throw new PlatformException("Decisioning columns are empty.");
 		insert.addValue("TDS_DECISIONING_COLUMNS",buff.substring(0,buff.length()-1));
 		try {
-			_dbManager.insert(insert);
+			_dbManager.insert(insert,"TDS_ID","GEN_TREE_DATA_SOURCES_ID");
 			_dbManager.commit();
 		} catch (SQLException e) {
 			_dbManager.rollback();
@@ -86,8 +89,9 @@ public final class TreeManager implements ITreeManager
 	}
 	
 	public List<Object []> getTreeDataSourceData(IDataSource dataSource) throws PlatformException {
-		List<Object []> returnList = new ArrayList<Object []>(100);
-		int columns = dataSource.getDecisionedColumn().length()+1;
+		if (dataSource == null) return null;
+		List<Object []> returnList = new ArrayList<Object []>();
+		int columns = dataSource.getDecioningColumns().length+1;
 		List<Object> row = null;
 		SQLSelect select = new SQLSelect();
 		select.addTable(dataSource.getTableName());
@@ -127,7 +131,7 @@ public final class TreeManager implements ITreeManager
 		select.addCondition("TDS_SOLUTION_ID = ",_solutionInfo.getId());
 		ResultSet resultSet = null;
 		try {
-			resultSet = _externalDBManager.select(select);
+			resultSet = _dbManager.select(select);
 			while (resultSet.next()) {
 				int i = 1;
 				DataSource dataSource = new DataSource(_solutionInfo);
@@ -166,7 +170,7 @@ public final class TreeManager implements ITreeManager
 		select.addCondition("TDS_ID = ",treeDataSourceId);
 		ResultSet resultSet = null;
 		try {
-			resultSet = _externalDBManager.select(select);
+			resultSet = _dbManager.select(select);
 			if(resultSet.next()) {
 				int i = 1;
 				DataSource dataSource = new DataSource(_solutionInfo);
@@ -191,30 +195,42 @@ public final class TreeManager implements ITreeManager
 	
 	public void removeTreeDataSource(IDataSource dataSource) throws PlatformException
 	{
-		SQLDelete delete = new SQLDelete("TREE_DATA_SOURCES");
-		delete.addCondition("TDS_SOLUTION_ID = ",_solutionInfo.getId());
-		delete.addCondition("TDS_ID = ",dataSource.getId());
-		try {
-			_dbManager.delete(delete);
-			_dbManager.commit();
-		} catch (SQLException e) {
-			_dbManager.rollback();
-			throw new PlatformException("Delete "+delete.getQuery()+" has errors: "+e.getLocalizedMessage());
+		if (dataSource != null ){
+			SQLDelete delete = new SQLDelete("TREE_DATA_SOURCES");
+			delete.addCondition("TDS_SOLUTION_ID = ",_solutionInfo.getId());
+			delete.addCondition("TDS_ID = ",dataSource.getId());
+			try {
+				_dbManager.delete(delete);
+				_dbManager.commit();
+			} catch (SQLException e) {
+				_dbManager.rollback();
+				throw new PlatformException("Delete "+delete.getQuery()+" has errors: "+e.getLocalizedMessage());
+			}
 		}
-		
 	}
 	
 	public ITree createTree() throws PlatformException {
-		return null;
+		return new Tree();
 	}
+
+	public ITree createTree(int dataSourceId) throws PlatformException {
+		IDataSource dataSource = getTreeDataSource(dataSourceId);
+		if (dataSource == null) throw new PlatformException("There isn`t tree data source with id: "+dataSourceId+" in database.");
+		return new Tree(dataSource);
+	}	
+	
+	public INode createNode(INode parentNode, String edge, Type type, String value){
+		return new Node(parentNode,edge,type,value);
+	}
+	
+	
+	//TODO
 	
 	public void addTree(ITree tree) throws PlatformException
 	{
 		throw new UnsupportedOperationException(
 				"Method addTree() not implemented yet!");
 	}
-
-
 
 
 	public ITree[] getAllTrees() throws PlatformException
@@ -230,10 +246,7 @@ public final class TreeManager implements ITreeManager
 	}
 
 
-
-
-
-	public ITree[] getTrees(ISolution solution) throws PlatformException
+	public ITree[] getTrees() throws PlatformException
 	{
 		throw new UnsupportedOperationException(
 				"Method getTrees() not implemented yet!");

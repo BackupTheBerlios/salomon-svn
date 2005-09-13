@@ -25,6 +25,12 @@ import java.util.Date;
 
 import salomon.engine.solution.ShortSolutionInfo;
 
+
+/**
+ * 
+ * @author Mateusz Nowakowski
+ *
+ */
 public interface IDataSource
 {
 	int getId();
@@ -42,4 +48,17 @@ public interface IDataSource
 	String[] getDecioningColumns();
 
 	Date getCreateDate();
+	
+	
+	void setName(String name);
+
+	void setInfo(String info);
+
+	void setTableName(String tableName);
+	
+	void setDecisionedColumn(String decisionedColumn);
+
+	void setDecioningColumns(String[] decisioningColumns);
+
+	
 }
