@@ -48,7 +48,18 @@ public final class ActionManager
 	 * @uml.associationEnd multiplicity="(0 1)"
 	 */
 	private AddTaskAction _addTaskAction;
-
+	
+	/**
+	 * @uml.property name="_chooseSolutionAction"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
+	private ChooseSolutionAction _chooseSolutionAction;
+	
+	
+	/**
+	 * @uml.property name="_editProjectAction"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
 	private EditProjectAction _editProjectAction;
 
 	/**
@@ -252,6 +263,18 @@ public final class ActionManager
 		return _addTaskAction;
 	}
 
+	/**
+	 * Returns the chooseSolutionAction.
+	 * @return The chooseSolutionAction
+	 */
+	public ChooseSolutionAction getChooseSolutionAction()
+	{
+		if( _chooseSolutionAction == null ) {
+			_chooseSolutionAction = new ChooseSolutionAction(_solutionManagerGUI);
+		}
+		return _chooseSolutionAction;
+	}
+	
 	/**
 	 * Returns the editProjectAction.
 	 * @return The editProjectAction
@@ -461,4 +484,5 @@ public final class ActionManager
 		}
 		return _editTaskAction;
 	}
+
 }

@@ -351,7 +351,7 @@ public final class LocalController implements IController
 		{
 			if (_btnOpenSolution == null) {
 				_btnOpenSolution = new JButton(
-						_actionManager.getOpenSolutionAction());
+						_actionManager.getChooseSolutionAction());
 				_btnOpenSolution.setIcon(new ImageIcon(_resourcesDir
 						+ Config.FILE_SEPARATOR
 						+ Resources.getString("ICO_SOLUTION_OPEN"))); //$NON-NLS-1$                
@@ -459,7 +459,7 @@ public final class LocalController implements IController
 			if (_itmOpenSolution == null) {
 				_itmOpenSolution = new JMenuItem();
 				_itmOpenSolution.setText(Messages.getString("MNU_OPEN")); //$NON-NLS-1$
-				_itmOpenSolution.addActionListener(_actionManager.getOpenSolutionAction());
+				_itmOpenSolution.addActionListener(_actionManager.getChooseSolutionAction());
 			}
 			return _itmOpenSolution;
 		}
@@ -601,8 +601,7 @@ public final class LocalController implements IController
 						"krzysztof@rajda.name"));
 				detailsPanel.add(this.getAuthorLabel("Jakub Galkowski",
 						"avi@student.uci.agh.edu.pl"));
-
-				detailsPanel.add(this.getAuthorLabel("Leszek Grzanka  ",
+				detailsPanel.add(this.getAuthorLabel("Leszek Grzanka",
 						"grzanka@student.uci.agh.edu.pl"));
 				detailsPanel.setBorder(BorderFactory.createEmptyBorder(30, 0,
 						0, 0));

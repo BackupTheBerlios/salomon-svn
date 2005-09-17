@@ -148,6 +148,7 @@ public final class SolutionManagerGUI
 		_solutionChooserFrame.setVisible(true);
 		return solutionID;
 	}
+	
 
 	public void chooseSolutionOnStart()
 	{
@@ -169,6 +170,7 @@ public final class SolutionManagerGUI
 		}
 
 	}
+	
 
 	public void editSolution()
 	{
@@ -206,8 +208,6 @@ public final class SolutionManagerGUI
 			ISolution solution = _solutionManager.createSolution();
 			setSolutionProperties(solution);
 			Collection solutions = ((SolutionManager) _solutionManager).getSolutionList();
-			LOGGER.info("Solutions " + solutions.size());
-
 			_solutions = (Solution[]) ((SolutionManager) _solutionManager).getSolutions();
 			String[] solutionNames = new String[_solutions.length];
 			int i;
@@ -226,10 +226,6 @@ public final class SolutionManagerGUI
 	public void openSolution()
 	{
 		
-		if (!_solutionChooserFrame.isVisible()) {
-			_solutionChooserFrame.setVisible(true);
-		}
-
 		int selectedRow = _comboSolutionList.getSelectedIndex();
 		final int solutionID = _solutions[selectedRow].getInfo().getId();
 		LOGGER.info("chosen solution: " + solutionID);
@@ -251,7 +247,7 @@ public final class SolutionManagerGUI
 		}
 		_statusBar.setItem(SB_CUR_SOLUTION, solution.getInfo().getName());
 		_solutionChooserFrame.setVisible(false);		
-		_parent.setVisible(true);		
+		_parent.setVisible(true);
 	}
 
 	public void saveSolution()
