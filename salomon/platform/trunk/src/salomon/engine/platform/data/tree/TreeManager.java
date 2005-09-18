@@ -70,8 +70,9 @@ public final class TreeManager implements ITreeManager
 	}
 	
 	
-	public void addTreeDataSource(IDataSource dataSource)throws PlatformException
+	public int addTreeDataSource(IDataSource dataSource)throws PlatformException
 	{
+		int treeDataSourceId = 0;
 		SQLInsert insert = new SQLInsert("TREE_DATA_SOURCES");
 		insert.addValue("TDS_NAME",dataSource.getName());
 		insert.addValue("TDS_INFO",dataSource.getInfo());
@@ -83,12 +84,13 @@ public final class TreeManager implements ITreeManager
 		if (buff.length() == 0) throw new PlatformException("Decisioning columns are empty.");
 		insert.addValue("TDS_DECISIONING_COLUMNS",buff.substring(0,buff.length()-1));
 		try {
-			_dbManager.insert(insert,"TDS_ID","GEN_TREE_DATA_SOURCES_ID");
+			treeDataSourceId = _dbManager.insert(insert,"TDS_ID","GEN_TREE_DATA_SOURCES_ID");
 			_dbManager.commit();
 		} catch (SQLException e) {
 			_dbManager.rollback();
 			throw new PlatformException("Insert "+insert.getQuery()+" has errors: "+e.getLocalizedMessage());
 		}
+		return treeDataSourceId;
 	}
 	
 	public List<Object []> getTreeDataSourceData(IDataSource dataSource) throws PlatformException {
@@ -226,8 +228,9 @@ public final class TreeManager implements ITreeManager
 	}
 	
 	
-	public void addTree(ITree tree) throws PlatformException
+	public int addTree(ITree tree) throws PlatformException
 	{
+		int returnCreatedTreeId = 0;
 		if ((tree == null)||(tree.getRoot() == null)) throw new PlatformException("Tree must by initialised.");
 		int trnId = this.insertNode(tree.getRoot(),null);
 		SQLInsert insert = new SQLInsert("TREES");
@@ -236,12 +239,13 @@ public final class TreeManager implements ITreeManager
 		insert.addValue("TRE_TDS_ID ",tree.getDataSource().getId());
 		insert.addValue("TRE_TRN_ID ",trnId);
 		try {
-			_dbManager.insert(insert,"TRE_ID"," GEN_TREES_ID");
+			returnCreatedTreeId = _dbManager.insert(insert,"TRE_ID"," GEN_TREES_ID");
 			_dbManager.commit();
 		} catch (SQLException e) {
 			_dbManager.rollback();
 			throw new PlatformException("Insert "+insert.getQuery()+" has errors: "+e.getLocalizedMessage());
 		}
+		return returnCreatedTreeId;
 	}
 
 	/**

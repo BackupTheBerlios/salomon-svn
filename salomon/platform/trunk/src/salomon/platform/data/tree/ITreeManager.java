@@ -53,9 +53,10 @@ public interface ITreeManager
 	/**
 	 * Dodaje IDataSource do bazy danych 
 	 * @param dataSource
+	 * @return id stworzonego data sourca 
 	 * @throws PlatformException
 	 */
-	void addTreeDataSource(IDataSource dataSource) throws PlatformException;;
+	int addTreeDataSource(IDataSource dataSource) throws PlatformException;;
 	
 	/**
 	 * Zwraca liste poprawnych DataSourcow dla aktualnego solutiona
@@ -113,7 +114,7 @@ public interface ITreeManager
 	/**
 	 * Dodaje drzewo do bazy danych
 	 */
-	void addTree(ITree tree) throws PlatformException;
+	int addTree(ITree tree) throws PlatformException;
 
 	
 	
