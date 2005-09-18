@@ -238,7 +238,13 @@ public final class SolutionManagerGUI
 				}
 			});
 			// forcing connecting to external database
-			solution.getDataEngine();
+			try {
+				solution.getDataEngine();
+			} catch (Exception e) {
+				LOGGER.fatal("", e);
+				Utils.showErrorMessage("ERR_CANNOT_OPEN_SOLUTION");
+				return;
+			}
 			LOGGER.info("Connected to external data base");
 
 			IProject project = solution.getProjectManager().createProject();
