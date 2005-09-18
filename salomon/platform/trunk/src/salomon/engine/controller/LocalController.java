@@ -152,33 +152,34 @@ public final class LocalController implements IController
 	{
 		if (_menuBar == null) {
 			_menuBar = new JMenuBar();
-			
+
 			JMenu solution = new JMenu(Messages.getString("MNU_SOLUTION")); //$NON-NLS-1$
 			JMenu project = new JMenu(Messages.getString("MNU_PROJECT")); //$NON-NLS-1$
-			
+
 			solution.add(project);
 			solution.addSeparator();
 			solution.add(_guiMenu.getItmNewSolution());
 			solution.add(_guiMenu.getItmOpenSolution());
+			solution.add(_guiMenu.getItmEditSolution());
 			solution.addSeparator();
 			solution.add(_guiMenu.getItmSaveSolution());
 			solution.addSeparator();
-			solution.add(_guiMenu.getItmExit());			
-			
+			solution.add(_guiMenu.getItmExit());
+
 			project.add(_guiMenu.getItmNewProject());
 			project.add(_guiMenu.getItmOpenProject());
 			project.add(_guiMenu.getItmEditProject());
 			project.addSeparator();
-			project.add(_guiMenu.getItmSaveProject());			
-			
+			project.add(_guiMenu.getItmSaveProject());
+
 			JMenu tools = new JMenu(Messages.getString("MNU_TOOLS")); //$NON-NLS-1$
 			tools.add(_guiMenu.getItmViewProjects());
 			tools.add(_guiMenu.getItmViewSolutions());
 			tools.add(_guiMenu.getItmViewPlugins());
 			tools.add(_guiMenu.getItmViewTasks());
-			tools.addSeparator();			
+			tools.addSeparator();
 			tools.add(_guiMenu.getItmSQLConsole());
-			
+
 			JMenu help = new JMenu(Messages.getString("MNU_HELP")); //$NON-NLS-1$           
 			help.add(_guiMenu.getItmAbout());
 			_menuBar.add(solution);
@@ -270,6 +271,8 @@ public final class LocalController implements IController
 		private JMenuItem _itmAbout;
 
 		private JMenuItem _itmEditProject;
+
+		private JMenuItem _itmEditSolution;
 
 		private JMenuItem _itmExit;
 
@@ -408,6 +411,16 @@ public final class LocalController implements IController
 			return _itmEditProject;
 		}
 
+		JMenuItem getItmEditSolution()
+		{
+			if (_itmEditSolution == null) {
+				_itmEditSolution = new JMenuItem();
+				_itmEditSolution.setText(Messages.getString("MNU_EDIT")); //$NON-NLS-1$
+				_itmEditSolution.addActionListener(_actionManager.getEditSolutionAction());
+			}
+			return _itmEditSolution;
+		}
+
 		JMenuItem getItmExit()
 		{
 			if (_itmExit == null) {
@@ -432,7 +445,6 @@ public final class LocalController implements IController
 			}
 			return _itmNewProject;
 		}
-	
 
 		JMenuItem getItmNewSolution()
 		{

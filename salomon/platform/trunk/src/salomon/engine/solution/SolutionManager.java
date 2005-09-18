@@ -22,20 +22,12 @@
 package salomon.engine.solution;
 
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.LinkedList;
-import java.util.List;
 
 import org.apache.log4j.Logger;
 
 import salomon.engine.database.DBManager;
 import salomon.engine.database.queries.SQLSelect;
-import salomon.engine.project.IProject;
-import salomon.engine.project.Project;
-import salomon.engine.project.ProjectInfo;
-import salomon.engine.project.ProjectManager;
 
 import salomon.util.gui.Utils;
 
@@ -145,40 +137,9 @@ public final class SolutionManager implements ISolutionManager
 		LOGGER.debug("solution: " + solution);
 		LOGGER.info("Solution successfully loaded.");
 
-		try {
-			// forcing connecting do external data base
-			solution.getDataEngine();
-		} catch (Exception e) {
-			LOGGER.fatal("", e);
-			Utils.showErrorMessage("Cannot connect to database");
-			throw new DBException(e.getLocalizedMessage());
-		}
-		LOGGER.info("Connected to external data base");
-
 		// setting current solution
 		_currentSolution = solution;
 		return _currentSolution;
-	}
-
-	// FIXME this method has to be removed but after implementing
-	// component to show table
-
-	public Collection getSolutionList() throws PlatformException
-	{
-		Collection solutions = null;
-		SQLSelect select = new SQLSelect();
-		select.addTable(SolutionInfo.TABLE_NAME);
-		// executing query
-		ResultSet resultSet = null;
-
-		try {
-			resultSet = _dbManager.select(select);
-			solutions = Utils.getDataFromResultSet(resultSet);
-		} catch (SQLException e) {
-			LOGGER.fatal("", e);
-			throw new DBException(e.getLocalizedMessage());
-		}
-		return solutions;
 	}
 
 	/**
@@ -198,74 +159,23 @@ public final class SolutionManager implements ISolutionManager
 		int i = 0;
 
 		try {
-
 			resultSet = _dbManager.select(select);
-			resultSet.next();
-			while (!resultSet.isAfterLast()) {
-
-				solutionsArrayList.add(new Solution(
-						(ManagerEngine) _managerEngine, _dbManager));
-				((Solution) solutionsArrayList.get(i++)).getInfo().load(
-						resultSet);
+			while (resultSet.next()) {
+				ISolution solution = this.createSolution();
+				solution.getInfo().load(resultSet);
+				solutionsArrayList.add(solution);
 				resultSet.next();
 			}
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			LOGGER.fatal("", e);
 			throw new DBException(e.getLocalizedMessage());
 		}
 
 		Solution[] solutionsArray = new Solution[solutionsArrayList.size()];
 
-		for (i = 0; i < solutionsArray.length; i++)
-			solutionsArray[i] = (Solution) solutionsArrayList.get(i);
-
+		solutionsArray = solutionsArrayList.toArray(solutionsArray);		
 		return solutionsArray;
-
-	}
-
-	/**
-	 * Method selects projects for given solution id
-	 * 
-	 * @param solutionID
-	 * @return
-	 * @throws ClassNotFoundException
-	 * @throws Exception
-	 */
-	private List<IProject> getProjectsForSolution(int solutionID)
-			throws Exception
-	{
-		List<IProject> projects = new LinkedList<IProject>();
-		SQLSelect select = new SQLSelect();
-		select.addTable(ProjectInfo.TABLE_NAME);
-		select.addColumn("project_id");
-		select.addColumn("solution_id");
-		select.addColumn("project_name");
-		select.addColumn("project_info");
-		select.addColumn("lm_date");
-		select.addCondition("solution_id =", solutionID);
-
-		// executing query
-		ResultSet resultSet = null;
-		resultSet = _dbManager.select(select);
-		ProjectManager projectManager = (ProjectManager) _currentSolution.getProjectManager();
-		try {
-			while (resultSet.next()) {
-				Project project = (Project) projectManager.createProject();
-				// loading task
-				project.getInfo().load(resultSet);
-				projectManager.addProject(project);
-				projects.add(project);
-			}
-		} catch (Exception e) {
-			LOGGER.fatal("", e);
-			resultSet.close();
-			throw e;
-		}
-		resultSet.close();
-
-		return projects;
 	}
 
 	private static final Logger LOGGER = Logger.getLogger(SolutionManager.class);
-
 }

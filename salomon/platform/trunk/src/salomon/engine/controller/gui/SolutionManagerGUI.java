@@ -22,14 +22,16 @@
 package salomon.engine.controller.gui;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.lang.reflect.InvocationTargetException;
-import java.util.Collection;
 
+import javax.swing.Action;
+import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -148,7 +150,6 @@ public final class SolutionManagerGUI
 		_solutionChooserFrame.setVisible(true);
 		return solutionID;
 	}
-	
 
 	public void chooseSolutionOnStart()
 	{
@@ -170,7 +171,6 @@ public final class SolutionManagerGUI
 		}
 
 	}
-	
 
 	public void editSolution()
 	{
@@ -206,17 +206,16 @@ public final class SolutionManagerGUI
 	{
 		try {
 			ISolution solution = _solutionManager.createSolution();
-			setSolutionProperties(solution);
-			Collection solutions = ((SolutionManager) _solutionManager).getSolutionList();
-			_solutions = (Solution[]) ((SolutionManager) _solutionManager).getSolutions();
-			String[] solutionNames = new String[_solutions.length];
-			int i;
-			for (i = 0; i < _solutions.length; i++) {
-				solutionNames[i] = _solutions[i].getInfo().getName();
+			if (setSolutionProperties(solution)) {
+				_solutions = (Solution[]) ((SolutionManager) _solutionManager).getSolutions();
+				String[] solutionNames = new String[_solutions.length];
+				int i;
+				for (i = 0; i < _solutions.length; i++) {
+					solutionNames[i] = _solutions[i].getInfo().getName();
+				}
+				_comboSolutionList.addItem((((Solution) solution).getInfo().getName()));
+				_comboSolutionList.repaint();
 			}
-			_comboSolutionList.addItem((((Solution) solution).getInfo().getName()));
-			_comboSolutionList.addItem(solution);
-			_comboSolutionList.repaint();
 		} catch (PlatformException e) {
 			LOGGER.fatal("", e);
 			Utils.showErrorMessage("Cannot create solution");
@@ -225,7 +224,7 @@ public final class SolutionManagerGUI
 
 	public void openSolution()
 	{
-		
+
 		int selectedRow = _comboSolutionList.getSelectedIndex();
 		final int solutionID = _solutions[selectedRow].getInfo().getId();
 		LOGGER.info("chosen solution: " + solutionID);
@@ -238,6 +237,10 @@ public final class SolutionManagerGUI
 					return solutionID;
 				}
 			});
+			// forcing connecting to external database
+			solution.getDataEngine();
+			LOGGER.info("Connected to external data base");
+
 			IProject project = solution.getProjectManager().createProject();
 			solution.getProjectManager().addProject(project);
 		} catch (PlatformException e) {
@@ -246,7 +249,7 @@ public final class SolutionManagerGUI
 			return;
 		}
 		_statusBar.setItem(SB_CUR_SOLUTION, solution.getInfo().getName());
-		_solutionChooserFrame.setVisible(false);		
+		_solutionChooserFrame.setVisible(false);
 		_parent.setVisible(true);
 	}
 
@@ -286,9 +289,10 @@ public final class SolutionManagerGUI
 	 * @param solution
 	 * @throws PlatformException 
 	 */
-	public void setSolutionProperties(ISolution iSolution)
+	public boolean setSolutionProperties(ISolution iSolution)
 			throws PlatformException
 	{
+		boolean approved = false;
 		Solution solution = (Solution) iSolution;
 		if (_pnlSolutionProperties == null) {
 			_pnlSolutionProperties = new JPanel();
@@ -340,7 +344,9 @@ public final class SolutionManagerGUI
 			solution.getInfo().setPasswd(_txtPasswd.getText());
 			_solutionManager.addSolution(iSolution);
 			_statusBar.setItem(SB_CUR_SOLUTION, solution.getInfo().getName());
+			approved = true;
 		}
+		return approved;
 	}
 
 	/**
@@ -369,27 +375,14 @@ public final class SolutionManagerGUI
 	}
 
 	/**
-	 * This method initializes _btnEdit
-	 * @return JButton
-	 */
-	JButton getBtnEdit()
-	{
-		if (_btnEdit == null) {
-			_btnEdit = new JButton(_actionManager.getEditSolutionAction());
-			_btnEdit.setText(Messages.getString("BTN_EDIT")); //$NON-NLS-1$
-		}
-		return _btnEdit;
-	}
-
-	/**
 	 * This method initializes _btnExit
 	 * @return JButton
 	 */
 	JButton getBtnExit()
 	{
 		if (_btnExit == null) {
-			_btnExit = new JButton(_actionManager.getExitAction());
-			_btnExit.setText(Messages.getString("BTN_EXIT")); //$NON-NLS-1$
+			_btnExit = this.createActionButton(_actionManager.getExitAction(),
+					Messages.getString("BTN_EXIT"));
 		}
 		return _btnExit;
 	}
@@ -401,8 +394,9 @@ public final class SolutionManagerGUI
 	JButton getBtnNew()
 	{
 		if (_btnNew == null) {
-			_btnNew = new JButton(_actionManager.getNewSolutionAction());
-			_btnNew.setText(Messages.getString("BTN_NEW")); //$NON-NLS-1$
+			_btnNew = this.createActionButton(
+					_actionManager.getNewSolutionAction(),
+					Messages.getString("BTN_NEW"));
 		}
 		return _btnNew;
 	}
@@ -414,10 +408,22 @@ public final class SolutionManagerGUI
 	JButton getBtnOpen()
 	{
 		if (_btnOpen == null) {
-			_btnOpen = new JButton(_actionManager.getOpenSolutionAction());
-			_btnOpen.setText(Messages.getString("BTN_OPEN")); //$NON-NLS-1$
+			_btnOpen = this.createActionButton(
+					_actionManager.getOpenSolutionAction(),
+					Messages.getString("BTN_OPEN"));
 		}
 		return _btnOpen;
+	}
+
+	private JButton createActionButton(Action action, String text)
+	{
+		JButton button = new JButton(action);
+		button.setText(text);
+		Dimension dim = new Dimension(75, 25);
+		button.setPreferredSize(dim);
+		button.setMinimumSize(dim);
+		button.setMaximumSize(dim);
+		return button;
 	}
 
 	/**
@@ -430,42 +436,15 @@ public final class SolutionManagerGUI
 		if (_pnlManagerButtons == null) {
 			_pnlManagerButtons = new JPanel();
 			_pnlManagerButtons.setLayout(new BoxLayout(_pnlManagerButtons,
-					BoxLayout.X_AXIS));
-			_pnlManagerButtons.add(Box.createHorizontalGlue());
-			_pnlManagerButtons.add(getBtnNew());
-			_pnlManagerButtons.add(Box.createHorizontalStrut(10));
-			_pnlManagerButtons.add(getBtnEdit());
-			_pnlManagerButtons.add(Box.createHorizontalStrut(10));
+					BoxLayout.Y_AXIS));
+			_pnlManagerButtons.add(Box.createVerticalGlue());
 			_pnlManagerButtons.add(getBtnOpen());
-			_pnlManagerButtons.add(Box.createHorizontalStrut(10));
+			_pnlManagerButtons.add(getBtnNew());
+			_pnlManagerButtons.add(Box.createVerticalStrut(10));
 			_pnlManagerButtons.add(getBtnExit());
-			_pnlManagerButtons.add(Box.createHorizontalGlue());
+			_pnlManagerButtons.add(Box.createVerticalGlue());
 		}
 		return _pnlManagerButtons;
-	}
-
-	private JFrame getSolutionController()
-	{
-
-		if (_solutionChooserFrame == null) {
-			_pnlSolutionController = new JPanel();
-			_pnlSolutionController.setLayout(new BorderLayout());
-			_pnlSolutionController.add(getPnlManagerButtons(),
-					BorderLayout.SOUTH);
-			_pnlSolutionController.add(_comboSolutionList, BorderLayout.CENTER);
-			_solutionChooserFrame = new JFrame(
-					Messages.getString("TIT_SOLUTIONS"));
-			Point location = new Point();
-			location.x = (Toolkit.getDefaultToolkit().getScreenSize().width - _solutionChooserFrame.getWidth()) / 2;
-			location.y = (Toolkit.getDefaultToolkit().getScreenSize().height - _solutionChooserFrame.getHeight()) / 2;
-			_solutionChooserFrame.setLocation(location);
-			_solutionChooserFrame.getContentPane().add(_pnlSolutionController);
-			_solutionChooserFrame.pack();
-			_solutionChooserFrame.addWindowListener( new WindowAdapter(){
-				  public void windowClosing(WindowEvent e) {Starter.exit();}
-			});
-		}
-		return _solutionChooserFrame;
 	}
 
 	private int showSolutionList()
@@ -476,20 +455,32 @@ public final class SolutionManagerGUI
 			_pnlSolutionController = new JPanel();
 			_pnlSolutionController.setLayout(new BorderLayout());
 			_pnlSolutionController.add(getPnlManagerButtons(),
-					BorderLayout.SOUTH);
-			_pnlSolutionController.add(_comboSolutionList, BorderLayout.CENTER);
+					BorderLayout.EAST);
+			JPanel panel = new JPanel();
+			panel.add(_comboSolutionList);
+			_comboSolutionList.setPreferredSize(new Dimension(150, 25));
+			panel.setBorder(BorderFactory.createTitledBorder(Messages.getString("TIT_SOLUTIONS")));
+
+			_pnlSolutionController.add(panel, BorderLayout.CENTER);
 			_solutionChooserFrame = new JFrame(
 					Messages.getString("TIT_SOLUTIONS"));
-			Point location = new Point();
-			location.x = (Toolkit.getDefaultToolkit().getScreenSize().width - _solutionChooserFrame.getWidth()) / 2;
-			location.y = (Toolkit.getDefaultToolkit().getScreenSize().height - _solutionChooserFrame.getHeight()) / 2;
-			_solutionChooserFrame.setLocation(location);
+
+			_solutionChooserFrame.setResizable(false);
 			_solutionChooserFrame.getContentPane().add(_pnlSolutionController);
 			_solutionChooserFrame.pack();
-			_solutionChooserFrame.addWindowListener( new WindowAdapter(){
-				  public void windowClosing(WindowEvent e) {Starter.exit();}
-			});
 			
+			Point location = new Point();
+			location.x = (Toolkit.getDefaultToolkit().getScreenSize().width - _solutionChooserFrame.getWidth()) / 2 ;
+			location.y = (Toolkit.getDefaultToolkit().getScreenSize().height - _solutionChooserFrame.getHeight()) / 2 ;
+			_solutionChooserFrame.setLocation(location);
+			
+			_solutionChooserFrame.addWindowListener(new WindowAdapter() {
+				public void windowClosing(WindowEvent e)
+				{
+					Starter.exit();
+				}
+			});
+
 		}
 		return solutionID;
 	}
