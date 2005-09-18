@@ -1,41 +1,20 @@
-\documentclass[a4paper,12pt]{article}
+\documentclass[a4paper,10pt]{article}
 \usepackage[polish]{babel}
 \usepackage[cp1250]{inputenc}
 \usepackage[T1]{fontenc}
-\usepackage[dvips]{graphicx}
-\usepackage{fancyvrb}
-
-\usepackage[urlcolor=blue, colorlinks=true, bookmarks=true, bookmarksnumbered=true]{hyperref}
+\usepackage{graphicx}
 \usepackage{indentfirst}
 \usepackage{times}
-\usepackage{epsfig}
-\usepackage{color}
 
-\usepackage{fancyhdr} 
+\title{\emph{Salomon} -- komponentowa architektura indukcyjnej bazy
+  danych jako platformy uczenia maszynowego}
 
-\pagestyle{fancy} 
+\author{Nikodem Jura \emph{(nico@icslab.agh.edu.pl)}\\
+ Krzysztof Rajda \emph{(krzysztof@rajda.name)}\\
+ Marek Kisiel-Dorohinicki \emph{(doroh@agh.edu.pl)}\\
+ Bart³omiej Œnie¿yñski \emph{(sniezyn@agh.edu.pl)}}
 
-\rfoot{SALOMON}
-
-
-%ustawienie wielkosci akapitu
-%\setlength{\parindent}{0mm}
-%%odstep miedzy akapitami
-%\setlength{\parskip}{2mm}
-
-%ustawienia rozmiaru tekstu
-%    \textwidth 16cm
-%    \textheight 24cm 
-%    \topmargin -15mm
-%    \evensidemargin-3mm
-%    \oddsidemargin -3mm   
-
-\title{\emph{Salomon} extended abstract}
-
-\author{Nikodem Jura \emph{(nico@icslab.agh.edu.pl)}
-        \\
-        Krzysztof Rajda \emph{(krzycho@student.uci.agh.edu.pl)}
-				}                       
+\date{Katedra Informatyki AGH}
 
 \begin{document}
 
@@ -43,123 +22,153 @@
 %wylaczenie numerowania na I stronie
 \thispagestyle{empty}
 
-\begin{center}
-\textcolor{blue}{\href{http://salomon.iisg.agh.edu.pl}{http://salomon.iisg.agh.edu.pl}}
-\end{center}
+Integracja technologii baz danych z nowoczesnymi metodami indukcyjnego
+generowania wiedzy wydaje siê dawaæ istotne korzyœci w perspektywie
+budowy systemów wspomaganie decyzji. Systemy nazywane czasem
+indukcyjnymi bazami danych potrafi¹ odpowiedzieæ nie tylko na pytania,
+dla których odpowiedŸ znajduje siê w bazie danych, ale równie¿ na
+pytania, które wymagaj¹ zsyntetyzowania i zastosowania wiarygodnej
+wiedzy, wygenerowanej przez indukcyjne wnioskowanie z faktów z bazy
+danych i wczeœniejszej wiedzy.  Indukcyjne bazy danych mog¹ byæ
+postrzegane jako naturalny krok w rozwoju systemów bazodanowych \cite{bib3}.
 
-\begin{center}
-Prowadz¹cy: dr in¿. Marek Kisiel-Dorohinicki
-\end{center}
-\emph{Knowledge Mining} to nowo rozwijana metodologia, która pozwala wydobywaæ u¿yteczn¹ wiedzê zarówno z danych jak i z wiedzy ogólnej. W metodologii tej bardzo du¿y nacisk k³adziony jest na prezentacjê wyników w sposób
-przyjazny dla cz³owieka, np. za pomoc¹ jêzyka zbli¿onego do jêzyka naturalnego, oraz za pomoc¹ ró¿norodnych graficznych reprezentacji. Pozwala one na generowanie wiedzy zarówno z wielkich systemów bazodanowych gdzie dane mog¹ byæ niekompletnych a nawet czêœciowo b³êdne.
+\begin{figure}[ht]
+    \centering
+        \includegraphics[width=0.70\textwidth]{img/knowledge_mining.png}
+    \caption{Indukcyjne bazdy danych}
+    \label{fig:architecture}
+\end{figure}
 
-Jednym z naukowców zajmuj¹cych siê dziedzin¹ \emph{Knowledge Mining} jest \emph{prof. Ryszard S. Michalski}. Wraz z innymi naukowcami z \emph{George Mason University (USA)} stworzy³ on system \emph{Vinlen}, którego zadaniem jest realizowanie zadañ metodologii \emph{Knowledge Mining} wykorzystuj¹c indukcyjne bazy danych. Celem tego projektu jest integracja wielu istniej¹cych metod wydobywania wiedzy takich jak np. \emph{AQ} (algorytm generacji regu³ atrybutowych), czy metod konceptualnego klastrowania. W systemie zosta³y równie¿ zawarte mechanizmy zarz¹dzania danymi, operatory wizualizacji wiedzy (ITG) oraz tworzenie grafów powi¹zañ. W celu ³atwego u¿ytkowania systemu zosta³ on wyposa¿ony w przyjazny graficzny interfejs u¿ytkownika.
 
-Z zwi¹zku z pewnymi ograniczeniami architektury \emph{VINLEN} powsta³ projekt maj¹cy na celu stworzenie dla niej alternatywy pozbawionej tych ograniczeñ.
+\emph{VINLEN} to system indukcyjnej bazy danych, rozwijany w
+\emph{George Mason University} \cite{bib1}. Integruje on
+mechanizmy wnioskowania idukcyjnego ze standardowymi relacyjnymi
+operatorami bazodanowymi. Integracja ta opiera siê na nowych
+rodzajach operatorów zwanych operatorami generowania wiedzy
+(\emph{KGO} -- knowledge generation operators). \emph{KGO} operuje
+na \emph{segmentach wiedzy} sk³adaj¹cych siê z kombinacji jednej
+lub wiêcej relacyjnych tabel i wiedzy powi¹zanej wiedzy w bazê
+wiedzy. \emph{KGO} przyjmuje na wyjœciu jeden lub wiêcej segment
+wiedzy, na podstawie którego generuje inny segment wiedzy.
 
+Indukcyjne bazy danych mog¹ byæ wspierane przez wyspecjalizowanych
+agentów (\emph{scauts}), których zadaniem jest synteza i zarz¹dzanie
+wiedz¹, która jest dostosowywana do wymagañ okreœlonego u¿ytkownika.
+Podczas odkrywania wiedzy, agent taki tworzy model zainteresowañ
+u¿ytkownika i wykorzystuje go do zsyntezowania wiedzy docelowej.
+System \emph{VINLEN} pozwala na integracjê bazy danych, wiedzy i
+algorytmów uczenia maszynowego, wykorzystuj¹c jêzyk \emph{KGL-1}
+(\emph{knowledge generation language}), który pozwala na opisanie
+zawartej w systemie wiedzy.
+
+Rozwój \emph{VINLEN'a} zmierza w kierunku opracowania metodologii
+budowania systemów indukcyjnych baz danych, zawieraj¹cych bazy wiedzy
+dziedzinowej, relacyjne bazy danych, a w szczególnoœci jêzyk
+\emph{KQL} (\emph{knowledge query language}) do tworzenia i
+zarz¹dzania skautami oraz funkcjonalny, graficzny interfejs
+u¿ytkownika, u³atwiaj¹cy wykorzystane mo¿liwoœci systemu. Cech¹
+charakterystyczn¹ tak rozwijanego systemu bêdzie mo¿liwoœæ sk³adowania
+wiedzy w relacyjnej bazie danych wraz z danymi.  Hierarchiczny schemat
+sk³adowania danych zapewniaæ bêdzie ³atwy dostêp, zadawanie zapytañ
+oraz manipulowanie wiedz¹ w sposób standardowy lub z wykorzystaniem
+jêzyka \emph{KQL}.
+
+Platforma \emph{Salomon} jest odpowiedzi¹ na pewne ograniczenia
+architektury systemu \emph{VINLEN}.  G³ówne za³o¿enia proponowanej
+architektury to:
 \begin{itemize}
-	\item \textbf{Ca³a funkcjonalnoœæ umieszczona we wtyczkach.}
-	Silnik programu powinien byæ tak lekki jak tylko to mo¿liwe. Jego zdaniem jest dostarczenie przyjaznego œrodowiska do realizacji funkcjonalnoœci zawartej we wtyczkach.
-	
-	\item \textbf{Otwarta architektura}
-	Wprowadzenie warstwy izoluj¹cej wtyczki od bazy danych. Otwarta architektura pozwala na wygodne rozszerzanie tej warstwy.
-	
-	\item \textbf{Niezale¿noœæ od platformy}
-	System powinien byæ niezale¿ny od platformy i umo¿liwiaæ pracê w rozproszonym, heterogenicznym œrodowisku
-	\item \textbf{Mo¿liwoœæ definiowania przep³ywu sterowania}
-	
-	\item \textbf{£atwoœæ adaptowania funkcjonalnoœci zawartej w systemie \emph{VINLEN}}
-	
+    \item \textbf{Budowa komponentowa.}
+    Platforma -- g³ówny modu³ systemu jest tak prosty jak to mo¿liwe. Jego zadaniem jest dostarczenie
+    przyjaznego œrodowiska do realizacji funkcjonalnoœci zawartej w komponentach
+    maj¹cych postaæ tzw. wtyczek.
+
+    \item \textbf{Otwartoœæ.} U¿ytkownik ma pe³n¹ swobodê w
+    dodawaniu nowych komponentów (wtyczek) do systemu.
+
+    \item \textbf{Niezale¿noœæ od platformy.}
+    Dziêki implementacji w jêzyku Java, system mo¿e byæ uruchamiany na dowolnej platformie posiadaj¹cej odpowiedni¹ maszynê wirtualn¹.
+
+    \item \textbf{Mo¿liwoœæ rozpraszania obliczeñ.}
+    Dziêki budowie komponentowej, i odpowiedniemu definiowaniu zadañ, system umo¿liwia pracê w rozproszonym,
+    heterogenicznym œrodowisku.
 \end{itemize}
 
-Ekstrakcja wiedzy to proces iteracyjny podzielony na etapy, które mog¹ tworzyæ cykle.
+\medskip
+System \emph{Salomon} sk³ada siê z dwóch zasadniczych czêœci.
+Pierwsz¹ z nich stanowi platforma. Druga czêœæ to zbiór wtyczek,
+dostarczaj¹cych logikê potrzebn¹ do skonfigurowania, wykonania i
+wyœwietlenia rezultatów zadania.
 
-W ka¿dym tym etapie wiedza jest poddawana obróbce. Na ka¿dym takim etapie proces odkrywania mo¿e byæ ukierunkowany zgodnie
-z wymaganiami u¿ytkownika. Ka¿dy etap tworzy odrêbn¹ ca³oœæ. Czêœæ etapów jest roz³¹czna, zatem mog¹ byæ wykonywane wspó³bie¿nie. Architektura Salomona pozwala na rozproszenie, a co za tym idzie -- zrównoleglenie, wykonywania takich roz³¹cznych etapów oraz na synchronizacjê ich wyników.
+Platforma sk³ada siê z dwóch elementów: silnika, którego zadaniem
+jest zarz¹dzanie i~uruchamianie zadañ, oraz magazynu, który s³u¿y
+do przechowywania danych i wiedzy.
 
-W Salomonie reprezentacj¹ etapu jest \emph{zadanie} (Task). Ka¿de zadanie mo¿e posiadaæ kilka nastêpników i kilka
-poprzedników. Ujmuj¹c rzecz proœciej, zadania mog¹ byæ zorganizowane w postaci grafu. 
+\medskip
+Jednym z istotnych elementów systemu jest mo¿liwoœæ definiowania
+przebiegu pracy systemu. Ekstrakcja wiedzy to proces, który mo¿e
+byæ podzielony na etapy. W ka¿dym etapie wiedza jest poddawana
+pewnej obróbce (np. dyskretyzowane s¹ atrybuty, tworzone s¹
+regu³y, wiedza jest testowana). Poniewa¿ ka¿dy etap tworzy odrêbn¹
+ca³oœæ, a czêœæ etapów jest od siebie niezale¿na, zatem mog¹ byæ
+one wykonywane wspó³bie¿nie.
 
-Zadanie to podstawowa jednostka reprezentuj¹ca obliczenia. Zdefiniowane jest jako trójka:
-
+Zadanie to podstawowa jednostka reprezentuj¹ca obliczenia.
+Zdefiniowane jest ono jako czwórka $(a, p, we, wy)$, gdzie:
 \begin{itemize}
-	\item algorytm(dostarczany w postaci wtyczki, czyli \emph{pluginu}))
-	\item dane steruj¹ce algorytmem
-	\item dane wejœciowe, z których algorytm bêdzie wydobywaæ wiedzê
+    \item $a$ jest algorytmem, dostarczanym do systemu w postaci komponentu --
+    wtyczki,
+    \item $p$ reprezentuje parametry algorytmu,
+    \item $we$ jest wejœciem,
+    \item $wy$ oznacza wyjœcie.
 \end{itemize}
+Wejœcie i wyjœcie mo¿e mieæ postaæ danych (w przypadku algorytmów,
+które dokonuj¹ np. selekcji danych), wiedzy (np. wygenerowane
+regu³y) lub danych i wiedzy naraz (np.\ regu³y i wyj¹tki dla
+nich).
 
-Na wejœciu lub wyjœciu ka¿dego zadania mog¹ pojawiæ siê dane (w przypadku algorytmów, które
-dokonuj¹ selekcji/segregacji danych), wiedza lub obie te rzeczy naraz.
+Wyjœcie jednego zadania mo¿e byæ wejœciem pewnej liczby nastêpnych
+zadañ. Aby zadanie mog³o zostaæ wykonane, wszystkie zadania od
+których zale¿y musz¹ byæ wykonanie wczeœniej. Powi¹zane zadania
+mog¹ byæ przedstawione w postaci grafu skierowanego. Taki graf z
+zaznaczonym zadaniem pocz¹tkowym tworzy \emph{program}. Dodatkowo,
+ka¿da krawêdŸ mo¿e mieæ przypisany warunek, który jest wymagany,
+aby sterowanie zosta³o przekazane wzd³u¿ tej krawêdzi. Tak
+zdefiniowany program mo¿e byæ ³atwo prezentowany w postaci
+graficznej.
 
-Salomon sk³ada siê z dwóch zasadniczych czêœci (Rys \ref{fig:architecture}). Pierwsz¹ z nich stanowi platforma. 
+\emph{Salomon} ma tak¿e aspekty dynamiczne. W systemie mo¿na
+definiowaæ agentów, którzy reaguj¹ na zmiany w danych i/lub wiedzy
+(np.\ na dodanie nowego rekordu do danych treningowych, czy
+wygenerowanie wiedzy przez innego agenta). Do zdefiniowania
+takiego agenta, potrzebny jest odpowiadaj¹cy mu program oraz
+wskazanie zdarzeñ, na które ma reagowaæ.
 
-\begin{figure}[h]
-	\centering
-		\includegraphics[width=0.90\textwidth]{../documentation/img/concept/architecture.png}
-	\caption{Architektura systemu}	
-	\label{fig:architecture}
-\end{figure}		
+\bigskip
+W pracy przedstawiona zostanie architektura i wybrane aspekty
+implementacji platformy \emph{Salomon}, jak równie¿ zaprezentowane
+zostan¹ mo¿liwoœci jego wykorzystania na przyk³adzie wybranych
+algorytmów pozyskiwania wiedzy z danych.
 
-Tworz¹ j¹:
-\begin{itemize}
-	\item silnik, którego zadaniem jest zarz¹dzanie i~uruchamianie
-zadañ
-	\item magazyn s³u¿¹cy do przechowywania wiedzy
-\end{itemize}
-
-Druga czêœæ to zbiór wtyczek, dostarczaj¹cych logikê potrzebn¹ do skonfigurowania, wykonania i~wyœwietlenia rezultatów
-zadania. System jest otwarty -- oznacza to, ¿e jego funkcjonalnoœæ mo¿e byæ w ³atwy sposób rozszerzana poprzez dostarczenie nowych wtyczek.
-
-
-
-
-%spis tresci
-%\tableofcontents
 %\newpage
-%VINLEN inductive database system is brie
-%y
-%reviewed and illustrated by selected results. The goal of research on VINLEN is to
-%develop a methodology for deeply integrating a wide range of knowledge generation
-%operators with a relational database and a knowledge base. The current system
-%has already integrated an AQ learning system for generating attributional rules in
-%two modes: theory formation, in which generated rules are consistent and complete
-%with regard to data, and pattern discovery, in which generated rules represent strong
-%patterns, not necessarily consistent or complete. It also has integrated a conceptual
-%clustering module for splitting data into conceptual classes, and providing descrip-
-%tions of those classes. Preliminary data management and knowledge visualization
-%operators, such as the intelligent target data generator (ITG) and concept asso-
-%ciation graph display, have also been integrated. To facilitate an easy interaction
-%with the system, a user-oriented visual interface has been implemented. An exam-
-%ple of results from applying VINLEN to a medical problem domain is presented to
-%illustrate VINLEN knowledge discovery and representation capabilities.
+\begin{thebibliography}{99}
+\bibitem {bib1} {Michalski, Kaufman, Pietrzykowski, Sniezynski,
+    Wojtusiak, Sharma, Seeman, Fischthal, Alkharouf, White, Draminski,
+    Glowinski, ''Inductive Databases and Knowledge Scouts''}
 
+\bibitem {bib2} {Kaufman, K. and Michalski, R. S., ''The Development
+    of the Inductive Database System VINLEN: A Review of Current
+    Research,'' International Intelligent Information Processing and
+    Web Mining Conference, Zakopane, Poland, 2003}
 
+\bibitem {bib3} {Michalski, R. S. and Kaufman, K., ''Data Mining and
+    Knowledge Discovery: A Review of Issues and a Multistrategy
+    Approach,'' Machine Learning and Data Mining: Methods and
+    Applications, R. S. Michalski, I. Bratko and M.  Kubat (Eds.), pp.
+    71-112, London: John Wiley \& Sons, 1998}
 
-%\newpage
-%Dziedzina baz danych znajduje siê obecnie w fazie niespotykanego rozwoju -- staj¹ siê one nie tylko wszechobecne, ale i~globalnie po³¹czone. W zwi¹zku z tym pojawi³o siê wiele nowych kierunków ich rozwoju, jednym z nich jest \emph{Data Mining}.
-%
-%\emph{Data Mining} to dziedzina nauki, zajmuj¹ca siê przetwarzaniem danych zmagazynowanych w bazach danych w celu wydobycia z nich wiedzy. W przeciwieñstwie do konwencjonalnych baz danych, wiedza ta umo¿liwia znalezienie odpowiedzi nie tylko na pytania, na które odpowiedzi znajduj¹ siê bezpoœrednio w bazie, ale pozwala na jej udzielenie tak¿e w przypadkach wymagaj¹cych po³¹czenia faktów zapisanych w danych ze sob¹ lub wczeœniej wygenerowan¹ wiedz¹. \emph{Data Minig} znajduje bardzo szerokie zastosowania w wielu dziedzinach, pocz¹wszy od handlu elektronicznego, przez analizê trendów na rynkach finansowych, po diagnostykê medyczn¹.
-%
-%Jednym z naukowców zajmuj¹cych siê dziedzin¹ Data Miningu jest prof. Ryszard S. Michalski. Wraz z innymi naukowcami z \emph{George Mason University (USA)} stworzy³ on system \emph{Vinlen}, którego zadaniem jest realizowanie zadañ \emph{Data Miningu}. 
-%W systemie \emph{Vinlen} standardowe operatory relacyjne definiowane przez  \emph{SQL} s¹ wykorzystywane do poprzez utworzenie nowych typów operatorów, zwanych \emph{operatorami generowania wiedzy} (ang. \emph{knowledge generation operators (KGO)}). Operatory te dzia³aj¹ na segmentach wiedzy, stanowi¹cych po³¹czenie jednej lub wiêkszej iloœci tabel z relacyjnej bazy danych oraz wiedzy przechowywanej w bazie wiedzy. Operatory te na podstawie kilku segmentów wejœciowych generuj¹ nowy segment wyjœciowy, który mo¿e byæ zapisany w bazie wiedzy.
-%
-%U podstaw tworzenia operatorów generowania wiedzy leg³y dwie zasady:
-%\begin{itemize}
-%	\item rezultaty ich dzia³ania musz¹ byæ przedstawiane w formie ³atwej do zrozumienia przez u¿ytkowników systemu
-%	\item wiedza generowana przy ich u¿yciu musi byæ wyra¿ona w sposób mo¿liwie zwarty i efektywny
-%\end{itemize}
-%
-%Te zasady zosta³y spe³nione poprzez zastosowanie metod dedukcji, w których sposób tworzenia opisu danych jest jak najbardziej naturalny dla cz³owieka -- dane te zapisywane s¹ w jêzyku atrybutywnym. Jêzyk atrybutywny to system logiczny, który ³¹czy elementy logiki \texttt{klasycznej, rachunku pierwszego rzêdu, oraz logiki wielowartoœciowej??}. S³u¿y on zarówno jako system wnioskowania, jak i jako jêzyk reprezentacji wiedzy.
-%
-%Regu³y atrybutywne, podstawowy sposób reprezentacji wiedzy w systemie \emph{Vinlen} s¹ znaczenie bardziej u¿yteczne ni¿ konwencjonalne regu³y decyzyjne oparte na warunkach postaci <atrybut-relacja-wartoœæ>.
-
-
-\begin{itemize}
-	\item \href{http://www.mli.gmu.edu/papers/2003-2004/Kaufman-Michalski-IIS03-final.pdf}{http://www.mli.gmu.edu/papers/2003-2004/Kaufman-Michalski-IIS03-final.pdf}
-	\item \href{http://www.mli.gmu.edu/papers/96-2000/98-5.pdf}{http://www.mli.gmu.edu/papers/96-2000/98-5.pdf}
-	
-	\item \href{http://www.galaxy.gmu.edu/stats/colloquia/AbstractsFall2004/CollSept17.html}{http://www.galaxy.gmu.edu/stats/colloquia/AbstractsFall2004/CollSept17.html}
-\end{itemize}
-
+\bibitem {bib4} {R. S. Michalski, ''Knowledge Mining and Inductive
+    Databases: An Emerging New Research Direction'', School of
+    Computational Sciences, George Mason University, 2004}
+\end{thebibliography}
 
 \end{document}
