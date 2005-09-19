@@ -29,7 +29,7 @@ package salomon.platform.data.tree;
 public interface INode
 {
 	enum Type {
-		COLUMN, VALUE
+		COLUMN, VALUE,
 	};
 
 	int getId();

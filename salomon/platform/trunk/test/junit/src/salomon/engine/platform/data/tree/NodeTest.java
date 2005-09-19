@@ -15,7 +15,7 @@ import junit.framework.TestCase;
 
 public class NodeTest extends TestCase
 {
-	private static Logger LOGGER = Logger.getLogger(ProjectManagerTest.class);
+	private static Logger LOGGER = Logger.getLogger(NodeTest.class);
 	private Node testNode1, testNode2, testNode3, testNode4, testNode5, testNode6, testNode7, testNode8;
 	
 	protected void setUp() throws Exception
