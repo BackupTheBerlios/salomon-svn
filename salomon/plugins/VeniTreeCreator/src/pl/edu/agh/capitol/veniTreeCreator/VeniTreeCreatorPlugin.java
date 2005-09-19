@@ -21,11 +21,30 @@ import salomon.plugin.ISettingComponent;
 import salomon.plugin.ISettings;
 import salomon.util.serialization.SimpleString;
 
+/**
+ * @author Lukasz
+ * <br><br>
+ * Plugin tworz¹cy drzewa decyzyjne na podstawie danych. Drzewa s¹ tworzone 
+ * na bazie struktury <code>IDataSource</code> a zapisywane do <code>ITree</code>.
+ * Zaimplementowany algorytm tworzenia drzew to ID3 
+ * 
+ */
 public class VeniTreeCreatorPlugin implements IPlugin {
 
 	private static final Logger LOGGER = Logger
 			.getLogger(VeniTreeCreatorPlugin.class);
 
+	
+	/**
+	 * G³ówna metoda licz¹ca pluginu. Wykonuje 3 czynnoœci
+	 * <li> pobiera z <code>Environment<code/> id DataSource'a i na tej 
+	 * podstawie pobiera samego DataSource'a
+	 * <li> wykonuje zasadnicze obliczenia - metoda 
+	 * <code>performCalculations</code>. Stworzone drzewo jest zapisywane 
+	 * dobazy danych 
+	 * <li> ustawia w <code>Environment</code> id stworzego drzewa
+	 * 
+	 */
 	public IResult doJob(IDataEngine eng, IEnvironment env, ISettings settings) {
 		IDataSource dane = null;
 		ITree result = null;
@@ -48,15 +67,28 @@ public class VeniTreeCreatorPlugin implements IPlugin {
 		return new VeniTreeCreatorResult();
 	}
 
+	/**
+	 * Zwraca komponent Settingsów (pusty)
+	 */
 	public ISettingComponent getSettingComponent() {
 		return new VeniTreeCreatorSettingsComponent();
 	}
 
+	/**
+	 * Zwraca komponent z rezultatem (pusty)
+	 */
 	public IResultComponent getResultComponent() {
 		return new VeniTreeCreatorResultComponent();
 	}
 
-	ITree performCalculations(IDataSource ds, IDataEngine eng) throws PlatformException {
+	/**
+	 * Metoda uruchamiaj¹ce logikê tworzenia drzewa
+	 * @param ds DataSource na podstawie którego tworzymy drzewa
+	 * @param eng IDataEngine - coby mo¿naby³o pobraæ dane z DataSource'a
+	 * @return stworzone drzewko (i tak zapisane do bazy)
+	 * @throws PlatformException - w wypadku problemów ze stworzeniem drzewa
+	 */
+	public ITree performCalculations(IDataSource ds, IDataEngine eng) throws PlatformException {
 		TreeConstructionTask tc = new TreeConstructionTask();
 		tc.loadFromDataSource(ds, eng.getTreeManager().getTreeDataSourceData(ds));
 		tc.createTree();
@@ -64,22 +96,33 @@ public class VeniTreeCreatorPlugin implements IPlugin {
 		return tc.returnResult(eng.getTreeManager(), ds);
 	}
 
+	/**
+	 * Rezultat zwracany w przypadku wyst¹pienia b³êdu
+	 * @param result - deskrpytor b³êdu
+	 * @return rezultat (IResult)
+	 */
 	IResult getDefaultErrorResult(String result) {
 		VeniTreeCreatorResult res = new VeniTreeCreatorResult();
 		res.setSuccessful(false);
 		res.setResult(result);
 		return res;
 	}
-
-	IDataSource getIDataSourceFromEnv(IDataEngine eng, IEnvironment env)
+	
+	/**
+	 * Metoda pomocnicza pobieraj¹ca IDataSource'a z IEnvironment'u 
+	 * @param eng
+	 * @param env
+	 * @return <code>IDataSource</code> z danymi
+	 * @throws PlatformException
+	 */
+	public IDataSource getIDataSourceFromEnv(IDataEngine eng, IEnvironment env)
 			throws PlatformException {
-		// TODO do uzgodnienia jak to bedzie
 		try {
-			/*int id = Integer.parseInt(env.getVariable("ds_name").getValue()
+			int id = Integer.parseInt(env.getVariable("ds_name").getValue()
 					.toString());
-			return eng.getTreeManager().getTreeDataSource(id);*/
+			return eng.getTreeManager().getTreeDataSource(id);
 			//zaslepka :/
-			return eng.getTreeManager().getTreeDataSource(18);
+			/*return eng.getTreeManager().getTreeDataSource(18);*/
 		} catch (NullPointerException e) {
 			LOGGER.error("Variable ds_name not set in env", e);
 			throw new PlatformException("Variable ds_name not set in env");
