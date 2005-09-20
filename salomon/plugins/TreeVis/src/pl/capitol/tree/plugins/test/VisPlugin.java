@@ -11,19 +11,17 @@ import org.apache.log4j.Logger;
 import pl.capitol.tree.plugins.test.components.VisResultComponent;
 import pl.capitol.tree.plugins.test.components.VisSettingComponent;
 import pl.capitol.tree.plugins.util.TreeVisResults;
-
 import salomon.platform.IDataEngine;
 import salomon.platform.IEnvironment;
-import salomon.platform.IVariable;
 import salomon.platform.data.tree.INode;
 import salomon.platform.data.tree.ITree;
 import salomon.platform.exception.PlatformException;
-
 import salomon.plugin.IPlugin;
 import salomon.plugin.IResult;
 import salomon.plugin.IResultComponent;
 import salomon.plugin.ISettingComponent;
 import salomon.plugin.ISettings;
+import salomon.util.serialization.SimpleString;
 
 
 //NK
@@ -38,7 +36,7 @@ public class VisPlugin implements IPlugin {
 		
 		int treeId = 0;
 		try {
-			treeId = Integer.parseInt(env.getVariable("tree_name").getValue().toString());
+			treeId = Integer.parseInt(((SimpleString)env.getVariable("tree_name").getValue()).getValue());
 		} catch (NumberFormatException e1) {
 			LOGGER.fatal("", e1);
 		} catch (PlatformException e1) {

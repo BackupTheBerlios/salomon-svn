@@ -58,7 +58,7 @@ public class TreeDataLoaderPlugin implements IPlugin {
 			int  dataSId = trm.addTreeDataSource(dataS);
 			IVariable variable = env.createEmpty("DATA_SOURCE_ID");
 			variable.setValue(new SimpleInteger(dataSId));
-			
+			env.add(variable);
 		} catch (PlatformException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

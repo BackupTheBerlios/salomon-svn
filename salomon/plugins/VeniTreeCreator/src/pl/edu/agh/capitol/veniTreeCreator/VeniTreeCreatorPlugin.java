@@ -9,7 +9,6 @@ import pl.edu.agh.capitol.veniTreeCreator.util.VeniTreeCreatorResult;
 import salomon.platform.IDataEngine;
 import salomon.platform.IEnvironment;
 import salomon.platform.IVariable;
-
 import salomon.platform.data.tree.IDataSource;
 import salomon.platform.data.tree.ITree;
 import salomon.platform.exception.PlatformException;
@@ -19,6 +18,7 @@ import salomon.plugin.IResult;
 import salomon.plugin.IResultComponent;
 import salomon.plugin.ISettingComponent;
 import salomon.plugin.ISettings;
+import salomon.util.serialization.SimpleInteger;
 import salomon.util.serialization.SimpleString;
 
 /**
@@ -47,14 +47,14 @@ public class VeniTreeCreatorPlugin implements IPlugin {
 	 */
 	public IResult doJob(IDataEngine eng, IEnvironment env, ISettings settings) {
 		IDataSource dane = null;
-		ITree result = null;
+		int result = -1;
 		try {
 			dane = getIDataSourceFromEnv(eng, env);
 			/** ************ Calculations *************** */
 			result = performCalculations(dane, eng);
 			/** ************ Calculations done ********** */
 			IVariable iv = env.createEmpty("tree_name");
-			IObject io = new SimpleString("" + result.getId());
+			IObject io = new SimpleString("" + result);
 			iv.setValue(io);
 			env.add(iv);
 		} catch (PlatformException e) {
@@ -88,7 +88,7 @@ public class VeniTreeCreatorPlugin implements IPlugin {
 	 * @return stworzone drzewko (i tak zapisane do bazy)
 	 * @throws PlatformException - w wypadku problemów ze stworzeniem drzewa
 	 */
-	public ITree performCalculations(IDataSource ds, IDataEngine eng) throws PlatformException {
+	public int performCalculations(IDataSource ds, IDataEngine eng) throws PlatformException {
 		TreeConstructionTask tc = new TreeConstructionTask();
 		tc.loadFromDataSource(ds, eng.getTreeManager().getTreeDataSourceData(ds));
 		tc.createTree();
@@ -118,14 +118,14 @@ public class VeniTreeCreatorPlugin implements IPlugin {
 	public IDataSource getIDataSourceFromEnv(IDataEngine eng, IEnvironment env)
 			throws PlatformException {
 		try {
-			int id = Integer.parseInt(env.getVariable("ds_name").getValue()
-					.toString());
+			int id = ((SimpleInteger)env.getVariable("DATA_SOURCE_ID").getValue()).getValue();
+
 			return eng.getTreeManager().getTreeDataSource(id);
 			//zaslepka :/
 			/*return eng.getTreeManager().getTreeDataSource(18);*/
 		} catch (NullPointerException e) {
-			LOGGER.error("Variable ds_name not set in env", e);
-			throw new PlatformException("Variable ds_name not set in env");
+			LOGGER.error("Variable DATA_SOURCE_ID not set in env", e);
+			throw new PlatformException("Variable DATA_SOURCE_ID not set in env");
 		} catch (PlatformException e) {
 			LOGGER.error("PlatformException occured ", e);
 			throw new PlatformException("PlatformException occured ");

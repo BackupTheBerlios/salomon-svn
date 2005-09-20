@@ -2,8 +2,8 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="C:/Documents and Settings/mnowakowski/Moje dokumenty/Inne/Salomon/platform/trunk/dev/platform.jar"/>
-	<classpathentry kind="lib" path="C:/Documents and Settings/mnowakowski/Moje dokumenty/Inne/Salomon/platform/trunk/dev/plugin.jar"/>
-	<classpathentry kind="lib" path="C:/Documents and Settings/mnowakowski/Moje dokumenty/Inne/Salomon/platform/trunk/dev/util.jar"/>
+	<classpathentry sourcepath="/Salomon" kind="lib" path="D:/Projekty/salomon/platform/trunk/dev/platform.jar"/>
+	<classpathentry sourcepath="/Salomon" kind="lib" path="D:/Projekty/salomon/platform/trunk/dev/plugin.jar"/>
+	<classpathentry kind="lib" path="D:/Projekty/salomon/platform/trunk/dev/util.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

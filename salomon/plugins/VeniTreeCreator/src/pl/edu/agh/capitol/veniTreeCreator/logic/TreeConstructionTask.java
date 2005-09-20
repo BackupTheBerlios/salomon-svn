@@ -71,7 +71,7 @@ public class TreeConstructionTask {
 	 * @return obiekt implementuj¹cy intefejs <code>ITree</code> 
 	 * @throws PlatformException
 	 */
-	public ITree returnResult(ITreeManager iTreeManager, IDataSource ds)
+	public int returnResult(ITreeManager iTreeManager, IDataSource ds)
 			throws PlatformException {
 		ITree gefco = iTreeManager.createTree();
 		gefco.setDataSource(ds);
@@ -105,9 +105,9 @@ public class TreeConstructionTask {
 			}
 			hm.put(ti, in);
 		}
-		iTreeManager.addTree(gefco);
+		int id = iTreeManager.addTree(gefco);
 
-		return gefco;
+		return id;
 	}
 
 	/** 

@@ -76,11 +76,11 @@ public class VeniTreeCreatorMainTest extends TestCase{
 			env.add(iva);
 			
 			IDataSource dane = vtcp.getIDataSourceFromEnv(eng, env);
-			ITree result = vtcp.performCalculations(dane, eng);
+			int result = vtcp.performCalculations(dane, eng);
 			
 			VeniTreeCreatorPlugin vtcp2 = new VeniTreeCreatorPlugin();
 			IDataSource dane2 = vtcp2.getIDataSourceFromEnv(eng, env);
-			ITree result2 = vtcp2.performCalculations(dane2, eng);
+			int result2 = vtcp2.performCalculations(dane2, eng);
 			
 			assertEquals(result,result2);
 			

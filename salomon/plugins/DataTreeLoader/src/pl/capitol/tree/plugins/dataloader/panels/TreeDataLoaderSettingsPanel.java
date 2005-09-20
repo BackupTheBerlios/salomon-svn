@@ -1,31 +1,16 @@
 package pl.capitol.tree.plugins.dataloader.panels;
 
 
-import java.awt.Container;
-import java.awt.FlowLayout;
-import java.util.LinkedList;
-import java.util.List;
-
-import javax.swing.JButton;
+import javax.swing.DefaultListModel;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.ListModel;
 
 import salomon.platform.IDataEngine;
 import salomon.platform.data.IColumn;
 import salomon.platform.data.ITable;
-import salomon.platform.data.tree.ITreeManager;
-import salomon.platform.serialization.IObject;
 import salomon.plugin.ISettings;
-import salomon.util.serialization.SimpleArray;
 import salomon.util.serialization.SimpleString;
-
-import javax.swing.JList;
-import javax.swing.JScrollBar;
-import javax.swing.DefaultListModel;
-import javax.swing.JScrollPane;
 
 
 /**
@@ -178,14 +163,14 @@ public class TreeDataLoaderSettingsPanel extends JPanel {
 					dListDecisioned.clear();
 					for (int i=0; i<listDecisioned.length; i++)
 					{
-						dListDecisioned.addElement(listDecisioned[i].toString());
+						dListDecisioned.addElement(listDecisioned[i].getName());
 					}
 					
 					listDecisioning = listTable[jListTable.getSelectedIndex()].getColumns();
 					dListDecisioning.clear();
 					for (int i=0; i<listDecisioning.length; i++)
 					{
-						dListDecisioning.addElement(listDecisioning[i].toString());
+						dListDecisioning.addElement(listDecisioning[i].getName());
 					}
 
 				}
