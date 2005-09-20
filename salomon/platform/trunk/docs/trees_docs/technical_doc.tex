@@ -65,7 +65,7 @@ System przetwarzania wiedzy\\}
  Salomon o obs³ugê drzew decyzyjnych
 
  \section{Cel}
- Dokument ten powsta³ w celu przybli¿enia szczegó³ów technicznych
+ Dokument ten ma na celu przybli¿enie szczegó³ów technicznych
  poszczególnych pluginów realizuj¹cych zadania kolejnych etapów
  procesu tworzenia i prezentowania drzew decyzyjnych. Okreœla on
  dok³adnie jakie parametry przyjmuj¹ pluginy, jakie s¹ na³o¿one na
@@ -73,37 +73,90 @@ System przetwarzania wiedzy\\}
 
  \section{Pluginy}
  \subsection{TreeDataLoader}
- Plugin ten zawarty jest w pakiecie pl.capitol.tree.plugins.dataloader.
+ Plugin ten zawarty jest w pakiecie \texttt{pl.capitol.tree.plugins.dataloader}.
 Implementuje on wszystkie interfejsy wymagane (zgodnie z
-za³o¿eniami twórców) przez plugin dla platformy Salomon.
+za³o¿eniami twórców) przez plugin dla platformy Salomon i jest
+pierwszym z grupy pluginów odpowiadaj¹ch za budowê drzew
+decyzyjnych. Jego rola sprowadza siê do wczytania dostepnych
+tabel, po wybraniu jednej wczytywane s¹ jej kolumny. Gdy
+u¿ytkownik dokona wyboru ról dla kolumn informacje te przekazywane
+s¹ do kolejnych pluginów.
 
 \subsubsection{Opis implementacji}
 
-pl.capitol.tree.plugins.dataloader.TreeDataLoaderSettingsPanel.java
-– pobiera ze obiektu implementuj¹cego interfejs IDataEngine
-informacje o tabelach (tablicê obiektów implementuj¹cych ITable) w
-aktualnej bazie danych za pomoca metody
+Klasa
+\texttt{pl.capitol.tree.plugins.dataloader.TreeDataLoaderSettingsPanel}
+– pobiera z obiektu implementuj¹cego interfejs
+\texttt{IDataEngine} informacje o tabelach (tablicê obiektów
+implementuj¹cych interfejs ITable) w aktualnej bazie danych za
+pomoca metody \texttt{listTable =
+dataEngine.getMetaData().getTables()} oraz wyœwietla je w oknie
+“Table”. Po wyborze ¿¹danej tabeli która pos³u¿y do budowy drzewa
+wczytywane s¹ dostêpne w niej kolumny za pomoc¹ metody
+\texttt{listTable[nr].getColumns()}, która zwraca tablicê obiektów
+implementuj¹cych IColumn. Wybrane ustawienia zwracane s¹ metod¹
+\texttt{getSettings()} jako obiekt implementuj¹cy ISettings.
 
-listTable = dataEngine.getMetaData().getTables();
-
-oraz wyœwietla je w oknie “Table”
-
-Po wyborze ¿¹danej tabeli zczytywane s¹ dostêpne w niej kolumny za
-pomoc¹
-
-listTable[nr].getColumns()
-
-która zwraca tablicê obiektów implementuj¹cych IColumn.
-
-Wybrane ustawienia zwracane s¹ metod¹ getSettings() jako obiekt
-implementuj¹cy ISettings.
-
-Nastêpnie odczytywane s¹ w klasie
+Zwracane wymienion¹ wy¿ej metod¹ ustawienia odczytywane s¹ w
+dalszej kolejnoœci w klasie
 pl.capitol.tree.plugins.dataloader.TreeDataLoaderPlugin, i
-umieszczanie w obiekcie implementuj¹cym IDataSource. Jego id zaœ
+umieszczanie w obiekcie implementuj¹cym IDataSource. Jego Id zaœ
 umieszczany jest w obiekcie implementuj¹cym IVariable – jako tak
 zwana zmienna œrodowiskowa, któr¹ mo¿e pobraæ nastêpny plugin i na
 tej podstawie zbudowaæ drzewo.
+
+\subsection{VeniTreeCreator}
+Plugin nale¿y do pakietu
+\texttt{pl.edu.agh.capitol.veniTreeCreator} i realizuje algorytm
+budowy drzew decyzyjnych.
+
+\subsubsection{Opis implementacji}
+Klasa \texttt{VeniTreeCreator} - Plugin tworz¹cy drzewa decyzyjne
+na podstawie danych. Drzewa s¹ tworzone na bazie struktury
+IDataSource a zapisywane do ITree. Zaimplementowany algorytm
+tworzenia drzew to ID3.
+
+Metody:
+\begin{itemize}
+    \item doJob() - G³ówna metoda licz¹ca pluginu.
+
+    Parametry:
+    \begin{description}
+        \item[-] salomon.platform.IDataEngine eng
+        \item[-] salomon.platform.IEnvironment env
+        \item[-] salomon.plugin.ISettings settings
+    \end{description}
+    Zwraca: salomon.plugin.IResult
+    \item getDefaultErrorResult() - Rezultat zwracany w przypadku wyst¹pienia b³êdu
+
+    Parametry:
+    \begin{description}
+        \item[-] java.lang.String result
+    \end{description}
+    Zwraca: salomon.plugin.IResult
+    \item performCalculations() - Metoda uruchamiaj¹ce logikê tworzenia drzewa
+
+    Parametry:
+    \begin{description}
+        \item[-] salomon.platform.data.tree.IDataSource ds
+        \item[-] salomon.platform.IDataEngine eng
+    \end{description}
+    Zwraca: salomon.platform.data.tree.ITree
+\end{itemize}
+
+ \subsection{TreeVisualisation}
+ Plugin ten zawarty jest w pakiecie pl.capitol.tree.plugins.test Implementuje
+on wszystkie interfejsy wymagane (zgodnie z za³o¿eniami twórców)
+przez plugin dla platformy Salomon.
+
+\subsubsection{Opis implementacji}
+pl.capitol.tree.plugins.test.VisPlugin  pobiera ze zmiennej
+œrodowiskowej \texttt{id} drzewa, które ma zostaæ wyœwietlone,
+nastêpnie przebiega po kolejnych poziomach drzewa dopisuj¹c do
+wynikowego stringu ga³êzie pomiêdzy kolejnymi poziomami, nastêpnie
+przekazuje rezultat do VisResultPanel.java gdzie string
+zawieraj¹cy obraz drzewa zostaje przetworzony i wyœwietlony w polu
+tekstowym.
  \newpage
 
 \end{document}
