@@ -6,6 +6,7 @@ package salomon.engine.platform.data.tree;
 import java.sql.SQLException;
 import java.util.List;
 
+import junit.framework.AssertionFailedError;
 import junit.framework.TestCase;
 
 import org.apache.log4j.Logger;
@@ -14,7 +15,6 @@ import org.apache.log4j.PropertyConfigurator;
 import salomon.engine.platform.ManagerEngine;
 
 import salomon.engine.database.DBManager;
-import salomon.engine.database.ExternalDBManager;
 import salomon.engine.database.queries.SQLInsert;
 import salomon.engine.solution.ISolution;
 import salomon.platform.data.tree.ITreeManager;
@@ -56,16 +56,129 @@ public class TreeManagerTest extends TestCase {
 	public void testAddTree()
 	{
 		INode testNode1 = new Node(null, "Node1", Node.Type.VALUE, "1");
-		INode testNode2 = new Node(null, "Node2", Node.Type.VALUE, "2");
-		INode testNode3 = new Node(null, "Node3", Node.Type.VALUE, "3");
-		INode testNode4 = new Node(null, "Node4", Node.Type.VALUE, "4");
-		INode testNode5 = new Node(null, "Node5", Node.Type.VALUE, "5");
+		INode testNode2 = new Node(null, "Node2", Node.Type.VALUE, "1->2");
+		INode testNode3 = new Node(null, "Node3", Node.Type.VALUE, "1->3");
+		INode testNode4 = new Node(null, "Node4", Node.Type.VALUE, "2->4");
+		INode testNode5 = new Node(null, "Node5", Node.Type.VALUE, "2->5");
 		
-		ITree testTree;
+		Tree testTree;
+		
+		testTree = new Tree();
+		testTree.setRoot(testNode1);
+		testTree.getRoot().addChild(testNode2);
+		testTree.getRoot().addChild(testNode3);
+		testNode2.addChild(testNode4);
+		testNode2.addChild(testNode5);
+		
+		testTree.setId(666);
+		testTree.setInfo("Informacja");
+		testTree.setName("Drzewko testowe");
+		
+		//przygotowujemy tree data source'a dla drzewa
+		SQLInsert insert = new SQLInsert("TREE_DATA_SOURCES");
+		insert.addValue("TDS_NAME","NAZWA TESTOWA DATASOURCEA");
+		insert.addValue("TDS_INFO","TEST_ADD_TREE");
+		insert.addValue("TDS_SOLUTION_ID",4);
+		insert.addValue("TDS_TABLE ","FIKCYJNA_TABELA");
+		insert.addValue("TDS_DECISIONED_COLUMN","KOLUMNA_DECISIONED");
+		insert.addValue("TDS_DECISIONING_COLUMNS","bla1,bla2,bla3,bla4");
+		insert.addValue("TDS_ID",666);
+		
+		SQLInsert insert2 = new SQLInsert("FIKCYJNA_TABELA");
+		insert2.addValue("KOLUMNA_DECISIONED",1);
+		insert2.addValue("BLA1",2);
+		insert2.addValue("BLA2",3);
+		insert2.addValue("BLA3",4);
+		insert2.addValue("BLA4","YES");
+		
+		try {
+			_dbManager.insert(insert);
+		} catch (SQLException e) {
+			LOGGER.fatal("", e);
+		}
+		_dbManager.commit();
+		try {
+			_externalDBManager.executeQuery("CREATE TABLE FIKCYJNA_TABELA ( KOLUMNA_DECISIONED INTEGER NOT NULL, BLA1 INTEGER NOT NULL, BLA2 INTEGER NOT NULL, BLA3 INTEGER NOT NULL, BLA4 VARCHAR(10) NOT NULL)");
+		} catch (SQLException e) {
+			LOGGER.fatal("", e);
+		}
+		_externalDBManager.commit();
+		
+		try {
+			_externalDBManager.insert(insert2);
+		} catch (SQLException e) {
+			LOGGER.fatal("", e);
+		}
+		_externalDBManager.commit();
+		
+		try {
+			testTree.setDataSource(treeManager.getTreeDataSource(666));
+		} catch (PlatformException e) {
+			LOGGER.fatal("", e);
+		}
+		
+		// przypisanie stworzonego datasource'a do drzewa
+		try {
+			testTree.setDataSource(treeManager.getTreeDataSource(666));
+		} catch (PlatformException e1) {
+			LOGGER.fatal("", e1);
+		}
+		
+		try {
+			ITree [] treeArray;
+			int treeID;
+			// dodanie drzewa
+			treeID = treeManager.addTree(testTree);
+			
+			// pobranie istniejacych drzew
+			treeArray = treeManager.getTrees();
+			LOGGER.debug("TreeArray length:" + treeArray.length);
+			LOGGER.debug("treeArray[treeArray.length - 1].getInfo() :"+treeArray[treeArray.length - 1].getInfo());
+			
+			assertTrue(treeArray[treeArray.length - 1].getInfo().compareTo("Informacja") == 0);
+			assertTrue(treeArray[treeArray.length - 1].getName().compareTo("Drzewko testowe") == 0);
+			LOGGER.debug("treeArray[treeArray.length - 1].getId():" + treeArray[treeArray.length - 1].getId());
+			assertTrue(treeArray[treeArray.length - 1].getId() == treeID);
+			assertTrue(treeArray[treeArray.length - 1].getRoot().getValue().compareTo(testNode1.getValue()) == 0 );
+			assertTrue(treeArray[treeArray.length - 1].getRoot().getChildren()[0].getValue().compareTo(testNode2.getValue()) == 0 );
+			assertTrue(treeArray[treeArray.length - 1].getRoot().getChildren()[1].getValue().compareTo(testNode3.getValue()) == 0 );
+			assertTrue(treeArray[treeArray.length - 1].getRoot().getChildren()[0].getChildren()[0].getValue().compareTo(testNode4.getValue()) == 0 );
+			assertTrue(treeArray[treeArray.length - 1].getRoot().getChildren()[0].getChildren()[1].getValue().compareTo(testNode5.getValue()) == 0 );
+			
+			assertTrue(treeArray[treeArray.length - 1].getDataSource().getDecisionedColumn().compareTo("KOLUMNA_DECISIONED") == 0);
+			assertTrue(treeArray[treeArray.length - 1].getDataSource().getInfo().compareTo("TEST_ADD_TREE") == 0);
+			assertTrue(treeArray[treeArray.length - 1].getDataSource().getName().compareTo("NAZWA TESTOWA DATASOURCEA") == 0);
+			assertTrue(treeArray[treeArray.length - 1].getDataSource().getTableName().compareTo("FIKCYJNA_TABELA") == 0);
+			LOGGER.debug("treeArray[treeArray.length - 1].getDataSource().getDecioningColumns()[0]:"+ treeArray[treeArray.length - 1].getDataSource().getDecioningColumns()[0]);
+			assertTrue(treeArray[treeArray.length - 1].getDataSource().getDecioningColumns()[0].compareTo("bla1") == 0);
+			assertTrue(treeArray[treeArray.length - 1].getDataSource().getSolution().getId() == 4);
+			
+			//	usuniêcie drzewa
+			treeManager.removeTree(treeID);
+		
+		} catch (PlatformException e1) {
+			
+			LOGGER.fatal("", e1);
+		}
 		
 		
-		//testTree();
-		//treeManager.addTree();
+		
+		
+		// usuniêcie testowego datasource'a
+		try {
+			_dbManager.executeQuery("DELETE FROM TREE_DATA_SOURCES WHERE TDS_ID = 666");
+			_dbManager.commit();
+		} catch (SQLException e) {
+			LOGGER.fatal("", e);
+		}
+		
+		//usuniêcie tabeli 
+		try {
+		_externalDBManager.executeQuery("DROP TABLE FIKCYJNA_TABELA");
+		_externalDBManager.commit();
+		} catch (SQLException e) {
+			LOGGER.fatal("", e);
+		}
 		
 	}
 	
@@ -89,6 +202,13 @@ public class TreeManagerTest extends TestCase {
 		insert.addValue("TDS_DECISIONING_COLUMNS","bla1,bla2,bla3,bla4");
 		
 		
+		SQLInsert insert2 = new SQLInsert("FIKCYJNA_TABELA");
+		insert2.addValue("KOLUMNA_DECISIONED",1);
+		insert2.addValue("BLA1",2);
+		insert2.addValue("BLA2",3);
+		insert2.addValue("BLA3",4);
+		insert2.addValue("BLA4","YES");
+		
 		try 
 		{
 			
@@ -96,12 +216,7 @@ public class TreeManagerTest extends TestCase {
 			_dbManager.commit();
 			_externalDBManager.executeQuery("CREATE TABLE FIKCYJNA_TABELA ( KOLUMNA_DECISIONED INTEGER NOT NULL, BLA1 INTEGER NOT NULL, BLA2 INTEGER NOT NULL, BLA3 INTEGER NOT NULL, BLA4 VARCHAR(10) NOT NULL)");
 			_externalDBManager.commit();
-			SQLInsert insert2 = new SQLInsert("FIKCYJNA_TABELA");
-			insert2.addValue("KOLUMNA_DECISIONED",1);
-			insert2.addValue("BLA1",2);
-			insert2.addValue("BLA2",3);
-			insert2.addValue("BLA3",4);
-			insert2.addValue("BLA4","YES");
+			
 			_externalDBManager.insert(insert2);
 			_externalDBManager.commit();
 			
@@ -122,6 +237,7 @@ public class TreeManagerTest extends TestCase {
 			
 			_externalDBManager.executeQuery("DROP TABLE FIKCYJNA_TABELA");
 			_externalDBManager.commit();
+			
 		} catch (PlatformException e) {	
 				LOGGER.fatal("", e);
 		} catch (SQLException e) {

@@ -1,0 +1,403 @@
+\documentclass[a4paper, 12pt]{article}
+%\usepackage[polish]{babel}
+\usepackage[cp1250]{inputenc}
+%\usepackage[latin2]{inputenc}
+%\usepackage{polski}
+\usepackage{amsfonts}
+\usepackage[T1]{fontenc}
+\usepackage[dvips]{graphicx}
+
+%\usepackage{pldoc}
+
+
+
+
+
+
+
+\pagestyle{headings}
+\textwidth      15.5cm
+\oddsidemargin    .1cm
+\evensidemargin   .1cm
+
+\begin{document}
+
+\thispagestyle{empty}
+
+\begin{minipage}{5cm}
+%\includegraphics[scale=0.3]{logo.eps}
+\end{minipage}
+\begin{minipage}{10cm}
+\begin{center}
+{\Large Salomon\\
+System przetwarzania wiedzy\\}
+\end{center}
+\end{minipage}
+
+\vspace*{0.5cm}
+
+\hrulefill
+
+\vspace*{1cm}
+
+
+\begin{flushright}
+{\Large \emph{Test Report, ver 1.0} }
+\end{flushright}
+
+\vspace{7cm}
+
+\begin{flushleft}
+{ \Large Historia wersji }\[\]
+\begin{tabular}{|p{2.5cm}||p{1.5cm}|p{6.5cm}|p{3.5cm}|}
+  \hline
+  Data & Wersja & Opis & Autorzy \\
+  \hline \hline
+  19-09-2005 & 1.0 & Raport testów & Tomasz W¹sala\\
+  \hline
+\end{tabular}
+\end{flushleft}
+
+
+
+\[\]
+\newpage
+    \section{Wstêp}
+        \subsection{Cel dokumentu}
+            
+            Dokument ma na celu przedstawienie raportu z testów implementacji drzew decyzyjnych an platformie Salomon. Dotyczy on wersji pre-release.
+            
+        \subsection{Referencje}
+            
+            Integraln¹ czêœci¹ niniejszego opracowania s¹ ni¿ej wymienione dokumenty:
+            
+            \begin{itemize}
+                \item Test Plan
+                \item Software Architect Document
+            \end{itemize}
+            
+    \section{Narzêdzia u¿yte do testów}
+       
+       
+        Do tworzenia testów zosta³ u¿yty pakiet jUnit. Natomiast nie zdecydowaliœmy siê na u¿ycie Gringer'a.
+       
+       
+        Niektóre testy, np. testy dzia³ania pluginu obs³uguj¹cego wizualizacje, bêd¹ te¿ przeprowadzane rêcznie. 
+
+    \section{Opis testów}
+        
+        
+        Zosta³y przetestowane nastêpuj¹ce klasy nale¿¹ce do pakietu salomon.engine.platform.data.tree:
+        \begin{itemize}
+                \item Node
+                \item DataSource
+                \item Tree
+                \item TreeManager
+        \end{itemize}
+        
+        
+        Pluginy zosta³y wstêpnie przetestowane przez osoby tworz¹ce je. Dok³adniejsze testy bêd¹ zrobione wkrótce. Analogicznie podczas rozszerzania platformy zosta³y wykryte ró¿ne jej bugi, czego œladem s¹ maile w naszej grupie dyskusyjnej.
+        
+        
+        Nale¿y te¿ tutaj wspomnieæ, ¿e testy w ramach poszczególnej klasy wzajemnie siê uzupe³niaj¹ i nale¿y patrzeæ na nie ca³oœciowo.
+    
+    
+        Testy zosta³y podzielone na dwie grupy: testy rozszerzenia platformy Salomon o obs³ugê drzew decyzyjnych; testy pluginów.
+        
+        
+        
+        
+    \section{Przeprowadzone testy rozszerzenia platformy salomon}
+    
+        \begin{itemize}
+            \item \textbf{Klasa salomon.engine.platform.data.tree.Node}
+            
+            
+            S¹ to testy na niskim poziomie abstrakcji sprawdzaj¹ce poprawnoœæ zaimplementowania interfejsu salomon.platform.data.tree.INode. Specjalnie na po¿ytek poni¿szych testów zosta³y przygotowane wêz³y z przyk³adowymi danymi - testowe, do których bêdê siê odwo³ywa³ przy opisach poszczególnych testów.
+            
+            
+            \begin{itemize}
+                \item testAddChild
+                    
+                    
+                    Tworzone s¹ Instancje klasy Node i dodawane do niej nowe wêz³y za pomoc¹ metody addChild(). Nastêpuje sprawdzenie wyników metod¹ getChildren().
+                    
+                    
+                    \textbf{Wyniki:}
+                    
+                    
+                    Pozytywne.
+                \item testAddChildren
+                
+                    
+                    Tworzone s¹ dwie tablice wêz³ów i dodawane s¹ jako dzieci do jednego z wêz³ów. 
+                    Poprawnoœæ dodawania sprawdzam poprzez porównanie typu, wartoœci i ga³êzi rodzica z wartoœciami oczekiwanymi.
+                     
+                    
+                    \textbf{Wyniki:}
+                    
+                    
+                    Pozytywne.
+            
+                \item testGetChildren
+                
+                    Test polega na sprawdzaniu iloœci pobranych dzieci z wêz³a testowego.
+                    
+                    Dzia³anie tej metody ta jest te¿ testowane w innych testach (np. testAddChild).
+                    
+                    \textbf{Wyniki:}
+                    
+                    
+                    Pozytywne.
+                \item testGetId
+                    
+                    
+                    Test polega na ustawieniu Id drzewa za pomoc¹ metody setId(int), pobraniu ustawionego Id poprzez metodê getId(). Uzyskany Id jest porównywany z wartoœciami oczekiwanymi.
+                
+                
+                    \textbf{Wyniki:}
+                    
+                    
+                    Pozytywne.
+                \item testGetLeafs
+                
+                    
+                    Test polega na pobraniu liœci z wêz³ów testowych i porównaniu iloœci otrzymanych liœci z wartoœciami oczekiwanymi.
+                    
+                    
+                    \textbf{Wyniki:}
+                    
+                    
+                    Pozytywne.
+                \item testGetParent
+                
+                
+                    Test polega na pobraniu rodziców z wêz³ów testowych i porównaniu otrzymanych wyników z wartoœciami spodziewanymi.
+                    
+                
+                    \textbf{Wyniki:}
+                    
+                    
+                    Pozytywne.
+                \item testGetParentEdge
+
+
+                    Test polega na pobraniu wartoœci krawêdzi do rodzica od wêz³ów testowych za pomoc¹ metody getParentEdge() i porównaniu otrzymanych wyników z wartoœciami oczekiwanymi.
+
+                
+                    \textbf{Wyniki:}
+                    
+                    
+                    Pozytywne.
+                \item testGetRoot
+
+                
+                    Test polega na stworzeniu wêz³ów. W konstruktorach wêz³ów ustawiane s¹ korzenie. Nastêpnie pobieramy korzenie za pomoc¹ metody getRoot() i porównujemy wyniki z wynikami spodziewanymi.
+                
+                
+                    \textbf{Wyniki:}
+                    
+                    
+                    Pozytywne.
+                \item testGetType
+                
+                
+                    Test polega na sprawdzeniu wyników metody getType() z wartoœciami oczekiwanymi. Metoda getType() zostaje wywo³ana na wêz³ach testowych.  
+                
+                
+                    \textbf{Wyniki:}
+                    
+                    
+                    Pozytywne.
+                \item testGetValue
+                
+                
+                    Test polega na pobraniu "wartoœci" za pomoc¹ metody getValue() z wêz³ów testowych i porównaniu z wartoœciami oczekiwanymi. Nastêpuje tu te¿ wywo³anie metody setValue() i porównanie wyników getValue() po zmianach.
+                
+                
+                    \textbf{Wyniki:}
+                    
+                    
+                    Pozytywne.
+                \item testIsLeaf
+                
+                    
+                    Test polega na sprawdzeniu wyników funkcji isLeaf() zastosowanej na wêz³ach testowych.
+                
+                
+                    \textbf{Wyniki:}
+                    
+                    
+                    Pozytywne.
+                \item testIsRoot
+                
+                
+                    Test polega na sprawdzeniu wyników metody isRoot() wywo³anje na wêz³ach testowych.
+                    
+                
+                    \textbf{Wyniki:}
+                    
+                    
+                    Pozytywne.
+                \item testNodeINodeStringTypeString
+                
+                
+                    Test konstruktora Node(INode, String, Type, String). Tworzymy kilka wêz³ów INode za pomoc¹ konstruktora. I sprawdzamy wartoœci ich atrybutów z wartoœciami oczekiwanymi.
+                    
+                
+                    \textbf{Wyniki:}
+                    
+                    
+                    Pozytywne.
+                \item testNodeIntINodeStringTypeString
+                
+                
+                    Test konstruktora Node(int, INode, String, Type, String). Tworzymy kilka wêz³ów INode za pomoc¹ konstruktora. I sprawdzamy wartoœci ich atrybutów z wartoœciami oczekiwanymi.
+                    Ró¿ni siê od powyzszego sprawdzeniem wartoœci atrybutu id.    
+                
+                
+                    \textbf{Wyniki:}
+                    
+                    
+                    Pozytywne.
+                \item testSetChildren
+                
+                
+                    Test polega na dodaniu do wêz³a testowego jego dzieci. I porównaniu atrybutów otrzymanej struktury rodzic-dzieci z wartoœciami oczekiwanymi. 
+                    
+                
+                    \textbf{Wyniki:}
+                    
+                    
+                    Pozytywne.
+                \item testSetId
+                
+                
+                    Test polega na stworzeniu tymczasowych wêz³ów, ustawieniu ró¿nych wartoœci atrybutów Id za pomoc¹ metody setId() oraz sprawdzeniu wyniów metody getId() z wartoœciami oczekiwanymi.
+                
+                
+                    \textbf{Wyniki:}
+                    
+                    
+                    Pozytywne.
+                \item testSetParent
+                
+                
+                    Test polega na ustwaieniu wêz³om testowym nowych rodziców i sprawdzeniu oczekiwanych wyników.
+                
+                
+                    \textbf{Wyniki:}
+                    
+                    
+                    Pozytywne.
+                \item testSetParentEdge
+                
+                
+                    Test polega na ustawieniu wartoœci atrybutu parentEdge za pomoc¹ metody setParentEdge(). Nastêpnie zostaj¹ pobrane ustawione atrybuty i zostaj¹ sprawdzone z wartoœciami oczekiwanymi.
+                
+                
+                    \textbf{Wyniki:}
+                    
+                    
+                    Pozytywne.
+                \item testSetType
+                
+                
+                    Test polega na ustawieniu typu wêz³a testowego i nastêpnie porównaniu wartoœci atrybutu Type z wartoœci¹ oczekiwan¹.
+                
+                
+                    \textbf{Wyniki:}
+                    
+                    
+                    Pozytywne.
+                \item testSetValue
+                
+                
+                    Test polega na ustawieniu wartoœci danego wêz³a i porównaniu wartoœci atrybutu value z wartoœciami oczekiwanymi.
+                
+                
+                    \textbf{Wyniki:}
+                    
+                    
+                    Pozytywne.
+            \end{itemize}
+            
+            \item \textbf{Klasa salomon.engine.platform.data.tree.TreeManager}
+                \begin{itemize}
+                    \item testGetTreeDataSourceData
+                    
+                    
+                        Poprzez odpowiednio spreparowane polecenia SQL zosta³y stworzone struktury w bazie danych umo¿liwiaj¹ce pobranie DataSource'a.
+                        Polecenie tworzy w bazie danych rekord opisuj¹cy DataSourc'a korzystaj¹cego z fikcyjnej tabeli, która te¿ zosta³a tymczasowo utworzona.
+                        
+                        
+                        Nastêpnie zostaje tworzona tablica DataSource'ów, w której ostatnim elementem bêdzie w³aœnie DataSource stworzony na podstawie danych wpisanych przez nas do bazy danych.
+                        Nastêpnie zostaje wywo³ana metoda getTreeDataSourceData(DataSource) i zawartoœæ otrzymanej listy jest porównywana z wartoœciami spodziewanymi.
+                        
+                        
+                        \textbf{Wyniki:}
+                    
+                    
+                        Pozytywne.
+                    
+                    \item testAddTree
+                    
+                    
+                        W tym teœcie tworzone s¹ tymczasowe struktury w bazie danych opisuj¹ce datasource'a, zewnêtrzn¹ tabelê z danymi. 
+                        Z przyk³adowych wêz³ów tworzymy proste drzewko. 
+                        Z danych umieszczonych w bazie danych nastêpnie tworzymy DataSource'a, którego przypisujemy do drzewa.
+                        Nastêpnie dodajemy do bazy danych nasze drzewo za pomoc¹ metody addTree().
+                        Porównujemy strukturê i atrybuty tego drzewa i jego wêz³ów z wartoœciami oczekiwanymi.
+                        Porównujemy atrybuty tak¿e DataSource'a przypisanego do tego drzewa z wartoœciami oczekiwanymi.
+                        
+                    
+                        \textbf{Wyniki:}
+                    
+                    
+                        Problemy:
+                        
+                        
+                        Podczas zapisywania drzewa do bazy danych w tabeli TREE\_NODES dla wêz³a, który jest root'em wartoœæ w kolumnie TRN\_PARENT\_NODE\_ID jest ustawiana na 0, a powinno byæ NULL.
+                        Wynika to z braku obs³ugi NULL przez SQLInsert (salomon.engine.database.queries.SQLInsert). Ten b³¹d zosta³ te¿ zg³oszony na naszej grupie dyskusyjnej. 
+                    
+                    
+                \end{itemize}
+                
+        \end{itemize}
+        
+    
+    \section {Przeprowadzone testy pluginów i ich rezultaty}
+    
+        
+        Testy pluginów zosta³y wstêpnie przeprowadzone przez osoby je tworz¹ce. Opis tych testów i dalsze testy zostan¹ umieszczone w tym punkcie.
+        
+        \subsection {Plugin - VeniTreeCreator - algorytmiczny}
+    
+            \textbf{Pakiet - pl.edu.agh.capitol.veniTreeCreator.jUnit}
+            
+            
+            Zosta³y przeprowadzone testy podstawowych klas logicznych nale¿¹cych do pluginu:
+            
+            
+            \begin{itemize}
+                \item pl.edu.agh.capitol.veniTreeCreator.logic.DataItem
+                \item pl.edu.agh.capitol.veniTreeCreator.logic.TreeItem
+            \end{itemize}
+            
+            
+            oraz wysokopoziomowe testy œrodowiska dostarczonego przez platformê
+            
+            
+            \begin{itemize}
+                \item salomon.platform.IDataEngine
+                \item salomon.platform.IEnvironment
+                \item salomon.platform.IVariable
+            \end{itemize}
+    
+        \subsection {Plugin -  - wejœciowy}
+        
+        
+        \subsection {Plugin - TreeVis - wizualizacyjny}
+    
+    
+\end{document}
