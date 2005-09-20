@@ -62,7 +62,7 @@ System przetwarzania wiedzy\\}
  Niniejszy dokument stanowi dokumentacjê u¿ytkownika pomocn¹ przy wykorzystaniu platformy
  Salomon do tworzenia drzew decyzyjnych.
 
- \section{Cel}
+ \subsection{Cel}
  Dokument ten powsta³ jako prosta instrukcja obs³ugi
  poszczególnych pluginów realizuj¹cych zadania kolejnych etapów
  procesu tworzenia i prezentowania drzew decyzyjnych. Wskazuje
@@ -104,17 +104,25 @@ wybrana kolumna Decisioned
 \end{itemize}
 
 \subsection{VeniTreeCreator}
+Jeœli chodzi o drugi w kolejnoœci plugin - realizuj¹cy algorytm
+budowy drzew decyzyjnych - to uruchamia siê go podobnie jak plugin
+pierwszy. Ze wzgledu na swój charakter plugin ten nie podejmuje
+interakcji z u¿ytkownikiem. Otrzymuje on od poprzedniego pluginu
+informacje na podstawie jakiej tabeli i w jaki sposób ma zbudowaæ
+drzewo decyzyjne, a po skoñczeniu swej pracy przekazuje jej efekty
+do kolejnego tym razem wizualizacyjnego pluginu.
 
 \subsection{TreeVisualisation}
 Jest to trzeci z grupy pluginów odpowiadajacych za tworzenie drzew
-decyzyjnych. S³u¿y do prezentacji graficznej utworzonych drzew. W
-pierwszej iteracji zosta³ on napisany jako bardzo prymitywny. Nie
-ma mo¿liwoœci wyboru ustawieñ pluginu. Aby obejrzeæ drzewo nale¿y
+decyzyjnych. Uruchamia siê go analogicznie jak poprzednie pluginy.
+S³u¿y do prezentacji graficznej utworzonych drzew. W pierwszej
+iteracji zosta³ on napisany jako bardzo prymitywny i nie ma
+mo¿liwoœci wyboru ustawieñ pluginu. Aby obejrzeæ drzewo nale¿y
 uruchomiæ plugin, a nastêpnie klikn¹æ na Result. Po naciœniêciu
 Result w okienku tekstowym pojawi siê drzewo w postaci wypisanego
 stringu. Gdzie mamy najpierw korzeñ drzewa, a póŸniej zestawienia
-rodzic,krawêdŸ, potomek. Kolejne poziomy s¹ oddzielone znakiem
-"/", natomiast psozczególne wêz³y na poziomie s¹ oddzielone
+rodzic, krawêdŸ, potomek. Kolejne poziomy s¹ oddzielone znakiem
+"/", natomiast poszczególne wêz³y na poziomie s¹ oddzielone
 znakiem "\#".
 
  \newpage
