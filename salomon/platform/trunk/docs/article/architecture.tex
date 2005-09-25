@@ -1,7 +1,35 @@
 \section{Architektura}
-\begin{itemize}
-	\item rozproszenie
-	\item wtyczki
-	\item technologie
-	\item wybrane aspekty implementacji
-\end{itemize}
+Proces odkrywania wiedzy jest bardzo z³o¿ony. Czêœæ z algorytmów wymaga du¿e iloœci obliczeñ.
+W przypadku systemu takich jak \emph{Salomon} obliczenia tê przeprowadzane s¹ na sporej iloœci danych.
+St¹d pojawiaj¹ siê problemy wydajnoœciowe, dlatego te¿ jednym z wa¿niejszych aspektów podczas projektowania
+architektury systemu by³a skalowalnoœæ. Uda³o siê to osi¹gn¹æ dziêki rozbiciu ca³ego procesu na pojedyncze zadania.
+Co z kolei stworzy³o mo¿liwoœæ rozproszenia obliczeñ pomiêdzy ró¿ne maszyny. W rozleg³ych systemach rozproszonych,
+mog¹ wyst¹piæ problemy z utrzymaniem homogenicznoœci nie tylko ze wzglêdu na wersje systemu, ale tak¿e na implementacje.
+St¹d potrzeba zdefiniowania jasno okreœlonych warstw i interfejsów pomiêdzy nimi.
+
+%TODO: Poprawiæ rysunek
+\begin{figure}[ht]
+    \centering
+        \includegraphics[width=0.70\textwidth]{img/architecture.png}
+    \caption{Architekura \emph{Salomona}}
+    \label{fig:architecture}
+\end{figure}
+Do najwa¿niejszych warst jakie mo¿emy wyró¿niæ nale¿¹:
+\begin{enumerate}
+	\item Komunikacja z zewnêtrznym Ÿród³em danych. \\
+	Za Komunikacja odbywa siê przez specjalne komponenty, które ukrywaj¹ ró¿nice pomiêdzy ró¿nymi bazami danych.
+	\item komunikacja z miêdzy ró¿nymi instancjami \emph{Salomona}
+	W obecnej wersji systemu wykorzystywana do komunikacji jest technologia \emph{RMI}, ale nic nie stoi na przeszkodzie,
+	aby w przysz³oœci wykorzystywaæ inne technologie.
+	\item komunikacja z wtyczkami
+	Zestaw specjalnych klas odpowiada, za dostarczenie wtyczk¹ danych z zewnêtrznego Ÿród³a danych oraz za umo¿liwienie operacji
+	na wiêdzy,
+	\item interfejs u¿ytkownika
+\emph{Salomon} mo¿e byæ wykorzystywany w ró¿nych kontekstach, takich jak na przyk³ad praca z u¿ytkownikiem,
+system udostêpniaj¹cy swoje us³ugi w rozproszonym œrodowisku czy biblioteka wykorzystywana w innym programie.
+To wymusza bardzo mocne oddzielnie interfejsu u¿ytkownika od reszty systemu.
+	\item j¹dro systemu
+	To najwa¿niejsza czêœæ systemu, odpowiedzialna za uruchamianie zadañ, zarz¹dzanie pozosta³y czêœciami.
+\end{enumerate}
+
+
