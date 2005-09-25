@@ -5,3 +5,76 @@
 	\item ogolna struktura (definicja zadania/obliczenia, sieci przeplywu sterowania
 itp.)
 \end{itemize}
+
+
+Platforma \emph{Salomon} jest odpowiedzi¹ na pewne ograniczenia
+architektury systemu \emph{VINLEN}.  G³ówne za³o¿enia proponowanej
+architektury to:
+\begin{itemize}
+    \item \textbf{Budowa komponentowa.}
+    Platforma -- g³ówny modu³ systemu jest tak prosty jak to mo¿liwe. Jego zadaniem jest dostarczenie
+    przyjaznego œrodowiska do realizacji funkcjonalnoœci zawartej w komponentach
+    maj¹cych postaæ tzw. wtyczek.
+
+    \item \textbf{Otwartoœæ.} U¿ytkownik ma pe³n¹ swobodê w
+    dodawaniu nowych komponentów (wtyczek) do systemu.
+
+    \item \textbf{Niezale¿noœæ od platformy.}
+    Dziêki implementacji w jêzyku Java, system mo¿e byæ uruchamiany na dowolnej platformie posiadaj¹cej odpowiedni¹ maszynê wirtualn¹.
+
+    \item \textbf{Mo¿liwoœæ rozpraszania obliczeñ.}
+    Dziêki budowie komponentowej, i odpowiedniemu definiowaniu zadañ, system umo¿liwia pracê w rozproszonym,
+    heterogenicznym œrodowisku.
+\end{itemize}
+
+\medskip
+System \emph{Salomon} sk³ada siê z dwóch zasadniczych czêœci.
+Pierwsz¹ z nich stanowi platforma. Druga czêœæ to zbiór wtyczek,
+dostarczaj¹cych logikê potrzebn¹ do skonfigurowania, wykonania i
+wyœwietlenia rezultatów zadania.
+
+Platforma sk³ada siê z dwóch elementów: silnika, którego zadaniem
+jest zarz¹dzanie i~uruchamianie zadañ, oraz magazynu, który s³u¿y
+do przechowywania danych i wiedzy.
+
+\medskip
+Jednym z istotnych elementów systemu jest mo¿liwoœæ definiowania
+przebiegu pracy systemu. Ekstrakcja wiedzy to proces, który mo¿e
+byæ podzielony na etapy. W ka¿dym etapie wiedza jest poddawana
+pewnej obróbce (np. dyskretyzowane s¹ atrybuty, tworzone s¹
+regu³y, wiedza jest testowana). Poniewa¿ ka¿dy etap tworzy odrêbn¹
+ca³oœæ, a czêœæ etapów jest od siebie niezale¿na, zatem mog¹ byæ
+one wykonywane wspó³bie¿nie.
+
+Zadanie to podstawowa jednostka reprezentuj¹ca obliczenia.
+Zdefiniowane jest ono jako czwórka $(a, p, we, wy)$, gdzie:
+\begin{itemize}
+    \item $a$ jest algorytmem, dostarczanym do systemu w postaci komponentu --
+    wtyczki,
+    \item $p$ reprezentuje parametry algorytmu,
+    \item $we$ jest wejœciem,
+    \item $wy$ oznacza wyjœcie.
+\end{itemize}
+Wejœcie i wyjœcie mo¿e mieæ postaæ danych (w przypadku algorytmów,
+które dokonuj¹ np. selekcji danych), wiedzy (np. wygenerowane
+regu³y) lub danych i wiedzy naraz (np.\ regu³y i wyj¹tki dla
+nich).
+
+Wyjœcie jednego zadania mo¿e byæ wejœciem pewnej liczby nastêpnych
+zadañ. Aby zadanie mog³o zostaæ wykonane, wszystkie zadania od
+których zale¿y musz¹ byæ wykonanie wczeœniej. Powi¹zane zadania
+mog¹ byæ przedstawione w postaci grafu skierowanego. Taki graf z
+zaznaczonym zadaniem pocz¹tkowym tworzy \emph{program}. Dodatkowo,
+ka¿da krawêdŸ mo¿e mieæ przypisany warunek, który jest wymagany,
+aby sterowanie zosta³o przekazane wzd³u¿ tej krawêdzi. Tak
+zdefiniowany program mo¿e byæ ³atwo prezentowany w postaci
+graficznej.
+
+\emph{Salomon} ma tak¿e aspekty dynamiczne. W systemie mo¿na
+definiowaæ agentów, którzy reaguj¹ na zmiany w danych i/lub wiedzy
+(np.\ na dodanie nowego rekordu do danych treningowych, czy
+wygenerowanie wiedzy przez innego agenta). Do zdefiniowania
+takiego agenta, potrzebny jest odpowiadaj¹cy mu program oraz
+wskazanie zdarzeñ, na które ma reagowaæ.
+
+

@@ -1,7 +1,141 @@
 \section{Inne prace}
 
-\begin{itemize}
-	\item vinlen
-	\item veka
-	\item inne (yeale, able)
-\end{itemize}
+\subsection{VINLEN}
+
+\emph{VINLEN} to system indukcyjnej bazy danych, rozwijany w
+\emph{George Mason University} \cite{bib1}. Integruje on
+mechanizmy wnioskowania indukcyjnego ze standardowymi relacyjnymi
+operatorami bazodanowymi. Integracja ta opiera siê na nowych
+rodzajach operatorów zwanych operatorami generowania wiedzy
+(\emph{KGO} -- knowledge generation operators). \emph{KGO} operuje
+na \emph{segmentach wiedzy} sk³adaj¹cych siê z kombinacji jednej
+lub wiêcej relacyjnych tabel i wiedzy powi¹zanej wiedzy w bazê
+wiedzy. \emph{KGO} przyjmuje na wyjœciu jeden lub wiêcej segment
+wiedzy, na podstawie którego generuje inny segment wiedzy.
+
+Indukcyjne bazy danych mog¹ byæ wspierane przez wyspecjalizowanych
+agentów (\emph{scauts}), których zadaniem jest synteza i zarz¹dzanie
+wiedz¹, która jest dostosowywana do wymagañ okreœlonego u¿ytkownika.
+Podczas odkrywania wiedzy, agent taki tworzy model zainteresowañ
+u¿ytkownika i wykorzystuje go do zsyntezowania wiedzy docelowej.
+System \emph{VINLEN} pozwala na integracjê bazy danych, wiedzy i
+algorytmów uczenia maszynowego, wykorzystuj¹c jêzyk \emph{KGL-1}
+(\emph{knowledge generation language}), który pozwala na opisanie
+zawartej w systemie wiedzy.
+
+Rozwój \emph{VINLEN'a} zmierza w kierunku opracowania metodologii
+budowania systemów indukcyjnych baz danych, zawieraj¹cych bazy wiedzy
+dziedzinowej, relacyjne bazy danych, a w szczególnoœci jêzyk
+\emph{KQL} (\emph{knowledge query language}) do tworzenia i
+zarz¹dzania skautami oraz funkcjonalny, graficzny interfejs
+u¿ytkownika, u³atwiaj¹cy wykorzystane mo¿liwoœci systemu. Cech¹
+charakterystyczn¹ tak rozwijanego systemu bêdzie mo¿liwoœæ sk³adowania
+wiedzy w relacyjnej bazie danych wraz z danymi.  Hierarchiczny schemat
+sk³adowania danych zapewniaæ bêdzie ³atwy dostêp, zadawanie zapytañ
+oraz manipulowanie wiedz¹ w sposób standardowy lub z wykorzystaniem
+jêzyka \emph{KQL}.
+
+\subsection{Weka}
+
+\emph{Weka} (\href{http://www.cs.waikato.ac.nz/ml/weka}{http://www.cs.waikato.ac.nz/ml/weka}) to narzêdzie wspomagania procesu uczenia maszynowego stworzone w \emph{The Uniwersity of Waikato}. Narzêdzie to znajduje szerokie zastosowanie w badaniach i celach dydaktycznych jak równie¿ mo¿e udostêpniaæ swoj¹ funkcjonalnoœæ innym programom. Stanowi zbiór narzêdzi do zarz¹dzania danymi w ró¿norodnych formatach, algorytmów ucz¹cych i oceniaj¹cych uzyskiwane rozwi¹zania a tak¿e œrodowisko do porównywania ró¿nych algorytmów ucz¹cych. Zapewnia przyjazny interfejs u¿ytkownika, co czyni j¹ ³atw¹ w wykorzystaniu.
+
+\emph{Weka} pozwala na wykorzystywanie danych przechowywanych w ró¿nych formatach, pocz¹wszy od plików tekstowych w wielu formatach, poprzez relacyjne bazy danych po dane umieszczone w Internecie. Dane te przetwarzane s¹ przez tzw. \emph{filtry}, które pozwalaj¹ na wyodrêbnienie z nich potrzebnych informacji i przedstawienie ich w czytelnej postaci.
+
+
+Main features:
+Comprehensive set of data pre-processing tools, learning algorithms and evaluation methods
+Graphical user interfaces (incl. data visualization)
+Environment for comparing learning algorithms
+
+
+
+Explorer: pre-processing the data
+
+Data can be imported from a file in various formats: ARFF, CSV, C4.5, binary
+Data can also be read from a URL or from an SQL database (using JDBC)
+Pre-processing tools in WEKA are called “filters”
+WEKA contains filters for:
+Discretization, normalization, resampling, attribute selection, transforming and combining attributes, 
+
+
+Classifiers
+
+Classifiers in WEKA are models for predicting nominal or numeric quantities
+Implemented learning schemes include:
+Decision trees and lists, instance-based classifiers, support vector machines, multi-layer perceptrons, logistic regression, Bayes’ nets, …
+“Meta”-classifiers include:
+Bagging, boosting, stacking, error-correcting output codes, locally weighted learning, …
+
+
+Klastowanie
+
+WEKA contains “clusterers” for finding groups of similar instances in a dataset
+Implemented schemes are:
+k-Means, EM, Cobweb, X-means, FarthestFirst
+Clusters can be visualized and compared to “true” clusters (if given)
+Evaluation based on loglikelihood if clustering scheme produces a probability distribution
+
+
+Finding assosiations
+
+WEKA contains an implementation of the Apriori algorithm for learning association rules
+Works only with discrete data
+Can identify statistical dependencies between groups of attributes:
+milk, butter ? bread, eggs (with confidence 0.9 and support 2000)
+Apriori can compute all rules that have a given minimum support and exceed a given confidence
+
+
+Attribuite selection
+
+Panel that can be used to investigate which (subsets of) attributes are the most predictive ones
+Attribute selection methods contain two parts:
+A search method: best-first, forward selection, random, exhaustive, genetic algorithm, ranking
+An evaluation method: correlation-based, wrapper, information gain, chi-squared, …
+Very flexible: WEKA allows (almost) arbitrary combinations of these two
+
+
+Wizualizacja danych
+
+Visualization very useful in practice: e.g. helps to determine difficulty of the learning problem
+WEKA can visualize single attributes (1-d) and pairs of attributes (2-d)
+To do: rotating 3-d visualizations (Xgobi-style)
+Color-coded class values
+“Jitter” option to deal with nominal attributes (and to detect “hidden” data points)
+“Zoom-in” function
+
+
+Performing experiments
+
+Experimenter makes it easy to compare the performance of different learning schemes
+For classification and regression problems
+Results can be written into file or database
+Evaluation options: cross-validation, learning curve, hold-out
+Can also iterate over different parameter settings
+Significance-testing built in!
+
+
+The Knowledge Flow GUI
+
+New graphical user interface for WEKA
+Java-Beans-based interface for setting up and running machine learning experiments
+Data sources, classifiers, etc. are beans and can be connected graphically
+Data “flows” through components: e.g.,
+	“data source” -> “filter” -> “classifier” -> “evaluator”
+Layouts can be saved and loaded again later
+
+
+
+
+%wersja konsolowa
+
+%rozbudowane GUI, które jednak nie zapewnie takiej funkcjonalnoœci jak wersja konsolowa.
+
+%
+
+%\item inne (yeale, able)	
+
+\subsection{YALE}
+
+\emph{YALE} (Yet Another Lering Environment)
+
+\subsection(Able)
