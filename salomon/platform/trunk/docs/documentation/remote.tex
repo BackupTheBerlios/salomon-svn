@@ -6,11 +6,11 @@ Stworzyliœmy dwa kontrolery:
 \begin{itemize}
 \item \emph{ServerController} - jego zadanie jest nas³uchiwanie na po³¹czenia klientów, udostêpniaj¹cych swoje mo¿liwoœci. Rozdziela on zadania pomiêdzy ró¿nych klientów i zbiera od nich wyniki.
 
-\item \emph{ClientContoller} - zadanie tego kontrolera jest zainicjalizowanie j¹dra systemu, zarejestrowanie siê u ServerContollera i odbieranie i wykonywanie zadañ otrzymanych od serwera i wysy³anie mu wyników. Kontroler ten nie posiada GUI, jego konfiguracja odbywa siê poprzez odpowiednie wpisy w pliki konfiguracyjne.
+\item \emph{ClientContoller} - zadanie tego kontrolera jest zainicjalizowanie j¹dra systemu, zarejestrowanie siê u \emph{ServerContollera} i odbieranie i wykonywanie zadañ otrzymanych od serwera i wysy³anie mu wyników. Kontroler ten nie posiada GUI, jego konfiguracja odbywa siê poprzez odpowiednie wpisy w pliki konfiguracyjne.
 \end{itemize}
 
 \paragraph{}
-Aby mo¿liwe by³o wykonanie zadania na kliencie, serwer i klient musz¹ posiadaæ w³asn¹ instancjê pluginów. Za³o¿enie to podyktowane jest tym, ¿e serwer wykorzystuje plugin do utworzenia danych wejœciowych dla zadania oraz do prezentacji wyników, a klient wykorzystuje plugin do odpalenia zadania. Dziêki takiemu podejœciu minimalizowany jest ruch pomiêdzy poszczególnymi elementami systemu. Gdy serwer chce zleciæ klientowi zadanie wysy³a mu adres, z którego klient mo¿e pobraæ dany plugin (aktualnie to FTP, HTTP). Klient sprawdza wersje pluginu na podstawie podanej lokalizacji, w razie posiadania starszej wersji lub jego braku, klient przed wykonaniem zadania pobiera plugin do swego lokalnego cache'a. 
+Aby mo¿liwe by³o wykonanie zadania na kliencie, serwer i klient musz¹ posiadaæ w³asn¹ instancjê pluginów. Za³o¿enie to podyktowane jest tym, ¿e serwer wykorzystuje wtyczkê do utworzenia danych wejœciowych dla zadania oraz do prezentacji wyników, a klient wykorzystuje wtyczkê do odpalenia zadania. Dziêki takiemu podejœciu minimalizowany jest ruch pomiêdzy poszczególnymi elementami systemu. Gdy serwer chce zleciæ klientowi zadanie wysy³a mu adres, z którego klient mo¿e pobraæ dan¹ wtyczkê (aktualnie to FTP, HTTP). Klient sprawdza wersje pluginu na podstawie podanej lokalizacji, w razie posiadania starszej wersji lub jego braku, klient przed wykonaniem zadania pobiera wtyczkê do swego lokalnego cache'a. 
 
 
 \subsection{Struktura klas}
@@ -19,10 +19,10 @@ Struktura klas, które uczestnicz¹ w komunikacji jest zarazem warstwowa i drzewia
 \subsubsection{Drzewiasta} 
 Ze wzglêdu na funkcjonalnoœæ mo¿na wyró¿niæ drzewiast¹ strukturê klas, implementuj¹ podany interfejsy. Na szczycie drzewa znajduje siê IManagerEngine. Interfejs ten s³u¿y do zarz¹dzania poszczególnymi menad¿erami.
  
-\paragraph{Pluginy}
+\paragraph{Wtyczki}
 \begin{itemize}
-\item \emph{IPluginManager} -  s³u¿y do zarz¹dzania pluginami
-\item \emph{IPlugin} -  udostêpnia funkcjonalnoœæ pluginów
+\item \emph{IPluginManager} -  s³u¿y do zarz¹dzania wtyczkami
+\item \emph{IPlugin} -  udostêpnia funkcjonalnoœæ wtyczek
 \end{itemize}
 
 \paragraph{Zadania}
@@ -50,7 +50,7 @@ Druga warstwa to warstwa odpowiedzialna za komunikacjê po stronie klienta. W sk³
 
 Trzecia warstwa to warstwa odpowiedzialna za ukrycie po stronie serwera faktu zdalnoœci obiektów.  W sk³ad warstwy tej wchodz¹: \emph{ManagerEngineProxy, PluginManagerProxy, PluginProxy, TaskManagerProxy, TaskProxy, ProjectManagerProxy, ProjectProxy}. Klasy te to proste wrappery na zdalne obiekty, które implementuj¹ odpowiednie interfejsy z j¹dra systemu. Deleguj¹ wywo³ania metod do zdalnych obiektów i zajmuj¹ siê obs³ug¹ zdalnych wyj¹tków. 
 
-Dziêki zastosowaniu budowy warstwowej interfejsy z j¹dra systemu nie musza dziedziczyæ po Remote ani wyj¹tków \emph{RemoteException}, a podmiana technologii s³u¿¹cej do komunikacji, to tylko wymiana drugiej i trzeciej warstwy, bez ingerencji w logikê systemu. Nie ma wymagania na to, aby zdalne interfejsy dok³adnie odpowiada³y swoim odpowiednikom z j¹dra.
+Dziêki zastosowaniu budowy warstwowej interfejsy z j¹dra systemu nie musza dziedziczyæ po \emph{Remote} ani wyj¹tków \emph{RemoteException}, a podmiana technologii s³u¿¹cej do komunikacji, to tylko wymiana drugiej i trzeciej warstwy, bez ingerencji w logikê systemu. Nie ma wymagania na to, aby zdalne interfejsy dok³adnie odpowiada³y swoim odpowiednikom z j¹dra.
 
 Dodatkowo na potrzeby GUI serwera zosta³a stworzona kolejna warstwa, w której sk³ad wchodz¹: \emph{ManagerEngineHolder, PluginManagerHolder, ProjectManagerHolder, TaskManagerHolder}. Zadaniem tej warstwy jest zapewnienie bezpieczeñstwa zmiany obecnie konfigurowanego klienta. Klasy te to wrappery, które przechowuj¹ instancje odpowiednich klas z warstwy trzeciej. Dziêki takim wrapperom podmiana aktualnie konfigurowanego klienta nastêpuje tylko w jednym miejscu. Podmiana polega na podmianie instancji przechowywanych w Holderach. Warstwa zabezpiecza przed sytuacj¹, w której nie wszystkie instancje w GUI wskazuj¹ na jednego klienta. 
 

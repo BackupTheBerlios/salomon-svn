@@ -1,7 +1,7 @@
-\section{Tworzenie w³asnego pluginu}
+\section{Tworzenie w³asnej wtyczki}
 
-System, dziêki swej elastycznej architekturze, pozwala u¿ytkownikowi na rozszerzanie jego mo¿liwoœci poprzez definiowanie przez niego w³asnych pluginów. Ca³a funkcjonalnoœæ zwi¹zana z przetwarzaniem pluginów, konfigurowaniem ich, prezentacj¹ wyników ich dzia³ania oraz komunikacj¹ przez sieæ ukryta jest przed twórc¹ pluginu i nie musi byæ brana pod uwagê przy jego projektowaniu i implementacji. Jedyne, co musi on zrobiæ to zaimplementowaæ opisane poni¿ej interfejsy.
-By system móg³ skorzystaæ z nowych pluginów nale¿y dodaæ go do systemu, umo¿liwiaj¹c mu tym samym zlokalizowanie i œci¹gniêcie pluginu. 
+System, dziêki swej elastycznej architekturze, pozwala u¿ytkownikowi na rozszerzanie jego mo¿liwoœci poprzez definiowanie przez niego w³asnych pluginów. Ca³a funkcjonalnoœæ zwi¹zana z przetwarzaniem pluginów, konfigurowaniem ich, prezentacj¹ wyników ich dzia³ania oraz komunikacj¹ przez sieæ ukryta jest przed twórc¹ wtyczki i nie musi byæ brana pod uwagê przy jego projektowaniu i implementacji. Jedyne, co musi on zrobiæ to zaimplementowaæ opisane poni¿ej interfejsy.
+By system móg³ skorzystaæ z nowych wtyczek nale¿y podaæ ich lokalizacje, umo¿liwiaj¹c systemowi tym samym œci¹gniêcie i za³adowanie wtyczki. 
 Obecna wersja systemu obs³uguje tylko pluginy w postaci archiwów jar.
 
 Poni¿ej zamieszczony jest schemat przyk³adowego pluginu:
@@ -17,7 +17,7 @@ Klasy zaznaczone na zielono i rozpoczynaj¹ce siê od liter \emph{AP} to przyk³ado
 
 \subsection{Interfejsy pluginów}
 
-Ka¿dy plugin aby móg³ byæ przetwarzany przez system musi
+Ka¿da wtyczka aby móg³a byæ przetwarzana przez system, musi
 implementowaæ nastêpuj¹ce \mbox{interfejsy:}
 
 \subsubsection{IPlugin}
@@ -62,14 +62,14 @@ implementuj¹ interfejsy:
 \subsubsection{IResultComponent}
 \begin{itemize}
 	\item \emph{getComponent(IResult result)} - zwraca graficzny
-    komponent wyœwietlaj¹cy rezultat wykonania pluginu. Wype³niany
+    komponent wyœwietlaj¹cy rezultat wykonania wtyczki. Wype³niany
     jest on na podstawie obiektu  \emph{IResult} zwróconego wczeœniej
     przez metodê \emph{doJob()}.
-	\item  \emph{getDefaultResult()} - zwraca domyœlny rezultat wykonania pluginu.
+	\item  \emph{getDefaultResult()} - zwraca domyœlny rezultat wykonania wtyczki.
 \end{itemize}    
 
 \subsubsection{ISettings}Implementowany przez obiekt reprezentuj¹cy
-	ustawienia pluginu.
+	ustawienia wtyczki.
 \begin{itemize}
 	\item \emph{parseSettings(String settings)} - metoda inicjalizuje obiekt klasy
     \emph{ISettings}  na podstawie jego  tekstowej reprezentacji.
@@ -79,7 +79,7 @@ implementuj¹ interfejsy:
     bazy danych.    
 \end{itemize}    
 
-\subsubsection{IResult} Implementowany przez obiekt reprezentuj¹cy rezultat dzia³ania pluginu.
+\subsubsection{IResult} Implementowany przez obiekt reprezentuj¹cy rezultat dzia³ania wtyczki.
 \begin{itemize}
 	\item \emph{parseResult(String result)} - metoda inicjalizuje obiekt klasy
     \emph{IResult}  na podstawie jego  tekstowej reprezentacji.

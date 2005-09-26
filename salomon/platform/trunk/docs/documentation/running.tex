@@ -1,8 +1,8 @@
 \section{Uruchomienie}
-Do uruchomienia programu konieczne jest zainstalowanie w systemie \emph{Java Runtime Environment} , w wersji 1.5. Jeœli program ma dzia³aæ z wykorzystaniem niezale¿nego serwera bazy danych \emph{Firebird}, to nale¿y zainstalowaæ dodatkowo bazê \emph{Firebird}.
+Do uruchomienia programu konieczne jest zainstalowanie w systemie \emph{Java Runtime Environment} , w wersji \emph{5.0}. Jeœli program ma dzia³aæ z wykorzystaniem niezale¿nego serwera bazy danych \emph{Firebird}, to nale¿y zainstalowaæ dodatkowo bazê \emph{Firebird}.
 
 Program mo¿e dzia³aæ w 3 trybach (jako serwer, klient lub lokalnie) i na dwa sposoby ³¹czyæ siê z baz¹ danych (poprzez serwer lub bez niego), zale¿nie od wpisów w pliku konfiguracyjnym. 
-Aby uruchomiæ go w odpowiedniej konfiguracji, nale¿y rozpakowaæ go i zmodyfikowaæ domyœlne ustawienia pliku konfiguracyjnego. Program dostarczany jest z przyk³adow¹ baz¹ danych w której zdefiniowane s¹ odpowiednie tabele i lokalizacje pluginów oraz z przyk³adowymi pluginami. 
+Aby uruchomiæ go w odpowiedniej konfiguracji, nale¿y rozpakowaæ go i zmodyfikowaæ domyœlne ustawienia pliku konfiguracyjnego. Program dostarczany jest z przyk³adow¹ baz¹ danych w której zdefiniowane s¹ odpowiednie tabele i lokalizacje wtyczek oraz z przyk³adowymi wtyczkami. 
 Dla u¿ytkowników, którzy chc¹ stworzyæ w³asn¹ bazê danych w katalogu db umieszczony zosta³ skrypt, tworz¹cy tabele niezbêdne do pracy programu i uruchomienia dostarczonych pluginów (crebas.sql).
 
 \subsection{Plik konfiguracyjny}
@@ -10,9 +10,9 @@ G³ównym plikiem konfiguracyjnym programu jest config.properties.
 Zawiera on nastêpuj¹ce klucze:
 
 \begin{itemize}
-\item \emph{HOSTNAME} - identyfikator sieciowy komputera, na którym zainstalowana jest baza danych. Uwzglêdniany jest tylko w przypadku, gdy program ³¹czy siê z baz¹ danych przy u¿yciu serwera Firebird.
+\item \emph{HOSTNAME} - identyfikator sieciowy komputera, na którym zainstalowana jest baza danych. Uwzglêdniany jest tylko w przypadku, gdy program ³¹czy siê z baz¹ danych przy u¿yciu serwera \emph{Firebird}.
 
-\item \emph{DB\_PATH} - lokalizacja bazy danych. Gdy program dzia³a z serwerem Firebird jest to lokalizacja bezwzglêdna, w przeciwnym przypadku - wzglêdem katalogu instalacyjnego.
+\item \emph{DB\_PATH} - lokalizacja bazy danych. Gdy program dzia³a z serwerem \emph{Firebird} jest to lokalizacja bezwzglêdna, w przeciwnym przypadku - wzglêdem katalogu instalacyjnego.
 
 \item \emph{USER} - nazwa u¿ytkownika, który loguje siê do bazy
 

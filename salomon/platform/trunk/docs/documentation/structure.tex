@@ -13,13 +13,14 @@ i~pluginy.
 \subsection{Platforma}
 
 Dostarcza podstawowej funkcjonalnoœci  umo¿liwiaj¹cej pracê ca³ego
-systemu,  ³aduje odpowiedni kontroler, wczytuje pluginy, uruchamia
-zadania. Za poszczególne zadania odpowiadaj¹ odpowiednie menad¿ery.
+systemu,  ³aduje odpowiedni kontroler, wczytuje wtyczki, uruchamia
+zadania. Opodwiada za komunikacje miêdzy innymi instancjami \emph{Salomona}.
 
+Za poszczególne zadania odpowiadaj¹ odpowiednie menad¿ery.
 Menad¿ery nie s¹ dostêpne bezpoœrednio z platformy, ale
-przekazywane s¹ pluginom poprzez klasê \emph{DataEngine}. Dotyczy
+przekazywane s¹ wtyczk¹ poprzez klasê \emph{DataEngine}. Dotyczy
 to tylko klasy \emph{DataSetManager} i \emph{RuleSetManager},
-pozosta³e nie s¹ dostêpne dla pluginów. Plugin, zale¿nie od
+pozosta³e nie s¹ dostêpne dla wtyczek. Plugin, zale¿nie od
 potrzeb, pobiera z niego potrzebny mu menad¿er i za jego
 poœrednictwem wykonuje operacje na bazie danych.
 
@@ -32,7 +33,7 @@ poœrednictwem wykonuje operacje na bazie danych.
 	\label{fig:data_engine}
 \end{figure}
 
-Klasa przekazywana pluginom podczas ich wykonania.
+Klasa przekazywana wtyczk¹ podczas ich wykonania.
 Za pomoc¹ pobieranych z niej menad¿erów (\emph{DataSetManager}, \emph{RuleSetManager}, w przysz³oœci \emph{AttributeManager} i inne) wtyczki mog¹ operowaæ na danych znajduj¹cych siê w bazie.
 
 \paragraph{DBManager}
@@ -111,17 +112,17 @@ nim odbywa siê za pomoc¹ klasy \emph{MasterController}.
 
 \input{winsalomon}
 
-\subsection{Pluginy}
+\subsection{Wtyczki}
 G³ówna funkcjonalnoœæ zosta³a  przeniesiona
-do pluginów, zadaniem systemu jest tylko zarz¹dzanie ich
+do wtyczek, zadaniem systemu jest tylko zarz¹dzanie ich
 wykonaniem. Dziêki takiemu podejœciu system jest ³atwo skalowalny
-i rozszerzalny o nowe mo¿liwoœci. Ka¿dy z pluginów musi
+i rozszerzalny o nowe mo¿liwoœci. Ka¿da z wtyczek musi
 implementowaæ nastêpuj¹ce interfejsy:
 
 \paragraph{IGraphicPlugin}
 
 Pozwala pobraæ parametry od u¿ytkownika, które nastêpnie zostan¹
-przekazane do pluginów  przed ich wykonaniem. Zawiera dwie metody:
+przekazane do wtyczek  przed ich wykonaniem. Zawiera dwie metody:
 \emph{getSettingsPanel()}  i \emph{getResultPanel()}.  Pierwsza z
 metod zwraca panel s³u¿¹cy do konfiguracji pluginu, druga -- panel,
 na którym prezentowane s¹ wyniki jego dzia³ania.
@@ -132,5 +133,5 @@ Posiada tylko jedn¹ metodê \emph{doJob()}. Przyjmuje ona jako
 parametry obiekt klasy \emph{Environment}, reprezentuj¹cy aktualny
 stan systemu; \emph{DataEngine}, który umo¿liwia operowanie na
 bazie danych i \emph{ISettings}, reprezentuj¹cy ustawienia
-pluginu. Zwracany jest obiekt klasy \emph{IResult}, stanowi¹cy
+wtyczki. Zwracany jest obiekt klasy \emph{IResult}, stanowi¹cy
 rezultat wykonania zadania.
