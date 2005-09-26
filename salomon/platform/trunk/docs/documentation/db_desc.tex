@@ -2,35 +2,55 @@
 
 W systemie bardzo wa¿n¹ rolê odgrywaj¹ baza danych
 w której przechowywane s¹ ustawienia, projekty, regu³y itp.
-Poni¿sza struktura dotyczy tylko ogranizacji danych wykorzystywanych do przetwarzania wiedzy. Rzeczywiste dane, na podstawie których wiedza ta jest tworzona przechowywana jest w osobnych bazach danych i dane te nie s¹ kopiowane do bazy \emph{Salomona}.
+Poni¿sza struktura dotyczy tylko organizacji danych wykorzystywanych do przetwarzania wiedzy. Rzeczywiste dane, na podstawie których wiedza ta jest tworzona przechowywana jest w osobnych bazach danych i dane te nie s¹ kopiowane do bazy \emph{Salomona}.
+
+\subsection{Struktura platformy}
 
 Dane zosta³y zorganizowane w nastêpuj¹cych tabelach:
 
-\paragraph{Projects}
+\subsubsection{Solutions}
 
-Tabela zawiera nag³ówki projektów, do których odnosz¹ siê rekordy
-z tabeli Tasks.
+Tabela reprezentuje obiekty \emph{Solution}, które grupuj¹ projekty dotycz¹ce tej samej tematyki i operuj¹ na tej samej bazie danych.
 
 \begin{itemize}
-    \item \emph{project\_id} - identyfikator projektu
-    \item \emph{name} - nazwa
-    \item \emph{info} - dodatkowy opis
+		\item \emph{solution\_id} -- identyfikator obiektu \emph{solution}
+		\item \emph{solution\_name} -- nazwa		
+		\item \emph{solution\_info} -- dodatkowy opis
+		\item \emph{hostname} -- host, na którym znajduje siê baza danych
+		\item \emph{db\_path} -- œcie¿ka do pliku bazy danych na serwerze
+		\item \emph{username} -- nazwa u¿ytkownika u¿ywanego do po³¹czenia z baz¹ danych
+		\item \emph{passwd} -- has³o potrzebne do zalogowania siê
+		\item \emph{lm\_date} -- data ostatniej modyfikacji
 \end{itemize}
 
-\paragraph{Plugins}
+\subsubsection{Projects}
+
+Tabela zawiera nag³ówki projektów, do których odnosz¹ siê rekordy
+z tabeli \emph{Tasks}.
+
+\begin{itemize}
+    \item \emph{project\_id} -- identyfikator projektu
+    \item \emph{solution\_id} -- powi¹zanie z tabel¹ \emph{solutions}
+    \item \emph{project\_name} -- nazwa
+    \item \emph{project\_info} -- dodatkowy opis
+    \item \emph{lm\_date} -- data ostatniej modyfikacji
+\end{itemize}
+
+\subsubsection{Plugins}
 
 Tabela zawiera informacje o pluginach, które mog¹ byæ wykorzystane
 przez system. Przechowuje dane o ich nazwach i lokalizacjach, sk¹d
 mog¹ byæ pobrane.
 
 \begin{itemize}
-    \item \emph{plugin\_id} - identyfikator pluginu
-    \item \emph{name} - nazwa
-    \item \emph{info} - dodatkowy opis
-    \item \emph{location} - lokalizacja pluginu.
+    \item \emph{plugin\_id} -- identyfikator pluginu
+    \item \emph{plugin\_name} -- nazwa pluginu
+    \item \emph{plugin\_info} -- dodatkowy opis
+    \item \emph{location} -- lokalizacja pluginu
+    \item \emph{lm\_date} -- data ostatniej modyfikacji
 \end{itemize}
 
-\paragraph{Tasks}
+\subsubsection{Tasks}
 
 Tabela zawiera zapis wykonania poszczególnych zadañ. Dla ka¿dego z nich
 przechowywane s¹ informacje o pluginie, który zosta³
@@ -39,42 +59,50 @@ zadanie zosta³o zapisane; ustawieniach, z jakimi zosta³o wykonane;
 rezultacie zadania oraz statusie, w jakim pozostaje po wykonaniu.
 
 \begin{itemize}
-    \item \emph{task\_id} - identyfikator zadania
-    \item \emph{project\_id} - identyfikator projektu, do którego nale¿y zadanie
-    \item \emph{plugin\_id} - identyfikator pluginu, który wykonywany jest w ramach tego zadania
-    \item \emph{name} - nazwa
-    \item \emph{info} - dodatkowy opis
-    \item \emph{plugin\_settings} - ustawienia pocz¹tkowe pluginu
-    \item \emph{plugin\_result} - rezultat dzia³ania pluginu
-    \item \emph{status} - status wykonania zadania
+    \item \emph{task\_id} -- identyfikator zadania
+    \item \emph{task\_nr} -- numer zadania w kolejce do ich wykonania
+    \item \emph{project\_id} -- identyfikator projektu, do którego nale¿y zadanie
+    \item \emph{plugin\_id} -- identyfikator pluginu, który wykonywany jest w ramach tego zadania
+    \item \emph{name} -- nazwa
+    \item \emph{info} -- dodatkowy opis
+    \item \emph{plugin\_settings} -- ustawienia pocz¹tkowe pluginu
+    \item \emph{plugin\_result} -- rezultat dzia³ania pluginu
+    \item \emph{status} -- status wykonania zadania
 \end{itemize}
 
-\paragraph{Datasets}
+    Relacje miêdzy nimi zobrazowane s¹ na rysunku (Rys \ref{fig:database})
+
+\begin{figure}[H]
+	\centering
+		\includegraphics[width=0.90\textwidth]{img/concept/salomon_db.png}
+	\caption{Relacje miêdzy tabelami}
+	\label{fig:database}
+\end{figure}
+
+\subsection{Organizacja wiedzy}
+
+Obecnie jedynym wspieranym typem wiedzy s¹ zbiory danych. Ich struktura opisana zosta³a ponie¿ej.
+
+\subsubsection{Datasets}
 Zawiera nag³ówki zbiorów zadañ.
 \begin{itemize}
-    \item \emph{dataset\_id} - identyfikator zbioru danych
-    \item \emph{dataset\_name} - nazwa
-    \item \emph{info} - dodatkowy opis
+    \item \emph{dataset\_id} -- identyfikator zbioru danych
+    \item \emph{dataset\_name} -- nazwa
+    \item \emph{info} -- dodatkowy opis
+    \item \emph{lm\_date} -- data ostatniej modyfikacji
 \end{itemize}
 
-\paragraph{Dataset\_items}
+\subsubsection{Dataset\_items}
 Zawiera definicje zbiorów zadañ. Zbiór danych definiowany jest
 przez nazwê tabeli oraz warunki, jakie ograniczaj¹ rekordy w tej
 tabeli. Tabela ta s³u¿y do przechowywania podzbioru danych pochodz¹cych z rzeczywistej bazy danych.
 
 \begin{itemize}
-    \item \emph{dataset\_item\_id} - identyfikator elementu zbioru danych
-    \item \emph{dataset\_id} - identyfikator zbioru danych, do którego nale¿y
+    \item \emph{dataset\_item\_id} -- identyfikator elementu zbioru danych
+    \item \emph{dataset\_id} -- identyfikator zbioru danych, do którego nale¿y
 element
-    \item \emph{table\_name} - nazwa tabeli
-    \item \emph{condition} - warunek ograniczaj¹cy zakres danych
+    \item \emph{table\_name} -- nazwa tabeli
+    \item \emph{condition} -- warunek ograniczaj¹cy zakres danych
+    \item \emph{lm\_date} -- data ostatniej modyfikacji
 \end{itemize}
 
-    Relacje miêdzy nimi zobrazowane s¹ na rysunku (Rys \ref{fig:database})
-
-\begin{figure}[htb]
-	\centering
-		\includegraphics[width=0.90\textwidth]{img/concept/salomon_db.jpg}
-	\caption{Relacje miêdzy tabelami}
-	\label{fig:database}
-\end{figure}

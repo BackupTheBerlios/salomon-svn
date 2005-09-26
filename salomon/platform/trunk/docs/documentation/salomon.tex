@@ -1,21 +1,20 @@
-%& --translate-file=cp1250pl
-%bez powyzszej linijki nie dzialaja polskie znaki (musi ona byc w pierwszej linii dokumentu
-%%&platex --translate-file=il2-pl % przeyestowac z tym
 \documentclass[a4paper,12pt]{article}
+\usepackage{float}
 \usepackage[polish]{babel}
+\usepackage[cp1250]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage[dvips]{graphicx}
-\usepackage{fancyvrb}
-
+\usepackage{indentfirst}
 \usepackage[urlcolor=blue, colorlinks=true, bookmarks=true, bookmarksnumbered=true]{hyperref}
-%\usepackage{intendfirst}
+\usepackage{fancyvrb}
 \usepackage{times}
 \usepackage{epsfig}
 \usepackage{color}
 
 \usepackage{fancyhdr} 
-
 \pagestyle{fancy} 
+
+
 
 \rfoot{SALOMON}
 
