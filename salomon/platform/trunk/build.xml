@@ -15,7 +15,11 @@
 	<property name="plugin_dev_dir" value="dev" />
 	<property name="db_dir" value="db" />
 	<property name="db_file" value="salomon.gdb" />
+	<property name="db_user" value="user" />
+	<property name="db_password" value="" />	
+	<property name="db_name" value="databasename" />	
 	<property name="crebas_file" value="crebas.sql" />
+	<property name="views_file" value="views.sql" />
 	<property name="run_script" value="run.bat" />
 
 	<property name="release_dir" value="_release" />
@@ -130,8 +134,16 @@
 		<mkdir dir="${release_dir}" />
 		<copy file="salomon.jar" todir="${release_dir}" />
 	</target>
-
-
+	
+	<target name="create_new_database">
+		<exec executable="isql" >
+			<arg line=" -U ${db_user} -P ${db_password} -d ${db_name} -i ${db_dir}/${crebas_file}" />
+		</exec>		
+		<exec executable="isql" >
+			<arg line=" -U ${db_user} -P ${db_password} -d ${db_name} -i ${db_dir}/${views_file} " />
+		</exec>		
+	</target>
+	
 	<target name="all" depends="copy_salomon, copy_plugins, 
 		copy_libs, copy_drivers, copy_data_base,
 		copy_res, copy_config, copy_run_files, get_version" />
