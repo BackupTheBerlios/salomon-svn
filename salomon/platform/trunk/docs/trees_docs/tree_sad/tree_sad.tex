@@ -1,14 +1,11 @@
 \documentclass[a4paper, 12pt]{article}  %definiujemy typ dokumentu
 %\usepackage[cp1250]{inputenc}
 \usepackage[latin2]{inputenc}	%pakiet okreslna kodowanie znakow
-%\usepackage[polish]{babel}  %pakiet okreslajacy lamanie wyrazow
-%\usepackage[MeX]{polski}		 %pakiet ustawiajacy jezyk polski podobno idealnie
-\usepackage{amsfonts}				 %czcionki dla labelek
+\usepackage[polish]{babel}  %pakiet okreslajacy lamanie wyrazow
 \usepackage[T1]{fontenc}		 %czcionki dla jezyka polskiego
 \usepackage{indentfirst}     %pakiet gwarantuje wciecie podczas pierwszego akapitu
-\usepackage[dvips]{graphicx}
-
-
+\usepackage[dvips]{graphicx} %umozwliwia  umieszczenie grafiki eps
+\usepackage{colortbl}				 %umozliwia dodatkowe umieszczenie png
 
 \pagestyle{headings}
 \textwidth      15.5cm
@@ -117,14 +114,15 @@ Cele architekturalne wynikaj±ce z powy¿szych ograniczeñ oraz z za³o¿eñ funkcjona
 \section{Przypadki u¿ycia (Use-Case View)}
 Poni¿szy opis zak³ada ¿e u¿y\-tkownik uruchomi³ platformê Salomon oraz poprawnie zdefiniowa³ solution oraz pragnie wykonaæ operacje na drzewach decyzyjnych.
 
-Poni¿szy diagram przedstawia punkt widzenia u¿y\-tko\-wnika:\\
-\begin{figure}
-	\centering
-	\includegraphics{sad_files/use_case.eps}
+Poni¿szy diagram przedstawia punkt widzenia u¿ytkownika:
+
+\begin{figure}[ht]
+	\includegraphics[width=0.70\textheight]{sad_files/use_case.png}
 	\caption{Use-Case View}
 	\label{fig:use_case_view}
 \end{figure}
-U¿y\-tkownik wybiera najpierw tzw. \textit{plugin wej¶ciowy}, okre¶la jego konfiguracjê. U¿y\-tkownik wybiera zdefiniowane wcze¶niej dla obecnego solution`a dane wej¶ciowe lub  nowe poprzez zdefiniowanie nazwy danych wej¶ciowych (dla pó¼niejszej identyfikacji),\linebreak
+
+U¿ytkownik wybiera najpierw tzw. \textit{plugin wej¶ciowy}, okre¶la jego konfiguracjê. U¿ytkownik wybiera zdefiniowane wcze¶niej dla obecnego solution`a dane wej¶ciowe lub  nowe poprzez zdefiniowanie nazwy danych wej¶ciowych (dla pó¼niejszej identyfikacji),\linebreak
 wybiera tabelê a nastêpnie kolumnê reprezentuj±c± wynik decyzji, nazwijmy j± \textit{kolumn± decyzyjn±} oraz listê kolumn reprezentuj±ce przes³anki decyzji, nazwijmy je \textit{kolumnami decyduj±cymi}. U¿ytkownik mo¿e wybraæ wiêcej ni¿ jedno ¼ród³o danych, z których potem bêd± generowane drzewa decyzyjne.
 
 Nastêpnie u¿ytkownik wybiera pluginy algorytmiczne, które utworz± drzewa decyzyjne na podstawie wcze¶niej zdefiniowanych danych wej¶ciowych. Konfiguracj± pluginów algorytmicznych jest zale¿na od nich samych.
@@ -150,19 +148,20 @@ Rozszerzenia j±dra Salomona polega na dostarczeniu interfejsów oraz ich implemen
 
 Poni¿szy diagram przedstawia uk³ad interfejsów do zaimplementowania:
 
-\begin{center}
-\begin{minipage}{15.5cm}
-	\includegraphics[width=1.00\textwidth]{sad_files/tree_interfaces.eps}
-	\label{fig:tree_interfaces}
-\end{minipage}
-\end{center}
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=0.62\textheight]{sad_files/tree_interfaces.png}
+	\caption{Model rozszerzeñ}
+	\label{fig:ex_model}
+\end{figure}
+
 
 \[\]
 \subsection{Architektura pluginów}
 Jak wcze¶niej wspomniano bêd± 3 rodzaje pluginów:
 \begin{itemize}
 \item Plugin wej¶ciowy - definiuj±cy dane na podstawie których bêd± tworzone drzewa decyzyjne. 
-\item Plugin algorytmiczny - tworz±cy drzewa na podstawie okre¶lonych danych wej¶ciowych
+\item Plugin algorytmiczny - tworz±cy drzewa na podstawie okre¶lonych danych we\-j¶ciowych
 \item Plugin wizualizacyjny, zarz±dzaj±cy drzewami istniej±cymi drzewami.
 Pluginy s± zgodne a architektur± Salomona i sposób ich budowania jest przez ni± okre¶lony.
 \end{itemize}
@@ -177,7 +176,7 @@ Plugin algorytmiczny bêdzie dziedziczy³ z abstrakcyjnej klasy TreeAlgoritmPlugin
 
 \subsubsection{Plugin wizualizacyjny, zarz±dzaj±cy}
 
-Plugin ten podobnie jak plugin wej¶ciowy pracuje w dwóch trybach. Jako samodzie\-lny plugin s³u¿y do wizualizacji istniej±cych w bazie drzew decyzyjnych wraz z mo¿liwo¶ci± usuniêcia.
+Plugin ten podobnie jak plugin wej¶ciowy pracuje w dwóch trybach. Jako samodzie\-lny plugin s³u¿y do wizualizacji istniej±cych w bazie drzew decyzyjnych wraz z mo\-¿liwo¶ci± usuniêcia.
 Je¿eli przed tym pluginem mial miejsce plugin algorytmiczny i odpowiednia zmienna z list± stworzonych identyfikatorów drzew znajduje siê w ¶rodowi\-sku, wówczas plugin ten wizualizuje ka¿de drzewo na tej li¶cie.
 
 \section{Model danych (Data View)}
@@ -185,17 +184,17 @@ Modu³ drzew decyzyjnych, zgodnie z logik± rozwi±zañ (sollution) w Salomonie, kor
 
 \subsection{Baza wej¶ciowa}
 
-Baza wej¶ciowa musi zawieraæ tabelki lub widoki zawieraj±ce dane. W celu okre¶lenia danych wej¶ciowych u¿ytkownik musi wybraæ tabelê a nastêpnie kolumnê reprezentuj±c± wynik decyzji, nazwijmy j± kolumn± decyzyjn± oraz listê kolumn reprezentuj±ce przes³anki decyzji, nazwijmy je kolumnami decyduj±cymi. Innymi s³owy format danych wej¶ciowych jest zwyk³± tabelk±. Wybrana tabela i kolumny wraz z definicj± bazy danych zostaje zapisana w bazie definicyjnej do pó¼niejszego u¿ycia przez pluginy algorytmiczne.
+Baza wej¶ciowa musi zawieraæ tabelki lub widoki zawieraj±ce dane. W celu okre¶le\-nia danych wej¶ciowych u¿ytkownik musi wybraæ tabelê a nastêpnie kolumnê reprezentuj±c± wynik decyzji, nazwijmy j± kolumn± decyzyjn± oraz listê kolumn reprezentuj±ce przes³anki decyzji, nazwijmy je kolumnami decyduj±cymi. Innymi s³owy format danych wej¶ciowych jest zwyk³± tabelk±. Wybrana tabela i kolumny wraz z definicj± bazy danych zostaje zapisana w bazie definicyjnej do pó¼niejszego u¿ycia przez pluginy algorytmiczne.
 
 \subsection{Baza definicyjna}
 Baza definicyjna ma za zadanie przechowaæ strukturê drzewa oraz parametry z nim zwi±zane.  Do opisu drzew zdefiniowane s± 3 tabele przedstawione na poni¿szym diagramie ERD:
 
-\begin{center}
-\begin{minipage}{15.5cm}
-	\includegraphics[width=1.00\textwidth]{sad_files/erd.eps}
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=0.745\textheight]{sad_files/erd.png}
+	\caption{Diagram ERD}
 	\label{fig:erd}
-\end{minipage}
-\end{center}
+\end{figure}
 
 Diagram nie przedstawia powi±zañ miêdzy powy¿szymi tabelami a pozosta³ymi tabelami definicyjnymi Salomona.
 
