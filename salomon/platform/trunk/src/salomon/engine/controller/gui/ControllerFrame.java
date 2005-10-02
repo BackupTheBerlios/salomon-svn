@@ -127,7 +127,7 @@ public final class ControllerFrame extends JFrame
 			}
 		});
 		LOGGER.debug("initialize end");
-	}
-
+	}	
+	
 	private static final Logger LOGGER = Logger.getLogger(ControllerFrame.class);
 }

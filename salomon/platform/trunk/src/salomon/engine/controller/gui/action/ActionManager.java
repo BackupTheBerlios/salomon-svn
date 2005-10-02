@@ -21,8 +21,6 @@
 
 package salomon.engine.controller.gui.action;
 
-import java.awt.event.ActionListener;
-
 import salomon.engine.controller.gui.PluginMangerGUI;
 import salomon.engine.controller.gui.ProjectManagerGUI;
 import salomon.engine.controller.gui.SolutionManagerGUI;
@@ -48,14 +46,7 @@ public final class ActionManager
 	 * @uml.associationEnd multiplicity="(0 1)"
 	 */
 	private AddTaskAction _addTaskAction;
-	
-	/**
-	 * @uml.property name="_chooseSolutionAction"
-	 * @uml.associationEnd multiplicity="(0 1)"
-	 */
-	private ChooseSolutionAction _chooseSolutionAction;
-	
-	
+
 	/**
 	 * @uml.property name="_editProjectAction"
 	 * @uml.associationEnd multiplicity="(0 1)"
@@ -68,6 +59,13 @@ public final class ActionManager
 	 * @uml.associationEnd multiplicity="(0 1)"
 	 */
 	private EditSolutionAction _editSolutionAction;
+
+	/**
+	 * 
+	 * @uml.property name="_editTaskAction"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
+	private EditTaskAction _editTaskAction;
 
 	/**
 	 * 
@@ -203,13 +201,6 @@ public final class ActionManager
 	 * @uml.associationEnd multiplicity="(0 1)"
 	 */
 	private ViewTaskAction _viewTaskAction;
-	
-	/**
-	 * 
-	 * @uml.property name="_editTaskAction"
-	 * @uml.associationEnd multiplicity="(0 1)"
-	 */
-	private EditTaskAction _editTaskAction;
 
 	/**
 	 * Sets object used to create actions.
@@ -264,18 +255,6 @@ public final class ActionManager
 	}
 
 	/**
-	 * Returns the chooseSolutionAction.
-	 * @return The chooseSolutionAction
-	 */
-	public ChooseSolutionAction getChooseSolutionAction()
-	{
-		if( _chooseSolutionAction == null ) {
-			_chooseSolutionAction = new ChooseSolutionAction(_solutionManagerGUI);
-		}
-		return _chooseSolutionAction;
-	}
-	
-	/**
 	 * Returns the editProjectAction.
 	 * @return The editProjectAction
 	 */
@@ -298,6 +277,14 @@ public final class ActionManager
 			_editSolutionAction = new EditSolutionAction(_solutionManagerGUI);
 		}
 		return _editSolutionAction;
+	}
+
+	public EditTaskAction getEditTaskAction()
+	{
+		if (_editTaskAction == null) {
+			_editTaskAction = new EditTaskAction(_taskManagerGUI);
+		}
+		return _editTaskAction;
 	}
 
 	/**
@@ -476,13 +463,6 @@ public final class ActionManager
 			_viewTaskAction = new ViewTaskAction(_taskManagerGUI);
 		}
 		return _viewTaskAction;
-	}
-
-	public EditTaskAction getEditTaskAction() {
-		if (_editTaskAction == null) {
-			_editTaskAction = new EditTaskAction(_taskManagerGUI);
-		}
-		return _editTaskAction;
 	}
 
 }

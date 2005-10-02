@@ -119,6 +119,7 @@ public final class DBManager
 		// setting auto commit off
 		_connection.setAutoCommit(false);
 		_statement = _connection.createStatement();
+        LOGGER.info("connected to database");
 	}
 
 	/**

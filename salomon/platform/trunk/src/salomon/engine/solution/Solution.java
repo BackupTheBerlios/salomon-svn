@@ -105,6 +105,12 @@ public final class Solution implements ISolution
 		return _managerEngine.getProjectManager();
 	}
 
+	@Override
+	public String toString()
+	{
+		return (_solutionInfo == null) ? "" : _solutionInfo.getName();
+	}
+
 	private IDataEngine createDataEngine(SolutionInfo solutionInfo)
 			throws PlatformException
 	{

@@ -32,6 +32,7 @@ import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -55,13 +56,10 @@ import salomon.engine.controller.gui.SolutionManagerGUI;
 import salomon.engine.controller.gui.SplashScreen;
 import salomon.engine.controller.gui.TaskManagerGUI;
 import salomon.engine.controller.gui.action.ActionManager;
-
-import salomon.util.gui.Utils;
-
-import salomon.platform.exception.PlatformException;
-
 import salomon.engine.platform.IManagerEngine;
 import salomon.engine.platform.ManagerEngine;
+import salomon.platform.exception.PlatformException;
+import salomon.util.gui.Utils;
 
 /**
  * Local implementation of IController interface.
@@ -112,6 +110,8 @@ public final class LocalController implements IController
 	 * @uml.associationEnd multiplicity="(0 1)"
 	 */
 	private ProjectManagerGUI _projectManagerGUI;
+
+	private JFrame _solutionChooserFrame;
 
 	/**
 	 * 
@@ -208,7 +208,7 @@ public final class LocalController implements IController
 	{
 		_managerEngine = managerEngine;
 		SplashScreen.show();
-		//FIXME: add cascade model support
+		//TODO: add cascade model support (?)
 		try {
 			_solutionManagerGUI = new SolutionManagerGUI(
 					_managerEngine.getSolutionManager());
@@ -239,19 +239,56 @@ public final class LocalController implements IController
 		_projectManagerGUI.setTaskManagerGUI(_taskManagerGUI);
 
 		SplashScreen.hide();
-		// choosing solution, add support for exiting application
-		// if user doesn't choose solution
-		_solutionManagerGUI.chooseSolutionOnStart();
-		// loading plugins
-		_pluginMangerGUI.refresh();
-		_taskManagerGUI.refresh();
 
 		frame.setContentPane(getJContentPane());
 		frame.setJMenuBar(getJMenuBar());
 		frame.setJToolBar(getToolBar());
 		frame.setControllerPanel(_contentPane);
 		Utils.setParent(getJContentPane());
+
+		//showSolutionChooser();
+		_solutionManagerGUI.showSolutionChooser();
 	}
+
+	//	private void showSolutionChooser()
+	//	{
+	//		JPanel panel = new JPanel();
+	//
+	//		JPanel pnlManagerButtons = new JPanel();
+	//		pnlManagerButtons.setLayout(new BoxLayout(pnlManagerButtons,
+	//				BoxLayout.Y_AXIS));
+	//		pnlManagerButtons.add(Box.createVerticalGlue());
+	//		pnlManagerButtons.add(_solutionManagerGUI.getBtnOpen());
+	//		pnlManagerButtons.add(_solutionManagerGUI.getBtnNew());
+	//		pnlManagerButtons.add(Box.createVerticalStrut(10));
+	//		pnlManagerButtons.add(_solutionManagerGUI.getBtnExit());
+	//		pnlManagerButtons.add(Box.createVerticalGlue());
+	//
+	//		panel.setLayout(new BorderLayout());
+	//		panel.add(_solutionManagerGUI.getSolutionsPanel(), BorderLayout.CENTER);
+	//		panel.add(pnlManagerButtons, BorderLayout.EAST);
+	//
+	//		_solutionChooserFrame = new JFrame(Messages.getString("TIT_SOLUTIONS"));
+	//		_solutionChooserFrame.setResizable(false);
+	//
+	//		_solutionChooserFrame.getContentPane().add(panel);
+	//		_solutionChooserFrame.pack();
+	//
+	//		_solutionChooserFrame.addWindowListener(new WindowAdapter() {
+	//			public void windowClosing(WindowEvent e)
+	//			{
+	//				Starter.exit();
+	//			}
+	//		});
+	//
+	//		Point location = new Point();
+	//		location.x = (Toolkit.getDefaultToolkit().getScreenSize().width - _solutionChooserFrame.getWidth()) / 2;
+	//		location.y = (Toolkit.getDefaultToolkit().getScreenSize().height - _solutionChooserFrame.getHeight()) / 2;
+	//		_solutionChooserFrame.setLocation(location);
+	//
+	//		_solutionChooserFrame.setVisible(true);
+	//
+	//	}
 
 	private final class LocalGUIMenu
 	{
@@ -354,12 +391,12 @@ public final class LocalController implements IController
 		{
 			if (_btnOpenSolution == null) {
 				_btnOpenSolution = new JButton(
-						_actionManager.getChooseSolutionAction());
+						_actionManager.getOpenSolutionAction());
 				_btnOpenSolution.setIcon(new ImageIcon(_resourcesDir
 						+ Config.FILE_SEPARATOR
 						+ Resources.getString("ICO_SOLUTION_OPEN"))); //$NON-NLS-1$                
 			}
-			return _btnOpenSolution;
+			return _btnOpenSolution;			
 		}
 
 		JButton getBtnSaveProject()
@@ -471,7 +508,7 @@ public final class LocalController implements IController
 			if (_itmOpenSolution == null) {
 				_itmOpenSolution = new JMenuItem();
 				_itmOpenSolution.setText(Messages.getString("MNU_OPEN")); //$NON-NLS-1$
-				_itmOpenSolution.addActionListener(_actionManager.getChooseSolutionAction());
+				_itmOpenSolution.addActionListener(_actionManager.getOpenSolutionAction());
 			}
 			return _itmOpenSolution;
 		}
