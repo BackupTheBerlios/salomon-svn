@@ -85,6 +85,33 @@ i za³adowana ponownie do powtórnego wykorzystania.
 
 \subsection{YALE}
 
-\emph{YALE} (Yet Another Learing Environment)
+\emph{YALE} (Yet Another Learing Environment) jest œrodowiskiem do prowadzenia eksperymentów zwi¹zanych z uczeniem maszynowym. 
+
+YALE is an environment for machine learning experiments. A modular operator concept allows the design of complex nested operator chains for a huge number of learning problems. The data handling is transparent to the operators. They do not have to cope with the actual data format or different data views - the YALE core takes care of the necessary transformations. YALE is widely used by researchers and data mining companies.
+
+Use YALE and explore your data! Simplify the construction of experiments and the evaluation of different approaches. Try to find the best combination of preprocessing and learning steps or let YALE do that automatically for you. The graphical user interface and the XML based scripting language turn YALE into an IDE for machine learning and data mining. Furthermore, this concept defines a standardized interchange format for data mining experiments. Have fun! 
+
+
+YALE provides more than 200 operators including:
+Learners 	Machine learning algorithms: a huge number of learning schemes for regression and classification tasks including support vector machines (SVM), decision tree and rule learners, lazy learners, Bayesian learners, and Logistic learners. Several algorithms for association rule mining and clustering are also part of YALE. Furthermore, we added several meta learning schemes including Bayesian Boosting.
+Weka Learners 	Weka operators: all learning schemes and attribute evaluators of the Weka learning environment are also available and can be used like all other YALE operators.
+Preprocessing 	Data preprocessing: discretization, example and feature filtering, missing and infinite value replenishment, normalization, removal of useless features, sampling, dimensionality reduction, and more.
+Features 	Feature operators: selection algorithms like forward selection, backward elimination, and several genetic algorithms, operators for feature extraction from time series, feature weighting, feature relevance, and generation of new features.
+Validation 	Meta operators: optimization operators for experiment design, e.g. example set iterations or several parameter optimization schemes.
+Validation 	Performance evaluation: cross-validation and other evaluation schemes, several performance criteria for classification and regression, operators for parameter optimization in enclosed operators or operator chains.
+Visualization 	Visualization: operators for logging and presenting results. Create online 2D and 3D plots of your data, learned models and other experiment results.
+IO 	In- and output: flexible operators for data in- and output, support of several file formats including arff, C4.5, csv, bibtex, dBase, and reading directly from databases.
+
+
+YALE supports flexible experimental (re)arrangements which allows the search for the best learning scheme and preprocessing for the data and learning task at hand. The simple adaption and evaluation of different experiment designs allow the comparison of different solutions. Due to the modular operator concept often only one operator has to be replaced to evaluate its performance while the rest of the experiment design remains the same. This is an important feature for both scientific research and the optimization of real-world applications.
+
+To guide the transformation of the feature space or the automatical search for the best preprocessing, the user can define additional meta data on the data set at hand. Meta data include the type of attributes or their unit (SI). This information is for example used by the feature generation / construction algorithms provided by YALE. The definition of meta information on your data is optional and if it is omitted YALE tries to guess the correct data types
+
+
+YALE's most important characteristic is the ability to nest operator chains and build complex operator trees. In order to support this characteristic the YALE data core acts like a data base management system and provides a multi-layered data view concept on a central data table which underlies all views. For example, the first view can select a subset of examples and the second view can select a subset of features. The result is a single view which reflects both views. Other views can create new attributes or filter the data on the fly. The number of layered views is not limited.
+
+This multi-layered view concept is also an efficient way to store different views on the same data table. This is especially important for automatic data preprocessing tasks like feature generation or selection. For example, the population of an evolutionary operator might consist of several data views - instead of several copys of parts of the data set. 
+
+YALE provides an easy to use extension and plugin mechanism that makes it possible to integrate new operators and adapt YALE to your personal requirements. Since YALE is entirely written in Java, it runs on any major platform/operating system. A command line version and a Java API allows invoking of YALE from your programs without using the GUI.
 
 \subsection(Able)
