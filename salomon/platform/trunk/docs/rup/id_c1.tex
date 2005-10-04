@@ -31,7 +31,7 @@ System przetwarzania wiedzy\\}
 
 
 \begin{flushright}
-{\Large \emph{Iteration Description --- C1, ver 1.0} }
+{\Large \emph{Iteration Description --- C1, ver 1.1} }
 \end{flushright}
 
 
@@ -44,6 +44,7 @@ System przetwarzania wiedzy\\}
   \hline \hline
   29.09.2005 & 1.0 & utworzenie & \emph{Leszek Grzanka}\\
   \hline
+  03.10.2005 & 1.1 & drobne uzupe³nienie & \emph{Nikodem Jura}\\
   \hline
 \end{tabular}
 \end{flushleft}
@@ -63,17 +64,20 @@ Stabilna wersja Salomona, zawieraj¹ca w pe³ni sprawn¹ warstwê \textit{Solution},
 %przypadki klikania po gui
 
 \section{Efekt wykonania iteracji}
+
 Efektem by³o:
 \begin{itemize}
-\item zaimplementowanie odpowiednich klas realizuj¹cych funkcjonalnoœæ warstwy \textit{Solution}
-\item rozbudowa bazy danych o tabele przechwuj¹c¹ informacjê o obiektach \textit{Solution}
-\item modyfikacja interfejsu u¿ytkownika o elementy umo¿liwiaj¹ce zarz¹dzanie warstw¹ \textit{Solution}
+	\item zaprojektowanie interfejsów i zaimplementowanie klas je implementuj¹cych realizuj¹cych funkcjonalnoœæ warstwy 	\textit{Solution}
+	\item rozbudowa bazy danych o tabele przechowuj¹c¹ informacjê o obiektach \textit{Solution}
+	\item modyfikacja interfejsu u¿ytkownika o elementy umo¿liwiaj¹ce zarz¹dzanie warstw¹ \textit{Solution}
 \end{itemize}
+
 Ponadto w ramach stabilizacji platformy powsta³y:
+
 \begin{itemize}
-\item klasa \textit{Environment}, s³u¿¹ca do przekazywania informacji pomiêdzy wtyczkami
-\item modyfikacje platformy o elementy udostêpniaj¹ce informacje o strukturze bazy danych
-\item manager po³¹czeñ do zewnêtrznej bazy danych
+	\item klasa \textit{Environment}, s³u¿¹ca do przekazywania informacji pomiêdzy wtyczkami
+	\item modyfikacje platformy o elementy udostêpniaj¹ce informacje o strukturze bazy danych -- udostêpnienie menad¿erom wiedzy i wtyczkom klasy przechowywuj¹cej informacje o schemacie bazy.
+	\item manager po³¹czeñ do zewnêtrznej bazy danych udostêpniany poprzez obiekt \emph{Solution} menad¿erom wiedzy operuj¹cym na tych danych 
 \end{itemize}
 
 \end{document}
