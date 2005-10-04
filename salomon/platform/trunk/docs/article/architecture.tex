@@ -7,7 +7,6 @@ Co z kolei stworzy³o mo¿liwoœæ rozproszenia obliczeñ pomiêdzy ró¿ne maszyny. W r
 mog¹ wyst¹piæ problemy z utrzymaniem homogenicznoœci nie tylko ze wzglêdu na wersje systemu, ale tak¿e na implementacje.
 St¹d potrzeba zdefiniowania jasno okreœlonych warstw i interfejsów pomiêdzy nimi.
 
-%TODO: Poprawiæ rysunek
 \begin{figure}[!ht]
     \centering
         \includegraphics[width=\linewidth]{img/architecture.png}
@@ -18,19 +17,22 @@ St¹d potrzeba zdefiniowania jasno okreœlonych warstw i interfejsów pomiêdzy nimi
 Do najwa¿niejszych warstw jakie mo¿emy wyró¿niæ nale¿¹:
 \begin{enumerate}
 	\item Komunikacja z zewnêtrznym Ÿród³em danych. \\
-	Za Komunikacja odbywa siê przez specjalne komponenty, które ukrywaj¹ ró¿nice pomiêdzy ró¿nymi bazami danych.
+	Za Komunikacja odbywa siê przez specjalne komponenty, które ukrywaj¹ ró¿nice pomiêdzy ró¿nymi Ÿród³ami danych.
+	Udostêpnia on specjalny interfejs za pomoc¹, którego wtyczki mog¹ pobraæ dane oraz strukturê bazy. 
 	\item komunikacja z miêdzy ró¿nymi instancjami \emph{Salomona}
-	W obecnej wersji systemu wykorzystywana do komunikacji jest technologia \emph{RMI}, ale nic nie stoi na przeszkodzie,
-	aby w przysz³oœci wykorzystywaæ inne technologie.
+	W obecnej wersji systemu wykorzystywana do komunikacji jest technologia \emph{RMI}.
+	Na obecnym etapie system jest homogeniczny, wiêc naturalnym wydaje byæ
+	u¿ycie w³aœnie \emph{RMI}. W przypadku pojawianie siê, innych implementacji konieczne mo¿e byæ zaimplêmêtowanie
+	równie¿ komunikacji w oparciu o bardziej uniwersalne technologie jak np. \emph{CORBA}. 
 	\item komunikacja z wtyczkami
 	Zestaw specjalnych klas odpowiada, za dostarczenie wtyczk¹ danych z zewnêtrznego Ÿród³a danych oraz za umo¿liwienie operacji
-	na wiêdzy,
+	na wiêdzy. Wtyczki s¹ ca³kowicie odseparowane od zewnêtrznego œrodowiska, i warstwa ta stanowi jedyne miejsce wymiany 
 	\item interfejs u¿ytkownika
 \emph{Salomon} mo¿e byæ wykorzystywany w ró¿nych kontekstach, takich jak na przyk³ad praca z u¿ytkownikiem,
 system udostêpniaj¹cy swoje us³ugi w rozproszonym œrodowisku czy biblioteka wykorzystywana w innym programie.
 To wymusza bardzo mocne oddzielnie interfejsu u¿ytkownika od reszty systemu.
-	\item j¹dro systemu
-	To najwa¿niejsza czêœæ systemu, odpowiedzialna za uruchamianie zadañ, zarz¹dzanie pozosta³y czêœciami.
+%	\item j¹dro systemu
+%	To najwa¿niejsza czêœæ systemu, odpowiedzialna za uruchamianie zadañ, zarz¹dzanie pozosta³y czêœciami.
 \end{enumerate}
 
 
