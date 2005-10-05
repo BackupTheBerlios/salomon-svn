@@ -1,0 +1,155 @@
+\documentclass[a4paper, 12pt]{article}
+%\usepackage[polish]{babel}
+\usepackage[cp1250]{inputenc}
+%\usepackage[latin2]{inputenc}
+%\usepackage{polski}
+\usepackage{amsfonts}
+\usepackage[T1]{fontenc}
+\usepackage[dvips]{graphicx}
+
+
+
+
+\pagestyle{headings}
+\textwidth      15.5cm
+\oddsidemargin    .1cm
+\evensidemargin   .1cm
+
+
+
+
+
+
+
+\begin{document}
+
+
+
+\thispagestyle{empty}
+
+\begin{minipage}{5cm}
+%\includegraphics[scale=0.3]{logo.eps}
+\end{minipage}
+\begin{minipage}{10cm}
+\begin{center}
+{\Large Salomon\\
+System przetwarzania wiedzy\\}
+\end{center}
+\end{minipage}
+
+
+\[\]
+\begin{flushright}
+{\Large \emph{Iteration Description for Transition -- Iteration
+1\\
+Wersja 1.0}}
+
+\[\]
+
+
+
+\end{flushright}
+
+\vspace{7cm}
+
+\[\]
+
+
+
+\begin{center}
+
+\begin{tabular}{|p{3.5cm}|p{3.5cm}|p{3.5cm}|p{3.5cm}|}
+
+  \hline
+
+  Data & Wersja & Opis & Autor \\
+
+  \hline
+
+  26-09-2005 & 1.0 & Wersja pocz¹tkowa & Dominik Seweryn\\
+
+  \hline
+
+  &&&\\
+
+  \hline
+
+  &&&\\
+
+  \hline
+
+\end{tabular}
+
+\end{center}
+
+
+\newpage
+
+
+
+\section{Zadania dla iteracji}
+\subsection{Implementacja pluginu realizuj¹cego wczytywanie danych} Plugin bêdzie umo¿liwia³ wybór tabeli wykorzystywanej do budowy
+drzew decyzyjnych. Po wyborze tabeli dostêpny bêdzie z niej wybór
+kolumny decyduj¹cej, wzglêdem której tworzone bêdzie drzewo
+dycyzyjne, oraz kolumn decyzyjnych, które bed¹ brane pod uwagê
+przy tworzeniu drzewa. Po wyborze odpowiednich kolumn i tabeli
+dane te zostan¹ zapisane do zmiennej œrodowiskowej aby udostêpniæ
+wyniki dzia³ania pluginu kolejnym pluginom.
+\subsection{Implementacja pluginu realizuj¹cego tworzenie drzew
+decyzyjnych} Plugin ten na podstawie danych, któr¹ tabelê m¹
+wykorzystaæ, oraz jak¹ rolê bêd¹ pe³ni³y poszczególne kolumny
+bêdzie tworzy³ drzewo decyzyjne wed³ug algorytmu ID3. Wynik
+dzia³ania algorytmu bedzie zapisywany do struktury ITree.
+\subsection{Implementacja atrapy pluginu realizuj¹cego
+wizualizacjê} W tym przypadku bêdzie mieli do czynienia z bardzo
+uproszczon¹ realizacj¹ wizualizacji. Plugin ten bedzie mia³ za
+zadanie na podstawie drzewa, otrzymanego jako strukture ITree,
+przedstawiæ je graficznie jako odpowiednio przeformatowane ci¹gi
+znaków.
+
+
+
+\section{Produkt iteracji}
+Produktem iteracji bêd¹ trzy pluginy, ka¿dy odpowiadaj¹cy za inny
+etap budowy drzew decyzyjnych. Plugin pierwszy bêdzie realizowa³
+funkcjê wczytywania danych i informacji o nich. Gromadzi³ bêdzie
+dane o tabeli jaka ma byæ podstaw¹ do budowy drzewa oraz o rolach
+poszczególnych kolumn w procesie tworzenia drzewa decyzyjnego.
+Plugin drugi bêdzie realizowa³ algorytm budowy drzew decyzyjnych
+na podstawie danych otrzymanych z pluginu pierwszego. Trzeci
+plugin odpowiada³ bêdzie za prezentacjê graficzn¹ otrzymanego
+wyniku.
+
+
+
+\section{Plan testów}
+Podczas przygotowywania bêdziemy korzystali z technologii jUnit.
+Niektóre testy, np. testy dzia³ania pluginu odpowiadaj¹cego za
+wizualizacje, bêd¹ te¿ przeprowadzane rêcznie.
+
+    Testy bêd¹ obejmowa³y sprawdzenie poprawnoœci:
+    \begin{itemize}
+        \item zrealizowanego algorytmu budowania drzew decyzyjnych.
+        \item dzia³ania poszczególnych klas, interfejsów w tym bêd¹ zawarte interfejsy szkieletowe (np. realizuj¹ce operacje dzia³ania na bazie danych).
+        \item dzia³ania pluginu realizuj¹cego budowê drzew decyzyjnych.
+        \item dzia³ania atrapy pluginu tworz¹cego wizualizacje.
+        \item dzia³ania ca³oœci zrealizowanej funkcjonalnoœci.
+    \end{itemize}
+
+
+\section{Efekt wykonania iteracji}
+Efektem pracy w ramach zakoñczonej iteracji jest powstanie
+zak³adanych trzech pluginów. Na ten moment s¹ one w wersji
+pocz¹tkowej - nie oferuj¹ mo¿liwoœci modyfikacji swoich parametrów
+(poza pluginem pierwszym, gdzie istnieje wybór tabeli oraz
+kolumn), wykonuj¹ swoje zadanie, ale nie oferuj¹ dodatkowych
+funkcjonalnoœci, a na przebieg ich dzia³ania w trakcie pracy nie
+ma ¿adnego wp³ywu. Wprowadzenie okreœlonych parametrów mog³oby ten
+stan rzeczy zmieniæ. Na przyk³ad przy wizualizacji, nawet w formie
+ci¹gu znaków, mo¿na by okreœlaæ przy uruchamianiu pluginu jakim
+znakiem bêd¹ oddzielane od siebie kolejne wêz³y na danym poziomie
+drzewa. W kwestii realizacji planu uda³o siê osi¹gn¹æ wszystko co
+zosta³o zaplanowane.
+
+
+\end{document}
