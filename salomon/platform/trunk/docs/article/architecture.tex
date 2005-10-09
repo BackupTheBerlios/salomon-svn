@@ -10,41 +10,41 @@
 Rysunek \ref{fig:architecture} przedstawia obecn¹ architekturê systemu Salomon.
 Która sk³ada siê z takich elementów jak:
 \begin{enumerate}
-	\item Salomon system
+	\item Salomon system \\
 		Pod tym pojêciem kryje siê zbiór uruchomionych Salomonów (instancji) dzia³aj¹cych we wspólnym œrodowisku i komunikuj¹cych,
 		siê ze sob¹. Poszczególne instancje mog¹ wymieniaæ miedzy sob¹ wiedzê oraz polecenia do wykonania. Na obecnym etapie rozwoju
 		mamy do czynienia z modelem gwiaŸdzistym. Jedna instacja stanowi role zarz¹dcy (sama równie¿ mo¿e wykonywaæ obliczenia) i inne
 		instancje wykonuj¹ obliczenia zlecone przez t¹ instancje nadrzêdn¹ i zwracaj¹ jej wyniki.
-  \item Salomon
+  \item Salomon \\
   	To pojedyñcza dzia³aj¹ca instancja systemu. W sk³ad której wchodz¹: J¹dro systemu, wtyczki i element odpowiedzialny
   	za przechowywanie wiedzy
-	\item J¹dro systemu
+	\item J¹dro systemu \\
 		To element integruj¹cy. Umo¿liwiaj¹cy komunikacjê pomiêdzy poszczególnymi elementami systemu.
 	\item Interfejs u¿ytkownika
 		Element odpowiedzialny, za komunikacjê z u¿ytkownikiem.
-	\item Zarz¹dzanie wiedz¹
+	\item Zarz¹dzanie wiedz¹ \\
 		 Salomon mo¿e przechowywaæ i operowaæ na wielu rodzajach wiedzy np. drzewach decyzyjnych, klastrach, regu³ach itp.
 		 Dla ka¿dego rodzaju wiedzy zosta³ wyodrêbniony osobny element odpowiedzialny, za udostêpnienie interfejsu wtyczk¹ umo¿liwiaj¹cego
 		 w ³atwy sposób operacje na wiedzy oraz odseparowanie ich od szczegó³ów implementacyjnych pozwalaj¹cych np. na przechowywanie
 		 wiedzy w bazie danych.
-	\item Zarz¹dzanie danymi
+	\item Zarz¹dzanie danymi \\
 		To warstwa abstrakcji dostêpu do danych. Do jej zadañ nale¿y uniezale¿nienie reszty systemu od ró¿nych implementacji systemów bazodanowych.
-	\item Komunikacja
+	\item Komunikacja \\
 		W celu umo¿liwienia rozproszonych obliczeñ potrzebna jest komunikacja pomiêdzy poszczególnymi instancjami Salomona.
 		W architekturze wyodrêbniony zosta³ specjalny element odpowiedzialny za komunikacjê.
-	\item Wtyczki
+	\item Wtyczki \\
 		Wtyczki s¹ odpowiedzialne za dostarczenie algorytmów wyszukuj¹cych, przetwarzaj¹cych wiedze, za prezentacje wyników itp.
 		S¹ one dostarczane z zewn¹trz. Wykonanie algorytmów przez nich dostarczonych odbywa siê w izolowanym œrodowisku.
 		W trakcie pracy wtyczki maj¹ dostêp do wiedzy, do danych i do interfejsu u¿ytkownika.
-	\item Dane
+	\item Dane \\
 		System wyszukuje wiedzê z danych, dlatego te¿ potrzebuje po³¹czenie zewnêtrznym Ÿród³em.
 		Dane pochodz¹ z zewnêtrznego Ÿród³a, do którego po³¹czenie mo¿e mieæ wiele instancji systemu.
-	\item Wiedza
+	\item Wiedza \\
 		Ka¿da instancja posiada w³asn¹ bazê danych w której przechowywana jest ca³a zgromadzona wiedza.
 		Baza ta wykorzystywana jest równie¿ do przechowywanie danych potrzebnych w trakcie dzia³ania systemu,
 		takich jakich: informacje o zainstalowanych wtyczkach, zdefiniowane projekty, Ÿród³a danych itp.
 	
-	\item Kontroler zadañ
+	\item Kontroler zadañ \\
 		Element ten jest odpowiedzialny za uruchamianie i kontrolowanie wykonywania poszczególnych zadañ.
 	 
 \end{enumerate}
