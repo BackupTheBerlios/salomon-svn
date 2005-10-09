@@ -8,41 +8,41 @@
 \end{figure}
 
 Rysunek \ref{fig:architecture} przedstawia obecn¹ architekturê systemu Salomon.
-Która sk³ada siê z takich elementów jak:
+Mo¿na na nim wyró¿niæ nastêpuj¹ce elementy:
 \begin{enumerate}
 	\item Salomon system \\
-		Pod tym pojêciem kryje siê zbiór uruchomionych Salomonów (instancji) dzia³aj¹cych we wspólnym œrodowisku i komunikuj¹cych,
-		siê ze sob¹. Poszczególne instancje mog¹ wymieniaæ miedzy sob¹ wiedzê oraz polecenia do wykonania. Na obecnym etapie rozwoju
-		mamy do czynienia z modelem gwiaŸdzistym. Jedna instacja stanowi role zarz¹dcy (sama równie¿ mo¿e wykonywaæ obliczenia) i inne
-		instancje wykonuj¹ obliczenia zlecone przez t¹ instancje nadrzêdn¹ i zwracaj¹ jej wyniki.
-  \item Salomon \\
-  	To pojedyñcza dzia³aj¹ca instancja systemu. W sk³ad której wchodz¹: J¹dro systemu, wtyczki i element odpowiedzialny
-  	za przechowywanie wiedzy
-	\item J¹dro systemu \\
-		To element integruj¹cy. Umo¿liwiaj¹cy komunikacjê pomiêdzy poszczególnymi elementami systemu.
-	\item Interfejs u¿ytkownika
-		Element odpowiedzialny, za komunikacjê z u¿ytkownikiem.
-	\item Zarz¹dzanie wiedz¹ \\
+		Pod tym pojêciem kryje siê zbiór uruchomionych instancji systemu. Dzia³aj¹ one we wspólnym œrodowisku i komunikuj¹ siê ze sob¹. Poszczególne instancje mog¹ wymieniaæ miedzy sob¹ wiedzê oraz polecenia do wykonania. Na obecnym etapie rozwoju mamy do czynienia z modelem gwiaŸdzistym. Jedna instancja stanowi role zarz¹dcy a pozosta³e wykonuj¹ obliczenia przez ni¹ zlecone i zwracaj¹ jej wyniki. Sama instancja zarz¹dzaj¹ca równie¿ mo¿e wykonywaæ obliczenia. 
+  \item Salomon \\  
+  	To pojedyncza instancja systemu. Jej funkcjonalnoœæ mo¿na podzieliæ na kilka czêœci: 
+	\item J¹dro systemu \\	
+		Jest to element integruj¹cy pozosta³e. Zapewnia komunikacjê pomiêdzy poszczególnymi elementami systemu.
+	\item Interfejs u¿ytkownika \\		
+		Element odpowiedzialny za komunikacjê z~u¿ytkownikiem.
+		
+	\item Element zarz¹dzaj¹cy wiedz¹ \\	
 		 Salomon mo¿e przechowywaæ i operowaæ na wielu rodzajach wiedzy np. drzewach decyzyjnych, klastrach, regu³ach itp.
-		 Dla ka¿dego rodzaju wiedzy zosta³ wyodrêbniony osobny element odpowiedzialny, za udostêpnienie interfejsu wtyczk¹ umo¿liwiaj¹cego
-		 w ³atwy sposób operacje na wiedzy oraz odseparowanie ich od szczegó³ów implementacyjnych pozwalaj¹cych np. na przechowywanie
-		 wiedzy w bazie danych.
-	\item Zarz¹dzanie danymi \\
+		 Dla ka¿dego rodzaju wiedzy zosta³ wyodrêbniony osobny element, który odpowiada za udostêpnienie wtyczkom interfejsu do zarz¹dzania danym rodzajem wiedzy. U³atwia to operowanie na wiedzy oraz odseparowuje wtyczki od szczegó³ów implementacyjnych pozwalaj¹cych np. na przechowywanie wiedzy w bazie danych.
+		 
+	\item Element zarz¹dzaj¹cy danymi \\	
 		To warstwa abstrakcji dostêpu do danych. Do jej zadañ nale¿y uniezale¿nienie reszty systemu od ró¿nych implementacji systemów bazodanowych.
-	\item Komunikacja \\
+		
+	\item Element komunikacyjny \\	
 		W celu umo¿liwienia rozproszonych obliczeñ potrzebna jest komunikacja pomiêdzy poszczególnymi instancjami Salomona.
 		W architekturze wyodrêbniony zosta³ specjalny element odpowiedzialny za komunikacjê.
+		
 	\item Wtyczki \\
 		Wtyczki s¹ odpowiedzialne za dostarczenie algorytmów wyszukuj¹cych, przetwarzaj¹cych wiedze, za prezentacje wyników itp.
 		S¹ one dostarczane z zewn¹trz. Wykonanie algorytmów przez nich dostarczonych odbywa siê w izolowanym œrodowisku.
-		W trakcie pracy wtyczki maj¹ dostêp do wiedzy, do danych i do interfejsu u¿ytkownika.
+		W trakcie pracy wtyczki maj¹ dostêp do wiedzy, do danych i~do interfejsu u¿ytkownika.
+		
 	\item Dane \\
-		System wyszukuje wiedzê z danych, dlatego te¿ potrzebuje po³¹czenie zewnêtrznym Ÿród³em.
-		Dane pochodz¹ z zewnêtrznego Ÿród³a, do którego po³¹czenie mo¿e mieæ wiele instancji systemu.
+		System wyszukuje wiedzê z danych, dlatego te¿ potrzebuje po³¹czenie z ich zewnêtrznym Ÿród³em.
+		Dane pojedynczego Ÿród³a danych po³¹czonych mo¿e byæ wiele instancji programu.
+		
 	\item Wiedza \\
-		Ka¿da instancja posiada w³asn¹ bazê danych w której przechowywana jest ca³a zgromadzona wiedza.
-		Baza ta wykorzystywana jest równie¿ do przechowywanie danych potrzebnych w trakcie dzia³ania systemu,
-		takich jakich: informacje o zainstalowanych wtyczkach, zdefiniowane projekty, Ÿród³a danych itp.
+		Ka¿da instancja posiada w³asn¹ bazê danych, w której przechowywana jest ca³a zgromadzona wiedza.
+		Baza ta wykorzystywana jest równie¿ do przechowywania danych potrzebnych w trakcie dzia³ania systemu,
+		takich jakich informacje o zainstalowanych wtyczkach, zdefiniowane projekty, Ÿród³a danych itp.
 	
 	\item Kontroler zadañ \\
 		Element ten jest odpowiedzialny za uruchamianie i kontrolowanie wykonywania poszczególnych zadañ.
@@ -50,16 +50,16 @@ Która sk³ada siê z takich elementów jak:
 \end{enumerate}
 
 
-Proces odkrywania wiedzy jest bardzo z³o¿ony. Czêœæ z algorytmów wymaga du¿e iloœci obliczeñ.
-W przypadku systemu takich jak \emph{Salomon} obliczenia tê przeprowadzane s¹ na sporej iloœci danych.
+Proces odkrywania wiedzy jest bardzo z³o¿ony. Czêœæ z algorytmów wymaga du¿ej iloœci obliczeñ.
+W przypadku systemów takich jak \emph{Salomon} obliczenia tê przeprowadzane s¹ na sporej iloœci danych.
 St¹d pojawiaj¹ siê problemy wydajnoœciowe, dlatego te¿ jednym z wa¿niejszych aspektów podczas projektowania
 architektury systemu by³a skalowalnoœæ. Uda³o siê to osi¹gn¹æ dziêki rozbiciu ca³ego procesu na pojedyncze zadania.
-Co z kolei stworzy³o mo¿liwoœæ rozproszenia obliczeñ pomiêdzy ró¿ne maszyny. W rozleg³ych systemach rozproszonych,
-mog¹ wyst¹piæ problemy z utrzymaniem homogenicznoœci nie tylko ze wzglêdu na wersje systemu, ale tak¿e na implementacje.
+To z kolei stworzy³o mo¿liwoœæ rozproszenia obliczeñ pomiêdzy ró¿ne maszyny. W rozleg³ych systemach rozproszonych,
+mog¹ wyst¹piæ problemy z utrzymaniem homogenicznoœci nie tylko ze wzglêdu na wersjê systemu, ale tak¿e na implementacje.
 St¹d potrzeba zdefiniowania jasno okreœlonych warstw i interfejsów pomiêdzy nimi.
 
 
-Do najwa¿niejszych warstw jakie mo¿emy wyró¿niæ nale¿¹:
+Do najwa¿niejszych warstw, jakie mo¿emy wyró¿niæ, nale¿¹:
 
 \begin{enumerate}
 	\item Komunikacja z zewnêtrznym Ÿród³em danych. \\
@@ -76,11 +76,11 @@ Do najwa¿niejszych warstw jakie mo¿emy wyró¿niæ nale¿¹:
 	
 	\item Komunikacja z wtyczkami.
 	
-	Zestaw specjalnych klas odpowiada, za dostarczenie wtyczkom danych z zewnêtrznego Ÿród³a danych oraz za umo¿liwienie operacji	na wiedzy. Wtyczki s¹ ca³kowicie odseparowane od zewnêtrznego œrodowiska i warstwa ta stanowi jedyne miejsce wymiany wiedzy pomiêdzy nimi a œrodowiskiem.
+	Zestaw specjalnych klas odpowiada za dostarczenie wtyczkom danych z zewnêtrznego Ÿród³a danych oraz za umo¿liwienie operacji na wiedzy. Wtyczki s¹ ca³kowicie odseparowane od zewnêtrznego œrodowiska i warstwa ta stanowi jedyne miejsce wymiany wiedzy pomiêdzy nimi a œrodowiskiem.
 	
 	\item Interfejs u¿ytkownika.
 	
-\emph{Salomon} mo¿e byæ wykorzystywany w ró¿nych kontekstach, takich jak na przyk³ad praca z u¿ytkownikiem,
+\emph{Salomon} mo¿e byæ wykorzystywany w ró¿nych kontekstach, takich jak na przyk³ad praca z~u¿ytkownikiem,
 system udostêpniaj¹cy swoje us³ugi w rozproszonym œrodowisku czy biblioteka wykorzystywana w innym programie.
 To wymusza bardzo mocne oddzielnie interfejsu u¿ytkownika od reszty systemu.
 
