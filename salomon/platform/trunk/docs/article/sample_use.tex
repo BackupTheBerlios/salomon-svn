@@ -1,10 +1,32 @@
 \section{Przyk³adowe zastosowanie}
 
-W ramach zajêæ na uczelni, zosta³a podjêta próba zaimplementowania algorytmów drzew decyzyjnych
-w oparciu i platformê \emph{Salomon}.
+W ramach zajêæ na uczelni, zosta³a podjêta próba zaimplementowania 
+algorytmów drzew decyzyjnych w oparciu o platformê \emph{Salomon}.
 
-\begin{itemize}
-	\item opis problemu
-	\item opis danych
-	\item wyniki  
-\end{itemize}
+Zgodnie z architektur¹ systemu, problem zaimplementowany zosta³ 
+za pomoc¹ odpowiednich wtyczek, z których ka¿da przeznaczona by³a 
+do realizacji osobnego etapu obliczeñ.
+
+Zadaniem pierwszej z nich jest konfiguracja procesu przetwarzania 
+danych. Pozwala ona na wybór cechy, wzglêdem której tworzone jest 
+drzewo decyzyjne oraz cech, które s¹ brane pod uwagê przy jego budowie.
+Wybór ten odbywa siê przy u¿yciu graficznego interfejsu u¿ytkownika 
+i mo¿e dotyczyæ dowolnej tematyki, zale¿nie od danych, na których 
+maj¹ byæ przeprowadzane obliczenia. 
+W naszym przypadku na podstawie kilku cech opisuj¹cych kandydatów do pracy, 
+takich jak np. wiek, doœwiadczenie zawodowe, znajomoœæ jêzyków obcych, 
+tworzone by³o drzewo maj¹ce na celu daæ odpowiedŸ na pytanie, 
+czy dany kandydat powinien byæ zatrudniony.
+
+Druga wtyczka jest w³aœciw¹ wtyczk¹ obliczeniow¹ -- jej zadaniem jest 
+dostarczenie algorytmu, za pomoc¹ którego tworzone jest drzewo. 
+Dla celów demonstracyjnych wybrany zosta³ jeden 
+z najprostszych algorytmów -- ID3.
+
+Ostatnia wtyczka ma na celu wizualizacjê utworzonego przez 
+wtyczkê algorytmiczn¹ drzewa w celu przedstawienia jej u¿ytkownikowi.
+W obecnej wersji drzewo to przedstawiane jest w formie tekstowej, 
+jednak¿e dziêki niezale¿noœci poszczególnych wtyczek od siebie, 
+nic nie stoi na przeszkodzie, ¿eby dodaæ stworzyæ now¹, 
+która realizuje wizualizacjê w dowolny inny sposób.
+
