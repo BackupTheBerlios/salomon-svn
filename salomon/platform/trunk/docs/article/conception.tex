@@ -3,8 +3,8 @@
 Proponowana architektura platfromy \emph{Salomon} jest odpowiedzi¹ na
 pewne ograniczenia systemu \emph{VINLEN}. Proces pozyskiwania wiedzy z
 danych jest zwykle bardzo z³o¿ony -- czêœæ algorytmów wymaga du¿ej
-iloœci obliczeñ, które przeprowadzane s¹ na sporej iloœci danych.
-St¹d pojawiaj¹ siê problemy wydajnoœciowe i dlatego te¿ jednym z
+iloœci obliczeñ, kt\'ore przeprowadzane s¹ na sporej iloœci danych.
+St¹d pojawiaj¹ siê problemy wydajnoœciowe i~dlatego te¿ jednym z
 wa¿niejszych aspektów podczas projektowania architektury systemu by³a
 jego skalowalnoœæ. Uda³o siê to osi¹gn¹æ dziêki rozbiciu ca³ego
 procesu obliczeniowego na pojedyncze \emph{zadania}.  To z kolei
@@ -22,8 +22,8 @@ G³ówne za³o¿enia platformy to:
     jest dostarczenie przyjaznego œrodowiska do realizacji funkcjonalnoœci 
     zawartej w komponentach maj¹cych postaæ tzw.\ wtyczek.
 
-    \item[Otwartoœæ.] U¿ytkownik ma pe³n¹ swobodê w    
-    dodawaniu nowych komponentów (wtyczek) do systemu.
+    \item[Otwartoœæ.] U¿ytkownik ma pe³n¹ swobodê
+    w~dodawaniu nowych komponentów (wtyczek) do systemu.
 
     \item[Niezale¿noœæ od œrodowiska wdro¿enia.]
     Dziêki wykorzystaniu przenoœnych narzêdzi, przyk³adowo jêzyka \emph{Java},
@@ -38,7 +38,7 @@ G³ówne za³o¿enia platformy to:
     \emph{VINLEN}. \emph{Salomon} stara siê równie¿ pod tym wzglêdem
     dorównaæ, a nawet przeœcign¹æ swojego protoplastê. Jako jedno z
     wa¿niejszych u³atwieñ przewidywane jest zast¹pienie jêzyka
-    definiowania ,,skautów'' graficznym interfejsem w postaci grafu
+    definiowania ,,skautów'' graficznym interfejsem w~postaci grafu
     przep³ywu wiedzy.
 \end{description}
 
@@ -57,7 +57,7 @@ Ekstrakcja wiedzy to proces, który mo¿e
 byæ podzielony na etapy -- w ka¿dym etapie wiedza jest poddawana
 pewnej obróbce (np. dyskretyzowane s¹ atrybuty, tworzone s¹
 regu³y, wiedza jest testowana). Poniewa¿ ka¿dy etap tworzy odrêbn¹
-ca³oœæ, a czêœæ etapów jest od siebie niezale¿na, zatem mog¹ byæ
+ca³oœæ, a~czêœæ etapów jest od siebie niezale¿na, zatem mog¹ byæ
 one wykonywane wspó³bie¿nie.
 
 Zadanie to podstawowa jednostka reprezentuj¹ca obliczenia.
@@ -87,6 +87,6 @@ ka¿da krawêdŸ mo¿e mieæ przypisany warunek, który jest wymagany,
 aby sterowanie zosta³o przekazane wzd³u¿ tej krawêdzi. Tak
 zdefiniowany program mo¿e byæ ³atwo prezentowany u¿ytkownikowi w postaci
 graficznej. W~systemie bêdzie mo¿na tak¿e
-definiowaæ agentów, którzy reagowaæ bêd¹ na zmiany w danych i/lub wiedzy
+definiowaæ agentów, którzy reagowa\'c bêd¹ na zmiany w danych i/lub wiedzy
 (np.\ na dodanie nowego rekordu do danych treningowych, czy
 wygenerowanie wiedzy przez innego agenta).

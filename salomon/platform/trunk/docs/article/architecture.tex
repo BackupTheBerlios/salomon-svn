@@ -1,8 +1,8 @@
 \section{Architektura systemu \emph{Salomon}}
 
 System \emph{Salomon} tworzy zbiór uruchomionych instancji platformy,
-dzia³aj¹cych we wspólnym œrodowisku i komunikuj¹cych siê ze sob¹ w
-celu wymiany wiedzy oraz przekazania zadañ do wykonania. Na obecnym etapie
+dzia³aj¹cych we wspólnym œrodowisku i komunikuj¹cych siê ze sob¹
+w~celu wymiany wiedzy oraz przekazania zada\'n do wykonania. Na obecnym etapie
 system pracuje w modelu klient-serwer, tj.\ jedna instancja platformy
 pe³ni rolê zarz¹dcy, a~pozosta³e wykonuj¹ obliczenia przez ni¹
 zlecone i~zwracaj¹ jej wyniki. Sama instancja zarz¹dzaj¹ca równie¿
@@ -11,45 +11,45 @@ mo¿e wykonywaæ obliczenia.
 \begin{figure}[!ht]
     \centering
         \includegraphics[width=\linewidth]{img/architecture.png}
-    \caption{Architekura systemu \emph{Salomon}}
+    \caption{Architekura \emph{Salomona}}
     \label{fig:architecture}
 \end{figure}
 
-Rysunek \ref{fig:architecture} przedstawia obecn¹ architekturê systemu Salomon.
-Mo¿na na niej wyró¿niæ nastêpuj¹ce elementy:
+Rysunek \ref{fig:architecture} przedstawia obecn¹ architekturê
+systemu Salomon. Mo¿na w niej wyró¿niæ nastêpuj¹ce elementy:
 \begin{description}
-	\item[J¹dro systemu] to element integruj¹cy pozosta³e modu³y. Zapewnia
- 		komunikacjê pomiêdzy poszczególnymi elementami systemu.
-	\item[Interfejs u¿ytkownika] -- tworzy pakiet modu³ów
- 		odpowiedzialnych za komunikacjê z~u¿ytkownikiem.
-	\item[Modu³ zarz¹dzaj¹cy wiedz¹] którego wyodrêbnienie pozwala
- 		\emph{Salomonowi} na przechowywanie i operowanie na ró¿nych
- 		rodzajach wiedzy np.\ drzewach decyzyjnych, klastrach, regu³ach itp.
- 		Dla ka¿dego rodzaju wiedzy definiowana jest osobna implemetacja, która
- 		odpowiada za udostêpnienie wtyczkom interfejsu do zarz¹dzania danym
- 		rodzajem wiedzy. U³atwia to operowanie na wiedzy oraz odseparowuje
- 		wtyczki od szczegó³ów implementacyjnych pozwalaj¹cych np.\ na
- 		przechowywanie wiedzy w bazie danych.
-	\item[Modu³ zarz¹dzaj¹cy danymi] stanowi warstwê abstrakcji dostêpu do
-  	danych. Pozwala na uniezale¿nienie reszty systemu od
-  	ró¿nych implementacji systemów bazodanowych.
-	\item[Modu³ komunikacyjny] umo¿liwiaj¹cy rozproszenie obliczeñ.
-	\item[Wtyczki] s¹ odpowiedzialne za dostarczenie algorytmów
- 		wyszukuj¹cych, przetwarzaj¹cych wiedzê, za prezentacje wyników itp.
- 		Wykonanie algorytmów przez nich dostarczonych odbywa siê w izolowanym
- 		œrodowisku.  W trakcie pracy wtyczki maj¹ dostêp do wiedzy, do danych
- 		i~do interfejsu u¿ytkownika.
-	\item[Dane] z pojedynczego Ÿród³a wykorzystywaæ mo¿e wiele instancji
- 		systemu.
-	\item[Wiedza] gromadzona i~przechowywana jest przez ka¿d¹ instancjê
- 		wraz danymi potrzebnymi w~trakcie dzia³ania systemu, takimi jak
- 		informacje o~zainstalowanych wtyczkach, zdefiniowane projekty, Ÿród³a
- 		danych itp
-	\item[Kontroler zadañ] jest odpowiedzialny za uruchamianie
-		i~kontrolowanie wykonywania poszczególnych zadañ. 
+\item[J¹dro systemu] to element integruj¹cy pozosta³e modu³y. Zapewnia
+ komunikacjê pomiêdzy poszczególnymi elementami systemu.
+\item[Interfejs u¿ytkownika] -- tworzy pakiet modu³\'ow
+ odpowiedzialnych za komunikacjê z~u¿ytkownikiem.
+\item[Modu³ zarz¹dzaj¹cy wiedz¹] kt\'orego wyodrêbnienie pozwala
+ \emph{Salomonowi} na przechowywanie i operowanie na r\'o\.znych
+ rodzajach wiedzy np.\ drzewach decyzyjnych, klastrach, regu³ach itp.
+ Dla ka¿dego rodzaju wiedzy definiowana jest osobna implemetacja, która
+ odpowiada za udostêpnienie wtyczkom interfejsu do zarz¹dzania danym
+ rodzajem wiedzy. U³atwia to operowanie na wiedzy oraz odseparowuje
+ wtyczki od szczegó³ów implementacyjnych pozwalaj¹cych np.\ na
+ przechowywanie wiedzy w bazie danych.
+\item[Modu³ zarz¹dzaj¹cy danymi] stanowi warstwê abstrakcji dostêpu do
+  danych. Pozwala na uniezale¿nienie reszty systemu od
+  ró¿nych implementacji systemów bazodanowych.
+\item[Modu³ komunikacyjny] umo¿liwiaj¹cy rozproszenie obliczeñ.
+\item[Wtyczki] s¹ odpowiedzialne za dostarczenie algorytmów
+ wyszukuj¹cych, przetwarzaj¹cych wiedzê, za prezentacje wyników itp.
+ Wykonanie algorytmów przez nich dostarczonych odbywa siê w izolowanym
+ œrodowisku.  W~trakcie pracy wtyczki maj¹ dostêp do wiedzy, do danych
+ i~do interfejsu u¿ytkownika.
+\item[Dane] z pojedynczego Ÿród³a wykorzystywa\'c mo¿e wiele instancji
+ systemu.
+\item[Wiedza] gromadzona i przechowywana jest przez ka¿d¹ instancjê
+ wraz danymi potrzebnymi w~trakcie dzia³ania systemu, takimi jak
+ informacje o zainstalowanych wtyczkach, zdefiniowane projekty, Ÿród³a
+ danych itp
+\item[Kontroler zadañ] jest odpowiedzialny za uruchamianie i
+ kontrolowanie wykonywania poszczególnych zadañ.
 \end{description}
 
-Poniewa¿ w systemach rozproszonych mog¹ wyst¹piæ problemy z
+Poniewa\.z w systemach rozproszonych mog¹ wyst¹piæ problemy z
 utrzymaniem zgodnoœci (ang.\ \emph{interoperability}) nie tylko ze
 wzglêdu na wersje systemu, ale tak¿e na implementacje, st¹d potrzeba
 zdefiniowania jasno okreœlonych warstw i interfejsów pomiêdzy nimi.
@@ -57,26 +57,24 @@ Do najwa¿niejszych warstw, jakie mo¿emy wyró¿niæ w systemie
 \emph{Salomon} nale¿¹:
 
 \begin{enumerate}
-	\item \emph{Komunikacja z zewnêtrznymi Ÿród³ami danych.}	
-	Komunikacja odbywa siê przez specjalne komponenty, które ukrywaj¹ ró¿nice pomiêdzy ró¿nymi Ÿród³ami danych.
-	Udostêpniaj¹ one specjalny interfejs, za pomoc¹ którego wtyczki mog¹ pobraæ dane oraz strukturê bazy. 
-	
-	\item \emph{Komunikacja z miêdzy ró¿nymi instancjami Salomona.}
-	W obecnej wersji systemu do komunikacji wykorzystywana  jest technologia \emph{RMI}.
-	Na obecnym etapie system jest homogeniczny, wiêc naturalnym wydaje byæ
-	u¿ycie w³aœnie \emph{RMI}. W przypadku pojawianie siê innych implementacji, konieczne mo¿e byæ zaimplementowanie
-	równie¿ komunikacji w oparciu o bardziej uniwersalne technologie jak np. \emph{CORBA}. 
-	
-	\item \emph{Komunikacja z wtyczkami.}
-	Zestaw specjalnych klas odpowiada za dostarczenie wtyczkom danych z zewnêtrznego Ÿród³a danych oraz za umo¿liwienie operacji na wiedzy. Wtyczki s¹ ca³kowicie odseparowane od zewnêtrznego œrodowiska i warstwa ta stanowi jedyne miejsce wymiany wiedzy pomiêdzy nimi a œrodowiskiem.
-	
-	\item \emph{Interfejs u¿ytkownika.}
-		\emph{Salomon} mo¿e byæ wykorzystywany w~ró¿nych kontekstach, takich jak na przyk³ad praca z~u¿ytkownikiem,
-		system udostêpniaj¹cy swoje us³ugi w~rozproszonym œrodowisku czy biblioteka wykorzystywana w innym programie.
-		To wymusza bardzo mocne oddzielnie interfejsu u¿ytkownika od reszty systemu.
+    \item \emph{Komunikacja z zewnêtrznymi Ÿród³ami danych.}
+    Komunikacja odbywa siê przez specjalne komponenty, które ukrywaj¹ ró¿nice pomiêdzy ró¿nymi Ÿród³ami danych.
+    Udostêpniaj¹ one specjalny interfejs, za pomoc¹ którego wtyczki mog¹ pobraæ dane oraz strukturê bazy.
 
-%	\item j¹dro systemu
-%	To najwa¿niejsza czêœæ systemu, odpowiedzialna za uruchamianie zadañ, zarz¹dzanie pozosta³y czêœciami.
+    \item \emph{Komunikacja z miêdzy ró¿nymi instancjami Salomona.}
+    W obecnej wersji systemu do komunikacji wykorzystywana  jest technologia \emph{RMI}.
+    Na obecnym etapie system jest homogeniczny, wiêc naturalnym wydaje byæ
+    u¿ycie w³aœnie \emph{RMI}. W przypadku pojawianie siê innych implementacji, konieczne mo¿e byæ zaimplementowanie
+    równie¿ komunikacji w oparciu o bardziej uniwersalne technologie jak np. \emph{CORBA}.
+
+    \item \emph{Komunikacja z wtyczkami.}
+    Zestaw specjalnych klas odpowiada za dostarczenie wtyczkom danych z zewnêtrznego Ÿród³a danych oraz za umo¿liwienie operacji na wiedzy. Wtyczki s¹ ca³kowicie odseparowane od zewnêtrznego œrodowiska i warstwa ta stanowi jedyne miejsce wymiany wiedzy pomiêdzy nimi a~œrodowiskiem.
+
+    \item \emph{Interfejs u¿ytkownika.}
+\emph{Salomon} mo¿e byæ wykorzystywany w~ró¿nych kontekstach, takich jak na przyk³ad praca z~u¿ytkownikiem,
+system udostêpniaj¹cy swoje us³ugi w~rozproszonym œrodowisku czy biblioteka wykorzystywana w innym programie.
+To wymusza bardzo mocne oddzielnie interfejsu u¿ytkownika od reszty systemu.
+
+%   \item j¹dro systemu
+%   To najwa¿niejsza czêœæ systemu, odpowiedzialna za uruchamianie zadañ, zarz¹dzanie pozosta³y czêœciami.
 \end{enumerate}
-
-

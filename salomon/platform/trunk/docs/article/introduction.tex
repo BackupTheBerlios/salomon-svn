@@ -3,27 +3,25 @@
 %\subsection{Indukcyjne bazy danych}
 %\subsection{Zastosowania}
 
-Integracja technologii baz danych z nowoczesnymi metodami indukcyjnego
-generowania wiedzy wydaje siê dawaæ istotne korzyœci w perspektywie
-budowy systemów wspomaganie decyzji. Systemy nazywane czasem
-indukcyjnymi bazami danych potrafi¹ odpowiedzieæ nie tylko na pytania,
-dla których odpowiedŸ znajduje siê w bazie danych, ale równie¿ na
-pytania, które wymagaj¹ zsyntetyzowania i zastosowania wiarygodnej
-wiedzy, wygenerowanej przez indukcyjne wnioskowanie z faktów z bazy
-danych i wczeœniejszej wiedzy.  Indukcyjne bazy danych mog¹ byæ
-postrzegane jako naturalny krok w rozwoju systemów bazodanowych \cite{bib3}.
+Integracja technologii baz danych z nowoczesnymi metodami
+indukcyjnego generowania wiedzy jest naturalnym kierunkiem rozwoju
+systemów bazodanowych. Systemy nazywane czasem indukcyjnymi bazami
+danych potrafi¹ odpowiedzieæ nie tylko na pytania, dla których
+odpowiedŸ znajduje siê w bazie danych, ale równie¿ na pytania,
+które wymagaj¹ zsyntetyzowania i zastosowania wiedzy,
+wygenerowanej przez indukcyjne wnioskowanie z faktów z bazy danych
+i wczeœniejszej wiedzy~\cite{bib3}. Schemat typowej indukcyjnej
+bazy danych przedstawiony jest na rysunku~\ref{fig:inddb}.
 
 \begin{figure}[!ht]
     \centering
         \includegraphics[width=\linewidth]{img/knowledge_mining.png}
     \caption{Indukcyjne bazy danych}
-    \label{fig:architecture}
+    \label{fig:inddb}
 \end{figure}
 
-\bigskip
-W pracy przedstawiona zostanie architektura i wybrane aspekty
-implementacji platformy \emph{Salomon}, jak równie¿ zaprezentowane
-zostan¹ mo¿liwoœci jego wykorzystania na przyk³adzie wybranych
-algorytmów pozyskiwania wiedzy z~danych.
-
-%\newpage
+W niniejszej pracy przedstawiona zosta³a architektura i wybrane
+aspekty implementacji platformy \emph{Salomon}, komponentowej
+realizacji indukcyjnej bazy wiedzy. Dziêki budowie modu³owej uda³o
+siê uzyskaæ du¿o lepsz¹ elastycznoœæ systemu w stosunku do innych,
+zbli¿onych platform.
