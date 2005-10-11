@@ -1,86 +1,92 @@
-\section{Koncepcja Salomona}
+\section{Koncepcja platformy \emph{Salomon}}
 
-Platforma \emph{Salomon} jest odpowiedzi¹ na pewne ograniczenia
-architektury systemu \emph{VINLEN}. Powsta³a jako alternatywna implementacja
-idei zawartych w tym systemie. Po przeanalizowaniu ograniczeñ swojego protoplasty
-powsta³y g³ówne za³o¿enia architektury:
+Proponowana architektura platfromy \emph{Salomon} jest odpowiedzi¹ na
+pewne ograniczenia systemu \emph{VINLEN}. Proces pozyskiwania wiedzy z
+danych jest zwykle bardzo z³o¿ony -- czêœæ algorytmów wymaga du¿ej
+iloœci obliczeñ, które przeprowadzane s¹ na sporej iloœci danych.
+St¹d pojawiaj¹ siê problemy wydajnoœciowe i dlatego te¿ jednym z
+wa¿niejszych aspektów podczas projektowania architektury systemu by³a
+jego skalowalnoœæ. Uda³o siê to osi¹gn¹æ dziêki rozbiciu ca³ego
+procesu obliczeniowego na pojedyncze \emph{zadania}.  To z kolei
+stworzy³o mo¿liwoœæ rozproszenia obliczeñ.
 
-\begin{itemize}
-    \item \textbf{Budowa komponentowa.}
-    \emph{VINLEN} to gotowy produkt, dostarczany z razem ró¿nymi algorytmami.
+G³ówne za³o¿enia platformy to:
+
+\begin{description}
+    \item[Budowa komponentowa.]
+    \emph{VINLEN} to gotowy produkt, dostarczany wraz z wbudowanymi ró¿nymi algorytmami.
     \emph{Salomon} to otwarta platforma, która ma stanowiæ bazê podczas 
     tworzenia produktów wykorzystuj¹cych ideê \emph{Machine Learning} 
     w procesie odkrywania wiedzy z danych. St¹d za³o¿enie, ¿e platforma -- 
-    g³ówny modu³ systemu -- jest tak prosty jak to mo¿liwe. Jego zadaniem 
+    g³ówny modu³ systemu -- jest tak prosta jak to mo¿liwe. Jej zadaniem 
     jest dostarczenie przyjaznego œrodowiska do realizacji funkcjonalnoœci 
-    zawartej w komponentach maj¹cych postaæ tzw. wtyczek.
+    zawartej w komponentach maj¹cych postaæ tzw.\ wtyczek.
 
-    \item \textbf{Otwartoœæ.} U¿ytkownik ma pe³n¹ swobodê w    
+    \item[Otwartoœæ.] U¿ytkownik ma pe³n¹ swobodê w    
     dodawaniu nowych komponentów (wtyczek) do systemu.
 
-    \item \textbf{Niezale¿noœæ od platformy.}    
-    Dziêki wykorzystaniu przenoœnych œrodowisk, przyk³adowo wykorzystaniu jêzyka \emph{Java},
-    system mo¿e byæ uruchamiany na dowolnej platformie posiadaj¹cej odpowiedni¹ maszynê wirtualn¹.
+    \item[Niezale¿noœæ od œrodowiska wdro¿enia.]
+    Dziêki wykorzystaniu przenoœnych narzêdzi, przyk³adowo jêzyka \emph{Java},
+    system mo¿e byæ uruchamiany w dowolnym systemie posiadaj¹cym odpowiedni¹ maszynê wirtualn¹.
 
-    \item \textbf{Mo¿liwoœæ rozpraszania obliczeñ.}
+    \item[Mo¿liwoœæ rozpraszania obliczeñ.]
     Dziêki budowie komponentowej i odpowiedniemu definiowaniu zadañ, system umo¿liwia pracê w rozproszonym,
-    heterogenicznym œrodowisku.
+    heterogenicznym œrodowisku sieciowym.
     
-    \item \textbf{Prostota u¿ytkowania.}
-    £atwoœæ u¿ytkowania to jeden z fundamentów systemu \emph{VINLEN}. \emph{Salomon} stara siê równie¿ pod tym wzglêdem
-    dorównaæ, a nawet przeœcign¹æ swojego protoplastê. System znajduje siê jeszcze we wstêpnej fazie rozwoju, wiêc
-    trudno dokonywaæ porównañ, choæ jako jedno z wa¿niejszych u³atwieñ mo¿na wymieniæ zast¹pienie jêzyka definiowania 	skautów modelem graficznym (grafem przep³ywu wiedzy).
-     
-\end{itemize}
+    \item[Prostota u¿ytkowania.]
+    £atwoœæ u¿ytkowania to jeden z fundamentów systemu
+    \emph{VINLEN}. \emph{Salomon} stara siê równie¿ pod tym wzglêdem
+    dorównaæ, a nawet przeœcign¹æ swojego protoplastê. Jako jedno z
+    wa¿niejszych u³atwieñ przewidywane jest zast¹pienie jêzyka
+    definiowania ,,skautów'' graficznym interfejsem w postaci grafu
+    przep³ywu wiedzy.
+\end{description}
 
 \medskip
 System \emph{Salomon} sk³ada siê z dwóch zasadniczych czêœci.
 Pierwsz¹ z nich stanowi platforma. Druga czêœæ to zbiór wtyczek,
 dostarczaj¹cych logikê potrzebn¹ do skonfigurowania, wykonania i
 wyœwietlenia rezultatów zadania.
-
-Platforma sk³ada siê z dwóch elementów: silnika, którego zadaniem
+Sama platforma sk³ada siê z dwóch elementów: silnika, którego zadaniem
 jest zarz¹dzanie i~uruchamianie zadañ, oraz magazynu, który s³u¿y
 do przechowywania danych i wiedzy.
 
-\medskip
-Jednym z istotnych elementów systemu jest mo¿liwoœæ definiowania
-przebiegu pracy systemu. Ekstrakcja wiedzy to proces, który mo¿e
-byæ podzielony na etapy. W ka¿dym etapie wiedza jest poddawana
+Jednym z istotnych atutów systemu jest mo¿liwoœæ elastycznego definiowania
+przebiegu pracy systemu w kategoriach tzw.\ \emph{zada\'n}.
+Ekstrakcja wiedzy to proces, który mo¿e
+byæ podzielony na etapy -- w ka¿dym etapie wiedza jest poddawana
 pewnej obróbce (np. dyskretyzowane s¹ atrybuty, tworzone s¹
 regu³y, wiedza jest testowana). Poniewa¿ ka¿dy etap tworzy odrêbn¹
 ca³oœæ, a czêœæ etapów jest od siebie niezale¿na, zatem mog¹ byæ
 one wykonywane wspó³bie¿nie.
 
 Zadanie to podstawowa jednostka reprezentuj¹ca obliczenia.
-Zdefiniowane jest ono jako czwórka $(a, p, we, wy)$, gdzie:
+Zdefiniowane jest ono jako: 
+$$
+z=(a, p, we, wy)
+$$
+gdzie:
 \begin{itemize}
     \item $a$ jest algorytmem, dostarczanym do systemu w postaci komponentu --
     wtyczki,
     \item $p$ reprezentuje parametry algorytmu,
-    \item $we$ jest wejœciem,
-    \item $wy$ oznacza wyjœcie.
+    \item $we$ i $wy$ oznaczaj¹ odpowiednio informacje wejœciowe i
+    wyjœciowe algorytmu.
 \end{itemize}
 Wejœcie i wyjœcie mo¿e mieæ postaæ danych (w przypadku algorytmów,
 które dokonuj¹ np. selekcji danych), wiedzy (np. wygenerowane
 regu³y) lub danych i wiedzy naraz (np.\ regu³y i wyj¹tki dla
 nich).
-% no tego jeszcze nie ma :( mozemy o tym pisac?
-Wyjœcie jednego zadania mo¿e byæ wejœciem pewnej liczby nastêpnych
+Przewiduje siê, ¿e
+wyjœcie jednego zadania mo¿e byæ wejœciem pewnej liczby nastêpnych
 zadañ. Aby zadanie mog³o zostaæ wykonane, wszystkie zadania od
 których zale¿y musz¹ byæ wykonanie wczeœniej. Powi¹zane zadania
 mog¹ byæ przedstawione w postaci grafu skierowanego. Taki graf z
 zaznaczonym zadaniem pocz¹tkowym tworzy \emph{program}. Dodatkowo,
 ka¿da krawêdŸ mo¿e mieæ przypisany warunek, który jest wymagany,
 aby sterowanie zosta³o przekazane wzd³u¿ tej krawêdzi. Tak
-zdefiniowany program mo¿e byæ ³atwo prezentowany w postaci
-graficznej.
-
-\emph{Salomon} ma tak¿e aspekty dynamiczne. W~systemie mo¿na
-definiowaæ agentów, którzy reaguj¹ na zmiany w danych i/lub wiedzy
+zdefiniowany program mo¿e byæ ³atwo prezentowany u¿ytkownikowi w postaci
+graficznej. W~systemie bêdzie mo¿na tak¿e
+definiowaæ agentów, którzy reagowaæ bêd¹ na zmiany w danych i/lub wiedzy
 (np.\ na dodanie nowego rekordu do danych treningowych, czy
-wygenerowanie wiedzy przez innego agenta). Do zdefiniowania
-takiego agenta, potrzebny jest odpowiadaj¹cy mu program oraz
-wskazanie zdarzeñ, na które ma reagowaæ.
-
-
+wygenerowanie wiedzy przez innego agenta).
