@@ -1,0 +1,150 @@
+\documentclass[a4paper]{article}
+\usepackage[polish]{babel}
+\usepackage[cp1250]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[dvips]{graphicx}
+\usepackage{colortbl}
+
+\pagestyle{headings}
+\textwidth      15.5cm
+\oddsidemargin    .1cm
+\evensidemargin   .1cm
+
+\begin{document}
+
+\thispagestyle{empty}
+
+\begin{minipage}{5cm}
+\includegraphics[scale=0.7]{salomon.eps}
+\end{minipage}
+\begin{minipage}{10cm}
+\begin{center}
+{\Large Salomon\\
+System przetwarzania wiedzy\\}
+\end{center}
+\end{minipage}
+
+\vspace*{0.5cm}
+
+\hrulefill
+
+\vspace*{1cm}
+
+
+\begin{flushright}
+{\Large \emph{Test Result Document, ver 1.0} }
+\end{flushright}
+
+%\vspace{7cm}
+
+\begin{flushleft}
+{ \Large Historia wersji }\[\]
+\begin{tabular}{|p{2.5cm}||p{1.5cm}|p{6cm}|p{3.5cm}|}
+  \hline
+  Data & Wersja & Opis & Autor \\
+  \hline \hline
+  17.09.2005 & 1.0 & Utworzenie & Jakub Ga³kowski \\
+  \hline
+\end{tabular}
+\end{flushleft}
+
+\newpage
+
+    \section{Wstêp}
+        \subsection{Cel dokumentu}         
+            Dokument ma na celu przedstawienie raportu z testów implementacji platformy Salomon. Dotyczy on wersji pre-release.
+            
+    \section{Narzêdzia u¿yte do testów}       
+        Do tworzenia testów jednostkowych zosta³ u¿yty pakiet jUnit, natomiast Gui testing zosta³ przeprowadzny rêcznie oraz za pomoc¹ pakietu Abbot.       
+
+
+    \section{Opis testów}
+        \subsection{Testy Jednostkowe}
+            \subsubsection{Testy Kontrolerów (salomon.engine.controller)}
+                Przetestowano dzia³anie Salomona jako biblioteki. Przetestowane klasy: 
+                \begin{itemize}
+                    \item LibraryController - Test: LibraryControllerTest \\ Kompleksowy test biblioteki  \\
+                    Wyniki: 1/1 poprawnych
+                \end{itemize}
+                
+            \subsubsection{Testy Modu³u komunkacji z baz¹ danych (salomon.engine.database.queries)}
+                Testy te poœwiêcone s¹ g³ównie zadawaniu zapytañ do bazy danych za pomoc¹ predefiniowanych obiektów. 
+                Dla ka¿dej operacji na bazie zosta³ stworzony osobny test.
+                \begin{itemize}
+                    \item DBManagerTest - Testy komunikacji z baz¹ \\
+                    Wyniki: 2/2 poprawnych
+                    \item SQLDeleteTest - Testy usuwania wierszy wed³ug zadanego filtra \\
+                    Wyniki: 2/2 poprawnych 
+                    \item SQLInsertTest - Testy wstawiania wiersza do tabeli\\
+                    Wyniki: 1/1 poprawnych
+                    \item SQLSelectTest - Testy wyboru z tabeli \\
+                    Wyniki: 4/4 poprawnych
+                    \item SQLUpdateTest - Testy zmiany wiersza w tabeli \\
+                    Wyniki: 3/3 poprawnych  
+                    \item DataSetTest - Testy obs³ugi DataSetów  \\
+                    Wyniki: 16/16 poprawnych
+                \end{itemize}
+            \subsubsection{Testy zarz¹dzania pluginami (salomon.engine.plugin)}
+                \begin{itemize}
+                    \item PluginManagerTest - Testy ³adowania i usuwania pluginów \\
+                    Wyniki: 4/4 poprawnych             
+                    \item DescriptionTest - Test przetwarzania informacji o pluginach
+                    Wyniki: 3/3 poprawnych
+                \end{itemize}
+
+
+            \subsubsection{Testy projektów  (salomon.engine.project)}
+                \begin{itemize}
+                    \item ProjectManagerTest - Testy Otwierania/zamykania/tworzenia/zmieniania projektów \\
+                    Wyniki: 4/4 poprawnych
+                    \item ProjectTest - Test jednostkowy dla metod klast projekt \\
+                    Wyniki: 2/2 poprawnych                 
+                \end{itemize}
+            \subsubsection{Testy solutionów (salomon.engine.solution)}
+                \begin{itemize}
+                    \item SolutionManagerTest - Testy zarz¹dzania solutionami \\
+                    Wyniki: 3/3 poprawnych
+                    \item SolutionTest - Test jednostkowy dla klasy Solution \\
+                    Wyniki: 2/2 poprawnych
+                    \item TaskManagerTest - Testy zwi¹zane z zarz¹dzaniem zadaniami \\
+                    Wyniki: 6/6 poprawnych
+                    \item TaskTest - Test jednostkowy dla klasy Task \\
+                    Wyniki: 1/1 poprawnych
+                \end{itemize}
+            \subsubsection{Testy serjalizacji obiektów do XMLa (salomon.engine.serialization)}
+                \begin{itemize}
+                    \item IObjectComparatorTest - Test porównywania serializowanych objektów \\
+                    Wyniki: 3/3 poprawnych
+                    \item SerializerTest - test serializacji/deserializacji objektów \\
+                    Wyniki: 3/3 poprawnych
+                \end{itemize}
+
+    \section {Testy GUI}
+    	Testy Gui zosta³y wykonane rêcznie oraz za pomoc¹ platformy testowej Abbot. Schemat testów 
+			\subsection{Testy zgodnoœci z platform¹ systemow¹}
+				Jako ¿e platform¹ jest maszyna virtualna javy, Gui mo¿e dostosowaæ swój wygl¹d do systemu w jakim siê znajduje.
+				Domyœlnym wygl¹dem dla naszej aplikacji jest standardowy wygl¹d javy 1.5, co wprowadza pewne odstêpstwa zarówno od standardu
+				Windows jak i Linux. Wszystkie u¿yte kontrolki nie odbiegaj¹ jednak od ogólnie przyjêtego wygl¹du i s¹ ³atwo rozpoznawalne przez u¿ytkownika.
+				Gui reaguje poprawnie na systemowy zestaw kolorów.
+						
+			\subsection{Walidacja okien}
+				\subsubsection{Estetyka}
+					Podczas ³adowania aplikacji do pamiêci wyœwietlany jest estetyczny splashscreen. Kolorystyka aplikacji jest zgodna ze standardem systemowym.
+					Rozk³ad i iloœæ dostêpnych naraz przycisków nie wprawia w zak³oponanie, a ikony na przyciskach s¹ intuicyjne i ³atwo rozpoznawalne nawet przez niedoœwiadczonego u¿ytkownika. Wszystkie akcje w menu zaczynaj¹ siê od du¿ej litery, zosta³y tak¿e sprawdzone pod wzglêdem pisowni. Zmiana rozmiaru okna nie powoduje zaburzenia uk³adu kontrolek. Wszystkie "`tooltipy"' zosta³y sprawdzone pod k¹tem ortografii. Look \& Feel dla wszystkich okien jest jednakowy.
+  			\subsubsection{Validacja zawartœci pól}
+  				Wiekszoœæ pól w systemie mo¿e przyjmowaæ dowoln¹ wartoœæ tekstow¹. Tam gdzie wartoœæ nie zosta³a podana poprawnie pod wzglêdem logicznym, wyœwietlany jest stosowny komunikat. Jednoczeœnie w przypadku gdy do wype³nienia jest danych kilka pól, pole b³êdnie wype³nione nie jest podœwietlane. Nie stanowi to jednak z³amania standardu.
+    		\subsubsection{Nawigacja pomiedzy oknami}
+    			Wszystkie potrzebne opcje dostêpne s¹ zarówno z g³ównego menu aplikacji jak i z paska narzêdziowego. Nawigacja miêdzy poszczególnymi oknami mo¿e byæ uznana za przejrzyst¹. Gdy dla dalszej pracy aplikacji wymagana jest uwaga u¿ytkownika na danym oknie, nawigacja jest blokowana.  
+   			\subsubsection{Urzytecznoœæ}
+   				Wszystkie przyciski s¹ dostêpne za pomoc¹ klawisza Tab, w odpowiedniej kolejnoœci. Pola tylko do oczytu s¹ pomijane w nawigacji. W ka¿dym oknie, które tego wymaga, istnieje domyœlny przycisk. Po pokazaniu siê okna, focus znajduje siê na pierwszym edytowalnym polu. Przeniesienie focusa na inn¹ aplikacjê nie powoduje ¿adnych skutków ubocznych.\\\\
+   				
+   				Pewnym uchybieniem jest nie przyznanie wszystkim akcjom w menu klawisza skrótu.
+   			\subsubsection{Integralnoœæ wpisywanych danych}
+   				Wszystkie dane wpisywane do okien s¹ persystentne. Pola tekstowe nie maj¹ oganiczenia na d³ugoœæ wpisywanych danych, lecz jesli wartoœæ pola przekroczy wartoœæ ograniczenia w bazie danych, wyœwietlany jest odpowiedni komunikat.
+				\subsubsection{Pozosta³e}
+					W menu g³ównym wystêpuje pozycja Help. W ca³ej aplikacji konsekwentnie u¿ywana jest jedna czcionka.
+				
+			\subsection{Scenariusze testowe }
+					Scenariusze testowe pokrywaj¹ce standardowe akcje zosta³y stworzone za pomoc¹ narzêdzia Abbot. Wszystkie uruchomione testy zakoñczy³y siê pomyœlnie.
+\end{document}
+
