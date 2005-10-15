@@ -22,7 +22,7 @@ import salomon.plugin.ISettings;
 import salomon.util.serialization.SimpleString;
 
 
-//NK
+
 public class VisPlugin implements IPlugin {
 	
 	
@@ -32,14 +32,34 @@ public class VisPlugin implements IPlugin {
 	
 	public IResult doJob(IDataEngine eng, IEnvironment env, ISettings settings) {
 		
-		
-		int treeId = 0;
-		try {
-			treeId = Integer.parseInt(((SimpleString)env.getVariable("tree_name").getValue()).getValue());
-		} catch (NumberFormatException e1) {
-			LOGGER.fatal("", e1);
-		} catch (PlatformException e1) {
-			LOGGER.fatal("", e1);
+		int treeId = -1;
+		String [] fieldNames = settings.getFieldNames();
+		String checkString = null;
+		int choice = -1;
+		for (int i=0; i<fieldNames.length; i++)
+		{
+			if (fieldNames[i].contains("checkbox"))
+			{
+				checkString = ((SimpleString)settings.getField(fieldNames[i])).getValue();
+			}
+			else if (fieldNames[i].contains("choice"))
+			{
+				choice = Integer.parseInt(((SimpleString)settings.getField(fieldNames[i])).getValue());
+			}
+		}
+		if(checkString == "F")
+		{
+			try {
+				treeId = Integer.parseInt(((SimpleString)env.getVariable("tree_name").getValue()).getValue());
+			} catch (NumberFormatException e1) {
+				LOGGER.fatal("", e1);
+			} catch (PlatformException e1) {
+				LOGGER.fatal("", e1);
+			}
+		}
+		else
+		{
+			 treeId = choice;
 		}
 		
 		String result = "";

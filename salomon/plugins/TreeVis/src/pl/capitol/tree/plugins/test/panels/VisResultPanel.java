@@ -49,8 +49,7 @@ public class VisResultPanel extends JScrollPane {
 	 * @return void
 	 */
 	private  void initialize() {
-		//int treeId = Integer.parseInt(((TreeVisResults) result).resultToString());
-		int treeId = 2;
+		int treeId = Integer.parseInt(((TreeVisResults) result).resultToString());
 		ITree myTree = null;
 		INode root = null;
 		DefaultMutableTreeNode top = null;
@@ -61,11 +60,12 @@ public class VisResultPanel extends JScrollPane {
 		INode rootLeaf = null;
 		INode[] children = null;
 		boolean notEndTree = true;
-			try {
-		myTree =  VisPlugin.enginik.getTreeManager().getTree(treeId);
-		rootLeaf = myTree.getRoot();
-		topDown = new DefaultMutableTreeNode(rootLeaf.getValue());
-		oldTop = topDown;
+		
+		try {
+			myTree =  VisPlugin.enginik.getTreeManager().getTree(treeId);
+			rootLeaf = myTree.getRoot();
+			topDown = new DefaultMutableTreeNode(rootLeaf.getValue());
+			oldTop = topDown;
 		while(notEndTree)
 		{
 			notEndTree = false;
@@ -93,14 +93,6 @@ public class VisResultPanel extends JScrollPane {
 
 		JTree tree = new JTree(oldTop);
 		this.setViewportView(tree);
-		/*resultLabel = new JLabel();
-		resultLabel.setText("Result");
-		resultLabel.setBounds(new java.awt.Rectangle(18,8,71,22));
-		this.setLayout(null);
-		this.setSize(435, 176);
-		this.setPreferredSize(new java.awt.Dimension(435,176));
-		this.add(resultLabel, null);
-		this.add(getResultText(), null);*/
 	}
 	public IResult getResult() {
 		return result;

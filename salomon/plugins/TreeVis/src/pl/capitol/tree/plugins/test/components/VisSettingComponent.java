@@ -32,5 +32,4 @@ public class VisSettingComponent implements ISettingComponent {
 		panel =  new VisSettingsPanel(settings,dataEngine);
 		return panel;
 	}
-
 }
