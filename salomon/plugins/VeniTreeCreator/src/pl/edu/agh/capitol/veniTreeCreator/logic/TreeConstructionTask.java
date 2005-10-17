@@ -116,9 +116,8 @@ public class TreeConstructionTask {
 																					.lastElement())),
 									(ti.isLeaf() ? INode.Type.VALUE
 											: INode.Type.COLUMN),
-									getValueOfProp(ti.getElements()
-											.elementAt(0).getName(), ti
-											.getRoadMap().lastElement()));
+									 ti.isLeaf() ?
+													ti.elements.elementAt(0).getObjective():"");
 				}
 			} else {// ROOT
 				in = iTreeManager.createNode(parent, "",
