@@ -30,7 +30,7 @@ public class VisSettingsPanel extends JPanel {
 	private ITree[] trees = null;
 	private Choice TreeChooser = null;
 	private Button button = new Button("Usuñ drzewo");
-	private Checkbox checkbox = new Checkbox("Dzia³aj samodzielnie", null, false);
+	private Checkbox checkbox = new Checkbox("Rysuj drzewo z listy", null, false);
 	private static final Logger LOGGER = Logger.getLogger(VisSettingsPanel.class);
 	/**
 	 * This is the default constructor
@@ -76,6 +76,11 @@ public class VisSettingsPanel extends JPanel {
 			{
 				try {
 					dataEngine.getTreeManager().removeTree(trees[TreeChooser.getSelectedIndex()].getId());
+				} catch (PlatformException e1) {
+					LOGGER.fatal("", e1);
+				}
+				try {
+					trees = dataEngine.getTreeManager().getTrees();
 				} catch (PlatformException e1) {
 					LOGGER.fatal("", e1);
 				}
