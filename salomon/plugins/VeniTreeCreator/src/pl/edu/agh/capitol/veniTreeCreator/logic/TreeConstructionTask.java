@@ -21,8 +21,8 @@ import salomon.platform.data.tree.ITreeManager;
 import salomon.platform.exception.PlatformException;
 
 /**
- * @author Lukasz Ostatek
- * Klasa bêd¹ca abstrakcj¹ zadania tworzenia drzewa decyzyjnego.
+ * @author Lukasz Ostatek Klasa bêd¹ca abstrakcj¹ zadania tworzenia drzewa
+ *         decyzyjnego.
  */
 public class TreeConstructionTask {
 
@@ -48,10 +48,13 @@ public class TreeConstructionTask {
 	}
 
 	/**
-	 * Pobiera wartoœæ atrybutu <code>prop</code> dla elementu 
-	 * o id <code>id</code>
-	 * @param id - id elementu
-	 * @param prop - nazwa atrybutu
+	 * Pobiera wartoœæ atrybutu <code>prop</code> dla elementu o id
+	 * <code>id</code>
+	 * 
+	 * @param id -
+	 *            id elementu
+	 * @param prop -
+	 *            nazwa atrybutu
 	 * @return wartoœæ atrybutu
 	 */
 	public String getValueOfProp(String id, String prop) {
@@ -64,11 +67,15 @@ public class TreeConstructionTask {
 	}
 
 	/**
-	 * Zwraca rezultat obliczeñ w postaci obiektu implementuj¹cego 
-	 * interfejs <code>ITree</code> 
-	 * @param iTreeManager - manager drzewek - coby mo¿naby³o zapisaæ do bazy
-	 * @param ds - <code>IDataSource</code> na podstawie ktorego stworzone drzewko
-	 * @return obiekt implementuj¹cy intefejs <code>ITree</code> 
+	 * Zwraca rezultat obliczeñ w postaci obiektu implementuj¹cego interfejs
+	 * <code>ITree</code>
+	 * 
+	 * @param iTreeManager -
+	 *            manager drzewek - coby mo¿naby³o zapisaæ do bazy
+	 * @param ds -
+	 *            <code>IDataSource</code> na podstawie ktorego stworzone
+	 *            drzewko
+	 * @return obiekt implementuj¹cy intefejs <code>ITree</code>
 	 * @throws PlatformException
 	 */
 	public int returnResult(ITreeManager iTreeManager, IDataSource ds)
@@ -90,14 +97,30 @@ public class TreeConstructionTask {
 				parent = (INode) hm.get(ti.getParent());
 			}
 			INode in = null;
-			if (ti.getRoadMap().size() > 0)// nie ROOT
-				in = iTreeManager
-						.createNode(parent, ti.getRoadMap().lastElement(), (ti
-								.isLeaf() ? INode.Type.VALUE
-								: INode.Type.COLUMN), getValueOfProp(ti
-								.getElements().elementAt(0).getName(), ti
-								.getRoadMap().lastElement()));
-			else {// ROOT
+			if (ti.getRoadMap().size() > 0) {// nie ROOT
+				if (ti.getElements().size() > 0) {// niepusty
+					in = iTreeManager
+							.createNode(
+									parent,
+									ti.getRoadMap().lastElement()
+											+ " = "
+											+ ti
+													.getElements()
+													.elementAt(0)
+													.getAttributeAt(
+															descriptions
+																	.getAttributes()
+																	.indexOf(
+																			ti
+																					.getRoadMap()
+																					.lastElement())),
+									(ti.isLeaf() ? INode.Type.VALUE
+											: INode.Type.COLUMN),
+									getValueOfProp(ti.getElements()
+											.elementAt(0).getName(), ti
+											.getRoadMap().lastElement()));
+				}
+			} else {// ROOT
 				in = iTreeManager.createNode(parent, "",
 						(ti.isLeaf() ? INode.Type.VALUE : INode.Type.COLUMN),
 						"");
@@ -110,10 +133,13 @@ public class TreeConstructionTask {
 		return id;
 	}
 
-	/** 
+	/**
 	 * Inicjalizuje zadanie tworzenia drzewa danymi z IDataSource'a
-	 * @param ds obiekt implementuj¹cy interfejs IDataSource
-	 * @param data dane zwrócene przez <code>ITreeManager</code>'a
+	 * 
+	 * @param ds
+	 *            obiekt implementuj¹cy interfejs IDataSource
+	 * @param data
+	 *            dane zwrócene przez <code>ITreeManager</code>'a
 	 */
 	public void loadFromDataSource(IDataSource ds, List<Object[]> data) {
 		root = new TreeItem();
@@ -141,8 +167,9 @@ public class TreeConstructionTask {
 	}
 
 	/**
-	 * Metoda u¿ywana we wczesnej fazie rozwoju pluginu. Laduje dane z 
-	 * pliku tekstowego.
+	 * Metoda u¿ywana we wczesnej fazie rozwoju pluginu. Laduje dane z pliku
+	 * tekstowego.
+	 * 
 	 * @deprecated
 	 * @param filename
 	 * @param objectiveIndex
@@ -174,7 +201,8 @@ public class TreeConstructionTask {
 	}
 
 	/**
-	 * Pomocnicza metoda sprawdzaj¹ca czy wszystkie wêz³y s¹ homogeniczne 
+	 * Pomocnicza metoda sprawdzaj¹ca czy wszystkie wêz³y s¹ homogeniczne
+	 * 
 	 * @return wartoœæ logiczna T/F
 	 */
 	boolean isAllHomogenous() {
@@ -186,9 +214,11 @@ public class TreeConstructionTask {
 	}
 
 	/**
-	 * Metoda pomocnicza dokonuj¹ca ekstrakcji roz³¹cznych klas 
-	 * atrybutów z danych
-	 * @param attributeIndex - iloœæ atrybutów
+	 * Metoda pomocnicza dokonuj¹ca ekstrakcji roz³¹cznych klas atrybutów z
+	 * danych
+	 * 
+	 * @param attributeIndex -
+	 *            iloœæ atrybutów
 	 * @return klasy atrybutów
 	 */
 	Vector<String> getDistinctClasses(int attributeIndex) {
@@ -202,8 +232,9 @@ public class TreeConstructionTask {
 	}
 
 	/**
-	 * Metoda pomocnicza dokonuj¹ca ekstrakcji roz³¹cznych klas 
-	 * wartoœci z danych
+	 * Metoda pomocnicza dokonuj¹ca ekstrakcji roz³¹cznych klas wartoœci z
+	 * danych
+	 * 
 	 * @return klasy wartoœci
 	 */
 	Vector<String> getDistinctClassesFromObjetives() {
@@ -218,8 +249,11 @@ public class TreeConstructionTask {
 
 	/**
 	 * Dokonuje rozwiniêcia drzewa wg zadanego atrybutu
-	 * @param vt wektor elementów drzewa decyzyjnego
-	 * @param attribute - indeks atrybutu wzgledem którego rozwijamy drzewo
+	 * 
+	 * @param vt
+	 *            wektor elementów drzewa decyzyjnego
+	 * @param attribute -
+	 *            indeks atrybutu wzgledem którego rozwijamy drzewo
 	 * @return wektor elementów nowego drzewa
 	 */
 	Vector<TreeItem> splitBy(Vector<TreeItem> vt, int attribute) {
@@ -231,8 +265,9 @@ public class TreeConstructionTask {
 	}
 
 	/**
-	 * Metoda pomocnicza dokonuj¹ca rozwiniêcia pojedynczego elementu
-	 * drzewa decyzjnego
+	 * Metoda pomocnicza dokonuj¹ca rozwiniêcia pojedynczego elementu drzewa
+	 * decyzjnego
+	 * 
 	 * @param ti
 	 * @param attribute
 	 * @return nowy wektor elementów drzewa powsta³y z podzia³u liœcia
@@ -246,10 +281,13 @@ public class TreeConstructionTask {
 	}
 
 	/**
-	 * Metoda matematyczna obliczaj¹ca œredni¹ entropiê w drzewie 
-	 * wzgledem zadanego atrybutu
-	 * @param vt wektor elementów drzewa
-	 * @param attribute indeks atrybutu do obliczeñ
+	 * Metoda matematyczna obliczaj¹ca œredni¹ entropiê w drzewie wzgledem
+	 * zadanego atrybutu
+	 * 
+	 * @param vt
+	 *            wektor elementów drzewa
+	 * @param attribute
+	 *            indeks atrybutu do obliczeñ
 	 * @return wartoœæ <0,1>
 	 */
 	double calculateAverageEntropy(Vector<TreeItem> vt, int attribute) {
@@ -273,8 +311,9 @@ public class TreeConstructionTask {
 		return entropy;
 	}
 
-	/** 
+	/**
 	 * Metoda pomocnicza zwracaj¹ca wszystkie liœcie drzewa
+	 * 
 	 * @return wektor liœci
 	 */
 	Vector<TreeItem> getLeafs() {
@@ -288,7 +327,9 @@ public class TreeConstructionTask {
 
 	/**
 	 * Metoda dokonuj¹ca rozwiniêcia wg zadanego atrybutu.
-	 * @param attribute - indeks atrybutu
+	 * 
+	 * @param attribute -
+	 *            indeks atrybutu
 	 */
 	void expandTree(int attribute) {
 		System.out.println("Expanding by attr:" + attribute);
@@ -311,8 +352,9 @@ public class TreeConstructionTask {
 	}
 
 	/**
-	 * Metoda wybieraj¹ca najlepszy dostêpny atrybut (ten który
-	 * minimalizuje entropiê)
+	 * Metoda wybieraj¹ca najlepszy dostêpny atrybut (ten który minimalizuje
+	 * entropiê)
+	 * 
 	 * @return indewks atrybutu
 	 */
 	int getBestAvailableAttribute() {
@@ -332,7 +374,9 @@ public class TreeConstructionTask {
 	}
 
 	/**
-	 * Test logiczny czy jest mo¿liwe jeszcze rozwijanie wzglêdem jakiegokolwiek atrybutu.
+	 * Test logiczny czy jest mo¿liwe jeszcze rozwijanie wzglêdem jakiegokolwiek
+	 * atrybutu.
+	 * 
 	 * @return wartoœæ T/F
 	 */
 	boolean anyAvailable() {
@@ -345,7 +389,7 @@ public class TreeConstructionTask {
 
 	/**
 	 * Metoda inicjalizuj¹ca tworzenia drzwa
-	 *
+	 * 
 	 */
 	public void createTree() {
 		LOGGER.info("----Tree creation start----");
@@ -359,7 +403,7 @@ public class TreeConstructionTask {
 
 	/**
 	 * Metoda wypisuj¹ca dzewo decyzyjne
-	 *
+	 * 
 	 */
 	public void print() {
 		LOGGER.info("----Tree start----");
@@ -370,7 +414,7 @@ public class TreeConstructionTask {
 
 	/**
 	 * Metoda wypisuj¹ca drzwo decyzyjne (tylko liœcie)
-	 *
+	 * 
 	 */
 	public void printLeavesOnly() {
 		LOGGER.info("----Tree start----");
