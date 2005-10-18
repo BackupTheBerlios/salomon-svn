@@ -65,6 +65,7 @@ public class VisSettingsPanel extends JPanel {
 		this.add(TreeChooser);
 		button.addActionListener(new MyActionListener());
 		this.add(button);
+		
 		this.add(checkbox);
 	}
 	

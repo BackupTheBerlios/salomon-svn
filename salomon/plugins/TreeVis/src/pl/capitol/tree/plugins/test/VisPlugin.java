@@ -34,19 +34,22 @@ public class VisPlugin implements IPlugin {
 		
 		int treeId = -1;
 		String [] fieldNames = settings.getFieldNames();
-		String checkString = null;
+		String checkString = "F";
 		int choice = -1;
 		for (int i=0; i<fieldNames.length; i++)
 		{
+			
 			if (fieldNames[i].contains("checkbox"))
 			{
 				checkString = ((SimpleString)settings.getField(fieldNames[i])).getValue();
+				settings.setField("checkbox", new SimpleString("F"));
 			}
 			else if (fieldNames[i].contains("choice"))
 			{
 				choice = Integer.parseInt(((SimpleString)settings.getField(fieldNames[i])).getValue());
 			}
 		}
+		
 		if(checkString == "F")
 		{
 			try {
