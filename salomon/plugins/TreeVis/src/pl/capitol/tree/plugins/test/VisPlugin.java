@@ -36,6 +36,7 @@ public class VisPlugin implements IPlugin {
 		String [] fieldNames = settings.getFieldNames();
 		String checkString = "F";
 		int choice = -1;
+		
 		for (int i=0; i<fieldNames.length; i++)
 		{
 			

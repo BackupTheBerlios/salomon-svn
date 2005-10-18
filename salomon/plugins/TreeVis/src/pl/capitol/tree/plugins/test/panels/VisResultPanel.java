@@ -37,6 +37,9 @@ public class VisResultPanel extends JScrollPane
 
 	private JTextArea resultText = null;
 
+	private String alert = new String(
+			"Aby wyœwietliæ drzewo musisz wybraæ w Settings drzewo i zaznaczyæ opcjê \"Dzia³aj samodzielnie\" po czym klikn¹æ Run lub te¿ jeœli chcesz wizualizowaæ wynik algorytmu obliczeniowego klikn¹æ Run.");
+
 	/**
 	 * This is the default constructor
 	 */
@@ -62,8 +65,6 @@ public class VisResultPanel extends JScrollPane
 			this.setSize(435, 176);
 			this.setPreferredSize(new java.awt.Dimension(435, 176));
 			this.add(resultLabel, null);
-			String alert = new String(
-			"(1)Aby wyœwietliæ drzewo musisz wybraæ w Settings drzewo i zaznaczyæ opcjê \"Dzia³aj samodzielnie\" po czym klikn¹æ Run lub te¿ jeœli chcesz wizualizowaæ wynik algorytmu obliczeniowego klikn¹æ Run.");
 			this.add(getResultText(alert), null);
 		} else {
 			int treeId = Integer.parseInt(((TreeVisResults) result).resultToString());
@@ -75,53 +76,44 @@ public class VisResultPanel extends JScrollPane
 				this.setSize(435, 176);
 				this.setPreferredSize(new java.awt.Dimension(435, 176));
 				this.add(resultLabel, null);
-				String alert = new String(
-				"(2)Aby wyœwietliæ drzewo musisz wybraæ w Settings drzewo i zaznaczyæ opcjê \"Dzia³aj samodzielnie\" po czym klikn¹æ Run lub te¿ jeœli chcesz wizualizowaæ wynik algorytmu obliczeniowego klikn¹æ Run.");
-				this.add(getResultText(alert), null);	
+				this.add(getResultText(alert), null);
 			} else {
+				this.setPreferredSize(new java.awt.Dimension(500, 500));
 				ITree myTree = null;
 				INode root = null;
-				DefaultMutableTreeNode top = null;
-				DefaultMutableTreeNode oldTop = null;
-				DefaultMutableTreeNode topDown = null;
-				DefaultMutableTreeNode edge = null;
-				DefaultMutableTreeNode child = null;
-				INode rootLeaf = null;
-				INode[] children = null;
-				boolean notEndTree = true;
+				DefaultMutableTreeNode top = new DefaultMutableTreeNode(
+						"Drzewo");
 
 				try {
 					myTree = VisPlugin.enginik.getTreeManager().getTree(treeId);
-					rootLeaf = myTree.getRoot();
-					topDown = new DefaultMutableTreeNode(rootLeaf.getValue());
-					oldTop = topDown;
-					while (notEndTree) {
-						notEndTree = false;
-						root = rootLeaf;
-						top = topDown;
-						children = root.getChildren();
-						for (int i = 0; i < children.length; i++) {
-							edge = new DefaultMutableTreeNode("e. "
-									+ children[i].getParentEdge());
-							top.add(edge);
-							child = new DefaultMutableTreeNode(
-									children[i].getValue());
-							edge.add(child);
-							if (children[i].isLeaf() == false) {
-								notEndTree = true;
-								rootLeaf = children[i];
-								topDown = child;
-							}
-						}
-
-					}
+					root = myTree.getRoot();
+					//top = new DefaultMutableTreeNode(root.getValue());
+					drawTree(root, top);
 
 				} catch (PlatformException e) {
 					LOGGER.fatal(e.getMessage());
 				}
 
-				JTree tree = new JTree(oldTop);
+				JTree tree = new JTree(top);
 				this.setViewportView(tree);
+			}
+		}
+	}
+
+	private void drawTree(INode root, DefaultMutableTreeNode top)
+	{
+		DefaultMutableTreeNode edge = null;
+		DefaultMutableTreeNode child = null;
+		INode[] children = null;
+		children = root.getChildren();
+		for (int i = 0; i < children.length; i++) {
+			edge = new DefaultMutableTreeNode("e. "
+					+ children[i].getParentEdge());
+			top.add(edge);
+			child = new DefaultMutableTreeNode(children[i].getValue());
+			edge.add(child);
+			if (children[i].isLeaf() == false) {
+				drawTree(children[i], child);
 			}
 		}
 	}
