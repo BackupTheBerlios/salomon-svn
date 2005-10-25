@@ -475,13 +475,34 @@ on wszystkie interfejsy wymagane (zgodnie z za³o¿eniami twórców)
 przez plugin dla platformy Salomon.
 
 \subsubsection{Opis implementacji}
-pl.capitol.tree.plugins.test.VisPlugin  pobiera ze zmiennej
-œrodowiskowej \texttt{id} drzewa, które ma zostaæ wyœwietlone,
-nastêpnie przebiega po kolejnych poziomach drzewa dopisuj¹c do
-wynikowego stringu ga³êzie pomiêdzy kolejnymi poziomami, nastêpnie
-przekazuje rezultat do VisResultPanel.java gdzie string
-zawieraj¹cy obraz drzewa zostaje przetworzony i wyœwietlony w polu
-tekstowym.
- \newpage
+Wyró¿niamy nastêpuj¹ce klasy:
+\begin{itemize}
+    \item \texttt{pl.capitol.tree.plugins.test.panels.VisSettingsPanel} jest to klasa
+rozszerzaj¹ca \texttt{JPanel}, u¿ywa ona trzech komponentów:
+    \begin{itemize}
+        \item texttt{Choice TreeChooser} -- jest to element który podczas inicjalizacji komponentu
+\texttt{VisSettingsPanel} wype³niony zostaje list¹ drzew dostêpnych w Solution,
+        \item \texttt{Button buton} jest to element typu przycisk przy pomocy którego mo¿emy usun¹æ drzewo z
+listy \texttt{TreeChooser}. Ma on zaimplementowan¹ klasê \texttt{MyActionListener implements
+ActionListener}, która to obs³uguje usuwanie drzewa,
+        \item \texttt{Checkbox checkbox} to element przy
+pomocy którego zostaje podjêta decyzja czy plugin ma dzia³aæ samodzielnie.
+    \end{itemize}
+W danej klasie jest zaimplementowana jeszcze jedna wa¿na metoda \texttt{ISettings getSettings()}
+która to pozwala na przekazanie ustawionych zmiennych w settings do elementu \texttt{VisPlugin}.
+
+    \item \texttt{pl.capitol.tree.plugins.test.panels.VisResultsPanel} jest to klasa rozszerzaj¹ca \texttt{JScrollPanel}.
+Wa¿niejsze z jej metod to \texttt{JTextArea getResultText(String alert)}, która pozwala umieœciæ
+informacje o tym jak nale¿y postêpowaæ aby wyœwietliæ drzewo w oknie Result. \texttt{drawTree(INode
+root, DefaultMutableTreeNode top)} jest metod¹ rekurencyjn¹ rysuj¹c¹ poddrzewo danego elementu w
+komponencie JTree. Istotn¹ metod¹ jest tak¿e \texttt{initialize()}, która podczas inicjalizacji
+panelu decyduje czy bêdzie wyœwietlony komunikat czy te¿ narysowane drzewo JTree w panelu Result.
+    \item \texttt{pl.capitol.tree.plugins.test.VisPlugin} implementuje jedn¹ istotn¹ metodê: \texttt{IResult doJob(IDataEngine
+eng, IEnvironment env, ISettings settings)} która to, pobiera ze zmiennej œrodowiskowej, lub te¿ z
+elementu pobranego z \texttt{VisSettingsPanel} id drzewa, które ma zostaæ wyœwietlone, po czym
+przekazuje ten identyfikator do \texttt{VisResultsPanel}.
+\end{itemize}
+
+\newpage
 
 \end{document}
