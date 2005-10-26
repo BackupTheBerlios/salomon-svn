@@ -61,105 +61,39 @@ Wiedza jest pewnego rodzaju struktur¹ (metadane) opisuj¹c¹ powi¹zania pomiêdzy d
 Celem tego projektu jest stworzenie przyjaznego œrodowiska do tworzenia, kontrolowania i efektywnego wykonywania zadañ oraz przechowywania zgromadzonej wiedzy. 
 
 \subsection{S³ownik}
-Patrz: Dokumentacja istniej¹cej platformy \emph{Salomon ver 0.9}.
+Patrz: Dokumentacja istniej¹cej platformy \emph{Salomon ver 1.0}.
 
 \section{Opis produktu}
-% Ostateczna wersj¹ produktu bêdzie system \emph{Salomon ver 1.0} wyposa¿ony w pe³n¹ obs³ugê zarz¹dzania etapami przetwarzania wiedzy (zadania), zbiorów danych oraz mo¿liwoœæ pracy z danymi zawartymi w bazie danych wraz z dokumentacj¹ techniczn¹ i u¿ytkow¹.
-% 
-% System ten bêdzie siê sk³ada³ z platformy, oraz uruchamianych na niej odpowiednich wtyczek. Produkt powinien zawieraæ w pe³ni funkcjonaln¹ platformê, oraz przyk³adowe aplikacje demonstruj¹ce mo¿liwoœæ realizacji systemu w architekturze platforma-wtyczki. Konieczne bêdzie tak¿e rozszerzenie platformy ver. 0.9 o warstwê poœredni¹ pomiêdzy wtyczkami, a baz¹ danych w której przechowywane bêd¹ dane (istnieje w wersji 0.9 taka warstwa, ale poœrednicz¹ca przy dostêpie do wiedzy).
+ Ostateczna wersj¹ produktu bêdzie system \emph{Salomon ver 1.1} wyposa¿ony w pe³n¹ obs³ugê zarz¹dzania etapami przetwarzania wiedzy (zadania), zbiorów danych oraz mo¿liwoœæ pracy z danymi zawartymi w bazie danych wraz z dokumentacj¹ techniczn¹ i u¿ytkow¹.
+ 
+System ten bêdzie siê sk³ada³ z platformy, oraz uruchamianych na niej odpowiednich wtyczek. Produkt powinien zawieraæ w pe³ni funkcjonaln¹ platformê, oraz przyk³adowe aplikacje demonstruj¹ce mo¿liwoœæ realizacji systemu w architekturze platforma-wtyczki. % TODO
 
 \subsection{U¿ytkownicy systemu}
 U¿ytkownikami systemu bêd¹ zarówno u¿ytkownicy koñcowi, przeprowadzaj¹cy ekstrakcjê wiedzy, jak i programiœci tworz¹cy nowe wtyczki Salomona. Produkt bêdzie udostêpnia³ programist¹ wtyczki zwarte i kompletne œrodowisko do rozwoju algorytmów odpowiedzialnych za ekstrakcjê wiedzy.
 
 \subsection{Poza zakresem problemu}
-W zakres produktu nie bêd¹ wchodziæ w pe³ni funkcjonalne wtyczki, a jedynie wtyczki demonstracyjne. Platforma nie bêdzie realizowaæ wspó³bie¿noœci i rozproszenia, a jedynie przetwarzaæ etapy lokalnie na jednym komputerze.
+Platforma nie bêdzie realizowaæ wspó³bie¿noœci i rozproszenia, a jedynie przetwarzaæ etapy lokalnie na jednym komputerze.
 
 \section{Funkcjonalnoœci produktu}
 
 \subsection{U¿ytkownicy koñcowi}
-U¿ytkownicy koñcowi bêd¹ mogli uzyskaæ dostêp do systemu poprzez graficzny interfejs u¿ytkownika (GUI). Powinien on umo¿liwiaæ wykonanie nastêpuj¹cych akcji:
-% \begin{enumerate}
-% 	\item Stworzenie grupy projektów (nazywanej przez nas obiektem \emph{Solution})\\
-% 	U¿ytkownik bêdzie móg³ skonfigurowaæ m.in. po³¹czenie z baz¹ danych.
-% 	
-% 	\item Operacje na projekcie:
-% 		\begin{itemize}
-% 			\item Uruchomienie projektu\\
-%             Akcja ta powoduje wykonanie zadañ zgromadzonych w tym projekcie. Wykonanie tej akcji wymaga wczeœniejszej konfiguracji w postaci specyfikacji listy zadañ do wykonania oraz ich indywidualnej konfiguracji.  
-% 			\item Przerwanie wykonywania projektu\\
-%             Przerywa aktualnie wykonywana listê zadañ. Jeœli aktualnie wykonywane jest zadnie, to czy je przerwaæ le¿y w gestii u¿ytkownika. Jeœli dokona on wyboru, ¿e zadanie ma byæ przerwane natychmiast, wyniki z poprzedniego zadnia nie ulegaj¹ zmianie, w przeciwnym wypadku projekt zostaje zakoñczony po zakoñczeniu bie¿¹cego zadnia
-% 			\item Monitorowanie pracy\\
-%             W podstawowej wersji monitorowanie wykonania polegaæ bêdzie na wyœwietleniu paska postêpu, którego stan bêdzie zmieniany po ka¿dym wykonaniu zadnia atomowego. W nastêpnych wersjach mo¿e pojawiæ siê mo¿liwoœæ rejestracji zdarzeñ aktualnie wykonywanego zadania informuj¹cych o jego stanie.
-%             
-% 			\item Przegl¹danie rezultatów\\
-%             Ka¿de zadanie automatycznie specyfikuje jak bêdzie prezentowaæ swoje wyniki, wiêc po wybraniu tej akcji inicjatywa prezentacji wyników spada na zadanie. Domyœlnie prezentowane s¹ wyniki ostatniego zadnia koñcz¹cego przetwarzanie, mo¿emy jednak, podczas wykonywania projektu, przejrzeæ wyniki ka¿dego z zadañ cz¹stkowych z osobna.
-% 		\end{itemize}
-% 
-% 	\item Operacje na zadaniach:
-% 		\begin{itemize}
-% 			\item Dodanie\\
-%             Akcja dodania nowego zadania polega na wstawieniu do kolejki zadañ do wykonania, wtyczki implementuj¹cego funkcjonalnoœæ tego zadania. 
-%             Dodatkowo okreœlamy nastêpuj¹ce po nim zadnie oraz zadanie poprzedzaj¹ce, oraz dokonujemy edycji ustawieñ zadania.          
-% 			\item Usuniêcie\\
-%             Akcja usuwa aktualnie zaznaczone zadnie. 
-% 			\item Organizowanie zadañ, ustawianie poprzedników, nastêpników\\
-%             Pozwala na zmianê aktualnej kolejnoœci wykonywania zadañ. 
-% 		\end{itemize}
-% 
-% 	\item Administracja
-% 		\begin{itemize}
-% 			\item Operacje na wtyczkach: dodanie, usuniêcie\\
-%             Akcja ta pozwala rozszerzyæ mo¿liwoœci platformy przez dodanie wtyczek. Wtyczki pozwalaj¹ wykonywaæ nowe rodzaje zadañ b¹dŸ rozszerzyæ mo¿liwoœci ju¿ istniej¹cych w systemie i importowaæ wiedzê z nowych Ÿróde³.
-% 			\item Konfiguracja\\
-%             Konfiguracja pozwala nam dostosowaæ system do w³asnych potrzeb, podczas tego kroku mo¿emy wyspecyfikowaæ wszystkie parametry pracy systemu jako ca³oœci, czyli parametry takie jak lokalizacja bazy danych b¹dŸ rozproszenie systemu. 
-% 		\end{itemize}
-% 
-% \end{enumerate}
+U¿ytkownicy koñcowi bêd¹ mogli uzyskaæ dostêp do systemu poprzez graficzny interfejs u¿ytkownika (GUI). Wobec interfejsu aktualnej wersji Salomona 1.0, powienien zawieraæ on nastêpuj¹ce rozszerzenia:
+\begin{itemize}
+\item ???
+\end{itemize}
 
 \subsection{Programiœci}
 
-% Ta grupa u¿ytkowników korzystaæ bêdzie z API udostêpnianego przez Salomona, w celu jego dalszego rozwijania. Konieczne jest uzupe³nienie i pe³ne zaimplementowanie zdefiniowanych ju¿ interfejsów.
-% 
-% \begin{enumerate}
-% 	\item Magazynowanie wiedzy
-% 
-% 	\begin{itemize}
-% 		\item podstawowe operacje na zbiorach danych
-% 		\begin{itemize}
-% 			\item zarz¹dzanie nimi -- tworzenie, modyfikacja, usuwanie
-% 			\item operowanie na nich -- sumowanie, obliczanie przeciêcia, ró¿nicy
-% 		\end{itemize}
-% 	\end{itemize}
-% 	\item Magazynowanie danych
-% 
-% 	Dane magazynowane bêd¹ w zewnêtrznych bazach danych. Konieczne jest dostarczenie warstwy poœrednicz¹cej w dostêpie do nich -- \emph{(Solution)}. 
-% 	\begin{itemize}
-% 		\item reprezentacja warstwy \emph{Solution} w bazie danych
-% 		\item zintegrowanie jej z reszta systemu
-% 	\end{itemize}
-% 	
-% \end{enumerate}
-
+ Ta grupa u¿ytkowników korzystaæ bêdzie z API udostêpnianego przez Salomona, w celu jego dalszego rozwijania. 
+ 
+ % ATRYBUTY ???
+ 
+ 
 \section{Priorytety funkcjonalnoœci}
 
-% Pierwszorzêdnym celem jest ustabilizowanie i rozszerzenie wersji 0.9 w takim stopniu, aby mo¿liwe by³o realizowanie testowych wtyczek i spe³nia³a ona podstawow¹ funkcjonalnoœæ, wymagan¹ od j¹dra systemu. W drugiej kolejnoœci jest dopiero realizowanie przyk³adowych wtyczek, rozbudowa GUI dla u¿ytkowników koñcowych, czy te¿ skompletowanie pe³nej dokumentacji u¿ytkownika.
+Pierwszorzêdnym celem jest uzupe³nienie funkcjonalnoœci, których brak nie pozwala na wypuszczenie koñcowej wersji aplikacji. W drugiej kolejnoœci jest dopiero realizowanie przyk³adowych wtyczek, rozbudowa GUI dla u¿ytkowników koñcowych, czy te¿ skompletowanie pe³nej dokumentacji u¿ytkownika.
 
-Zadania do wykonania w ramach tej wersji wg ich priorytetów z podzia³em na u¿ytkowników docelowych:
-
-% \begin{enumerate}
-% 	\item U¿ytkownicy koñcowi
-% 	\begin{itemize}
-% 		\item dodanie mo¿liwoœci zarz¹dzania pod³¹czaniem do zewnêtrznych baz danych z poziomu GUI
-% 		\item dostarczenie wtyczki prezentuj¹cej podstawowe operacje na zbiorach danych (tworzenie, sumowanie)
-% 	\end{itemize}
-% 
-% 	\item Programiœci
-% 	\begin{itemize}
-% 		\item obs³uga warstwy \emph{Solution}
-% 		\item obs³uga podstawowych operacji na zbiorach danych (zarz¹dzanie oraz operowanie na nich)
-% 	\end{itemize}
-% 
-% \end{enumerate}
+% DOKLADNIEJ ???
 
 \section{Wymagania}
 \subsection{Stosowane standardy}
