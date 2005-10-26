@@ -32,8 +32,10 @@ System przetwarzania wiedzy\\}
 
 
 \begin{flushright}
-{\Large \emph{Software Development Plan, ver 1.2} }
+{\Large \emph{Software Development Plan, ver 1.0} }
 \end{flushright}
+
+%\vspace{7cm}
 
 \begin{flushleft}
 { \Large Historia wersji }\[\]
@@ -41,11 +43,7 @@ System przetwarzania wiedzy\\}
   \hline
   Data & Wersja & Opis & Autor \\
   \hline \hline
-  25.04.2005 & 1.0 & utworzenie & \emph{Krzysztof Rajda}\\
-  \hline
-  03.05.2005 & 1.1 & opis poszczególnych faz & \emph{Nikodem Jura}\\
-  \hline
-  02.10.2005 & 1.2 & aktualizacja & \emph{Leszek Grzanka}\\
+  26.10.2005 & 1.0 & utworzenie & \emph{Leszek Grzanka}\\
   \hline
 \end{tabular}
 \end{flushleft}
@@ -54,13 +52,13 @@ System przetwarzania wiedzy\\}
 
 \section{Wstêp}
 Celem planu konstrukcji oprogramowania jest wyznaczenie ról poszczególnych cz³onków zespo³u oraz harmonogramu pracy.
-Przypisanie ról pozwoli wyegzekwowaæ brakuj¹ce elementy systemu, od osób za nie odpowiedzialnych oraz zlecenie poprawek, 
-w wypadku, gdyby jakiœ element jakieœ elementy nie dzia³a³y zgodnie z dokumentacj¹.
+Przypisanie ról pozwoli wyegzekwowaæ brakuj¹ce elementy systemu od osób za nie odpowiedzialnych oraz zlecenie poprawek w wypadku, gdyby jakiœ element jakieœ elementy nie dzia³a³y zgodnie z dokumentacj¹.
 Stworzenie harmonogramu pozwoli oceniæ postêp prac i odpowiedzieæ na pytanie, czy koñcowy termin realizacji projektu jest osi¹galny.
 
 \section{Organizacja projektu}
 
 	\begin{flushleft}
+		%{ \Large Historia wersji }\[\]
 		\begin{tabular}{|l|l|}
   		\hline
   		Osoba & Rola wg. RUP \\
@@ -88,45 +86,45 @@ Stworzenie harmonogramu pozwoli oceniæ postêp prac i odpowiedzieæ na pytanie, cz
   		\hline
   		Faza & Iteracja & G³ówne cele & Produkty & Planowe rozpoczêcie/zakoñczenie \\
   		\hline
-  		Inception &  I1 & Rozpoznanie problemu i otoczenia & Vision i SDP & 27.04.2005 \\
+  		Inception &  I1 & Rozpoznanie problemu i otoczenia & Vision i SDP & 27.10.2005 \\
   		\hline
-  		Eleboration & E1 & & Dokument SAD &  11.05.2005 \\
+  		Eleboration & E1 & & Dokument SAD &  15.11.2005 \\
   		\hline
-  		Construction & C1 & Stabilizacja Salomona & Stabilna wersja Salomona & 08.06.2005 \\
+  		Construction & C1 & - & - & ..2005 \\
   		\hline
-  		Construction & C2 & Rozwój GUI & Ergonomiczne GUI z pe³n¹ obs³ug¹ Solution &  22.06.2005\\
+  		Construction & C2 & - & - &  ..2005\\
   		\hline
-  		Transition & T1 & Prezentacja dzia³ania platformy na przyk³adzie drzew decyzyjnych & Prezentacja Salomona &  25.09.2005\\
+  		Transition & T1 & - & - &  30.01.2006\\
   		\hline
 		\end{tabular}
 	\end{flushleft}
 	
-	
-\begin{itemize}
-	\item[E1] 	
-	\begin{itemize}
-		\item projekt nowej warstwy - \emph{Solution}, reprezentuj¹cej zewnêtrzne bazy danych
-		\item projekt klasy realizuj¹cej po³¹czenie z zewnêtrznymi bazami
-		\item koncepcja prostych algorytmów operuj¹cych na zbiorach danych (wzorowanych na pojêciach teoriomnogoœciowych)		
-		\begin{itemize}
-			\item suma
-			\item przeciêcie
-			\item ró¿nica
-		\end{itemize}
-	\end{itemize}
-	\item[C1]	
-	\begin{itemize}
-		\item dzia³aj¹ca platforma z obs³ug¹ warstwy \emph{Solution}
-		\item mo¿liwoœæ pod³¹czania siê do zewnêtrznych baz danych, na których mog¹ operowaæ wtyczki
-		\item wewnêtrzny milestone - wersja dla grupy wspó³tworz¹cej Salomona
-	\end{itemize}
-	\item[C2] 	
-	\begin{itemize}
-		\item rozbudowa interfejsu u¿ytkownika umo¿liwiaj¹ca zarz¹dzanie warstw¹ Solution
-		\item dodanie do interfejsu u¿ytkownika mo¿liwoœci zarz¹dzania wszystkimi warstwami Salomona
-		\item poprawienie ergonomii pracy poprzez dodanie mo¿liwoœci przegl¹dania obiektów poszczególnych warstw
-	\end{itemize}
-\end{itemize}
+% 	
+% \begin{itemize}
+% 	\item[E1] 	
+% 	\begin{itemize}
+% 		\item projekt nowej warstwy - \emph{Solution}, reprezentuj¹cej zewnêtrzne bazy danych
+% 		\item projekt klasy realizuj¹cej po³¹czenie z zewnêtrznymi bazami
+% 		\item koncepcja prostych algorytmów operuj¹cych na zbiorach danych (wzorowanych na pojêciach teoriomnogoœciowych)		
+% 		\begin{itemize}
+% 			\item suma
+% 			\item przeciêcie
+% 			\item ró¿nica
+% 		\end{itemize}
+% 	\end{itemize}
+% 	\item[C1]	
+% 	\begin{itemize}
+% 		\item dzia³aj¹ca platforma z obs³ug¹ warstwy \emph{Solution}
+% 		\item mo¿liwoœæ pod³¹czania siê do zewnêtrznych baz danych, na których mog¹ operowaæ wtyczki
+% 		\item wewnêtrzny milestone - wersja dla grupy wspó³tworz¹cej Salomona
+% 	\end{itemize}
+% 	\item[C2] 	
+% 	\begin{itemize}
+% 		\item rozbudowa interfejsu u¿ytkownika umo¿liwiaj¹ca zarz¹dzanie warstw¹ Solution
+% 		\item dodanie do interfejsu u¿ytkownika mo¿liwoœci zarz¹dzania wszystkimi warstwami Salomona
+% 		\item poprawienie ergonomii pracy poprzez dodanie mo¿liwoœci przegl¹dania obiektów poszczególnych warstw
+% 	\end{itemize}
+% \end{itemize}
 
 \section{Plan akceptacji produktu}
 Akceptacja produktu bêdzie kilkuetapowa:
