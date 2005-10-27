@@ -55,7 +55,7 @@ System przetwarzania wiedzy\\}
             Dokument ma na celu przedstawienie raportu z testów implementacji platformy Salomon. Dotyczy on wersji pre-release.
             
     \section{Narzêdzia u¿yte do testów}       
-        Do tworzenia testów jednostkowych zosta³ u¿yty pakiet jUnit, natomiast Gui testing zosta³ przeprowadzny rêcznie oraz za pomoc¹ pakietu Abbot.       
+        Do tworzenia testów jednostkowych zosta³ u¿yty pakiet \emph{jUnit}, natomiast testy GUI zosta³y przeprowadzone rêcznie oraz za pomoc¹ pakietu \emph{Abbot}.       
 
 
     \section{Opis testów}
@@ -120,31 +120,31 @@ System przetwarzania wiedzy\\}
                 \end{itemize}
 
     \section {Testy GUI}
-    	Testy Gui zosta³y wykonane rêcznie oraz za pomoc¹ platformy testowej Abbot. Schemat testów 
+    	Testy \emph{GUI} zosta³y wykonane rêcznie oraz za pomoc¹ platformy testowej \emph{Abbot}.
+			
 			\subsection{Testy zgodnoœci z platform¹ systemow¹}
-				Jako ¿e platform¹ jest maszyna virtualna javy, Gui mo¿e dostosowaæ swój wygl¹d do systemu w jakim siê znajduje.
-				Domyœlnym wygl¹dem dla naszej aplikacji jest standardowy wygl¹d javy 1.5, co wprowadza pewne odstêpstwa zarówno od standardu
-				Windows jak i Linux. Wszystkie u¿yte kontrolki nie odbiegaj¹ jednak od ogólnie przyjêtego wygl¹du i s¹ ³atwo rozpoznawalne przez u¿ytkownika.
-				Gui reaguje poprawnie na systemowy zestaw kolorów.
+				Jako, ¿e platform¹ jest maszyna wirtualna \emph{Javy}, \emph{GUI} mo¿e dostosowaæ swój wygl¹d do systemu w jakim siê znajduje.
+				Domyœlnym wygl¹dem dla naszej aplikacji jest standardowy wygl¹d \emph{Javy 1.5}, co wprowadza pewne odstêpstwa zarówno od standardu Windows jak i Linux. Wszystkie u¿yte kontrolki nie odbiegaj¹ jednak od ogólnie przyjêtego wygl¹du i s¹ ³atwo rozpoznawalne przez u¿ytkownika.
+				\emph{GUI} reaguje poprawnie na systemowy zestaw kolorów.
 						
 			\subsection{Walidacja okien}
 				\subsubsection{Estetyka}
 					Podczas ³adowania aplikacji do pamiêci wyœwietlany jest estetyczny splashscreen. Kolorystyka aplikacji jest zgodna ze standardem systemowym.
-					Rozk³ad i iloœæ dostêpnych naraz przycisków nie wprawia w zak³oponanie, a ikony na przyciskach s¹ intuicyjne i ³atwo rozpoznawalne nawet przez niedoœwiadczonego u¿ytkownika. Wszystkie akcje w menu zaczynaj¹ siê od du¿ej litery, zosta³y tak¿e sprawdzone pod wzglêdem pisowni. Zmiana rozmiaru okna nie powoduje zaburzenia uk³adu kontrolek. Wszystkie "`tooltipy"' zosta³y sprawdzone pod k¹tem ortografii. Look \& Feel dla wszystkich okien jest jednakowy.
-  			\subsubsection{Validacja zawartœci pól}
-  				Wiekszoœæ pól w systemie mo¿e przyjmowaæ dowoln¹ wartoœæ tekstow¹. Tam gdzie wartoœæ nie zosta³a podana poprawnie pod wzglêdem logicznym, wyœwietlany jest stosowny komunikat. Jednoczeœnie w przypadku gdy do wype³nienia jest danych kilka pól, pole b³êdnie wype³nione nie jest podœwietlane. Nie stanowi to jednak z³amania standardu.
-    		\subsubsection{Nawigacja pomiedzy oknami}
+					Rozk³ad i iloœæ dostêpnych naraz przycisków nie wprawia w zak³opotanie, a ikony na przyciskach s¹ intuicyjne i ³atwo rozpoznawalne nawet przez niedoœwiadczonego u¿ytkownika. Wszystkie akcje w menu zaczynaj¹ siê od du¿ej litery, zosta³y tak¿e sprawdzone pod wzglêdem pisowni. Zmiana rozmiaru okna nie powoduje zaburzenia uk³adu kontrolek. Wszystkie "`tooltipy"' zosta³y sprawdzone pod k¹tem ortografii. Look \& Feel dla wszystkich okien jest jednakowy.
+  			\subsubsection{Walidacja zawartoœci pól}
+  				Wiêkszoœæ pól w systemie mo¿e przyjmowaæ dowoln¹ wartoœæ tekstow¹. Tam gdzie wartoœæ nie zosta³a podana poprawnie pod wzglêdem logicznym, wyœwietlany jest stosowny komunikat. Jednoczeœnie w przypadku gdy do wype³nienia jest danych kilka pól, pole b³êdnie wype³nione nie jest podœwietlane. Nie stanowi to jednak z³amania standardu.
+    		\subsubsection{Nawigacja pomiêdzy oknami}
     			Wszystkie potrzebne opcje dostêpne s¹ zarówno z g³ównego menu aplikacji jak i z paska narzêdziowego. Nawigacja miêdzy poszczególnymi oknami mo¿e byæ uznana za przejrzyst¹. Gdy dla dalszej pracy aplikacji wymagana jest uwaga u¿ytkownika na danym oknie, nawigacja jest blokowana.  
-   			\subsubsection{Urzytecznoœæ}
-   				Wszystkie przyciski s¹ dostêpne za pomoc¹ klawisza Tab, w odpowiedniej kolejnoœci. Pola tylko do oczytu s¹ pomijane w nawigacji. W ka¿dym oknie, które tego wymaga, istnieje domyœlny przycisk. Po pokazaniu siê okna, focus znajduje siê na pierwszym edytowalnym polu. Przeniesienie focusa na inn¹ aplikacjê nie powoduje ¿adnych skutków ubocznych.\\\\
+   			\subsubsection{U¿ytecznoœæ}
+   				Wszystkie przyciski s¹ dostêpne za pomoc¹ klawisza Tab, w odpowiedniej kolejnoœci. Pola tylko do odczytu s¹ pomijane w nawigacji. W ka¿dym oknie, które tego wymaga, istnieje domyœlny przycisk. Po pokazaniu siê okna, focus znajduje siê na pierwszym edytowalnym polu. Przeniesienie focusa na inn¹ aplikacjê nie powoduje ¿adnych skutków ubocznych.\\\\
    				
    				Pewnym uchybieniem jest nie przyznanie wszystkim akcjom w menu klawisza skrótu.
    			\subsubsection{Integralnoœæ wpisywanych danych}
-   				Wszystkie dane wpisywane do okien s¹ persystentne. Pola tekstowe nie maj¹ oganiczenia na d³ugoœæ wpisywanych danych, lecz jesli wartoœæ pola przekroczy wartoœæ ograniczenia w bazie danych, wyœwietlany jest odpowiedni komunikat.
+   				Wszystkie dane wpisywane do okien s¹ persystentne. Pola tekstowe nie maj¹ ograniczenia na d³ugoœæ wpisywanych danych, lecz jeœli wartoœæ pola przekroczy wartoœæ ograniczenia w bazie danych, wyœwietlany jest odpowiedni komunikat.
 				\subsubsection{Pozosta³e}
 					W menu g³ównym wystêpuje pozycja Help. W ca³ej aplikacji konsekwentnie u¿ywana jest jedna czcionka.
 				
 			\subsection{Scenariusze testowe }
-					Scenariusze testowe pokrywaj¹ce standardowe akcje zosta³y stworzone za pomoc¹ narzêdzia Abbot. Wszystkie uruchomione testy zakoñczy³y siê pomyœlnie.
+					Scenariusze testowe pokrywaj¹ce standardowe akcje zosta³y stworzone za pomoc¹ narzêdzia \emph{Abbot}. Wszystkie uruchomione testy zakoñczy³y siê pomyœlnie.
 \end{document}
 

@@ -31,7 +31,7 @@ System przetwarzania wiedzy\\}
 
 
 \begin{flushright}
-{\Large \emph{Vision, ver 1.0} }
+{\Large \emph{Vision, ver 1.1} }
 \end{flushright}
 
 %\vspace{7cm}
@@ -43,6 +43,8 @@ System przetwarzania wiedzy\\}
   Data & Wersja & Opis & Autor \\
   \hline \hline
   26.10.2005 & 1.0 & utworzenie & \emph{Leszek Grzanka}\\
+  \hline
+  27.10.2005 & 1.1 & rozbudowanie funkcjonalnoœci & \emph{Nikodem Jura}\\
   \hline
 \end{tabular}
 \end{flushleft}
@@ -56,7 +58,7 @@ Odkrywanie wiedzy to proces iteracyjny, podzielony na etapy. Etapy te mog¹ tworz
 W ka¿dym tym etapie wiedza jest poddawana obróbce. Na ka¿dym takim etapie proces odkrywania mo¿e byæ ukierunkowany zgodnie z wymaganiami u¿ytkownika. Ka¿dy etap tworzy odrêbn¹ ca³oœæ. Czêœæ etapów jest roz³¹czna, zatem mog¹ byæ wykonywane wspó³bie¿nie. 
 Ka¿dy etap reprezentowany jest przez zadanie, które mo¿na interpretowaæ jako jedn¹ fazê wykonania pewnego algorytmu. Z ka¿dym etapem zwi¹zane s¹ dane wejœciowe, oraz dane konfiguracyjne. Dane wyjœciowe mog¹ pos³u¿yæ jako dane wejœciowe do innych etapów.
 \subsection{Dane,wiedza}
-Wiedza jest pewnego rodzaju struktur¹ (metadane) opisuj¹c¹ powi¹zania pomiêdzy danymi. Typowe zagadnienie w procesie ekstrakcji wiedzy to wydobywanie wiedzy na podstawie zebranych danych (np. okreœlanie struktury danych). Mo¿liwe jest tak¿e wykorzystywanie zebranej, lub wekstraktowanej wiedzy na pewnych danych, w celu udzielenia odpowiedzi na pytania powi¹zane z wiedz¹.
+Wiedza jest pewnego rodzaju struktur¹ (metadane) opisuj¹c¹ powi¹zania pomiêdzy danymi. Typowe zagadnienie w procesie ekstrakcji wiedzy to wydobywanie wiedzy na podstawie zebranych danych (np. okreœlanie struktury danych). Mo¿liwe jest tak¿e wykorzystywanie zebranej, lub wyekstraktowanej wiedzy na pewnych danych, w celu udzielenia odpowiedzi na pytania powi¹zane z wiedz¹.
 
 Celem tego projektu jest stworzenie przyjaznego œrodowiska do tworzenia, kontrolowania i efektywnego wykonywania zadañ oraz przechowywania zgromadzonej wiedzy. 
 
@@ -64,11 +66,13 @@ Celem tego projektu jest stworzenie przyjaznego œrodowiska do tworzenia, kontrol
 Patrz: Dokumentacja istniej¹cej platformy \emph{Salomon ver 1.0}.
 
 \section{Opis produktu}
- Ostateczna wersj¹ produktu bêdzie system \emph{Salomon ver 1.1} wyposa¿ony w pe³n¹ obs³ugê zarz¹dzania etapami przetwarzania wiedzy (zadania), zbiorów danych oraz mo¿liwoœæ pracy z danymi zawartymi w bazie danych wraz z dokumentacj¹ techniczn¹ i u¿ytkow¹.
+
+Ostateczna wersj¹ produktu bêdzie system \emph{Salomon ver 1.1} wyposa¿ony w pe³n¹ obs³ugê zarz¹dzania etapami przetwarzania wiedzy (zadania) i mo¿liwoœæ pracy z danymi zawartymi w bazie danych wraz z dokumentacj¹ techniczn¹ i u¿ytkow¹.
  
 System ten bêdzie siê sk³ada³ z platformy, oraz uruchamianych na niej odpowiednich wtyczek. Produkt powinien zawieraæ w pe³ni funkcjonaln¹ platformê, oraz przyk³adowe aplikacje demonstruj¹ce mo¿liwoœæ realizacji systemu w architekturze platforma-wtyczki. % TODO
 
 \subsection{U¿ytkownicy systemu}
+
 U¿ytkownikami systemu bêd¹ zarówno u¿ytkownicy koñcowi, przeprowadzaj¹cy ekstrakcjê wiedzy, jak i programiœci tworz¹cy nowe wtyczki Salomona. Produkt bêdzie udostêpnia³ programist¹ wtyczki zwarte i kompletne œrodowisko do rozwoju algorytmów odpowiedzialnych za ekstrakcjê wiedzy.
 
 \subsection{Poza zakresem problemu}
@@ -77,17 +81,19 @@ Platforma nie bêdzie realizowaæ wspó³bie¿noœci i rozproszenia, a jedynie przetwa
 \section{Funkcjonalnoœci produktu}
 
 \subsection{U¿ytkownicy koñcowi}
-U¿ytkownicy koñcowi bêd¹ mogli uzyskaæ dostêp do systemu poprzez graficzny interfejs u¿ytkownika (GUI). Wobec interfejsu aktualnej wersji Salomona 1.0, powienien zawieraæ on nastêpuj¹ce rozszerzenia:
+U¿ytkownicy koñcowi bêd¹ mogli uzyskaæ dostêp do systemu poprzez graficzny interfejs u¿ytkownika (GUI). Wobec interfejsu aktualnej wersji Salomona 1.0, powinien zawieraæ on nastêpuj¹ce rozszerzenia:
+
 \begin{itemize}
-\item ???
+	\item mo¿liwoœæ kolejkowania zadañ w formie grafu
+	\item mo¿liwoœæ uruchomienia algorytmów zaimplementowanych w systemie \emph{WEKA}
+	\item rozbudowane mo¿liwoœci zarz¹dzania obiektami przechowywanymi w systemie
+	\item bardziej ergonomiczne \emph{GUI}
 \end{itemize}
 
 \subsection{Programiœci}
 
- Ta grupa u¿ytkowników korzystaæ bêdzie z API udostêpnianego przez Salomona, w celu jego dalszego rozwijania. 
- 
- % ATRYBUTY ???
- 
+Ta grupa u¿ytkowników korzystaæ bêdzie z API udostêpnianego przez Salomona, w celu jego dalszego rozwijania.
+Udostêpnione zostan¹ interfejsy pozwalaj¹ce na do³¹czanie algorytmów przeznaczonych dla systemu \emph{WEKA}. 
  
 \section{Priorytety funkcjonalnoœci}
 
