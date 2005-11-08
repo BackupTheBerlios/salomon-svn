@@ -45,7 +45,7 @@ Drzewa decyzyjne\\}
 {\Large \emph{Software Architect Document, ver 1.1} }
 \end{flushright}
 
-\vspace{7cm}
+\vspace{3cm}
 
 \begin{flushleft}
 { \Large Historia wersji }\[\]
@@ -58,6 +58,10 @@ Drzewa decyzyjne\\}
   30-09-2005 & 1.1 & Aktualizacja po zaimplementowaniu & Mateusz Nowakowski\\
              &     & pierwszej wersji produktu &                   \\
   \hline
+  08-11-2005 & 1.2 & Opis pluginu wnioskuj¹cego & Mateusz Nowakowski\\
+             &     & Aktualizacja wiekszoœci rozdzia³ów &            \\
+  \hline
+  
 
 \end{tabular}
 \end{flushleft}
@@ -110,11 +114,13 @@ Poni¿szy diagram przedstawia punkt widzenia u¿ytkownika.
 \end{figure}
 
 U¿ytkownik wybiera najpierw tzw. \textit{plugin wejœciowy}. Nastêpnie u¿ytkownik wybiera zdefiniowane wczeœniej dla obecnego \textit{solution}`a dane wejœciowe lub  nowe poprzez zdefiniowanie nazwy danych wejœciowych (dla póŸniejszej identyfikacji),
-wybiera tabelê a nastêpnie kolumnê reprezentuj¹c¹ wynik decyzji --  \textit{kolumna decyzyjna} oraz listê kolumn reprezentuj¹ce przes³anki decyzji -- \textit{kolumny decyduj¹ce}. U¿ytkownik mo¿e wybraæ wiêcej ni¿ jedno Ÿród³o danych, z których potem bêd¹ generowane drzewa decyzyjne.
+wybiera tabelê a nastêpnie kolumnê reprezentuj¹c¹ wynik decyzji --  \textit{kolumna decyzyjna} oraz listê kolumn reprezentuj¹ce przes³anki decyzji -- \textit{kolumny decyduj¹ce}. Nastêpnie musi okreœliæ, na których wierszach bêdzie budowane drzewo decyzyjne. U¿ytkownik mo¿e wybraæ wiêcej ni¿ jedno Ÿród³o danych, z których potem bêd¹ generowane drzewa decyzyjne. 
 
 Nastêpnie u¿ytkownik wybiera pluginy algorytmiczne, które utworz¹ drzewa decyzyjne na podstawie wczeœniej zdefiniowanych danych wejœciowych. Konfiguracj¹ pluginów algorytmicznych opiera siê (je¿eli jakakolwiek wystêpuje) na zdefiniowaniu parametrów algorytmu, ktorego u¿ywa plugin.
 
 Jeœli u¿ytkownik sobie ¿yczy mo¿e wybraæ równie¿ plugin wizualizacyjny, który przedstawi stworzone wczeœniej drzewa. Plugin ten ma mo¿liwoœæ dzia³aæ równie¿ samodzielnie. U¿ytkownik konfiguruj¹c plugin mo¿e sam okreœliæ jakie istniej¹ce drzewa maj¹ zostaæ zwizualizowane. Mo¿e równie¿ usun¹æ wybrane drzewa decyzyjne.
+
+Ka¿de drzewo decyzyjne mo¿na zweryfikowaæ. Samodzielny plugin wnioskuj¹cy umo¿liwia dla 
 
 \subsection{Developer Use-Case View}
 
