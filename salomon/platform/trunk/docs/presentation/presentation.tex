@@ -14,14 +14,17 @@
 %\setbeamertemplate{background canvas}[vertical shading][top=blue!10,bottom=white]
 
 \hypersetup{%
-  pdftitle={Dr Burski},%
+  pdftitle={Salomon},%
   pdfauthor={Nikodem Jura},
-  pdfauthor={Krzysztof Rajda}
+  pdfauthor={Krzysztof Rajda},
+  pdfauthor={Marek Kisiel-Dorohinicki},
+  pdfauthor={Bart³omiej Œnie¿yñski}
   }
 
-\title[TP-SI: Salomon]{\small{Prezentacja systemu} \emph{Dr Burski}}
+\title[TP-SI: Salomon]{\small{Salomon – komponentowa architektura indukcyjnej bazy danych jako
+platformy uczenia maszynowego}}
 
-\author{Nikodem Jura, Krzysztof Rajda}
+\author{Nikodem Jura, Krzysztof Rajda, Marek Kisiel-Dorohinicki, Bart³omiej Œnie¿yñski}
 
 \institute{
   AGH}\date{\today}
@@ -36,53 +39,30 @@
 
 \newcommand{\smallhref}[1]{{\footnotesize\href{#1}{\url{#1}}}}
 
-%Wstawia przed kazdym poczatkiej subsection toc z zaznaczonym miejsce :-)
-%\AtBeginSubsection[]
-%{
-%  \begin{frame}<beamer>
-%    \frametitle{Outline}
-%    \tableofcontents[currentsection,currentsubsection]
-%  \end{frame}
-%}
-
 \begin{document}
 
 \frame{\titlepage}
 
-\section{Agenda} % {{{
+\section{Agenda}
 
 \frame{
 	\frametitle{Agenda}
-	%TODO: co to jest
 	\begin{itemize}
-		\item Typy agentów w systemie
-		\item Zachowania agentów
-		\item Sposoby integracji ontologii
-		\item Dalszy rozwój systemu
+		\item Wprowadzenie
+		\item Prace pokrewne
+		\item Koncepcja platformy Salomon
+		\item Architektura systemu
+		\item Przyk³adowe zastosowanie
+		\item Kierunki rozwoju
 	\end{itemize}
 }
 
 \include{introduction}
-%\include{others}
-%\include{conception}
+\include{others}
+\include{conception}
 %\include{architecture}
 %\include{sample_use}
 %\include{summary}
-
-%\section{Typy agentów w systemie}
-%\frame{
-%	\frametitle{Typy agentów w systemie}
-%	\begin{itemize}
-%		\item Master Agent
-%		\item Query Agent
-%		\item Integrating Agent		
-%		\begin{itemize}
-%			\item Jena Integrating Agent
-%			\item Prompt Integrating Agent
-%		\end{itemize}
-%	\end{itemize}	
-%}
-
 
 \frame{
 	\begin{center}

@@ -1,118 +1,31 @@
 \section{Prace pokrewne}
 
-\subsection*{VINLEN}
-to system indukcyjnej bazy danych, rozwijany w
-\emph{George Mason University}~\cite{bib2}. Jest to klasyczna
-realizacja indukcyjnej bazy danych. Mechanizmy wnioskowania
-indukcyjnego sπ zintegrowane ze standardowymi relacyjnymi
-operatorami bazodanowymi. Integracja ta opiera siÍ na nowych
-rodzajach operatorÛw zwanych operatorami generowania wiedzy
-\emph{KGO} (Knowledge Generation Operators). \emph{KGO} operuje na
-\emph{segmentach wiedzy} sk≥adajπcych siÍ z~kombinacji jednej lub
-wiÍcej tabel z relacyjnej bazy danych i~wiedzy przechowywanej
-w~bazie wiedzy (por. rysunek~\ref{fig:inddb}). \emph{KGO} przyjmuje
-na wyjúciu jeden lub wiÍcej segment wiedzy, na podstawie ktÛrego
-generuje inny segment wiedzy. Podstawowym operatorem uøywanym w
-systemie jest AQ21, program do indukcyjnego tworzenia regu≥ na
-podstawie danych.
-
-Indukcyjne bazy danych mogπ byÊ wspierane przez wyspecjalizowanych
-agentÛw (\emph{Scauts}), ktÛrych zadaniem jest synteza
-i~zarzπdzanie wiedzπ, ktÛra jest dostosowywana do wymagaÒ
-okreúlonego uøytkownika. System \emph{VINLEN} pozwala na tworzenie skryptÛw
-operujπcych na bazach danych, wiedzy i algorytmach uczenia
-maszynowego przy uøyciu jÍzyka \emph{KGL-1} (\emph{Knowledge
+\subsection{VINLEN}
+\frame{
+	\frametitle{VINLEN}
+	\begin{itemize}
+		\item Klasyczna realizacja indukcyjnej bazy danych -- mechanizmy wnioskowania zintegrowane z relacyjnymi operatorami bazodanowymi.
+		\item Oparta na nowych operatorach generowania wiedzy -- \emph{KGO} (Knowledge Generation Operators).
+		\item Synteza i zarzπdzanie wiedzy przez wyspecjalizowanych agentÛw (\emph{Scauts}).
+		\item Operowanie na danych, wiedzy i algorytmach uczenia maszynowego za pomocπ \emph{KGL-1} (\emph{Knowledge
 Generation Language}).
+		\item Sk≥adowanie wiedzy wraz z danymi w relacyjnej bazie danych -- \emph{KQL} jako jÍzyk zapytaÒ.
+		\item Graficzny interfejs uøytkownika.
+	\end{itemize}	
+}
 
-Cechπ charakterystycznπ tak rozwijanego systemu bÍdzie moøliwoúÊ
-sk≥adowania wiedzy w~relacyjnej bazie danych wraz z danymi,
-zadawanie zapytaÒ oraz manipulowanie wiedzπ z~wykorzystaniem
-jÍzyka \emph{KQL} lub przy uøyciu funkcjonalnego, graficznego
-interfejsu uøytkownika.
+\subsection{Weka}
+\frame{
+	\frametitle{Weka}
+	\begin{itemize}
+		\item 
+	\end{itemize}	
+}
 
-\subsection*{Weka}
-to narzÍdzie do prowadzenia eksperymentÛw
-zwiπzanych z~uczeniem maszynowym stworzone w \emph{Uniwersity of
-Waikato}~\cite{weka}. NarzÍdzie to znajduje szerokie zastosowanie
-w dydaktyce i badaniach naukowych. Moøe rÛwnieø udostÍpniaÊ swojπ
-funkcjonalnoúÊ innym programom. Stanowi ono zbiÛr narzÍdzi do
-zarzπdzania danymi w rÛønorodnych formatach, algorytmÛw uczenia
-maszynowego i~oceniajπcych uzyskiwane rozwiπzania a~takøe
-úrodowisko do porÛwnywania rÛønych algorytmÛw. årodowisko zapewnia
-przyjazny interfejs uøytkownika, co czyni je ≥atwym
-w~wykorzystaniu.
-
-\emph{Weka} pozwala na wykorzystywanie rÛønorodnych ürÛde≥ danych,
-poczπwszy od plikÛw tekstowych w wielu formatach, poprzez
-relacyjne bazy danych po dane umieszczone w Internecie. Dane te
-przetwarzane sπ przez tzw. \emph{filtry}, ktÛre pozwalajπ na
-wyodrÍbnienie z nich potrzebnych informacji i przedstawienie ich w
-czytelnej postaci.
-
-NajwiÍkszπ grupπ algorytmÛw zaimplementowanych w programie
-\emph{Weka} sπ algorytmy klasyfikujπce. Wykorzystujπ one wiele
-form reprezentacji nauczonej wiedzy: od drzew i~regu≥ decyzyjnych,
-przez maszyny wektorowe po sieci Bayesowskie.
-
-Innπ grupπ algorytmÛw sπ algorytmy grupujπce (klastrujπce). Bazujπ
-one na schematach \emph{k-Means}, \emph{EM}, \emph{Cobweb},
-\emph{X-means}, \emph{FarthestFirst}. Utworzone za ich pomocπ
-klastry mogπ byÊ wizualizowane oraz porÛwnywane do wzorcowych,
-jeúli takie sπ do dyspozycji.
-
-System \emph{Weka} implementuje rÛwnieø popularny algorytm
-\emph{Apriori}, wykorzystywany do znajdowania regu≥ asocjacyjnych.
-Dzia≥a on tylko na danych dyskretnych i pozwala na identyfikacjÍ
-zaleønoúci statystycznych miÍdzy rÛønymi grupami atrybutÛw.
-
-\emph{Weka} dostarcza przyjazny graficzny interfejs uøytkownika,
-ktÛry jest bardzo uøyteczny w praktyce.
-Pozwala on nie tylko na sprawne wczytywanie danych do systemu,
-ale takøe na ich wizualizacjÍ w formie czytelnych diagramÛw i~wykresÛw.
-
-Jednπ z ciekawszych funkcji systemu jest moøliwoúÊ graficznego
-definiowania przep≥ywu danych i sposobu ich przetwarzania. èrÛd≥a
-danych, filtry, klasyfikatory i algorytmy oceniajπce mogπ byÊ
-≥πczone graficznie za pomocπ linii. W~ten sposÛb moøna okreúlaÊ
-jaki ma byÊ przep≥yw danych w systemie. Konfiguracja konkretnych
-danych i metod ich przetwarzania moøe byÊ zapisania i za≥adowana
-ponownie do powtÛrnego wykorzystania.
-
-\subsection*{YALE}
-(Yet Another Learing Environment), podobnie jak
-opisywana powyøej \emph{Weka}, jest systemem do prowadzenia
-eksperymentÛw zwiπzanych z uczeniem maszynowym.
-
-Jego g≥Ûwnπ zaletπ jest bogaty zestaw operatorÛw, ktÛre
-umoøliwiajπ tworzenie ,,≥aÒcuchÛw'' z≥oøonych z rÛønych problemÛw
-zwiπzanych z~uczeniem. Dane, na ktÛrych operujπ operatory sπ dla
-nich ca≥kowicie przeüroczyste i przechowywane mogπ byÊ w
-rÛønorodnych formatach -- za odpowiednie transformacje pomiÍdzy
-nimi odpowiada samo úrodowisko.
-
-DziÍki operatorom i moøliwoúci ich ≥atwego ≥πczenia przy uøyciu
-graficznego interfejsu uøytkownika, a takøe dziÍki jÍzykowi
-skryptowemu bazujπcemu na \emph{XML}, \emph{YALE} jest czÍsto
-uøywane do prowadzenia badaÒ i~eksperymentÛw z rÛønorodnymi
-algorytmami uczenia maszynowego.
-
-\emph{YALE} dostarcza ponad 200 operatorÛw, jak choÊby algorytmy
-klasyfikujπce, asocjacyjne, klastrujπce, wyszukujπce regu≥y czy
-oparte na drzewach decyzyjnych. Dodatkowo moøliwe jest
-wykorzystanie wielu algorytmÛw dostarczanych przez úrodowisko
-\emph{Weka} w sposÛb analogiczny do operatorÛw wbudowanych. Przed
-przetworzeniem dane mogπ byÊ poddane dyskretyzacji, filtrowaniu
-czy normalizacji, a po zakoÒczeniu obliczeÒ odpowiedniej
-walidacji.
-
-\emph{YALE} pozwala na eksperymentowanie i~poszukiwanie najlepszego dla danego problemu
-po≥πczenia rÛønych metod uczenia maszynowego. DziÍki modularnej strukturze operatorÛw
-moøliwa jest wymiana pojedynczych ogniw ,,≥aÒcuchÛw'' obliczeÒ w celu uzyskania
-najlepszego efektu. Dodatkowo ,,≥aÒcuchy'' te mogπ byÊ zagnieødøane, tworzπc skomplikowane
-drzewa operatorÛw.
-
-%Duøe moøliwoúci tego úrodowiska mogπ byÊ dodatkowo rozszerzane
-%poprzez mechanizm wtyczek, dziÍki ktÛrym moøliwe jest dodawanie
-%nowych operatorÛw i dostosowanie go do indywidualnych potrzeb.
-
-%\subsection{Able}
+\subsection{YALE}
+\frame{
+	\frametitle{YALE}
+	\begin{itemize}
+		\item 
+	\end{itemize}	
+}
