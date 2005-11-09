@@ -59,7 +59,7 @@ Drzewa decyzyjne\\}
              &     & pierwszej wersji produktu &                   \\
   \hline
   08-11-2005 & 1.2 & Opis pluginu wnioskuj¹cego & Mateusz Nowakowski\\
-             &     & Aktualizacja wiekszoœci rozdzia³ów &            \\
+             &     & Aktualizacja wiêkszoœci rozdzia³ów &            \\
   \hline
   
 
@@ -120,7 +120,7 @@ Nastêpnie u¿ytkownik wybiera pluginy algorytmiczne, które utworz¹ drzewa decyzyj
 
 Jeœli u¿ytkownik sobie ¿yczy mo¿e wybraæ równie¿ plugin wizualizacyjny, który przedstawi stworzone wczeœniej drzewa. Plugin ten ma mo¿liwoœæ dzia³aæ równie¿ samodzielnie. U¿ytkownik konfiguruj¹c plugin mo¿e sam okreœliæ jakie istniej¹ce drzewa maj¹ zostaæ zwizualizowane. Mo¿e równie¿ usun¹æ wybrane drzewa decyzyjne.
 
-Ka¿de drzewo decyzyjne mo¿na zweryfikowaæ. Samodzielny plugin wnioskuj¹cy umo¿liwia dla 
+Ka¿de drzewo decyzyjne mo¿na zweryfikowaæ. Samodzielny plugin wnioskuj¹cy umo¿liwia przeprowadzenie wnioskowania za pomoc¹ wybranego drzewa na innym zbiorze danych. U¿ytkownik wybiera drzewo oraz zbiór danych, nastêpniê w oknie wyników przedstawione s¹ wnioski np. procent poprawnoœci, które wiersze zawieraj¹ inny wynik ni¿ spodziewany itp.
 
 \subsection{Developer Use-Case View}
 
@@ -134,7 +134,7 @@ Deweloper bêdzie musia³ zaimplementowaæ tylko okreœlony interfejs lub klasê abst
 Modu³ drzew decyzyjnych sk³ada siê z dwóch czêœci:
 \begin{itemize}
 \item Rozszerzenia j¹dra platformy Salomon o podstawow¹ obs³ugê drzew decyzyjnych
-\item Zestawu 3 typów pluginów: pluginu definiuj¹cego dane wejœciowe, pluginu algorytmicznego, pluginu wizualizuj¹cego, zarz¹dzaj¹cego drzewami
+\item Zestawu 4 typów pluginów: pluginu definiuj¹cego dane wejœciowe, pluginu algorytmicznego, pluginu wizualizuj¹cego, zarz¹dzaj¹cego drzewami oraz pluginu wnioskuj¹cego
 \end{itemize}
 
 \subsection{Model rozszerzeñ j¹dra Salomona}
@@ -152,13 +152,15 @@ Poni¿szy diagram przedstawia uk³ad interfejsów do zaimplementowania:
 
 \[\]
 \subsection{Architektura pluginów}
-Jak wczeœniej wspomniano bêd¹ 3 rodzaje pluginów:
+Jak wczeœniej wspomniano bêd¹ 4 rodzaje pluginów:
 \begin{itemize}
 \item Plugin wejœciowy - definiuj¹cy dane na podstawie których bêd¹ tworzone drzewa decyzyjne.
 \item Plugin algorytmiczny - tworz¹cy drzewa na podstawie okreœlonych danych wejœciowych
 \item Plugin wizualizacyjny, zarz¹dzaj¹cy drzewami istniej¹cymi drzewami.
-Pluginy s¹ zgodne a architektur¹ Salomona i sposób ich budowania jest przez ni¹ okreœlony.
+\item Plugin wnioskuj¹cy - przeprowadzajacy testy drzew na zbiorach danych.
 \end{itemize}
+Pluginy s¹ zgodne a architektur¹ Salomona i sposób ich budowania jest przez ni¹ okreœlony.
+
 \subsubsection{Plugin wejœciowy}
 Plugin wejœciowy zarz¹dza istniej¹cymi definicjami danych wejœciowych (dodaje, usuwa) jak równie¿ okreœla, na podstawie jakich danych wejœciowych póŸniejsze w kolejce pluginy algorytmiczne maj¹ tworzyæ drzewa.
 
@@ -183,12 +185,24 @@ z wynikiem bêdzie wyœwietla³ nam albo komunikat o tym co nale¿y zrobiæ aby wizua
 jeœli zrobimy coœ nie tak, albo te¿ bêdzie nam wyœwietla³ stworzone przez nas drzewo w postaci
 JTree.
 
+\subsubsection{Plugin wnioskuj¹cy}
+
+Plugin wnioskuj¹cy mo¿e równie¿ pracowaæ w dwóch trybach. Jednak zalecana jest praca samodzielna. W przypadku gdy w œrodowisku znajdujê siê lista identyfikatorów drzew wówczas plugin uruchamia wnioskowanie dla ka¿dego drzewa z tej listy. Danymi wejœciowymi s¹ tabele, z których drzewa powsta³y pomijaj¹c wiersze, z których przeprowadzane by³o budowanie drzewa. Plugin w oknie rezultatów przedstawia wnioski z testów dla ka¿dego drzewa w postaci ogólnych informacji o drzewie (jego nazwa, zbiór danych, z którego powsta³), informacja na jakich wierszach by³o przeprowadzone testowanie oraz wynik testów:
+\begin{itemize}
+\item Procent zgodnoœci - stosunek liczby wierszy z poprawnym wynikiem testu do ogólnej liczby testowanych wierszy
+\item Lista wierszy (przedzia³ów) dla których wynik testu by³ nieprawid³owy
+\end{itemize}
+
+W przypadku pracy samodzielnej (tzn. w sytuacji kiedy plugin nie wykryje obecnoœci listy drzew w œrodowisku) u¿ytkownik wybiera drzewo, które chce testowaæ, oraz okreœla zbiór danych do testowania. Zbiór danych musi nale¿eæ do tej samej tabeli z której drzewo powsta³o, ale musi zawieraæ inne wiersze. Wynik wnioskowania jest identyczny jak w przypadku pracy niesamodzielnej.
+
+
+
 \section{Model danych}
 Modu³ drzew decyzyjnych, zgodnie z logik¹ rozwi¹zañ w Salomonie, korzysta z dwóch baz danych. Jedna z nich -- \textit{baza definicyjna} przechowuje informacjê o budowie ju¿ istniej¹cych drzew oraz wszystkie niezbêdne informacje potrzebne do zbudowania drzewa. Druga zewnêtrzna -- \textit{baza wejœciowa}, jest skojarzona z aktualnym rozwi¹zaniem i przechowuje dane wejœciowe drzew decyzyjnych.
 
 \subsection{Baza wejœciowa}
 
-Baza wejœciowa musi zawieraæ tabelki lub widoki zawieraj¹ce dane. W celu okreœlenia danych wejœciowych u¿ytkownik musi wybraæ tabelê a nastêpnie kolumnê reprezentuj¹c¹ wynik decyzji, nazwijmy j¹ kolumn¹ decyzyjn¹ oraz listê kolumn reprezentuj¹ce przes³anki decyzji, nazwijmy je kolumnami decyduj¹cymi. Innymi s³owy format danych wejœciowych jest zwyk³¹ tabelk¹. Wybrana tabela i kolumny wraz z definicj¹ bazy danych zostaje zapisana w bazie definicyjnej do póŸniejszego u¿ycia przez pluginy algorytmiczne.
+Baza wejœciowa musi zawieraæ tabelki lub widoki zawieraj¹ce dane. W celu okreœlenia danych wejœciowych u¿ytkownik musi wybraæ tabelê a nastêpnie kolumnê reprezentuj¹c¹ wynik decyzji, nazwijmy j¹ kolumn¹ decyzyjn¹ oraz listê kolumn reprezentuj¹ce przes³anki decyzji, nazwijmy je kolumnami decyduj¹cymi. Nastêpnie u¿ytkownik definiujê podzbiór tabeli lub widoku, na których bêdzie budowane drzewo. Innymi s³owy format danych wejœciowych jest zwyk³¹ tabelk¹. Wybrana tabela i kolumny wraz z definicj¹ bazy danych zostaje zapisana w bazie definicyjnej do póŸniejszego u¿ycia przez pluginy algorytmiczne.
 
 \subsection{Baza definicyjna}
 Baza definicyjna ma za zadanie przechowaæ strukturê drzewa oraz parametry z nim zwi¹zane.  Do opisu drzew zdefiniowane s¹ 3 tabele przedstawione na poni¿szym diagramie ERD:
@@ -205,7 +219,7 @@ Diagram nie przedstawia powi¹zañ miêdzy powy¿szymi tabelami a pozosta³ymi tabela
 Dane przechowywane w poszczególnych tabelach s¹ nastêpuj¹ce:
 \begin{itemize}
 \item TREE\_NODES  - tabela przechowuje wêz³y drzew. Ka¿dy wêze³ zawiera informacjê o poprzedzaj¹cym go wêŸle (null jeœli takowego nie posiada, czyli jest korzeniem drzewa), o poprzedzaj¹cej krawêdzi oraz o wartoœci zapisanej w wêŸle. Wartoœæ w wêŸle mo¿e byæ zarówno nazw¹ kolumny lub wartoœci¹ (zbiorem wartoœci) kolumny decyzyjnej (wówczas jest to liœæ drzewa)
-\item TREE\_DATA\_SOURCES - tabela reprezentuj¹ce wybrane przez u¿ytkownika dane wejœciowe potrzebne do zbudowania drzewa. Zawiera m.in.: wskaŸnik do rozwi¹zania (solution) oraz nazwy wybranej wraz z wybranymi kolumnami: kolumnê decyzyjnej i kolumny decyduj¹ce. Informacja o logowaniu potrzebna jest w celu zidentyfikowania parametrów bazy wejœciowej oraz w celu umo¿liwienia korzystania z danych wejœciowych przez wszystkie projekty w rozwi¹zaniu.
+\item TREE\_DATA\_SOURCES - tabela reprezentuj¹ce wybrane przez u¿ytkownika dane wejœciowe potrzebne do zbudowania drzewa. Zawiera m.in.: wskaŸnik do rozwi¹zania (solution) oraz nazwy wybranej wraz z wybranymi kolumnami: kolumnê decyzyjnej i kolumny decyduj¹ce, numer pierwszego i ostatniego wiersza. Informacja o rozwi¹zaniu potrzebna jest w celu zidentyfikowania parametrów bazy wejœciowej oraz w celu umo¿liwienia korzystania z danych wejœciowych przez wszystkie projekty w rozwi¹zaniu.
 \item TREES -  tabela opisuj¹ca zbiorczo informacjê o drzewie. Zawiera m.in.:nazwê drzewa, wskaŸnik do taska pluginu algorytmicznego, wskaŸnik do wêz³a drzewa reprezentuj¹cy korzeñ oraz wskaŸnik do tabeli opisuj¹cej dane wejœciowe.
 \end{itemize}
 
