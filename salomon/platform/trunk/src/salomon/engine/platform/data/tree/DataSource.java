@@ -25,6 +25,7 @@ import java.util.Date;
 
 import salomon.engine.solution.ShortSolutionInfo;
 import salomon.platform.data.tree.IDataSource;
+import salomon.platform.exception.PlatformException;
 
 /**
  * 
@@ -40,6 +41,8 @@ public class DataSource implements IDataSource
 	private String tableName;
 	private String decisionedColumn;
 	private String[] decioningColumns;
+	private int firstRowIndex = 1;
+	private int lastRowIndex = -1;
 	private Date createDate;
 	
 	
@@ -52,7 +55,8 @@ public class DataSource implements IDataSource
 	 * @param name
 	 * @param solution
 	 */
-	public DataSource(Date date, String[] columns, String column, int id, String info, String name, ShortSolutionInfo solution) {
+	public DataSource(Date date, String[] columns, String column, int firstRowIndex, int lastRowIndex, int id, String info, String name, ShortSolutionInfo solution) throws PlatformException{
+		if ((firstRowIndex < 0 && lastRowIndex < 0) || (firstRowIndex <= lastRowIndex)) throw new PlatformException("Indexy wierszy data sourca musza byc liczbami dodatnimi oraz index pierwszego wiersza nie moze byc wiekszy od indexu wiersza ostatniego");
 		createDate = date;
 		decioningColumns = columns;
 		decisionedColumn = column;
@@ -60,6 +64,8 @@ public class DataSource implements IDataSource
 		this.info = info;
 		this.name = name;
 		this.solution = solution;
+		this.firstRowIndex = firstRowIndex;
+		this.lastRowIndex = lastRowIndex;
 	}
 	
 	
@@ -171,6 +177,46 @@ public class DataSource implements IDataSource
 	 */
 	public void setSolution(ShortSolutionInfo solution) {
 		this.solution = solution;
+	}
+
+
+
+
+	/**
+	 * @return Returns the firstRowIndex.
+	 */
+	public int getFirstRowIndex() {
+		return firstRowIndex;
+	}
+
+
+
+
+	/**
+	 * @param firstRowIndex The firstRowIndex to set.
+	 */
+	public void setFirstRowIndex(int firstRowIndex) {
+		this.firstRowIndex = firstRowIndex;
+	}
+
+
+
+
+	/**
+	 * @return Returns the lastRowIndex.
+	 */
+	public int getLastRowIndex() {
+		return lastRowIndex;
+	}
+
+
+
+
+	/**
+	 * @param lastRowIndex The lastRowIndex to set.
+	 */
+	public void setLastRowIndex(int lastRowIndex) {
+		this.lastRowIndex = lastRowIndex;
 	}
 	
 

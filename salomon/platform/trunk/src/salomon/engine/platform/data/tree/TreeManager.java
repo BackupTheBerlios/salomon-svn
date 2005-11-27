@@ -65,6 +65,36 @@ public final class TreeManager implements ITreeManager
 	
 	
 	
+	
+	
+	/* (non-Javadoc)
+	 * @see salomon.platform.data.tree.ITreeManager#getTableSize(java.lang.String)
+	 */
+	public int getTableSize(String tableName) throws PlatformException {
+		if ((tableName == null)||tableName.equals("")) throw new PlatformException("Nazwa tabeli nie moze byc pusta");
+				
+		SQLSelect select = new SQLSelect();
+		select.addTable(tableName);
+		select.addColumn("count(*)");
+		ResultSet resultSet = null;
+		try {
+			resultSet = _externalDBManager.select(select);
+			if (resultSet.next()) return resultSet.getInt(1);
+			else throw new PlatformException("Metoda getTableSize() failed quering: " + select.getQuery()+ " Errors: Brak zwroconego kursora");
+		
+		} catch (SQLException e) {
+			throw new PlatformException("Metoda getTableSize() failed quering: " + select.getQuery()
+					+ " Errors: " + e.getLocalizedMessage());
+		} finally {
+			try {if (resultSet != null) resultSet.close();}catch (SQLException e1) {};
+		}
+	}
+
+
+
+
+
+
 	public IDataSource createTreeDataSource() throws PlatformException {
 		return new DataSource(_solutionInfo);
 	}
@@ -79,6 +109,8 @@ public final class TreeManager implements ITreeManager
 		insert.addValue("TDS_SOLUTION_ID",dataSource.getSolution().getId());
 		insert.addValue("TDS_TABLE ",dataSource.getTableName());
 		insert.addValue("TDS_DECISIONED_COLUMN",dataSource.getDecisionedColumn());
+		insert.addValue("TDS_FIRST_ROW",dataSource.getFirstRowIndex());
+		insert.addValue("TDS_LAST_ROW",dataSource.getLastRowIndex());
 		StringBuffer buff = new StringBuffer();
 		for (String item : dataSource.getDecioningColumns()) buff.append(item+",");
 		if (buff.length() == 0) throw new PlatformException("Decisioning columns are empty.");
@@ -102,14 +134,23 @@ public final class TreeManager implements ITreeManager
 		select.addTable(dataSource.getTableName());
 		select.addColumn(dataSource.getDecisionedColumn());
 		for (String columnName : dataSource.getDecioningColumns()) select.addColumn(columnName);
+		//Nie moge zastosowac konstrukcji SELECT [FIRST (<integer expr m>)] [SKIP (<integer expr n>)]
+		//SQLSelect bardziej przeszkadza niz pomaga
+		int first = dataSource.getFirstRowIndex();
+		int last = dataSource.getLastRowIndex();
 		ResultSet resultSet = null;
 		try {
 			resultSet = _externalDBManager.select(select);
-			while (resultSet.next()) {
-				row = new ArrayList<Object>(columns);
-				for (int i=1;i<=columns;i++) row.add(resultSet.getObject(i));
-				returnList.add(row.toArray(new Object [row.size()]));
+			int j = 1;
+			while (resultSet.next() && j <= last) {
+				if (j >= first) {
+					row = new ArrayList<Object>(columns);
+					for (int i=1;i<=columns;i++) row.add(resultSet.getObject(i));
+					returnList.add(row.toArray(new Object [row.size()]));
+				}
+				j++;
 			}
+			if (j < last ) throw new PlatformException("Metoda getTreeDataSourceData() failed due to: Definicja datasource nie zgadza sie ze stanem faktycznym. Parametry firstRow i lastRow nie sa zgodne z prawda.");
 		} catch (SQLException e) {
 			throw new PlatformException("Metoda getTreeDataSourceData() failed quering: " + select.getQuery()
 					+ " Errors: " + e.getLocalizedMessage());
@@ -131,6 +172,8 @@ public final class TreeManager implements ITreeManager
 		select.addColumn("TDS_TABLE");
 		select.addColumn("TDS_DECISIONED_COLUMN");
 		select.addColumn("TDS_DECISIONING_COLUMNS");
+		select.addColumn("TDS_FIRST_ROW");
+		select.addColumn("TDS_LAST_ROW");
 		select.addColumn("TDS_CREATE_DATE");
 		select.addCondition("TDS_SOLUTION_ID = ",_solutionInfo.getId());
 		ResultSet resultSet = null;
@@ -145,6 +188,8 @@ public final class TreeManager implements ITreeManager
 				dataSource.setTableName(resultSet.getString(i++));
 				dataSource.setDecisionedColumn(resultSet.getString(i++));
 				dataSource.setDecioningColumns(resultSet.getString(i++).split(","));
+				dataSource.setFirstRowIndex(resultSet.getInt(i++));
+				dataSource.setLastRowIndex(resultSet.getInt(i++));
 				dataSource.setCreateDate(resultSet.getDate(i++));
 				dataSources.add(dataSource);
 			}
@@ -169,6 +214,8 @@ public final class TreeManager implements ITreeManager
 		select.addColumn("TDS_TABLE");
 		select.addColumn("TDS_DECISIONED_COLUMN");
 		select.addColumn("TDS_DECISIONING_COLUMNS");
+		select.addColumn("TDS_FIRST_ROW");
+		select.addColumn("TDS_LAST_ROW");
 		select.addColumn("TDS_CREATE_DATE");
 		select.addCondition("TDS_SOLUTION_ID = ",_solutionInfo.getId());
 		select.addCondition("TDS_ID = ",treeDataSourceId);
@@ -184,6 +231,8 @@ public final class TreeManager implements ITreeManager
 				dataSource.setTableName(resultSet.getString(i++));
 				dataSource.setDecisionedColumn(resultSet.getString(i++));
 				dataSource.setDecioningColumns(resultSet.getString(i++).split(","));
+				dataSource.setFirstRowIndex(resultSet.getInt(i++));
+				dataSource.setLastRowIndex(resultSet.getInt(i++));
 				dataSource.setCreateDate(resultSet.getDate(i++));
 				returnDataSource = dataSource;
 			}

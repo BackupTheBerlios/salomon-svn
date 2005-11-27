@@ -33,8 +33,15 @@ import salomon.platform.exception.PlatformException;
  */
 public interface ITreeManager
 {
-
-
+	
+	/**
+	 * Metoda zwraca ilosc wierszy tabeli,ktorej nazwa jest podana jako parametr
+	 * 
+	 * @param tableName
+	 * @return
+	 * @throws PlatformException
+	 */
+	int getTableSize(String tableName)throws PlatformException;
 	/**
 	 * Metoda zwraca liste wierszy bedacych wynikiem pobrania danych z zewnetrznej bazy
 	 * na podstawie IDataSource.

@@ -46,6 +46,10 @@ public interface IDataSource
 	String getDecisionedColumn();
 
 	String[] getDecioningColumns();
+	
+	int getFirstRowIndex();
+	
+	int getLastRowIndex();
 
 	Date getCreateDate();
 	
@@ -60,5 +64,8 @@ public interface IDataSource
 
 	void setDecioningColumns(String[] decisioningColumns);
 
+	void setFirstRowIndex(int index);
+	
+	void setLastRowIndex(int index);
 	
 }

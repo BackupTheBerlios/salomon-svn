@@ -9,7 +9,6 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import salomon.platform.IDataEngine;
-import salomon.platform.data.tree.ITree;
 import salomon.platform.data.tree.ITreeManager;
 import salomon.plugin.ISettings;
 
@@ -195,11 +194,13 @@ public class TestSettingsPanel extends JPanel {
 					
 					try{
 						ITreeManager manager = dataEngine.getTreeManager();
-						ITree [] tress = manager.getTrees();
-						System.out.println("sss"+tress.toString());
-						ITree tree = manager.getTree(tress[0].getId());
-						System.out.println("sss"+tree.toString());
-						manager.removeTree(tree.getId());
+			
+						getTestText().setText(manager.getTableSize(tableName)+"");
+						//ITree [] tress = manager.getTrees();
+						//System.out.println("sss"+tress.toString());
+						//ITree tree = manager.getTree(tress[0].getId());
+						//System.out.println("sss"+tree.toString());
+						//manager.removeTree(tree.getId());
 						//manager.getAll
 						/*boolean b = manager.checkTableAndColumns(tableName,columns);
 						if (b) {
