@@ -1,11 +1,11 @@
-package pl.edu.agh.capitol.veniTreeCreator;
+package pl.edu.agh.capitol.c45TreeCreator;
 
 import org.apache.log4j.Logger;
 
-import pl.edu.agh.capitol.veniTreeCreator.logic.TreeConstructionTask;
-import pl.edu.agh.capitol.veniTreeCreator.components.VeniTreeCreatorResultComponent;
-import pl.edu.agh.capitol.veniTreeCreator.components.VeniTreeCreatorSettingsComponent;
-import pl.edu.agh.capitol.veniTreeCreator.util.VeniTreeCreatorResult;
+import pl.edu.agh.capitol.c45TreeCreator.components.C45TreeCreatorResultComponent;
+import pl.edu.agh.capitol.c45TreeCreator.components.C45TreeCreatorSettingsComponent;
+import pl.edu.agh.capitol.c45TreeCreator.logic.TreeConstructionTask;
+import pl.edu.agh.capitol.c45TreeCreator.util.C45TreeCreatorResult;
 import salomon.platform.IDataEngine;
 import salomon.platform.IEnvironment;
 import salomon.platform.IVariable;
@@ -29,10 +29,10 @@ import salomon.util.serialization.SimpleString;
  * Zaimplementowany algorytm tworzenia drzew to ID3 
  * 
  */
-public class VeniTreeCreatorPlugin implements IPlugin {
+public class C45TreeCreatorPlugin implements IPlugin {
 
 	private static final Logger LOGGER = Logger
-			.getLogger(VeniTreeCreatorPlugin.class);
+			.getLogger(C45TreeCreatorPlugin.class);
 
 	
 	/**
@@ -64,21 +64,21 @@ public class VeniTreeCreatorPlugin implements IPlugin {
 					+ e.getLocalizedMessage());
 		}
 
-		return new VeniTreeCreatorResult();
+		return new C45TreeCreatorResult();
 	}
 
 	/**
 	 * Zwraca komponent Settingsów (pusty)
 	 */
 	public ISettingComponent getSettingComponent() {
-		return new VeniTreeCreatorSettingsComponent();
+		return new C45TreeCreatorSettingsComponent();
 	}
 
 	/**
 	 * Zwraca komponent z rezultatem (pusty)
 	 */
 	public IResultComponent getResultComponent() {
-		return new VeniTreeCreatorResultComponent();
+		return new C45TreeCreatorResultComponent();
 	}
 
 	/**
@@ -102,7 +102,7 @@ public class VeniTreeCreatorPlugin implements IPlugin {
 	 * @return rezultat (IResult)
 	 */
 	IResult getDefaultErrorResult(String result) {
-		VeniTreeCreatorResult res = new VeniTreeCreatorResult();
+		C45TreeCreatorResult res = new C45TreeCreatorResult();
 		res.setSuccessful(false);
 		res.setResult(result);
 		return res;

@@ -3,6 +3,8 @@
  */
 package pl.edu.agh.capitol.veniTreeCreator.logic;
 
+import pl.edu.agh.capitol.veniTreeCreator.logic.TreeConstructionTask;
+
 /**
  * @author Lukasz Ostatek
  *

@@ -5,6 +5,8 @@ package pl.edu.agh.capitol.veniTreeCreator.logic;
 
 import java.util.Vector;
 
+import pl.edu.agh.capitol.veniTreeCreator.logic.DataItem;
+
 /**
  * Klasa reprezentuj¹ca wêze³ drzewa decyzyjnego
  * @author Lukasz Ostatek
