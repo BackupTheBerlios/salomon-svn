@@ -42,6 +42,15 @@ public class TreeConstructionTask {
 
 	Vector<Boolean> isContignous = new Vector<Boolean>();
 
+	boolean multipleContinuousAttributeExpansions = true;// czy mozna
+
+	// dokonywac
+	// podzialow
+	// wzgledem
+	// atrybutow
+	// ciaglych
+	// wielokrotnie
+
 	private static final Logger LOGGER = Logger
 			.getLogger(TreeConstructionTask.class);
 
@@ -85,8 +94,8 @@ public class TreeConstructionTask {
 		ITree gefco = iTreeManager.createTree();
 		gefco.setDataSource(ds);
 		gefco.setCreateDate(new Date(System.currentTimeMillis()));
-		gefco.setInfo("Created with VeniTreeCreator");
-		gefco.setName("VeniTreeCreator generated tree");
+		gefco.setInfo("Created with C45TreeCreator");
+		gefco.setName("C45TreeCreator generated tree");
 
 		// przepisanie node'ow
 
@@ -118,8 +127,15 @@ public class TreeConstructionTask {
 																					.lastElement())),
 									(ti.isLeaf() ? INode.Type.VALUE
 											: INode.Type.COLUMN),
-									ti.isLeaf() ? ti.elements.elementAt(0)
-											.getObjective() : "");
+									ti.isLeaf() ? (ti.getParent() != null
+											&& ti.getParent().partitionEdge != Double.NaN ? ti.sign
+											+ Double
+													.toString(ti.getParent().partitionEdge)
+											: ti.elements.elementAt(0)
+													.getObjective())
+											: "");
+					// bra³em edge z parenta (czyli np. podzia³ wg granicy 75) a
+					// znak z dzieci (czyli np. ">=")
 				}
 			} else {// ROOT
 				in = iTreeManager.createNode(parent, "",
@@ -323,6 +339,40 @@ public class TreeConstructionTask {
 		return entropy;
 	}
 
+	double calculateAverageEntropyCont(Vector<TreeItem> vt, int attribute) {
+		double bestEntr = Double.MIN_VALUE;
+		for (TreeItem ti : this.getLeafs()) {
+			if (!ti.isHomogenous()) { // nie rozwijam homogenicznych
+				// node'ów
+				// TODO zeby w ogole ich nie brac przy wyliczaniu entropii
+
+				for (DataItem di : ti.elements) {
+					double tmpEdge = Double.parseDouble(di
+							.getAttributeAt(attribute));
+					/*
+					 * TreeItem hi = ti.subTreeItemHi(attribute, tmpEdge);
+					 * TreeItem lo = ti.subTreeItemLo(attribute, tmpEdge);
+					 */
+					Vector<TreeItem> vtT = splitBy(ti, attribute, tmpEdge);
+					double ent = (vtT.elementAt(0).elements.size() / (vtT
+							.elementAt(0).elements.size() + vtT.elementAt(1).elements
+							.size()))
+							* vtT.elementAt(0).calculateEntropy(
+									distinctObjectives)
+							+ (vtT.elementAt(1).elements.size() / (vtT
+									.elementAt(0).elements.size() + vtT
+									.elementAt(1).elements.size()))
+							* vtT.elementAt(1).calculateEntropy(
+									distinctObjectives);
+					if (ent > bestEntr) {
+						bestEntr = ent;
+					}
+				}
+			}
+		}
+		return bestEntr;
+	}
+
 	/**
 	 * Metoda matematyczna obliczaj¹ca œredni¹ entropiê w drzewie wzgledem
 	 * zadanego atrybutu
@@ -382,7 +432,7 @@ public class TreeConstructionTask {
 	}
 
 	/**
-	 * Metoda matematyczna obliczaj¹ca informacjê w drzewie
+	 * Metoda matematyczna obliczaj¹ca SplitInfo
 	 * 
 	 * @param vt
 	 *            wektor elementów drzewa
@@ -410,7 +460,7 @@ public class TreeConstructionTask {
 	}
 
 	/**
-	 * Metoda obliczaj¹ca wartoœæ <code>Gain</code>
+	 * Metoda obliczaj¹ca wartoœæ Gain
 	 * 
 	 * @param vt
 	 *            wektor elementów drzewa
@@ -465,26 +515,55 @@ public class TreeConstructionTask {
 					// node'ów
 					// TODO zeby w ogole ich nie brac przy wyliczaniu entropii
 
-					double bestEdge;
+					double bestEdge = -1;
+					double bestEntr = Double.MIN_VALUE;
 					for (DataItem di : ti.elements) {
 						double tmpEdge = Double.parseDouble(di
 								.getAttributeAt(attribute));
-						TreeItem hi = ti.subTreeItemHi(attribute, tmpEdge);
-						TreeItem lo = ti.subTreeItemLo(attribute, tmpEdge);
+						/*
+						 * TreeItem hi = ti.subTreeItemHi(attribute, tmpEdge);
+						 * TreeItem lo = ti.subTreeItemLo(attribute, tmpEdge);
+						 */
+						Vector<TreeItem> vtT = splitBy(ti, attribute, tmpEdge);
+						double ent = (vtT.elementAt(0).elements.size() / (vtT
+								.elementAt(0).elements.size() + vtT
+								.elementAt(1).elements.size()))
+								* vtT.elementAt(0).calculateEntropy(
+										distinctObjectives)
+								+ (vtT.elementAt(1).elements.size() / (vtT
+										.elementAt(0).elements.size() + vtT
+										.elementAt(1).elements.size()))
+								* vtT.elementAt(1).calculateEntropy(
+										distinctObjectives);
+						if (ent > bestEntr) {
+							bestEntr = ent;
+							bestEdge = tmpEdge;
+						}
 					}
-					Vector<TreeItem> exps = splitBy(ti, attribute);
-					for (TreeItem tiIn : exps) {
-						tiIn.setParent(ti);
-						for (String elem : ti.getRoadMap())
-							tiIn.addToRoadMap(elem);
-						tiIn.addToRoadMap(descriptions
-								.getAttributeAt(attribute));
-					}
+					Vector<TreeItem> exps = splitBy(ti, attribute, bestEdge);
+
+					exps.elementAt(0).setParent(ti);
+					for (String elem : ti.getRoadMap())
+						exps.elementAt(0).addToRoadMap(elem);
+					exps.elementAt(0).addToRoadMap(
+							descriptions.getAttributeAt(attribute));
+
+					exps.elementAt(1).setParent(ti);
+					for (String elem : ti.getRoadMap())
+						exps.elementAt(1).addToRoadMap(elem);
+					exps.elementAt(1).addToRoadMap(
+							descriptions.getAttributeAt(attribute));
+
 					treeElements.addAll(exps);
 					ti.setLeaf(false);
+					ti.partitionEdge = bestEdge;
+					exps.elementAt(0).sign = ">=";
+					exps.elementAt(1).sign = "<";
 				}
 			}
-			used.setElementAt(true, attribute);
+			if (!multipleContinuousAttributeExpansions)
+				used.setElementAt(true, attribute);
+
 		} else {
 			System.out.println("Attr is not contignous");
 			for (TreeItem ti : this.getLeafs()) {
@@ -516,14 +595,23 @@ public class TreeConstructionTask {
 	 * @return indewks atrybutu
 	 */
 	int getBestAvailableAttribute() {
+		// FIXME sprawdzanie dla ci¹g³ych atrybutów
 		int bestNo = -1;
 		double bestEntropy = 2;
 		double tempEntropy;
 		for (int i = 0; i < used.size(); i++) {
 			if (!used.elementAt(i))
-				if ((tempEntropy = calculateAverageEntropy(getLeafs(), i)) < bestEntropy) {
-					bestEntropy = tempEntropy;
-					bestNo = i;
+				if (isContignous.elementAt(i)) {
+					if ((tempEntropy = calculateAverageEntropyCont(getLeafs(),
+							i)) < bestEntropy) {
+						bestEntropy = tempEntropy;
+						bestNo = i;
+					}
+				} else {
+					if ((tempEntropy = calculateAverageEntropy(getLeafs(), i)) < bestEntropy) {
+						bestEntropy = tempEntropy;
+						bestNo = i;
+					}
 				}
 		}
 		System.out.println("BestAvailable =" + bestNo + " (" + bestEntropy
@@ -538,6 +626,8 @@ public class TreeConstructionTask {
 	 * @return wartoœæ T/F
 	 */
 	boolean anyAvailable() {
+		// FIXME sprawdzanie ciaglych atrybutow - zeby nie bylo nieskonczonych
+		// poszukiwan
 		for (Boolean us : used) {
 			if (!us)
 				return true;

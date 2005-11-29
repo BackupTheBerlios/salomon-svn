@@ -26,7 +26,10 @@ public class TreeItem {
 
 	TreeItem parent = null;
 
-	double partitionEdge; // granica podzia³u dla ci¹g³ych zmiennych <= - A, >
+	double partitionEdge = Double.NaN; // granica podzia³u dla ci¹g³ych
+										// zmiennych <= - A, >
+
+	String sign = "<undef>";
 
 	// - B
 
