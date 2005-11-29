@@ -56,7 +56,7 @@ public class DataSource implements IDataSource
 	 * @param solution
 	 */
 	public DataSource(Date date, String[] columns, String column, int firstRowIndex, int lastRowIndex, int id, String info, String name, ShortSolutionInfo solution) throws PlatformException{
-		if ((firstRowIndex < 0 && lastRowIndex < 0) || (firstRowIndex <= lastRowIndex)) throw new PlatformException("Indexy wierszy data sourca musza byc liczbami dodatnimi oraz index pierwszego wiersza nie moze byc wiekszy od indexu wiersza ostatniego");
+		if ((firstRowIndex < 1 || lastRowIndex < 1) || (firstRowIndex > lastRowIndex)) throw new PlatformException("Indexy wierszy data sourca musza byc liczbami dodatnimi oraz index pierwszego wiersza nie moze byc wiekszy od indexu wiersza ostatniego");
 		createDate = date;
 		decioningColumns = columns;
 		decisionedColumn = column;
