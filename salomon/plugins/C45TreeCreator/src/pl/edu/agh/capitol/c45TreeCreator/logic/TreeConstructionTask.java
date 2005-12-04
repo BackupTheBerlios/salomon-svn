@@ -184,14 +184,30 @@ public class TreeConstructionTask {
 		// po przeniesieniu na managera atybutów
 		// bo to jest bardzo sztuczne ;)
 		for (int i = 0; i < root.elements.elementAt(0).getAttributeCount(); i++) {
-			if (distinctClasses.elementAt(i).size() * 2 >= root.elements
-					.elementAt(i).getAttributeCount())
+			if (ifContinuous(i))
 				isContignous.add(new Boolean(true));
 			else
 				isContignous.add(new Boolean(false));
 		}
 
 		distinctObjectives.addAll(getDistinctClassesFromObjetives());
+	}
+
+	/**
+	 * Meteda decyduje czy traktowaæ atrybut jako ci¹g³y
+	 * 
+	 * @param i
+	 * @return
+	 */
+	private boolean ifContinuous(int i) {
+		if (distinctClasses.elementAt(i).size() * 2 <= root.elements.size())
+			return false;
+		try {
+			Double.parseDouble(root.elements.elementAt(0).getAttributeAt(i));
+		} catch (Throwable th) {
+			return false;
+		}
+		return true;
 	}
 
 	/**
@@ -340,7 +356,7 @@ public class TreeConstructionTask {
 	}
 
 	double calculateAverageEntropyCont(Vector<TreeItem> vt, int attribute) {
-		double bestEntr = Double.MIN_VALUE;
+		double bestEntr = Double.MAX_VALUE;
 		for (TreeItem ti : this.getLeafs()) {
 			if (!ti.isHomogenous()) { // nie rozwijam homogenicznych
 				// node'ów
@@ -364,7 +380,7 @@ public class TreeConstructionTask {
 									.elementAt(1).elements.size()))
 							* vtT.elementAt(1).calculateEntropy(
 									distinctObjectives);
-					if (ent > bestEntr) {
+					if (ent < bestEntr) {
 						bestEntr = ent;
 					}
 				}
@@ -516,7 +532,7 @@ public class TreeConstructionTask {
 					// TODO zeby w ogole ich nie brac przy wyliczaniu entropii
 
 					double bestEdge = -1;
-					double bestEntr = Double.MIN_VALUE;
+					double bestEntr = Double.MAX_VALUE;
 					for (DataItem di : ti.elements) {
 						double tmpEdge = Double.parseDouble(di
 								.getAttributeAt(attribute));
@@ -525,17 +541,17 @@ public class TreeConstructionTask {
 						 * TreeItem lo = ti.subTreeItemLo(attribute, tmpEdge);
 						 */
 						Vector<TreeItem> vtT = splitBy(ti, attribute, tmpEdge);
-						double ent = (vtT.elementAt(0).elements.size() / (vtT
-								.elementAt(0).elements.size() + vtT
+						double ent = ((double) vtT.elementAt(0).elements.size() / ((double) vtT
+								.elementAt(0).elements.size() + (double) vtT
 								.elementAt(1).elements.size()))
 								* vtT.elementAt(0).calculateEntropy(
 										distinctObjectives)
-								+ (vtT.elementAt(1).elements.size() / (vtT
-										.elementAt(0).elements.size() + vtT
+								+ ((double) vtT.elementAt(1).elements.size() / ((double) vtT
+										.elementAt(0).elements.size() + (double) vtT
 										.elementAt(1).elements.size()))
 								* vtT.elementAt(1).calculateEntropy(
 										distinctObjectives);
-						if (ent > bestEntr) {
+						if (ent < bestEntr) {
 							bestEntr = ent;
 							bestEdge = tmpEdge;
 						}
@@ -557,8 +573,8 @@ public class TreeConstructionTask {
 					treeElements.addAll(exps);
 					ti.setLeaf(false);
 					ti.partitionEdge = bestEdge;
-					exps.elementAt(0).sign = ">=";
-					exps.elementAt(1).sign = "<";
+					exps.elementAt(0).sign = ">";
+					exps.elementAt(1).sign = "<=";
 				}
 			}
 			if (!multipleContinuousAttributeExpansions)

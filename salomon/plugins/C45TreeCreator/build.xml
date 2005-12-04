@@ -5,7 +5,7 @@
 	<target name="all" description="builds distribution jars" depends="compile">
 		<jar destfile="${dist_dir}/c45TreeCreator.jar" basedir="${bin_dir}" includes="pl/**">
 			<manifest>
-				<attribute name="Main-Class" value="pl.edu.agh.capitol.c45TreeCreator.c45TreeCreatorPlugin" />
+				<attribute name="Main-Class" value="pl.edu.agh.capitol.c45TreeCreator.C45TreeCreatorPlugin" />
 			</manifest>
 		</jar>
 		<copy file="${dist_dir}/c45TreeCreator.jar" todir="${jar_loc}"/>
