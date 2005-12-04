@@ -26,6 +26,8 @@ import salomon.platform.exception.PlatformException;
  */
 public class TreeConstructionTask {
 
+	private double confidenceLevel = 1;
+
 	TreeItem root = null;
 
 	Vector<TreeItem> treeElements = new Vector<TreeItem>();
@@ -215,10 +217,10 @@ public class TreeConstructionTask {
 	 * 
 	 * @return wartoœæ logiczna T/F
 	 */
-	boolean isAllHomogenous() {
+	boolean isAllHomogenous(double confidenceLevel) {
 		for (TreeItem ti : treeElements)
 			if (ti.isLeaf())
-				if (!ti.isHomogenous())
+				if (!ti.isHomogenous(confidenceLevel))
 					return false;
 		return true;
 	}
@@ -358,7 +360,8 @@ public class TreeConstructionTask {
 	double calculateAverageEntropyCont(Vector<TreeItem> vt, int attribute) {
 		double bestEntr = Double.MAX_VALUE;
 		for (TreeItem ti : this.getLeafs()) {
-			if (!ti.isHomogenous()) { // nie rozwijam homogenicznych
+			if (!ti.isHomogenous(getConfidenceLevel())) { // nie rozwijam
+															// homogenicznych
 				// node'ów
 				// TODO zeby w ogole ich nie brac przy wyliczaniu entropii
 
@@ -527,7 +530,8 @@ public class TreeConstructionTask {
 		if (isContignous.elementAt(attribute)) {
 			System.out.println("Attr is contignous");
 			for (TreeItem ti : this.getLeafs()) {
-				if (!ti.isHomogenous()) { // nie rozwijam homogenicznych
+				if (!ti.isHomogenous(getConfidenceLevel())) { // nie rozwijam
+																// homogenicznych
 					// node'ów
 					// TODO zeby w ogole ich nie brac przy wyliczaniu entropii
 
@@ -583,7 +587,8 @@ public class TreeConstructionTask {
 		} else {
 			System.out.println("Attr is not contignous");
 			for (TreeItem ti : this.getLeafs()) {
-				if (!ti.isHomogenous()) { // nie rozwijam homogenicznych
+				if (!ti.isHomogenous(getConfidenceLevel())) { // nie rozwijam
+																// homogenicznych
 					// node'ów
 					// TODO zeby w ogole ich nie brac przy wyliczaniu entropii
 
@@ -657,7 +662,7 @@ public class TreeConstructionTask {
 	 */
 	public void createTree() {
 		LOGGER.info("----Tree creation start----");
-		while ((anyAvailable()) && (!isAllHomogenous())) {
+		while ((anyAvailable()) && (!isAllHomogenous(getConfidenceLevel()))) {
 			LOGGER.info("----Tree creation - in loop----");
 			expandTree(getBestAvailableAttribute());
 		}
@@ -686,5 +691,13 @@ public class TreeConstructionTask {
 			if (ti.isLeaf())
 				ti.print();
 		LOGGER.info("----Tree end----");
+	}
+
+	public void setConfidenceLevel(double confidenceLevel) {
+		this.confidenceLevel = confidenceLevel;
+	}
+
+	public double getConfidenceLevel() {
+		return confidenceLevel;
 	}
 }

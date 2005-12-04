@@ -3,6 +3,7 @@
  */
 package pl.edu.agh.capitol.c45TreeCreator.logic;
 
+import java.util.Hashtable;
 import java.util.Vector;
 
 import pl.edu.agh.capitol.c45TreeCreator.logic.DataItem;
@@ -27,7 +28,8 @@ public class TreeItem {
 	TreeItem parent = null;
 
 	double partitionEdge = Double.NaN; // granica podzia³u dla ci¹g³ych
-										// zmiennych <= - A, >
+
+	// zmiennych <= - A, >
 
 	String sign = "<undef>";
 
@@ -70,14 +72,23 @@ public class TreeItem {
 	 * 
 	 * @return wartoœæ T/F
 	 */
-	public boolean isHomogenous() {
-		String value = null;
+	public boolean isHomogenous(double confidenceLevel) {
+		int total = 0;
+		Hashtable<String, Integer> classes = new Hashtable<String, Integer>();
 		for (DataItem dt : elements) {
-			if ((value != null) && (!dt.getObjective().equals(value)))
-				return false;
-			value = dt.getObjective();
+			if (classes.containsKey(dt.getObjective()))
+				classes.put(dt.getObjective(), new Integer((classes.remove(dt
+						.getObjective()).intValue()) + 1));
+			else
+				classes.put(dt.getObjective(), new Integer(1));
+			total++;
 		}
-		return true;
+
+		for (Integer i : classes.values()) {
+			if (i.doubleValue() / (double) total >= confidenceLevel)
+				return true;
+		}
+		return false;
 	}
 
 	/**

@@ -22,11 +22,12 @@ import salomon.util.serialization.SimpleInteger;
 import salomon.util.serialization.SimpleString;
 
 /**
- * @author Lukasz
- * <br><br>
- * Plugin tworz¹cy drzewa decyzyjne na podstawie danych. Drzewa s¹ tworzone 
- * na bazie struktury <code>IDataSource</code> a zapisywane do <code>ITree</code>.
- * Zaimplementowany algorytm tworzenia drzew to ID3 
+ * @author Lukasz <br>
+ *         <br>
+ *         Plugin tworz¹cy drzewa decyzyjne na podstawie danych. Drzewa s¹
+ *         tworzone na bazie struktury <code>IDataSource</code> a zapisywane
+ *         do <code>ITree</code>. Zaimplementowany algorytm tworzenia drzew
+ *         to ID3
  * 
  */
 public class C45TreeCreatorPlugin implements IPlugin {
@@ -34,7 +35,6 @@ public class C45TreeCreatorPlugin implements IPlugin {
 	private static final Logger LOGGER = Logger
 			.getLogger(C45TreeCreatorPlugin.class);
 
-	
 	/**
 	 * G³ówna metoda licz¹ca pluginu. Wykonuje 3 czynnoœci
 	 * <li> pobiera z <code>Environment<code/> id DataSource'a i na tej 
@@ -43,7 +43,7 @@ public class C45TreeCreatorPlugin implements IPlugin {
 	 * <code>performCalculations</code>. Stworzone drzewo jest zapisywane 
 	 * dobazy danych 
 	 * <li> ustawia w <code>Environment</code> id stworzego drzewa
-	 * 
+	 *
 	 */
 	public IResult doJob(IDataEngine eng, IEnvironment env, ISettings settings) {
 		IDataSource dane = null;
@@ -51,7 +51,7 @@ public class C45TreeCreatorPlugin implements IPlugin {
 		try {
 			dane = getIDataSourceFromEnv(eng, env);
 			/** ************ Calculations *************** */
-			result = performCalculations(dane, eng);
+			result = performCalculations(dane, eng, settings);
 			/** ************ Calculations done ********** */
 			IVariable iv = env.createEmpty("tree_name");
 			IObject io = new SimpleString("" + result);
@@ -83,22 +83,37 @@ public class C45TreeCreatorPlugin implements IPlugin {
 
 	/**
 	 * Metoda uruchamiaj¹ce logikê tworzenia drzewa
-	 * @param ds DataSource na podstawie którego tworzymy drzewa
-	 * @param eng IDataEngine - coby mo¿naby³o pobraæ dane z DataSource'a
+	 * 
+	 * @param ds
+	 *            DataSource na podstawie którego tworzymy drzewa
+	 * @param eng
+	 *            IDataEngine - coby mo¿naby³o pobraæ dane z DataSource'a
 	 * @return stworzone drzewko (i tak zapisane do bazy)
-	 * @throws PlatformException - w wypadku problemów ze stworzeniem drzewa
+	 * @throws PlatformException -
+	 *             w wypadku problemów ze stworzeniem drzewa
 	 */
-	public int performCalculations(IDataSource ds, IDataEngine eng) throws PlatformException {
+	public int performCalculations(IDataSource ds, IDataEngine eng,
+			ISettings settings) throws PlatformException {
 		TreeConstructionTask tc = new TreeConstructionTask();
-		tc.loadFromDataSource(ds, eng.getTreeManager().getTreeDataSourceData(ds));
+		try {
+			tc.setConfidenceLevel(Double.parseDouble(((SimpleString) settings
+					.getField("confidenceLevel")).getValue()));
+		} catch (Throwable th) {
+			System.out.println("Error parameter confidenceLevel: "
+					+ settings.getField("confidenceLevel"));
+		}
+		tc.loadFromDataSource(ds, eng.getTreeManager()
+				.getTreeDataSourceData(ds));
 		tc.createTree();
-		
+
 		return tc.returnResult(eng.getTreeManager(), ds);
 	}
 
 	/**
 	 * Rezultat zwracany w przypadku wyst¹pienia b³êdu
-	 * @param result - deskrpytor b³êdu
+	 * 
+	 * @param result -
+	 *            deskrpytor b³êdu
 	 * @return rezultat (IResult)
 	 */
 	IResult getDefaultErrorResult(String result) {
@@ -107,9 +122,10 @@ public class C45TreeCreatorPlugin implements IPlugin {
 		res.setResult(result);
 		return res;
 	}
-	
+
 	/**
-	 * Metoda pomocnicza pobieraj¹ca IDataSource'a z IEnvironment'u 
+	 * Metoda pomocnicza pobieraj¹ca IDataSource'a z IEnvironment'u
+	 * 
 	 * @param eng
 	 * @param env
 	 * @return <code>IDataSource</code> z danymi
@@ -118,14 +134,16 @@ public class C45TreeCreatorPlugin implements IPlugin {
 	public IDataSource getIDataSourceFromEnv(IDataEngine eng, IEnvironment env)
 			throws PlatformException {
 		try {
-			int id = ((SimpleInteger)env.getVariable("DATA_SOURCE_ID").getValue()).getValue();
+			int id = ((SimpleInteger) env.getVariable("DATA_SOURCE_ID")
+					.getValue()).getValue();
 
 			return eng.getTreeManager().getTreeDataSource(id);
-			//zaslepka :/
-			/*return eng.getTreeManager().getTreeDataSource(18);*/
+			// zaslepka :/
+			/* return eng.getTreeManager().getTreeDataSource(18); */
 		} catch (NullPointerException e) {
 			LOGGER.error("Variable DATA_SOURCE_ID not set in env", e);
-			throw new PlatformException("Variable DATA_SOURCE_ID not set in env");
+			throw new PlatformException(
+					"Variable DATA_SOURCE_ID not set in env");
 		} catch (PlatformException e) {
 			LOGGER.error("PlatformException occured ", e);
 			throw new PlatformException("PlatformException occured ");
