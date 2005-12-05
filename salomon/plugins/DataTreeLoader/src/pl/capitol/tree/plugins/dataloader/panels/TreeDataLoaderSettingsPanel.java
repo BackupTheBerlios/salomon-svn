@@ -6,14 +6,17 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 
 import salomon.platform.IDataEngine;
 import salomon.platform.data.IColumn;
 import salomon.platform.data.ITable;
+import salomon.platform.data.tree.ITreeManager;
+import salomon.platform.exception.PlatformException;
 import salomon.plugin.ISettings;
+import salomon.util.serialization.SimpleInteger;
 import salomon.util.serialization.SimpleString;
-import javax.swing.JTextField;
 
 
 /**
@@ -51,10 +54,13 @@ public class TreeDataLoaderSettingsPanel extends JPanel {
 	private JLabel jLabelRangeTo = null;
 	private JTextField jTextFieldRangeTo = null;
 	
-	private int actualDecisionedColumn = -2;
-	private int lastDecisionedColumn = -2;
+	private int actualDecisionedColumn = -1;
+	private int lastDecisionedColumn = -1;
+	private int actualTable = -1;
+	
 	/**
 	 * This is the default constructor
+	 * @throws PlatformException 
 	 */
 	public TreeDataLoaderSettingsPanel(ISettings settings, IDataEngine dataEngine) {
 		super();
@@ -66,6 +72,7 @@ public class TreeDataLoaderSettingsPanel extends JPanel {
 	 * This method initializes this
 	 * 
 	 * @return void
+	 * @throws PlatformException 
 	 */
 	private  void initialize() {
 		jLabelTable = new JLabel();
@@ -109,8 +116,7 @@ public class TreeDataLoaderSettingsPanel extends JPanel {
 		for (int i=0; i<listTable.length; i++)
 		{
 			dListTable.addElement(listTable[i].toString());
-		}
-		
+		}		
 	}
 	public ISettings getSettings() {
 		//TODO umiescic z pol settingsy dla doJob()
@@ -123,46 +129,37 @@ public class TreeDataLoaderSettingsPanel extends JPanel {
 		{
 			settings.setField(decisioningColumn+i, new SimpleString(selectedValues[i].toString()));
 		}
+
+		ITreeManager trm = dataEngine.getTreeManager();
+		int tableSize = 0;
+		int firstIndex = 0;
+		int lastIndex = 0;
 		
-		/*
-		 * nie dzialalo:/
-		Object [] selectedValues = jListDecisioning.getSelectedValues();
-		
-		String [] selectedValuesS = new String[selectedValues.length];
-		for (int i=0; i<selectedValues.length; i++)
-		{
-			selectedValuesS[i] = (String)selectedValues[i];
-			System.out.println(selectedValuesS[i]);
+		try {
+			 tableSize= trm.getTableSize(listTable[actualTable].toString());
+		} catch (PlatformException e1) {
+			e1.printStackTrace();
 		}
+			
+		lastIndex = Integer.parseInt(this.jTextFieldRangeTo.getText());
+		firstIndex = Integer.parseInt(this.jTextFieldRangeFrom.getText());
+		
+		if (lastIndex > tableSize)
+			settings.setField("firstIndex", new SimpleInteger(tableSize));
+		else
+			settings.setField("firstIndex", new SimpleInteger(lastIndex));
 		
 		
-		SimpleString [] selectedValuesSS = new SimpleString[selectedValuesS.length];
-		for (int i=0; i<selectedValuesS.length; i++)
-		{
-			selectedValuesSS[i] = new SimpleString(selectedValuesS[i]);
-			System.out.println(selectedValuesSS[i].getValue());
-		}
+		if (firstIndex < 1)
+			settings.setField("lastIndex", new SimpleInteger(1));
+		else
+			settings.setField("lastIndex", new SimpleInteger(firstIndex));
+			
 		
-		System.out.println("aaaaa"); 
-		
-		SimpleArray selectedValuesSA = new SimpleArray(selectedValuesSS);
-		
-		System.out.println("bbbbb");
-		
-		SimpleString [] decisioningColumnsSS = (SimpleString[]) selectedValuesSA.getValue();
-		
-		System.out.println("cccccc");
-		
-		for (int i=0; i<decisioningColumnsSS.length; i++)
-		{
-			System.out.println(decisioningColumnsSS[i].getValue());
-		}
-		
-		settings.setField("decisioningColumns", selectedValuesSA);
-		 * 
-		 */
 		return settings;
 	}
+
+
 	public void setSettings(ISettings settings) {
 		this.settings = settings;
 	}
@@ -185,21 +182,42 @@ public class TreeDataLoaderSettingsPanel extends JPanel {
 			jScrollListTable.setBounds(new java.awt.Rectangle(5,25,120,100));
 			jListTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		
+			
 			jListTable.addMouseListener(new java.awt.event.MouseAdapter() {
 				public void mouseClicked(java.awt.event.MouseEvent e) {
-					listDecisioned = listTable[jListTable.getSelectedIndex()].getColumns();
+					
+					actualTable = jListTable.getSelectedIndex();
+					
+					actualDecisionedColumn = -1;
+					lastDecisionedColumn = -1;
 					dListDecisioned.clear();
-					for (int i=0; i<listDecisioned.length; i++)
-					{
-						dListDecisioned.addElement(listDecisioned[i].getName());
+					dListDecisioning.clear();
+					
+					if (actualTable>-1){
+						listDecisioned = listTable[actualTable].getColumns();
+						for (int i=0; i<listDecisioned.length; i++)
+						{
+							dListDecisioned.addElement(listDecisioned[i].getName());
+						}
+						
+						listDecisioning = listTable[actualTable].getColumns();
+						for (int i=0; i<listDecisioning.length; i++)
+						{
+							dListDecisioning.addElement(listDecisioning[i].getName());
+						}
 					}
 					
-					listDecisioning = listTable[jListTable.getSelectedIndex()].getColumns();
-					dListDecisioning.clear();
-					for (int i=0; i<listDecisioning.length; i++)
-					{
-						dListDecisioning.addElement(listDecisioning[i].getName());
+					ITreeManager trm = dataEngine.getTreeManager();
+					try {
+						jTextFieldRangeTo.setText(String.valueOf(trm.getTableSize(listTable[actualTable].toString())));
+						jTextFieldRangeFrom.setText("1");
+						
+					} catch (PlatformException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
 					}
+
+					
 
 				}
 			});
@@ -220,18 +238,17 @@ public class TreeDataLoaderSettingsPanel extends JPanel {
 			
 			jListDecisioned.addMouseListener(new java.awt.event.MouseAdapter() {
 				public void mouseClicked(java.awt.event.MouseEvent e) {
-					System.out.println("mouseClicked()"); 
 					
 					jListDecisioning.clearSelection();
 					
 					actualDecisionedColumn = jListDecisioned.getSelectedIndex();
 					
-					if (lastDecisionedColumn>-2 & actualDecisionedColumn!=lastDecisionedColumn){
+					if (lastDecisionedColumn>-1 & actualDecisionedColumn>-1){
 						dListDecisioning.add(lastDecisionedColumn, listDecisioning[lastDecisionedColumn].getName()); 
 					}
 
 
-					if (actualDecisionedColumn>-2){
+					if (actualDecisionedColumn>-1){
 						dListDecisioning.remove(actualDecisionedColumn);
 						lastDecisionedColumn = actualDecisionedColumn;						
 					}
@@ -255,7 +272,7 @@ public class TreeDataLoaderSettingsPanel extends JPanel {
 			
 			jListDecisioning.addMouseListener(new java.awt.event.MouseAdapter() {
 				public void mouseClicked(java.awt.event.MouseEvent e) {
-					System.out.println("mouseClicked()"); // TODO Auto-generated Event stub mouseClicked()
+					//System.out.println("mouseClicked()"); // TODO Auto-generated Event stub mouseClicked()
 				}
 			});
 		}
