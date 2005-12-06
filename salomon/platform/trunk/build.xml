@@ -14,9 +14,10 @@
 	<property name="plugin_dir" value="plugins" />
 	<property name="plugin_dev_dir" value="dev" />
 	<property name="db_dir" value="db" />
+	<property name="install_dir" value="install" />
 	<property name="empty_db_file" value="empty.gdb" />	
 	<property name="db_file" value="salomon.gdb" />
-        <property name="db_user" value="sysdba" />
+    <property name="db_user" value="sysdba" />
 	<property name="db_password" value="masterkey" />	
 	<property name="crebas_file" value="crebas.sql" />
 	<property name="views_file" value="views.sql" />
@@ -126,7 +127,7 @@
 	</target>
 
 	<target name="copy_run_files">
-		<copy file="${run_script}" todir="${release_dir}" />
+		<copy  file="${install_dir}/${run_script}" todir="${release_dir}" />
 		<!-- goes to jar: copy file="all.policy" todir="${release_dir}" /-->
 	</target>
 
@@ -167,5 +168,9 @@
 
 		</svn>
 		<echo message="REVISION_VERSION=${testStatus.revision}" file="${src_dir}/version.properties" />
+	</target>
+	
+	<target name="run" depends="build_salomon_jar">
+		<java classpath=""></java>
 	</target>
 </project>
