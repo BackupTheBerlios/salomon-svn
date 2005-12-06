@@ -21,12 +21,38 @@
 
 package salomon.engine.platform.data.dataset;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import salomon.platform.data.IColumn;
 import salomon.platform.data.dataset.IData;
+import salomon.platform.exception.DBException;
+import salomon.platform.exception.PlatformException;
 
 /**
  *  Not used.
  */
 class Data implements IData
 {
+	private ResultSet _resultSet;
+	
+	public Object[] getData() throws PlatformException
+	{
+		throw new UnsupportedOperationException("Method Data.getData() not implemented yet!");
+	}
+
+	public Object getData(IColumn column)
+	{
+		throw new UnsupportedOperationException("Method Data.getData() not implemented yet!");
+	}
+
+	public boolean next()throws PlatformException
+	{
+		try {
+			return _resultSet.next();
+		} catch (SQLException e) {
+			throw new DBException(e);
+		}
+	}
 	//TODO: add implementation
 }

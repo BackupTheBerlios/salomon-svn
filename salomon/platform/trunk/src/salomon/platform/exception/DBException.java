@@ -27,10 +27,20 @@ package salomon.platform.exception;
 public class DBException extends PlatformException
 {
 	/**
-	 * 
+	 * @param message
 	 */
 	public DBException(String message)
 	{
 		super(message);
+	}
+
+	public DBException(String message, Throwable t)
+	{
+		super(message, t);
+	}
+
+	public DBException(Throwable t)
+	{
+		super(t);
 	}
 }

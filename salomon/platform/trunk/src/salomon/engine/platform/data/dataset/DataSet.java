@@ -37,6 +37,9 @@ import salomon.engine.database.ExternalDBManager;
 
 import salomon.platform.IInfo;
 import salomon.platform.IUniqueId;
+import salomon.platform.data.IColumn;
+import salomon.platform.data.dataset.ICondition;
+import salomon.platform.data.dataset.IData;
 import salomon.platform.data.dataset.IDataSet;
 import salomon.platform.exception.PlatformException;
 
@@ -192,6 +195,11 @@ class DataSet implements IDataSet
 		//		return _datasetID;
 		throw new UnsupportedOperationException(
 				"Method save() not implemented yet!");
+	}
+
+	public IData selectData(IColumn[] columns, ICondition[] conditions) throws PlatformException
+	{
+		throw new UnsupportedOperationException("Method DataSet.selectData() not implemented yet!");
 	}
 
 	/**

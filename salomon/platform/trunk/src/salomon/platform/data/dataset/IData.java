@@ -21,10 +21,17 @@
 
 package salomon.platform.data.dataset;
 
+import salomon.platform.data.IColumn;
+import salomon.platform.exception.PlatformException;
+
 /**
  * 
  */
 public interface IData
 {
-	//TODO: add methods
+	Object[] getData() throws PlatformException;
+
+	Object getData(IColumn column) throws PlatformException;
+
+	boolean next() throws PlatformException;
 }

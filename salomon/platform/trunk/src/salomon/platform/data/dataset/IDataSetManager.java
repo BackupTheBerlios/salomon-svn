@@ -38,19 +38,17 @@ public interface IDataSetManager
 	void add(IDataSet dataSet) throws PlatformException;
 
 	/**
-	 * Removes the given data set from the storage.
-	 * 
-	 * @param dataSet the data set to remove
-	 * @throws PlatformException
-	 */
-	void remove(IDataSet dataSet) throws PlatformException;
-
-	/**
 	 * Creates empty data set.
 	 * 
 	 * @return the empty data set
 	 */
 	IDataSet createEmpty() throws PlatformException;
+
+	ICondition createEqualsCondition() throws PlatformException;
+
+	ICondition createGreaterCondition() throws PlatformException;
+
+	ICondition createLowerCondition() throws PlatformException;
 
 	/**
 	 * Gets all data sets.
@@ -67,4 +65,16 @@ public interface IDataSetManager
 	 */
 	IDataSet getDataSet(IUniqueId id) throws PlatformException;
 
+	/**
+	 * Removes the given data set from the storage.
+	 * 
+	 * @param dataSet the data set to remove
+	 * @throws PlatformException
+	 */
+	void remove(IDataSet dataSet) throws PlatformException;
+
+	/**
+	 * TODO: service OR and AND statements
+	 */
+	//ICondition createComplexCondition() throws PlatformException;
 }

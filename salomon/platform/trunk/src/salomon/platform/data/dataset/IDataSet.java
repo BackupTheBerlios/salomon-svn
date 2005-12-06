@@ -23,6 +23,7 @@ package salomon.platform.data.dataset;
 
 import salomon.platform.IInfo;
 import salomon.platform.IUniqueId;
+import salomon.platform.data.IColumn;
 import salomon.platform.exception.PlatformException;
 
 /**
@@ -94,6 +95,6 @@ public interface IDataSet
 	 */
 	IDataSet union(IDataSet dataSet, IUniqueId id) throws PlatformException;
 
-	//	ResultSet selectData(SQLSelect select) throws PlatformException;
+	IData selectData(IColumn[] columns, ICondition[] conditions) throws PlatformException;
 
 }

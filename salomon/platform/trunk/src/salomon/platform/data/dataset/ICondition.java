@@ -19,11 +19,12 @@
  * 
  */
 
-package salomon.platform.data;
+package salomon.platform.data.dataset;
 
-public interface IColumn
+/**
+ * 
+ */
+public interface ICondition
 {
-	String getName();
-
-	String getType();
+	// empty interface
 }

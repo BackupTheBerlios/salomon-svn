@@ -35,4 +35,13 @@ public class PlatformException extends Exception
 		super(message);
 	}
 
+	public PlatformException(String message, Throwable t)
+	{
+		super(message, t);
+	}
+
+	public PlatformException(Throwable t)
+	{
+		super(t);
+	}
 }
