@@ -1,0 +1,76 @@
+\documentclass{beamer}
+
+\usepackage[polish]{babel}
+\usepackage[Cp1250]{inputenc}
+\usepackage[OT4]{fontenc}
+\usepackage{beamerthemeshadow}
+\usepackage{fancyvrb}
+\usepackage{graphicx}
+\usepackage{url}
+
+\beamertemplateballitem
+\beamertemplatenumberedballsectiontoc
+\setbeamertemplate{footline}[frame number]
+\setbeamertemplate{navigation symbols}{}
+
+%\setbeamertemplate{background canvas}[vertical shading][top=blue!10,bottom=white]
+\newtheorem{elements}[theorem]{Elementy}
+\newtheorem{idatabase}[theorem]{Indukcyjna baza danych}
+\hypersetup{%
+  pdftitle={Salomon},%
+  pdfauthor={Nikodem Jura},
+  pdfauthor={Krzysztof Rajda},
+  pdfauthor={Marek Kisiel-Dorohinicki},
+  pdfauthor={Bart³omiej Œnie¿yñski}
+  }
+
+\title[TP-SI: Salomon]{\small{Salomon – komponentowa architektura indukcyjnej bazy danych\\
+jako platformy uczenia maszynowego}}
+
+\author{Nikodem Jura, Krzysztof Rajda,\\ Marek Kisiel-Dorohinicki, Bart³omiej Œnie¿yñski}
+
+\institute{
+  AGH -- Katedra Informatyki}\date{\today}
+
+\newcounter{minisection}
+\newcommand{\minisectionframe}[1]{
+\frame{
+	\begin{center}
+	#1
+	\end{center}
+}}
+
+\newcommand{\smallhref}[1]{{\footnotesize\href{#1}{\url{#1}}}}
+
+\begin{document}
+
+\frame{\titlepage}
+
+\section{Agenda}
+
+\frame{
+	\frametitle{Agenda}
+	\begin{itemize}
+		\item Wprowadzenie
+		\item Prace pokrewne
+		\item Koncepcja platformy Salomon
+		\item Architektura systemu
+		\item Przyk³adowe zastosowanie
+		\item Kierunki rozwoju
+	\end{itemize}
+}
+
+\include{introduction}
+\include{others}
+\include{conception}
+\include{architecture}
+\include{sample_use}
+\include{summary}
+
+\frame{
+	\begin{center}
+		 \LARGE{Dziêkujemy za uwagê!}
+	\end{center}
+}
+
+\end{document}

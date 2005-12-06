@@ -1,0 +1,215 @@
+\documentclass[a4paper, 12pt]{article}
+%\usepackage[polish]{babel}
+\usepackage[cp1250]{inputenc}
+%\usepackage[latin2]{inputenc}
+%\usepackage{polski}
+\usepackage{amsfonts}
+\usepackage[T1]{fontenc}
+\usepackage[dvips]{graphicx}
+
+%\usepackage{pldoc}
+
+
+
+
+
+
+
+\pagestyle{headings}
+\textwidth      15.5cm
+\oddsidemargin    .1cm
+\evensidemargin   .1cm
+
+\begin{document}
+
+\thispagestyle{empty}
+
+\begin{minipage}{5cm}
+%\includegraphics[scale=0.3]{logo.eps}
+\end{minipage}
+\begin{minipage}{10cm}
+\begin{center}
+{\Large Salomon\\
+System przetwarzania wiedzy\\}
+\end{center}
+\end{minipage}
+
+\vspace*{0.5cm}
+
+\hrulefill
+
+\vspace*{1cm}
+
+
+\begin{flushright}
+{\Large \emph{Vision Scope, ver 1.2} }
+\end{flushright}
+
+\vspace{7cm}
+
+\begin{flushleft}
+{ \Large Historia wersji }\[\]
+\begin{tabular}{|p{2.5cm}||p{1.5cm}|p{4.5cm}|p{5.5cm}|}
+  \hline
+  Data & Wersja & Opis & Autorzy \\
+  \hline \hline
+  18-04-2005 & 1.0 & Pocz¹tkowa wersja Vision pierwszego etapu & Przemys³aw Misiuda, Dominik Seweryn\\
+  \hline
+  27-04-2005 & 1.1 & Poprawiona wersja Vision & Przemys³aw Misiuda, Dominik Seweryn\\
+  \hline
+  07-10-2005 & 1.2 & Auktualizacja dokumentu Vision, etap drugi & Dominik Seweryn\\
+  \hline
+\end{tabular}
+\end{flushleft}
+
+
+%\begin{flushleft}
+%{ \Large Autor} \[\]
+%\begin{tabular}{|p{3.5cm}|p{3.5cm}|p{3.5cm}|p{3.5cm}|}
+%  \hline
+%  Imiê Nazwisko & Pozycja & adres@e-mail.pl & data \\
+%  \hline
+%\end{tabular}
+%\end{flushleft}
+
+\newpage
+
+\section{Cel}
+Celem projektu jest rozbudowa platformy Salomon o obs³ugê drzew decyzyjnych oraz implementacja algorytmów budowy i wizualizacji drzew decyzyjnych.
+%\subsection{S³ownik}
+%\subsection{Odnoœniki}
+
+\section{Ramy i za³o¿enia projektowe}
+Mamy do dyspozycji platformê Salomon s³u¿¹c¹ jako platforma do uruchamiania zadañ. Platformê t¹
+bêdziemy rozbudowywaæ o now¹ funkcjonalnoœæ - obs³ugê drzew decyzyjnych, polegaj¹c¹ na opracowaniu
+struktury w bazie danych przeznaczonej do przechowywania drzew decyzyjnych i obs³udze takich
+struktur. Implementacja algorytmów budowy drzew decyzyjnych oraz wstêpnej wizualizacji bêdzie
+realizowana w postaci pluginów obs³ugiwanych przez t¹ platformê.
+
+\section{Opis u¿ytkownika}
+W przypadku niniejszego projektu bêdziemy mieli do czynienia z dwoma rodzajami u¿ytkowników.
+Pierwszy z nich to tzn. u¿ytkownik koñcowy - osoba pragn¹ca korzystaæ z funkcjonalnoœci, jak¹
+chcemy zaoferowaæ w zakresie budowy drzew decyzyjnych -  korzystania z zaimplementowanych przez nas
+algorytmów. Tu istotne bêd¹ funkcje zwi¹zane bezpoœrednio z przygotowaniem danych na potrzeby
+algorytmu, wyborem typu algorytmu, prezentacj¹ uzyskanych wyników. Drugi rodzaj u¿ytkownika to ktoœ
+pragn¹cy w przysz³oœci wykorzystaæ rozbudowan¹ w tym projekcie funkcjonalnoœæ platformy o
+reprezentacjê drzew decyzyjnych. W tym przypadku wa¿ne bêd¹ informacje o interfejsach i opis ich
+funkcji.
+
+\section{Wymagania projektowe}
+\subsection{Funkcjonalne}
+\subsubsection{Wymagania funkcjonalne}
+Interfejs:
+\begin{itemize}
+    \item ekran do wyboru Ÿród³a danych (baza, tabela)
+    \item wskazanie kolumny decyduj¹cej o przydziale elementów do poszczególnych ga³êzi w drzewie
+    \item ustalanie które atrybuty (które kolumny tabeli) maj¹ byæ u¿yte przy tworzeniu drzewa
+    \item ustalanie miejsca sk³adowania wyników dzia³ania algorytmu
+    \item wybór algorytmu tworzenie drzewa
+    \item uruchamianie
+    \item wizualizowanie wyników obliczeñ - graf ilustruj¹cy stworzone zale¿noœci
+%   \item redukcja/optymalizowanie drzewa decyzyjnego -to bedzie w trzeciej fazie
+\end{itemize}
+
+\subsection{Niefunkcjonalne}
+\subsubsection{Systemowe}
+\begin{itemize}
+    \item Stworzenie kodu i api umo¿liwiaj¹cego ³atwe do³¹czenie innych implementacji algorytmu tworzenia drzew decyzyjnych.
+    \item Napisanie intuicyjnej dokumentacji u¿ytkownika i dokumentacji do kodu.
+    \item Stworzenie przyk³adów ilustruj¹cych dzia³anie pluginu.
+\end{itemize}
+
+\subsubsection{Jakoœciowe}
+\begin{itemize}
+    \item Napisanie wydajnego algorytmu budowy drzew decyzyjnych
+    \item Reprezentacja drzew decyzyjnych w sposób umo¿liwiaj¹cych ich ³atw¹ wizualizacjê
+\end{itemize}
+%\section{Funkcjonalnoœci produktu}
+%\subsection{Cecha 1}
+%\subsection{Cecha 2}
+%\subsection{Priorytety funkcjonalnoœci }
+
+\section{Architektura i narzêdzia}
+System nasz bêdzie rozbudowywa³ platformê Salomon (o obs³ugê drzew decyzyjnych) oraz dostarcza³
+trzy pluginy dla tej platformy - jeden dla okreœlenia tabeli i kolumn, które pos³u¿¹ do konstrukcji
+drzewa, drugi dla algorytmu do tworzenia drzew decyzyjnych, trzeci dla wizualizacji tych drzew.
+Wiêkszoœæ procesu kodowania systemu bêdzie polega³a na zaimplementowaniu zdefiniowanych przez
+twórców platformy Salomon interfejsów. Z tej przyczyny nie bêd¹ nas interesowa³y zagadnienia
+po³¹czenia z baz¹ danych, warstwy sieciowej itp., bêd¹ one obs³ugiwane przez platformê Salomon.
+Konfigurowanie pluginów bêdzie dokonywane przez graficzny interfejs u¿ytkownika ukazuj¹cy siê po
+wybraniu odpowiedniej wtyczki. W procesie kodowania bêdziemy u¿ywaæ IDE Eclipse Dziêki mo¿liwoœci
+eksportowania ustawieñ bêdziemy mogli korzystaæ z tych samych ustawieñ, co twórcy platformy
+Salomon.
+
+%\subsection{Stosowane standardy}
+%\subsection{Wymagania dla systemu}
+%\subsection{Wymagania wydajnoœciowe}
+
+%\section{Wymagania stawiane dokumentacji}
+%\subsection{Podrêcznik u¿ytkownika}
+%\subsection{Opis instalacji i konfiguracji}
+%\subsection{Wersjonowanie i pakiety}
+
+\section{Ryzyko}
+
+\subsection{Niewykryte dot¹d b³êdy w rozwijanych pluginach}
+
+\subsubsection{Opis ryzyka}
+
+Istnieje zagro¿enie, i¿ w kodzie pluginów nadal wystêpuj¹ b³êdy, które mimo testów nie zosta³y
+wykryte. Dotyczyæ to mo¿e zw³aszcza pluginu drugiego i algorytmu budowy drzew decyzyjnych.
+
+\subsubsection{Ranga ryzyka}
+
+Œrednie.
+
+\subsubsection{Wp³yw na projekt}
+
+Znacz¹cy. Mo¿e spowodowaæ opóŸnienia w realizacji projektu o czas potrzebny na zlokalizowanie
+b³êdów i ich naprawienie. Im póŸniej b³¹d zostanie dostrze¿ony tym trudniej bedzie ustaliæ jego
+Ÿród³o, gdy¿ mo¿e nie byæ jasne czy pochodzi on z nowo napisanego kodu wprowadzaj¹cego dodatkowe
+funkcjonalnoœci, czy te¿ z dotychczas istniej¹cej czêœci.
+
+\subsubsection{Metody wykrywania}
+
+Tego typu zagro¿enie mo¿e byæ trudne do wykrycia, je¿eli nie zosta³o dotychczas zidentyfikowane w
+procesie testów. Podejrzenia powinno budziæ np. pojawianie siê dziwnych wyników przy testowaniu
+kolejnego zaimplementowanego algorytmu, b³¹d algorytmu budowy drzew decyzyjnych podczas swej pracy,
+czy zachowanie sie pluginu w sposób odmienny ni¿ by³o to ustalone za pomoc¹ zmiennych. Nie musi to
+od razu oznaczaæ b³êdów tkwi¹cych w pocz¹tkowych wersjach tworzonych pluginów, ale trzeba i tak¹
+ewentualnoœæ braæ pod uwagê.
+
+\subsubsection{Strategia redukcji zagro¿enia}
+
+Dok³adne testy na kilku zbiorach danych dotychczas istniej¹cej implementacji pluginów. Gruntowne
+testy klas, metod, interfejsów.
+
+\subsection{Wprowadzenie b³êdów do istniej¹cej funkcjonalnoœci podczas rozbudowywania pluginów}
+
+\subsubsection{Opis ryzyka}
+
+W trakcie rozbudowywania pluginów mo¿e wyst¹piæ sytuacja, ¿e pojawi¹ siê b³êdy w dotychczas dobrze
+dzia³aj¹cej funkcjonalnoœci.
+
+\subsubsection{Ranga ryzyka}
+
+Œrednie.
+
+\subsubsection{Wp³yw na projekt}
+
+Œredni. Pojawienie siê b³êdów w testach, które wykonywa³y siê dotychczas bez problemów bedzie z
+du¿ym prawdopodobieñstwem oznacza³o, i¿ gdzieœ w kodzie wprowadzony zosta³ b³¹d przy okazji
+dodawania nowej funkcjonalnoœci. B³¹d tego typu bêdzie powodowa³ opóŸnienie w realizacji projektu
+zwi¹zane z czasem potrzebnym na jego identyfikacje i naprawienie, ewentualnie tak¿e modyfikacje
+tego co zosta³o dopisane jako nowa funkcjonalnoœæ.
+
+\subsubsection{Metody wykrywania}
+
+Testy regresyjne.
+
+\subsubsection{Strategia redukcji zagro¿enia}
+
+Intensywne testy, protokó³ odbioru.
+
+
+\end{document}

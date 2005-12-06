@@ -1,0 +1,235 @@
+\documentclass[a4paper, 12pt]{article}
+%\usepackage[polish]{babel}
+\usepackage[cp1250]{inputenc}
+%\usepackage[latin2]{inputenc}
+%\usepackage{polski}
+\usepackage{amsfonts}
+\usepackage[T1]{fontenc}
+\usepackage[dvips]{graphicx}
+
+%\usepackage{pldoc}
+
+
+
+
+
+
+
+\pagestyle{headings}
+\textwidth      15.5cm
+\oddsidemargin    .1cm
+\evensidemargin   .1cm
+
+\begin{document}
+
+\thispagestyle{empty}
+
+\begin{minipage}{5cm}
+%\includegraphics[scale=0.3]{logo.eps}
+\end{minipage}
+\begin{minipage}{10cm}
+\begin{center}
+{\Large Salomon\\
+System przetwarzania wiedzy\\}
+\end{center}
+\end{minipage}
+
+\vspace*{0.5cm}
+
+\hrulefill
+
+\vspace*{1cm}
+
+
+\begin{flushright}
+{\Large \emph{SDP, ver 1.5} }
+\end{flushright}
+
+\vspace{6cm}
+
+\begin{flushleft}
+{ \Large Historia wersji }\[\]
+\begin{tabular}{|p{2.5cm}||p{1.5cm}|p{4.5cm}|p{5.5cm}|}
+  \hline
+  Data & Wersja & Opis & Autorzy \\
+  \hline \hline
+  18-04-2005 & 1.0 & SDP & Przemys³aw Misiuda, Dominik Seweryn\\
+  \hline
+  27-04-2005 & 1.1 & Poprawione SDP & Przemys³aw Misiuda, Dominik Seweryn\\
+  \hline
+  04-05-2005 & 1.2 & Drobne poprawki, dodany plan akceptacji produktu & Dominik Seweryn\\
+  \hline
+  10-05-2005 & 1.3 & Doprecyzowanie planu akceptacji & Dominik Seweryn\\
+  \hline
+  06-10-2005 & 1.4 & Harmonogram etapu drugiego i jego plan akceptacji & Dominik
+  Seweryn\\
+  \hline
+  27-10-2005 & 1.5 & Drobne korekty etapu drugiego & Dominik Seweryn\\
+
+  \hline
+\end{tabular}
+\end{flushleft}
+
+\[\]
+\newpage
+ \section{Podzia³ na role}
+ \begin{itemize}
+ \item Project Manager - Dominik Seweryn - zadania: planowanie realizacji ca³oœci projektu, koordynacja prac poszczególnych osób, kontrola harmonogramu, przygotowanie dokumentów: vision, rejestru ryzyka, harmonogramu
+ projektu, udzia³ w testach.
+ \item Reviewer  - Przemys³aw Misiuda - zadania: opiniowanie, analiza i zatwierdzanie powstaj¹cych pomys³ów i dokumentów, przygotowanie i nadzór nad
+ wdra¿aniem.
+ \item Software Architect - Krzysztof Nadolski - zadania:  przygotowanie dokumentu architektury i wszelkich dokumentów uzupe³niaj¹cych, opracowanie struktury architektonicznej bazy danych i systemu, opracowanie dokumentacji technicznej, projekt rozbudowy platformy Salomon, nadzór nad tworzonymi pluginami i ich poprawnym dzia³aniem.
+ \item Configuration Manager - Mateusz Nowakowski - zadania: przygotowanie konfiguracji œrodowiska programistycznego, uzupe³nianie dokumentacji o wszelkie zmiany konfiguracji, zarz¹dzanie konfiguracjami, nadzór nad w³aœciw¹ rozbudow¹ platformy i jej poprawnym funkcjonowaniem.
+ \item Test Manager - Tomasz W¹sala - zadania: stworzenie planu testów, przygotowanie odpowiednich testów, przeprowadzenie testów zgodnie z planem, opracowanie dokumentacji
+ testów.
+ \item System Analyst - £ukasz Ostatek - zadania: analiza platformy, przygotowanie wymagañ projektowych, rozpoznanie kwestii tworzenia drzew decyzyjnych, projekt interfejsu u¿ytkownika, opracowanie dokumentacji
+ u¿ytkownika.
+ \end{itemize}
+
+ \newpage
+ \section{Harmonogram pierwszego etapu - wersja pre-release}
+ \subsection{Inception (do 18 kwietnia 2005)}
+ \begin{itemize}
+\item opracowanie dokumentów: ogólne Vision i Vision fazy pierwszej.
+\item podzia³ na role
+\item przypisanie zadañ do poszczególnych ról
+\item rozpoznanie platformy Salomon
+\item przygotowanie œrodowiska programistycznego do pracy (konfiguracja, zapoznanie siê z narzêdziami)
+\item okreœlenie wstêpnych wymagañ funkcjonalnych i niefunkcjonalnych
+ \end{itemize}
+
+\subsection{Elaboration (do 20 maja 2005)}
+\begin{itemize}
+\item analiza problemu drzew decyzyjnych
+\item precyzyjne okreœlenie wymagañ funkcjonalnych i niefunkcjonalnych
+\item analiza architektury systemu (zapoznanie siê ze schematem interfejsów które musi nasz plugin implementowaæ)
+\item ustalenie formatu/typu wszystkich zbiorów danych potrzebnych reprezentacji drzew decyzyjnych przez platformê Salomon
+\item projekt rozbudowy platformy Salomon
+\item projekt interfejsu i stworzenie makiety interfejsu
+\item zaprojektowanie i stworzenie struktury bazy danych
+\item projekt interfejsów dostêpu do bazy dla pluginów
+\item wstêpne przetestowanie poprawnoœci bazy danych
+\end{itemize}
+\newpage
+\subsection{Construction (do 16 czerwca 2005)}
+\begin{itemize}
+\item rozbudowa platformy Salomon - rozbudowa i implementacja szkieletowych interfejsów stworzonych przez kooperuj¹cy zespó³
+\item implementacja interfejsów pluginu realizuj¹cego budowê drzew decyzyjnych
+\item implementacja atrapy pluginu realizuj¹cego wizualizacjê
+\item testy stworzonego kodu (testy klas, testy ca³oœciowe platfromy oraz pluginów)
+\end{itemize}
+
+\subsection{Transition (do 30 czerwca 2005)}
+\begin{itemize}
+\item weryfikacja poprawnoœci dzia³ania zaimplementowanej funkcjonalnoœci
+\item testy ca³oœci platformy
+\item testy wydajnoœciowe
+\item weryfikacja zgodnoœci z za³o¿eniami projektowymi
+\end{itemize}
+\newpage
+\section{Plan akceptacji produktu etapu pierwszego}
+\
+\begin{itemize}
+    \item Inception
+    \begin{description}
+        \item[--] Akceptacja dokumentów Vision i Vision fazy pierwszej
+        \item[--] Akceptacja podzia³u na role i zadañ przypisanych do poszczególnych ról
+    \end{description}
+    \
+    \item Elaboration
+    \begin{description}
+        \item[--] Akceptacja dokumentu SAD
+        \item[--] Akceptacja dokumentu analizuj¹cego problem drzew decyzyjnych
+        \item[--] Poprawna implementacja jednego z algorytmów budowy drzew decyzyjnych
+        \item[--] Poprawna implementacja przyk³adowego pluginu testuj¹cego poprawnoœæ platformy pod wzglêdem obs³ugi pluginów
+    \end{description}
+    \
+    \item Construction
+    \begin{description}
+        \item[--] Poprawnie dzia³aj¹ce rozbudowane i zaimplementowane interfejsy szkieletowe (po testach)
+        \item[--] Kompletna dokumentacja ukoñczonej fazy rozbudowy
+        \item[--] Poprawnie zaimplementowane interfejsy pluginu realizuj¹cego budowê drzew decyzyjnych (po testach)
+        \item[--] Dokumentacja pluginu/pluginów
+        \item[--] Dzia³aj¹ca atrapa pluginu wizualizacji
+    \end{description}
+    \
+    \item Transition
+    \begin{description}
+        \item[--] Poprawne dzia³anie ca³oœci rozbudowanej platformy
+        \item[--] Dokumentacja techniczna do dotychczas zaimplementowanej funkcjonalnoœci
+        \item[--] Potwierdzenie zgodnoœci z za³o¿eniami projektowymi
+    \end{description}
+\end{itemize}
+\newpage
+\section{Harmonogram drugiego etapu - release v.1.0}
+    \subsection{Inception (do 10 paŸdziernika 2005)}
+    \begin{itemize}
+        \item Uaktualnienie dokumentów vision oraz SDP o elementy
+        drugiego etapu
+        \item Ustalenie zakresu prac i czynnoœci.
+        \item Przydzia³ zadañ w zespole
+    \end{itemize}
+    \subsection{Elaboration (do 20 paŸdziernika 2005)}
+    \begin{itemize}
+        \item Uaktualnienie dokumentu SAD
+        \item Przygotowanie i opracowanie drugiego algorytmu budowy drzew
+        decyzyjnych
+        \item Ustalenie sposobu graficznej prezentacji utworzonych drzew
+        decyzyjnych
+        \item Przygotowanie danych testowych
+        \item Opracowanie planu testów
+        \item Koncepcja modyfikacji GUI pluginu odpowiadaj¹cego za wczytanie danych oraz pluginu odpowiadaj¹cego za wizualizacje
+        \item Projekt pluginu wnioskuj¹cego
+    \end{itemize}
+    \subsection{Construction (do 4 listopada 2005)}
+    \begin{itemize}
+        \item Implementacja drugiego algorytmu budowy drzew decyzyjnych
+        \item Implementacja wizualizacji w postaci graficznej w pluginie trzecim
+        \item Implementacja zmian w GUI pluginów odpowiadaj¹cego za wczytanie danych oraz pluginu
+        wizualizuj¹cego
+        \item Implementacja pluginu wnioskuj¹cego
+        \item Testy pluginów (regresyjne, nowej funkcjonalnoœci)
+    \end{itemize}
+    \subsection{Transition (do 11 listopada 2005)}
+    \begin{itemize}
+        \item Weryfikacja poprawnoœci dzia³ania zaimplementowanej funkcjonalnoœci
+        \item Weryfikacja zgodnoœci z za³o¿eniami projektowymi
+        \item Testy ca³oœci platformy
+        \item Testy wydajnoœciowe
+    \end{itemize}
+\newpage
+\section{Plan akceptacji produktu etapu drugiego}
+\begin{itemize}
+    \item Inception
+    \begin{description}
+        \item[--] Akceptacja uaktualnionych dokumentów Vision i SDP dla drugiego etapu
+        \item[--] Akceptacja przydzia³u zadañ i zakresu prac
+    \end{description}
+    \
+    \item Elaboration
+    \begin{description}
+        \item[--] Akceptacja zaktualizowanego dokumentu SAD
+        \item[--] Akceptacja planu testów
+        \item[--] Akceptacja koncepcji prezentacji graficznej utworzonych drzew decyzyjnych
+        \item[--] Akceptacja propozycji GUI pluginu wczytuj¹cego dane oraz pluginu odpowiadaj¹cego za wizualizacje
+        \item[--] Akceptacja projektu pluginu wnioskuj¹cego
+    \end{description}
+    \
+    \item Construction
+    \begin{description}
+        \item[--] Poprawna implementacja drugiego algorytmu budowy drzew decyzyjnych
+        \item[--] Poprawnie zaimplementowane i dzia³aj¹ce rozbudowane interfejsy wszystkich trzech
+        pluginów (po testach)
+        \item[--] Poprawne funkcjonowanie pluginu wnioskuj¹cego
+        \item[--] Dokumentacja pluginów
+    \end{description}
+    \
+    \item Transition
+    \begin{description}
+        \item[--] Poprawne dzia³anie ca³oœci rozbudowanej platformy
+        \item[--] Akceptacja dokumentu ID
+        \item[--] Potwierdzenie zgodnoœci z za³o¿eniami projektowymi
+        \item[--] Dokumentacja u¿ytkownika
+    \end{description}
+\end{itemize}
+\end{document}

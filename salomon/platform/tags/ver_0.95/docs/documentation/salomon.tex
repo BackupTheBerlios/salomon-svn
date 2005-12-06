@@ -1,0 +1,87 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{float}
+\usepackage[polish]{babel}
+\usepackage[cp1250]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[dvips]{graphicx}
+\usepackage{indentfirst}
+\usepackage[urlcolor=blue, colorlinks=true, bookmarks=true, bookmarksnumbered=true]{hyperref}
+\usepackage{fancyvrb}
+\usepackage{times}
+\usepackage{epsfig}
+\usepackage{color}
+
+\usepackage{fancyhdr} 
+\pagestyle{fancy} 
+
+
+
+\rfoot{SALOMON}
+
+
+%ustawienie wielkosci akapitu
+%\setlength{\parindent}{0mm}
+%%odstep miedzy akapitami
+%\setlength{\parskip}{2mm}
+
+%ustawienia rozmiaru tekstu
+    \textwidth 16cm
+    \textheight 24cm 
+    \topmargin -15mm
+    \evensidemargin-3mm
+    \oddsidemargin -3mm
+    
+
+
+\title{Salomon}
+
+\author{Nikodem Jura \emph{(\href{mailto:nico@icslab.agh.edu.pl}{nico@icslab.agh.edu.pl})}
+        \\
+        Krzysztof Rajda \emph{(\href{mailto:krzysztof@rajda.name}{krzysztof@rajda.name})}
+        \\
+        Leszek Grzanka \emph{(\href{mailto:grzanka@student.agh.edu.pl}{grzanka@student.agh.edu.pl})}
+        \\
+        Jakub Ga³kowski \emph{(\href{mailto:avi@student.agh.edu.pl}{avi@student.agh.edu.pl})}
+        }               
+        
+
+\begin{document}
+
+\maketitle
+%wylaczenie numerowania na I stronie
+\thispagestyle{empty}
+
+\begin{center}
+\textcolor{blue}{\href{http://salomon.iisg.agh.edu.pl}{http://salomon.iisg.agh.edu.pl}}
+\end{center}
+
+\begin{center}
+Prowadz¹cy: dr in¿. Marek Kisiel-Dorohinicki
+\end{center}
+
+\newpage
+
+%spis tresci
+\tableofcontents
+\newpage
+
+%reszta
+\include{intro}
+\include{concepts}
+\include{functionality}
+\include{structure}
+\include{remote}
+\include{action}
+\include{db_desc}
+\include{user_plugin}
+\include{running}
+\include{ui}
+\include{production}
+%\include{junit}
+%\include{abbot}
+%\include{grinder}
+\include{security}
+\include{roadmap}
+\include{links}
+
+\end{document}

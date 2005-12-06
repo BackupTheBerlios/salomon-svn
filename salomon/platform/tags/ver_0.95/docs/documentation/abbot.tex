@@ -1,0 +1,52 @@
+\subsection{Abbot}
+
+W projekcie chcemy dodaæ GUI Testy. U¿ywamy do tego Abbota(\href{http://abbot.sourceforge.net/}{http://abbot.sourceforge.net/}). Jest to prosty framework pozwalaj¹cy na takie w³aœnie testy. Na razie zaimplementowaliœmy przyk³adowy test, odpalaj¹cy okienko Salomona. To podstawowy test pozwalaj¹cy stwierdziæ czy program dzia³a czy nie.
+
+
+\subsubsection{Instalacja}
+Program mo¿na œci¹gn¹æ ze strony projektu. Razem z dystrybucj¹ dostajemy przyjemne GUI do tworzenia tych testów.
+Testy zapisywane s¹ w XMLu.\\
+Nale¿y ponadto dodaæ odpowiednie jar-y do classpath (\texttt{abbot.jar}, \texttt{xalan.jar}, \texttt{xml-apis.jar}).
+\subsubsection{Test}
+\begin{Verbatim}
+<AWTTestScript 
+  desc="Skrypt (D:\home\krzychu\dv\ks\test\abbot\salomon.xml)"
+  forked="true">
+  <launch 
+    args="[]"
+    class="salomon.engine.Starter" 
+    classpath="
+      salomon.jar;
+      .;
+      lib\mini-j2ee.jar;
+      lib\log4j-1.2.8.jar;
+      lib\firebirdsql.jar"
+    method="main"/>
+  <wait 
+    args="Salomon"
+    class="abbot.tester.ComponentTester"
+    method="assertFrameShowing"/>
+  <terminate/>
+</AWTTestScript>
+\end{Verbatim}
+Jak widaæ w teœcie tym sprawdzamy czy okienko siê pokazuje czy te¿ nie.
+
+\subsubsection{Uruchomienie testu}
+\begin{Verbatim}
+java -cp lib/abbot.jar 
+	junit.extensions.abbot.ScriptFixture test/abbot/salomon.xml
+\end{Verbatim}
+
+Po uruchomieniu tego dostajemy output:
+\begin{Verbatim}
+$ runabbot.bat
+
+D:\home\krzychu\dv\ks>java -cp lib/abbot.jar 
+	junit.extensions.abbot.ScriptFixture test/abbot/salomon.xml
+.
+Time: 38,035
+
+OK (1 test)
+\end{Verbatim}
+
+W planach mamy bardziej zaawansowane testy w miarê jak bêdzie siê poszerzaæ funkcjonalnoœæ.

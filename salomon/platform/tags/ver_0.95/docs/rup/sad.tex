@@ -1,0 +1,122 @@
+\documentclass[a4paper]{article}
+\usepackage[polish]{babel}
+\usepackage[cp1250]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[dvips]{graphicx}
+\usepackage{colortbl}
+
+\pagestyle{headings}
+\textwidth      15.5cm
+\oddsidemargin    .1cm
+\evensidemargin   .1cm
+
+\begin{document}
+
+\thispagestyle{empty}
+
+\begin{minipage}{5cm}
+\includegraphics[scale=0.7]{salomon.eps}
+\end{minipage}
+\begin{minipage}{10cm}
+\begin{center}
+{\Large Salomon\\
+System przetwarzania wiedzy\\}
+\end{center}
+\end{minipage}
+
+\vspace*{0.5cm}
+
+\hrulefill
+
+\vspace*{1cm}
+
+
+\begin{flushright}
+{\Large \emph{System Architecture Document, ver 1.1} }
+\end{flushright}
+
+%\vspace{7cm}
+
+\begin{flushleft}
+{ \Large Historia wersji }\[\]
+\begin{tabular}{|p{2.5cm}||p{1.5cm}|p{6cm}|p{3.5cm}|}
+  \hline
+  Data & Wersja & Opis & Autor \\
+  \hline \hline
+  17.05.2005 & 1.0 & Utworzenie & Nikodem Jura \\
+  \hline \hline
+  31.05.2005 & 1.1 & Dodanie diagramu przypadków u¿ycia, drobne poprawki & Nikodem Jura \\
+  \hline
+\end{tabular}
+\end{flushleft}
+
+\newpage
+
+\section{Wprowadzenie}
+Celem dokumentu SAD jest sprecyzowanie architektury systemu uwzglêdniaj¹cej now¹ warstwê -- \emph{Solution}, pozwalaj¹cej na po³¹czenie z zewnêtrznymi bazami danych.
+
+\section{Architektura}
+
+W ramach platformy pojawi siê nowa warstwa -- \emph{Solution} -- odpowiedzialna za udostêpnienie zewnêtrznych baz danych. Bêdzie ona warstw¹ nadrzêdn¹ w stosunku do obecnie istniej¹cej warstwy j¹dra systemu (menad¿erów Projektów i Tasków). W ramach jednego \emph{Solutiona} zgrupowane bêd¹ projekty dotycz¹ce tej samej problematyki, korzystaj¹ce z tej samej zewnêtrznej bazy danych.
+
+\subsection{Przypadki u¿ycia}
+Poni¿szy diagram przedstawia przyk³adowe wykorzystanie nowej warstwy. Najpierw tworzony jest nowy \emph{Solution}. G³ównym etapem jego tworzenia jest skonfigurowanie po³¹czenia z zewnêtrzn¹ baz¹ danych, na której bêd¹ operowaæ wtyczki. Po utworzeniu obiektu \emph{Solution} mo¿liwa jest dalsza praca z platform¹ -- utworzenie projektu i definiowanie zadañ do wykonania.
+
+\begin{figure}[h]
+	\centering
+		\includegraphics[width=0.80\textwidth]{../documentation/img/uml/use_case_1.png}
+	\caption{Przypadki u¿ycia}
+	\label{fig:use_case_1}
+\end{figure}
+
+\newpage
+\subsection{Model logiczny}
+
+Warstwa \emph{Solution} bêdzie reprezentowana przez nowy modu³, który ³¹czy siê z istniej¹cymi klasami zarz¹dzaj¹cymi jak przedstawiono na rysunku:
+
+\begin{figure}[h]
+	\includegraphics[width=0.70\textheight]{../documentation/img/uml/manager_engine.png}
+	\caption{Warstwa Solution i inne modu³y}
+	\label{fig:manager_engine}
+\end{figure}
+
+\newpage
+\subsection{Model implementacyjny}
+
+Modu³ odpowiedzialny za obs³ugê warstwy \emph{Solution} grupuje projekty dotycz¹ce tej samej problematyki, zapewniaj¹c im dostêp do zewnêtrznej bazy danych. W ramach tej warstwy zgrupowane s¹ tak¿e zbiory danych i drzewa decyzyjne powsta³e na podstawie danych zawartych w danej bazie. Na danych tych operowaæ mog¹ dowolne wtyczki, niezale¿ne od danych.
+
+\begin{figure}[h]
+	\centering
+		\includegraphics[height=0.70\textheight]{../documentation/img/concept/solution.png}
+	\caption{}
+	\label{fig:solution}
+\end{figure}
+
+\newpage
+\subsection{Model danych}
+
+Do modelu bazy danych zostanie dodana nowa tabela \emph{Solutions}.
+Zawieraæ bêdzie nastêpuj¹ce pola:
+\begin{itemize}
+	\item SOLUTION\_ID -- unikalny identyfikator
+	\item SOLUTION\_NAME -- nazwa
+	\item SOLUTION\_INFO -- krótki opis
+	\item HOSTNAME -- nazwa hosta, na którym znajduje siê dana baza danych
+	\item DB\_PATH -- œcie¿ka do bazy na tym hoœcie
+	\item USERNAME -- login do bazy danych
+	\item PASSWD -- has³o
+	\item C\_DATE -- data utworzenia wpisu
+	\item LM\_DATE -- data ostatniej modyfikacji
+\end{itemize}
+
+Powi¹zania z pozosta³ymi tabelami przedstawia poni¿szy rysunek (Rys \ref{fig:salomon_db}):
+
+\begin{figure}[h]
+	\centering
+		\includegraphics[width=0.90\textwidth]{../documentation/img/concept/salomon_db.png}
+	\caption{Zapis warstwy Solution w bazie danych}
+	\label{fig:salomon_db}
+\end{figure}
+
+\end{document}
+

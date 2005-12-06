@@ -1,0 +1,161 @@
+\subsection{Grinder}
+W za³o¿eniach projektu to nie wydajnoœæ mia³a decydowaæ o przydatnoœci Salomona, a mo¿liwoœæ ³atwego pisania pluginów do rozproszonego wykonywania zadañ zwi¹zanych z knowledge mining. Jednak w RMI zawsze sa pewne narzuty na komunikacje. Do testowania zamierzaliœmy u¿yæ narzêdzie zwane Grinder\\
+(\href{http://grinder.sourceforge.net/}{http://grinder.sourceforge.net/})
+
+\subsubsection{grinder.properties}
+\begin{verbatim}
+grinder.processes=2
+grinder.threads=2
+grinder.runs=1
+
+grinder.logDirectory=log
+grinder.numberOfOldLogs=2
+
+grinder.script=scripts/register.py
+\end{verbatim}
+
+\subsubsection{Skrypty uruchomieniowe}
+\begin{Verbatim}
+#!/bin/bash
+LIB_HOME=../../lib
+CP=../../lib/grinder/grinder.jar
+CP=$CP\;../../bin/
+for i in `ls $LIB_HOME | grep jar`
+do
+CP=$CP\;$LIB_HOME/$i
+done
+echo $CP
+java -cp $CP -Djava.security.policy=../../all.policy \\
+net.grinder.Console
+\end{Verbatim}
+
+\subsubsection{Skrypt testowy}
+register.py
+\begin{Verbatim}
+from net.grinder.script.Grinder import grinder
+from net.grinder.script import Test
+from java.rmi.registry import LocateRegistry
+from salomon.engine.platform import ManagerEngine
+from salomon.engine.remote import RemoteController
+from salomon.engine.remote import ICentralController;
+from java.lang import System
+from java.rmi import RMISecurityManager;
+# Client Properties
+SERVER     = "localhost"
+PORT       = 4321
+test1 = Test(1, "RegisterTest")
+class TestRunner:
+    
+    # This method is called for every run.
+    def __call__(self):
+        System.setSecurityManager(RMISecurityManager());
+        managerEngine = ManagerEngine()
+        remoteController = RemoteController(managerEngine,SERVER)
+        registry = LocateRegistry.getRegistry(SERVER,PORT)
+        centralController = registry.lookup("CentralController")
+        centralController.register(remoteController)
+        if centralController is None:
+            grinder.statistics.setSuccess(0)
+
+\end{Verbatim}
+
+\subsubsection{Skrypt testowy nr 2}
+Chocia¿ za pomoc¹ Jythona mo¿na zapisaæ niemal ka¿dy kod Javy, zdecydowaliœmy siê na zmianê podejœcia i trzymanie wszystkich testów w klasach Javy - Jythona u¿ywaæ bêdziemy jedynie do instancjonowania tych klas. Dziêki temu mo¿liwe jest debuggowanie testów w razie, gdyby któryœ dzia³a³ niezgodnie z za³o¿eniem. Nowsza wersja skryptu wygl¹da tak:
+\begin{Verbatim}
+from net.grinder.script.Grinder import grinder
+from net.grinder.script import Test
+from salomon.engine import TestRegister
+def registerTestCase():
+	case = TestRegister()
+	case.test()
+
+testRegister = Test(1, "RegisterTest").wrap(registerTestCase)
+
+class TestRunner:
+    def __call__(self):
+        testRegister()
+
+\end{Verbatim}
+
+
+
+
+\subsubsection{TestCase}
+Zrobiliœmy na razie najprostszy mo¿liwy test case polegaj¹cy na zarejestrowaniu i wyrejestrowaniu klienta z serwera.
+\begin{figure}[h]
+	\centering
+		\includegraphics[width=\textwidth]{img/tests/testRegister2.png}
+	\caption{Test Case: TestRegister}
+	\label{fig:resolution_2}
+\end{figure}
+Opis:
+\begin{enumerate}
+	\item create()\\
+	Stworzenie obiektu klasy TestRegister
+	\item test()\\
+	Tester wywoluje na stworzonym obiekcie metodê test()
+	
+		\begin{enumerate}
+			\item lookup()\\
+			TestRegister wyszukuje w LocateRegistry obiektu CentralController
+			\item register()\\
+			Klasa TestRegister rejestruje siê w CentralController
+			\item unregister()\\
+			Klasa TestRegister wyrejestrowuje siê z CentralController
+		\end{enumerate}
+\end{enumerate}
+\subsubsection{Wyniki}
+\begin{center}
+\begin{tabular}{|l|l|l|}
+\hline  
+\textbf{Clients} & \textbf{Mean Time}& \textbf{Errors} \\
+\hline 
+10 & 2777 & 0\\
+\hline
+20 & 2829 & 0\\
+\hline
+30 & 4914 & 0\\
+\hline
+40 & 6014 & 0\\
+\hline
+50 & 6279 & 0\\
+\hline
+60 & 6937 & 0\\
+\hline
+70 & 7819 & 0\\
+\hline
+80 & 8948 & 0\\
+\hline
+90 & 9458 & 0\\
+\hline
+100 & 10953 & 0\\
+\hline
+110 & 11545 & 0\\
+\hline
+120 & 12496 & 0\\
+\hline
+130 & 15927 & 0\\
+\hline
+140 & 16322 & 0\\
+\hline
+150 & 16729 & 0\\
+\hline
+160 & 29865 & 7\\
+\hline
+170 & 27012 & 8\\
+\hline
+180 & 30328 & 14\\
+\hline
+190 & 33825 & 19\\
+\hline
+200 & 34480 & 27\\
+\hline
+\end{tabular}  
+\end{center}
+Nie by³o sensu liczyæ dalej, gdy¿ b³êdy mia³y znaczny wp³yw na wyniki i psu³yby wykresy zale¿noœci czasu oczekiwania od liczby uruchomionych w¹tków klienckich. Te b³êdy objawia³y siê w logach jako ConnectionRefused. S¹dzimy, ¿e jest to zwi¹zane z pul¹ w¹tków RMI. 
+\begin{figure}[h]
+	\centering
+		\includegraphics[width=\textwidth]{img/tests/testRegister-results2.png}
+	\caption{TestRegister: Results}
+	\label{fig:resolution_2}
+\end{figure}

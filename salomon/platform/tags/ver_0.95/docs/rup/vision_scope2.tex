@@ -1,0 +1,118 @@
+\documentclass[a4paper]{article}
+\usepackage[polish]{babel}
+\usepackage[cp1250]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[dvips]{graphicx}
+
+\pagestyle{headings}
+\textwidth      15.5cm
+\oddsidemargin    .1cm
+\evensidemargin   .1cm
+
+\begin{document}
+
+\thispagestyle{empty}
+
+\begin{minipage}{5cm}
+\includegraphics[scale=0.7]{salomon.eps}
+\end{minipage}
+\begin{minipage}{10cm}
+\begin{center}
+{\Large Salomon\\
+System przetwarzania wiedzy\\}
+\end{center}
+\end{minipage}
+
+\vspace*{0.5cm}
+
+\hrulefill
+
+\vspace*{1cm}
+
+
+\begin{flushright}
+{\Large \emph{Vision, ver 1.1} }
+\end{flushright}
+
+%\vspace{7cm}
+
+\begin{flushleft}
+{ \Large Historia wersji }\[\]
+\begin{tabular}{|p{2.5cm}||p{1.5cm}|p{6cm}|p{3.5cm}|}
+  \hline
+  Data & Wersja & Opis & Autor \\
+  \hline \hline
+  26.10.2005 & 1.0 & utworzenie & \emph{Leszek Grzanka}\\
+  \hline
+  27.10.2005 & 1.1 & rozbudowanie funkcjonalnoœci & \emph{Nikodem Jura}\\
+  \hline
+\end{tabular}
+\end{flushleft}
+
+\newpage
+
+\section{Wstêp - opis problemu}
+Salomon to system do wydobywania wiedzy z danych zgodnie z metodologi¹ \emph{Knowlege Mining}.
+\subsection{Proces odkrywania wiedzy}
+Odkrywanie wiedzy to proces iteracyjny, podzielony na etapy. Etapy te mog¹ tworzyæ cykle.
+W ka¿dym tym etapie wiedza jest poddawana obróbce. Na ka¿dym takim etapie proces odkrywania mo¿e byæ ukierunkowany zgodnie z wymaganiami u¿ytkownika. Ka¿dy etap tworzy odrêbn¹ ca³oœæ. Czêœæ etapów jest roz³¹czna, zatem mog¹ byæ wykonywane wspó³bie¿nie. 
+Ka¿dy etap reprezentowany jest przez zadanie, które mo¿na interpretowaæ jako jedn¹ fazê wykonania pewnego algorytmu. Z ka¿dym etapem zwi¹zane s¹ dane wejœciowe, oraz dane konfiguracyjne. Dane wyjœciowe mog¹ pos³u¿yæ jako dane wejœciowe do innych etapów.
+\subsection{Dane,wiedza}
+Wiedza jest pewnego rodzaju struktur¹ (metadane) opisuj¹c¹ powi¹zania pomiêdzy danymi. Typowe zagadnienie w procesie ekstrakcji wiedzy to wydobywanie wiedzy na podstawie zebranych danych (np. okreœlanie struktury danych). Mo¿liwe jest tak¿e wykorzystywanie zebranej, lub wyekstraktowanej wiedzy na pewnych danych, w celu udzielenia odpowiedzi na pytania powi¹zane z wiedz¹.
+
+Celem tego projektu jest stworzenie przyjaznego œrodowiska do tworzenia, kontrolowania i efektywnego wykonywania zadañ oraz przechowywania zgromadzonej wiedzy. 
+
+\subsection{S³ownik}
+Patrz: Dokumentacja istniej¹cej platformy \emph{Salomon ver 1.0}.
+
+\section{Opis produktu}
+
+Ostateczna wersj¹ produktu bêdzie system \emph{Salomon ver 1.1} wyposa¿ony w pe³n¹ obs³ugê zarz¹dzania etapami przetwarzania wiedzy (zadania) i mo¿liwoœæ pracy z danymi zawartymi w bazie danych wraz z dokumentacj¹ techniczn¹ i u¿ytkow¹.
+ 
+System ten bêdzie siê sk³ada³ z platformy, oraz uruchamianych na niej odpowiednich wtyczek. Produkt powinien zawieraæ w pe³ni funkcjonaln¹ platformê, oraz przyk³adowe aplikacje demonstruj¹ce mo¿liwoœæ realizacji systemu w architekturze platforma-wtyczki. % TODO
+
+\subsection{U¿ytkownicy systemu}
+
+U¿ytkownikami systemu bêd¹ zarówno u¿ytkownicy koñcowi, przeprowadzaj¹cy ekstrakcjê wiedzy, jak i programiœci tworz¹cy nowe wtyczki Salomona. Produkt bêdzie udostêpnia³ programist¹ wtyczki zwarte i kompletne œrodowisko do rozwoju algorytmów odpowiedzialnych za ekstrakcjê wiedzy.
+
+\subsection{Poza zakresem problemu}
+Platforma nie bêdzie realizowaæ wspó³bie¿noœci i rozproszenia, a jedynie przetwarzaæ etapy lokalnie na jednym komputerze.
+
+\section{Funkcjonalnoœci produktu}
+
+\subsection{U¿ytkownicy koñcowi}
+U¿ytkownicy koñcowi bêd¹ mogli uzyskaæ dostêp do systemu poprzez graficzny interfejs u¿ytkownika (GUI). Wobec interfejsu aktualnej wersji Salomona 1.0, powinien zawieraæ on nastêpuj¹ce rozszerzenia:
+
+\begin{itemize}
+	\item mo¿liwoœæ kolejkowania zadañ w formie grafu
+	\item mo¿liwoœæ uruchomienia algorytmów zaimplementowanych w systemie \emph{WEKA}
+	\item rozbudowane mo¿liwoœci zarz¹dzania obiektami przechowywanymi w systemie
+	\item bardziej ergonomiczne \emph{GUI}
+\end{itemize}
+
+\subsection{Programiœci}
+
+Ta grupa u¿ytkowników korzystaæ bêdzie z API udostêpnianego przez Salomona, w celu jego dalszego rozwijania.
+Udostêpnione zostan¹ interfejsy pozwalaj¹ce na do³¹czanie algorytmów przeznaczonych dla systemu \emph{WEKA}. 
+ 
+\section{Priorytety funkcjonalnoœci}
+
+Pierwszorzêdnym celem jest uzupe³nienie funkcjonalnoœci, których brak nie pozwala na wypuszczenie koñcowej wersji aplikacji. W drugiej kolejnoœci jest dopiero realizowanie przyk³adowych wtyczek, rozbudowa GUI dla u¿ytkowników koñcowych, czy te¿ skompletowanie pe³nej dokumentacji u¿ytkownika.
+
+% DOKLADNIEJ ???
+
+\section{Wymagania}
+\subsection{Stosowane standardy}
+Patrz: Dokumentacja istniej¹cej platformy \emph{Salomon ver 1.0}.
+
+\subsection{Wymagania dla systemu}
+Zgodnoœæ z wymaganiami systemowymi dla istniej¹cej wersji platformy \emph{Salomon}.
+
+\section{Wymagania stawiane dokumentacji}
+Dokumentacja powinna obejmowaæ odpowiednie komentarze w kodzie, oraz dokumenty tworzone podczas realizacji projektu, wzorowane na metodologii \emph{RUP}. 
+Dokumentacja tworzona bêdzie w systemie \LaTeX, w jêzyku polskim. Dodatkowo czêœæ dokumentacji technicznej nale¿y umieszczaæ na \emph{Wiki Salomona}.
+
+\subsection{Wersjonowanie i pakiety}
+Dokumentacja i sam projekt bêd¹ wersjonowane w systemie \emph{Subversion (SVN)} i dostêpne on-line na stronie internetowej projektu.
+
+\end{document}

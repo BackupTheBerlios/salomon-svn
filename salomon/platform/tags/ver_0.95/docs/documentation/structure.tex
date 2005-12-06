@@ -1,0 +1,137 @@
+\section{Struktura systemu}
+
+System zosta³ podzielony na 3 g³ówne czêœci: platformê, kontrolery
+i~pluginy.
+
+\begin{figure}[ht]
+	\centering
+		\includegraphics[width=0.90\textwidth]{img/uml/core.jpg}
+	\caption{G³ówne klasy systemu}
+	\label{fig:core}
+\end{figure}
+
+\subsection{Platforma}
+
+Dostarcza podstawowej funkcjonalnoœci  umo¿liwiaj¹cej pracê ca³ego
+systemu,  ³aduje odpowiedni kontroler, wczytuje wtyczki, uruchamia
+zadania. Opodwiada za komunikacje miêdzy innymi instancjami \emph{Salomona}.
+
+Za poszczególne zadania odpowiadaj¹ odpowiednie menad¿ery.
+Menad¿ery nie s¹ dostêpne bezpoœrednio z platformy, ale
+przekazywane s¹ wtyczk¹ poprzez klasê \emph{DataEngine}. Dotyczy
+to tylko klasy \emph{DataSetManager} i \emph{RuleSetManager},
+pozosta³e nie s¹ dostêpne dla wtyczek. Plugin, zale¿nie od
+potrzeb, pobiera z niego potrzebny mu menad¿er i za jego
+poœrednictwem wykonuje operacje na bazie danych.
+
+\paragraph{DataEngine}
+
+\begin{figure}[htb]
+	\centering
+		\includegraphics[width=0.90\textwidth]{img/uml/data_engine.jpg}
+	\caption{Schemat powi¹zañ klas zarz¹dzaj¹cych z DataEngine}
+	\label{fig:data_engine}
+\end{figure}
+
+Klasa przekazywana wtyczk¹ podczas ich wykonania.
+Za pomoc¹ pobieranych z niej menad¿erów (\emph{DataSetManager}, \emph{RuleSetManager}, w przysz³oœci \emph{AttributeManager} i inne) wtyczki mog¹ operowaæ na danych znajduj¹cych siê w bazie.
+
+\paragraph{DBManager}
+
+Odpowiada za po³¹czenie z baz¹ danych. Dostarcza metody
+zapewniaj¹ce dostêp do danych przechowywanych w bazie. Swoj¹
+funkcjonalnoœæ udostêpnia odpowiednim menad¿erom.
+
+\paragraph{DataSetManager}
+
+Zarz¹dza zbiorami danych. Pozwala tworzyæ nowe podzbiory danych na
+podstawie zawartych w bazie informacji oraz umo¿liwia operowanie
+na nich.
+
+\paragraph{RuleSetManager}
+
+Zarz¹dza regu³ami. Pozwala tworzyæ nowe regu³y oraz
+zarz¹dza dostêpem do ju¿ istniej¹cych.
+
+
+\paragraph{IManagerEngine}
+
+Klasa zarz¹dza pozosta³ymi menad¿erami. Utrzymuje jedn¹ instancjê ka¿dego z nich 
+i udostêpnia je pozosta³ym klasom z platformy.
+
+\begin{figure}[htb]
+	\centering
+		\includegraphics[width=0.90\textwidth]{img/uml/manager_engine.jpg}
+	\caption{G³ówna klasa zarz¹dzaj¹ca}
+	\label{fig:manager_engine}
+\end{figure}
+
+\paragraph{IProjectManager}
+
+Zarz¹dza projektami. Pozwala na utworzenie nowego
+projektu, zapisanie bie¿¹cego do bazy danych oraz na za³adowanie z bazy.
+
+\paragraph{IPluginManger}
+
+Zarz¹dza pluginami. Pozwala na utworzenie zapisanie informacji o nowym pluginie (jego nazwa, lokalizacja) oraz na pobranie listy dostêpnych pluginów.
+
+\paragraph{ITaskManger}
+
+Zarz¹dza zadaniami. 
+
+\subsection{Kontrolery}
+Kontrolery odpowiadaj¹ za interakcjê
+systemu z otoczeniem. W zale¿noœci od konfiguracji systemu przy
+starcie uruchamiany jest jeden z kontrolerów. Kontrolery operuj¹
+na danych poprzez wspólny interfejs, a co za tym idzie, dane
+utworzone poprzez jeden z nich s¹ dostêpne pomiêdzy kolejnymi
+uruchomieniami programu dla pozosta³ych kontrolerów.
+
+\paragraph{LocalController}
+
+Jest najprostszym kontrolerem. Zarz¹dza zadaniami wykonywanymi na lokalnym komputerze. S¹ one
+wykonywane sekwencyjnie. Zadaniem tego kontrolera jest dostarczenie
+interfejsu u¿ytkownika, pozwalaj¹cego na zarz¹dzanie projektami,
+wtyczkami i zadaniami.
+
+\paragraph{MasterController}
+
+Zadaniem tego kontrolera jest dostarczenie interfejsu do
+zarz¹dzania zdalnymi kontrolerami (\emph{ServantController}). Po
+uruchomieniu nas³uchuje na po³¹czenia od klientów, rozdziela
+zadania oraz wyœwietla ich wyniki.
+
+\paragraph{ServantController}
+
+Zadaniem tego kontrolera jest odszukanie g³ównego kontrolera
+(\emph{MasterController}), zarejestrowanie siê i udostêpnianie mu
+swoich us³ug. Ta wersja kontrolera nie posiada GUI, zarz¹dzanie
+nim odbywa siê za pomoc¹ klasy \emph{MasterController}.
+
+%\paragraph{WinSalomon}
+
+%\input{winsalomon}
+
+\subsection{Wtyczki}
+G³ówna funkcjonalnoœæ zosta³a  przeniesiona
+do wtyczek, zadaniem systemu jest tylko zarz¹dzanie ich
+wykonaniem. Dziêki takiemu podejœciu system jest ³atwo skalowalny
+i rozszerzalny o nowe mo¿liwoœci. Ka¿da z wtyczek musi
+implementowaæ nastêpuj¹ce interfejsy:
+
+\paragraph{IGraphicPlugin}
+
+Pozwala pobraæ parametry od u¿ytkownika, które nastêpnie zostan¹
+przekazane do wtyczek  przed ich wykonaniem. Zawiera dwie metody:
+\emph{getSettingsPanel()}  i \emph{getResultPanel()}.  Pierwsza z
+metod zwraca panel s³u¿¹cy do konfiguracji pluginu, druga -- panel,
+na którym prezentowane s¹ wyniki jego dzia³ania.
+
+\paragraph{IDataPlugin}
+
+Posiada tylko jedn¹ metodê \emph{doJob()}. Przyjmuje ona jako
+parametry obiekt klasy \emph{Environment}, reprezentuj¹cy aktualny
+stan systemu; \emph{DataEngine}, który umo¿liwia operowanie na
+bazie danych i \emph{ISettings}, reprezentuj¹cy ustawienia
+wtyczki. Zwracany jest obiekt klasy \emph{IResult}, stanowi¹cy
+rezultat wykonania zadania.
