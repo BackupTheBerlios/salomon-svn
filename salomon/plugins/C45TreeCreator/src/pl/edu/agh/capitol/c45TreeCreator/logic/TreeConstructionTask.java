@@ -171,8 +171,10 @@ public class TreeConstructionTask {
 			String dec = objs[0].toString();
 			String[] decs = new String[objs.length - 1];
 			for (int i = 1; i < objs.length; i++) {
-				decs[i - 1] = objs[i].toString();
-				hT.put(decisioningColumns[i - 1], objs[i].toString());
+				if (objs[i] != null) {
+					decs[i - 1] = objs[i].toString();
+					hT.put(decisioningColumns[i - 1], objs[i].toString());
+				}
 			}
 			DataItem di = new DataItem(decs, dec);
 			root.elements.add(di);
@@ -361,7 +363,7 @@ public class TreeConstructionTask {
 		double bestEntr = Double.MAX_VALUE;
 		for (TreeItem ti : this.getLeafs()) {
 			if (!ti.isHomogenous(getConfidenceLevel())) { // nie rozwijam
-															// homogenicznych
+				// homogenicznych
 				// node'ów
 				// TODO zeby w ogole ich nie brac przy wyliczaniu entropii
 
@@ -531,7 +533,7 @@ public class TreeConstructionTask {
 			System.out.println("Attr is contignous");
 			for (TreeItem ti : this.getLeafs()) {
 				if (!ti.isHomogenous(getConfidenceLevel())) { // nie rozwijam
-																// homogenicznych
+					// homogenicznych
 					// node'ów
 					// TODO zeby w ogole ich nie brac przy wyliczaniu entropii
 
@@ -588,7 +590,7 @@ public class TreeConstructionTask {
 			System.out.println("Attr is not contignous");
 			for (TreeItem ti : this.getLeafs()) {
 				if (!ti.isHomogenous(getConfidenceLevel())) { // nie rozwijam
-																// homogenicznych
+					// homogenicznych
 					// node'ów
 					// TODO zeby w ogole ich nie brac przy wyliczaniu entropii
 
