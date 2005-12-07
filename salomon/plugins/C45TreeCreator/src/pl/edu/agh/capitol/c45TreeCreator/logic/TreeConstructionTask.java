@@ -129,8 +129,8 @@ public class TreeConstructionTask {
 																					.lastElement())),
 									(ti.isLeaf() ? INode.Type.VALUE
 											: INode.Type.COLUMN),
-									ti.isLeaf() ? (ti.getParent() != null
-											&& ti.getParent().partitionEdge != Double.NaN ? ti.sign
+									ti.isLeaf() ? ((ti.getParent() != null && !ti
+											.getParent().sign.equals("<undef>")) ? ti.sign
 											+ Double
 													.toString(ti.getParent().partitionEdge)
 											: ti.elements.elementAt(0)
