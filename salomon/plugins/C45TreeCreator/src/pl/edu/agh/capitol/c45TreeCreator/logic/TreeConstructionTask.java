@@ -167,18 +167,20 @@ public class TreeConstructionTask {
 		String decisionedColumn = ds.getDecisionedColumn();
 		descriptions = new DataItem(decisioningColumns, decisionedColumn);
 		for (Object[] objs : data) {
-			Hashtable<String, String> hT = new Hashtable<String, String>();
-			String dec = objs[0].toString();
-			String[] decs = new String[objs.length - 1];
-			for (int i = 1; i < objs.length; i++) {
-				if (objs[i] != null) {
-					decs[i - 1] = objs[i].toString();
-					hT.put(decisioningColumns[i - 1], objs[i].toString());
+			if (data != null) {
+				Hashtable<String, String> hT = new Hashtable<String, String>();
+				String dec = objs[0].toString();
+				String[] decs = new String[objs.length - 1];
+				for (int i = 1; i < objs.length; i++) {
+					if (objs[i] != null) {
+						decs[i - 1] = objs[i].toString();
+						hT.put(decisioningColumns[i - 1], objs[i].toString());
+					}
 				}
+				DataItem di = new DataItem(decs, dec);
+				root.elements.add(di);
+				propertyValues.put(di.getName(), hT);
 			}
-			DataItem di = new DataItem(decs, dec);
-			root.elements.add(di);
-			propertyValues.put(di.getName(), hT);
 		}
 		for (int i = 0; i < root.elements.elementAt(0).getAttributeCount(); i++) {
 			distinctClasses.add(getDistinctClasses(i));
