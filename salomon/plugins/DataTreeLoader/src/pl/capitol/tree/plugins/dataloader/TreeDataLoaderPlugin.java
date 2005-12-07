@@ -1,7 +1,7 @@
 package pl.capitol.tree.plugins.dataloader;
 
-import pl.capitol.tree.plugins.dataloader.components.TreeDataLoaderSettingComponent;
 import pl.capitol.tree.plugins.dataloader.components.TreeDataLoaderResultComponent;
+import pl.capitol.tree.plugins.dataloader.components.TreeDataLoaderSettingComponent;
 import pl.capitol.tree.plugins.util.TreeDataLoaderResults;
 import salomon.platform.IDataEngine;
 import salomon.platform.IEnvironment;
@@ -14,7 +14,6 @@ import salomon.plugin.IResult;
 import salomon.plugin.IResultComponent;
 import salomon.plugin.ISettingComponent;
 import salomon.plugin.ISettings;
-import salomon.util.serialization.SimpleArray;
 import salomon.util.serialization.SimpleInteger;
 import salomon.util.serialization.SimpleString;
 
@@ -24,13 +23,12 @@ public class TreeDataLoaderPlugin implements IPlugin {
 		// TODO 
 		ITreeManager trm = eng.getTreeManager();
 		try {
-
-
-			System.out.println("-----------XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX---------------");
 			SimpleString table = (SimpleString) settings.getField("table");
 			SimpleString decisionedColumn = (SimpleString) settings.getField("decisionedColumn");
 			String [] fieldNames = settings.getFieldNames();
 			String [] decisioningColumns = new String [fieldNames.length - 2];
+			SimpleInteger firstColumn = (SimpleInteger) settings.getField("firstIndex");
+			SimpleInteger lastColumn = (SimpleInteger) settings.getField("lastIndex");
 			
 			int j = 0;
 			for (int i=0; i<fieldNames.length; i++)
@@ -54,11 +52,14 @@ public class TreeDataLoaderPlugin implements IPlugin {
 			dataS.setTableName(table.getValue());
 			dataS.setDecisionedColumn(decisionedColumn.getValue());
 			dataS.setDecioningColumns(decisioningColumns);
+			dataS.setFirstRowIndex(firstColumn.getValue());
+			dataS.setLastRowIndex(lastColumn.getValue());
 				
 			int  dataSId = trm.addTreeDataSource(dataS);
 			IVariable variable = env.createEmpty("DATA_SOURCE_ID");
 			variable.setValue(new SimpleInteger(dataSId));
 			env.add(variable);
+					
 		} catch (PlatformException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
