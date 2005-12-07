@@ -26,11 +26,20 @@ public class TreeDataLoaderPlugin implements IPlugin {
 			SimpleString table = (SimpleString) settings.getField("table");
 			SimpleString decisionedColumn = (SimpleString) settings.getField("decisionedColumn");
 			String [] fieldNames = settings.getFieldNames();
-			String [] decisioningColumns = new String [fieldNames.length - 2];
+			//String [] decisioningColumns = new String [fieldNames.length - 2];
 			SimpleInteger firstColumn = (SimpleInteger) settings.getField("firstIndex");
 			SimpleInteger lastColumn = (SimpleInteger) settings.getField("lastIndex");
 			
-			int j = 0;
+			SimpleString decisioningColumns = (SimpleString) settings.getField("decisioningColumns");
+			String [] decisioningColumnsTable = decisioningColumns.getValue().split("'");
+
+			//SimpleString[] decisioningColumnsTableSS = new SimpleString[decisioningColumnsTable.length];
+			
+			//for (int i=0; i<decisioningColumnsTable.length; i++)
+			//	decisioningColumnsTableSS[i] = new SimpleString(decisioningColumnsTable[i]);
+			
+			
+			/*int j = 0;
 			for (int i=0; i<fieldNames.length; i++)
 			{
 				if (fieldNames[i].contains("decisioningColumn"))
@@ -40,18 +49,36 @@ public class TreeDataLoaderPlugin implements IPlugin {
 				}
 			}
 			
+			int numberOfDecisioningColumn = 0;
 			
 			for (int i=0; i<decisioningColumns.length; i++)
 			{
-				System.out.println(decisioningColumns[i]);
+				if (decisioningColumns[i]!=null)
+					numberOfDecisioningColumn +=1;
 			}
+			String[] decisioningColumns2 = new String [numberOfDecisioningColumn];
+			j=0;
+			for (int i=0; i<fieldNames.length; i++)
+			{
+				if (fieldNames[i].contains("decisioningColumn"))
+				{
+					decisioningColumns2[j] = ((SimpleString)settings.getField(fieldNames[i])).getValue();
+					j++;
+				}
+			}*/
+			
+			
+			/*for (int i=0; i<decisioningColumns.length; i++)
+			{
+				System.out.println(decisioningColumns[i]);
+			}*/
 			
 			IDataSource dataS = trm.createTreeDataSource();
 			dataS.setInfo("TreeDataSource z informacjami na temat tabeli oraz wybranych kolumn");
 			dataS.setName("TreeDataSource");
 			dataS.setTableName(table.getValue());
 			dataS.setDecisionedColumn(decisionedColumn.getValue());
-			dataS.setDecioningColumns(decisioningColumns);
+			dataS.setDecioningColumns(decisioningColumnsTable);
 			dataS.setFirstRowIndex(firstColumn.getValue());
 			dataS.setLastRowIndex(lastColumn.getValue());
 				
