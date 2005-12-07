@@ -116,19 +116,23 @@ public class TreeDataLoaderSettingsPanel extends JPanel {
 		for (int i=0; i<listTable.length; i++)
 		{
 			dListTable.addElement(listTable[i].toString());
-		}		
+		}	
+		
+		
 	}
 	public ISettings getSettings() {
 		//TODO umiescic z pol settingsy dla doJob()
 		settings.setField("table", new SimpleString(jListTable.getSelectedValue().toString()));
 		settings.setField("decisionedColumn", new SimpleString(jListDecisioned.getSelectedValue().toString()));
 		
-		String decisioningColumn = new String("decisioningColumn"); 
+		String decisioningColumns = new String(); 
 		Object [] selectedValues = jListDecisioning.getSelectedValues();
 		for (int i=0; i<selectedValues.length; i++)
 		{
-			settings.setField(decisioningColumn+i, new SimpleString(selectedValues[i].toString()));
+			decisioningColumns+=","+selectedValues[i].toString();
 		}
+		String decisioningColumnsSubString = decisioningColumns.substring(1);
+		settings.setField("decisioningColumns", new SimpleString(decisioningColumnsSubString));
 
 		ITreeManager trm = dataEngine.getTreeManager();
 		int tableSize = 0;
