@@ -144,16 +144,18 @@ public class TreeDataLoaderSettingsPanel extends JPanel {
 		lastIndex = Integer.parseInt(this.jTextFieldRangeTo.getText());
 		firstIndex = Integer.parseInt(this.jTextFieldRangeFrom.getText());
 		
-		if (lastIndex > tableSize)
-			settings.setField("firstIndex", new SimpleInteger(tableSize));
+		
+		 if (lastIndex > tableSize)
+			settings.setField("lastIndex", new SimpleInteger(tableSize));
 		else
-			settings.setField("firstIndex", new SimpleInteger(lastIndex));
+			settings.setField("lastIndex", new SimpleInteger(lastIndex));
 		
 		
-		if (firstIndex < 1)
-			settings.setField("lastIndex", new SimpleInteger(1));
+		
+		 if (firstIndex < 1)
+			settings.setField("firstIndex", new SimpleInteger(1));
 		else
-			settings.setField("lastIndex", new SimpleInteger(firstIndex));
+			settings.setField("firstIndex", new SimpleInteger(firstIndex));
 			
 		
 		return settings;
