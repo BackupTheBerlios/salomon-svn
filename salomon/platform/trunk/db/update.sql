@@ -47,4 +47,20 @@ ADD ENV VARCHAR(1000);
 alter table PROJECTS
 alter LM_DATE position 6;
 
+/* 7.12.2005 nico adding datasets_solution_id field */
+
+-- before adding not null column
+DELETE FROM DATASETS;
+
+-- adding new column
+ALTER TABLE DATASETS
+ADD SOLUTION_ID INTEGER NOT NULL;
+
+alter table DATASETS
+add constraint FK_DATASETS_SOLUTIONS
+foreign key (SOLUTION_ID)
+references SOLUTIONS(SOLUTION_ID)
+using index FK_DATASETS;
+
+
 
