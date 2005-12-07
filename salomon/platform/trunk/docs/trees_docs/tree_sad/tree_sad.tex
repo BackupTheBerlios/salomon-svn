@@ -61,6 +61,8 @@ Drzewa decyzyjne\\}
   08-11-2005 & 1.2 & Opis pluginu wnioskuj¹cego & Mateusz Nowakowski\\
              &     & Aktualizacja wiêkszoœci rozdzia³ów &            \\
   \hline
+  15-11-2005 & 1.3 & Poprawa rozdzia³u 3. Przypadki   & Mateusz Nowakowski\\
+             &     & u¿ycia &            \\
   
 
 \end{tabular}
@@ -108,10 +110,15 @@ Poni¿szy opis zak³ada ¿e u¿ytkownik uruchomi³ platformê Salomon oraz poprawnie z
 Poni¿szy diagram przedstawia punkt widzenia u¿ytkownika.
 
 \begin{figure}[ht]
-    \includegraphics[width=0.70\textheight]{sad_files/use_case.png}
+		\center
+    \includegraphics[width=0.40\textheight]{sad_files/use_case.png}
     \caption{Diagram przypadków u¿ycia}
     \label{fig:use_case_view}
 \end{figure}
+
+Aby zdefiniowaæ jakiekolwiek drzewo decyzyjne u¿ytkownik musi okreœliæ na jakich danych pragnie je stworzyæ. Tworzenie drzewa polega na wyborze algorytmu buduj¹cego oraz odpowiednie skonfigurowanie jego parametrów. U¿ytkownik musi równie¿ mieæ mo¿liwoœæ zarz¹dzania istniej¹cymi drzewami oraz móc je odpowiednio wizualizowaæ. Drzewa decyzyjne tworzy siê na pewnym ma³ym zbiorze danych by nastêpnie zweryfikowaæ ich poprawnoœæ na wiekszym zbiorze danych. U¿ytkownik zatem powinien mieæ mo¿liwoœc wykorzystania drzew w praktyce.
+
+Powy¿sze przypadki u¿ycia oraz za³o¿enia platfomy Salomon prowadza do nastêpuj¹cych operacji u¿ytkownika w ramach platformy.
 
 U¿ytkownik wybiera najpierw tzw. \textit{plugin wejœciowy}. Nastêpnie u¿ytkownik wybiera zdefiniowane wczeœniej dla obecnego \textit{solution}`a dane wejœciowe lub  nowe poprzez zdefiniowanie nazwy danych wejœciowych (dla póŸniejszej identyfikacji),
 wybiera tabelê a nastêpnie kolumnê reprezentuj¹c¹ wynik decyzji --  \textit{kolumna decyzyjna} oraz listê kolumn reprezentuj¹ce przes³anki decyzji -- \textit{kolumny decyduj¹ce}. Nastêpnie musi okreœliæ, na których wierszach bêdzie budowane drzewo decyzyjne. U¿ytkownik mo¿e wybraæ wiêcej ni¿ jedno Ÿród³o danych, z których potem bêd¹ generowane drzewa decyzyjne. 
@@ -144,7 +151,7 @@ Poni¿szy diagram przedstawia uk³ad interfejsów do zaimplementowania:
 
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=0.62\textheight]{sad_files/tree_interfaces.png}
+    \includegraphics[width=0.55\textheight]{sad_files/tree_interfaces.png}
     \caption{Model rozszerzeñ}
     \label{fig:ex_model}
 \end{figure}
@@ -209,7 +216,7 @@ Baza definicyjna ma za zadanie przechowaæ strukturê drzewa oraz parametry z nim 
 
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=0.745\textheight]{sad_files/erd.png}
+    \includegraphics[width=0.7\textheight]{sad_files/erd.png}
     \caption{Diagram ERD}
     \label{fig:erd}
 \end{figure}
