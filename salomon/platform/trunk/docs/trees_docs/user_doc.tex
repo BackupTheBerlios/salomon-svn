@@ -51,7 +51,7 @@ System przetwarzania wiedzy\\}
   \hline
   Data & Wersja & Opis & Autorzy \\
   \hline \hline
-  17-09-2005 & 1.0 & User's Manual & Przemys³aw Misiuda, Krzysztof Nadolski, £ukasz Ostatek, Dominik Seweryn\\
+  17-09-2005 & 1.0 & User's Manual & Przemys³aw Misiuda, Krzysztof Nadolski, Mateusz Nowakowski, £ukasz Ostatek, Dominik Seweryn, Tomasz W¹sala\\
   \hline
 \end{tabular}
 \end{flushleft}
@@ -111,6 +111,28 @@ interakcji z u¿ytkownikiem. Otrzymuje on od poprzedniego pluginu
 informacje na podstawie jakiej tabeli i w jaki sposób ma zbudowaæ
 drzewo decyzyjne, a po skoñczeniu swej pracy przekazuje jej efekty
 do kolejnego tym razem wizualizacyjnego pluginu.
+ 
+\subsection{C45TreeCreator}
+Alternatyw¹ dla opisanego powy¿ej pluginu algorytmicznego 
+implementuj¹cego zasadê dzia³ania algorytmu ID3 jest plugin 
+C45TreeCreator implemnetuj¹cy algorytm C4.5. W ustawieniach tego 
+pluinu mo¿na podaæ poziom ufnoœci na jakim bêdzie dzia³a³ ten plugin. 
+Wartoœæ ta oznacza minimalny odsetek elementów znajduj¹cych siê w 
+wêŸle drzewa aby wêze³ ten zosta³ uznany za homogeniczny i nie 
+rozwijany dalej. Sensowne wartoœci dla tego parametru s¹ z przedzia³u
+(0,5;1>. Dodatkow¹ cech¹ tego algorytmu jest, ¿e potrafi on dla 
+atrybutów ci¹g³ych operowaæ na ich zakresach zamiast na dyskretnych 
+wartoœciach. Przyk³adowo zamiast tworzyæ osobne wêz³y dla wartoœci
+atrybutu ci¹g³ego wynosz¹cych 1,2,3,4,5,6 mo¿e np. stworzyæ dwa wêz³y
+dla wartoœci <=2 i >2. U podstaw algorytm tworzy drzewa korzystaj¹c z 
+obliczanego dla ka¿dego atrybutu wspó³czynnika GainRatio. U¿ycie tego
+wspó³czynnika zamiast u¿ywanej w algorytmie ID3 entropii redukuje 
+niekorzystny wp³yw atrybutów posiadaj¹cych wiele dopuszczalnych 
+wartoœci. Dodatkowo GainRatio jest wyliczane tylko na danych, dla 
+których wartoœæ danego atrybutu jest okreœlona. W ten sposób 
+redukowana jest u³omnoœæ algorytmu ID3, który to algorytm wymaga³,
+aby wartoœci wszystkich atrybutów dla wszystkich elementów danych 
+by³y okreœlone.
 
 \subsection{TreeVisualisation}
 Jest to trzeci z grupy pluginów odpowiadajacych za tworzenie drzew
