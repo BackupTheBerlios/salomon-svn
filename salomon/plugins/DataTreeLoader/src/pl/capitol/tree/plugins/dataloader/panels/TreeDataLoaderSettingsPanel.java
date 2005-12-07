@@ -122,6 +122,16 @@ public class TreeDataLoaderSettingsPanel extends JPanel {
 	}
 	public ISettings getSettings() {
 		//TODO umiescic z pol settingsy dla doJob()
+		if (jListTable.getSelectedValue()==null)
+			return null;
+	
+		if (jListDecisioned.getSelectedValue()==null)
+			return null;
+		
+		if (jListDecisioning.getSelectedValue()==null)
+			return null;
+		
+		
 		settings.setField("table", new SimpleString(jListTable.getSelectedValue().toString()));
 		settings.setField("decisionedColumn", new SimpleString(jListDecisioned.getSelectedValue().toString()));
 		
@@ -145,8 +155,17 @@ public class TreeDataLoaderSettingsPanel extends JPanel {
 			e1.printStackTrace();
 		}
 			
-		lastIndex = Integer.parseInt(this.jTextFieldRangeTo.getText());
-		firstIndex = Integer.parseInt(this.jTextFieldRangeFrom.getText());
+		try {
+			lastIndex = Integer.parseInt(this.jTextFieldRangeTo.getText());
+		} catch (NumberFormatException e){
+			lastIndex = tableSize;
+		}
+		
+		try {
+			firstIndex = Integer.parseInt(this.jTextFieldRangeFrom.getText());
+		} catch (NumberFormatException e){
+			firstIndex = 1;
+		}
 		
 		
 		 if (lastIndex > tableSize)
