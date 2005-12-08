@@ -30,7 +30,6 @@ import salomon.engine.database.DBManager;
 
 public class DataSetTest extends TestCase
 {
-
 	/**
 	 * 
 	 * @uml.property name="_manager"

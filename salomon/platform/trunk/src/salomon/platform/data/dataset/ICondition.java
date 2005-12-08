@@ -26,5 +26,7 @@ package salomon.platform.data.dataset;
  */
 public interface ICondition
 {
-	// empty interface
+	String getTable();
+	
+	String getCondition();
 }

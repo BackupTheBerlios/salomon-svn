@@ -96,5 +96,9 @@ public interface IDataSet
 	IDataSet union(IDataSet dataSet, IUniqueId id) throws PlatformException;
 
 	IData selectData(IColumn[] columns, ICondition[] conditions) throws PlatformException;
+	
+	void addCondition(ICondition condition);
+	
+	ICondition[] getConditions();
 
 }

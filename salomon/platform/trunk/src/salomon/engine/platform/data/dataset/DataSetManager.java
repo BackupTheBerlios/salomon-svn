@@ -21,15 +21,11 @@
 
 package salomon.engine.platform.data.dataset;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
 import org.apache.log4j.Logger;
 
 import salomon.engine.database.DBManager;
 import salomon.engine.database.ExternalDBManager;
 import salomon.engine.solution.ShortSolutionInfo;
-
 import salomon.platform.IUniqueId;
 import salomon.platform.data.IColumn;
 import salomon.platform.data.dataset.ICondition;
@@ -42,10 +38,10 @@ import salomon.platform.exception.PlatformException;
  */
 public final class DataSetManager implements IDataSetManager
 {
+	private DBManager _dbManager;
+
 	private ExternalDBManager _externalDBManager;
 
-	private DBManager _dbManager;
-	
 	private ShortSolutionInfo _solutionInfo;
 
 	public DataSetManager(DBManager dbManager, ShortSolutionInfo solutionInfo,
@@ -71,6 +67,24 @@ public final class DataSetManager implements IDataSetManager
 		return dataSet;
 	}
 
+	public ICondition createEqualsCondition(IColumn column, Object value)
+			throws PlatformException
+	{
+		return new EqualsCondition(column, value);
+	}
+
+	public ICondition createGreaterCondition() throws PlatformException
+	{
+		throw new UnsupportedOperationException(
+				"Method DataSetManager.createGreaterCondition() not implemented yet!");
+	}
+
+	public ICondition createLowerCondition() throws PlatformException
+	{
+		throw new UnsupportedOperationException(
+				"Method DataSetManager.createLowerCondition() not implemented yet!");
+	}
+
 	/**
 	 * @see salomon.platform.data.dataset.IDataSetManager#getAll()
 	 */
@@ -84,33 +98,6 @@ public final class DataSetManager implements IDataSetManager
 	{
 		throw new UnsupportedOperationException(
 				"Method getDataSet() not implemented yet!");
-	}
-
-	public IDataSet getDataSet(String name) throws PlatformException
-	{
-		DataSet dataSet = null;
-		ResultSet resultSet = null;
-		try {
-			resultSet = getDataSetItems(name);
-		} catch (Exception e) {
-			LOGGER.fatal("", e);
-			throw new PlatformException(e.getLocalizedMessage());
-		}
-
-		// getting conditions
-		try {
-			dataSet = (DataSet) this.createEmpty();
-			dataSet.setName(name);
-			while (resultSet.next()) {
-				String tableName = resultSet.getString("table_name");
-				String condition = resultSet.getString("condition");
-				dataSet.addCondition(tableName, condition);
-			}
-		} catch (SQLException e) {
-			LOGGER.fatal("", e);
-			throw new PlatformException(e.getLocalizedMessage());
-		}
-		return dataSet;
 	}
 
 	/**
@@ -150,41 +137,9 @@ public final class DataSetManager implements IDataSetManager
 				"Method union() not implemented yet!");
 	}
 
-	private ResultSet getDataSetItems(String dataSetName) throws SQLException,
-			ClassNotFoundException
-	{
-		//		SQLSelect select = new SQLSelect();
-		//		select.addColumn("table_name");
-		//		select.addColumn("condition");
-		//		select.addTable(DATASETS + " d");
-		//		select.addTable(DATASET_ITEMS + " di");
-		//		select.addCondition("d.dataset_id = di.dataset_id");
-		//		select.addCondition("dataset_name =", dataSetName);
-		//
-		//		DBManager connector = DBManager.getInstance();
-		//		return connector.select(select);
-		throw new UnsupportedOperationException(
-				"Method enclosing_method() not implemented yet!");
-	}
-
 	private static final String DATASET_ITEMS = "dataset_items";
 
 	private static final String DATASETS = "datasets";
 
 	private static final Logger LOGGER = Logger.getLogger(DataSetManager.class);
-
-	public ICondition createEqualsCondition(IColumn column, Object value) throws PlatformException
-	{
-		return new EqualsCondition(column, value);
-	}
-
-	public ICondition createGreaterCondition() throws PlatformException
-	{
-		throw new UnsupportedOperationException("Method DataSetManager.createGreaterCondition() not implemented yet!");
-	}
-
-	public ICondition createLowerCondition() throws PlatformException
-	{
-		throw new UnsupportedOperationException("Method DataSetManager.createLowerCondition() not implemented yet!");
-	}
 }

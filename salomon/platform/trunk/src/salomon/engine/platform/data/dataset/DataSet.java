@@ -21,20 +21,15 @@
 
 package salomon.engine.platform.data.dataset;
 
-//import java.net.MalformedURLException;
-import java.net.MalformedURLException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
 
 import salomon.engine.database.DBManager;
 import salomon.engine.database.ExternalDBManager;
-
 import salomon.platform.IInfo;
 import salomon.platform.IUniqueId;
 import salomon.platform.data.IColumn;
@@ -49,64 +44,43 @@ import salomon.platform.exception.PlatformException;
  * 
  * TODO: add join between tables support
  */
-class DataSet implements IDataSet
+public class DataSet implements IDataSet
 {
-	/**
-	 * Conditions determinating data set. key is table name, value - list of
-	 * conditions corresponding to given table
-	 */
-	private Map<String, Set<String>> _conditions;
-
-	private int _datasetID;
-
 	private DBManager _dbManager;
 
 	private ExternalDBManager _externalDBManager;
 
-	private String _info;
-
-	private String _name;
+	private DataSetInfo _info;
 
 	/**
 	 * Creates data set. This constructor can be used only from DataSetManager.
 	 */
 	protected DataSet(DBManager dbManager, ExternalDBManager externalDBManager)
 	{
-		_datasetID = 0;
-		_conditions = new HashMap<String, Set<String>>();
 		_dbManager = dbManager;
 		_externalDBManager = externalDBManager;
+		_info = new DataSetInfo(dbManager);
 	}
 
 	/**
-	 * Method adds condition corresponding to given table name
-	 * 
-	 * @param tableName
+	 * Method adds condition corresponding to given table name.
+	 *
 	 * @param condition
 	 */
-	public void addCondition(String tableName, String condition)
+	public void addCondition(ICondition condition)
 	{
-		Set<String> tableConditions = _conditions.get(tableName);
-		if (tableConditions == null) {
-			tableConditions = new HashSet<String>();
-			_conditions.put(tableName, tableConditions);
-		}
-		tableConditions.add(condition);
+		_info.addCondition(condition);
 	}
 
-	/**
-	 * @see salomon.engine.database.IDBSupporting#delete()
-	 */
-	public boolean delete() throws SQLException, ClassNotFoundException
+	public ICondition[] getConditions()
 	{
-		throw new UnsupportedOperationException(
-				"Method delete() not implemented yet!");
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	public IInfo getInfo() throws PlatformException
 	{
-		throw new UnsupportedOperationException(
-				"Method getInfo() not implemented yet!");
+		return _info;
 	}
 
 	public IDataSet intersection(IDataSet dataSet) throws PlatformException
@@ -122,28 +96,6 @@ class DataSet implements IDataSet
 				"Method intersection() not implemented yet!");
 	}
 
-	/**
-	 * @see salomon.engine.database.IDBSupporting#load(java.sql.ResultSet)
-	 * 
-	 * Only dataset header is loaded.
-	 * Items cannot be loaded, bacause it is imposible to open more than one
-	 * result set in the same time.
-	 * To load items, use @see loadItems() method. 
-	 * 
-	 */
-	public void load(ResultSet resultSet) throws MalformedURLException,
-			SQLException
-	{
-		throw new UnsupportedOperationException(
-				"Method load() not implemented yet!");
-	}
-
-	public void loadItems() throws SQLException
-	{
-		throw new UnsupportedOperationException(
-				"Method loadItems() not implemented yet!");
-	}
-
 	public IDataSet minus(IDataSet dataSet) throws PlatformException
 	{
 		throw new UnsupportedOperationException(
@@ -157,49 +109,11 @@ class DataSet implements IDataSet
 				"Method minus() not implemented yet!");
 	}
 
-	/**
-	 * @see salomon.engine.database.IDBSupporting#save()
-	 */
-	public int save() throws SQLException, ClassNotFoundException
+	public IData selectData(IColumn[] columns, ICondition[] conditions)
+			throws PlatformException
 	{
-		//removing old items
-		//FIXME: reimplement it
-		//		SQLDelete delete = new SQLDelete();
-		//		delete.setTable(ITEMS_TABLE_NAME);
-		//		delete.addCondition("dataset_id = ", _datasetID);
-		//		int rows = DBManager.getInstance().delete(delete);
-		//		LOGGER.debug("rows deleted: " + rows);
-		//		
-		//		//saving header
-		//		SQLUpdate update = new SQLUpdate(TABLE_NAME);
-		//		if (_name != null) {
-		//			update.addValue("dataset_name", _name);
-		//		}
-		//		if (_info != null) {
-		//			update.addValue("dataset_info", _info);
-		//		}
-		//		update.addValue("lm_date", new Date(System.currentTimeMillis()));
-		//		_datasetID = DBManager.getInstance().insertOrUpdate(update,
-		//				"dataset_id", _datasetID, GEN_NAME);
-		//		
-		//		// saving items
-		//		for (String tableName : _conditions.keySet()) {
-		//			for (String condition: _conditions.get(tableName)) {
-		//				SQLInsert insert = new SQLInsert(ITEMS_TABLE_NAME);
-		//				insert.addValue("dataset_id", _datasetID);
-		//				insert.addValue("table_name", tableName);
-		//				insert.addValue("condition", condition);
-		//				LOGGER.debug("insert: " + insert.getQuery());
-		//			}
-		//		}
-		//		return _datasetID;
 		throw new UnsupportedOperationException(
-				"Method save() not implemented yet!");
-	}
-
-	public IData selectData(IColumn[] columns, ICondition[] conditions) throws PlatformException
-	{
-		throw new UnsupportedOperationException("Method DataSet.selectData() not implemented yet!");
+				"Method DataSet.selectData() not implemented yet!");
 	}
 
 	/**
@@ -302,25 +216,7 @@ class DataSet implements IDataSet
 		// return connector.getResultSet();
 		throw new UnsupportedOperationException(
 				"Method selectData() not implemented yet!");
-	}
-
-	/**
-	 * Set the value of info field.
-	 * 
-	 * @param info The info to set
-	 */
-	public void setInfo(String info)
-	{
-		_info = info;
-	}
-
-	/**
-	 * @see salomon.platform.data.dataset.IDataSet#setName(java.lang.String)
-	 */
-	public void setName(String name)
-	{
-		_name = name;
-	}
+	}	
 
 	/*
 	 * (non-Javadoc)
@@ -329,7 +225,7 @@ class DataSet implements IDataSet
 	 */
 	public String toString()
 	{
-		return _name + ": " + _conditions;
+		return _info.toString();
 	}
 
 	public IDataSet union(IDataSet dataSet) throws PlatformException
@@ -344,12 +240,6 @@ class DataSet implements IDataSet
 		throw new UnsupportedOperationException(
 				"Method union() not implemented yet!");
 	}
-
-	public static final String ITEMS_TABLE_NAME = "dataset_items";
-
-	public static final String TABLE_NAME = "datasets";
-
-	private static final String GEN_NAME = "gen_dataset_id";
 
 	private static final Logger LOGGER = Logger.getLogger(DataSet.class);
 }
