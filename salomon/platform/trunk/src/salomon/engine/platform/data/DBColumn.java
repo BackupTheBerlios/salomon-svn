@@ -65,4 +65,10 @@ public final class DBColumn implements IColumn
 	{
 		return _name + " (" + _type + ")";
 	}
+
+	DBTable getTable()
+	{
+		throw new UnsupportedOperationException(
+				"Method DBColumn.getTable() not implemented yet!");;
+	}
 }
