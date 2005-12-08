@@ -3,11 +3,11 @@
 	<!-- Allows us to use the IzPack Ant task -->
 	<taskdef name="izpack" classpath="${basedir}/ext/compiler.jar" classname="com.izforge.izpack.ant.IzPackTask" />
 	<taskdef name="svn" classpath="${basedir}/ext/svn/svnant.jar;${basedir}/ext/svn/svnClientAdapter.jar;${basedir}/ext/svn/svnjavahl.jar" classname="org.tigris.subversion.svnant.SvnTask" />
-	<!--	resource="svntask.properties"/> -->
+    <taskdef name="SetBuildProperties" classpath="config/" classname="SetBuildProperties" />
+    <!--	resource="svntask.properties"/> -->
 
+    <SetBuildProperties />    
 	<property name="src_dir" value="src" />
-
-
 	<property name="bin_dir" value="bin" />
 	<property name="lib_dir" value="lib" />
 	<property name="res_dir" value="res" />
@@ -22,9 +22,12 @@
 	<property name="crebas_file" value="crebas.sql" />
 	<property name="views_file" value="views.sql" />
 	<property name="run_script" value="run.bat" />
-
 	<property name="release_dir" value="_release" />
 
+    <property file="config/hosts/${build.host}/build.properties" />
+    <property file="config/users/${build.host}/build.properties" />
+
+            
 	<target name="compile_salomon" depends="init">
 		<echo message="Build salomon core" />
 		<javac srcdir="${src_dir}/" includes="salomon/**" classpath="${lib_dir}/log4j-1.2.8.jar" destdir="${bin_dir}" source="1.5"/>
@@ -44,7 +47,6 @@
 				<attribute name="Main-Class" value="pl.edu.agh.icsr.salomon.plugin.averageprice.UnionSet" />
 			</manifest>
 		</jar>
-
 	</target>
 
 	<target name="build_simpleconsole_jar">
