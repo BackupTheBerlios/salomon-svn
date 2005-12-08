@@ -22,6 +22,7 @@
 package salomon.platform.data.dataset;
 
 import salomon.platform.IUniqueId;
+import salomon.platform.data.IColumn;
 import salomon.platform.exception.PlatformException;
 
 /**
@@ -44,7 +45,7 @@ public interface IDataSetManager
 	 */
 	IDataSet createEmpty() throws PlatformException;
 
-	ICondition createEqualsCondition() throws PlatformException;
+	ICondition createEqualsCondition(IColumn column, Object value) throws PlatformException;
 
 	ICondition createGreaterCondition() throws PlatformException;
 

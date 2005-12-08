@@ -31,6 +31,7 @@ import salomon.engine.database.ExternalDBManager;
 import salomon.engine.solution.ShortSolutionInfo;
 
 import salomon.platform.IUniqueId;
+import salomon.platform.data.IColumn;
 import salomon.platform.data.dataset.ICondition;
 import salomon.platform.data.dataset.IDataSet;
 import salomon.platform.data.dataset.IDataSetManager;
@@ -172,9 +173,9 @@ public final class DataSetManager implements IDataSetManager
 
 	private static final Logger LOGGER = Logger.getLogger(DataSetManager.class);
 
-	public ICondition createEqualsCondition() throws PlatformException
+	public ICondition createEqualsCondition(IColumn column, Object value) throws PlatformException
 	{
-		throw new UnsupportedOperationException("Method DataSetManager.createEqualsCondition() not implemented yet!");
+		return new EqualsCondition(column, value);
 	}
 
 	public ICondition createGreaterCondition() throws PlatformException
