@@ -69,6 +69,6 @@ public final class DBColumn implements IColumn
 	DBTable getTable()
 	{
 		throw new UnsupportedOperationException(
-				"Method DBColumn.getTable() not implemented yet!");;
+				"Method DBColumn.getTable() not implemented yet!");
 	}
 }
