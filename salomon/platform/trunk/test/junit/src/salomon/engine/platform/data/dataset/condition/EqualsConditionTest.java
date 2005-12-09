@@ -42,7 +42,7 @@ public class EqualsConditionTest extends AbstractConditionTest
 	 */
 	public void testGetValueString()
 	{
-		AbstractCondition condition = getCondition();
+		AbstractOperatorCondition condition = (AbstractOperatorCondition) getCondition();
 		String valueString = condition.getValueString();
 
 		assertEquals("10", valueString);

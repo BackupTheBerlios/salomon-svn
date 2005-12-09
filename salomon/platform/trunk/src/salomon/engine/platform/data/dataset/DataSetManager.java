@@ -32,9 +32,12 @@ import salomon.platform.data.dataset.IDataSet;
 import salomon.platform.data.dataset.IDataSetManager;
 import salomon.platform.exception.PlatformException;
 
+import salomon.engine.platform.data.dataset.condition.AbstractCondition;
+import salomon.engine.platform.data.dataset.condition.AndCondition;
 import salomon.engine.platform.data.dataset.condition.EqualsCondition;
 import salomon.engine.platform.data.dataset.condition.GreaterCondition;
 import salomon.engine.platform.data.dataset.condition.LowerCondition;
+import salomon.engine.platform.data.dataset.condition.OrCondition;
 
 /**
  * Class manages with datasets.
@@ -67,7 +70,7 @@ public final class DataSetManager implements IDataSetManager
 	public IDataSet createEmpty() throws PlatformException
 	{
 		IDataSet dataSet = new DataSet(_dbManager, _externalDBManager);
-		((DataSetInfo)dataSet.getInfo()).setSolutionID(_solutionInfo.getId());
+		((DataSetInfo) dataSet.getInfo()).setSolutionID(_solutionInfo.getId());
 		return dataSet;
 	}
 
@@ -77,12 +80,14 @@ public final class DataSetManager implements IDataSetManager
 		return new EqualsCondition(column, value);
 	}
 
-	public ICondition createGreaterCondition(IColumn column, Object value) throws PlatformException
+	public ICondition createGreaterCondition(IColumn column, Object value)
+			throws PlatformException
 	{
 		return new GreaterCondition(column, value);
 	}
 
-	public ICondition createLowerCondition(IColumn column, Object value) throws PlatformException
+	public ICondition createLowerCondition(IColumn column, Object value)
+			throws PlatformException
 	{
 		return new LowerCondition(column, value);
 	}
@@ -137,6 +142,20 @@ public final class DataSetManager implements IDataSetManager
 	{
 		throw new UnsupportedOperationException(
 				"Method union() not implemented yet!");
+	}
+
+	public ICondition createAndCondition(ICondition condition,
+			ICondition... conditions) throws PlatformException
+	{
+		return new AndCondition((AbstractCondition) condition,
+				(AbstractCondition[]) conditions);
+	}
+
+	public ICondition createOrCondition(ICondition condition,
+			ICondition... conditions) throws PlatformException
+	{
+		return new OrCondition((AbstractCondition) condition,
+				(AbstractCondition[]) conditions);
 	}
 
 }

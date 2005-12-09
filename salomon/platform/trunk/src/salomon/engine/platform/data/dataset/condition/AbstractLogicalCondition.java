@@ -21,32 +21,33 @@
 
 package salomon.engine.platform.data.dataset.condition;
 
-import salomon.platform.data.IColumn;
-import salomon.platform.data.dataset.ICondition;
-
-/**
- * 
- */
-public abstract class AbstractCondition implements ICondition
+public abstract class AbstractLogicalCondition extends AbstractCondition
 {
-	private IColumn _column;
+	private AbstractCondition[] _conditions;
 
-	AbstractCondition(IColumn column)
+	private AbstractCondition _firstCondition;
+
+	AbstractLogicalCondition(AbstractCondition codition,
+			AbstractCondition... conditions)
 	{
-		_column = column;
+		super(null);
+
+		_firstCondition = codition;
+		_conditions = conditions;
 	}
 
-	/**
-	 * Returns the column.
-	 * @return The column
-	 */
-	public final IColumn getColumn()
+	@Override
+	public String toSQL()
 	{
-		return _column;
+		StringBuilder result = new StringBuilder();
+		String operator = getOperator();
+		result.append('(').append(_firstCondition).append(')');
+		for (AbstractCondition currentCondition : _conditions) {
+			result.append(' ').append(operator).append(' ');
+			result.append('(').append(currentCondition.toSQL()).append(')');
+		}
+
+		return result.toString();
 	}
-
-	public abstract String toSQL();
-
-	protected abstract String getOperator();
 
 }

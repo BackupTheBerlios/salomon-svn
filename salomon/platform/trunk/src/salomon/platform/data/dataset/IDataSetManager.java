@@ -39,17 +39,29 @@ public interface IDataSetManager
 	void add(IDataSet dataSet) throws PlatformException;
 
 	/**
+	 * TODO: service OR and AND statements
+	 */
+	ICondition createAndCondition(ICondition condition,
+			ICondition... conditions) throws PlatformException;
+
+	/**
 	 * Creates empty data set.
 	 * 
 	 * @return the empty data set
 	 */
 	IDataSet createEmpty() throws PlatformException;
 
-	ICondition createEqualsCondition(IColumn column, Object value) throws PlatformException;
+	ICondition createEqualsCondition(IColumn column, Object value)
+			throws PlatformException;
 
-	ICondition createGreaterCondition(IColumn column, Object value) throws PlatformException;
+	ICondition createGreaterCondition(IColumn column, Object value)
+			throws PlatformException;
 
-	ICondition createLowerCondition(IColumn column, Object value) throws PlatformException;
+	ICondition createLowerCondition(IColumn column, Object value)
+			throws PlatformException;
+
+	ICondition createOrCondition(ICondition condition, ICondition... conditions)
+			throws PlatformException;
 
 	/**
 	 * Gets all data sets.
@@ -74,8 +86,4 @@ public interface IDataSetManager
 	 */
 	void remove(IDataSet dataSet) throws PlatformException;
 
-	/**
-	 * TODO: service OR and AND statements
-	 */
-	//ICondition createComplexCondition() throws PlatformException;
 }

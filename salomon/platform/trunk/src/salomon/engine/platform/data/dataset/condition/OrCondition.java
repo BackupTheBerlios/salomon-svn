@@ -21,32 +21,18 @@
 
 package salomon.engine.platform.data.dataset.condition;
 
-import salomon.platform.data.IColumn;
-import salomon.platform.data.dataset.ICondition;
-
-/**
- * 
- */
-public abstract class AbstractCondition implements ICondition
+public final class OrCondition extends AbstractLogicalCondition
 {
-	private IColumn _column;
 
-	AbstractCondition(IColumn column)
+	public OrCondition(AbstractCondition codition, AbstractCondition[] conditions)
 	{
-		_column = column;
+		super(codition, conditions);
 	}
 
-	/**
-	 * Returns the column.
-	 * @return The column
-	 */
-	public final IColumn getColumn()
+	@Override
+	protected String getOperator()
 	{
-		return _column;
+		return "OR";
 	}
-
-	public abstract String toSQL();
-
-	protected abstract String getOperator();
 
 }

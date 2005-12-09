@@ -29,9 +29,20 @@ import salomon.engine.platform.data.DBTable;
 abstract class AbstractOperatorCondition extends AbstractCondition
 {
 
+	private Object _value;
+
 	protected AbstractOperatorCondition(IColumn column, Object value)
 	{
-		super(column, value);
+		super(column);
+	}
+
+	/**
+	 * Returns the value.
+	 * @return The value
+	 */
+	final Object getValue()
+	{
+		return _value;
 	}
 
 	/**
@@ -52,6 +63,20 @@ abstract class AbstractOperatorCondition extends AbstractCondition
 
 		return result.toString();
 	}
+	
+	protected final String getValueString()
+	{
+		//TODO:
+		String result = null;
+		if (_value instanceof String) {
+			result = (String) _value;
+		} else {
+			result = _value.toString();
+		}
+
+		return result;
+	}
+
 
 	protected abstract String getOperator();
 }
