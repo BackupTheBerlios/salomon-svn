@@ -21,6 +21,8 @@
 
 package salomon.engine.platform.data.dataset;
 
+import java.sql.SQLException;
+
 import junit.framework.TestCase;
 
 import org.apache.log4j.Logger;
@@ -28,7 +30,11 @@ import org.apache.log4j.PropertyConfigurator;
 
 import salomon.engine.database.DBManager;
 import salomon.engine.database.ExternalDBManager;
+import salomon.engine.platform.data.DBColumn;
+import salomon.engine.platform.data.DBTable;
 import salomon.engine.solution.ShortSolutionInfo;
+import salomon.platform.data.IColumn;
+import salomon.platform.data.dataset.ICondition;
 import salomon.platform.exception.PlatformException;
 
 public class DataSetTest extends TestCase
@@ -39,9 +45,9 @@ public class DataSetTest extends TestCase
 	 * @uml.associationEnd multiplicity="(0 1)"
 	 */
 	DBManager _manager;
-	
+
 	ExternalDBManager _externalDBManager;
-	
+
 	DataSetManager _dataSetManager;
 
 	//TODO: commented out until DataSet is implemented
@@ -151,26 +157,42 @@ public class DataSetTest extends TestCase
 	//		assertEquals(selectBefore, selectAfter);
 	//	}
 	//
-		/*
-		 * Class under test for ResultSet selectData(String)
-		 */
-		public void testSave1()
-		{
-			LOGGER.info("DataSetTest.testSave1()");
-			boolean success = false;
-			try {			
+	/*
+	 * Class under test for ResultSet selectData(String)
+	 */
+	public void testSave1()
+	{
+		LOGGER.info("DataSetTest.testSave1()");
+		boolean success = false;
+		try {
 			DataSet dataSet = (DataSet) _dataSetManager.createEmpty();
-//			dataSet.addCondition("projects", "project_id > 10");
-//			dataSet.addCondition("projects", "project_name <> 'project_1'");
+			((DataSetInfo)dataSet.getInfo()).setName("first");
+			
+			DBTable table = new DBTable("persons");
+			// column type is not important
+			IColumn column = new DBColumn(table, "person_id", "INT");
+			dataSet.addCondition(_dataSetManager.createEqualsCondition(column,
+					new Integer(10)));
+			column = new DBColumn(table, "first_name", "VARCHAR");
+			dataSet.addCondition(_dataSetManager.createEqualsCondition(column,
+					"Nikodem"));
+			column = new DBColumn(table, "last_name", "VARCHAR");
+			dataSet.addCondition(_dataSetManager.createEqualsCondition(column,
+					"Jura"));
 
-//				dataSet.save();
-//				success = true;
-			} catch (PlatformException e) {
-				LOGGER.fatal("", e);
-			} 
-			_manager.rollback();
-			assertTrue(success);
+			dataSet.getInfo().save();
+			success = true;
+		} catch (PlatformException e) {
+			LOGGER.fatal("", e);
+		} catch (SQLException e) {
+			LOGGER.fatal("", e);
+		} catch (ClassNotFoundException e) {
+			LOGGER.fatal("", e);
 		}
+		_manager.rollback();
+		assertTrue(success);
+	}
+
 	//	
 	//	public void testSave2()
 	//	{
@@ -201,7 +223,7 @@ public class DataSetTest extends TestCase
 		_manager.connect();
 		_externalDBManager = new ExternalDBManager();
 		_externalDBManager.connect("", "\\db\\persons.gdb", "sysdba",
-					"masterkey");
+				"masterkey");
 		//TODO: pass ShorSolutionInfo
 		_dataSetManager = new DataSetManager(_manager, null, _externalDBManager);
 		LOGGER.info("Connected");
@@ -214,7 +236,7 @@ public class DataSetTest extends TestCase
 		_externalDBManager.disconnect();
 		LOGGER.info("Disconnected");
 	}
-	
+
 	private static final Logger LOGGER = Logger.getLogger(DataSetTest.class);
 
 }

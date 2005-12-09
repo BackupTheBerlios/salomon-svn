@@ -37,15 +37,7 @@ public interface IInfo extends IUniqueId
 
 	Date getCreationDate() throws PlatformException;
 
-	String getInfo() throws PlatformException;
-
 	Date getLastModificationDate() throws PlatformException;
-
-	/**
-	 * Sets the description.
-	 * @param description the description
-	 */
-	void setInfo(String info) throws PlatformException;
 
 	/**
 	 * Removes itself from database. After successsful finish object should be

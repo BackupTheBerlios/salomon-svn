@@ -95,6 +95,14 @@ public final class DataSetInfo implements IInfo
 		return null;
 	}
 
+	/**
+	 * @return Returns the name.
+	 */
+	public String getName()
+	{
+		return _name;
+	}
+
 	public void load(ResultSet resultSet) throws MalformedURLException,
 			SQLException
 	{
@@ -123,7 +131,7 @@ public final class DataSetInfo implements IInfo
 			update.addValue("dataset_info", _info);
 		}
 		update.addValue("lm_date", new Date(System.currentTimeMillis()));
-		
+
 		_datasetID = _dbManager.insertOrUpdate(update, "dataset_id",
 				_datasetID, GEN_NAME);
 
@@ -131,18 +139,27 @@ public final class DataSetInfo implements IInfo
 		for (AbstractCondition condition : _conditions) {
 			SQLInsert insert = new SQLInsert(ITEMS_TABLE_NAME);
 			insert.addValue("dataset_id", _datasetID);
-			insert.addValue("table_name", condition.getColumn().getTable().getName());
+			insert.addValue("table_name",
+					condition.getColumn().getTable().getName());
 			insert.addValue("condition", condition.getSQL());
 			LOGGER.debug("insert: " + insert.getQuery());
 			_dbManager.insert(insert, "dataset_item_id");
 		}
-		
+
 		return _datasetID;
 	}
 
-	public void setInfo(String info) throws PlatformException
+	public void setInfo(String info)
 	{
 		_info = info;
+	}
+
+	/**
+	 * @param name The name to set.
+	 */
+	public void setName(String name)
+	{
+		_name = name;
 	}
 
 	public static final String ITEMS_TABLE_NAME = "dataset_items";

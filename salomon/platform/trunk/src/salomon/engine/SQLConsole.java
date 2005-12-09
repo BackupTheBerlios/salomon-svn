@@ -110,8 +110,7 @@ public final class SQLConsole extends JFrame
 
 	/**
 	 * Creates instance of SQLConsole object.
-	 * 
-	 * @param isStandAlone if true SQLConsole is standalone application
+	 *
 	 */
 	public SQLConsole(DBManager manager)
 	{

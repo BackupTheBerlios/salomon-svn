@@ -184,7 +184,6 @@ public final class PluginMangerGUI
 
 			for (ILocalPlugin plugin : plugins) {
 				LOGGER.debug("adding plugin:" + plugin);
-				LOGGER.debug("description:" + plugin.getInfo().getInfo());
 				_pluginListModel.addElement(plugin);
 			}
 		} catch (PlatformException e) {

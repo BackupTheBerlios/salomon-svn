@@ -21,8 +21,6 @@
 
 package salomon.engine.platform.data.dataset;
 
-import org.apache.log4j.Logger;
-
 import salomon.engine.database.DBManager;
 import salomon.engine.database.ExternalDBManager;
 import salomon.engine.solution.ShortSolutionInfo;
@@ -137,9 +135,4 @@ public final class DataSetManager implements IDataSetManager
 				"Method union() not implemented yet!");
 	}
 
-	private static final String DATASET_ITEMS = "dataset_items";
-
-	private static final String DATASETS = "datasets";
-
-	private static final Logger LOGGER = Logger.getLogger(DataSetManager.class);
 }

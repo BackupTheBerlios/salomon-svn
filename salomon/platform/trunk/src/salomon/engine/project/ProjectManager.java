@@ -99,7 +99,7 @@ public final class ProjectManager implements IProjectManager
 			throw new PlatformException(e.getLocalizedMessage());
 		}
 		_currentProject = project;
-		LOGGER.info("nowy project " + _currentProject.getInfo().getInfo());
+		LOGGER.info("nowy project " + ((ProjectInfo)_currentProject.getInfo()).getName());
 	}
 
 	/**
@@ -189,7 +189,7 @@ public final class ProjectManager implements IProjectManager
 		//select.addCondition("SOLUTION_ID");
 		LOGGER.info("Zly _currentProject = " + _currentProject);
 		LOGGER.info("Zly _currentProject name = "
-				+ _currentProject.getInfo().getInfo());
+				+ ((ProjectInfo)_currentProject.getInfo()).getName());
 		select.addCondition("solution_id =",
 				((Project) _currentProject).getInfo().getSolutionID());
 		// executing query
