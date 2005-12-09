@@ -123,7 +123,12 @@ public final class DataSetInfo implements IInfo
 	}
 
 	public void loadItems(ResultSet resultSet) throws SQLException {
-		LOGGER.info("DataSetInfo.loadItems(): TODO: "); 
+		LOGGER.info("DataSetInfo.loadItems(): TODO: ");
+		String tableName = resultSet.getString("table_name");
+		String condition = resultSet.getString("condition");
+		//AbstractCondition condition = facory.createCondition(table, conditon)
+		AbstractCondition abstractCondition = null;
+		_conditions.add(abstractCondition);
 	}
 	
 	public void load(ResultSet resultSet) throws MalformedURLException,

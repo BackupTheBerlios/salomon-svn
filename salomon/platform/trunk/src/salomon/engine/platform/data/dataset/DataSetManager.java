@@ -120,16 +120,37 @@ public final class DataSetManager implements IDataSetManager
 	{
 		List<IDataSet> dataSets = new LinkedList<IDataSet>();
 
-		SQLSelect select = this.getDataSetSelect();
+		SQLSelect select = new SQLSelect();
+		select.addTable(DataSetInfo.TABLE_NAME + " d");
+		select.addTable(DataSetInfo.ITEMS_TABLE_NAME + " di");
+		select.addColumn("d.dataset_id");
+		select.addColumn("d.dataset_name");
+		select.addColumn("d.info");
+		select.addColumn("di.table_name");
+		select.addColumn("di.condition");
+		select.addCondition("d.dataset_id = di.dataset_id");
+		select.addOrderBy("d.dataset_id");
 
 		ResultSet resultSet;
+		int dataSetID = -1;
 		try {
 			resultSet = _dbManager.select(select);
-
-			while (resultSet.next()) {
-				IDataSet dataSet = this.createEmpty();
-				dataSet.getInfo().load(resultSet);
-				dataSets.add(dataSet);
+			IDataSet dataSet = null;
+			while (resultSet.next()) {				
+				int tmpDataSetID = resultSet.getInt("dataset_id");
+				// when dataset_id changes, creating new DataSet object 
+				if (tmpDataSetID != dataSetID) {
+					dataSetID = tmpDataSetID;
+					dataSet = this.createEmpty();
+					dataSet.getInfo().load(resultSet);
+					dataSets.add(dataSet);
+					// not loading items, if there is no more rows
+					if (! resultSet.next()) {
+						break;
+					}
+				}
+				// loading items
+				((DataSetInfo)dataSet.getInfo()).loadItems(resultSet);				
 			}
 			resultSet.close();
 		} catch (Exception e) {
