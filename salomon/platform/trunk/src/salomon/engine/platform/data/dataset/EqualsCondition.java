@@ -53,16 +53,4 @@ final class EqualsCondition extends AbstractCondition
 		return result;
 	}
 
-	public String getTable()
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public String getCondition()
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

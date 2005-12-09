@@ -27,6 +27,9 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
 import salomon.engine.database.DBManager;
+import salomon.engine.database.ExternalDBManager;
+import salomon.engine.solution.ShortSolutionInfo;
+import salomon.platform.exception.PlatformException;
 
 public class DataSetTest extends TestCase
 {
@@ -36,6 +39,10 @@ public class DataSetTest extends TestCase
 	 * @uml.associationEnd multiplicity="(0 1)"
 	 */
 	DBManager _manager;
+	
+	ExternalDBManager _externalDBManager;
+	
+	DataSetManager _dataSetManager;
 
 	//TODO: commented out until DataSet is implemented
 
@@ -144,27 +151,26 @@ public class DataSetTest extends TestCase
 	//		assertEquals(selectBefore, selectAfter);
 	//	}
 	//
-	//	/*
-	//	 * Class under test for ResultSet selectData(String)
-	//	 */
-	//	public void testSave1()
-	//	{
-	//		LOGGER.info("DataSetTest.testSave1()");
-	//		boolean success = false;
-	//		DataSet dataSet = new DataSet("testName");
-	//		dataSet.addCondition("projects", "project_id > 10");
-	//		dataSet.addCondition("projects", "project_name <> 'project_1'");
-	//		try {
-	//			dataSet.save();
-	//			success = true;
-	//		} catch (SQLException e) {
-	//			LOGGER.fatal("", e);
-	//		} catch (ClassNotFoundException e) {
-	//			LOGGER.fatal("", e);
-	//		}
-	//		_manager.rollback();
-	//		assertTrue(success);
-	//	}
+		/*
+		 * Class under test for ResultSet selectData(String)
+		 */
+		public void testSave1()
+		{
+			LOGGER.info("DataSetTest.testSave1()");
+			boolean success = false;
+			try {			
+			DataSet dataSet = (DataSet) _dataSetManager.createEmpty();
+//			dataSet.addCondition("projects", "project_id > 10");
+//			dataSet.addCondition("projects", "project_name <> 'project_1'");
+
+//				dataSet.save();
+//				success = true;
+			} catch (PlatformException e) {
+				LOGGER.fatal("", e);
+			} 
+			_manager.rollback();
+			assertTrue(success);
+		}
 	//	
 	//	public void testSave2()
 	//	{
@@ -193,8 +199,22 @@ public class DataSetTest extends TestCase
 		PropertyConfigurator.configure("log.conf"); //$NON-NLS-1$   
 		_manager = new DBManager();
 		_manager.connect();
+		_externalDBManager = new ExternalDBManager();
+		_externalDBManager.connect("", "\\db\\persons.gdb", "sysdba",
+					"masterkey");
+		//TODO: pass ShorSolutionInfo
+		_dataSetManager = new DataSetManager(_manager, null, _externalDBManager);
+		LOGGER.info("Connected");
 	}
 
+	@Override
+	protected void tearDown() throws Exception
+	{
+		_manager.disconnect();
+		_externalDBManager.disconnect();
+		LOGGER.info("Disconnected");
+	}
+	
 	private static final Logger LOGGER = Logger.getLogger(DataSetTest.class);
 
 }

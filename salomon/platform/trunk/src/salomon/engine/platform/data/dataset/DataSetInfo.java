@@ -44,7 +44,7 @@ public final class DataSetInfo implements IInfo
 	 * Conditions determinating data set. key is table name, value - list of
 	 * conditions corresponding to given table
 	 */
-	private Set<ICondition> _conditions;
+	private Set<AbstractCondition> _conditions;
 
 	private int _datasetID;
 
@@ -59,12 +59,12 @@ public final class DataSetInfo implements IInfo
 	DataSetInfo(DBManager dbManager)
 	{
 		_dbManager = dbManager;
-		_conditions = new HashSet<ICondition>();
+		_conditions = new HashSet<AbstractCondition>();
 	}
 
 	public void addCondition(ICondition condition)
 	{
-		_conditions.add(condition);
+		_conditions.add((AbstractCondition) condition);
 	}
 
 	public boolean delete() throws SQLException, ClassNotFoundException
@@ -128,11 +128,11 @@ public final class DataSetInfo implements IInfo
 				_datasetID, GEN_NAME);
 
 		// saving items
-		for (ICondition condition : _conditions) {
+		for (AbstractCondition condition : _conditions) {
 			SQLInsert insert = new SQLInsert(ITEMS_TABLE_NAME);
 			insert.addValue("dataset_id", _datasetID);
-			insert.addValue("table_name", condition.getTable());
-			insert.addValue("condition", condition.getCondition());
+			insert.addValue("table_name", condition.getColumn().getTable().getName());
+			insert.addValue("condition", condition.getSQL());
 			LOGGER.debug("insert: " + insert.getQuery());
 			_dbManager.insert(insert, "dataset_item_id");
 		}

@@ -45,7 +45,7 @@ abstract class AbstractCondition implements ICondition
 	 * Returns the column.
 	 * @return The column
 	 */
-	protected final IColumn getColumn()
+	final IColumn getColumn()
 	{
 		return _column;
 	}
@@ -54,7 +54,7 @@ abstract class AbstractCondition implements ICondition
 	 * Returns the value.
 	 * @return The value
 	 */
-	protected final Object getValue()
+	final Object getValue()
 	{
 		return _value;
 	}
@@ -71,4 +71,5 @@ abstract class AbstractCondition implements ICondition
 		
 		return result;
 	}
+
 }

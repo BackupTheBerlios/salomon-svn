@@ -21,12 +21,11 @@
 
 package salomon.platform.data.dataset;
 
+
 /**
  * 
  */
 public interface ICondition
 {
-	String getTable();
-	
-	String getCondition();
+	// empty body
 }
