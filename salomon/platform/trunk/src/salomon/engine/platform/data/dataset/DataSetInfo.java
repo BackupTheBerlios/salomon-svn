@@ -122,11 +122,17 @@ public final class DataSetInfo implements IInfo
 		return _solutionID;
 	}
 
+	public void loadItems(ResultSet resultSet) throws SQLException {
+		LOGGER.info("DataSetInfo.loadItems(): TODO: "); 
+	}
+	
 	public void load(ResultSet resultSet) throws MalformedURLException,
 			SQLException
 	{
-		// TODO Auto-generated method stub
-
+		// do not load solution_id - it is set while creating dataset
+		_datasetID = resultSet.getInt("dataset_id");		
+		_name = resultSet.getString("dataset_name");
+		_info = resultSet.getString("info");
 	}
 
 	/**
@@ -180,6 +186,16 @@ public final class DataSetInfo implements IInfo
 	public void setName(String name)
 	{
 		_name = name;
+	}
+
+	@Override
+	public String toString()
+	{
+		String info = _datasetID + " " + _solutionID; 
+		info +=	(_name == null ? "" : _name);
+		info += (_name == null ? "" : " " + _info);
+		info += _conditions.toString();
+		return info;
 	}
 
 	/**

@@ -34,7 +34,9 @@ import salomon.engine.platform.data.DBColumn;
 import salomon.engine.platform.data.DBTable;
 import salomon.engine.solution.ISolution;
 import salomon.platform.IDataEngine;
+import salomon.platform.IUniqueId;
 import salomon.platform.data.IColumn;
+import salomon.platform.data.dataset.IDataSet;
 import salomon.platform.exception.PlatformException;
 
 public class DataSetTest extends TestCase
@@ -189,7 +191,7 @@ public class DataSetTest extends TestCase
 		} catch (ClassNotFoundException e) {
 			LOGGER.fatal("", e);
 		}
-		_manager.rollback();
+		_manager.commit();
 		assertTrue(success);
 	}
 
@@ -212,6 +214,27 @@ public class DataSetTest extends TestCase
 		_manager.rollback();
 		assertTrue(success);
 	}
+	
+	public void testLoad()
+	{
+		LOGGER.info("DataSetTest.testLoad()");
+		boolean success = false;
+		try {			
+			IDataSet dataSet = _dataSetManager.getDataSet(new IUniqueId() {
+				public int getId()
+				{
+					return 12;
+				}
+				
+			});
+			LOGGER.info(dataSet.getInfo());			
+			success = true;
+		} catch (PlatformException e) {
+			LOGGER.fatal("", e);
+		}
+		assertTrue(success);
+	}
+	
 	//	
 	//	public void testSave2()
 	//	{
