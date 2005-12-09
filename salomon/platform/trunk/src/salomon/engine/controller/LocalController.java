@@ -61,10 +61,13 @@ import salomon.engine.controller.gui.SolutionManagerGUI;
 import salomon.engine.controller.gui.SplashScreen;
 import salomon.engine.controller.gui.TaskManagerGUI;
 import salomon.engine.controller.gui.action.ActionManager;
+
+import salomon.util.gui.Utils;
+
+import salomon.platform.exception.PlatformException;
+
 import salomon.engine.platform.IManagerEngine;
 import salomon.engine.platform.ManagerEngine;
-import salomon.platform.exception.PlatformException;
-import salomon.util.gui.Utils;
 
 /**
  * Local implementation of IController interface.
@@ -214,9 +217,12 @@ public final class LocalController implements IController
 		_managerEngine = managerEngine;
 		SplashScreen.show();
 		try {
-		      UIManager.setLookAndFeel(new PlasticXPLookAndFeel());
-		      PlasticLookAndFeel.setMyCurrentTheme(new ExperienceBlue());
-		   } catch (Exception e) {}
+			PlasticLookAndFeel.setTabStyle(PlasticLookAndFeel.TAB_STYLE_METAL_VALUE);
+			PlasticLookAndFeel.setMyCurrentTheme(new ExperienceBlue());
+			UIManager.setLookAndFeel(new PlasticXPLookAndFeel());
+		} catch (Exception e) {
+			LOGGER.warn("Cannot set look&feel!", e);
+		}
 		//TODO: add cascade model support (?)
 		try {
 			_solutionManagerGUI = new SolutionManagerGUI(
@@ -405,7 +411,7 @@ public final class LocalController implements IController
 						+ Config.FILE_SEPARATOR
 						+ Resources.getString("ICO_SOLUTION_OPEN"))); //$NON-NLS-1$                
 			}
-			return _btnOpenSolution;			
+			return _btnOpenSolution;
 		}
 
 		JButton getBtnSaveProject()

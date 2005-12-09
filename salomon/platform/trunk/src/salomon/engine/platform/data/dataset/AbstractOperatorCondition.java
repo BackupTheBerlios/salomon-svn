@@ -22,56 +22,35 @@
 package salomon.engine.platform.data.dataset;
 
 import salomon.platform.data.IColumn;
-import salomon.platform.data.dataset.ICondition;
 
-/**
- * 
- */
-abstract class AbstractCondition implements ICondition
+import salomon.engine.platform.data.DBColumn;
+import salomon.engine.platform.data.DBTable;
+
+abstract class AbstractOperatorCondition extends AbstractCondition
 {
-	private IColumn _column;
-
-	private Object _value;
-
-	AbstractCondition(IColumn column, Object value)
+	
+	protected AbstractOperatorCondition(IColumn column, Object value)
 	{
-		_column = column;
-		_value = value;
-	}
-
-	/**
-	 * Returns the column.
-	 * @return The column
-	 */
-	final IColumn getColumn()
-	{
-		return _column;
-	}
-
-	abstract String getSQL();
-
-	/**
-	 * Returns the value.
-	 * @return The value
-	 */
-	final Object getValue()
-	{
-		return _value;
+		super(column, value);
 	}
 
 	protected abstract String getOperator();
 
-	protected final String getValueString()
+	/**
+	 * @see salomon.engine.platform.data.dataset.AbstractCondition#getSQL()
+	 */
+	@Override
+	String getSQL()
 	{
-		//TODO:
-		String result = null;
-		if (_value instanceof String) {
-			result = (String) _value;
-		} else {
-			result = _value.toString();
-		}
+		DBColumn column = (DBColumn) getColumn();
+		String columnName = column.getName();
+		DBTable table = column.getTable();
+		String tableName = table.getName();
+		String value = getValueString();
+		StringBuilder result = new StringBuilder();
+		String operator = getOperator();
+		result.append(tableName).append(operator).append(columnName).append(value);
 
-		return result;
+		return result.toString();
 	}
-
 }

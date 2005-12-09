@@ -47,9 +47,9 @@ public interface IDataSetManager
 
 	ICondition createEqualsCondition(IColumn column, Object value) throws PlatformException;
 
-	ICondition createGreaterCondition() throws PlatformException;
+	ICondition createGreaterCondition(IColumn column, Object value) throws PlatformException;
 
-	ICondition createLowerCondition() throws PlatformException;
+	ICondition createLowerCondition(IColumn column, Object value) throws PlatformException;
 
 	/**
 	 * Gets all data sets.

@@ -72,16 +72,14 @@ public final class DataSetManager implements IDataSetManager
 		return new EqualsCondition(column, value);
 	}
 
-	public ICondition createGreaterCondition() throws PlatformException
+	public ICondition createGreaterCondition(IColumn column, Object value) throws PlatformException
 	{
-		throw new UnsupportedOperationException(
-				"Method DataSetManager.createGreaterCondition() not implemented yet!");
+		return new GreaterCondition(column, value);
 	}
 
-	public ICondition createLowerCondition() throws PlatformException
+	public ICondition createLowerCondition(IColumn column, Object value) throws PlatformException
 	{
-		throw new UnsupportedOperationException(
-				"Method DataSetManager.createLowerCondition() not implemented yet!");
+		return new LowerCondition(column, value);
 	}
 
 	/**

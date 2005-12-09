@@ -29,28 +29,17 @@ import salomon.engine.platform.data.DBTable;
 /**
  * 
  */
-final class EqualsCondition extends AbstractCondition
+final class EqualsCondition extends AbstractOperatorCondition
 {
 	EqualsCondition(IColumn column, Object value)
 	{
 		super(column, value);
 	}
 
-	/**
-	 * @see salomon.engine.platform.data.dataset.AbstractCondition#getSQL()
-	 */
 	@Override
-	String getSQL()
+	protected String getOperator()
 	{
-		DBColumn column = (DBColumn) getColumn();
-		String columnName = column.getName();
-		DBTable table = column.getTable();
-		String tableName = table.getName();
-		String value = null;
-
-		String result = String.format("$s.$s=$s", tableName, columnName, value);
-
-		return result;
+		return "=";
 	}
 
 }

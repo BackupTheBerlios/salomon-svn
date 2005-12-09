@@ -22,56 +22,20 @@
 package salomon.engine.platform.data.dataset;
 
 import salomon.platform.data.IColumn;
-import salomon.platform.data.dataset.ICondition;
 
-/**
- * 
- */
-abstract class AbstractCondition implements ICondition
+public final class GreaterCondition extends AbstractOperatorCondition
 {
-	private IColumn _column;
 
-	private Object _value;
-
-	AbstractCondition(IColumn column, Object value)
+	protected GreaterCondition(IColumn column, Object value)
 	{
-		_column = column;
-		_value = value;
+		super(column, value);
+		// TODO Auto-generated constructor stub
 	}
 
-	/**
-	 * Returns the column.
-	 * @return The column
-	 */
-	final IColumn getColumn()
+	@Override
+	protected String getOperator()
 	{
-		return _column;
-	}
-
-	abstract String getSQL();
-
-	/**
-	 * Returns the value.
-	 * @return The value
-	 */
-	final Object getValue()
-	{
-		return _value;
-	}
-
-	protected abstract String getOperator();
-
-	protected final String getValueString()
-	{
-		//TODO:
-		String result = null;
-		if (_value instanceof String) {
-			result = (String) _value;
-		} else {
-			result = _value.toString();
-		}
-
-		return result;
+		return ">";
 	}
 
 }
