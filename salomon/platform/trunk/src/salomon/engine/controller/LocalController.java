@@ -44,6 +44,10 @@ import javax.swing.UIManager;
 
 import org.apache.log4j.Logger;
 
+import com.jgoodies.looks.plastic.PlasticLookAndFeel;
+import com.jgoodies.looks.plastic.PlasticXPLookAndFeel;
+import com.jgoodies.looks.plastic.theme.ExperienceBlue;
+
 import salomon.engine.Config;
 import salomon.engine.Messages;
 import salomon.engine.Resources;
@@ -210,8 +214,8 @@ public final class LocalController implements IController
 		_managerEngine = managerEngine;
 		SplashScreen.show();
 		try {
-//		      UIManager.setLookAndFeel(new PlasticXPLookAndFeel());
-//		      PlasticLookAndFeel.setMyCurrentTheme(new ExperienceBlue());
+		      UIManager.setLookAndFeel(new PlasticXPLookAndFeel());
+		      PlasticLookAndFeel.setMyCurrentTheme(new ExperienceBlue());
 		   } catch (Exception e) {}
 		//TODO: add cascade model support (?)
 		try {
