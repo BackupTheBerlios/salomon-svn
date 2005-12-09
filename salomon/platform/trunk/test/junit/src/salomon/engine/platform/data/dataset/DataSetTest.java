@@ -29,12 +29,12 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
 import salomon.engine.database.DBManager;
-import salomon.engine.database.ExternalDBManager;
+import salomon.engine.platform.ManagerEngine;
 import salomon.engine.platform.data.DBColumn;
 import salomon.engine.platform.data.DBTable;
-import salomon.engine.solution.ShortSolutionInfo;
+import salomon.engine.solution.ISolution;
+import salomon.platform.IDataEngine;
 import salomon.platform.data.IColumn;
-import salomon.platform.data.dataset.ICondition;
 import salomon.platform.exception.PlatformException;
 
 public class DataSetTest extends TestCase
@@ -44,11 +44,11 @@ public class DataSetTest extends TestCase
 	 * @uml.property name="_manager"
 	 * @uml.associationEnd multiplicity="(0 1)"
 	 */
-	DBManager _manager;
-
-	ExternalDBManager _externalDBManager;
-
 	DataSetManager _dataSetManager;
+	
+	ManagerEngine _engine;
+	
+	DBManager _manager;
 
 	//TODO: commented out until DataSet is implemented
 
@@ -218,23 +218,13 @@ public class DataSetTest extends TestCase
 	 */
 	protected void setUp() throws Exception
 	{
-		PropertyConfigurator.configure("log.conf"); //$NON-NLS-1$   
-		_manager = new DBManager();
-		_manager.connect();
-		_externalDBManager = new ExternalDBManager();
-		_externalDBManager.connect("", "\\db\\persons.gdb", "sysdba",
-				"masterkey");
-		//TODO: pass ShorSolutionInfo
-		_dataSetManager = new DataSetManager(_manager, null, _externalDBManager);
+		PropertyConfigurator.configure("log.conf"); //$NON-NLS-1$
+		_engine = new ManagerEngine();
+		ISolution solution = _engine.getSolutionManager().getSolutions()[0];				
+		IDataEngine dataEngine = solution.getDataEngine();
+		_dataSetManager = (DataSetManager) dataEngine.getDataSetManager();
+		_manager = _engine.getDbManager();
 		LOGGER.info("Connected");
-	}
-
-	@Override
-	protected void tearDown() throws Exception
-	{
-		_manager.disconnect();
-		_externalDBManager.disconnect();
-		LOGGER.info("Disconnected");
 	}
 
 	private static final Logger LOGGER = Logger.getLogger(DataSetTest.class);

@@ -103,6 +103,14 @@ public final class DataSetInfo implements IInfo
 		return _name;
 	}
 
+	/**
+	 * @return Returns the solutionID.
+	 */
+	public int getSolutionID()
+	{
+		return _solutionID;
+	}
+
 	public void load(ResultSet resultSet) throws MalformedURLException,
 			SQLException
 	{
@@ -123,13 +131,14 @@ public final class DataSetInfo implements IInfo
 		LOGGER.debug("rows deleted: " + rows);
 
 		//saving header
-		SQLUpdate update = new SQLUpdate(TABLE_NAME);
+		SQLUpdate update = new SQLUpdate(TABLE_NAME);		
 		if (_name != null) {
 			update.addValue("dataset_name", _name);
 		}
 		if (_info != null) {
 			update.addValue("dataset_info", _info);
 		}
+		update.addValue("solution_id", _solutionID);
 		update.addValue("lm_date", new Date(System.currentTimeMillis()));
 
 		_datasetID = _dbManager.insertOrUpdate(update, "dataset_id",
@@ -160,6 +169,14 @@ public final class DataSetInfo implements IInfo
 	public void setName(String name)
 	{
 		_name = name;
+	}
+
+	/**
+	 * @param solutionID The solutionID to set.
+	 */
+	void setSolutionID(int solutionID)
+	{
+		_solutionID = solutionID;
 	}
 
 	public static final String ITEMS_TABLE_NAME = "dataset_items";

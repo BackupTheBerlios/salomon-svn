@@ -62,6 +62,7 @@ public final class DataSetManager implements IDataSetManager
 	public IDataSet createEmpty() throws PlatformException
 	{
 		IDataSet dataSet = new DataSet(_dbManager, _externalDBManager);
+		((DataSetInfo)dataSet.getInfo()).setSolutionID(_solutionInfo.getId());
 		return dataSet;
 	}
 
