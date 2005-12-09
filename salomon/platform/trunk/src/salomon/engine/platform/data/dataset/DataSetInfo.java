@@ -161,7 +161,7 @@ public final class DataSetInfo implements IInfo
 			insert.addValue("dataset_id", _datasetID);
 			insert.addValue("table_name",
 					condition.getColumn().getTable().getName());
-			insert.addValue("condition", condition.getSQL());
+			insert.addValue("condition", condition.toSQL());
 			LOGGER.debug("insert: " + insert.getQuery());
 			_dbManager.insert(insert, "dataset_item_id");
 		}

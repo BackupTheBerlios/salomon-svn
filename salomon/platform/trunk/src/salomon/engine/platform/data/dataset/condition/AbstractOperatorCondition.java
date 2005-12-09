@@ -35,10 +35,10 @@ abstract class AbstractOperatorCondition extends AbstractCondition
 	}
 
 	/**
-	 * @see salomon.engine.platform.data.dataset.condition.AbstractCondition#getSQL()
+	 * @see salomon.engine.platform.data.dataset.condition.AbstractCondition#toSQL()
 	 */
 	@Override
-	public String getSQL()
+	public String toSQL()
 	{
 		DBColumn column = (DBColumn) getColumn();
 		String columnName = column.getName();

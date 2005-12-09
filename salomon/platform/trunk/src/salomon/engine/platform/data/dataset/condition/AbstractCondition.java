@@ -48,7 +48,7 @@ public abstract class AbstractCondition implements ICondition
 		return _column;
 	}
 
-	public abstract String getSQL();
+	public abstract String toSQL();
 
 	/**
 	 * Returns the value.
