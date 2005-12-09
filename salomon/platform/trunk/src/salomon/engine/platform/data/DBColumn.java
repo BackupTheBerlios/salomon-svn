@@ -31,13 +31,16 @@ public final class DBColumn implements IColumn
 	private String _name;
 
 	private String _type;
+	
+	private DBTable _table;
 
 	/**
 	 * @param name
 	 * @param type
 	 */
-	public DBColumn(String name, String type)
+	public DBColumn(DBTable table, String name, String type)
 	{
+		_table = table;
 		_name = name;
 		_type = type;
 	}
@@ -68,7 +71,6 @@ public final class DBColumn implements IColumn
 
 	public DBTable getTable()
 	{
-		throw new UnsupportedOperationException(
-				"Method DBColumn.getTable() not implemented yet!");
+		return _table;
 	}
 }

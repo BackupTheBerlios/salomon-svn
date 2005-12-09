@@ -78,7 +78,7 @@ public final class DBMetaData implements IMetaData
 			while (resultSet.next()) {
 				String colName = resultSet.getString("column_name");
 				String colType = resultSet.getString("type_name");
-				DBColumn column = new DBColumn(colName, colType);
+				DBColumn column = new DBColumn(_tables[i], colName, colType);
 				columns.add(column);
 			}
 			resultSet.close();

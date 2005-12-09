@@ -26,4 +26,6 @@ public interface IColumn
 	String getName();
 
 	String getType();
+	
+	ITable getTable();
 }
