@@ -193,6 +193,25 @@ public class DataSetTest extends TestCase
 		assertTrue(success);
 	}
 
+	public void testDelete()
+	{
+		LOGGER.info("DataSetTest.testDelete()");
+		boolean success = false;
+		try {
+			DataSet dataSet = (DataSet) _dataSetManager.getAll()[0];
+			assertNull(dataSet);
+			dataSet.getInfo().delete();
+			success = true;
+		} catch (PlatformException e) {
+			LOGGER.fatal("", e);
+		} catch (SQLException e) {
+			LOGGER.fatal("", e);
+		} catch (ClassNotFoundException e) {
+			LOGGER.fatal("", e);
+		}
+		_manager.rollback();
+		assertTrue(success);
+	}
 	//	
 	//	public void testSave2()
 	//	{

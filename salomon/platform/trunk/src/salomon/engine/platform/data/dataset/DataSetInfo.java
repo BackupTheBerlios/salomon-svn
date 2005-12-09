@@ -69,8 +69,17 @@ public final class DataSetInfo implements IInfo
 
 	public boolean delete() throws SQLException, ClassNotFoundException
 	{
-		// TODO Auto-generated method stub
-		return false;
+		SQLDelete delete = new SQLDelete();
+		// deleting items
+		delete.setTable(ITEMS_TABLE_NAME);
+		delete.addCondition("dataset_id = ", _datasetID);
+		int rows = _dbManager.delete(delete);
+		LOGGER.debug("rows deleted: " + rows);
+		// deleting header
+		delete.setTable(TABLE_NAME);
+		rows = _dbManager.delete(delete);
+		LOGGER.debug("rows deleted: " + rows);
+		return (rows > 0);
 	}
 
 	public Date getCreationDate() throws PlatformException
@@ -131,7 +140,7 @@ public final class DataSetInfo implements IInfo
 		LOGGER.debug("rows deleted: " + rows);
 
 		//saving header
-		SQLUpdate update = new SQLUpdate(TABLE_NAME);		
+		SQLUpdate update = new SQLUpdate(TABLE_NAME);
 		if (_name != null) {
 			update.addValue("dataset_name", _name);
 		}
