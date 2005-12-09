@@ -19,19 +19,16 @@
  * 
  */
 
-package salomon.engine.platform.data.dataset;
+package salomon.engine.platform.data.dataset.condition;
 
 import salomon.platform.data.IColumn;
-
-import salomon.engine.platform.data.DBColumn;
-import salomon.engine.platform.data.DBTable;
 
 /**
  * 
  */
-final class EqualsCondition extends AbstractOperatorCondition
+public final class EqualsCondition extends AbstractOperatorCondition
 {
-	EqualsCondition(IColumn column, Object value)
+	public EqualsCondition(IColumn column, Object value)
 	{
 		super(column, value);
 	}

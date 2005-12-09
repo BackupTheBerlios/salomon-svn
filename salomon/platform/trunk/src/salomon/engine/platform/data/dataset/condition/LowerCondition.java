@@ -19,38 +19,23 @@
  * 
  */
 
-package salomon.engine.platform.data.dataset;
+package salomon.engine.platform.data.dataset.condition;
 
 import salomon.platform.data.IColumn;
 
-import salomon.engine.platform.data.DBColumn;
-import salomon.engine.platform.data.DBTable;
-
-abstract class AbstractOperatorCondition extends AbstractCondition
+public final class LowerCondition extends AbstractOperatorCondition
 {
-	
-	protected AbstractOperatorCondition(IColumn column, Object value)
+
+	public LowerCondition(IColumn column, Object value)
 	{
 		super(column, value);
+		// TODO Auto-generated constructor stub
 	}
 
-	protected abstract String getOperator();
-
-	/**
-	 * @see salomon.engine.platform.data.dataset.AbstractCondition#getSQL()
-	 */
 	@Override
-	String getSQL()
+	protected String getOperator()
 	{
-		DBColumn column = (DBColumn) getColumn();
-		String columnName = column.getName();
-		DBTable table = column.getTable();
-		String tableName = table.getName();
-		String value = getValueString();
-		StringBuilder result = new StringBuilder();
-		String operator = getOperator();
-		result.append(tableName).append(operator).append(columnName).append(value);
-
-		return result.toString();
+		return "<";
 	}
+
 }

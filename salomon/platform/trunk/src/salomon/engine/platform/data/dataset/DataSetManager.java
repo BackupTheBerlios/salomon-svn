@@ -24,12 +24,17 @@ package salomon.engine.platform.data.dataset;
 import salomon.engine.database.DBManager;
 import salomon.engine.database.ExternalDBManager;
 import salomon.engine.solution.ShortSolutionInfo;
+
 import salomon.platform.IUniqueId;
 import salomon.platform.data.IColumn;
 import salomon.platform.data.dataset.ICondition;
 import salomon.platform.data.dataset.IDataSet;
 import salomon.platform.data.dataset.IDataSetManager;
 import salomon.platform.exception.PlatformException;
+
+import salomon.engine.platform.data.dataset.condition.EqualsCondition;
+import salomon.engine.platform.data.dataset.condition.GreaterCondition;
+import salomon.engine.platform.data.dataset.condition.LowerCondition;
 
 /**
  * Class manages with datasets.

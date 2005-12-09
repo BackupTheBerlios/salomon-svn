@@ -38,6 +38,8 @@ import salomon.platform.IInfo;
 import salomon.platform.data.dataset.ICondition;
 import salomon.platform.exception.PlatformException;
 
+import salomon.engine.platform.data.dataset.condition.AbstractCondition;
+
 public final class DataSetInfo implements IInfo
 {
 	/**
