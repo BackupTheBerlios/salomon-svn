@@ -47,8 +47,8 @@ abstract class AbstractOperatorCondition extends AbstractCondition
 		String value = getValueString();
 		StringBuilder result = new StringBuilder();
 		String operator = getOperator();
-		result.append(tableName).append('.').append(columnName).append(operator).append(
-				value);
+		result.append(tableName).append('.').append(columnName);
+		result.append(" ").append(operator).append(" ").append(value);
 
 		return result.toString();
 	}
