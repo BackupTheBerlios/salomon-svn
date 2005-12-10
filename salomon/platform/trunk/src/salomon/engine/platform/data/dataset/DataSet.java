@@ -23,8 +23,6 @@ package salomon.engine.platform.data.dataset;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashSet;
-import java.util.Set;
 
 import org.apache.log4j.Logger;
 
@@ -215,7 +213,7 @@ public class DataSet implements IDataSet
 		// return connector.getResultSet();
 		throw new UnsupportedOperationException(
 				"Method selectData() not implemented yet!");
-	}	
+	}
 
 	/*
 	 * (non-Javadoc)

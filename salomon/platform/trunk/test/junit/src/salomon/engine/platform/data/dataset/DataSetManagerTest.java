@@ -21,6 +21,8 @@
 
 package salomon.engine.platform.data.dataset;
 
+import java.sql.SQLException;
+
 import junit.framework.TestCase;
 
 import org.apache.log4j.Logger;
@@ -29,9 +31,12 @@ import org.apache.log4j.PropertyConfigurator;
 import salomon.TestObjectFactory;
 import salomon.engine.database.DBManager;
 import salomon.engine.platform.ManagerEngine;
+import salomon.engine.platform.data.DBColumn;
+import salomon.engine.platform.data.DBTable;
 import salomon.engine.solution.ISolution;
 import salomon.platform.IDataEngine;
 import salomon.platform.IUniqueId;
+import salomon.platform.data.IColumn;
 import salomon.platform.data.dataset.IDataSet;
 import salomon.platform.exception.PlatformException;
 
@@ -58,16 +63,40 @@ public class DataSetManagerTest extends TestCase
 		}
 	}
 
-	public void testGetDataSet() throws PlatformException
+	public void testAdd()
 	{
-		LOGGER.info("DataSetManagerTest.testGetDataSet()");
-		IDataSet dataSet = _dataSetManager.getDataSet(new IUniqueId() {
+		throw new UnsupportedOperationException(
+				"Method testAdd() not implemented yet!");
+	}
+	
+	public void testGetDataSet() throws PlatformException, SQLException, ClassNotFoundException
+	{
+		DataSet dataSet = (DataSet) _dataSetManager.createEmpty();
+		((DataSetInfo) dataSet.getInfo()).setName("second");
+
+		DBTable table = new DBTable("persons");
+		// column type is not important
+		IColumn column = new DBColumn(table, "id", "INT");
+		dataSet.addCondition(_dataSetManager.createEqualsCondition(column,
+				new Integer(10)));
+		column = new DBColumn(table, "first_name", "VARCHAR");
+		dataSet.addCondition(_dataSetManager.createEqualsCondition(column,
+				"Nikodem"));
+		column = new DBColumn(table, "last_name", "VARCHAR");
+		dataSet.addCondition(_dataSetManager.createEqualsCondition(column,
+				"Jura"));
+
+		final int dataSetID = dataSet.getInfo().save();		
+		
+		IDataSet loadedDataSet = _dataSetManager.getDataSet(new IUniqueId() {
 			public int getId()
 			{
-				return 13;
+				return dataSetID;
 			}
+
 		});
-		LOGGER.info(dataSet.getInfo());
+		assertNotNull(loadedDataSet);
+		LOGGER.info(loadedDataSet.getInfo());
 	}
 
 	private static final Logger LOGGER = Logger.getLogger(DataSetManagerTest.class);

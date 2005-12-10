@@ -26,18 +26,14 @@ import java.sql.SQLException;
 import junit.framework.TestCase;
 
 import org.apache.log4j.Logger;
-import org.apache.log4j.PropertyConfigurator;
 
 import salomon.TestObjectFactory;
 import salomon.engine.database.DBManager;
-import salomon.engine.platform.ManagerEngine;
 import salomon.engine.platform.data.DBColumn;
 import salomon.engine.platform.data.DBTable;
 import salomon.engine.solution.ISolution;
 import salomon.platform.IDataEngine;
-import salomon.platform.IUniqueId;
 import salomon.platform.data.IColumn;
-import salomon.platform.data.dataset.IDataSet;
 import salomon.platform.exception.PlatformException;
 
 public class DataSetTest extends TestCase
@@ -52,6 +48,17 @@ public class DataSetTest extends TestCase
 	DBManager _manager;
 
 	//TODO: commented out until DataSet is implemented
+
+	public void testDelete() throws PlatformException, SQLException,
+			ClassNotFoundException
+	{
+		LOGGER.info("DataSetTest.testDelete()");
+		DataSet dataSet = (DataSet) _dataSetManager.getAll()[0];
+		assertNotNull(dataSet);
+		dataSet.getInfo().delete();
+		_manager.rollback();
+
+	}
 
 	/*
 	 * Class under test for ResultSet selectData(SQLSelect)
@@ -182,49 +189,6 @@ public class DataSetTest extends TestCase
 		dataSet.getInfo().save();
 
 		_manager.commit();
-	}
-
-	public void testDelete() throws PlatformException, SQLException,
-			ClassNotFoundException
-	{
-		LOGGER.info("DataSetTest.testDelete()");
-		DataSet dataSet = (DataSet) _dataSetManager.getAll()[0];
-		assertNotNull(dataSet);
-		dataSet.getInfo().delete();
-		_manager.rollback();
-
-	}
-
-	public void testLoad() throws PlatformException, SQLException, ClassNotFoundException
-	{
-		LOGGER.info("DataSetTest.testLoad()");
-		
-		DataSet dataSet = (DataSet) _dataSetManager.createEmpty();
-		((DataSetInfo) dataSet.getInfo()).setName("second");
-
-		DBTable table = new DBTable("persons");
-		// column type is not important
-		IColumn column = new DBColumn(table, "id", "INT");
-		dataSet.addCondition(_dataSetManager.createEqualsCondition(column,
-				new Integer(10)));
-		column = new DBColumn(table, "first_name", "VARCHAR");
-		dataSet.addCondition(_dataSetManager.createEqualsCondition(column,
-				"Nikodem"));
-		column = new DBColumn(table, "last_name", "VARCHAR");
-		dataSet.addCondition(_dataSetManager.createEqualsCondition(column,
-				"Jura"));
-
-		final int dataSetID = dataSet.getInfo().save();		
-		
-		IDataSet loadedDataSet = _dataSetManager.getDataSet(new IUniqueId() {
-			public int getId()
-			{
-				return dataSetID;
-			}
-
-		});
-		assertNotNull(loadedDataSet);
-		LOGGER.info(loadedDataSet.getInfo());
 	}
 
 	//	
