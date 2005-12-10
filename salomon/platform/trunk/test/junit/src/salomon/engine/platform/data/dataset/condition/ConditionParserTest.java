@@ -37,17 +37,17 @@ public class ConditionParserTest extends TestCase
 	 */
 	public void testParse() throws PlatformException
 	{
-		String sqlInput = "persons.person_id = 10";
+		String sqlInput = "persons.id = 10";
 		ICondition condition = ConditionParser.parse(_metaData, sqlInput);
 		assertTrue("Invalid condition type", condition instanceof EqualsCondition);
 		EqualsCondition equalsCondition = (EqualsCondition) condition;
 		String returnSql = equalsCondition.toSQL();
-		assertTrue("Invalid sql! " + returnSql, sqlInput.equals(returnSql));
+		assertTrue("Invalid sql! " + returnSql, sqlInput.equalsIgnoreCase(returnSql));
 	}
 
 	@Override
 	protected void setUp() throws Exception
 	{
-		_metaData = TestObjectFactory.getMetaData();
+		_metaData = (DBMetaData) TestObjectFactory.getSolution("Persons").getDataEngine().getMetaData();
 	}
 }
