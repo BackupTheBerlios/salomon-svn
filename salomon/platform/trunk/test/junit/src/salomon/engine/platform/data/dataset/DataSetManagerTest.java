@@ -64,7 +64,7 @@ public class DataSetManagerTest extends TestCase
 		IDataSet dataSet = _dataSetManager.getDataSet(new IUniqueId() {
 			public int getId()
 			{
-				return 12;
+				return 13;
 			}
 		});
 		LOGGER.info(dataSet.getInfo());

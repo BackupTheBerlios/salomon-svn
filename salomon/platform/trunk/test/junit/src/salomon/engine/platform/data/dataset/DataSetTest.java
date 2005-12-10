@@ -28,6 +28,7 @@ import junit.framework.TestCase;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
+import salomon.TestObjectFactory;
 import salomon.engine.database.DBManager;
 import salomon.engine.platform.ManagerEngine;
 import salomon.engine.platform.data.DBColumn;
@@ -47,9 +48,7 @@ public class DataSetTest extends TestCase
 	 * @uml.associationEnd multiplicity="(0 1)"
 	 */
 	DataSetManager _dataSetManager;
-	
-	ManagerEngine _engine;
-	
+
 	DBManager _manager;
 
 	//TODO: commented out until DataSet is implemented
@@ -162,79 +161,72 @@ public class DataSetTest extends TestCase
 	/*
 	 * Class under test for ResultSet selectData(String)
 	 */
-	public void testSave1()
+	public void testSave1() throws PlatformException, SQLException, ClassNotFoundException
 	{
 		LOGGER.info("DataSetTest.testSave1()");
-		boolean success = false;
-		try {
-			DataSet dataSet = (DataSet) _dataSetManager.createEmpty();
-			((DataSetInfo)dataSet.getInfo()).setName("first");
-			
-			DBTable table = new DBTable("persons");
-			// column type is not important
-			IColumn column = new DBColumn(table, "person_id", "INT");
-			dataSet.addCondition(_dataSetManager.createEqualsCondition(column,
-					new Integer(10)));
-			column = new DBColumn(table, "first_name", "VARCHAR");
-			dataSet.addCondition(_dataSetManager.createEqualsCondition(column,
-					"Nikodem"));
-			column = new DBColumn(table, "last_name", "VARCHAR");
-			dataSet.addCondition(_dataSetManager.createEqualsCondition(column,
-					"Jura"));
+		DataSet dataSet = (DataSet) _dataSetManager.createEmpty();
+		((DataSetInfo) dataSet.getInfo()).setName("first");
 
-			dataSet.getInfo().save();
-			success = true;
-		} catch (PlatformException e) {
-			LOGGER.fatal("", e);
-		} catch (SQLException e) {
-			LOGGER.fatal("", e);
-		} catch (ClassNotFoundException e) {
-			LOGGER.fatal("", e);
-		}
+		DBTable table = new DBTable("persons");
+		// column type is not important
+		IColumn column = new DBColumn(table, "id", "INT");
+		dataSet.addCondition(_dataSetManager.createEqualsCondition(column,
+				new Integer(10)));
+		column = new DBColumn(table, "first_name", "VARCHAR");
+		dataSet.addCondition(_dataSetManager.createEqualsCondition(column,
+				"Nikodem"));
+		column = new DBColumn(table, "last_name", "VARCHAR");
+		dataSet.addCondition(_dataSetManager.createEqualsCondition(column,
+				"Jura"));
+
+		dataSet.getInfo().save();
+
 		_manager.commit();
-		assertTrue(success);
 	}
 
-	public void testDelete()
+	public void testDelete() throws PlatformException, SQLException,
+			ClassNotFoundException
 	{
 		LOGGER.info("DataSetTest.testDelete()");
-		boolean success = false;
-		try {
-			DataSet dataSet = (DataSet) _dataSetManager.getAll()[0];
-			assertNull(dataSet);
-			dataSet.getInfo().delete();
-			success = true;
-		} catch (PlatformException e) {
-			LOGGER.fatal("", e);
-		} catch (SQLException e) {
-			LOGGER.fatal("", e);
-		} catch (ClassNotFoundException e) {
-			LOGGER.fatal("", e);
-		}
+		DataSet dataSet = (DataSet) _dataSetManager.getAll()[0];
+		assertNotNull(dataSet);
+		dataSet.getInfo().delete();
 		_manager.rollback();
-		assertTrue(success);
+
 	}
-	
-	public void testLoad()
+
+	public void testLoad() throws PlatformException, SQLException, ClassNotFoundException
 	{
 		LOGGER.info("DataSetTest.testLoad()");
-		boolean success = false;
-		try {			
-			IDataSet dataSet = _dataSetManager.getDataSet(new IUniqueId() {
-				public int getId()
-				{
-					return 12;
-				}
-				
-			});
-			LOGGER.info(dataSet.getInfo());			
-			success = true;
-		} catch (PlatformException e) {
-			LOGGER.fatal("", e);
-		}
-		assertTrue(success);
+		
+		DataSet dataSet = (DataSet) _dataSetManager.createEmpty();
+		((DataSetInfo) dataSet.getInfo()).setName("second");
+
+		DBTable table = new DBTable("persons");
+		// column type is not important
+		IColumn column = new DBColumn(table, "id", "INT");
+		dataSet.addCondition(_dataSetManager.createEqualsCondition(column,
+				new Integer(10)));
+		column = new DBColumn(table, "first_name", "VARCHAR");
+		dataSet.addCondition(_dataSetManager.createEqualsCondition(column,
+				"Nikodem"));
+		column = new DBColumn(table, "last_name", "VARCHAR");
+		dataSet.addCondition(_dataSetManager.createEqualsCondition(column,
+				"Jura"));
+
+		final int dataSetID = dataSet.getInfo().save();		
+		
+		IDataSet loadedDataSet = _dataSetManager.getDataSet(new IUniqueId() {
+			public int getId()
+			{
+				return dataSetID;
+			}
+
+		});
+		assertNotNull(loadedDataSet);
+		LOGGER.info(loadedDataSet.getInfo());
 	}
-	
+
 	//	
 	//	public void testSave2()
 	//	{
@@ -260,12 +252,10 @@ public class DataSetTest extends TestCase
 	 */
 	protected void setUp() throws Exception
 	{
-		PropertyConfigurator.configure("log.conf"); //$NON-NLS-1$
-		_engine = new ManagerEngine();
-		ISolution solution = _engine.getSolutionManager().getSolutions()[0];				
+		ISolution solution = TestObjectFactory.getSolution("Persons");
 		IDataEngine dataEngine = solution.getDataEngine();
 		_dataSetManager = (DataSetManager) dataEngine.getDataSetManager();
-		_manager = _engine.getDbManager();
+		_manager = TestObjectFactory.getDbManager();
 		LOGGER.info("Connected");
 	}
 

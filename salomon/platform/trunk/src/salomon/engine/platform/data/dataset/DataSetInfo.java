@@ -73,13 +73,9 @@ public final class DataSetInfo implements IInfo
 	{
 		SQLDelete delete = new SQLDelete();
 		// deleting items
-		delete.setTable(ITEMS_TABLE_NAME);
+		delete.setTable(TABLE_NAME);
 		delete.addCondition("dataset_id = ", _datasetID);
 		int rows = _dbManager.delete(delete);
-		LOGGER.debug("rows deleted: " + rows);
-		// deleting header
-		delete.setTable(TABLE_NAME);
-		rows = _dbManager.delete(delete);
 		LOGGER.debug("rows deleted: " + rows);
 		return (rows > 0);
 	}
@@ -141,7 +137,7 @@ public final class DataSetInfo implements IInfo
 	}
 
 	/**
-	 * @see salomon.engine.database.IDBSupporting#save()
+	 * @see salomon.platform.IInfo#save()
 	 */
 	public int save() throws SQLException, ClassNotFoundException
 	{
@@ -209,6 +205,12 @@ public final class DataSetInfo implements IInfo
 	void setSolutionID(int solutionID)
 	{
 		_solutionID = solutionID;
+	}
+	
+	public ICondition[] getConditions()
+	{
+		ICondition[] conditions = new ICondition[_conditions.size()];
+		return _conditions.toArray(conditions);
 	}
 
 	public static final String ITEMS_TABLE_NAME = "dataset_items";

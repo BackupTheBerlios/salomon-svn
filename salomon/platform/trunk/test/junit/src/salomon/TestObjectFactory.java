@@ -55,7 +55,7 @@ public final class TestObjectFactory
 	 * @return
 	 * @throws PlatformException
 	 */
-	private static DBManager getDbManager() throws PlatformException
+	public static DBManager getDbManager() throws PlatformException
 	{
 		if (DB_MANGER == null) {
 			ManagerEngine engine = getManagerEngine();

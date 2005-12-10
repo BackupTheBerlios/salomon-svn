@@ -74,8 +74,7 @@ public class DataSet implements IDataSet
 
 	public ICondition[] getConditions()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return _info.getConditions();
 	}
 
 	public IInfo getInfo() throws PlatformException
