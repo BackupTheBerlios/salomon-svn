@@ -31,15 +31,18 @@ import salomon.engine.platform.ManagerEngine;
 import salomon.engine.platform.data.DBMetaData;
 
 /**
- * TODO: use static fields
+ * 
  */
 public final class TestObjectFactory
 {
-	public static DBMetaData createMetaData() throws Exception
+	public static DBMetaData getMetaData() throws Exception
 	{
-		DBManager manager = createDbManager();
+		if (META_DATA == null) {
+			DBManager dbManager = getDbManager();
+			META_DATA = dbManager.getMetaData();
+		}
 
-		return manager.getMetaData();
+		return META_DATA;
 	}
 
 	/**
@@ -47,12 +50,14 @@ public final class TestObjectFactory
 	 * @return
 	 * @throws PlatformException
 	 */
-	private static DBManager createDbManager() throws PlatformException
+	private static DBManager getDbManager() throws PlatformException
 	{
-		ManagerEngine engine = createManagerEngine();
-		DBManager manager = engine.getDbManager();
+		if (DB_MANGER == null) {
+			ManagerEngine engine = getManagerEngine();
+			DB_MANGER = engine.getDbManager();
+		}
 
-		return manager;
+		return DB_MANGER;
 	}
 
 	/**
@@ -60,11 +65,19 @@ public final class TestObjectFactory
 	 * @return
 	 * @throws PlatformException
 	 */
-	private static ManagerEngine createManagerEngine() throws PlatformException
+	private static ManagerEngine getManagerEngine() throws PlatformException
 	{
-		PropertyConfigurator.configure("log.conf"); //$NON-NLS-1$
-		ManagerEngine engine = new ManagerEngine();
+		if (MANAGER_ENGINE == null) {
+			PropertyConfigurator.configure("log.conf"); //$NON-NLS-1$
+			MANAGER_ENGINE = new ManagerEngine();
+		}
 
-		return engine;
+		return MANAGER_ENGINE;
 	}
+
+	private static DBManager DB_MANGER;
+
+	private static ManagerEngine MANAGER_ENGINE;
+
+	private static DBMetaData META_DATA;
 }
