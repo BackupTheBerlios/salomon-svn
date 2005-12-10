@@ -3,18 +3,23 @@
 	<property file="build.properties"/>
 
 	<target name="all" description="builds distribution jars" depends="compile">
-		<jar destfile="${dist_dir}/veniTreeCreator.jar" basedir="${bin_dir}" includes="pl/**">
+		<jar destfile="${dist_dir}/VeniTreeCreator.jar" basedir="${bin_dir}" includes="pl/**">
 			<manifest>
 				<attribute name="Main-Class" value="pl.edu.agh.capitol.veniTreeCreator.VeniTreeCreatorPlugin" />
 			</manifest>
 		</jar>
-		<copy file="${dist_dir}/veniTreeCreator.jar" todir="${jar_loc}"/>
+		<copy file="${dist_dir}/VeniTreeCreator.jar" todir="${jar_loc}"/>
 	</target>
 	
 	<path id="project.class.path">
 		<fileset dir="${lib_dir}">
-			<include name="**/*"/>
+			<include name="**/platform.jar"/>
+			<include name="**/plugin.jar"/>
+			<include name="**/util.jar"/>
 		</fileset>
+		<fileset dir="${sal_lib_dir}">
+			<include name="**/*.jar"/>
+		</fileset>		
 	</path>
 
 
@@ -33,7 +38,7 @@
 	<target name="clean">
 		<delete dir="${bin_dir}" />		
 		<delete dir="${dist_dir}" />
-		<delete file="${jar_loc}/treeTest.jar"/>
+		<delete file="${jar_loc}/VeniTreeCreator"/>
 	</target>	
 
 	

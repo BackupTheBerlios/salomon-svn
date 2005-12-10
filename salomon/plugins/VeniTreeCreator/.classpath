@@ -5,7 +5,7 @@
 	<classpathentry kind="lib" path="/Salomon/dev/platform.jar"/>
 	<classpathentry kind="lib" path="/Salomon/dev/plugin.jar"/>
 	<classpathentry kind="lib" path="/Salomon/dev/util.jar"/>
+	<classpathentry kind="lib" path="/Salomon/lib/junit.jar"/>
 	<classpathentry kind="lib" path="/Salomon/lib/log4j-1.2.8.jar"/>
-	<classpathentry kind="var" path="JUNIT_HOME/junit.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

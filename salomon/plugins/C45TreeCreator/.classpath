@@ -2,9 +2,10 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="/Salomon_core/dev/log4j-1.2.8.jar"/>
-	<classpathentry sourcepath="/Salomon_core/src" kind="lib" path="/Salomon_core/dev/platform.jar"/>
-	<classpathentry kind="lib" path="/Salomon_core/dev/plugin.jar"/>
-	<classpathentry kind="lib" path="/Salomon_core/dev/util.jar"/>
+	<classpathentry kind="lib" path="/Salomon/dev/platform.jar"/>
+	<classpathentry kind="lib" path="/Salomon/dev/plugin.jar"/>
+	<classpathentry kind="lib" path="/Salomon/dev/util.jar"/>
+	<classpathentry kind="lib" path="/Salomon/lib/junit.jar"/>
+	<classpathentry kind="lib" path="/Salomon/lib/log4j-1.2.8.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

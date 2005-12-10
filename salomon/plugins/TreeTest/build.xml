@@ -1,14 +1,14 @@
-<project name="TestTree" default="all" basedir=".">
+<project name="TreeTest" default="all" basedir=".">
 
 	<property file="build.properties"/>
 
 	<target name="all" description="builds distribution jars" depends="compile">
-		<jar destfile="${dist_dir}/treeTest.jar" basedir="${bin_dir}" includes="pl/capitol/**">
+		<jar destfile="${dist_dir}/TreeTest.jar" basedir="${bin_dir}" includes="pl/capitol/**">
 			<manifest>
 				<attribute name="Main-Class" value="pl.capitol.tree.plugins.test.TestPlugin" />
 			</manifest>
 		</jar>
-		<copy file="${dist_dir}/treeTest.jar" todir="${jar_loc}"/>
+		<copy file="${dist_dir}/TreeTest.jar" todir="${jar_loc}"/>
 	</target>
 	
 	<path id="project.class.path">
@@ -17,6 +17,9 @@
 			<include name="**/plugin.jar"/>
 			<include name="**/util.jar"/>
 		</fileset>
+		<fileset dir="${sal_lib_dir}">
+			<include name="**/*.jar"/>
+		</fileset>		
 	</path>
 
 
@@ -35,7 +38,7 @@
 	<target name="clean">
 		<delete dir="${bin_dir}" />		
 		<delete dir="${dist_dir}" />
-		<delete file="${jar_loc}/treeTest.jar"/>
+		<delete file="${jar_loc}/TreeTest.jar"/>
 	</target>	
 
 	

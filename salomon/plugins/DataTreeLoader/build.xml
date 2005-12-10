@@ -17,6 +17,9 @@
 			<include name="**/plugin.jar"/>
 			<include name="**/util.jar"/>
 		</fileset>
+		<fileset dir="${sal_lib_dir}">
+			<include name="**/*.jar"/>
+		</fileset>		
 	</path>
 
 

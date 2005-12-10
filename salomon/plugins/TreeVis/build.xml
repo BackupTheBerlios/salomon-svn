@@ -1,14 +1,14 @@
-<project name="VisTree" default="all" basedir=".">
+<project name="TreeVis" default="all" basedir=".">
 
 	<property file="build.properties"/>
 
 	<target name="all" description="builds distribution jars" depends="compile">
-		<jar destfile="${dist_dir}/treeVis.jar" basedir="${bin_dir}" includes="pl/capitol/**">
+		<jar destfile="${dist_dir}/VisPlugin.jar" basedir="${bin_dir}" includes="pl/capitol/**">
 			<manifest>
 				<attribute name="Main-Class" value="pl.capitol.tree.plugins.test.VisPlugin" />
 			</manifest>
 		</jar>
-		<copy file="${dist_dir}/treeVis.jar" todir="${jar_loc}"/>
+		<copy file="${dist_dir}/VisPlugin.jar" todir="${jar_loc}"/>
 	</target>
 	
 	<path id="project.class.path">
@@ -16,8 +16,10 @@
 			<include name="**/platform.jar"/>
 			<include name="**/plugin.jar"/>
 			<include name="**/util.jar"/>
-			<include name="**/*"/>
 		</fileset>
+		<fileset dir="${sal_lib_dir}">
+			<include name="**/*.jar"/>
+		</fileset>		
 	</path>
 
 
@@ -36,7 +38,7 @@
 	<target name="clean">
 		<delete dir="${bin_dir}" />		
 		<delete dir="${dist_dir}" />
-		<delete file="${jar_loc}/treeVis.jar"/>
+		<delete file="${jar_loc}/VisPlugin.jar"/>
 	</target>	
 
 	
