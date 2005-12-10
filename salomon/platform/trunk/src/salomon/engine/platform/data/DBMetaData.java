@@ -89,12 +89,18 @@ public final class DBMetaData implements IMetaData
 			++i;
 		}
 	}
-
+	/**
+	 * Returns table basing on given name.
+	 * Method is case insensitive.
+	 *
+	 * @name table name
+	 * @return table object
+	 */
 	public ITable getTable(String name)
 	{
 		ITable table = null;
 		for (ITable t : _tables) {
-			if (t.getName().equals(name)) {
+			if (t.getName().equalsIgnoreCase(name)) {
 				table = t;
 				break;
 			}

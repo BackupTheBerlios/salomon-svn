@@ -40,9 +40,10 @@ public final class DBTable implements ITable
 
 	/**
 	 * Returns column of given name.
+	 * Method is case insensitive.
 	 * 
 	 * @param name column name
-	 * @return
+	 * @return column object
 	 */
 	public IColumn getColumn(String name)
 	{
