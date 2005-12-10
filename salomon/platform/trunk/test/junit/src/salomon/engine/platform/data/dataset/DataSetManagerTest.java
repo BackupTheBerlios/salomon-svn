@@ -26,6 +26,7 @@ import junit.framework.TestCase;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
+import salomon.TestObjectFactory;
 import salomon.engine.database.DBManager;
 import salomon.engine.platform.ManagerEngine;
 import salomon.engine.solution.ISolution;
@@ -39,56 +40,34 @@ public class DataSetManagerTest extends TestCase
 
 	private DataSetManager _dataSetManager;
 
-	private ManagerEngine _engine;
-
-	private DBManager _manager;
-
 	protected void setUp() throws Exception
 	{
-		PropertyConfigurator.configure("log.conf"); //$NON-NLS-1$
-		_engine = new ManagerEngine();
-		ISolution solution = _engine.getSolutionManager().getSolutions()[0];
+		ISolution solution = TestObjectFactory.getSolution("Persons");
 		IDataEngine dataEngine = solution.getDataEngine();
 		_dataSetManager = (DataSetManager) dataEngine.getDataSetManager();
-		_manager = _engine.getDbManager();
 		LOGGER.info("Connected");
 	}
 
-	public void testGetAll()
+	public void testGetAll() throws PlatformException
 	{
 		LOGGER.info("DataSetManagerTest.testGetAll()");
-		boolean success = false;
 		IDataSet[] dataSets;
-		try {
-			dataSets = _dataSetManager.getAll();
-			for (IDataSet dataSet : dataSets) {
-				LOGGER.info(dataSet.getInfo());
-			}
-			success = true;
-		} catch (PlatformException e) {
-			LOGGER.fatal("", e);
+		dataSets = _dataSetManager.getAll();
+		for (IDataSet dataSet : dataSets) {
+			LOGGER.info(dataSet.getInfo());
 		}
-
-		assertTrue(success);
 	}
 
-	public void testGetDataSet()
+	public void testGetDataSet() throws PlatformException
 	{
 		LOGGER.info("DataSetManagerTest.testGetDataSet()");
-		boolean success = false;
-		try {
-			IDataSet dataSet = _dataSetManager.getDataSet(new IUniqueId() {
-				public int getId()
-				{
-					return 12;
-				}
-			});
-			LOGGER.info(dataSet.getInfo());
-			success = true;
-		} catch (PlatformException e) {
-			LOGGER.fatal("", e);
-		}
-		assertTrue(success);
+		IDataSet dataSet = _dataSetManager.getDataSet(new IUniqueId() {
+			public int getId()
+			{
+				return 12;
+			}
+		});
+		LOGGER.info(dataSet.getInfo());
 	}
 
 	private static final Logger LOGGER = Logger.getLogger(DataSetManagerTest.class);

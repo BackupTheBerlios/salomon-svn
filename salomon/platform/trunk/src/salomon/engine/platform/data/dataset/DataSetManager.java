@@ -136,7 +136,7 @@ public final class DataSetManager implements IDataSetManager
 		try {
 			resultSet = _dbManager.select(select);
 			IDataSet dataSet = null;
-			while (resultSet.next()) {				
+			while (resultSet.next()) {
 				int tmpDataSetID = resultSet.getInt("dataset_id");
 				// when dataset_id changes, creating new DataSet object 
 				if (tmpDataSetID != dataSetID) {
@@ -145,12 +145,12 @@ public final class DataSetManager implements IDataSetManager
 					dataSet.getInfo().load(resultSet);
 					dataSets.add(dataSet);
 					// not loading items, if there is no more rows
-					if (! resultSet.next()) {
+					if (!resultSet.next()) {
 						break;
 					}
 				}
 				// loading items
-				((DataSetInfo)dataSet.getInfo()).loadItems(resultSet);				
+				((DataSetInfo) dataSet.getInfo()).loadItems(resultSet);
 			}
 			resultSet.close();
 		} catch (Exception e) {
@@ -162,6 +162,10 @@ public final class DataSetManager implements IDataSetManager
 		return dataSets.toArray(dataSetsArray);
 	}
 
+	/**
+	 * Returns DataSet object basing on given id.
+	 *
+	 */
 	public IDataSet getDataSet(IUniqueId id) throws PlatformException
 	{
 		IDataSet dataSet = this.createEmpty();
@@ -182,7 +186,9 @@ public final class DataSetManager implements IDataSetManager
 			DataSetInfo dataSetInfo = (DataSetInfo) dataSet.getInfo();
 
 			resultSet = _dbManager.select(dataSetSelect);
-			resultSet.next();
+			if (!resultSet.next()) {
+				throw new DBException("Data Set not found");
+			}
 			// loading data set header
 			dataSetInfo.load(resultSet);
 
@@ -251,30 +257,6 @@ public final class DataSetManager implements IDataSetManager
 	{
 		throw new UnsupportedOperationException(
 				"Method union() not implemented yet!");
-	}
-
-	private SQLSelect getDataSetItemsSelect(int id)
-	{
-		SQLSelect select = new SQLSelect();
-		select.addTable(DataSetInfo.ITEMS_TABLE_NAME);
-		select.addColumn("table_name");
-		select.addColumn("condition");
-		return select;
-	}
-
-	private SQLSelect getDataSetSelect()
-	{
-		SQLSelect select = new SQLSelect();
-		select.addTable(DataSetInfo.TABLE_NAME + " d");
-		select.addTable(DataSetInfo.ITEMS_TABLE_NAME + " di");
-		select.addColumn("d.dataset_id");
-		select.addColumn("d.dataset_name");
-		select.addColumn("d.info");
-		select.addColumn("di.table_name");
-		select.addColumn("di.condition");
-		select.addCondition("d.dataset_id = di.dataset_id");
-		select.addOrderBy("d.dataset_id");
-		return select;
 	}
 
 	private static final Logger LOGGER = Logger.getLogger(DataSetManager.class);

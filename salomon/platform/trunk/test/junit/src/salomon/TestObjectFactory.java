@@ -21,14 +21,19 @@
 
 package salomon;
 
+import java.sql.ResultSet;
+
 import org.apache.log4j.PropertyConfigurator;
 
 import salomon.engine.database.DBManager;
-
-import salomon.platform.exception.PlatformException;
-
+import salomon.engine.database.queries.SQLSelect;
 import salomon.engine.platform.ManagerEngine;
 import salomon.engine.platform.data.DBMetaData;
+import salomon.engine.solution.ISolution;
+import salomon.engine.solution.ISolutionManager;
+import salomon.engine.solution.SolutionInfo;
+import salomon.platform.IUniqueId;
+import salomon.platform.exception.PlatformException;
 
 /**
  * 
@@ -75,6 +80,44 @@ public final class TestObjectFactory
 		return MANAGER_ENGINE;
 	}
 
+	public static ISolution getSolution(String name) throws PlatformException  {
+		
+		SQLSelect select = new SQLSelect();
+		select.addTable(SolutionInfo.TABLE_NAME);
+		select.addColumn("solution_id");
+		select.addCondition("solution_name =", name);
+		
+		final int solutionID;
+		try {
+			ResultSet resultSet = getDbManager().select(select);
+			if (resultSet.next()) {
+				solutionID = resultSet.getInt("solution_id");
+			} else {
+				throw new PlatformException("Solution not found");
+			}
+		} catch (Exception e) {
+			throw new PlatformException(e);
+		}
+		
+		ISolution solution = getSolutionManager().getSolution(new IUniqueId() {
+			public int getId()
+			{
+				return solutionID;
+			}});
+		
+		return solution;		
+	}
+	
+	public static ISolutionManager getSolutionManager() throws PlatformException
+	{
+		if (SOLUTION_MANAGER == null) {
+			SOLUTION_MANAGER = getManagerEngine().getSolutionManager();
+		}
+		return SOLUTION_MANAGER;
+	}
+	
+	private static ISolutionManager SOLUTION_MANAGER;
+	
 	private static DBManager DB_MANGER;
 
 	private static ManagerEngine MANAGER_ENGINE;
