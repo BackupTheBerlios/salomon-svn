@@ -35,10 +35,8 @@ import salomon.engine.database.queries.SQLDelete;
 import salomon.engine.database.queries.SQLInsert;
 import salomon.engine.database.queries.SQLSelect;
 import salomon.engine.database.queries.SQLUpdate;
-
-import salomon.util.gui.Utils;
-
 import salomon.engine.platform.data.DBMetaData;
+import salomon.util.gui.Utils;
 
 /**
  * Class is responsible for data base operations. It enables executing SQL
@@ -119,7 +117,7 @@ public final class DBManager
 		// setting auto commit off
 		_connection.setAutoCommit(false);
 		_statement = _connection.createStatement();
-        LOGGER.info("connected to database");
+		LOGGER.info("connected to database");
 	}
 
 	/**
@@ -358,7 +356,6 @@ public final class DBManager
 	{
 		String query = selectObject.getQuery();
 		LOGGER.info("query = " + query); //$NON-NLS-1$
-
 		return _statement.executeQuery(query);
 	}
 
@@ -375,6 +372,22 @@ public final class DBManager
 		LOGGER.info("query = " + query); //$NON-NLS-1$
 
 		return _statement.executeUpdate(query);
+	}
+
+	/**
+	 * Method checks if given query return any result.
+	 * 
+	 * @param select query to be selected
+	 * @return true if query returns anything, false otherwise
+	 * @throws SQLException
+	 */
+	public boolean existsSelect(SQLSelect select) throws SQLException
+	{
+		boolean exists = false;
+		ResultSet resultSet = _statement.executeQuery(select.getQuery());
+		exists = resultSet.next();
+		resultSet.close();
+		return exists;
 	}
 
 	/**

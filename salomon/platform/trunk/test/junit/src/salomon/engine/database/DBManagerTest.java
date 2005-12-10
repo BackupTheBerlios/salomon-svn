@@ -23,6 +23,7 @@ package salomon.engine.database;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import junit.framework.TestCase;
 
@@ -30,14 +31,10 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
 import salomon.engine.database.queries.SQLSelect;
-
-import salomon.util.gui.Utils;
-
 import salomon.platform.data.IColumn;
 import salomon.platform.data.IMetaData;
 import salomon.platform.data.ITable;
-
-import salomon.engine.platform.data.DBTable;
+import salomon.util.gui.Utils;
 
 public class DBManagerTest extends TestCase
 {
@@ -71,6 +68,7 @@ public class DBManagerTest extends TestCase
 			LOGGER.info("CONNECTED to PERSONS");
 			select = new SQLSelect();
 			select.addTable("persons");
+			//resultSet = personManager.select(select);
 			resultSet = personManager.select(select);
 			Utils.getDataFromResultSet(resultSet);
 		} catch (SQLException e) {
