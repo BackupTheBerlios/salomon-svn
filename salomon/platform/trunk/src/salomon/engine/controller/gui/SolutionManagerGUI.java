@@ -201,15 +201,6 @@ public final class SolutionManagerGUI
 		}
 	}
 
-	private boolean chooseSolution()
-	{
-		int result = JOptionPane.showConfirmDialog(_parent,
-				getSolutionsPanel(), "Choose solution",
-				JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
-
-		return (result == JOptionPane.OK_OPTION);
-	}
-
 	public void openSolution()
 	{
 		boolean approved = false;

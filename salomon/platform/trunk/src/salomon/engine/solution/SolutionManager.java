@@ -156,15 +156,12 @@ public final class SolutionManager implements ISolutionManager
 
 		ArrayList<ISolution> solutionsArrayList = new ArrayList<ISolution>();
 
-		int i = 0;
-
 		try {
 			resultSet = _dbManager.select(select);
 			while (resultSet.next()) {
 				ISolution solution = this.createSolution();
 				solution.getInfo().load(resultSet);
 				solutionsArrayList.add(solution);
-				resultSet.next();
 			}
 		} catch (Exception e) {
 			LOGGER.fatal("", e);
