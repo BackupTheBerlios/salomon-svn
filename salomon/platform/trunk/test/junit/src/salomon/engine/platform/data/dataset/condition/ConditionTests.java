@@ -35,6 +35,7 @@ public class ConditionTests
 		suite.addTestSuite(EqualsConditionTest.class);
 		suite.addTestSuite(GreaterConditionTest.class);
 		suite.addTestSuite(LowerConditionTest.class);
+		suite.addTestSuite(ConditionParserTest.class);
 		//$JUnit-END$
 		return suite;
 	}

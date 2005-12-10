@@ -62,7 +62,7 @@ abstract class AbstractConditionTest extends TestCase
 		DBTable table = new DBTable("persons");
 
 		IColumn column = new DBColumn(table, "person_id", "INT");
-		_condition = createCondition(column, "10");
+		_condition = createCondition(column, 10);
 
 		LOGGER.info("Connected");
 	}

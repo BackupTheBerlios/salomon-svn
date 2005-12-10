@@ -34,6 +34,7 @@ abstract class AbstractOperatorCondition extends AbstractCondition
 	protected AbstractOperatorCondition(IColumn column, Object value)
 	{
 		super(column);
+		_value = value;
 	}
 
 	/**
@@ -69,7 +70,7 @@ abstract class AbstractOperatorCondition extends AbstractCondition
 		//TODO:
 		String result = null;
 		if (_value instanceof String) {
-			result = (String) _value;
+			result = '\'' + (String) _value + '\'';
 		} else {
 			result = _value.toString();
 		}
