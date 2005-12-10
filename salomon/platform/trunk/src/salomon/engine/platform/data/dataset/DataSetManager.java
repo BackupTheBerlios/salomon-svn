@@ -22,7 +22,6 @@
 package salomon.engine.platform.data.dataset;
 
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -69,7 +68,7 @@ public final class DataSetManager implements IDataSetManager
 	 * @see salomon.platform.data.dataset.IDataSetManager#add(salomon.platform.data.dataset.IDataSet)
 	 */
 	public void add(IDataSet dataSet) throws PlatformException
-	{		
+	{
 		try {
 			dataSet.getInfo().save();
 			_dbManager.commit();
@@ -229,26 +228,6 @@ public final class DataSetManager implements IDataSetManager
 		return dataSet;
 	}
 
-	/**
-	 * @see salomon.platform.data.dataset.IDataSetManager#intersection(salomon.platform.data.dataset.IDataSet, salomon.platform.data.dataset.IDataSet)
-	 */
-	public IDataSet intersection(IDataSet firstDataSet, IDataSet secondDataSet)
-			throws PlatformException
-	{
-		throw new UnsupportedOperationException(
-				"Method intersection() not implemented yet!");
-	}
-
-	/**
-	 * @see salomon.platform.data.dataset.IDataSetManager#minus(salomon.platform.data.dataset.IDataSet, salomon.platform.data.dataset.IDataSet)
-	 */
-	public IDataSet minus(IDataSet firstDataSet, IDataSet secondDataSet)
-			throws PlatformException
-	{
-		throw new UnsupportedOperationException(
-				"Method minus() not implemented yet!");
-	}
-
 	public void remove(IDataSet dataSet) throws PlatformException
 	{
 		try {
@@ -257,18 +236,7 @@ public final class DataSetManager implements IDataSetManager
 		} catch (Exception e) {
 			_dbManager.rollback();
 			LOGGER.fatal("", e);
-		} 
-	}
-
-	/**
-	 * @see salomon.platform.data.dataset.IDataSetManager#union(salomon.platform.data.dataset.IDataSet,
-	 *      salomon.platform.data.dataset.IDataSet)
-	 */
-	public IDataSet union(IDataSet firstDataSet, IDataSet secondDataSet)
-			throws PlatformException
-	{
-		throw new UnsupportedOperationException(
-				"Method union() not implemented yet!");
+		}
 	}
 
 	private static final Logger LOGGER = Logger.getLogger(DataSetManager.class);
