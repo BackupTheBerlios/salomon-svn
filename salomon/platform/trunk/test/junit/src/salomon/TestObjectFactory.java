@@ -25,17 +25,17 @@ import org.apache.log4j.PropertyConfigurator;
 
 import salomon.engine.database.DBManager;
 
-import salomon.platform.data.IMetaData;
 import salomon.platform.exception.PlatformException;
 
 import salomon.engine.platform.ManagerEngine;
+import salomon.engine.platform.data.DBMetaData;
 
 /**
  * TODO: use static fields
  */
 public final class TestObjectFactory
 {
-	public static IMetaData createMetaData() throws Exception
+	public static DBMetaData createMetaData() throws Exception
 	{
 		DBManager manager = createDbManager();
 
@@ -51,7 +51,7 @@ public final class TestObjectFactory
 	{
 		ManagerEngine engine = createManagerEngine();
 		DBManager manager = engine.getDbManager();
-		
+
 		return manager;
 	}
 
@@ -64,7 +64,7 @@ public final class TestObjectFactory
 	{
 		PropertyConfigurator.configure("log.conf"); //$NON-NLS-1$
 		ManagerEngine engine = new ManagerEngine();
-		
+
 		return engine;
 	}
 }
