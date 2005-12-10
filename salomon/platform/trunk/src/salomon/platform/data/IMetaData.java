@@ -26,5 +26,7 @@ package salomon.platform.data;
  */
 public interface IMetaData
 {
-	public ITable[] getTables();
+	ITable getTable(String name);
+
+	ITable[] getTables();
 }

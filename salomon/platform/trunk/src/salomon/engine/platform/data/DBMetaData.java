@@ -28,6 +28,7 @@ import java.util.LinkedList;
 import salomon.engine.database.DBManager;
 
 import salomon.platform.data.IMetaData;
+import salomon.platform.data.ITable;
 
 /**
  * 
@@ -88,6 +89,11 @@ public final class DBMetaData implements IMetaData
 			_tables[i].setColumns(colArray);
 			++i;
 		}
+	}
+
+	public ITable getTable(String name)
+	{
+		throw new UnsupportedOperationException("Method DBMetaData.getTable() not implemented yet!");
 	}
 
 }
