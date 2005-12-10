@@ -82,7 +82,7 @@ public class VisResultPanel extends JScrollPane
 				ITree myTree = null;
 				INode root = null;
 				DefaultMutableTreeNode top = new DefaultMutableTreeNode(
-						"Drzewo");
+						"Root");
 
 				try {
 					myTree = VisPlugin.enginik.getTreeManager().getTree(treeId);
@@ -107,13 +107,13 @@ public class VisResultPanel extends JScrollPane
 		INode[] children = null;
 		children = root.getChildren();
 		for (int i = 0; i < children.length; i++) {
-			edge = new DefaultMutableTreeNode("e. "
-					+ children[i].getParentEdge());
+			edge = new DefaultMutableTreeNode(children[i].getParentEdge());
 			top.add(edge);
-			child = new DefaultMutableTreeNode(children[i].getValue());
-			edge.add(child);
 			if (children[i].isLeaf() == false) {
-				drawTree(children[i], child);
+				drawTree(children[i], edge);
+			} else {
+				child = new DefaultMutableTreeNode(children[i].getValue());
+				edge.add(child);
 			}
 		}
 	}
