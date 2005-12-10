@@ -106,6 +106,12 @@ ALTER TABLE DATASETS ADD CONSTRAINT FK_DATASETS_SOLUTIONS FOREIGN KEY (SOLUTION_
 ALTER TABLE DATASET_ITEMS ADD CONSTRAINT FK_DATASET_ITEMS FOREIGN KEY (DATASET_ID) REFERENCES DATASETS (DATASET_ID);
 
 /******************************************************************************/
+/****                          Unique Constraints                          ****/
+/******************************************************************************/
+
+ALTER TABLE SOLUTIONS ADD CONSTRAINT UNQ_SOLUTION_NAME UNIQUE (SOLUTION_NAME);
+
+/******************************************************************************/
 /****                             Generators                               ****/
 /******************************************************************************/
 

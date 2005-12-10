@@ -63,4 +63,9 @@ references SOLUTIONS(SOLUTION_ID)
 using index FK_DATASETS;
 
 
+/* 9.12.2005 nico adding constraint on solution.solution_name field */
+
+alter table SOLUTIONS
+add constraint UNQ_SOLUTION_NAME
+unique (SOLUTION_NAME);
 
