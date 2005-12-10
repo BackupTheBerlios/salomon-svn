@@ -78,6 +78,7 @@ public final class SolutionManager implements ISolutionManager
 			solution.getInfo().save();
 			_dbManager.commit();
 		} catch (Exception e) {
+			_dbManager.rollback();
 			LOGGER.fatal("", e);
 			throw new PlatformException(e.getLocalizedMessage());
 		}

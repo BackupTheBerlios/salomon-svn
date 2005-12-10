@@ -26,11 +26,8 @@ import java.sql.SQLException;
 import junit.framework.TestCase;
 
 import org.apache.log4j.Logger;
-import org.apache.log4j.PropertyConfigurator;
 
 import salomon.TestObjectFactory;
-import salomon.engine.database.DBManager;
-import salomon.engine.platform.ManagerEngine;
 import salomon.engine.platform.data.DBColumn;
 import salomon.engine.platform.data.DBTable;
 import salomon.engine.solution.ISolution;
@@ -44,14 +41,15 @@ public class DataSetManagerTest extends TestCase
 {
 
 	private DataSetManager _dataSetManager;
-
-	protected void setUp() throws Exception
+	
+	public DataSetManagerTest() throws PlatformException
 	{
 		ISolution solution = TestObjectFactory.getSolution("Persons");
 		IDataEngine dataEngine = solution.getDataEngine();
 		_dataSetManager = (DataSetManager) dataEngine.getDataSetManager();
-		LOGGER.info("Connected");
+		LOGGER.info("Connected");		
 	}
+
 
 	public void testGetAll() throws PlatformException
 	{
@@ -63,11 +61,41 @@ public class DataSetManagerTest extends TestCase
 		}
 	}
 
-	public void testAdd()
+	public void testAdd() throws PlatformException
 	{
-		throw new UnsupportedOperationException(
-				"Method testAdd() not implemented yet!");
+		LOGGER.info("DataSetManagerTest.testAdd()");
+		DataSet dataSet = (DataSet) _dataSetManager.createEmpty();
+		((DataSetInfo) dataSet.getInfo()).setName("test add");
+
+		DBTable table = new DBTable("persons");
+		// column type is not important
+		IColumn column = new DBColumn(table, "id", "INT");
+		dataSet.addCondition(_dataSetManager.createEqualsCondition(column,
+				new Integer(10)));
+		column = new DBColumn(table, "first_name", "VARCHAR");
+		dataSet.addCondition(_dataSetManager.createEqualsCondition(column,
+				"Nikodem"));
+		column = new DBColumn(table, "last_name", "VARCHAR");
+		dataSet.addCondition(_dataSetManager.createEqualsCondition(column,
+				"Jura"));
+		_dataSetManager.add(dataSet);
 	}
+	
+	public void testRemove() throws PlatformException
+	{
+		LOGGER.info("DataSetManagerTest.testRemove()");
+		DataSet dataSet = (DataSet) _dataSetManager.createEmpty();
+		((DataSetInfo) dataSet.getInfo()).setName("test remove");
+
+		DBTable table = new DBTable("persons");
+		// column type is not important
+		IColumn column = new DBColumn(table, "id", "INT");
+		dataSet.addCondition(_dataSetManager.createEqualsCondition(column,
+				new Integer(10)));
+		_dataSetManager.add(dataSet);
+		_dataSetManager.remove(dataSet);
+	}
+	
 	
 	public void testGetDataSet() throws PlatformException, SQLException, ClassNotFoundException
 	{

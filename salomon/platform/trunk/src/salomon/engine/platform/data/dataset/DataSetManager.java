@@ -22,6 +22,7 @@
 package salomon.engine.platform.data.dataset;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -68,9 +69,15 @@ public final class DataSetManager implements IDataSetManager
 	 * @see salomon.platform.data.dataset.IDataSetManager#add(salomon.platform.data.dataset.IDataSet)
 	 */
 	public void add(IDataSet dataSet) throws PlatformException
-	{
-		throw new UnsupportedOperationException(
-				"Method add() not implemented yet!");
+	{		
+		try {
+			dataSet.getInfo().save();
+			_dbManager.commit();
+		} catch (Exception e) {
+			_dbManager.rollback();
+			LOGGER.fatal("", e);
+			throw new DBException(e);
+		}
 	}
 
 	public ICondition createAndCondition(ICondition condition,
@@ -244,8 +251,13 @@ public final class DataSetManager implements IDataSetManager
 
 	public void remove(IDataSet dataSet) throws PlatformException
 	{
-		throw new UnsupportedOperationException(
-				"Method remove() not implemented yet!");
+		try {
+			dataSet.getInfo().delete();
+			_dbManager.commit();
+		} catch (Exception e) {
+			_dbManager.rollback();
+			LOGGER.fatal("", e);
+		} 
 	}
 
 	/**

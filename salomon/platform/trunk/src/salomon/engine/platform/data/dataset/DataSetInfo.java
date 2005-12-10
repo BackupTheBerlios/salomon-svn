@@ -74,7 +74,7 @@ public final class DataSetInfo implements IInfo
 		SQLDelete delete = new SQLDelete();
 		// deleting items
 		delete.setTable(TABLE_NAME);
-		delete.addCondition("dataset_id = ", _datasetID);
+		delete.addCondition("dataset_id =", _datasetID);
 		int rows = _dbManager.delete(delete);
 		LOGGER.debug("rows deleted: " + rows);
 		return (rows > 0);
