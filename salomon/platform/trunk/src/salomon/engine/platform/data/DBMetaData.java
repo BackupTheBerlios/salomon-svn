@@ -26,7 +26,6 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 
 import salomon.engine.database.DBManager;
-
 import salomon.platform.data.IMetaData;
 import salomon.platform.data.ITable;
 
@@ -93,7 +92,14 @@ public final class DBMetaData implements IMetaData
 
 	public ITable getTable(String name)
 	{
-		throw new UnsupportedOperationException("Method DBMetaData.getTable() not implemented yet!");
+		ITable table = null;
+		for (ITable t : _tables) {
+			if (t.getName().equals(name)) {
+				table = t;
+				break;
+			}
+		}
+		return table;
 	}
 
 }
