@@ -69,3 +69,44 @@ alter table SOLUTIONS
 add constraint UNQ_SOLUTION_NAME
 unique (SOLUTION_NAME);
 
+/* 9.12.2005 nico delete dependant objects on delete the root object */
+
+alter table DATASET_ITEMS
+add constraint FK_DATASET_ITEMS
+foreign key (DATASET_ID)
+references DATASETS(DATASET_ID)
+on delete CASCADE
+on update CASCADE
+using index FK_DATASET_ITEMS;
+
+alter table DATASETS
+add constraint FK_DATASETS_SOLUTIONS
+foreign key (SOLUTION_ID)
+references SOLUTIONS(SOLUTION_ID)
+on delete CASCADE
+on update CASCADE
+using index FK_DATASETS;
+
+alter table PROJECTS
+add constraint FK_PROJECTS_SOLUTIONS
+foreign key (SOLUTION_ID)
+references SOLUTIONS(SOLUTION_ID)
+on delete CASCADE
+on update CASCADE
+using index FK_PROJECTS_SOLUTIONS;
+
+alter table TASKS
+add constraint FK_TASKS_PROJECTS
+foreign key (PROJECT_ID)
+references PROJECTS(PROJECT_ID)
+on delete CASCADE
+on update CASCADE
+using index FK_TASKS_PROJECTS;
+
+alter table TASKS
+add constraint FK_TASKS_PLUGINS
+foreign key (PLUGIN_ID)
+references PLUGINS(PLUGIN_ID)
+on delete CASCADE
+on update CASCADE
+using index FK_TASKS_PLUGINS;
