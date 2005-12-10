@@ -156,65 +156,6 @@ public class DataSet implements IDataSet
 	//		}
 	//		return resultSet;
 	//	}
-	/**
-	 * Method returns ResultSet basing on given query. Query is modified - all
-	 * conditions determinating data set are concatenated to the query; TODO:
-	 * reimplement it
-	 * 
-	 * @param query SQL query to be executed
-	 * @throws ClassNotFoundException
-	 * @throws SQLException
-	 */
-	public ResultSet selectData(String query) throws SQLException,
-			ClassNotFoundException
-	{
-		LOGGER.info("given query: " + query);
-		String finalQuery = query.trim().toLowerCase();
-		//
-		// If there are some conditions determinating data set
-		// they are added to query
-		//
-		// String dataSetCond = null;
-		// if (_conditions != null) {
-		// for (int i = 0; i < _conditions.length; i++) {
-		// // to first condition "and" is not added
-		// // it will be added later, if necessary
-		// if (i > 0) {
-		// dataSetCond += " and ";
-		// }
-		// dataSetCond += _conditions[i].toString();
-		// }
-		// }
-		// _logger.debug("dataSetCond" + dataSetCond);
-		// //
-		// // If there are any conditions, given query has to be modified
-		// //
-		// if (dataSetCond != null) {
-		// //
-		// // removing semicolon if exists
-		// //
-		// if (finalQuery.endsWith(";")) {
-		// finalQuery = finalQuery.substring(0, finalQuery.length() - 1);
-		// }
-		// //
-		// // if there is where clause,
-		// // then adding conditions at the end of query
-		// // else adding where and conditions list
-		// //
-		// if (finalQuery.indexOf("where") != -1) {
-		// finalQuery += " where ";
-		// } else {
-		// finalQuery += " and " + dataSetCond;
-		// }
-		// }
-		// _logger.info("finalQuery: " + finalQuery);
-		// DBManager connector = DBManager.getInstance();
-		// connector.executeQuery(finalQuery);
-		// return connector.getResultSet();
-		throw new UnsupportedOperationException(
-				"Method selectData() not implemented yet!");
-	}
-
 	/*
 	 * (non-Javadoc)
 	 * 

@@ -22,7 +22,10 @@
 package salomon.engine.platform.data.dataset;
 
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+
+import org.apache.log4j.Logger;
 
 import salomon.platform.data.IColumn;
 import salomon.platform.data.dataset.IData;
@@ -34,19 +37,58 @@ import salomon.platform.exception.PlatformException;
  */
 class Data implements IData
 {
+	private int _columnCount;
+
 	private ResultSet _resultSet;
-	
+
+	public Data(ResultSet resultSet) throws PlatformException
+	{
+		_resultSet = resultSet;
+		ResultSetMetaData metaData;
+		try {
+			metaData = _resultSet.getMetaData();
+			_columnCount = metaData.getColumnCount();
+		} catch (SQLException e) {
+			LOGGER.fatal("", e);
+			throw new DBException(e);
+		}
+	}
+
+	public void close() throws PlatformException
+	{
+		try {
+			_resultSet.close();
+		} catch (SQLException e) {
+			LOGGER.fatal("", e);
+			throw new PlatformException(e);
+		}
+	}
+
 	public Object[] getData() throws PlatformException
 	{
-		throw new UnsupportedOperationException("Method Data.getData() not implemented yet!");
+		Object[] data = new Object[_columnCount];
+		try {
+			for (int i = 0; i < data.length; ++i) {
+				data[i] = _resultSet.getObject(i + 1);
+			}
+		} catch (SQLException e) {
+			LOGGER.fatal("", e);
+			throw new DBException(e);
+		}
+		return data;
 	}
 
-	public Object getData(IColumn column)
+	public Object getData(IColumn column) throws PlatformException
 	{
-		throw new UnsupportedOperationException("Method Data.getData() not implemented yet!");
+		try {
+			return _resultSet.getObject(column.getName());
+		} catch (SQLException e) {
+			LOGGER.fatal("", e);
+			throw new PlatformException(e);
+		}
 	}
 
-	public boolean next()throws PlatformException
+	public boolean next() throws PlatformException
 	{
 		try {
 			return _resultSet.next();
@@ -54,5 +96,6 @@ class Data implements IData
 			throw new DBException(e);
 		}
 	}
-	//TODO: add implementation
+
+	private static final Logger LOGGER = Logger.getLogger(Data.class);
 }

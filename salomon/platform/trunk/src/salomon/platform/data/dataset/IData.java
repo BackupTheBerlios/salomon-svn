@@ -34,4 +34,6 @@ public interface IData
 	Object getData(IColumn column) throws PlatformException;
 
 	boolean next() throws PlatformException;
+	
+	void close() throws PlatformException;
 }
