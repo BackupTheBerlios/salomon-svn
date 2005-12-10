@@ -33,9 +33,10 @@ import salomon.platform.exception.DBException;
 import salomon.platform.exception.PlatformException;
 
 /**
- *  Not used.
+ *  
+ *  TODO: change scope to default after Unit tests
  */
-class Data implements IData
+public class Data implements IData
 {
 	private int _columnCount;
 
