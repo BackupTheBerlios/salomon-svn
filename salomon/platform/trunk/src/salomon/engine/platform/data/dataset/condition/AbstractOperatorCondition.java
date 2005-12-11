@@ -37,13 +37,23 @@ abstract class AbstractOperatorCondition extends AbstractCondition
 		_value = value;
 	}
 
-	/**
-	 * Returns the value.
-	 * @return The value
-	 */
-	final Object getValue()
+	@Override
+	public boolean equals(Object obj)
 	{
-		return _value;
+		boolean result = false;
+		if (obj instanceof AbstractOperatorCondition) {
+			AbstractOperatorCondition condition = (AbstractOperatorCondition) obj;
+			result = _value.equals(condition._value)
+					&& getColumn().equals(condition.getColumn());
+		}
+
+		return result;
+	}
+
+	@Override
+	public int hashCode()
+	{
+		return getColumn().hashCode() ^ _value.hashCode();
 	}
 
 	/**
@@ -64,7 +74,18 @@ abstract class AbstractOperatorCondition extends AbstractCondition
 
 		return result.toString();
 	}
-	
+
+	/**
+	 * Returns the value.
+	 * @return The value
+	 */
+	final Object getValue()
+	{
+		return _value;
+	}
+
+	protected abstract String getOperator();
+
 	protected final String getValueString()
 	{
 		//TODO:
@@ -77,7 +98,4 @@ abstract class AbstractOperatorCondition extends AbstractCondition
 
 		return result;
 	}
-
-
-	protected abstract String getOperator();
 }

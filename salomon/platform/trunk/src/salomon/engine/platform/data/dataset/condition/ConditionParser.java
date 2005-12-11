@@ -21,7 +21,6 @@
 
 package salomon.engine.platform.data.dataset.condition;
 
-import java.util.regex.MatchResult;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -32,7 +31,7 @@ import salomon.platform.data.dataset.ICondition;
 import salomon.platform.exception.PlatformException;
 
 /**
- * 
+ * ^(\w+)\.(\w+)\s([=><])\s(.+)$
  */
 public final class ConditionParser
 {
@@ -40,6 +39,13 @@ public final class ConditionParser
 	
 	public static ICondition parse(IMetaData metaData, String sql) throws PlatformException
 	{
+		if (metaData == null) {
+			throw new PlatformException("Meta data cannot be null!");
+		}
+		if (sql == null) {
+			throw new PlatformException("Sql cannot be null!");
+		}
+		
 		Matcher matcher = PATTERN.matcher(sql);
 		if (!matcher.matches()) {
 			throw new PlatformException("Cannot parse sql! Invalid format! " + sql);			
