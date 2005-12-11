@@ -30,9 +30,9 @@ public final class DBColumn implements IColumn
 {
 	private String _name;
 
-	private String _type;
-	
 	private DBTable _table;
+
+	private String _type;
 
 	/**
 	 * @param name
@@ -45,6 +45,20 @@ public final class DBColumn implements IColumn
 		_type = type;
 	}
 
+	@Override
+	public boolean equals(Object obj)
+	{
+		boolean result = false;
+		if (obj instanceof DBColumn) {
+			DBColumn column = (DBColumn) obj;
+			result = _name.equalsIgnoreCase(column._name)
+					&& _type.equalsIgnoreCase(column._type)
+					&& _table.equals(column._table);
+		}
+
+		return result;
+	}
+
 	/**
 	 * Returns the name.
 	 * @return The name
@@ -52,6 +66,11 @@ public final class DBColumn implements IColumn
 	public String getName()
 	{
 		return _name;
+	}
+
+	public DBTable getTable()
+	{
+		return _table;
 	}
 
 	/**
@@ -64,13 +83,14 @@ public final class DBColumn implements IColumn
 	}
 
 	@Override
+	public int hashCode()
+	{
+		return _name.hashCode() ^ _type.hashCode() ^ _table.hashCode();
+	}
+
+	@Override
 	public String toString()
 	{
 		return _name + " (" + _type + ")";
-	}
-
-	public DBTable getTable()
-	{
-		return _table;
 	}
 }

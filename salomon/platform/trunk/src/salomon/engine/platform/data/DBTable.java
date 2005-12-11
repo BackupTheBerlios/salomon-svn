@@ -38,6 +38,18 @@ public final class DBTable implements ITable
 		_name = name;
 	}
 
+	@Override
+	public boolean equals(Object obj)
+	{
+		boolean result = false;
+		if (obj instanceof DBTable) {
+			DBTable table = (DBTable) obj;
+			result = _name.equalsIgnoreCase(table._name);
+		}
+
+		return result;
+	}
+
 	/**
 	 * Returns column of given name.
 	 * Method is case insensitive.
@@ -77,6 +89,12 @@ public final class DBTable implements ITable
 	}
 
 	@Override
+	public int hashCode()
+	{
+		return _name.hashCode();
+	}
+
+	@Override
 	public String toString()
 	{
 		return _name;
@@ -90,5 +108,4 @@ public final class DBTable implements ITable
 	{
 		_columns = columns;
 	}
-
 }

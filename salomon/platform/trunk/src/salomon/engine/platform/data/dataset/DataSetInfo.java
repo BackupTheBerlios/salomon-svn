@@ -34,14 +34,12 @@ import salomon.engine.database.ExternalDBManager;
 import salomon.engine.database.queries.SQLDelete;
 import salomon.engine.database.queries.SQLInsert;
 import salomon.engine.database.queries.SQLUpdate;
-
+import salomon.engine.platform.data.dataset.condition.AbstractCondition;
+import salomon.engine.platform.data.dataset.condition.ConditionParser;
 import salomon.platform.IInfo;
 import salomon.platform.data.dataset.ICondition;
 import salomon.platform.exception.DBException;
 import salomon.platform.exception.PlatformException;
-
-import salomon.engine.platform.data.dataset.condition.AbstractCondition;
-import salomon.engine.platform.data.dataset.condition.ConditionParser;
 
 public final class DataSetInfo implements IInfo
 {
@@ -245,6 +243,11 @@ public final class DataSetInfo implements IInfo
 	void setSolutionID(int solutionID)
 	{
 		_solutionID = solutionID;
+	}
+
+	protected Set<AbstractCondition> getConditionSet()
+	{
+		return _conditions;
 	}
 
 	public static final String ITEMS_TABLE_NAME = "dataset_items";

@@ -66,5 +66,24 @@ public class DBMetaDataTest extends TestCase
 			}
 		}
 	}
+	
+	public void testEquals()
+	{		
+		LOGGER.info("DBMetaDataTest.testEquals()");
+		DBTable table1 = new DBTable("persons");
+		DBColumn column1 = new DBColumn(table1, "id", "INT");
+		
+		DBTable table2 = new DBTable("persons");
+		DBColumn column2 = new DBColumn(table1, "id", "INT");
+		
+		// equals
+		assertTrue(column1.equals(column2));		
+		assertTrue(table1.equals(table2));
+		
+		// hashcode
+		assertTrue(column1.hashCode() == column2.hashCode());		
+		assertTrue(table1.hashCode() == table2.hashCode());
+	}
+	
 	private static final Logger LOGGER = Logger.getLogger(DBMetaDataTest.class);
 }
