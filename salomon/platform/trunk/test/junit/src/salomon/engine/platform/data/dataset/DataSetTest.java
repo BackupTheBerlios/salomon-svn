@@ -21,6 +21,7 @@
 
 package salomon.engine.platform.data.dataset;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import junit.framework.TestCase;
@@ -29,11 +30,18 @@ import org.apache.log4j.Logger;
 
 import salomon.TestObjectFactory;
 import salomon.engine.database.DBManager;
+import salomon.engine.database.queries.SQLSelect;
 import salomon.engine.platform.data.DBColumn;
 import salomon.engine.platform.data.DBTable;
 import salomon.engine.solution.ISolution;
 import salomon.platform.IDataEngine;
+import salomon.platform.IUniqueId;
 import salomon.platform.data.IColumn;
+import salomon.platform.data.IMetaData;
+import salomon.platform.data.ITable;
+import salomon.platform.data.dataset.ICondition;
+import salomon.platform.data.dataset.IData;
+import salomon.platform.data.dataset.IDataSet;
 import salomon.platform.exception.PlatformException;
 
 public class DataSetTest extends TestCase
@@ -47,7 +55,14 @@ public class DataSetTest extends TestCase
 
 	DBManager _manager;
 
-	//TODO: commented out until DataSet is implemented
+	public DataSetTest() throws Exception
+	{
+		ISolution solution = TestObjectFactory.getSolution("Persons");
+		IDataEngine dataEngine = solution.getDataEngine();
+		_dataSetManager = (DataSetManager) dataEngine.getDataSetManager();
+		_manager = TestObjectFactory.getDbManager();
+		LOGGER.info("Connected");
+	}
 
 	public void testDelete() throws PlatformException, SQLException,
 			ClassNotFoundException
@@ -60,115 +75,8 @@ public class DataSetTest extends TestCase
 
 	}
 
-	/*
-	 * Class under test for ResultSet selectData(SQLSelect)
-	 */
-	//	public void testSelectDataSQLSelect1()
-	//	{
-	//		LOGGER.info("DataSetTest.testSelectDataSQLSelect1()");
-	//		boolean success = false;
-	//
-	//		DataSet dataSet = 
-	//		dataSet.addCondition("project", "project_id > 10");
-	//		dataSet.addCondition("project", "project_name <> 'project_1'");
-	//		dataSet.addCondition("task", "task_name  'task1'");
-	//		SQLSelect select = new SQLSelect();
-	//		select.addTable("projects");
-	//		select.addTable("tasks");
-	//		select.addCondition("task_id >", 10);
-	//		select.addCondition("task_name =", "task2");
-	//
-	//		String selectBefore = select.getQuery();
-	//		LOGGER.debug("select: " + selectBefore);
-	//		try {
-	//			ResultSet result = dataSet.selectData(select);
-	//            result.close();
-	//            _manager.rollback();
-	//			ResultSet result2 = dataSet.selectData(select);	
-	//			result2.close();
-	//            
-	//			success = true;
-	//		} catch (SQLException e) {
-	//			LOGGER.fatal("", e);
-	//		} catch (ClassNotFoundException e) {
-	//			LOGGER.fatal("", e);
-	//		}
-	//		_manager.rollback();
-	//		assertTrue(success);
-	//		String selectAfter = select.getQuery();
-	//		LOGGER.debug("select: " + selectAfter);
-	//		assertEquals(selectBefore, selectAfter);			
-	//	}
-	//	
-	//
-	//	public void testSelectDataSQLSelect2()
-	//	{
-	//		LOGGER.info("DataSetTest.testSelectDataSQLSelect2()");
-	//		boolean success = false;
-	//
-	//		DataSet dataSet = new DataSet("testName");
-	//		dataSet.addCondition("projects p", "p.project_id > 10");
-	//		dataSet.addCondition("projects p", "p.project_name <> 'project_1'");
-	//
-	//		SQLSelect select = new SQLSelect();
-	//		select.addTable("projects");
-	//		select.addTable("tasks");
-	//		select.addCondition("task_id >", 10);
-	//		select.addCondition("task_name =", "task2");
-	//
-	//		String selectBefore = select.getQuery();
-	//		LOGGER.debug("select: " + selectBefore);
-	//		try {
-	//			ResultSet result = dataSet.selectData(select);
-	//			result.close();			
-	//			success = true;			
-	//		} catch (SQLException e) {
-	//			LOGGER.fatal("", e);
-	//		} catch (ClassNotFoundException e) {
-	//			LOGGER.fatal("", e);
-	//		}
-	//		_manager.rollback();
-	//		assertTrue(success);
-	//		String selectAfter = select.getQuery();
-	//		LOGGER.debug("select: " + selectAfter);
-	//		assertEquals(selectBefore, selectAfter);
-	//	}
-	//
-	//	public void testSelectDataSQLSelect3()
-	//	{
-	//		LOGGER.info("DataSetTest.testSelectDataSQLSelect2()");
-	//		boolean success = false;
-	//
-	//		DataSet dataSet = new DataSet("testName");
-	//
-	//		SQLSelect select = new SQLSelect();
-	//		select.addTable("projects");
-	//		select.addTable("tasks");
-	//		select.addCondition("task_id >", 10);
-	//		select.addCondition("task_name =", "task2");
-	//
-	//		String selectBefore = select.getQuery();
-	//		LOGGER.debug("select: " + selectBefore);
-	//		try {
-	//			ResultSet result = dataSet.selectData(select);
-	//			result.close();
-	//			success = true;
-	//		} catch (SQLException e) {
-	//			LOGGER.fatal("", e);
-	//		} catch (ClassNotFoundException e) {
-	//			LOGGER.fatal("", e);
-	//		}
-	//		_manager.rollback();
-	//		assertTrue(success);
-	//		String selectAfter = select.getQuery();
-	//		LOGGER.debug("select: " + selectAfter);
-	//		assertEquals(selectBefore, selectAfter);
-	//	}
-	//
-	/*
-	 * Class under test for ResultSet selectData(String)
-	 */
-	public void testSave1() throws PlatformException, SQLException, ClassNotFoundException
+	public void testSave1() throws PlatformException, SQLException,
+			ClassNotFoundException
 	{
 		LOGGER.info("DataSetTest.testSave1()");
 		DataSet dataSet = (DataSet) _dataSetManager.createEmpty();
@@ -191,36 +99,78 @@ public class DataSetTest extends TestCase
 		_manager.commit();
 	}
 
-	//	
-	//	public void testSave2()
-	//	{
-	//		LOGGER.info("DataSetTest.testSave2()");
-	//		boolean success = false;
-	//		DataSet dataSet = new DataSet("testName2");
-	//		dataSet.addCondition("projects", "project_id > 10");
-	//		dataSet.addCondition("projects", "project_name <> 'project_1'");
-	//		dataSet.addCondition("tasks", "task_id = 2");
-	//		try {
-	//			dataSet.save();
-	//			success = true;
-	//		} catch (SQLException e) {
-	//			LOGGER.fatal("", e);
-	//		} catch (ClassNotFoundException e) {
-	//			LOGGER.fatal("", e);
-	//		}
-	//		_manager.rollback();
-	//		assertTrue(success);
-	//	}
-	/**
-	 * @see junit.framework.TestCase#setUp()
-	 */
-	protected void setUp() throws Exception
+	public void testSelect() throws SQLException, PlatformException
 	{
-		ISolution solution = TestObjectFactory.getSolution("Persons");
-		IDataEngine dataEngine = solution.getDataEngine();
-		_dataSetManager = (DataSetManager) dataEngine.getDataSetManager();
-		_manager = TestObjectFactory.getDbManager();
-		LOGGER.info("Connected");
+		LOGGER.info("DataSetTest.testSelect()");
+		SQLSelect select = new SQLSelect();
+		select.addTable(DataSetInfo.TABLE_NAME);
+		select.addCondition("dataset_name =", "test select");
+
+		// if not exists, then adding test data set
+		if (!_manager.existsSelect(select)) {
+			LOGGER.debug("Adding test dataset");
+			DataSet dataSet = (DataSet) _dataSetManager.createEmpty();
+			((DataSetInfo) dataSet.getInfo()).setName("test select");
+
+			DBTable table = new DBTable("persons");
+			// column type is not important
+			IColumn column = new DBColumn(table, "id", "INT");
+			dataSet.addCondition(_dataSetManager.createLowerCondition(column,
+					new Integer(4)));
+			_dataSetManager.add(dataSet);
+		}
+
+		ResultSet resultSet = _manager.select(select);
+		assertTrue(resultSet.next());
+
+		final int dataSetID = resultSet.getInt("dataset_id");
+		resultSet.close();
+
+		IDataSet dataSet = _dataSetManager.getDataSet(new IUniqueId() {
+			public int getId()
+			{
+				return dataSetID;
+			}
+		});
+
+		IData data = dataSet.selectData(null, null);
+
+		while (data.next()) {
+			Object[] dataArray = data.getData();
+			StringBuilder dataString = new StringBuilder();
+			for (Object d : dataArray) {
+				dataString.append("|");
+				dataString.append(d);
+			}
+			LOGGER.debug(dataString);
+		}
+		data.close();
+
+		// adding some conditions
+		IMetaData metaData = TestObjectFactory.getSolution("Persons").getDataEngine().getMetaData();
+		ITable table = metaData.getTable("persons");
+		IColumn[] columns = new IColumn[2]; 
+		columns[0] = table.getColumn("first_name");
+		columns[1] = table.getColumn("email");
+		
+		IColumn idColumn = table.getColumn("id");
+		
+		ICondition[] conditions = new ICondition[1];
+		conditions[0] = _dataSetManager.createLowerCondition(idColumn, new Integer(3));
+		
+		data = dataSet.selectData(columns, conditions);
+
+		while (data.next()) {
+			Object[] dataArray = data.getData();
+			StringBuilder dataString = new StringBuilder();
+			for (Object d : dataArray) {
+				dataString.append("|");
+				dataString.append(d);
+			}
+			LOGGER.debug(dataString);
+		}
+		data.close();
+
 	}
 
 	private static final Logger LOGGER = Logger.getLogger(DataSetTest.class);

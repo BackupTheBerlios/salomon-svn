@@ -31,6 +31,7 @@ import java.util.Set;
 import org.apache.log4j.Logger;
 
 import salomon.engine.database.DBManager;
+import salomon.engine.database.ExternalDBManager;
 import salomon.engine.database.queries.SQLDelete;
 import salomon.engine.database.queries.SQLInsert;
 import salomon.engine.database.queries.SQLUpdate;
@@ -39,6 +40,7 @@ import salomon.platform.data.dataset.ICondition;
 import salomon.platform.exception.PlatformException;
 
 import salomon.engine.platform.data.dataset.condition.AbstractCondition;
+import salomon.engine.platform.data.dataset.condition.ConditionParser;
 
 public final class DataSetInfo implements IInfo
 {
@@ -52,15 +54,18 @@ public final class DataSetInfo implements IInfo
 
 	private DBManager _dbManager;
 
+	private ExternalDBManager _externalDBManager;
+
 	private String _info;
 
 	private String _name;
 
 	private int _solutionID;
 
-	DataSetInfo(DBManager dbManager)
+	DataSetInfo(DBManager dbManager, ExternalDBManager externalDBManager)
 	{
 		_dbManager = dbManager;
+		_externalDBManager = externalDBManager;
 		_conditions = new HashSet<AbstractCondition>();
 	}
 
@@ -91,7 +96,7 @@ public final class DataSetInfo implements IInfo
 		return _datasetID;
 	}
 
-	public String getInfo() throws PlatformException
+	public String getInfo()
 	{
 		return _info;
 	}
@@ -118,20 +123,19 @@ public final class DataSetInfo implements IInfo
 		return _solutionID;
 	}
 
-	public void loadItems(ResultSet resultSet) throws SQLException {
-		LOGGER.info("DataSetInfo.loadItems(): TODO: ");
-		String tableName = resultSet.getString("table_name");
+	public void loadItems(ResultSet resultSet) throws SQLException, PlatformException
+	{
 		String condition = resultSet.getString("condition");
-		//AbstractCondition condition = facory.createCondition(table, conditon)
-		AbstractCondition abstractCondition = null;
+		AbstractCondition abstractCondition = (AbstractCondition) ConditionParser.parse(
+				_externalDBManager.getMetaData(), condition);
 		_conditions.add(abstractCondition);
 	}
-	
+
 	public void load(ResultSet resultSet) throws MalformedURLException,
 			SQLException
 	{
 		// do not load solution_id - it is set while creating dataset
-		_datasetID = resultSet.getInt("dataset_id");		
+		_datasetID = resultSet.getInt("dataset_id");
 		_name = resultSet.getString("dataset_name");
 		_info = resultSet.getString("info");
 	}
@@ -192,8 +196,8 @@ public final class DataSetInfo implements IInfo
 	@Override
 	public String toString()
 	{
-		String info = _datasetID + " " + _solutionID; 
-		info +=	(_name == null ? "" : _name);
+		String info = _datasetID + " " + _solutionID;
+		info += (_name == null ? "" : _name);
 		info += (_name == null ? "" : " " + _info);
 		info += _conditions.toString();
 		return info;
@@ -206,10 +210,10 @@ public final class DataSetInfo implements IInfo
 	{
 		_solutionID = solutionID;
 	}
-	
-	public ICondition[] getConditions()
+
+	public AbstractCondition[] getConditions()
 	{
-		ICondition[] conditions = new ICondition[_conditions.size()];
+		AbstractCondition[] conditions = new AbstractCondition[_conditions.size()];
 		return _conditions.toArray(conditions);
 	}
 

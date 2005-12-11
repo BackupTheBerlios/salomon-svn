@@ -28,12 +28,15 @@ import org.apache.log4j.Logger;
 
 import salomon.engine.database.DBManager;
 import salomon.engine.database.ExternalDBManager;
+import salomon.engine.database.queries.SQLSelect;
+import salomon.engine.platform.data.dataset.condition.AbstractCondition;
 import salomon.platform.IInfo;
 import salomon.platform.IUniqueId;
 import salomon.platform.data.IColumn;
 import salomon.platform.data.dataset.ICondition;
 import salomon.platform.data.dataset.IData;
 import salomon.platform.data.dataset.IDataSet;
+import salomon.platform.exception.DBException;
 import salomon.platform.exception.PlatformException;
 
 /**
@@ -57,7 +60,7 @@ public class DataSet implements IDataSet
 	{
 		_dbManager = dbManager;
 		_externalDBManager = externalDBManager;
-		_info = new DataSetInfo(dbManager);
+		_info = new DataSetInfo(dbManager, externalDBManager);
 	}
 
 	/**
@@ -109,8 +112,41 @@ public class DataSet implements IDataSet
 	public IData selectData(IColumn[] columns, ICondition[] conditions)
 			throws PlatformException
 	{
-		throw new UnsupportedOperationException(
-				"Method DataSet.selectData() not implemented yet!");
+		SQLSelect select = new SQLSelect();
+		// adding columns to be selected
+		if (columns != null) {
+			for (IColumn column : columns) {
+				select.addColumn(column.getName());
+			}
+		}
+
+		// setting data set conditions
+		AbstractCondition[] dataSetConditions = _info.getConditions();
+		for (AbstractCondition condition : dataSetConditions) {
+			select.addCondition(condition.toSQL());
+
+			// adding table (tables are kept is set
+			// so it doesnt have to be checked if table exists in query
+			select.addTable(condition.getColumn().getTable().getName());
+		}
+
+		// adding additional conditions
+		if (conditions != null) {
+			for (ICondition condition : conditions) {
+				select.addCondition(((AbstractCondition) condition).toSQL());
+				// adding table 
+				select.addTable(((AbstractCondition) condition).getColumn().getTable().getName());
+			}
+		}
+
+		// executing query
+		ResultSet resultSet = null;
+		try {
+			resultSet = _externalDBManager.select(select);
+		} catch (SQLException e) {
+			throw new DBException(e);
+		}
+		return new Data(resultSet);
 	}
 
 	/**

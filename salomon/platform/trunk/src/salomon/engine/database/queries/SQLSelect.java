@@ -111,7 +111,13 @@ public final class SQLSelect implements Cloneable
 	{
 		_orderBy.add(orderColumn);
 	}
-
+	
+	/**
+	 * Method adds table to FROM section of select statement.
+	 * If table already exists in this section it is not added.
+	 * 
+	 * @param tableName
+	 */
 	public void addTable(String tableName)
 	{
 		_tables.add(tableName);
