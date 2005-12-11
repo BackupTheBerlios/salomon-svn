@@ -44,7 +44,8 @@ abstract class AbstractOperatorCondition extends AbstractCondition
 		if (obj instanceof AbstractOperatorCondition) {
 			AbstractOperatorCondition condition = (AbstractOperatorCondition) obj;
 			result = _value.equals(condition._value)
-					&& getColumn().equals(condition.getColumn());
+					&& getColumn().equals(condition.getColumn())
+					&& getOperator().equals(condition.getOperator());
 		}
 
 		return result;
@@ -53,7 +54,8 @@ abstract class AbstractOperatorCondition extends AbstractCondition
 	@Override
 	public int hashCode()
 	{
-		return getColumn().hashCode() ^ _value.hashCode();
+		return getColumn().hashCode() ^ _value.hashCode()
+				^ getOperator().hashCode();
 	}
 
 	/**
