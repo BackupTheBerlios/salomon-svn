@@ -25,11 +25,14 @@ import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.apache.log4j.Logger;
+
 import salomon.engine.database.DBManager;
 import salomon.engine.database.queries.SQLDelete;
 import salomon.engine.database.queries.SQLUpdate;
 
 import salomon.platform.IInfo;
+import salomon.platform.exception.DBException;
 import salomon.platform.exception.PlatformException;
 
 public final class SolutionInfo implements IInfo
@@ -42,23 +45,35 @@ public final class SolutionInfo implements IInfo
 	 */
 	private DBManager _dbManager;
 
-	private String _name;
+	private String _host;
 
 	private String _info;
 
-	private String _host;
-
-	private String _path;
-
-	private String _user;
+	private String _name;
 
 	private String _passwd;
 
+	private String _path;
+
 	private int _solutionID = 0;
+
+	private String _user;
 
 	public SolutionInfo(DBManager manager)
 	{
 		_dbManager = manager;
+	}
+
+	public boolean delete() throws DBException
+	{
+		SQLDelete delete = new SQLDelete(TABLE_NAME);
+		delete.addCondition("solution_id =", _solutionID);
+		try {
+			return (_dbManager.delete(delete) > 0);
+		} catch (SQLException e) {
+			LOGGER.fatal("Exception was thrown!", e);
+			throw new DBException("Cannot delete solution info!", e);
+		}
 	}
 
 	public Date getCreationDate() throws PlatformException
@@ -67,34 +82,85 @@ public final class SolutionInfo implements IInfo
 				"Method getCreationDate() not implemented yet!");
 	}
 
+	/**
+	 * @return Returns the host.
+	 */
+	public String getHost()
+	{
+		return _host;
+	}
+
+	public int getId()
+	{
+		return _solutionID;
+	}
+
+	/**
+	 * @return Returns the info.
+	 */
+	public String getInfo()
+	{
+		return _info;
+	}
+
 	public Date getLastModificationDate() throws PlatformException
 	{
 		throw new UnsupportedOperationException(
 				"Method getLastModificationDate() not implemented yet!");
 	}
 
-	public boolean delete() throws SQLException, ClassNotFoundException
+	/**
+	 * @return Returns the name.
+	 */
+	public String getName()
 	{
-		SQLDelete delete = new SQLDelete(TABLE_NAME);
-		delete.addCondition("solution_id =", _solutionID);
-		return (_dbManager.delete(delete) > 0);
+		return _name;
+	}
+
+	/**
+	 * @return Returns the pass.
+	 */
+	public String getPasswd()
+	{
+		return _passwd;
+	}
+
+	/**
+	 * @return Returns the path.
+	 */
+	public String getPath()
+	{
+		return _path;
+	}
+
+	/**
+	 * @return Returns the user.
+	 */
+	public String getUser()
+	{
+		return _user;
 	}
 
 	/**
 	 * Initializes itself basing on given row from resultSet.
 	 * 
 	 * @param resultSet
-	 * @throws SQLException
+	 * @throws DBException 
 	 */
-	public void load(ResultSet resultSet) throws SQLException
+	public void load(ResultSet resultSet) throws DBException
 	{
-		_solutionID = resultSet.getInt("solution_id");
-		_name = resultSet.getString("solution_name");
-		_info = resultSet.getString("solution_info");
-		_host = resultSet.getString("hostname");
-		_path = resultSet.getString("db_path");
-		_user = resultSet.getString("username");
-		_passwd = resultSet.getString("passwd");
+		try {
+			_solutionID = resultSet.getInt("solution_id");
+			_name = resultSet.getString("solution_name");
+			_info = resultSet.getString("solution_info");
+			_host = resultSet.getString("hostname");
+			_path = resultSet.getString("db_path");
+			_user = resultSet.getString("username");
+			_passwd = resultSet.getString("passwd");
+		} catch (SQLException e) {
+			LOGGER.fatal("Exception was thrown!", e);
+			throw new DBException("Cannot load solution info!", e);
+		}
 	}
 
 	/**
@@ -103,10 +169,8 @@ public final class SolutionInfo implements IInfo
 	 * or new id in case of insert.
 	 * 
 	 * @return unique id
-	 * @throws ClassNotFoundException
-	 * @throws SQLException
 	 */
-	public int save() throws SQLException, ClassNotFoundException
+	public int save() throws DBException
 	{
 		SQLUpdate update = new SQLUpdate(TABLE_NAME);
 		if (_name != null) {
@@ -128,62 +192,22 @@ public final class SolutionInfo implements IInfo
 			update.addValue("passwd", _passwd);
 		}
 		update.addValue("lm_date", new Date(System.currentTimeMillis()));
-		_solutionID = _dbManager.insertOrUpdate(update, "solution_id",
-				_solutionID, GEN_NAME);
+		try {
+			_solutionID = _dbManager.insertOrUpdate(update, "solution_id",
+					_solutionID, GEN_NAME);
+		} catch (SQLException e) {
+			LOGGER.fatal("Exception was thrown!", e);
+			throw new DBException("Cannot save solution info!", e);
+		}
 		return _solutionID;
 	}
 
-	public int getId()
-	{
-		return _solutionID;
-	}
-
 	/**
-	 * @return Returns the name.
+	 * @param host The host to set.
 	 */
-	public String getName()
+	public void setHost(String host)
 	{
-		return _name;
-	}
-
-	/**
-	 * @return Returns the info.
-	 */
-	public String getInfo()
-	{
-		return _info;
-	}
-
-	/**
-	 * @return Returns the host.
-	 */
-	public String getHost()
-	{
-		return _host;
-	}
-
-	/**
-	 * @return Returns the path.
-	 */
-	public String getPath()
-	{
-		return _path;
-	}
-
-	/**
-	 * @return Returns the user.
-	 */
-	public String getUser()
-	{
-		return _user;
-	}
-
-	/**
-	 * @return Returns the pass.
-	 */
-	public String getPasswd()
-	{
-		return _passwd;
+		_host = host;
 	}
 
 	/**
@@ -203,11 +227,11 @@ public final class SolutionInfo implements IInfo
 	}
 
 	/**
-	 * @param host The host to set.
+	 * @param pass The pass to set.
 	 */
-	public void setHost(String host)
+	public void setPasswd(String pass)
 	{
-		_host = host;
+		_passwd = pass;
 	}
 
 	/**
@@ -219,27 +243,19 @@ public final class SolutionInfo implements IInfo
 	}
 
 	/**
-	 * @param user The user to set.
-	 */
-	public void setUser(String user)
-	{
-		_user = user;
-	}
-
-	/**
-	 * @param pass The pass to set.
-	 */
-	public void setPasswd(String pass)
-	{
-		_passwd = pass;
-	}
-
-	/**
 	 * @param solutionID The solutionID to set.
 	 */
 	public void setSolutionID(int solutionID)
 	{
 		_solutionID = solutionID;
+	}
+
+	/**
+	 * @param user The user to set.
+	 */
+	public void setUser(String user)
+	{
+		_user = user;
 	}
 
 	public String toString()
@@ -251,5 +267,7 @@ public final class SolutionInfo implements IInfo
 	public static final String TABLE_NAME = "solutions";
 
 	private static final String GEN_NAME = "gen_solution_id";
+
+	private static final Logger LOGGER = Logger.getLogger(SolutionInfo.class);
 
 }

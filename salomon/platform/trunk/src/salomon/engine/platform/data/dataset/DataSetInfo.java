@@ -21,7 +21,6 @@
 
 package salomon.engine.platform.data.dataset;
 
-import java.net.MalformedURLException;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -35,8 +34,10 @@ import salomon.engine.database.ExternalDBManager;
 import salomon.engine.database.queries.SQLDelete;
 import salomon.engine.database.queries.SQLInsert;
 import salomon.engine.database.queries.SQLUpdate;
+
 import salomon.platform.IInfo;
 import salomon.platform.data.dataset.ICondition;
+import salomon.platform.exception.DBException;
 import salomon.platform.exception.PlatformException;
 
 import salomon.engine.platform.data.dataset.condition.AbstractCondition;
@@ -74,15 +75,28 @@ public final class DataSetInfo implements IInfo
 		_conditions.add((AbstractCondition) condition);
 	}
 
-	public boolean delete() throws SQLException, ClassNotFoundException
+	public boolean delete() throws DBException
 	{
 		SQLDelete delete = new SQLDelete();
 		// deleting items
 		delete.setTable(TABLE_NAME);
 		delete.addCondition("dataset_id =", _datasetID);
-		int rows = _dbManager.delete(delete);
+		int rows;
+		try {
+			rows = _dbManager.delete(delete);
+		} catch (SQLException e) {
+			LOGGER.fatal("Exception was thrown!", e);
+			throw new DBException("Cannot delete!", e);
+		}
+
 		LOGGER.debug("rows deleted: " + rows);
 		return (rows > 0);
+	}
+
+	public AbstractCondition[] getConditions()
+	{
+		AbstractCondition[] conditions = new AbstractCondition[_conditions.size()];
+		return _conditions.toArray(conditions);
 	}
 
 	public Date getCreationDate() throws PlatformException
@@ -123,7 +137,21 @@ public final class DataSetInfo implements IInfo
 		return _solutionID;
 	}
 
-	public void loadItems(ResultSet resultSet) throws SQLException, PlatformException
+	public void load(ResultSet resultSet) throws DBException
+	{
+		// do not load solution_id - it is set while creating dataset
+		try {
+			_datasetID = resultSet.getInt("dataset_id");
+			_name = resultSet.getString("dataset_name");
+			_info = resultSet.getString("info");
+		} catch (SQLException e) {
+			LOGGER.fatal("Exception was thrown!", e);
+			throw new DBException("Cannot load!", e);
+		}
+	}
+
+	public void loadItems(ResultSet resultSet) throws SQLException,
+			PlatformException
 	{
 		String condition = resultSet.getString("condition");
 		AbstractCondition abstractCondition = (AbstractCondition) ConditionParser.parse(
@@ -131,25 +159,23 @@ public final class DataSetInfo implements IInfo
 		_conditions.add(abstractCondition);
 	}
 
-	public void load(ResultSet resultSet) throws MalformedURLException,
-			SQLException
-	{
-		// do not load solution_id - it is set while creating dataset
-		_datasetID = resultSet.getInt("dataset_id");
-		_name = resultSet.getString("dataset_name");
-		_info = resultSet.getString("info");
-	}
-
 	/**
+	 * @throws DBException 
 	 * @see salomon.platform.IInfo#save()
 	 */
-	public int save() throws SQLException, ClassNotFoundException
+	public int save() throws DBException
 	{
 		//removing old items
 		SQLDelete delete = new SQLDelete();
 		delete.setTable(ITEMS_TABLE_NAME);
 		delete.addCondition("dataset_id = ", _datasetID);
-		int rows = _dbManager.delete(delete);
+		int rows;
+		try {
+			rows = _dbManager.delete(delete);
+		} catch (SQLException e) {
+			LOGGER.fatal("Exception was thrown!", e);
+			throw new DBException("Cannot save!", e);
+		}
 		LOGGER.debug("rows deleted: " + rows);
 
 		//saving header
@@ -163,18 +189,28 @@ public final class DataSetInfo implements IInfo
 		update.addValue("solution_id", _solutionID);
 		update.addValue("lm_date", new Date(System.currentTimeMillis()));
 
-		_datasetID = _dbManager.insertOrUpdate(update, "dataset_id",
-				_datasetID, GEN_NAME);
+		try {
+			_datasetID = _dbManager.insertOrUpdate(update, "dataset_id",
+					_datasetID, GEN_NAME);
+		} catch (SQLException e) {
+			LOGGER.fatal("Exception was thrown!", e);
+			throw new DBException("Cannot save!", e);
+		}
 
-		// saving items
-		for (AbstractCondition condition : _conditions) {
-			SQLInsert insert = new SQLInsert(ITEMS_TABLE_NAME);
-			insert.addValue("dataset_id", _datasetID);
-			insert.addValue("table_name",
-					condition.getColumn().getTable().getName());
-			insert.addValue("condition", condition.toSQL());
-			LOGGER.debug("insert: " + insert.getQuery());
-			_dbManager.insert(insert, "dataset_item_id");
+		try {
+			// saving items
+			for (AbstractCondition condition : _conditions) {
+				SQLInsert insert = new SQLInsert(ITEMS_TABLE_NAME);
+				insert.addValue("dataset_id", _datasetID);
+				insert.addValue("table_name",
+						condition.getColumn().getTable().getName());
+				insert.addValue("condition", condition.toSQL());
+				LOGGER.debug("insert: " + insert.getQuery());
+				_dbManager.insert(insert, "dataset_item_id");
+			}
+		} catch (SQLException e) {
+			LOGGER.fatal("Exception was thrown!", e);
+			throw new DBException("Cannot save!", e);
 		}
 
 		return _datasetID;
@@ -209,12 +245,6 @@ public final class DataSetInfo implements IInfo
 	void setSolutionID(int solutionID)
 	{
 		_solutionID = solutionID;
-	}
-
-	public AbstractCondition[] getConditions()
-	{
-		AbstractCondition[] conditions = new AbstractCondition[_conditions.size()];
-		return _conditions.toArray(conditions);
 	}
 
 	public static final String ITEMS_TABLE_NAME = "dataset_items";

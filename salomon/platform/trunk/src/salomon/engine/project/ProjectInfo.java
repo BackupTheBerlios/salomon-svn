@@ -25,11 +25,14 @@ import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.apache.log4j.Logger;
+
 import salomon.engine.database.DBManager;
 import salomon.engine.database.queries.SQLDelete;
 import salomon.engine.database.queries.SQLUpdate;
 
 import salomon.platform.IInfo;
+import salomon.platform.exception.DBException;
 import salomon.platform.exception.PlatformException;
 
 public final class ProjectInfo implements IInfo
@@ -61,14 +64,19 @@ public final class ProjectInfo implements IInfo
 	 * Removes itself from database. After successsful finish object should be
 	 * destroyed.
 	 * 
-	 * @return @throws ClassNotFoundException
-	 * @throws SQLException
+	 * @return
+	 * @throws DBException 
 	 */
-	public boolean delete() throws SQLException, ClassNotFoundException
+	public boolean delete() throws DBException
 	{
 		SQLDelete delete = new SQLDelete(TABLE_NAME);
 		delete.addCondition("project_id =", _projectID);
-		return (_dbManager.delete(delete) > 0);
+		try {
+			return (_dbManager.delete(delete) > 0);
+		} catch (SQLException e) {
+			LOGGER.fatal("Exception was thrown!", e);
+			throw new DBException("Cannot delete project info!", e);
+		}
 	}
 
 	public Date getCreationDate() throws PlatformException
@@ -125,15 +133,20 @@ public final class ProjectInfo implements IInfo
 	 * Initializes itself basing on given row from resultSet.
 	 * 
 	 * @param resultSet
-	 * @throws SQLException
+	 * @throws DBException
 	 */
-	public void load(ResultSet resultSet) throws SQLException
+	public void load(ResultSet resultSet) throws DBException
 	{
-		_projectID = resultSet.getInt("project_id");
-		_solutionID = resultSet.getInt("solution_id");
-		_name = resultSet.getString("project_name");
-		_info = resultSet.getString("project_info");
-		_environment = resultSet.getString("env");
+		try {
+			_projectID = resultSet.getInt("project_id");
+			_solutionID = resultSet.getInt("solution_id");
+			_name = resultSet.getString("project_name");
+			_info = resultSet.getString("project_info");
+			_environment = resultSet.getString("env");
+		} catch (SQLException e) {
+			LOGGER.fatal("Exception was thrown!", e);
+			throw new DBException("Cannot load project info!", e);
+		}
 	}
 
 	/**
@@ -142,10 +155,9 @@ public final class ProjectInfo implements IInfo
 	 * or new id in case of insert.
 	 * 
 	 * @return unique id
-	 * @throws ClassNotFoundException
-	 * @throws SQLException
+	 * @throws DBException 
 	 */
-	public int save() throws SQLException, ClassNotFoundException
+	public int save() throws DBException
 	{
 		SQLUpdate update = new SQLUpdate(TABLE_NAME);
 		update.addValue("solution_id", _solutionID);
@@ -159,8 +171,14 @@ public final class ProjectInfo implements IInfo
 			update.addValue("env", _environment);
 		}
 		update.addValue("lm_date", new Date(System.currentTimeMillis()));
-		_projectID = _dbManager.insertOrUpdate(update, "project_id",
-				_projectID, GEN_NAME);
+		try {
+			_projectID = _dbManager.insertOrUpdate(update, "project_id",
+					_projectID, GEN_NAME);
+		} catch (SQLException e) {
+			LOGGER.fatal("Exception was thrown!", e);
+			throw new DBException("Cannot save project info!", e);
+		}
+
 		return _projectID;
 	}
 
@@ -210,4 +228,6 @@ public final class ProjectInfo implements IInfo
 	public static final String TABLE_NAME = "projects";
 
 	private static final String GEN_NAME = "gen_project_id";
+
+	private static final Logger LOGGER = Logger.getLogger(ProjectInfo.class);
 }

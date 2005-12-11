@@ -33,6 +33,7 @@ import salomon.engine.database.queries.SQLDelete;
 import salomon.engine.database.queries.SQLUpdate;
 
 import salomon.platform.IInfo;
+import salomon.platform.exception.DBException;
 import salomon.platform.exception.PlatformException;
 
 public final class TaskInfo implements IInfo
@@ -77,14 +78,18 @@ public final class TaskInfo implements IInfo
 	 * by TaskManager.
 	 * 
 	 * @return
-	 * @throws ClassNotFoundException
-	 * @throws SQLException
+	 * @throws DBException 
 	 */
-	public boolean delete() throws SQLException, ClassNotFoundException
+	public boolean delete() throws DBException
 	{
 		SQLDelete delete = new SQLDelete(TABLE_NAME);
 		delete.addCondition("task_id =", _taskID);
-		return (_dbManager.delete(delete) > 0);
+		try {
+			return (_dbManager.delete(delete) > 0);
+		} catch (SQLException e) {
+			LOGGER.fatal("Exception was thrown!", e);
+			throw new DBException("Cannot delete task info!", e);
+		}
 	}
 
 	public Date getCreationDate() throws PlatformException
@@ -157,28 +162,33 @@ public final class TaskInfo implements IInfo
 	 * @param resultSet
 	 * @throws SQLException
 	 */
-	public void load(ResultSet resultSet) throws SQLException
+	public void load(ResultSet resultSet) throws DBException
 	{
-		_taskID = resultSet.getInt("task_id");
-		_projectID = resultSet.getInt("project_id");
-		// it is not neccessery to set plugin id
-		_taskNr = resultSet.getInt("task_nr");
-		_name = resultSet.getString("task_name");
-		_info = resultSet.getString("task_info");
-		// setting has to be set
-		_settings = resultSet.getString("plugin_settings");
-		//		if (_plugin != null) {
-		//			LOGGER.debug("loading settings...");
-		//
-		//			ByteArrayInputStream bis = new ByteArrayInputStream(
-		//					settings.getBytes());
-		//			IObject object = XMLSerializer.deserialize(bis);
-		//			_settings = _plugin.getSettingComponent().getDefaultSettings();
-		//			_settings.init(object);
-		//		}
-		// TODO: support result loading?
-		//_result = resultSet.getString("plugin_result");
-		_status = resultSet.getString("status");
+		try {
+			_taskID = resultSet.getInt("task_id");
+			_projectID = resultSet.getInt("project_id");
+			// it is not neccessery to set plugin id
+			_taskNr = resultSet.getInt("task_nr");
+			_name = resultSet.getString("task_name");
+			_info = resultSet.getString("task_info");
+			// setting has to be set
+			_settings = resultSet.getString("plugin_settings");
+			//		if (_plugin != null) {
+			//			LOGGER.debug("loading settings...");
+			//
+			//			ByteArrayInputStream bis = new ByteArrayInputStream(
+			//					settings.getBytes());
+			//			IObject object = XMLSerializer.deserialize(bis);
+			//			_settings = _plugin.getSettingComponent().getDefaultSettings();
+			//			_settings.init(object);
+			//		}
+			// TODO: support result loading?
+			//_result = resultSet.getString("plugin_result");
+			_status = resultSet.getString("status");
+		} catch (SQLException e) {
+			LOGGER.fatal("Exception was thrown!", e);
+			throw new DBException("Cannot load task info!", e);
+		}
 	}
 
 	/**
@@ -187,10 +197,9 @@ public final class TaskInfo implements IInfo
 	 * or new id in case of insert.
 	 * 
 	 * @return unique id
-	 * @throws ClassNotFoundException
-	 * @throws SQLException
+	 * @throws DBException 
 	 */
-	public int save() throws SQLException, ClassNotFoundException
+	public int save() throws DBException
 	{
 		SQLUpdate update = new SQLUpdate(TABLE_NAME);
 		update.addValue("project_id", _projectID);
@@ -214,8 +223,13 @@ public final class TaskInfo implements IInfo
 			update.addValue("stop_time", new Time(System.currentTimeMillis()));
 		}
 		update.addValue("lm_date", new Date(System.currentTimeMillis()));
-		_taskID = _dbManager.insertOrUpdate(update, "task_id", _taskID,
-				GEN_NAME);
+		try {
+			_taskID = _dbManager.insertOrUpdate(update, "task_id", _taskID,
+					GEN_NAME);
+		} catch (SQLException e) {
+			LOGGER.fatal("Exception was thrown!", e);
+			throw new DBException("Cannot save task info!", e);
+		}
 		return _taskID;
 	}
 

@@ -28,11 +28,14 @@ import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.apache.log4j.Logger;
+
 import salomon.engine.database.DBManager;
 import salomon.engine.database.queries.SQLDelete;
 import salomon.engine.database.queries.SQLUpdate;
 
 import salomon.platform.IInfo;
+import salomon.platform.exception.DBException;
 import salomon.platform.exception.PlatformException;
 
 /**
@@ -80,15 +83,18 @@ public class PluginInfo implements IInfo, Serializable
 	/**
 	 * Removes itself from database.
 	 * After successsful finish object should be destroyed.
-	 * 
-	 * @throws ClassNotFoundException
-	 * @throws SQLException
+	 * @throws DBException 
 	 */
-	public boolean delete() throws SQLException, ClassNotFoundException
+	public boolean delete() throws DBException
 	{
 		SQLDelete delete = new SQLDelete(TABLE_NAME);
 		delete.addCondition("plugin_id =", _pluginID);
-		return (_dbManager.delete(delete) > 0);
+		try {
+			return (_dbManager.delete(delete) > 0);
+		} catch (SQLException e) {
+			LOGGER.fatal("Exception was thrown!", e);
+			throw new DBException("Cannor delete!", e);
+		}
 	}
 
 	public java.util.Date getCreationDate() throws PlatformException
@@ -97,17 +103,17 @@ public class PluginInfo implements IInfo, Serializable
 				"Method getCreationDate() not implemented yet!");
 	}
 
+	public int getId()
+	{
+		return _pluginID;
+	}
+
 	/**
 	 * @return Returns the description.
 	 */
 	public String getInfo()
 	{
 		return _info;
-	}
-
-	public int getId()
-	{
-		return _pluginID;
 	}
 
 	/**
@@ -168,16 +174,22 @@ public class PluginInfo implements IInfo, Serializable
 	 * Initializes itself basing on given row from resultSet.
 	 * 
 	 * @param resultSet
-	 * @throws SQLException
-	 * @throws MalformedURLException
+	 * @throws PlatformException 
 	 */
-	public void load(ResultSet resultSet) throws MalformedURLException,
-			SQLException
+	public void load(ResultSet resultSet) throws PlatformException
 	{
-		_pluginID = resultSet.getInt("plugin_id");
-		_name = resultSet.getString("plugin_name");
-		_location = new URL(resultSet.getString("location"));
-		_info = resultSet.getString("plugin_info");
+		try {
+			_pluginID = resultSet.getInt("plugin_id");
+			_name = resultSet.getString("plugin_name");
+			_location = new URL(resultSet.getString("location"));
+			_info = resultSet.getString("plugin_info");
+		} catch (SQLException e) {
+			LOGGER.fatal("Cannot load result!!", e);
+			throw new DBException("Cannot load result!", e);
+		} catch (MalformedURLException e) {
+			LOGGER.fatal("Cannot load result!!", e);
+			throw new PlatformException("Cannot load result!", e);
+		}
 	}
 
 	/**
@@ -186,10 +198,9 @@ public class PluginInfo implements IInfo, Serializable
 	 * or new id in case of insert.
 	 * 
 	 * @return unique id
-	 * @throws ClassNotFoundException
-	 * @throws SQLException
+	 * @throws DBException 
 	 */
-	public int save() throws SQLException, ClassNotFoundException
+	public int save() throws DBException
 	{
 		SQLUpdate update = new SQLUpdate(TABLE_NAME);
 		update.addValue("plugin_name", _name);
@@ -198,8 +209,13 @@ public class PluginInfo implements IInfo, Serializable
 			update.addValue("plugin_info", _info);
 		}
 		update.addValue("lm_date", new Date(System.currentTimeMillis()));
-		_pluginID = _dbManager.insertOrUpdate(update, "plugin_id", _pluginID,
-				GEN_NAME);
+		try {
+			_pluginID = _dbManager.insertOrUpdate(update, "plugin_id",
+					_pluginID, GEN_NAME);
+		} catch (SQLException e) {
+			LOGGER.fatal("Cannot save! Exception was thrown!", e);
+			throw new DBException("Cannot save!", e);
+		}
 		return _pluginID;
 	}
 
@@ -264,5 +280,7 @@ public class PluginInfo implements IInfo, Serializable
 	public static final String TABLE_NAME = "plugins";
 
 	private static final String GEN_NAME = "gen_plugin_id";
+
+	private static final Logger LOGGER = Logger.getLogger(PluginInfo.class);
 
 } // end PluginInfo
