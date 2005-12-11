@@ -24,6 +24,7 @@ package salomon.engine.platform.data.dataset;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -41,7 +42,7 @@ import salomon.platform.data.dataset.ICondition;
 import salomon.platform.exception.DBException;
 import salomon.platform.exception.PlatformException;
 
-public final class DataSetInfo implements IInfo
+final class DataSetInfo implements IInfo
 {
 	/**
 	 * Conditions determinating data set. key is table name, value - list of
@@ -68,15 +69,10 @@ public final class DataSetInfo implements IInfo
 		_conditions = new HashSet<AbstractCondition>();
 	}
 
-	public void addCondition(ICondition condition)
-	{
-		_conditions.add((AbstractCondition) condition);
-	}
-
 	public boolean delete() throws DBException
 	{
 		SQLDelete delete = new SQLDelete();
-		// deleting items
+		// deleting data set
 		delete.setTable(TABLE_NAME);
 		delete.addCondition("dataset_id =", _datasetID);
 		int rows;
@@ -158,12 +154,12 @@ public final class DataSetInfo implements IInfo
 	}
 
 	/**
-	 * @throws DBException 
+	 * @throws DBException
 	 * @see salomon.platform.IInfo#save()
 	 */
 	public int save() throws DBException
 	{
-		//removing old items
+		// removing old items
 		SQLDelete delete = new SQLDelete();
 		delete.setTable(ITEMS_TABLE_NAME);
 		delete.addCondition("dataset_id = ", _datasetID);
@@ -176,7 +172,7 @@ public final class DataSetInfo implements IInfo
 		}
 		LOGGER.debug("rows deleted: " + rows);
 
-		//saving header
+		// saving header
 		SQLUpdate update = new SQLUpdate(TABLE_NAME);
 		if (_name != null) {
 			update.addValue("dataset_name", _name);
@@ -212,6 +208,19 @@ public final class DataSetInfo implements IInfo
 		}
 
 		return _datasetID;
+	}
+
+	public void setConditions(ICondition[] conditions)
+	{
+		_conditions = new HashSet<AbstractCondition>();
+		for (ICondition condition : conditions) {
+			_conditions.add((AbstractCondition) condition);
+		}		
+	}
+
+	public void setConditions(Set<AbstractCondition> conditions)
+	{
+		_conditions = conditions;
 	}
 
 	public void setInfo(String info)

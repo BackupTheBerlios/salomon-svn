@@ -33,8 +33,8 @@ import salomon.platform.exception.DBException;
 import salomon.platform.exception.PlatformException;
 
 /**
- *  
- *  TODO: change scope to default after Unit tests
+ * 
+ * TODO: change scope to default after Unit tests
  */
 public class Data implements IData
 {

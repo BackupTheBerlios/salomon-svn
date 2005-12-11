@@ -23,6 +23,9 @@ package salomon.engine.platform.data.dataset;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.apache.log4j.Logger;
 
@@ -47,7 +50,7 @@ import salomon.platform.exception.PlatformException;
  */
 public class DataSet implements IDataSet
 {
-	private DBManager _dbManager;
+	DataSetManager _dataSetManager;
 
 	private ExternalDBManager _externalDBManager;
 
@@ -56,21 +59,20 @@ public class DataSet implements IDataSet
 	/**
 	 * Creates data set. This constructor can be used only from DataSetManager.
 	 */
-	protected DataSet(DBManager dbManager, ExternalDBManager externalDBManager)
+	protected DataSet(DataSetManager dataSetManager, DBManager manager,
+			ExternalDBManager externalDBManager)
 	{
-		_dbManager = dbManager;
+		_dataSetManager = dataSetManager;
 		_externalDBManager = externalDBManager;
-		_info = new DataSetInfo(dbManager, externalDBManager);
+		_info = new DataSetInfo(manager, externalDBManager);
 	}
 
-	/**
-	 * Method adds condition corresponding to given table name.
-	 *
-	 * @param condition
-	 */
-	public void addCondition(ICondition condition)
+	public IDataSet createSubset(ICondition[] conditions)
+			throws PlatformException
 	{
-		_info.addCondition(condition);
+		DataSet dataSet = (DataSet) _dataSetManager.getMainDataSet();
+		dataSet._info.setConditions(conditions);
+		return dataSet;
 	}
 
 	public ICondition[] getConditions()
@@ -85,8 +87,15 @@ public class DataSet implements IDataSet
 
 	public IDataSet intersection(IDataSet dataSet) throws PlatformException
 	{
-		throw new UnsupportedOperationException(
-				"Method intersection() not implemented yet!");
+		DataSet newDataSet = (DataSet) _dataSetManager.getMainDataSet();
+		Set<AbstractCondition> currentConditons = _info.getConditionSet();
+		Set<AbstractCondition> newConditons = ((DataSet) dataSet)._info.getConditionSet();
+
+		Set<AbstractCondition> conditions = new HashSet<AbstractCondition>();
+		conditions.addAll(currentConditons);
+		conditions.retainAll(newConditons);
+		newDataSet._info.setConditions(conditions);
+		return newDataSet;
 	}
 
 	public IDataSet intersection(IDataSet dataSet, IUniqueId id)
@@ -98,8 +107,15 @@ public class DataSet implements IDataSet
 
 	public IDataSet minus(IDataSet dataSet) throws PlatformException
 	{
-		throw new UnsupportedOperationException(
-				"Method minus() not implemented yet!");
+		DataSet newDataSet = (DataSet) _dataSetManager.getMainDataSet();
+		Set<AbstractCondition> currentConditons = _info.getConditionSet();
+		Set<AbstractCondition> newConditons = ((DataSet) dataSet)._info.getConditionSet();
+
+		Set<AbstractCondition> conditions = new HashSet<AbstractCondition>();
+		conditions.addAll(currentConditons);
+		conditions.removeAll(newConditons);
+		newDataSet._info.setConditions(conditions);
+		return newDataSet;
 	}
 
 	public IDataSet minus(IDataSet dataSet, IUniqueId id)
@@ -134,7 +150,7 @@ public class DataSet implements IDataSet
 		if (conditions != null) {
 			for (ICondition condition : conditions) {
 				select.addCondition(((AbstractCondition) condition).toSQL());
-				// adding table 
+				// adding table
 				select.addTable(((AbstractCondition) condition).getColumn().getTable().getName());
 			}
 		}
@@ -149,49 +165,6 @@ public class DataSet implements IDataSet
 		return new Data(resultSet);
 	}
 
-	/**
-	 * Method selects data basing on given parameters. It takes into account
-	 * conditions determinating data set - conditions passed as the arguments of
-	 * method are concatenated to them. TODO: reimplement it
-	 * 
-	 * @param select SELECT query
-	 * @throws PlatformException
-	 */
-	//	public ResultSet selectData(SQLSelect select) throws PlatformException
-	//
-	//	{
-	//		SQLSelect selectCopy = (SQLSelect) select.clone();
-	//		// getting all tables used in select and _tableNames
-	//		// (intersection of these sets)
-	//		// These tables are needed to add conditions determinating dataset
-	//		Collection<String> commonTables = selectCopy.getTables();
-	//		commonTables.retainAll(_conditions.keySet());
-	//
-	//		if (_conditions.size() > 0) {
-	//			// preparing conditions
-	//			for (String commonTable : commonTables) {
-	//				for (String condition : _conditions.get(commonTable)) {
-	//					selectCopy.addCondition(condition);
-	//				}
-	//			}
-	//		}
-	//		// adding tables from original select
-	//		for (String tableName : select.getTables()) {
-	//			selectCopy.addTable(tableName);
-	//		}
-	//
-	//		LOGGER.debug("selectCopy: " + selectCopy.getQuery());
-	//		return DBManager.getInstance().select(selectCopy);
-	//FIXME: use conditions
-	//		ResultSet resultSet = null;
-	//		try {
-	//			resultSet = _externalDBManager.select(select);
-	//		} catch (SQLException e) {
-	//			LOGGER.fatal("", e);
-	//			throw new PlatformException(e.getLocalizedMessage());
-	//		}
-	//		return resultSet;
-	//	}
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -204,8 +177,15 @@ public class DataSet implements IDataSet
 
 	public IDataSet union(IDataSet dataSet) throws PlatformException
 	{
-		throw new UnsupportedOperationException(
-				"Method union() not implemented yet!");
+		DataSet newDataSet = (DataSet) _dataSetManager.getMainDataSet();
+		Set<AbstractCondition> currentConditons = _info.getConditionSet();
+		Set<AbstractCondition> newConditons = ((DataSet) dataSet)._info.getConditionSet();
+
+		Set<AbstractCondition> conditions = new HashSet<AbstractCondition>();
+		conditions.addAll(currentConditons);
+		conditions.addAll(newConditons);
+		newDataSet._info.setConditions(conditions);
+		return newDataSet;
 	}
 
 	public IDataSet union(IDataSet dataSet, IUniqueId id)

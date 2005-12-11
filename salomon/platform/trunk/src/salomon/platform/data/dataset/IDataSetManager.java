@@ -44,13 +44,6 @@ public interface IDataSetManager
 	ICondition createAndCondition(ICondition condition,
 			ICondition... conditions) throws PlatformException;
 
-	/**
-	 * Creates empty data set.
-	 * 
-	 * @return the empty data set
-	 */
-	IDataSet createEmpty() throws PlatformException;
-
 	ICondition createEqualsCondition(IColumn column, Object value)
 			throws PlatformException;
 
@@ -71,12 +64,19 @@ public interface IDataSetManager
 	IDataSet[] getAll() throws PlatformException;
 
 	/**
-	 * Gets a data set with the given id. 
+	 * Gets a data set with the given id.
 	 * 
 	 * @param id data set id
 	 * @return wanted data set
 	 */
 	IDataSet getDataSet(IUniqueId id) throws PlatformException;
+
+	/**
+	 * Returns the data set that describes all data base.
+	 * 
+	 * @return the main data set
+	 */
+	IDataSet getMainDataSet() throws PlatformException;
 
 	/**
 	 * Removes the given data set from the storage.

@@ -64,8 +64,7 @@ public class DataSetTest extends TestCase
 		LOGGER.info("Connected");
 	}
 
-	public void testDelete() throws PlatformException, SQLException,
-			ClassNotFoundException
+	public void testDelete() throws PlatformException
 	{
 		LOGGER.info("DataSetTest.testDelete()");
 		DataSet dataSet = (DataSet) _dataSetManager.getAll()[0];
@@ -75,25 +74,25 @@ public class DataSetTest extends TestCase
 
 	}
 
-	public void testSave1() throws PlatformException, SQLException,
-			ClassNotFoundException
+	public void testSave1() throws PlatformException
 	{
 		LOGGER.info("DataSetTest.testSave1()");
-		DataSet dataSet = (DataSet) _dataSetManager.createEmpty();
-		((DataSetInfo) dataSet.getInfo()).setName("first");
+		DataSet mainDataSet = (DataSet) _dataSetManager.getMainDataSet();
 
 		DBTable table = new DBTable("persons");
 		// column type is not important
 		IColumn column = new DBColumn(table, "id", "INT");
-		dataSet.addCondition(_dataSetManager.createEqualsCondition(column,
-				new Integer(10)));
+		ICondition[] condition = new ICondition[3];
+		condition[0] = _dataSetManager.createEqualsCondition(column,
+				new Integer(10));
 		column = new DBColumn(table, "first_name", "VARCHAR");
-		dataSet.addCondition(_dataSetManager.createEqualsCondition(column,
-				"Nikodem"));
+		condition[1] = _dataSetManager.createEqualsCondition(column, "Nikodem");
 		column = new DBColumn(table, "last_name", "VARCHAR");
-		dataSet.addCondition(_dataSetManager.createEqualsCondition(column,
-				"Jura"));
+		condition[2] = _dataSetManager.createEqualsCondition(column, "Jura");
 
+		IDataSet dataSet = mainDataSet.createSubset(condition);
+
+		((DataSetInfo) dataSet.getInfo()).setName("first");
 		dataSet.getInfo().save();
 
 		_manager.commit();
@@ -109,14 +108,17 @@ public class DataSetTest extends TestCase
 		// if not exists, then adding test data set
 		if (!_manager.existsSelect(select)) {
 			LOGGER.debug("Adding test dataset");
-			DataSet dataSet = (DataSet) _dataSetManager.createEmpty();
-			((DataSetInfo) dataSet.getInfo()).setName("test select");
+			DataSet mainDataSet = (DataSet) _dataSetManager.getMainDataSet();
 
 			DBTable table = new DBTable("persons");
 			// column type is not important
 			IColumn column = new DBColumn(table, "id", "INT");
-			dataSet.addCondition(_dataSetManager.createLowerCondition(column,
-					new Integer(4)));
+			ICondition[] conditions = new ICondition[1];
+			conditions[0] = _dataSetManager.createLowerCondition(column,
+					new Integer(4));
+			
+			IDataSet dataSet = mainDataSet.createSubset(conditions);
+			((DataSetInfo) dataSet.getInfo()).setName("test select");
 			_dataSetManager.add(dataSet);
 		}
 
@@ -149,15 +151,16 @@ public class DataSetTest extends TestCase
 		// adding some conditions
 		IMetaData metaData = TestObjectFactory.getSolution("Persons").getDataEngine().getMetaData();
 		ITable table = metaData.getTable("persons");
-		IColumn[] columns = new IColumn[2]; 
+		IColumn[] columns = new IColumn[2];
 		columns[0] = table.getColumn("first_name");
 		columns[1] = table.getColumn("email");
-		
+
 		IColumn idColumn = table.getColumn("id");
-		
+
 		ICondition[] conditions = new ICondition[1];
-		conditions[0] = _dataSetManager.createLowerCondition(idColumn, new Integer(3));
-		
+		conditions[0] = _dataSetManager.createLowerCondition(idColumn,
+				new Integer(3));
+
 		data = dataSet.selectData(columns, conditions);
 
 		while (data.next()) {
@@ -171,6 +174,21 @@ public class DataSetTest extends TestCase
 		}
 		data.close();
 
+	}
+	
+	public void testUnion()
+	{
+		
+	}
+	
+	public void testIntersection()
+	{
+		
+	}
+	
+	public void testMinus()
+	{
+		
 	}
 
 	private static final Logger LOGGER = Logger.getLogger(DataSetTest.class);

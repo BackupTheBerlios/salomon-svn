@@ -86,14 +86,6 @@ public final class DataSetManager implements IDataSetManager
 				(AbstractCondition[]) conditions);
 	}
 
-	//TODO: rename
-	public IDataSet createEmpty() throws PlatformException
-	{
-		IDataSet dataSet = new DataSet(_dbManager, _externalDBManager);
-		((DataSetInfo) dataSet.getInfo()).setSolutionID(_solutionInfo.getId());
-		return dataSet;
-	}
-
 	public ICondition createEqualsCondition(IColumn column, Object value)
 			throws PlatformException
 	{
@@ -144,10 +136,10 @@ public final class DataSetManager implements IDataSetManager
 			IDataSet dataSet = null;
 			while (resultSet.next()) {
 				int tmpDataSetID = resultSet.getInt("dataset_id");
-				// when dataset_id changes, creating new DataSet object 
+				// when dataset_id changes, creating new DataSet object
 				if (tmpDataSetID != dataSetID) {
 					dataSetID = tmpDataSetID;
-					dataSet = this.createEmpty();
+					dataSet = this.getMainDataSet();
 					dataSet.getInfo().load(resultSet);
 					dataSets.add(dataSet);
 					// not loading items, if there is no more rows
@@ -170,11 +162,11 @@ public final class DataSetManager implements IDataSetManager
 
 	/**
 	 * Returns DataSet object basing on given id.
-	 *
+	 * 
 	 */
 	public IDataSet getDataSet(IUniqueId id) throws PlatformException
 	{
-		IDataSet dataSet = this.createEmpty();
+		IDataSet dataSet = this.getMainDataSet();
 
 		// selecting DataSet header
 		SQLSelect dataSetSelect = new SQLSelect();
@@ -225,6 +217,13 @@ public final class DataSetManager implements IDataSetManager
 
 		LOGGER.info("DataSet successfully loaded.");
 
+		return dataSet;
+	}
+
+	public IDataSet getMainDataSet() throws PlatformException
+	{
+		IDataSet dataSet = new DataSet(this, _dbManager, _externalDBManager);
+		((DataSetInfo) dataSet.getInfo()).setSolutionID(_solutionInfo.getId());
 		return dataSet;
 	}
 

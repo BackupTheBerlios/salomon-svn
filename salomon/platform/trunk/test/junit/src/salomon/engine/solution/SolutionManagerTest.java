@@ -124,7 +124,7 @@ public class SolutionManagerTest extends TestCase
 		}
 		IDataSet dataSet = null;
 		try {
-			dataSet = dataEngine.getDataSetManager().createEmpty();
+			dataSet = dataEngine.getDataSetManager().getMainDataSet();
 		} catch (PlatformException e) {
 			LOGGER.fatal("", e);
 		}

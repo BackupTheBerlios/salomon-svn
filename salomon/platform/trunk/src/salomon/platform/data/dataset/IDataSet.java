@@ -41,6 +41,7 @@ public interface IDataSet
 	/**
 	 * 
 	 * TODO: add comment.
+	 * 
 	 * @param dataSet
 	 * @return
 	 * @throws PlatformException
@@ -50,6 +51,7 @@ public interface IDataSet
 	/**
 	 * 
 	 * TODO: add comment.
+	 * 
 	 * @param dataSet
 	 * @param id
 	 * @return
@@ -61,6 +63,7 @@ public interface IDataSet
 	/**
 	 * 
 	 * TODO: add comment.
+	 * 
 	 * @param dataSet
 	 * @return
 	 * @throws PlatformException
@@ -70,6 +73,7 @@ public interface IDataSet
 	/**
 	 * 
 	 * TODO: add comment.
+	 * 
 	 * @param dataSet
 	 * @param id
 	 * @return
@@ -88,6 +92,7 @@ public interface IDataSet
 	/**
 	 * 
 	 * TODO: add comment.
+	 * 
 	 * @param dataSet
 	 * @param id
 	 * @return
@@ -95,10 +100,25 @@ public interface IDataSet
 	 */
 	IDataSet union(IDataSet dataSet, IUniqueId id) throws PlatformException;
 
-	IData selectData(IColumn[] columns, ICondition[] conditions) throws PlatformException;
-	
-	void addCondition(ICondition condition);
-	
+	IData selectData(IColumn[] columns, ICondition[] conditions)
+			throws PlatformException;
+
+	/**
+	 * Method creates new data set that is a subset of the current one. DataSet
+	 * object is immutable so the only way to add some conditions to data set is
+	 * creating its subset.
+	 * 
+	 * @param conditions condtions of data set
+	 * @return data set that is a subset of current one
+	 * @throws PlatformException
+	 */
+	IDataSet createSubset(ICondition[] conditions) throws PlatformException;
+
+	/**
+	 * Returns conditions that determine data set.
+	 * 
+	 * @return conditions determinating data set
+	 */
 	ICondition[] getConditions();
 
 }
