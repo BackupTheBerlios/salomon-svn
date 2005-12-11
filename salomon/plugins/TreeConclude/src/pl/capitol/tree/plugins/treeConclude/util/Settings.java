@@ -3,6 +3,7 @@ package pl.capitol.tree.plugins.treeConclude.util;
 import salomon.platform.serialization.IObject;
 import salomon.platform.serialization.IStruct;
 import salomon.plugin.ISettings;
+import salomon.util.serialization.SimpleInteger;
 import salomon.util.serialization.SimpleStruct;
 
 public class Settings extends SimpleStruct implements ISettings {
@@ -16,4 +17,11 @@ public class Settings extends SimpleStruct implements ISettings {
     		this.setField(field, struct.getField(field));
     	}
     }
+
+	public Settings() {
+		this.setField("isAlone",new SimpleInteger(0));
+		this.setField("treeId",new SimpleInteger(0));
+	}
+	
+	
 }

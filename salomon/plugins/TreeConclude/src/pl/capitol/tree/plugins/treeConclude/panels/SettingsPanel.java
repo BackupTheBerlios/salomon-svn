@@ -1,16 +1,20 @@
 package pl.capitol.tree.plugins.treeConclude.panels;
 
-import java.util.LinkedList;
+import java.awt.GridLayout;
 
-import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
+
+import org.apache.log4j.Logger;
 
 import salomon.platform.IDataEngine;
-import salomon.platform.data.tree.ITreeManager;
+import salomon.platform.data.tree.IDataSource;
+import salomon.platform.data.tree.ITree;
+import salomon.platform.exception.PlatformException;
 import salomon.plugin.ISettings;
+import salomon.util.serialization.SimpleInteger;
 
 /**
  * @author mnowakowski
@@ -18,23 +22,29 @@ import salomon.plugin.ISettings;
  */
 public class SettingsPanel extends JPanel {
 
-	private static final long serialVersionUID = 1L;
+	private static final Logger LOGGER = Logger.getLogger(SettingsPanel.class);
 	private ISettings settings;
 	private IDataEngine dataEngine;
+	private ITree [] trees;
 	
-	private JTextField tableNameText = null;
-	private JLabel tableNameLabel = null;
-	private JTextArea testText = null;
-	private JLabel testLabel = null;
-	private JLabel decisionedLabel = null;
-	private JTextField decisionedText = null;
-	private JTextField decisioning1Text = null;
-	private JTextField decisioning2Text = null;
-	private JTextField decisioning3Text = null;
-	private JLabel decisioning1Label = null;
-	private JLabel decisioning2Label = null;
-	private JLabel decisioning3Label = null;
-	private JButton testButton = null;
+	private JCheckBox workAloneCheckBox = null;
+	private JComboBox chooseTreeComboBox = null;
+	private JPanel chosenTreePanel = null;
+	private JLabel treeNameLabel = null;
+	private JLabel treeName = null;
+	private JLabel treeInfoLabel = null;
+	private JLabel treeInfo = null;
+	private JLabel dataSourceLabel = null;
+	private JLabel dataSource = null;
+	private JLabel dataSourceDecideLabel = null;
+	private JLabel dataSourceDecide = null;
+	private JLabel dataSourceDecisioningLabel = null;
+	private JLabel dataSourceDecisioning = null;
+	private JLabel dataSourceRowsLabel = null;
+	private JLabel dataSourceRows = null;
+	private JLabel titleLabel = null;
+	private JLabel chooseTreeLabel = null;
+	private JLabel errorLabel = null;
 	/**
 	 * This is the default constructor
 	 */
@@ -43,6 +53,19 @@ public class SettingsPanel extends JPanel {
 		this.dataEngine = dataEngine;
 		this.settings = settings;
 		initialize();
+		
+		// wczytanie danych
+		try {
+			this.trees = dataEngine.getTreeManager().getTrees();
+			for (ITree tree : this.trees) this.chooseTreeComboBox.addItem(tree);
+			chosenTreeComboBoxChanged();
+			selectChooseTreeComboBoxItem();
+		} catch (PlatformException e) {
+			LOGGER.error("Error occured while initialising plugin: "+e.getMessage());
+			e.printStackTrace();
+			errorLabel.setText("Error: "+e.getMessage());
+		}
+		
 	}
 	/**
 	 * This method initializes this
@@ -50,117 +73,36 @@ public class SettingsPanel extends JPanel {
 	 * @return void
 	 */
 	private  void initialize() {
-		tableNameLabel = new JLabel();
-		decisionedLabel = new JLabel();
-		decisioning3Label = new JLabel();
-		decisioning2Label = new JLabel();
-		decisioning1Label = new JLabel();
-		testLabel = new JLabel();
+		errorLabel = new JLabel();
+		errorLabel.setBounds(new java.awt.Rectangle(215,58,282,20));
+		errorLabel.setForeground(java.awt.Color.red);
+		errorLabel.setPreferredSize(new java.awt.Dimension(282,20));
+		errorLabel.setText("");
+		chooseTreeLabel = new JLabel();
+		chooseTreeLabel.setBounds(new java.awt.Rectangle(18,86,172,22));
+		chooseTreeLabel.setText("Wybierz drzewo:");
+		titleLabel = new JLabel();
+		titleLabel.setBounds(new java.awt.Rectangle(144,16,290,30));
+		titleLabel.setFont(new java.awt.Font("Comic Sans MS", java.awt.Font.BOLD | java.awt.Font.ITALIC, 18));
+		titleLabel.setText("Plugin wnioskuj¹cy: Ustawienia");
 		this.setLayout(null);
-		this.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-		this.setPreferredSize(new java.awt.Dimension(487,188));
-		this.setSize(487, 188);
-		tableNameLabel.setBounds(7, 22, 65, 22);
-		tableNameLabel.setText("Table:");
+		this.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Drzewa decyzyjne", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, null, null));
+		this.setPreferredSize(new java.awt.Dimension(509,280));
+		this.setSize(509, 280);
 		this.setName("settingsPanel");
-		testLabel.setBounds(247, 24, 72, 16);
-		testLabel.setText("Test text:");
-		decisionedLabel.setBounds(7, 49, 77, 27);
-		decisionedLabel.setText("Decisioned:");
-		decisioning1Label.setBounds(7, 77, 81, 21);
-		decisioning1Label.setText("Decisioning1:");
-		decisioning2Label.setBounds(7, 100, 79, 23);
-		decisioning2Label.setText("Decisioning2:");
-		decisioning3Label.setBounds(7, 129, 80, 22);
-		decisioning3Label.setText("Decisioning3:");
-		this.add(getTableNameText(), null);
-		this.add(getTestText(), null);
-		this.add(testLabel, null);
-		this.add(decisionedLabel, null);
-		this.add(getDecisionedText(), null);
-		this.add(getDecisioning1Text(), null);
-		this.add(getDecisioning2Text(), null);
-		this.add(getDecisioning3Text(), null);
-		this.add(decisioning1Label, null);
-		this.add(decisioning2Label, null);
-		this.add(decisioning3Label, null);
-		this.add(tableNameLabel, null);
-		this.add(getTestButton(), null);
-	}
-	/**
-	 * This method initializes decisionedText	
-	 * 	
-	 * @return javax.swing.JTextField	
-	 */    
-	private JTextField getTableNameText() {
-		if (tableNameText == null) {
-			tableNameText = new JTextField();
-			tableNameText.setBounds(90, 23, 152, 20);;
-		}
-		return tableNameText;
-	}
-	/**
-	 * This method initializes jTextArea	
-	 * 	
-	 * @return javax.swing.JTextArea	
-	 */    
-	private JTextArea getTestText() {
-		if (testText == null) {
-			testText = new JTextArea();
-			testText.setBounds(246, 46, 230, 101);
-		}
-		return testText;
-	}
-	/**
-	 * This method initializes decisionedText	
-	 * 	
-	 * @return javax.swing.JTextField	
-	 */    
-	private JTextField getDecisionedText() {
-		if (decisionedText == null) {
-			decisionedText = new JTextField();
-			decisionedText.setBounds(90, 52, 152, 20);
-		}
-		return decisionedText;
-	}
-	/**
-	 * This method initializes decisioning1Text	
-	 * 	
-	 * @return javax.swing.JTextField	
-	 */    
-	private JTextField getDecisioning1Text() {
-		if (decisioning1Text == null) {
-			decisioning1Text = new JTextField();
-			decisioning1Text.setBounds(90, 78, 152, 20);
-		}
-		return decisioning1Text;
-	}
-	/**
-	 * This method initializes decisioning2Text	
-	 * 	
-	 * @return javax.swing.JTextField	
-	 */    
-	private JTextField getDecisioning2Text() {
-		if (decisioning2Text == null) {
-			decisioning2Text = new JTextField();
-			decisioning2Text.setBounds(91, 101, 151, 20);
-		}
-		return decisioning2Text;
-	}
-	/**
-	 * This method initializes decisioning3Text	
-	 * 	
-	 * @return javax.swing.JTextField	
-	 */    
-	private JTextField getDecisioning3Text() {
-		if (decisioning3Text == null) {
-			decisioning3Text = new JTextField();
-			decisioning3Text.setBounds(95, 128, 147, 20);
-		}
-		return decisioning3Text;
+		this.add(getWorkAloneCheckBox(), null);
+		this.add(getChosenTreePanel(), null);
+		this.add(getChooseTreeComboBox(), null);
+		this.add(titleLabel, null);
+		this.add(chooseTreeLabel, null);
+		this.add(errorLabel, null);
 	}
 	public ISettings getSettings() {
-		//TODO umiescic z pol settingsy dla doJob()
+
+		settings.setField("isAlone",new SimpleInteger((workAloneCheckBox.isSelected() ? 1 : 0)));
+		ITree selectedTree = (ITree)this.chooseTreeComboBox.getSelectedItem();
+		if (selectedTree != null) settings.setField("treeId",new SimpleInteger(selectedTree.getId()));
+		else settings.setField("treeId",new SimpleInteger(-1)); // -1 oznacza blad
 		return settings;
 	}
 	public void setSettings(ISettings settings) {
@@ -172,50 +114,157 @@ public class SettingsPanel extends JPanel {
 	public void setDataEngine(IDataEngine dataEngine) {
 		this.dataEngine = dataEngine;
 	}
+	
+	
+	private void selectChooseTreeComboBoxItem(){
+		ITree selectedTree = (ITree)this.chooseTreeComboBox.getSelectedItem();
+		if (selectedTree != null) {
+			treeName.setText(selectedTree.getName());
+			treeInfo.setText(selectedTree.getInfo());
+			IDataSource selDataSource = selectedTree.getDataSource();
+			String decCols = "";
+			for (String col : selDataSource.getDecioningColumns()) decCols +=col+",";
+			if (!decCols.equals("")) decCols = decCols.substring(0,decCols.length()-1);
+			dataSource.setText(selDataSource.getName());
+			dataSourceDecide.setText(selDataSource.getDecisionedColumn());
+			dataSourceDecisioning.setText(decCols);
+			dataSourceRows.setText(selDataSource.getFirstRowIndex()+" - "+selDataSource.getLastRowIndex());
+		}else {
+			treeName.setText("");
+			treeInfo.setText("");
+			dataSource.setText("");
+			dataSourceDecide.setText("");
+			dataSourceDecisioning.setText("");
+			dataSourceRows.setText("");			
+		}
+	}
+	
 	/**
-	 * This method initializes testButton	
-	 * 	
-	 * @return javax.swing.JButton	
+	 * Pomocnicza metoda ktora disable/enable pola w zaleznosci od stanu checkbox`a
+	 *
 	 */
-	private JButton getTestButton() {
-		if (testButton == null) {
-			testButton = new JButton();
-			testButton.setBounds(new java.awt.Rectangle(9,159,180,19));
-			testButton.setText("Test table and columns");
-
-			testButton.addMouseListener(new java.awt.event.MouseAdapter() {
-				public void mouseClicked(java.awt.event.MouseEvent e) {
-					String tableName = tableNameText.getText();
-					LinkedList<String> columns = new LinkedList<String>();
-					if ((decisionedText.getText() != null)&&(!decisionedText.getText().equals(""))) columns.add(decisionedText.getText());
-					if ((decisioning1Text.getText() != null)&&(!decisioning1Text.getText().equals(""))) columns.add(decisioning1Text.getText());
-					if ((decisioning2Text.getText() != null)&&(!decisioning2Text.getText().equals(""))) columns.add(decisioning2Text.getText());
-					if ((decisioning3Text.getText() != null)&&(!decisioning3Text.getText().equals(""))) columns.add(decisioning3Text.getText());
-					
-					try{
-						ITreeManager manager = dataEngine.getTreeManager();
-			
-						getTestText().setText(manager.getTableSize(tableName)+"");
-						//ITree [] tress = manager.getTrees();
-						//System.out.println("sss"+tress.toString());
-						//ITree tree = manager.getTree(tress[0].getId());
-						//System.out.println("sss"+tree.toString());
-						//manager.removeTree(tree.getId());
-						//manager.getAll
-						/*boolean b = manager.checkTableAndColumns(tableName,columns);
-						if (b) {
-							getTestText().setText("Table and columns existed");
-						} else {
-							getTestText().setText("Table and columns not  existed");
-						}*/
-					}catch(Throwable e1) {
-						getTestText().setText(e1.getMessage());
-					}
+	private void chosenTreeComboBoxChanged(){
+		if (!workAloneCheckBox.isSelected()) {
+			chooseTreeComboBox.setEnabled(false);
+			treeName.setEnabled(false);
+			treeInfo.setEnabled(false);
+			dataSource.setEnabled(false);
+			dataSourceDecide.setEnabled(false);
+			dataSourceDecisioning.setEnabled(false);
+			dataSourceRows.setEnabled(false);
+		} else {
+			chooseTreeComboBox.setEnabled(true);
+			treeName.setEnabled(true);
+			treeInfo.setEnabled(true);
+			dataSource.setEnabled(true);
+			dataSourceDecide.setEnabled(true);
+			dataSourceDecisioning.setEnabled(true);
+			dataSourceRows.setEnabled(true);					
+		}	
+	}
+	
+	/**
+	 * This method initializes workAloneCheckBox	
+	 * 	
+	 * @return javax.swing.JCheckBox	
+	 */
+	private JCheckBox getWorkAloneCheckBox() {
+		if (workAloneCheckBox == null) {
+			workAloneCheckBox = new JCheckBox();
+			workAloneCheckBox.setBounds(new java.awt.Rectangle(17,55,148,21));
+			workAloneCheckBox.setText("Pracuj samodzielnie");
+			workAloneCheckBox.addChangeListener(new javax.swing.event.ChangeListener() {
+				public void stateChanged(javax.swing.event.ChangeEvent e) {
+					chosenTreeComboBoxChanged();
 				}
 			});
 		}
-		return testButton;
+		return workAloneCheckBox;
+	}
+	/**
+	 * This method initializes chooseTreeComboBox	
+	 * 	
+	 * @return javax.swing.JComboBox	
+	 */
+	private JComboBox getChooseTreeComboBox() {
+		if (chooseTreeComboBox == null) {
+			chooseTreeComboBox = new JComboBox();
+			chooseTreeComboBox.setBounds(new java.awt.Rectangle(207,85,229,25));
+			chooseTreeComboBox.addItemListener(new java.awt.event.ItemListener() {
+				public void itemStateChanged(java.awt.event.ItemEvent e) {
+					selectChooseTreeComboBoxItem();
+				}
+			});
+		}
+		return chooseTreeComboBox;
+	}
+	/**
+	 * This method initializes jPanel	
+	 * 	
+	 * @return javax.swing.JPanel	
+	 */
+	private JPanel getChosenTreePanel() {
+		if (chosenTreePanel == null) {
+			dataSourceRows = new JLabel();
+			dataSourceRows.setText("");
+			dataSourceRows.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+			dataSourceRowsLabel = new JLabel();
+			dataSourceRowsLabel.setText("Wiersze:");
+			dataSourceRowsLabel.setPreferredSize(new java.awt.Dimension(50,16));
+			dataSourceDecisioning = new JLabel();
+			dataSourceDecisioning.setText("");
+			dataSourceDecisioning.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
+			dataSourceDecisioningLabel = new JLabel();
+			dataSourceDecisioningLabel.setText("Kolumny decyzyjne:");
+			dataSourceDecisioningLabel.setPreferredSize(new java.awt.Dimension(50,16));
+			dataSourceDecide = new JLabel();
+			dataSourceDecide.setText("");
+			dataSourceDecide.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
+			dataSourceDecideLabel = new JLabel();
+			dataSourceDecideLabel.setText("Kolumna decyzyjna:");
+			dataSourceDecideLabel.setPreferredSize(new java.awt.Dimension(50,16));
+			dataSource = new JLabel();
+			dataSource.setText("");
+			dataSource.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
+			dataSourceLabel = new JLabel();
+			dataSourceLabel.setText("Zbiór danych:");
+			dataSourceLabel.setPreferredSize(new java.awt.Dimension(50,16));
+			treeInfo = new JLabel();
+			treeInfo.setText("");
+			treeInfo.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
+			treeInfoLabel = new JLabel();
+			treeInfoLabel.setText("Opis drzewa:");
+			treeInfoLabel.setPreferredSize(new java.awt.Dimension(50,16));
+			treeName = new JLabel();
+			treeName.setText("");
+			treeName.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
+			GridLayout gridLayout = new GridLayout();
+			gridLayout.setRows(6);
+			gridLayout.setHgap(0);
+			gridLayout.setColumns(2);
+			treeNameLabel = new JLabel();
+			treeNameLabel.setText("Nazwa drzewa:");
+			treeNameLabel.setPreferredSize(new java.awt.Dimension(50,16));
+			chosenTreePanel = new JPanel();
+			chosenTreePanel.setPreferredSize(new java.awt.Dimension(484,154));
+			chosenTreePanel.setLayout(gridLayout);
+			chosenTreePanel.setBounds(new java.awt.Rectangle(11,119,484,154));
+			chosenTreePanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Wybrane drzewo", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", java.awt.Font.BOLD, 12), new java.awt.Color(51,51,51)));
+			chosenTreePanel.add(treeNameLabel, null);
+			chosenTreePanel.add(treeName, null);
+			chosenTreePanel.add(treeInfoLabel, null);
+			chosenTreePanel.add(treeInfo, null);
+			chosenTreePanel.add(dataSourceLabel, null);
+			chosenTreePanel.add(dataSource, null);
+			chosenTreePanel.add(dataSourceDecideLabel, null);
+			chosenTreePanel.add(dataSourceDecide, null);
+			chosenTreePanel.add(dataSourceDecisioningLabel, null);
+			chosenTreePanel.add(dataSourceDecisioning, null);
+			chosenTreePanel.add(dataSourceRowsLabel, null);
+			chosenTreePanel.add(dataSourceRows, null);
+		}
+		return chosenTreePanel;
 	}
 	
 	
- }  //  @jve:decl-index=0:visual-constraint="10,10"  
+ }  //  @jve:decl-index=0:visual-constraint="35,18"

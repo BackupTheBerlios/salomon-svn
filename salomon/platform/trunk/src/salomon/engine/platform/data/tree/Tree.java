@@ -46,6 +46,12 @@ public class Tree implements ITree
 	
 	
 	
+	@Override
+	public String toString() {
+		return name;
+	}
+
+
 	/**
 	 * Empty constructor 
 	 */
