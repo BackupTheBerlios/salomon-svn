@@ -228,7 +228,7 @@ public final class GUIButtons
 
 	private static void setButtonDimension(JButton button)
 	{
-		Dimension dim = new Dimension(52, 54);
+		Dimension dim = new Dimension(30, 30);
 		button.setPreferredSize(dim);
 		button.setMinimumSize(dim);
 		button.setMaximumSize(dim);

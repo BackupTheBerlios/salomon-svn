@@ -501,7 +501,8 @@ public final class LocalController implements IController
 		JMenuItem getItmNewSolution()
 		{
 			if (_itmNewSolution == null) {
-				_itmNewSolution = new JMenuItem();
+				_itmNewSolution = new JMenuItem(Messages.getString("MNU_NEW"),
+						getMenuIcon("ICO_PROJECT_NEW"));
 				_itmNewSolution.setText(Messages.getString("MNU_NEW")); //$NON-NLS-1$
 				_itmNewSolution.addActionListener(_actionManager.getNewSolutionAction());
 			}
@@ -511,8 +512,7 @@ public final class LocalController implements IController
 		JMenuItem getItmOpenProject()
 		{
 			if (_itmOpenProject == null) {
-				_itmOpenProject = new JMenuItem();
-				_itmOpenProject.setText(Messages.getString("MNU_OPEN")); //$NON-NLS-1$
+				_itmOpenProject = new JMenuItem(Messages.getString("MNU_OPEN"));
 				_itmOpenProject.addActionListener(_actionManager.getOpenProjectAction());
 			}
 			return _itmOpenProject;
@@ -521,8 +521,8 @@ public final class LocalController implements IController
 		JMenuItem getItmOpenSolution()
 		{
 			if (_itmOpenSolution == null) {
-				_itmOpenSolution = new JMenuItem();
-				_itmOpenSolution.setText(Messages.getString("MNU_OPEN")); //$NON-NLS-1$
+				_itmOpenSolution = new JMenuItem(
+						Messages.getString("MNU_OPEN"), getMenuIcon("ICO_PROJECT_OPEN"));
 				_itmOpenSolution.addActionListener(_actionManager.getOpenSolutionAction());
 			}
 			return _itmOpenSolution;
@@ -541,11 +541,20 @@ public final class LocalController implements IController
 		JMenuItem getItmSaveSolution()
 		{
 			if (_itmSaveSolution == null) {
-				_itmSaveSolution = new JMenuItem();
-				_itmSaveSolution.setText(Messages.getString("MNU_SAVE")); //$NON-NLS-1$
+				_itmSaveSolution = new JMenuItem(
+						Messages.getString("MNU_SAVE"), getMenuIcon("ICO_PROJECT_SAVE"));
 				_itmSaveSolution.addActionListener(_actionManager.getSaveSolutionAction());
 			}
 			return _itmSaveSolution;
+		}
+		
+		private ImageIcon getMenuIcon(String iconKey)
+		{
+			String iconFileName = Resources.getString(iconKey);
+			String iconPath = _resourcesDir
+					+ Config.FILE_SEPARATOR + iconFileName;
+
+			return new ImageIcon(iconPath);
 		}
 
 		JMenuItem getItmSQLConsole()
