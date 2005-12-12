@@ -642,7 +642,7 @@ public final class LocalController implements IController
 				// application name
 				//
 				JLabel lblAppName = new JLabel(new ImageIcon(_resourcesDir
-						+ Config.FILE_SEPARATOR + "")); //$NON-NLS-1$
+						+ Config.FILE_SEPARATOR + "logo.jpg")); //$NON-NLS-1$
 				//
 				// version and author panel
 				//
