@@ -178,8 +178,13 @@ public final class GUIButtons
 		if (_btnRun == null) {
 			_btnRun = new JButton(
 					_taskManagerGUI.getActionManager().getRunTaskAction());
-			_btnRun.setText(Messages.getString("BTN_RUN")); //$NON-NLS-1$
+			_btnRun.setIcon(new ImageIcon(_resourcesDir + Config.FILE_SEPARATOR
+					+ Resources.getString("ICO_TASK_RUN")));
+			_btnRun.setToolTipText(Messages.getString("BTN_RUN"));
+			setButtonDimension(_btnRun);
+
 		}
+
 		return _btnRun;
 	}
 
@@ -215,11 +220,17 @@ public final class GUIButtons
 		button.setIcon(new ImageIcon(_resourcesDir + Config.FILE_SEPARATOR
 				+ text));
 		button.addActionListener(_manipulationListener);
+		setButtonDimension(button);
+
+		return button;
+	}
+
+	private static void setButtonDimension(JButton button)
+	{
 		Dimension dim = new Dimension(52, 54);
 		button.setPreferredSize(dim);
 		button.setMinimumSize(dim);
 		button.setMaximumSize(dim);
-		return button;
 	}
 
 	/**
