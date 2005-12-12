@@ -93,7 +93,7 @@ public final class GUIButtons
 	{
 		if (_btnAdd == null) {
 			_btnAdd = createManipulationButton(
-					Resources.getString("ICO_TASK_ADD"), _taskManagerGUI.getActionManager().getAddTaskAction()); //$NON-NLS-1$
+					Resources.getString("ICO_TASK_ADD"), Messages.getString("TASK_ADD"), _taskManagerGUI.getActionManager().getAddTaskAction()); //$NON-NLS-1$
 		}
 		return _btnAdd;
 	}
@@ -107,7 +107,7 @@ public final class GUIButtons
 	{
 		if (_btnDown == null) {
 			_btnDown = createManipulationButton(
-					Resources.getString("ICO_TASK_DOWN"), null); //$NON-NLS-1$
+					Resources.getString("ICO_TASK_DOWN"), Messages.getString("TASK_DOWN"), null); //$NON-NLS-1$
 		}
 		return _btnDown;
 	}
@@ -121,7 +121,7 @@ public final class GUIButtons
 	{
 		if (_btnFirst == null) {
 			_btnFirst = createManipulationButton(
-					Resources.getString("ICO_TASK_FIRST"), null); //$NON-NLS-1$
+					Resources.getString("ICO_TASK_FIRST"), Messages.getString("TASK_FIRST"), null); //$NON-NLS-1$
 		}
 		return _btnFirst;
 	}
@@ -135,7 +135,7 @@ public final class GUIButtons
 	{
 		if (_btnLast == null) {
 			_btnLast = createManipulationButton(
-					Resources.getString("ICO_TASK_LAST"), null); //$NON-NLS-1$
+					Resources.getString("ICO_TASK_LAST"), Messages.getString("TASK_LAST"), null); //$NON-NLS-1$
 		}
 		return _btnLast;
 	}
@@ -149,7 +149,7 @@ public final class GUIButtons
 	{
 		if (_btnRemove == null) {
 			_btnRemove = createManipulationButton(
-					Resources.getString("ICO_TASK_REMOVE"), _taskManagerGUI.getActionManager().getRemoveTaskAction()); //$NON-NLS-1$
+					Resources.getString("ICO_TASK_REMOVE"), Messages.getString("TASK_REMOVE"), _taskManagerGUI.getActionManager().getRemoveTaskAction()); //$NON-NLS-1$
 		}
 		return _btnRemove;
 	}
@@ -163,7 +163,7 @@ public final class GUIButtons
 	{
 		if (_btnRemoveAll == null) {
 			_btnRemoveAll = createManipulationButton(
-					Resources.getString("ICO_TASK_REMOVEALL"), _taskManagerGUI.getActionManager().getRemoveAllTasksAction()); //$NON-NLS-1$
+					Resources.getString("ICO_TASK_REMOVEALL"), Messages.getString("TASK_REMOVE_ALL"), _taskManagerGUI.getActionManager().getRemoveAllTasksAction()); //$NON-NLS-1$
 		}
 		return _btnRemoveAll;
 	}
@@ -197,7 +197,7 @@ public final class GUIButtons
 	{
 		if (_btnUp == null) {
 			_btnUp = createManipulationButton(
-					Resources.getString("ICO_TASK_UP"), null); //$NON-NLS-1$
+					Resources.getString("ICO_TASK_UP"), Messages.getString("TASK_UP"), null); //$NON-NLS-1$
 		}
 		return _btnUp;
 	}
@@ -208,7 +208,7 @@ public final class GUIButtons
 	 * @param text
 	 * @return
 	 */
-	private JButton createManipulationButton(String text, Action action)
+	private JButton createManipulationButton(String text, String tooltip, Action action)
 	{
 		JButton button;
 		if (action == null) {
@@ -220,6 +220,7 @@ public final class GUIButtons
 		button.setIcon(new ImageIcon(_resourcesDir + Config.FILE_SEPARATOR
 				+ text));
 		button.addActionListener(_manipulationListener);
+		button.setToolTipText(tooltip);
 		setButtonDimension(button);
 
 		return button;
