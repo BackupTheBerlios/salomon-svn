@@ -215,7 +215,7 @@ public final class GUIButtons
 		button.setIcon(new ImageIcon(_resourcesDir + Config.FILE_SEPARATOR
 				+ text));
 		button.addActionListener(_manipulationListener);
-		Dimension dim = new Dimension(50, 25);
+		Dimension dim = new Dimension(52, 54);
 		button.setPreferredSize(dim);
 		button.setMinimumSize(dim);
 		button.setMaximumSize(dim);
