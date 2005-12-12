@@ -1,4 +1,4 @@
-<project name="salomon" default="all" basedir=".">
+<project name="salomon" default="build" basedir=".">
 
 	<!-- Allows us to use the IzPack Ant task -->
 	<taskdef name="izpack" classpath="${basedir}/ext/compiler.jar" classname="com.izforge.izpack.ant.IzPackTask" />
@@ -23,9 +23,10 @@
 	<property name="views_file" value="views.sql" />
 	<property name="run_script" value="run.bat" />
 	<property name="release_dir" value="_release" />
-
+	<property name="controller" value="local" />
+	
     <property file="config/hosts/${build.host}/build.properties" />
-    <property file="config/users/${build.host}/build.properties" />
+    <property file="config/users/${build.user}/build.properties" />
 
             
 	<target name="compile_salomon" depends="init">
@@ -63,7 +64,10 @@
 	</target>
 
 	<target name="build_salomon_jar">
-		<copy file="all.policy" todir="${bin_dir}" />
+        <copy todir="${bin_dir}">
+        	<fileset dir="." includes="${src_dir}/*.properties" />
+        </copy>
+        <copy file="all.policy" todir="${bin_dir}" />
 		<copy file="log.conf" todir="${bin_dir}" />
 		<jar destfile="salomon.jar" basedir="${bin_dir}" includes="salomon/** *.properties log.conf all.policy">
 			<manifest>
@@ -148,11 +152,11 @@
 		</exec>		
 	</target>
 	
-	<target name="all" depends="copy_salomon, copy_plugins, 
+	<target name="deploy" depends="copy_salomon, copy_plugins, 
 		copy_libs, copy_drivers, copy_data_base,
 		copy_res, copy_config, copy_run_files, get_version" />
 
-	<target name="compress" depends="all">
+	<target name="compress" depends="deploy">
 		<zip destfile="salomon.zip" basedir="${release_dir}" />
 	</target>
 
@@ -161,7 +165,7 @@
 	</target>
 
 	<!-- creating installtor file -->
-	<target name="installator" depends="all">
+	<target name="installator" depends="deploy">
 		<izpack input="${basedir}/install/install.xml" output="${basedir}/install.jar" installerType="standard" basedir="${basedir}/install" izPackDir="${izpackdir}/" />
 	</target>
 	<target name="get_version">
@@ -172,7 +176,17 @@
 		<echo message="REVISION_VERSION=${testStatus.revision}" file="${src_dir}/version.properties" />
 	</target>
 	
-	<target name="run" depends="build_salomon_jar">
-		<java classpath=""></java>
+	<target name="start" depends="deploy">
+        <java dir="${release_dir}" fork="true" classname="salomon.engine.Starter" classpathref="project.class.path">
+        	<classpath path="${release_dir}/salomon.jar" />
+        	<jvmarg value="-Djava.rmi.server.RMIClassLoaderSpi=salomon.core.plugin.PluginRMIClassLoaderSpi"/>
+		    <jvmarg value="-Djava.security.policy=all.policy" />
+        	<arg value="-${controller}" />
+		</java>
 	</target>
+	
+	<target name="build" depends="build_salomon_jar">
+	</target>
+	
+	
 </project>
