@@ -25,6 +25,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -40,6 +42,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JToolBar;
+import javax.swing.KeyStroke;
 import javax.swing.UIManager;
 
 import org.apache.log4j.Logger;
@@ -162,7 +165,9 @@ public final class LocalController implements IController
 			_menuBar = new JMenuBar();
 
 			JMenu solution = new JMenu(Messages.getString("MNU_SOLUTION")); //$NON-NLS-1$
+			solution.setMnemonic('s');
 			JMenu project = new JMenu(Messages.getString("MNU_PROJECT")); //$NON-NLS-1$
+			project.setMnemonic('p');
 
 			solution.add(project);
 			solution.addSeparator();
@@ -181,6 +186,7 @@ public final class LocalController implements IController
 			project.add(_guiMenu.getItmSaveProject());
 
 			JMenu tools = new JMenu(Messages.getString("MNU_TOOLS")); //$NON-NLS-1$
+			tools.setMnemonic('t');
 			tools.add(_guiMenu.getItmViewProjects());
 			tools.add(_guiMenu.getItmViewSolutions());
 			tools.add(_guiMenu.getItmViewPlugins());
@@ -188,7 +194,8 @@ public final class LocalController implements IController
 			tools.addSeparator();
 			tools.add(_guiMenu.getItmSQLConsole());
 
-			JMenu help = new JMenu(Messages.getString("MNU_HELP")); //$NON-NLS-1$           
+			JMenu help = new JMenu(Messages.getString("MNU_HELP")); //$NON-NLS-1$
+			help.setMnemonic('h');
 			help.add(_guiMenu.getItmAbout());
 			_menuBar.add(solution);
 			//_menuBar.add(project);
@@ -202,6 +209,8 @@ public final class LocalController implements IController
 	{
 		if (_toolBar == null) {
 			_toolBar = new JToolBar();
+			_toolBar.setFloatable(true);
+			_toolBar.setRollover(true);
 			_toolBar.add(_guiMenu.getBtnNewSolution());
 			_toolBar.add(_guiMenu.getBtnOpenSolution());
 			_toolBar.add(_guiMenu.getBtnSaveSolution());
@@ -439,8 +448,9 @@ public final class LocalController implements IController
 		JMenuItem getItmAbout()
 		{
 			if (_itmAbout == null) {
-				_itmAbout = new JMenuItem();
-				_itmAbout.setText(Messages.getString("MNU_ABOUT")); //$NON-NLS-1$
+				_itmAbout = new JMenuItem(Messages.getString("MNU_ABOUT"));
+				_itmAbout.setMnemonic('a');
+				
 				_itmAbout.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e)
 					{
@@ -466,6 +476,9 @@ public final class LocalController implements IController
 			if (_itmEditSolution == null) {
 				_itmEditSolution = new JMenuItem();
 				_itmEditSolution.setText(Messages.getString("MNU_EDIT")); //$NON-NLS-1$
+				_itmEditSolution.setMnemonic('e');
+				_itmEditSolution.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E, InputEvent.CTRL_MASK));
+
 				_itmEditSolution.addActionListener(_actionManager.getEditSolutionAction());
 			}
 			return _itmEditSolution;
@@ -474,8 +487,8 @@ public final class LocalController implements IController
 		JMenuItem getItmExit()
 		{
 			if (_itmExit == null) {
-				_itmExit = new JMenuItem();
-				_itmExit.setText(Messages.getString("MNU_EXIT")); //$NON-NLS-1$
+				_itmExit = new JMenuItem(Messages.getString("MNU_EXIT"));
+				_itmExit.setMnemonic('x');
 				_itmExit.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e)
 					{
@@ -501,7 +514,9 @@ public final class LocalController implements IController
 			if (_itmNewSolution == null) {
 				_itmNewSolution = new JMenuItem(Messages.getString("MNU_NEW"), //$NON-NLS-1$
 						getMenuIcon("ICO_PROJECT_NEW")); //$NON-NLS-1$
-				_itmNewSolution.setText(Messages.getString("MNU_NEW")); //$NON-NLS-1$
+				_itmNewSolution.setMnemonic('n');
+				_itmNewSolution.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, InputEvent.CTRL_MASK));
+				
 				_itmNewSolution.addActionListener(_actionManager.getNewSolutionAction());
 			}
 			return _itmNewSolution;
@@ -521,6 +536,9 @@ public final class LocalController implements IController
 			if (_itmOpenSolution == null) {
 				_itmOpenSolution = new JMenuItem(
 						Messages.getString("MNU_OPEN"), getMenuIcon("ICO_PROJECT_OPEN")); //$NON-NLS-1$ //$NON-NLS-2$
+				_itmOpenSolution.setMnemonic('o');
+				_itmOpenSolution.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, InputEvent.CTRL_MASK));
+
 				_itmOpenSolution.addActionListener(_actionManager.getOpenSolutionAction());
 			}
 			return _itmOpenSolution;
@@ -541,6 +559,9 @@ public final class LocalController implements IController
 			if (_itmSaveSolution == null) {
 				_itmSaveSolution = new JMenuItem(
 						Messages.getString("MNU_SAVE"), getMenuIcon("ICO_PROJECT_SAVE")); //$NON-NLS-1$ //$NON-NLS-2$
+				_itmSaveSolution.setMnemonic('s');
+				_itmSaveSolution.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_MASK));
+				
 				_itmSaveSolution.addActionListener(_actionManager.getSaveSolutionAction());
 			}
 			return _itmSaveSolution;

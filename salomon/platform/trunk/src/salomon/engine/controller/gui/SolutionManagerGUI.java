@@ -138,6 +138,7 @@ public final class SolutionManagerGUI
 		if (_btnExit == null) {
 			_btnExit = this.createActionButton(_actionManager.getExitAction(),
 					Messages.getString("BTN_EXIT"));
+			_btnExit.setMnemonic('e');
 		}
 		return _btnExit;
 	}
@@ -152,6 +153,7 @@ public final class SolutionManagerGUI
 			_btnNew = this.createActionButton(
 					_actionManager.getNewSolutionAction(),
 					Messages.getString("BTN_NEW"));
+			_btnNew.setMnemonic('n');
 		}
 		return _btnNew;
 	}
@@ -166,6 +168,7 @@ public final class SolutionManagerGUI
 			_btnOpen = this.createActionButton(
 					_actionManager.getOpenSolutionAction(),
 					Messages.getString("BTN_OPEN"));
+			_btnOpen.setMnemonic('o');
 		}
 		return _btnOpen;
 	}
@@ -181,6 +184,7 @@ public final class SolutionManagerGUI
 		panel.add(getSolutionsCombo());
 		_comboSolutionList.setPreferredSize(new Dimension(150, 25));
 		panel.setBorder(BorderFactory.createTitledBorder(Messages.getString("TIT_SOLUTIONS")));
+		
 		return panel;
 	}
 
@@ -264,6 +268,7 @@ public final class SolutionManagerGUI
 	public void showSolutionChooser()
 	{
 		JPanel panel = new JPanel();
+		panel.setBorder(BorderFactory.createEmptyBorder(4, 4, 4, 4));
 
 		JPanel pnlManagerButtons = new JPanel();
 		pnlManagerButtons.setLayout(new BoxLayout(pnlManagerButtons,
