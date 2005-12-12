@@ -221,7 +221,7 @@ public final class LocalController implements IController
 			PlasticLookAndFeel.setMyCurrentTheme(new ExperienceBlue());
 			UIManager.setLookAndFeel(new PlasticXPLookAndFeel());
 		} catch (Exception e) {
-			LOGGER.warn("Cannot set look&feel!", e);
+			LOGGER.warn("Cannot set look&feel!", e); //$NON-NLS-1$
 		}
 		//TODO: add cascade model support (?)
 		try {
@@ -234,8 +234,8 @@ public final class LocalController implements IController
 			_pluginMangerGUI = new PluginMangerGUI(
 					_managerEngine.getPluginManager());
 		} catch (PlatformException e) {
-			LOGGER.fatal("", e);
-			Utils.showErrorMessage("ERR_CANNOT_SHOW_GUI");
+			LOGGER.fatal("", e); //$NON-NLS-1$
+			Utils.showErrorMessage("ERR_CANNOT_SHOW_GUI"); //$NON-NLS-1$
 			return;
 		}
 
@@ -363,7 +363,7 @@ public final class LocalController implements IController
 		public LocalGUIMenu(ActionManager actionManager)
 		{
 			_actionManager = actionManager;
-			_resourcesDir = Config.getString("RESOURCES_DIR");
+			_resourcesDir = Config.getString("RESOURCES_DIR"); //$NON-NLS-1$
 		}
 
 		JButton getBtnNewProject()
@@ -373,7 +373,7 @@ public final class LocalController implements IController
 						_actionManager.getNewProjectAction());
 				_btnNewProject.setIcon(new ImageIcon(_resourcesDir
 						+ Config.FILE_SEPARATOR
-						+ Resources.getString("ICO_PROJECT_NEW"))); //$NON-NLS-1$
+						+ "")); //$NON-NLS-1$
 			}
 			return _btnNewProject;
 		}
@@ -383,9 +383,8 @@ public final class LocalController implements IController
 			if (_btnNewSolution == null) {
 				_btnNewSolution = new JButton(
 						_actionManager.getNewSolutionAction());
-				_btnNewSolution.setIcon(new ImageIcon(_resourcesDir
-						+ Config.FILE_SEPARATOR
-						+ Resources.getString("ICO_SOLUTION_NEW"))); //$NON-NLS-1$
+				_btnNewSolution.setIcon(getMenuIcon("ICO_SOLUTION_NEW")); //$NON-NLS-1$
+				_btnNewSolution.setToolTipText(Messages.getString("TOOLTIP_NEW_SOLUTION")); //$NON-NLS-1$
 			}
 			return _btnNewSolution;
 		}
@@ -397,7 +396,7 @@ public final class LocalController implements IController
 						_actionManager.getOpenProjectAction());
 				_btnOpenProject.setIcon(new ImageIcon(_resourcesDir
 						+ Config.FILE_SEPARATOR
-						+ Resources.getString("ICO_PROJECT_OPEN"))); //$NON-NLS-1$                
+						+ "")); //$NON-NLS-1$                
 			}
 			return _btnOpenProject;
 		}
@@ -407,9 +406,9 @@ public final class LocalController implements IController
 			if (_btnOpenSolution == null) {
 				_btnOpenSolution = new JButton(
 						_actionManager.getOpenSolutionAction());
-				_btnOpenSolution.setIcon(new ImageIcon(_resourcesDir
-						+ Config.FILE_SEPARATOR
-						+ Resources.getString("ICO_SOLUTION_OPEN"))); //$NON-NLS-1$                
+				_btnOpenSolution.setIcon(getMenuIcon("ICO_SOLUTION_OPEN")); //$NON-NLS-1$
+				_btnOpenSolution.setToolTipText(Messages.getString("TOOLTIP_OPEN_SOLUTION")); //$NON-NLS-1$
+
 			}
 			return _btnOpenSolution;
 		}
@@ -421,7 +420,7 @@ public final class LocalController implements IController
 						_actionManager.getSaveProjectAction());
 				_btnSaveProject.setIcon(new ImageIcon(_resourcesDir
 						+ Config.FILE_SEPARATOR
-						+ Resources.getString("ICO_PROJECT_SAVE"))); //$NON-NLS-1$
+						+ "")); //$NON-NLS-1$
 			}
 			return _btnSaveProject;
 		}
@@ -431,9 +430,8 @@ public final class LocalController implements IController
 			if (_btnSaveSolution == null) {
 				_btnSaveSolution = new JButton(
 						_actionManager.getSaveSolutionAction());
-				_btnSaveSolution.setIcon(new ImageIcon(_resourcesDir
-						+ Config.FILE_SEPARATOR
-						+ Resources.getString("ICO_SOLUTION_SAVE"))); //$NON-NLS-1$
+				_btnSaveSolution.setIcon(getMenuIcon("ICO_SOLUTION_SAVE")); //$NON-NLS-1$
+				_btnSaveSolution.setToolTipText(Messages.getString("TOOLTIP_SAVE_SOLUTION")); //$NON-NLS-1$
 			}
 			return _btnSaveSolution;
 		}
@@ -501,8 +499,8 @@ public final class LocalController implements IController
 		JMenuItem getItmNewSolution()
 		{
 			if (_itmNewSolution == null) {
-				_itmNewSolution = new JMenuItem(Messages.getString("MNU_NEW"),
-						getMenuIcon("ICO_PROJECT_NEW"));
+				_itmNewSolution = new JMenuItem(Messages.getString("MNU_NEW"), //$NON-NLS-1$
+						getMenuIcon("ICO_PROJECT_NEW")); //$NON-NLS-1$
 				_itmNewSolution.setText(Messages.getString("MNU_NEW")); //$NON-NLS-1$
 				_itmNewSolution.addActionListener(_actionManager.getNewSolutionAction());
 			}
@@ -512,7 +510,7 @@ public final class LocalController implements IController
 		JMenuItem getItmOpenProject()
 		{
 			if (_itmOpenProject == null) {
-				_itmOpenProject = new JMenuItem(Messages.getString("MNU_OPEN"));
+				_itmOpenProject = new JMenuItem(Messages.getString("MNU_OPEN")); //$NON-NLS-1$
 				_itmOpenProject.addActionListener(_actionManager.getOpenProjectAction());
 			}
 			return _itmOpenProject;
@@ -522,7 +520,7 @@ public final class LocalController implements IController
 		{
 			if (_itmOpenSolution == null) {
 				_itmOpenSolution = new JMenuItem(
-						Messages.getString("MNU_OPEN"), getMenuIcon("ICO_PROJECT_OPEN"));
+						Messages.getString("MNU_OPEN"), getMenuIcon("ICO_PROJECT_OPEN")); //$NON-NLS-1$ //$NON-NLS-2$
 				_itmOpenSolution.addActionListener(_actionManager.getOpenSolutionAction());
 			}
 			return _itmOpenSolution;
@@ -542,7 +540,7 @@ public final class LocalController implements IController
 		{
 			if (_itmSaveSolution == null) {
 				_itmSaveSolution = new JMenuItem(
-						Messages.getString("MNU_SAVE"), getMenuIcon("ICO_PROJECT_SAVE"));
+						Messages.getString("MNU_SAVE"), getMenuIcon("ICO_PROJECT_SAVE")); //$NON-NLS-1$ //$NON-NLS-2$
 				_itmSaveSolution.addActionListener(_actionManager.getSaveSolutionAction());
 			}
 			return _itmSaveSolution;
@@ -644,7 +642,7 @@ public final class LocalController implements IController
 				// application name
 				//
 				JLabel lblAppName = new JLabel(new ImageIcon(_resourcesDir
-						+ Config.FILE_SEPARATOR + Resources.getString("LOGO"))); //$NON-NLS-1$
+						+ Config.FILE_SEPARATOR + "")); //$NON-NLS-1$
 				//
 				// version and author panel
 				//
@@ -668,14 +666,14 @@ public final class LocalController implements IController
 
 				detailsPanel.add(versionBox);
 				detailsPanel.add(authorsBox);
-				detailsPanel.add(this.getAuthorLabel("Nikodem Jura",
-						"nico@icslab.agh.edu.pl"));
-				detailsPanel.add(this.getAuthorLabel("Krzysztof Rajda",
-						"krzysztof@rajda.name"));
-				detailsPanel.add(this.getAuthorLabel("Jakub Galkowski",
-						"avi@student.uci.agh.edu.pl"));
-				detailsPanel.add(this.getAuthorLabel("Leszek Grzanka",
-						"grzanka@student.uci.agh.edu.pl"));
+				detailsPanel.add(this.getAuthorLabel("Nikodem Jura", //$NON-NLS-1$
+						"nico@icslab.agh.edu.pl")); //$NON-NLS-1$
+				detailsPanel.add(this.getAuthorLabel("Krzysztof Rajda", //$NON-NLS-1$
+						"krzysztof@rajda.name")); //$NON-NLS-1$
+				detailsPanel.add(this.getAuthorLabel("Jakub Galkowski", //$NON-NLS-1$
+						"avi@student.uci.agh.edu.pl")); //$NON-NLS-1$
+				detailsPanel.add(this.getAuthorLabel("Leszek Grzanka", //$NON-NLS-1$
+						"grzanka@student.uci.agh.edu.pl")); //$NON-NLS-1$
 				detailsPanel.setBorder(BorderFactory.createEmptyBorder(30, 0,
 						0, 0));
 				// adding componens
@@ -701,7 +699,7 @@ public final class LocalController implements IController
 		private void showAboutDialog()
 		{
 			JOptionPane.showMessageDialog(_positionComponent, getPnlAbout(),
-					"About", JOptionPane.PLAIN_MESSAGE);
+					"About", JOptionPane.PLAIN_MESSAGE); //$NON-NLS-1$
 		}
 
 	}
