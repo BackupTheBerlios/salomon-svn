@@ -208,7 +208,7 @@ public final class PluginManagerGUI
 
 			if (wasOk) {
 				_pluginListModel.remove(_selectedItem);
-				refresh();
+				_parent.refreshGui();
 			} else {
 				Utils.showErrorMessage(Messages.getString("ERR_CANNOT_SAVE_PLUGIN"));
 			}
