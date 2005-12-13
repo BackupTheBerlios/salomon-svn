@@ -83,7 +83,7 @@ public final class ConditionParser
 		if (valueString.startsWith("\'")) {
 			if (valueString.endsWith("\'")) {
 				// string value
-				result = valueString.substring(1, valueString.length() - 2);
+				result = valueString.substring(1, valueString.length() - 1);
 			} else {
 				throw new PlatformException("Invalid value: " + valueString);
 			}

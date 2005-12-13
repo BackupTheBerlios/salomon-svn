@@ -384,7 +384,9 @@ public final class DBManager
 	public boolean existsSelect(SQLSelect select) throws SQLException
 	{
 		boolean exists = false;
-		ResultSet resultSet = _statement.executeQuery(select.getQuery());
+		String query = select.getQuery();
+		LOGGER.info("query = " + query); //$NON-NLS-1$
+		ResultSet resultSet = _statement.executeQuery(query);
 		exists = resultSet.next();
 		resultSet.close();
 		return exists;
