@@ -23,7 +23,7 @@ package salomon.engine.controller.gui.action;
 
 import javax.swing.AbstractAction;
 
-import salomon.engine.controller.gui.PluginMangerGUI;
+import salomon.engine.controller.gui.PluginManagerGUI;
 
 /**
  * Represents abstract action caused while editing plugins.
@@ -38,9 +38,9 @@ public abstract class AbstractPluginAction extends AbstractAction
 	 * @uml.property name="_pluginMangerGUI"
 	 * @uml.associationEnd multiplicity="(0 1)"
 	 */
-	protected PluginMangerGUI _pluginMangerGUI;
+	protected PluginManagerGUI _pluginMangerGUI;
 
-	public AbstractPluginAction(PluginMangerGUI editionManager)
+	public AbstractPluginAction(PluginManagerGUI editionManager)
 	{
 		_pluginMangerGUI = editionManager;
 	}

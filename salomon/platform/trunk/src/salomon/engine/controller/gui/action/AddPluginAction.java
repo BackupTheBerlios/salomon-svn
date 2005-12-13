@@ -23,7 +23,7 @@ package salomon.engine.controller.gui.action;
 
 import java.awt.event.ActionEvent;
 
-import salomon.engine.controller.gui.PluginMangerGUI;
+import salomon.engine.controller.gui.PluginManagerGUI;
 
 /**
  * Class represents action fired while adding new plugin.
@@ -37,7 +37,7 @@ public final class AddPluginAction extends AbstractPluginAction
 	 * 
 	 * @param pluginManager an instance of TaskManagerGUI
 	 */
-	public AddPluginAction(PluginMangerGUI pluginManager)
+	public AddPluginAction(PluginManagerGUI pluginManager)
 	{
 		super(pluginManager);
 	}

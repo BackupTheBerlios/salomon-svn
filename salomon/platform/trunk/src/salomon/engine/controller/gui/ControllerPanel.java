@@ -73,7 +73,7 @@ public final class ControllerPanel extends JPanel
 	 * @uml.property name="_pluginMangerGUI"
 	 * @uml.associationEnd multiplicity="(0 1)"
 	 */
-	private PluginMangerGUI _pluginMangerGUI;
+	private PluginManagerGUI _pluginMangerGUI;
 
 	private JPanel _pnlInit;
 
@@ -108,7 +108,7 @@ public final class ControllerPanel extends JPanel
 
 	public ControllerPanel(SolutionManagerGUI solutionManagerGUI,
 			ProjectManagerGUI projectManagerGUI, TaskManagerGUI taskManagerGUI,
-			PluginMangerGUI pluginMangerGUI, ActionManager actionManager)
+			PluginManagerGUI pluginMangerGUI, ActionManager actionManager)
 	{
 		_actionManager = actionManager;
 		_solutionManagerGUI = solutionManagerGUI;

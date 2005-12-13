@@ -51,7 +51,7 @@ import salomon.engine.Messages;
 import salomon.engine.Resources;
 import salomon.engine.controller.gui.ControllerFrame;
 import salomon.engine.controller.gui.ControllerPanel;
-import salomon.engine.controller.gui.PluginMangerGUI;
+import salomon.engine.controller.gui.PluginManagerGUI;
 import salomon.engine.controller.gui.ProjectManagerGUI;
 import salomon.engine.controller.gui.RemoteControllerGUI;
 import salomon.engine.controller.gui.RemoteControllerPanel;
@@ -118,7 +118,7 @@ public final class MasterController implements IController
 	 * @uml.property name="_pluginMangerGUI"
 	 * @uml.associationEnd multiplicity="(0 1)"
 	 */
-	private PluginMangerGUI _pluginMangerGUI;
+	private PluginManagerGUI _pluginMangerGUI;
 
 	/**
 	 * 
@@ -242,7 +242,7 @@ public final class MasterController implements IController
 		//FIXME:
 		//		_projectManagerGUI = new ProjectManagerGUI(_managerEngineHolder.getProjectManager());
 		//		_taskManagerGUI = new TaskManagerGUI)_managerEngineHolder);
-		//		_pluginMangerGUI = new PluginMangerGUI(_managerEngineHolder);
+		//		_pluginMangerGUI = new PluginManagerGUI(_managerEngineHolder);
 		_actionManager = new ActionManager(_projectManagerGUI, _taskManagerGUI,
 				_pluginMangerGUI);
 		_guiMenu = new MasterGUIMenu(_actionManager);

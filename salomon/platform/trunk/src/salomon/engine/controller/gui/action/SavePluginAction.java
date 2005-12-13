@@ -23,7 +23,7 @@ package salomon.engine.controller.gui.action;
 
 import java.awt.event.ActionEvent;
 
-import salomon.engine.controller.gui.PluginMangerGUI;
+import salomon.engine.controller.gui.PluginManagerGUI;
 
 /**
  * TODO: add comment.
@@ -33,7 +33,7 @@ public final class SavePluginAction extends AbstractPluginAction
 	/**
 	 * @param editionManager
 	 */
-	public SavePluginAction(PluginMangerGUI pluginMangerGUI)
+	public SavePluginAction(PluginManagerGUI pluginMangerGUI)
 	{
 		super(pluginMangerGUI);
 	}

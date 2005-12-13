@@ -58,7 +58,7 @@ import salomon.engine.SQLConsole;
 import salomon.engine.Starter;
 import salomon.engine.controller.gui.ControllerFrame;
 import salomon.engine.controller.gui.ControllerPanel;
-import salomon.engine.controller.gui.PluginMangerGUI;
+import salomon.engine.controller.gui.PluginManagerGUI;
 import salomon.engine.controller.gui.ProjectManagerGUI;
 import salomon.engine.controller.gui.SolutionManagerGUI;
 import salomon.engine.controller.gui.SplashScreen;
@@ -113,7 +113,7 @@ public final class LocalController implements IController
 	 * @uml.property name="_pluginMangerGUI"
 	 * @uml.associationEnd multiplicity="(0 1)"
 	 */
-	private PluginMangerGUI _pluginMangerGUI;
+	private PluginManagerGUI _pluginMangerGUI;
 
 	/**
 	 * 
@@ -240,7 +240,7 @@ public final class LocalController implements IController
 					_managerEngine.getProjectManager());
 			_taskManagerGUI = new TaskManagerGUI(
 					_managerEngine.getTasksManager());
-			_pluginMangerGUI = new PluginMangerGUI(
+			_pluginMangerGUI = new PluginManagerGUI(
 					_managerEngine.getPluginManager());
 		} catch (PlatformException e) {
 			LOGGER.fatal("", e); //$NON-NLS-1$

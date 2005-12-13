@@ -21,7 +21,7 @@
 
 package salomon.engine.controller.gui.action;
 
-import salomon.engine.controller.gui.PluginMangerGUI;
+import salomon.engine.controller.gui.PluginManagerGUI;
 import salomon.engine.controller.gui.ProjectManagerGUI;
 import salomon.engine.controller.gui.SolutionManagerGUI;
 import salomon.engine.controller.gui.TaskManagerGUI;
@@ -107,7 +107,7 @@ public final class ActionManager
 	 * @uml.property name="_pluginMangerGUI"
 	 * @uml.associationEnd multiplicity="(0 1)"
 	 */
-	private PluginMangerGUI _pluginMangerGUI;
+	private PluginManagerGUI _pluginMangerGUI;
 
 	/**
 	 * 
@@ -209,7 +209,7 @@ public final class ActionManager
 	 * @param projectManagerGUI
 	 */
 	public ActionManager(ProjectManagerGUI projectManagerGUI,
-			TaskManagerGUI taskManagerGUI, PluginMangerGUI pluginMangerGUI)
+			TaskManagerGUI taskManagerGUI, PluginManagerGUI pluginMangerGUI)
 	{
 		_projectManagerGUI = projectManagerGUI;
 		_taskManagerGUI = taskManagerGUI;
@@ -225,7 +225,7 @@ public final class ActionManager
 	 */
 	public ActionManager(SolutionManagerGUI solutionManagerGUI,
 			ProjectManagerGUI projectManagerGUI, TaskManagerGUI taskManagerGUI,
-			PluginMangerGUI pluginMangerGUI)
+			PluginManagerGUI pluginMangerGUI)
 	{
 		_solutionManagerGUI = solutionManagerGUI;
 		_projectManagerGUI = projectManagerGUI;

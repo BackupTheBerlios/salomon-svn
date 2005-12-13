@@ -3,11 +3,11 @@ package salomon.engine.controller.gui.action;
 
 import java.awt.event.ActionEvent;
 
-import salomon.engine.controller.gui.PluginMangerGUI;
+import salomon.engine.controller.gui.PluginManagerGUI;
 
 public class ViewPluginsAction extends AbstractPluginAction
 {
-	protected ViewPluginsAction(PluginMangerGUI pluginMangerGUI)
+	protected ViewPluginsAction(PluginManagerGUI pluginMangerGUI)
 	{
 		super(pluginMangerGUI);
 	}

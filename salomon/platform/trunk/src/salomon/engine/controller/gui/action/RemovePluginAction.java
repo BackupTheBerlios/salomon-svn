@@ -23,7 +23,7 @@ package salomon.engine.controller.gui.action;
 
 import java.awt.event.ActionEvent;
 
-import salomon.engine.controller.gui.PluginMangerGUI;
+import salomon.engine.controller.gui.PluginManagerGUI;
 
 /**
  * Class represents action fired while removing plugin.
@@ -35,7 +35,7 @@ public final class RemovePluginAction extends AbstractPluginAction
 	/**
 	 * @param editionManager
 	 */
-	public RemovePluginAction(PluginMangerGUI editionManager)
+	public RemovePluginAction(PluginManagerGUI editionManager)
 	{
 		super(editionManager);
 	}
