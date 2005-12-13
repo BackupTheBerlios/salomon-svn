@@ -58,7 +58,7 @@ import salomon.util.gui.Utils;
 
 import salomon.platform.exception.PlatformException;
 
-public final class PluginMangerGUI
+public final class PluginManagerGUI
 {
 
 	/**
@@ -107,7 +107,7 @@ public final class PluginMangerGUI
 	/**
 	 * 
 	 */
-	public PluginMangerGUI(IPluginManager pluginManager)
+	public PluginManagerGUI(IPluginManager pluginManager)
 	{
 		_pluginManager = pluginManager;
 
@@ -402,5 +402,5 @@ public final class PluginMangerGUI
 		}
 	}
 
-	private static final Logger LOGGER = Logger.getLogger(PluginMangerGUI.class);
+	private static final Logger LOGGER = Logger.getLogger(PluginManagerGUI.class);
 }
