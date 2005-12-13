@@ -255,6 +255,7 @@ public final class LocalController implements IController
 		ControllerFrame frame = new ControllerFrame();
 		_solutionManagerGUI.setParent(frame);
 		_projectManagerGUI.setParent(frame);
+		_pluginMangerGUI.setParent(frame);
 		_taskManagerGUI.setParent(frame);
 
 		_solutionManagerGUI.setActionManager(_actionManager);

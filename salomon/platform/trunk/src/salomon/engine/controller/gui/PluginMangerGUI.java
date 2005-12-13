@@ -208,6 +208,7 @@ public final class PluginMangerGUI
 
 			if (wasOk) {
 				_pluginListModel.remove(_selectedItem);
+				refresh();
 			} else {
 				Utils.showErrorMessage(Messages.getString("ERR_CANNOT_SAVE_PLUGIN"));
 			}
@@ -267,6 +268,14 @@ public final class PluginMangerGUI
 		_actionManager = actionManager;
 	}
 
+	/**
+	 * @param parent The parent to set.
+	 */
+	public void setParent(ControllerFrame parent)
+	{
+		_parent = parent;
+	}
+		
 	/**
 	 * Set the value of statusBar field.
 	 * @param statusBar The statusBar to set

@@ -301,6 +301,7 @@ public final class TaskManagerGUI
 		ITask[] tasks = null;
 		try {
 			// TODO: change it
+			_taskManager.clearTasks();
 			tasks = _taskManager.getTasks();
 		} catch (PlatformException e1) {
 			LOGGER.fatal("", e1);
