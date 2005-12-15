@@ -1,5 +1,8 @@
 package pl.capitol.tree.plugins.treeConclude.util;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import salomon.plugin.IResult;
 
 public class Results implements IResult {
@@ -9,6 +12,7 @@ public class Results implements IResult {
 	private String treeName;
 	private int allTests;
 	private int positiveTests;
+	private Collection<Object[]> invalidRows;
 	
 	private String result = "";
 	public void parseResult(String result) {
@@ -58,7 +62,14 @@ public class Results implements IResult {
 	public void setSuccess(boolean success) {
 		this.success = success;
 	}
-	
+
+	public Collection<Object[]> getInvalidRows() {
+		return invalidRows;
+	}
+
+	public void setInvalidRows(Collection<Object[]> invalidRows) {
+		this.invalidRows = invalidRows;
+	}
 	
 
 }

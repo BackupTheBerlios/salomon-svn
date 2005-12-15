@@ -2,10 +2,12 @@ package pl.capitol.tree.plugins.treeConclude.panels;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 
 import pl.capitol.tree.plugins.treeConclude.util.Results;
-
 import salomon.plugin.IResult;
+import salomon.util.gui.Utils;
 
 /**
  * @author mnowakowski
@@ -40,6 +42,10 @@ public class ResultPanel extends JPanel {
 
 	private JLabel positiveTestsAmount = null;
 
+	private JScrollPane resultScroll = null;
+
+	private JTable resultTable = null;
+
 	/**
 	 * This is the default constructor
 	 */
@@ -52,6 +58,13 @@ public class ResultPanel extends JPanel {
 			this.concludePanel.setVisible(false);
 			this.errorLabel.setVisible(true);
 			this.errorLabel.setText(this.result.getErrorMessage());
+		} else {
+			this.treeName.setText(this.result.getTreeName());
+			this.testedRowsAmount.setText(this.result.getAllTests()+"");
+			this.positiveTestsAmount.setText(this.result.getPositiveTests()+"");
+			int percent = (int)((double)this.result.getPositiveTests()*100/((double)this.result.getAllTests()));
+			this.percentTree.setText(percent+" %");
+			
 		}
 		
 	}
@@ -135,8 +148,35 @@ public class ResultPanel extends JPanel {
 			concludePanel.add(testedRowsAmount, null);
 			concludePanel.add(percentTree, null);
 			concludePanel.add(positiveTestsAmount, null);
+			concludePanel.add(getResultScroll(), null);
 		}
 		return concludePanel;
+	}
+	/**
+	 * This method initializes resultScroll	
+	 * 	
+	 * @return javax.swing.JScrollPane	
+	 */
+	private JScrollPane getResultScroll() {
+		if (resultScroll == null) {
+			resultScroll = new JScrollPane();
+			resultScroll.setBounds(new java.awt.Rectangle(9,114,410,131));
+			resultScroll.setViewportView(getResultTable());
+		}
+		return resultScroll;
+	}
+	/**
+	 * This method initializes resultTable	
+	 * 	
+	 * @return javax.swing.JTable	
+	 */
+	private JTable getResultTable() {
+		if (resultTable == null) {
+			if (this.result.getInvalidRows() != null) resultTable =  Utils.createResultTable(this.result.getInvalidRows());
+			else resultTable = new JTable();
+		}
+		
+		return resultTable;
 	}
 	
 	

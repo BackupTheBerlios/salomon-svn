@@ -1,5 +1,8 @@
 package pl.capitol.tree.plugins.treeConclude;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import pl.capitol.tree.plugins.treeConclude.components.ResultComponent;
 import pl.capitol.tree.plugins.treeConclude.components.SettingComponent;
 import pl.capitol.tree.plugins.treeConclude.util.Results;
@@ -14,8 +17,18 @@ import salomon.plugin.ISettings;
 public class Plugin implements IPlugin {
 
 	public IResult doJob(IDataEngine eng, IEnvironment env, ISettings settings) {
-		// TODO 
-		return new Results();
+		Results results = new Results();
+		results.setSuccess(true);
+		results.setAllTests(10);
+		results.setPositiveTests(9);
+		results.setTreeName("tree (1)");
+		
+		Collection<Object []> list = new ArrayList<Object []>();
+		list.add(new Object[]{"col1","col2"});
+		list.add(new Object[]{"1","2"});
+		list.add(new Object[]{"3","5"});
+		results.setInvalidRows(list);
+		return results;
 	}
 
 	public ISettingComponent getSettingComponent() {
