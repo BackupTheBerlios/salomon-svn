@@ -1,6 +1,5 @@
 package pl.capitol.tree.plugins.treeConclude.util;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 import salomon.plugin.IResult;

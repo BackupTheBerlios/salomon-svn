@@ -161,6 +161,7 @@ public class ResultPanel extends JPanel {
 		if (resultScroll == null) {
 			resultScroll = new JScrollPane();
 			resultScroll.setBounds(new java.awt.Rectangle(9,114,410,131));
+			resultScroll.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Niepoprawne wiersze", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, null, null));
 			resultScroll.setViewportView(getResultTable());
 		}
 		return resultScroll;
