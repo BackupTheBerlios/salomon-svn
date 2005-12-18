@@ -53,10 +53,8 @@ import salomon.engine.plugin.IPluginManager;
 import salomon.engine.plugin.LocalPlugin;
 import salomon.engine.plugin.PluginInfo;
 import salomon.engine.plugin.PluginManager;
-
-import salomon.util.gui.Utils;
-
 import salomon.platform.exception.PlatformException;
+import salomon.util.gui.Utils;
 
 public final class PluginManagerGUI
 {
@@ -275,9 +273,10 @@ public final class PluginManagerGUI
 	{
 		_parent = parent;
 	}
-		
+
 	/**
 	 * Set the value of statusBar field.
+	 * 
 	 * @param statusBar The statusBar to set
 	 */
 	public void setStatusBar(StatusBar statusBar)
@@ -292,9 +291,9 @@ public final class PluginManagerGUI
 			_pluginsViewerFrame.getContentPane().add(
 					new PluginViewer(
 							((PluginManager) _pluginManager).getDBManager()));
-			_pluginsViewerFrame.pack();
+			_pluginsViewerFrame.pack();			
 		}
-
+		_pluginsViewerFrame.setLocation(Utils.getCenterLocation(_pluginsViewerFrame));
 		_pluginsViewerFrame.setVisible(true);
 	}
 

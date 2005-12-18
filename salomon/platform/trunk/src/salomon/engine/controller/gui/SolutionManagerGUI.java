@@ -131,6 +131,7 @@ public final class SolutionManagerGUI
 
 	/**
 	 * This method initializes _btnExit
+	 * 
 	 * @return JButton
 	 */
 	public JButton getBtnExit()
@@ -145,6 +146,7 @@ public final class SolutionManagerGUI
 
 	/**
 	 * This method initializes _btnNew
+	 * 
 	 * @return JButton
 	 */
 	public JButton getBtnNew()
@@ -160,6 +162,7 @@ public final class SolutionManagerGUI
 
 	/**
 	 * This method initializes _btnOpen
+	 * 
 	 * @return JButton
 	 */
 	public JButton getBtnOpen()
@@ -184,7 +187,7 @@ public final class SolutionManagerGUI
 		panel.add(getSolutionsCombo());
 		_comboSolutionList.setPreferredSize(new Dimension(150, 25));
 		panel.setBorder(BorderFactory.createTitledBorder(Messages.getString("TIT_SOLUTIONS")));
-		
+
 		return panel;
 	}
 
@@ -210,7 +213,7 @@ public final class SolutionManagerGUI
 		boolean approved = false;
 
 		// if _solutionChooserFrame is null
-		// the dialog to choose solution should be shown	
+		// the dialog to choose solution should be shown
 		if (_solutionChooserFrame == null) {
 			int result = JOptionPane.showConfirmDialog(_parent,
 					getSolutionsPanel(), "Choose solution",
@@ -227,7 +230,7 @@ public final class SolutionManagerGUI
 			int selectedRow = _comboSolutionList.getSelectedIndex();
 			final int solutionID = _solutions[selectedRow].getInfo().getId();
 			LOGGER.info("chosen solution: " + solutionID);
-			//FIXME - do it in better way
+			// FIXME - do it in better way
 			Solution solution;
 			try {
 				solution = (Solution) _solutionManager.getSolution(new IUniqueId() {
@@ -255,11 +258,12 @@ public final class SolutionManagerGUI
 			}
 			_statusBar.setItem(SB_CUR_SOLUTION, solution.getInfo().getName());
 		}
-		// if method is called at start of application (_solutionChooserFrame == null)
+		// if method is called at start of application (_solutionChooserFrame ==
+		// null)
 		// the behaviour is diffrent -- main frame shout be shown etc.
 		if (_solutionChooserFrame != null) {
 			_solutionChooserFrame.setVisible(false);
-			_solutionChooserFrame = null;		
+			_solutionChooserFrame = null;
 		}
 		_parent.refreshGui();
 		_parent.setVisible(true);
@@ -310,7 +314,8 @@ public final class SolutionManagerGUI
 		try {
 			Solution solution = (Solution) _solutionManager.getCurrentSolution();
 			// setting solution name if neccessary
-			// TODO: remove this checking, make user to enter solution name while
+			// TODO: remove this checking, make user to enter solution name
+			// while
 			// creating it
 			if (solution.getInfo().getName() == null) {
 				setSolutionProperties(solution);
@@ -339,7 +344,7 @@ public final class SolutionManagerGUI
 	 * Shows dialog which enables to initialize solution settings.
 	 * 
 	 * @param solution
-	 * @throws PlatformException 
+	 * @throws PlatformException
 	 */
 	public boolean setSolutionProperties(ISolution iSolution)
 			throws PlatformException
@@ -403,6 +408,7 @@ public final class SolutionManagerGUI
 
 	/**
 	 * Set the value of statusBar field.
+	 * 
 	 * @param statusBar The statusBar to set
 	 */
 	public void setStatusBar(StatusBar statusBar)
@@ -411,7 +417,7 @@ public final class SolutionManagerGUI
 		_statusBar.addItem(SB_CUR_SOLUTION);
 	}
 
-	public void viewSolutionList()
+	public void viewSolutions()
 	{
 
 		if (_solutionViewerFrame == null) {
@@ -422,7 +428,7 @@ public final class SolutionManagerGUI
 							((SolutionManager) _solutionManager).getDBManager()));
 			_solutionViewerFrame.pack();
 		}
-
+		_solutionViewerFrame.setLocation(Utils.getCenterLocation(_solutionViewerFrame));
 		_solutionViewerFrame.setVisible(true);
 	}
 

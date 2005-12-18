@@ -25,7 +25,6 @@ import java.awt.GridLayout;
 import java.text.DateFormat;
 import java.util.Collection;
 import java.util.Date;
-import java.util.Locale;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -43,11 +42,9 @@ import salomon.engine.project.IProject;
 import salomon.engine.project.IProjectManager;
 import salomon.engine.project.Project;
 import salomon.engine.project.ProjectManager;
-
-import salomon.util.gui.Utils;
-
 import salomon.platform.IUniqueId;
 import salomon.platform.exception.PlatformException;
+import salomon.util.gui.Utils;
 
 /**
  * Class used to manage with projects editing.
@@ -83,9 +80,9 @@ public final class ProjectManagerGUI
 
 	private JTextField _txtProjectInfo;
 
-	private JTextField _txtProjectName;
-
 	private JTextField _txtProjectLastModDate;
+
+	private JTextField _txtProjectName;
 
 	/**
 	 */
@@ -99,7 +96,7 @@ public final class ProjectManagerGUI
 
 		try {
 			Project project = (Project) _projectManager.getCurrentProject();
-			
+
 			// saving project
 			this.saveProject(project);
 
@@ -114,10 +111,10 @@ public final class ProjectManagerGUI
 
 		try {
 			Project project = (Project) _projectManager.createProject();
-			
+
 			// saving project
 			this.saveProject(project);
-			
+
 		} catch (PlatformException e) {
 			LOGGER.fatal("", e);
 			Utils.showErrorMessage("ERR_CANNOT_CREATE_PROJECT");
@@ -182,25 +179,26 @@ public final class ProjectManagerGUI
 			_pnlProjectProperties.setLayout(new GridLayout(0, 2));
 			_txtProjectName = new JTextField();
 			_txtProjectInfo = new JTextField();
-			_txtProjectLastModDate = new JTextField() ; 
-			_txtProjectLastModDate.setEnabled(false) ;
+			_txtProjectLastModDate = new JTextField();
+			_txtProjectLastModDate.setEnabled(false);
 			_pnlProjectProperties.add(new JLabel("Project name"));
 			_pnlProjectProperties.add(_txtProjectName);
 			_pnlProjectProperties.add(new JLabel("Project info"));
 			_pnlProjectProperties.add(_txtProjectInfo);
 			_pnlProjectProperties.add(new JLabel("Last Modification Date"));
 			_pnlProjectProperties.add(_txtProjectLastModDate);
-			
+
 		}
 
 		String name = project.getInfo().getName();
 		String info = project.getInfo().getInfo();
-		Date dmdate = new Date() ; //TODO: NYI 
-		String lmoddate = DateFormat.getDateInstance().format(dmdate) + " " +DateFormat.getTimeInstance().format(dmdate) ;
+		Date dmdate = new Date(); // TODO: NYI
+		String lmoddate = DateFormat.getDateInstance().format(dmdate) + " "
+				+ DateFormat.getTimeInstance().format(dmdate);
 		_txtProjectName.setText(name == null ? "" : name);
 		_txtProjectInfo.setText(info == null ? "" : info);
-		_txtProjectLastModDate.setText(lmoddate == null ? "" : lmoddate) ;
-		
+		_txtProjectLastModDate.setText(lmoddate == null ? "" : lmoddate);
+
 		// TODO:
 		int retVal = JOptionPane.showConfirmDialog(_parent,
 				_pnlProjectProperties, "Enter project properties",
@@ -216,6 +214,7 @@ public final class ProjectManagerGUI
 
 	/**
 	 * Set the value of statusBar field.
+	 * 
 	 * @param statusBar The statusBar to set
 	 */
 	public void setStatusBar(StatusBar statusBar)
@@ -238,6 +237,7 @@ public final class ProjectManagerGUI
 							((ProjectManager) _projectManager).getDbManager()));
 			_projectViewerFrame.pack();
 		}
+		_projectViewerFrame.setLocation(Utils.getCenterLocation(_projectViewerFrame));
 		_projectViewerFrame.setVisible(true);
 	}
 
@@ -246,7 +246,7 @@ public final class ProjectManagerGUI
 		int projectID = 0;
 
 		try {
-			//FIXME ugly but quick
+			// FIXME ugly but quick
 			Collection projects = ((ProjectManager) _projectManager).getProjectList();
 			JTable projectTable = null;
 			projectTable = Utils.createResultTable(projects);
@@ -280,9 +280,9 @@ public final class ProjectManagerGUI
 		int projectID = 0;
 		JScrollPane panel = new JScrollPane();
 		panel.setViewportView(table);
-		//		Dimension dim = new Dimension(250, 200);
-		//		panel.setMaximumSize(dim);
-		//		panel.setPreferredSize(dim);
+		// Dimension dim = new Dimension(250, 200);
+		// panel.setMaximumSize(dim);
+		// panel.setPreferredSize(dim);
 
 		int result = JOptionPane.showConfirmDialog(_parent, panel,
 				"Choose project", JOptionPane.OK_CANCEL_OPTION,

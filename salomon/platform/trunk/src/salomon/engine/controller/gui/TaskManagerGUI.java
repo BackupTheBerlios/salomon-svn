@@ -32,10 +32,8 @@ import java.awt.event.MouseListener;
 import java.text.DateFormat;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Locale;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JComponent;
@@ -45,7 +43,6 @@ import javax.swing.JList;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JPasswordField;
 import javax.swing.JPopupMenu;
 import javax.swing.JTextField;
 
@@ -55,25 +52,18 @@ import salomon.engine.Messages;
 import salomon.engine.controller.gui.action.ActionManager;
 import salomon.engine.controller.gui.viewer.TaskViewer;
 import salomon.engine.plugin.LocalPlugin;
-import salomon.engine.solution.ISolution;
-import salomon.engine.solution.Solution;
 import salomon.engine.task.ITask;
 import salomon.engine.task.ITaskManager;
 import salomon.engine.task.Task;
 import salomon.engine.task.TaskManager;
-
-import salomon.util.gui.Utils;
-
 import salomon.platform.IDataEngine;
-import salomon.platform.IUniqueId;
 import salomon.platform.exception.PlatformException;
-
 import salomon.plugin.IPlugin;
 import salomon.plugin.IResult;
 import salomon.plugin.IResultComponent;
 import salomon.plugin.ISettingComponent;
 import salomon.plugin.ISettings;
-import sun.security.krb5.internal.i;
+import salomon.util.gui.Utils;
 
 /**
  * Class used to manage with tasks editing. It enables creating and configuring
@@ -95,6 +85,8 @@ public final class TaskManagerGUI
 	 * @uml.associationEnd multiplicity="(0 1)"
 	 */
 	private ControllerFrame _parent;
+
+	private JPanel _pnlTaskProperties;
 
 	private MouseListener _popupListener;
 
@@ -119,17 +111,15 @@ public final class TaskManagerGUI
 
 	private JFrame _tasksViewerFrame;
 
-	private JPanel _pnlTaskProperties;
-
-	private JTextField _txtTaskName;
+	private JTextField _txtTaskCrDate;
 
 	private JTextField _txtTaskInfo;
 
 	private JTextField _txtTaskLastMod;
 
-	private JTextField _txtTaskStatus;
+	private JTextField _txtTaskName;
 
-	private JTextField _txtTaskCrDate;
+	private JTextField _txtTaskStatus;
 
 	public TaskManagerGUI(ITaskManager taskManager)
 	{
@@ -153,7 +143,7 @@ public final class TaskManagerGUI
 		}
 
 		try {
-			// loading plugin			
+			// loading plugin
 			localPlugin.load();
 
 			// creating task
@@ -171,6 +161,20 @@ public final class TaskManagerGUI
 		} catch (Exception e) {
 			LOGGER.fatal("", e); //$NON-NLS-1$				
 			Utils.showErrorMessage(Messages.getString("ERR_CANNOT_LOAD_PLUGIN"));
+		}
+	}
+
+	public void editTask()
+	{
+		try {
+			int selectedRow = this._taskList.getSelectedIndex();
+			if (selectedRow >= 0) {
+				ITask task = ((TaskGUI) getTasks().get(selectedRow)).getTask();
+				setTaskProperties(task);
+			}
+		} catch (PlatformException e) {
+			LOGGER.fatal("", e);
+			Utils.showErrorMessage("Cannot edit task");
 		}
 	}
 
@@ -326,7 +330,7 @@ public final class TaskManagerGUI
 	}
 
 	/**
-	 * Removes task from tasks list. 
+	 * Removes task from tasks list.
 	 */
 	public void removeTask()
 	{
@@ -355,7 +359,7 @@ public final class TaskManagerGUI
 		try {
 			// saving tasks before execution
 			if (saveTasks()) {
-				_taskManager.start() ;
+				_taskManager.start();
 			} else {
 				Utils.showErrorMessage("ERR_CANNOT_RUN_TASKS");
 			}
@@ -367,7 +371,7 @@ public final class TaskManagerGUI
 
 	public boolean saveTasks()
 	{
-		// if tasks list is empty then method does nothing		
+		// if tasks list is empty then method does nothing
 		if (_taskListModel.isEmpty()) {
 			return true;
 		}
@@ -427,6 +431,7 @@ public final class TaskManagerGUI
 
 	/**
 	 * Set the value of statusBar field.
+	 * 
 	 * @param statusBar The statusBar to set
 	 */
 	public void setStatusBar(StatusBar statusBar)
@@ -442,7 +447,7 @@ public final class TaskManagerGUI
 					new TaskViewer(((TaskManager) _taskManager).getDBManager()));
 			_tasksViewerFrame.pack();
 		}
-
+		_tasksViewerFrame.setLocation(Utils.getCenterLocation(_tasksViewerFrame));
 		_tasksViewerFrame.setVisible(true);
 	}
 
@@ -477,18 +482,78 @@ public final class TaskManagerGUI
 					showResultPanel();
 				}
 			});
-			
-			JMenuItem itmEdit = new JMenuItem(
-					Messages.getString("MNU_EDIT")); //$NON-NLS-1$
+
+			JMenuItem itmEdit = new JMenuItem(Messages.getString("MNU_EDIT")); //$NON-NLS-1$
 			itmEdit.addActionListener(_actionManager.getEditTaskAction());
-			
-			_taskPopup.add(itmEdit) ;  
+
+			_taskPopup.add(itmEdit);
 			_taskPopup.addSeparator();
 			_taskPopup.add(itmSettings);
 			_taskPopup.add(itmResult);
 		}
 
 		return _taskPopup;
+	}
+
+	private void setTaskProperties(ITask iTask) throws PlatformException
+	{
+		Task task = (Task) iTask;
+
+		if (_pnlTaskProperties == null) {
+			_pnlTaskProperties = new JPanel();
+			_pnlTaskProperties.setLayout(new GridLayout(5, 2));
+
+			_txtTaskName = new JTextField();
+			_txtTaskInfo = new JTextField();
+
+			_txtTaskCrDate = new JTextField();
+			_txtTaskCrDate.setEnabled(false);
+			_txtTaskLastMod = new JTextField();
+			_txtTaskLastMod.setEnabled(false);
+			_txtTaskStatus = new JTextField();
+			_txtTaskStatus.setEnabled(false);
+
+			_pnlTaskProperties.add(new JLabel("Task name"));
+			_pnlTaskProperties.add(_txtTaskName);
+			_pnlTaskProperties.add(new JLabel("Task info"));
+			_pnlTaskProperties.add(_txtTaskInfo);
+
+			_pnlTaskProperties.add(new JLabel("Creation Date"));
+			_pnlTaskProperties.add(_txtTaskCrDate);
+			_pnlTaskProperties.add(new JLabel("Last Modification Date"));
+			_pnlTaskProperties.add(_txtTaskLastMod);
+			_pnlTaskProperties.add(new JLabel("Task Status"));
+			_pnlTaskProperties.add(_txtTaskStatus);
+		}
+
+		String name = task.getInfo().getName();
+		String info = task.getInfo().getInfo();
+		Date dcdate = new Date(); // TODO: NYI
+		// task.getInfo().getCreationDate() ;
+		Date dmdate = new Date(); // TODO: NYI
+		// task.getInfo().getLastModificationDate(
+		String cdate = "NYI! " + DateFormat.getDateInstance().format(dcdate)
+				+ " " + DateFormat.getTimeInstance().format(dcdate);
+		String mdate = "NYI! " + DateFormat.getDateInstance().format(dmdate)
+				+ " " + DateFormat.getTimeInstance().format(dmdate);
+		String status = task.getInfo().getStatus();
+
+		_txtTaskName.setText(name == null ? "" : name);
+		_txtTaskInfo.setText(info == null ? "" : info);
+		_txtTaskCrDate.setText(cdate == null ? "" : cdate);
+		_txtTaskLastMod.setText(mdate == null ? "" : mdate);
+		_txtTaskStatus.setText(status == null ? "" : status);
+
+		int result = JOptionPane.showConfirmDialog(_parent, _pnlTaskProperties,
+				"Enter Task properties", JOptionPane.OK_CANCEL_OPTION,
+				JOptionPane.PLAIN_MESSAGE);
+
+		if (result == JOptionPane.OK_OPTION) {
+			task.getInfo().setName(_txtTaskName.getText());
+			task.getInfo().setInfo(_txtTaskInfo.getText());
+
+			_taskManager.saveTasks();
+		}
 	}
 
 	private void showResultPanel()
@@ -543,7 +608,7 @@ public final class TaskManagerGUI
 		if (inputSettings == null) {
 			inputSettings = plugin.getSettingComponent().getDefaultSettings();
 		}
-		//FIXME needed by DataSet		
+		// FIXME needed by DataSet
 		IDataEngine dataEngine = null;
 		try {
 			dataEngine = _taskManager.getProject().getProjectManager().getSolution().getDataEngine();
@@ -571,10 +636,10 @@ public final class TaskManagerGUI
 	}
 
 	/**
-	 * Method changes task_nr from each task from the list.
-	 * Task_nr is set according to order in _taskListModel.
+	 * Method changes task_nr from each task from the list. Task_nr is set
+	 * according to order in _taskListModel.
 	 * 
-	 * @throws PlatformException 
+	 * @throws PlatformException
 	 * 
 	 */
 	private void synchronizeTaskOrder() throws PlatformException
@@ -621,78 +686,8 @@ public final class TaskManagerGUI
 					getTaskPopup().show(e.getComponent(), e.getX(), e.getY());
 				}
 			}
-		}		
+		}
 	}
 
 	static final Logger LOGGER = Logger.getLogger(TaskManagerGUI.class);
-
-	public void editTask() {
-			try {
-				int selectedRow = this._taskList.getSelectedIndex() ;
-				if (selectedRow >= 0) {
-					ITask task = ((TaskGUI)getTasks().get(selectedRow)).getTask() ;
-						setTaskProperties(task);
-				}
-			} catch (PlatformException e) {
-				LOGGER.fatal("", e);
-				Utils.showErrorMessage("Cannot edit task");
-			}
-	}
-
-	private void setTaskProperties(ITask iTask) throws PlatformException{
-		Task task = (Task) iTask;
-				
-		if (_pnlTaskProperties == null) {
-			_pnlTaskProperties = new JPanel() ;
-			_pnlTaskProperties.setLayout(new GridLayout(5, 2));
-			
-			_txtTaskName = new JTextField();
-			_txtTaskInfo = new JTextField();
-			
-			_txtTaskCrDate = new JTextField();
-			_txtTaskCrDate.setEnabled(false) ;
-			_txtTaskLastMod = new JTextField();
-			_txtTaskLastMod.setEnabled(false) ; 
-			_txtTaskStatus  = new JTextField();
-			_txtTaskStatus.setEnabled(false) ; 
-			
-			_pnlTaskProperties.add(new JLabel("Task name"));
-			_pnlTaskProperties.add(_txtTaskName);
-			_pnlTaskProperties.add(new JLabel("Task info"));
-			_pnlTaskProperties.add(_txtTaskInfo);
-			
-			_pnlTaskProperties.add(new JLabel("Creation Date"));
-			_pnlTaskProperties.add(_txtTaskCrDate);
-			_pnlTaskProperties.add(new JLabel("Last Modification Date"));
-			_pnlTaskProperties.add(_txtTaskLastMod);
-			_pnlTaskProperties.add(new JLabel("Task Status"));
-			_pnlTaskProperties.add(_txtTaskStatus);
-		}
-
-
-		String name = task.getInfo().getName();
-		String info = task.getInfo().getInfo();	
-		Date dcdate = new Date() ; //TODO: NYI task.getInfo().getCreationDate() ;
-		Date dmdate = new Date() ; //TODO: NYI task.getInfo().getLastModificationDate(
-		String cdate = "NYI! " + DateFormat.getDateInstance().format(dcdate) + " " +DateFormat.getTimeInstance().format(dcdate) ;
-		String mdate = "NYI! " + DateFormat.getDateInstance().format(dmdate) + " " +DateFormat.getTimeInstance().format(dmdate) ; 
-		String status = task.getInfo().getStatus() ; 
-		
-		_txtTaskName.setText(name == null ? "" : name);
-		_txtTaskInfo.setText(info == null ? "" : info);
-		_txtTaskCrDate.setText(cdate == null ? "" : cdate);
-		_txtTaskLastMod.setText(mdate == null ? "" : mdate);
-		_txtTaskStatus.setText(status == null ? "" : status);
-		
-		int result = JOptionPane.showConfirmDialog(_parent,
-				_pnlTaskProperties, "Enter Task properties",
-				JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
-
-		if (result == JOptionPane.OK_OPTION) {
-			task.getInfo().setName(_txtTaskName.getText());
-			task.getInfo().setInfo(_txtTaskInfo.getText());
-			
-			_taskManager.saveTasks() ;
-		}		
-	}
 }

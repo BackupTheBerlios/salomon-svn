@@ -269,7 +269,7 @@ public final class LocalController implements IController
 		frame.setJMenuBar(getJMenuBar());
 		frame.setJToolBar(getToolBar());
 		frame.setControllerPanel(_contentPane);
-		Utils.setParent(getJContentPane());
+		Utils.setParent(frame);
 
 		//showSolutionChooser();
 		_solutionManagerGUI.showSolutionChooser();

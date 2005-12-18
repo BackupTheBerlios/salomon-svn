@@ -47,7 +47,6 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
 import salomon.engine.database.DBManager;
-
 import salomon.util.gui.Utils;
 
 /**
@@ -75,7 +74,7 @@ public final class SQLConsole extends JFrame
 	 */
 	private DBManager _dbManager = null;
 
-	//	private JPanel _contentPane = null;
+	// private JPanel _contentPane = null;
 
 	private JTextPane _edtSQLQuery = null;
 
@@ -110,11 +109,10 @@ public final class SQLConsole extends JFrame
 
 	/**
 	 * Creates instance of SQLConsole object.
-	 *
+	 * 
 	 */
 	public SQLConsole(DBManager manager)
 	{
-		super();
 		_isStandAlone = (manager == null);
 		if (_isStandAlone) {
 			PropertyConfigurator.configure("log.conf"); //$NON-NLS-1$
@@ -138,7 +136,7 @@ public final class SQLConsole extends JFrame
 
 	/**
 	 * Method executes query from text pane and places results in the table
-	 *  
+	 * 
 	 */
 	private void executeQuery()
 	{
@@ -279,14 +277,14 @@ public final class SQLConsole extends JFrame
 		return _edtSQLQuery;
 	}
 
-	//	private JPanel getJContentPane()
-	//	{
-	//		if (_contentPane == null) {
-	//			_contentPane = new JPanel();
-	//			_contentPane.setLayout(new BorderLayout());
-	//		}
-	//		return _contentPane;
-	//	}
+	// private JPanel getJContentPane()
+	// {
+	// if (_contentPane == null) {
+	// _contentPane = new JPanel();
+	// _contentPane.setLayout(new BorderLayout());
+	// }
+	// return _contentPane;
+	// }
 
 	private JTextArea getMessageArea()
 	{
@@ -396,11 +394,12 @@ public final class SQLConsole extends JFrame
 				}
 			}
 		});
+		this.setLocation(Utils.getCenterLocation(this));
 		this.setVisible(true);
 	}
 
 	/**
-	 *  
+	 * 
 	 */
 	private void nextCommand()
 	{
@@ -412,7 +411,7 @@ public final class SQLConsole extends JFrame
 	}
 
 	/**
-	 *  
+	 * 
 	 */
 	private void previousCommand()
 	{
@@ -437,57 +436,13 @@ public final class SQLConsole extends JFrame
 
 	/**
 	 * starts SQLConsole
+	 * 
 	 * @param args parameters from the command line
 	 */
 	public static void main(String[] args)
 	{
 		new SQLConsole(null);
 	}
-
-	//	private static void printResultSet(ResultSet resultSet) throws SQLException
-	//	{
-	//		if (resultSet == null) {
-	//			LOGGER.fatal("Result set is empty"); //$NON-NLS-1$
-	//			return;
-	//		}
-	//		ResultSetMetaData metaData = resultSet.getMetaData();
-	//		int columnCount = metaData.getColumnCount();
-	//		String[] columnNames = new String[columnCount];
-	//		// getting column names
-	//		for (int i = 0; i < columnCount; i++) {
-	//			columnNames[i] = metaData.getColumnLabel(i + 1);
-	//		}
-	//		// getting data
-	//		LinkedList<Object[]> rows = new LinkedList<Object[]>();
-	//		int size = 0;
-	//		while (resultSet.next()) {
-	//			Object[] row = new Object[columnCount];
-	//			int i = 0;
-	//			for (; i < columnCount; i++) {
-	//				row[i] = resultSet.getObject(i + 1);
-	//			}
-	//			rows.add(row);
-	//			size++;
-	//		}
-	//		// creating result table
-	//		Object[][] data = new Object[size][columnCount];
-	//		for (int i = 0; i < size; i++) {
-	//			data[i] = rows.get(i);
-	//		}
-	//		// printing result
-	//		StringBuilder buffer = new StringBuilder(512);
-	//		for (int i = 0; i < columnCount; i++) {
-	//			buffer.append(columnNames[i] + " "); //$NON-NLS-1$
-	//		}
-	//		buffer.append("\n=============================================\n"); //$NON-NLS-1$
-	//		for (int i = 0; i < size; i++) {
-	//			for (int j = 0; j < columnCount; j++) {
-	//				buffer.append(data[i][j] + "|"); //$NON-NLS-1$
-	//			}
-	//			buffer.append("\n"); //$NON-NLS-1$
-	//		}
-	//		LOGGER.fatal(buffer);
-	//	}   
 
 	/**
 	 * Class manages command history list.

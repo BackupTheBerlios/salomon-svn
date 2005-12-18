@@ -21,6 +21,8 @@
 
 package salomon.util.gui;
 
+import java.awt.Component;
+import java.awt.Point;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
@@ -28,7 +30,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedList;
 
-import javax.swing.JComponent;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 
@@ -42,9 +44,19 @@ import salomon.engine.Messages;
  */
 public final class Utils
 {
-	private JComponent _parent;
+	private Component _parent;
 
-	private void setParentImpl(JComponent parent)
+	private Point getCenterLocationImpl(JFrame frame)
+	{
+		Point location = new Point();
+		location.x = _parent.getLocation().x
+				+ (_parent.getSize().width - frame.getWidth()) / 2;
+		location.y = _parent.getLocation().y
+				+ (_parent.getSize().height - frame.getHeight()) / 2;
+		return location;
+	}
+
+	private void setParentImpl(Component parent)
 	{
 		_parent = parent;
 	}
@@ -122,6 +134,11 @@ public final class Utils
 		return table;
 	}
 
+	public static Point getCenterLocation(JFrame frame)
+	{
+		return getInstance().getCenterLocationImpl(frame);
+	}
+
 	/**
 	 * Processes given result set. Returns Collection, which first element is an
 	 * array of column names and a selected rows as next elements
@@ -179,7 +196,7 @@ public final class Utils
 	 * 
 	 * @param parent parent component
 	 */
-	public static void setParent(JComponent parent)
+	public static void setParent(Component parent)
 	{
 		getInstance().setParentImpl(parent);
 	}

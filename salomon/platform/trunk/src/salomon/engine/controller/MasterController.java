@@ -260,7 +260,7 @@ public final class MasterController implements IController
 		_projectManagerGUI.setParent(frame);
 		_remoteControllerPanel.setParent(frame);
 
-		Utils.setParent(getJContentPane());
+		Utils.setParent(frame);
 		SplashScreen.hide();
 		frame.setVisible(true);
 	}

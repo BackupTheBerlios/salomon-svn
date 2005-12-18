@@ -17,7 +17,7 @@ public class ViewSolutionAction extends AbstractSolutionAction
 	public void actionPerformed(ActionEvent arg0)
 	{
 		System.out.println("action preformator");
-		_solutionEditionManager.viewSolutionList();
+		_solutionEditionManager.viewSolutions();
 	}
 
 }
