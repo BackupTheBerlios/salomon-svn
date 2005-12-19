@@ -17,6 +17,7 @@ import salomon.platform.data.tree.IDataSource;
 import salomon.platform.data.tree.INode;
 import salomon.platform.data.tree.ITree;
 import salomon.platform.serialization.IInteger;
+import salomon.platform.serialization.IString;
 import salomon.plugin.IPlugin;
 import salomon.plugin.IResult;
 import salomon.plugin.IResultComponent;
@@ -43,7 +44,7 @@ public class Plugin implements IPlugin {
 					results.setErrorMessage("Brak drzewa w srodowisku.");
 					return results;
 				}
-				treeId = ((IInteger)treeVar.getValue()).getValue();
+				treeId = Integer.parseInt(((IString)treeVar.getValue()).getValue());
 				
 			}
 			
@@ -88,7 +89,7 @@ public class Plugin implements IPlugin {
 	}
 	
 	
-	private String conclude(INode root,IDataSource dataSource, Object [] row){
+	private String conclude(INode root,IDataSource dataSource, Object [] row) throws Exception{
 		boolean testResult = false;
 		String test = root.getParentEdge();
 		if (test == null) test = "";
@@ -141,26 +142,26 @@ public class Plugin implements IPlugin {
 		return result.trim();
 	}
 
-	private int getColumnIndex(String columnName,IDataSource dataSource){
+	private int getColumnIndex(String columnName,IDataSource dataSource) throws Exception{
 		String [] columns = dataSource.getDecioningColumns();
 		for (int i=0;i< columns.length;i++){
 			String name = columns[i];
 			if (name.equals(columnName)) return i+2; 
 		}
-		throw new RuntimeException("Cannot find column name "+columnName+"in dataSource "+dataSource.getId());
+		throw new Exception("Cannot find column name "+columnName+"in dataSource "+dataSource.getId());
 	}
 	
 	
-	private String getOperator(String test){
+	private String getOperator(String test) throws Exception{
 		int index;
 		index = test.indexOf(">");
 		if (index < 0) index = test.indexOf("="); else return ">";
 		if (index < 0) index = test.indexOf("<="); else return "=";
 		if (index >= 0) return "<=";
-		else throw new RuntimeException("Cannot find supported operator.");
+		else throw new Exception("Cannot find supported operator.");
 	}
 	
-	private String getValue(String test){
+	private String getValue(String test)throws Exception{
 		int index;
 		int opLen = 1;
 		index = test.indexOf(">");
@@ -168,7 +169,7 @@ public class Plugin implements IPlugin {
 		if (index < 0) {
 			index = test.indexOf("<=");
 			if (index >= 0) opLen =2;
-			else throw new RuntimeException("Cannot find supported operator.");
+			else throw new Exception("Cannot find supported operator.");
 		}
 		return test.substring(index+opLen,test.length()).trim();
 	}
