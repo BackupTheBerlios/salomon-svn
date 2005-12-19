@@ -91,24 +91,43 @@ public class Plugin implements IPlugin {
 	private String conclude(INode root,IDataSource dataSource, Object [] row){
 		boolean testResult = false;
 		String test = root.getParentEdge();
+		if (test == null) test = "";
 		if ("".equals(test)) testResult = true;
 		else {
+			String columnName = getColumnName(test);
+			String operator = getOperator(test);
+			String value = getValue(test);
 			
-			
+			int index = getColumnIndex(columnName,dataSource);
+			String testValue = row[index].toString();
+			if (operator.equals("=")) {
+				testResult = testValue.equals(value);
+			} else {
+				double val1 = Double.parseDouble(testValue);
+				double val2 = Double.parseDouble(value);
+				
+				
+				if (operator.equals(">")) testResult = (val1 > val2);
+				if (operator.equals("<=")) testResult = (val1 <= val2);
+			}
 		}
-		String columnName = getColumnName(test);
+		
 		switch (root.getType()) {
 		case COLUMN:
-			
-			break;
+			if (testResult){
+				String result = null;
+				for (INode node : root.getChildren()) {
+					result = conclude(node,dataSource,row);
+					if (result != null) return result;
+				}
+				return null;
+			} else return null;
 		case VALUE:
-			
-			break;
+			if (testResult) return root.getValue();
+			else return null;
 		}
-		
-		
-		
-		return "testttt";
+
+		return null;
 	}
 	
 
@@ -122,6 +141,38 @@ public class Plugin implements IPlugin {
 		return result.trim();
 	}
 
+	private int getColumnIndex(String columnName,IDataSource dataSource){
+		String [] columns = dataSource.getDecioningColumns();
+		for (int i=0;i< columns.length;i++){
+			String name = columns[i];
+			if (name.equals(columnName)) return i+2; 
+		}
+		throw new RuntimeException("Cannot find column name "+columnName+"in dataSource "+dataSource.getId());
+	}
+	
+	
+	private String getOperator(String test){
+		int index;
+		index = test.indexOf(">");
+		if (index < 0) index = test.indexOf("="); else return ">";
+		if (index < 0) index = test.indexOf("<="); else return "=";
+		if (index >= 0) return "<=";
+		else throw new RuntimeException("Cannot find supported operator.");
+	}
+	
+	private String getValue(String test){
+		int index;
+		int opLen = 1;
+		index = test.indexOf(">");
+		if (index < 0) index = test.indexOf("=");
+		if (index < 0) {
+			index = test.indexOf("<=");
+			if (index >= 0) opLen =2;
+			else throw new RuntimeException("Cannot find supported operator.");
+		}
+		return test.substring(index+opLen,test.length()).trim();
+	}
+	
 	public ISettingComponent getSettingComponent() {
 		return new SettingComponent();
 	}
