@@ -161,6 +161,44 @@ public final class TreeManager implements ITreeManager
 		return returnList;
 	}
 	
+
+	public List<Object []> getRestTreeDataSourceRows(IDataSource dataSource) throws PlatformException {
+		if (dataSource == null) return null;
+		List<Object []> returnList = new ArrayList<Object []>();
+		int columns = dataSource.getDecioningColumns().length+1;
+		List<Object> row = null;
+		SQLSelect select = new SQLSelect();
+		select.addTable(dataSource.getTableName());
+		select.addColumn(dataSource.getDecisionedColumn());
+		for (String columnName : dataSource.getDecioningColumns()) select.addColumn(columnName);
+		//Nie moge zastosowac konstrukcji SELECT [FIRST (<integer expr m>)] [SKIP (<integer expr n>)]
+		//SQLSelect bardziej przeszkadza niz pomaga
+		int first = dataSource.getFirstRowIndex();
+		int last = dataSource.getLastRowIndex();
+		ResultSet resultSet = null;
+		try {
+			resultSet = _externalDBManager.select(select);
+			int j = 1;
+			while (resultSet.next()) {
+				if ((j < first)||(j > last)) {
+					row = new ArrayList<Object>(columns);
+					row.add(j);
+					for (int i=1;i<=columns;i++) row.add(resultSet.getObject(i));
+					returnList.add(row.toArray(new Object [row.size()]));
+				}
+				j++;
+			}		
+		} catch (SQLException e) {
+			throw new PlatformException("Metoda getTreeDataSourceData() failed quering: " + select.getQuery()
+					+ " Errors: " + e.getLocalizedMessage());
+		} finally {
+			try {if (resultSet != null) resultSet.close();}catch (SQLException e1) {};
+		}
+		
+		return returnList;
+	}
+	
+	
 	public IDataSource[] getTreeDataSources() throws PlatformException
 	{
 		List<IDataSource> dataSources = new LinkedList<IDataSource>();

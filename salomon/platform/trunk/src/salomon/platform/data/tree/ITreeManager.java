@@ -51,6 +51,13 @@ public interface ITreeManager
 	 */
 	List<Object []> getTreeDataSourceData(IDataSource dataSource) throws PlatformException;
 	/**
+	 * Metoda zwraca liste pozostalych wierszy nie wskazywanych przez IDataSource
+	 * 
+	 * @param dataSource
+	 * @return
+	 */	
+	List<Object []> getRestTreeDataSourceRows(IDataSource dataSource) throws PlatformException;
+	/**
 	 * Tworzy instancje IDataSource
 	 * @return
 	 * @throws PlatformException
