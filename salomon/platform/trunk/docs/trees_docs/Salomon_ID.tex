@@ -40,9 +40,8 @@ System przetwarzania wiedzy\\}
 
 \[\]
 \begin{flushright}
-{\Large \emph{Iteration Description for Transition -- Iteration
-1\\
-Wersja 1.0}}
+{\Large \emph{Iteration Description for Transition -- Iteration 2\\
+Wersja 1.1}}
 
 \[\]
 
@@ -66,11 +65,11 @@ Wersja 1.0}}
 
   \hline
 
-  26-09-2005 & 1.0 & Wersja pocz¹tkowa & Dominik Seweryn\\
+  30-11-2005 & 1.0 & Wersja pocz¹tkowa & Dominik Seweryn\\
 
   \hline
 
-  &&&\\
+  20-12-2005 & 1.1 & Iteracja 2 & Dominik Seweryn\\
 
   \hline
 
@@ -88,68 +87,36 @@ Wersja 1.0}}
 
 
 \section{Zadania dla iteracji}
-\subsection{Implementacja pluginu realizuj¹cego wczytywanie danych} Plugin bêdzie umo¿liwia³ wybór tabeli wykorzystywanej do budowy
-drzew decyzyjnych. Po wyborze tabeli dostêpny bêdzie z niej wybór
-kolumny decyduj¹cej, wzglêdem której tworzone bêdzie drzewo
-dycyzyjne, oraz kolumn decyzyjnych, które bed¹ brane pod uwagê
-przy tworzeniu drzewa. Po wyborze odpowiednich kolumn i tabeli
-dane te zostan¹ zapisane do zmiennej œrodowiskowej aby udostêpniæ
-wyniki dzia³ania pluginu kolejnym pluginom.
-\subsection{Implementacja pluginu realizuj¹cego tworzenie drzew
-decyzyjnych} Plugin ten na podstawie danych, któr¹ tabelê m¹
-wykorzystaæ, oraz jak¹ rolê bêd¹ pe³ni³y poszczególne kolumny
-bêdzie tworzy³ drzewo decyzyjne wed³ug algorytmu ID3. Wynik
-dzia³ania algorytmu bedzie zapisywany do struktury ITree.
-\subsection{Implementacja atrapy pluginu realizuj¹cego
-wizualizacjê} W tym przypadku bêdzie mieli do czynienia z bardzo
-uproszczon¹ realizacj¹ wizualizacji. Plugin ten bedzie mia³ za
-zadanie na podstawie drzewa, otrzymanego jako strukture ITree,
-przedstawiæ je graficznie jako odpowiednio przeformatowane ci¹gi
-znaków.
+\subsection{Implementacja drugiego algorytmu budowy drzew decyzyjnych} Drugim algorytmem o jaki rozbudowany ma zostaæ plugin odpowiadaj¹cy za konstrukcje drzew decyzyjnych jest C4.5. Jest to ulepszona wersja algorytmu ID3. Miêdzy innymi atrybuty ci¹g³e s¹ dyskretyzowane (zamiana na przedzia³y wartoœci),   
+\subsection{Implementacja pluginu wnioskuj¹cego} Plugin ten na podstawie stworzonego drzewa, bêdzie przeprowadza³ klasyfikacje nowych danych i przypisywa³ je do ju¿ istniej¹cych grup.
+\subsection{Implementacja wizualizacji w postaci graficznej w pluginie wizualizacyjnym} Plugin odpowiadaj¹cy za wizualizacjê w obecnej iteracji bêdzie prezentowa³ wynik dzia³ania algorytmu (utworzone drzewo) z wykorzystaniem JTree umo¿liwiaj¹c obserwowanie drzewa na ró¿nych poziomach szczegó³owoœci.
 
-
+\\
 
 \section{Produkt iteracji}
-Produktem iteracji bêd¹ trzy pluginy, ka¿dy odpowiadaj¹cy za inny
-etap budowy drzew decyzyjnych. Plugin pierwszy bêdzie realizowa³
-funkcjê wczytywania danych i informacji o nich. Gromadzi³ bêdzie
-dane o tabeli jaka ma byæ podstaw¹ do budowy drzewa oraz o rolach
-poszczególnych kolumn w procesie tworzenia drzewa decyzyjnego.
-Plugin drugi bêdzie realizowa³ algorytm budowy drzew decyzyjnych
-na podstawie danych otrzymanych z pluginu pierwszego. Trzeci
-plugin odpowiada³ bêdzie za prezentacjê graficzn¹ otrzymanego
-wyniku.
+Produktem iteracji bêdzie jeden zupe³nie nowy plugin, umo¿liwiaj¹cy wnioskowanie na nowych danych z wykorzystaniem istniej¹cego drzewa decyzyjnego i decydowanie gdzie zakwalifikowaæ w³aœnie analizowane dane. Dodatkowo podczas iteracji zostan¹ rozbudowane dwa pluginy. Plugin buduj¹cy drzewa decyzyjne zostanie rozszerzony o nowy znacznie bardziej zaawansowany algorytm - C4.5. Plugin wizualizacyjny bêdzie prezentowa³ stworzone drzewa w formie graficznej (dotychczas by³a tylko forma tekstowa) umo¿liwiaj¹c, dziêki rozwijanym wêz³om, przegl¹danie na ró¿nych stopniach szczegó³owoœci. Niewielkiej modyfikacji ulegnie tak¿e plugin wczytuj¹cy dane - bêdzie umo¿liwia³ wybór przedzia³u wierszy z danymi na których bêdzie budowane drzewo. Pozosta³e rekordy bêd¹ mog³y byæ wykorzystane przy wnioskowaniu i w³aœnie na jego potrzeby jest ta modyfikacja. 
 
-
+\\
 
 \section{Plan testów}
-Podczas przygotowywania bêdziemy korzystali z technologii jUnit.
+Podobnie jak przy poprzedniej iteracji przy testowaniu bêdziemy korzystali z technologii jUnit.
 Niektóre testy, np. testy dzia³ania pluginu odpowiadaj¹cego za
 wizualizacje, bêd¹ te¿ przeprowadzane rêcznie.
 
     Testy bêd¹ obejmowa³y sprawdzenie poprawnoœci:
     \begin{itemize}
-        \item zrealizowanego algorytmu budowania drzew decyzyjnych.
-        \item dzia³ania poszczególnych klas, interfejsów w tym bêd¹ zawarte interfejsy szkieletowe (np. realizuj¹ce operacje dzia³ania na bazie danych).
+        \item zaimplementowania algorytmów budowy drzew decyzyjnych.
+        \item dzia³ania poszczególnych klas, interfejsów, w tym tak¿e interfejsy szkieletowe (np. realizuj¹ce operacje dzia³ania na bazie danych).
         \item dzia³ania pluginu realizuj¹cego budowê drzew decyzyjnych.
-        \item dzia³ania atrapy pluginu tworz¹cego wizualizacje.
+        \item dzia³ania pluginu wizualizacyjnego.
+        \item dzia³ania pluginu wnioskuj¹cego.
         \item dzia³ania ca³oœci zrealizowanej funkcjonalnoœci.
     \end{itemize}
 
+\\ 
 
 \section{Efekt wykonania iteracji}
-Efektem pracy w ramach zakoñczonej iteracji jest powstanie
-zak³adanych trzech pluginów. Na ten moment s¹ one w wersji
-pocz¹tkowej - nie oferuj¹ mo¿liwoœci modyfikacji swoich parametrów
-(poza pluginem pierwszym, gdzie istnieje wybór tabeli oraz
-kolumn), wykonuj¹ swoje zadanie, ale nie oferuj¹ dodatkowych
-funkcjonalnoœci, a na przebieg ich dzia³ania w trakcie pracy nie
-ma ¿adnego wp³ywu. Wprowadzenie okreœlonych parametrów mog³oby ten
-stan rzeczy zmieniæ. Na przyk³ad przy wizualizacji, nawet w formie
-ci¹gu znaków, mo¿na by okreœlaæ przy uruchamianiu pluginu jakim
-znakiem bêd¹ oddzielane od siebie kolejne wêz³y na danym poziomie
-drzewa. W kwestii realizacji planu uda³o siê osi¹gn¹æ wszystko co
-zosta³o zaplanowane.
+W omawianej iteracji uda³o siê zrealizowaæ zgodnie z planem wszystkie zak³adane rozszerzenia istniej¹cych pluginów, natomiast nie uda³o siê stworzyæ pluginu wnioskuj¹cego. W zwi¹zku z tym jego realizacja zosta³a przeniesiona do iteracji trzeciej. 
 
 
 \end{document}
