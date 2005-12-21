@@ -3,17 +3,12 @@
 \usepackage[cp1250]{inputenc}
 %\usepackage[latin2]{inputenc}
 %\usepackage{polski}
+\usepackage{indentfirst}
 \usepackage{amsfonts}
 \usepackage[T1]{fontenc}
 \usepackage[dvips]{graphicx}
 
 %\usepackage{pldoc}
-
-
-
-
-
-
 
 \pagestyle{headings} \textwidth      15.5cm \oddsidemargin    .1cm
 \evensidemargin   .1cm
@@ -40,7 +35,7 @@ System przetwarzania wiedzy\\}
 
 
 \begin{flushright}
-{\Large \emph{User's Manual, ver 1.0} }
+{\Large \emph{User's Manual, ver 1.1} }
 \end{flushright}
 
 \vspace{7cm}
@@ -50,8 +45,10 @@ System przetwarzania wiedzy\\}
 \begin{tabular}{|p{2.5cm}||p{1.5cm}|p{4.5cm}|p{5.5cm}|}
   \hline
   Data & Wersja & Opis & Autorzy \\
-  \hline \hline
+  \hline  \hline
   17-09-2005 & 1.0 & User's Manual & Przemys³aw Misiuda, Krzysztof Nadolski, Mateusz Nowakowski, £ukasz Ostatek, Dominik Seweryn, Tomasz W¹sala\\
+ \hline  
+  20-12-2005 & 1.0 & Rozdzia³ TreeConclude & Mateusz Nowakowski\\  
   \hline
 \end{tabular}
 \end{flushleft}
@@ -154,6 +151,18 @@ interesuj¹ce nas drzewo w postaci JTree. Jeœli zrobimy coœ niezgodnie z instrukc
 pojawi siê komunikat z informacj¹ jak nale¿y post¹piæ z pluginem aby wyœwietliæ drzewo.
 \end{enumerate}
 
+\subsection{TreeConclude}
+Plugin s³u¿y do zweryfikowania drzewa tj. sprawdzenia czy na innych danych opisuj¹cych t¹ sam¹ rzeczywistoœæ drzewo zwraca prawid³owe rezultaty. 
+\\
+Plugin uruchamia siê analogicznie jak pozosta³e. Podobnie jak plugin wizualizacyjny mo¿e pracowaæw dwóch trybach: samodzielnie lub wspó³dzia³aj¹c z innymi pluginami. Tryb pracy okreœla siê w oknie ustawieñ.
+\subsubsection{Okno ustawieñ}
+Okno ustawieñ definiuje drzewo, które bêdzie testowane, natomiast danymi testowymi s¹ pozosta³e wiersze w tabeli ¿ród³a danych, które nie uczestniczy³y w definiowaniu drzewa np. je¿eli drzewo by³o zbudowane za pomoca wierszy 2-8, a tabela zawiera 14 wierszy wówczas test bêdzie przeprowadzony na wierszach: 1,9-14.
+\\
+W oknie ustawieñ okreœla siê za pomoc¹ checkbox`a \textit{Pracuj samodzielnie} tryb pracy. Domyœlnym ustawieniem jest wspó³dzia³anie z poprzednimi pluginami tj. obecnoœci w œrodkowisku Salomona wygenerowanego drzewa przez plugin algorytmiczny. W przypadku ustawienia pracy samodzielnej nale¿y okreœliæ za pomoc¹ listy wyboru \textit{Wybierz drzewo} interesuj¹ce nas drzewo. \\
+Po wybraniu konkretnego drzewa w oknie pokazuj¹ siê niektóre w³aœciwoœci drzewa tj. jego nazwa, opis, definicja ¿ród³a danych na podstawie którego drzewo powsta³o. Po wybraniu drzewa do testów, nale¿y klikn¹æ \textit{OK} w celu zatwierdzenia.
+
+\subsubsection{Okno rezultatów}
+Okno wyników przedstawia wynik testu tzn. nazwê drzewa, iloœæ wierszy na których przeprowadzono test, iloœæ testów pozytywnych, procent zgodnoœci drzewa oraz listê wierszy, których wynik nie jest zgodny z definicj¹ drzewa. Lista zawiera kolumny: nr wiersza, wynik skonstruowany za pomoc¹ drzewa,  spodziewany wynik tj. taki jaki by³ w bazie danych, oraz kolumny decyzyjne.
 
  \newpage
 
