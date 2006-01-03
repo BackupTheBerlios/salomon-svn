@@ -21,6 +21,9 @@
 
 package salomon.platform.data.attribute.description;
 
+import salomon.platform.data.attribute.IAttribute;
+import salomon.platform.exception.PlatformException;
+
 /**
  * 
  */
@@ -31,4 +34,10 @@ public interface IAttributeDescription
 	 * @return the name
 	 */
 	String getName();
+	
+	/**
+	 * Creates new attribute with given value.
+	 * @return the new attribute
+	 */
+	IAttribute createAttribute(Object value) throws PlatformException;
 }
