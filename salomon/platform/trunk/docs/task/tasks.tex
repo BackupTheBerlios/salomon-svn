@@ -1,14 +1,13 @@
-%& --translate-file=cp1250pl
-%bez powyzszej linijki nie dzialaja polskie znaki (musi ona byc w pierwszej linii dokumentu
-%%&platex --translate-file=il2-pl % przeyestowac z tym
 \documentclass[a4paper,12pt]{article}
+\usepackage{float}
 \usepackage[polish]{babel}
+\usepackage[cp1250]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage[dvips]{graphicx}
+\usepackage{indentfirst}
+\usepackage[urlcolor=blue, colorlinks=true, bookmarks=true, bookmarksnumbered=true]{hyperref}
 \usepackage{fancyvrb}
 
-\usepackage[urlcolor=blue, colorlinks=true, bookmarks=true, bookmarksnumbered=true]{hyperref}
-%\usepackage{intendfirst}
 \usepackage{times}
 \usepackage{epsfig}
 \usepackage{color}
@@ -19,12 +18,6 @@
 
 \rfoot{SALOMON}
 
-
-%ustawienie wielkosci akapitu
-%\setlength{\parindent}{0mm}
-%%odstàp miàdzy akapitami
-%\setlength{\parskip}{2mm}
-
 %ustawienia rozmiaru tekstu
     \textwidth 16cm
     \textheight 24cm 
@@ -34,13 +27,12 @@
     
 
 
-\title{Salomon - zadania}
+\title{Salomon - zarz¹dzanie zadaniami}
 
 \author{Nikodem Jura \emph{(nico@icslab.agh.edu.pl)}
         \\
-        Krzysztof Rajda \emph{(krzycho@student.uci.agh.edu.pl)}
-        \\
-        Jakub Ga³kowski \emph{(avi@student.uci.agh.edu.pl)}}
+        Krzysztof Rajda \emph{(krzycho@rajda.name)}
+		}
         
 
 \begin{document}
@@ -50,53 +42,76 @@
 \thispagestyle{empty}
 
 \begin{center}
-\textcolor{blue}{\href{http://salomon.iisg.agh.edu.pl}{http://salomon.iisg.agh.edu.pl}}
-\end{center}
-
-\begin{center}
-Prowadz¹cy: dr in¿. Marek Kisiel-Dorohinicki
+Prowadz¹cy: mgr in¿. Aleksander Byrski
 \end{center}
 
 \newpage
 
-%spis tresciz
-%\tableofcontents
-%\newpage
-
 %reszta
-\section{Zarz¹dzanie zadaniami}
-Pierwszym zadaniem bêdzie usprawnienie zarz¹dzania zadaniami.
-W obecnej wersji \emph{Salomon} pozwala na liniowe uruchamianie zadañ.
-W kolejnej wersji chcielibyœmy umo¿liwiæ tworzenie grafu przep³ywu wiedzy i danych.
-Ka¿dy wêze³ reprezentowa³by pojedyncze zadanie. Takie zadanie mog³oby zale¿eæ od innych zadañ.
-Na krawêdziach grafu powinna byæ mo¿liwoœæ definiowania warunków, które s¹ potrzebne, aby wiedza/dane
-zosta³y przekazane wzd³u¿ tej krawêdzi. Wzorem dla takiego grafu mo¿e byæ sieæ \emph{Petriego}.
+\section{Projekt}
+W obecnej wersji \emph{Salomon} pozwala na sekwencyjne uruchamianie zadañ. Zadanie te prezentowane s¹ w sposób tekstowy na liœcie zadañ.
+W kolejnej wersji chcielibyœmy umo¿liwiæ tworzenie grafu przep³ywu wiedzy i danych. Umo¿liwi³oby to czytelniejsze wizualizowanie przebiegu wykonywania zadañ, a tak¿e na bardziej intuicyjne zarz¹dzanie kolejnoœci¹ ich wykonania.
 
-Etapy realizacji tego zadania mo¿na podzieliæ na:
+\begin{figure}[H]
+	\centering
+		\includegraphics[width=0.40\textwidth]{../documentation/img/concept/WorkflowGraph.jpg}
+	\caption{Przyk³adowy graf przep³ywu}	
+	\label{fig:WorkflowGraph}	
+\end{figure}
+
+Na powy¿szym rysunku widoczny jest przyk³adowy przep³yw wiedzy oraz danych. Przetwarzanie rozpoczyna sie od punku oznaczonym ¿ó³tym kó³kiem z napisem \emph{Start}. Niebieskie elipsy reprezentuj¹ wtyczki wykonuj¹ce konkretne zadanie, na strza³kach opisana jest wiedza, która zosta³a wygenerowana przez dan¹ wtyczkê. U¿ytkownik bêdzie mia³ mo¿liwoœæ stworzenia podobnego grafu.
+
+\section{Funkcjonalnoœæ}
+
+Graf przep³ywu bêdzie sk³ada³ siê z wêz³ów symbolizuj¹cych poszczególne wtyczki po³¹czonych krawêdziami skierowanymi.
+
+Utworzenie nowego wêz³a bêdzie przebiegaæ nastêpuj¹co:
+
 \begin{itemize}
-	\item Komponent graficzny umo¿liwiaj¹cy tworzenie grafu
-	\item Mechanizmy do automatycznego rozpraszania zadañ pomiêdzy ró¿ne instancje \emph{Salomona}
-	\item Mechanizmy do monitorowania aktualnego stanu systemu
+	\item u¿ytkownik klika prawym przyciskiem na panel i wybiera \emph{New Task}
+	\item pojawia siê lista dostêpnych wtyczek, z których wybierana jest jedna
+	\item zadaniu mo¿na nadaæ nazwê podczas jego tworzenia, lub póŸniej poprzez wybranie opcji \emph{Edit} z menu kontekstowego
+	\item utworzony w ten sposób wêze³ (zadanie) mo¿na skonfigurowaæ. Po klikniêciu prawym klawiszem myszy na wêŸle pojawi siê menu, z którego nale¿y wybraæ \emph{Settings} -- wtedy pojawi sie okienko z ustawieniami dla danego zadania.	
 \end{itemize}
 
-\section{Wiedza}
-Zadanie to polegaæ bêdzie na realizacji dla poszczególnych rodzajów wiedzy:
-\begin{itemize}
-	\item Regu³y
-	\item Drzewa decyzyjne
-	\item Klastry
-	\item Dane statystyczne
-\end{itemize}
+Po stworzeniu grafu przep³ywu mo¿na uruchomiæ przetwarzanie poprzez naciœniêcie odpowiedniego przycisku. Aktualnie przetwarzane zadanie bêdzie wyró¿nione, a po zakoñczeniu wykonania zadañ mo¿na sprawdziæ rezultaty ka¿dego z nich poprzez klikniêcie prawym przyciskiem na danym wêŸle i wybraniu opcji \emph{Result} z menu kontekstowego.
 
-Poni¿szych zadañ:
-\begin{itemize}
-	\item Implementacja mechanizmów sk³adowania wiedzy w bazie danych
-	\item Implementacja interfejsów do zarz¹dzania wiedz¹
-	\item Stworzenie komponentów graficznych do zarz¹dzania wiedz¹ (przegl¹danie, usuwanie)
-	\item Implementacja komponentu do rêcznego definiowania wiedzy
-	\item Implementacja przyk³adowego pluginu, który wyszukuje wiedzê z danych
-	\item Implementacja pluginu do wizualizacji wiedzy
-\end{itemize}
 
-Przy realizacji tego zadania mo¿na wykorzystaæ program \emph{Weka} 
+-- REMOVE IT -- 
+
+Zastanawialiœmy siê nad u¿yciem sieci petriego.
+(dwa typy wêz³ów: 1 (tranzycje) - pluginy które coœ robi¹, 2 (stany) -  miejsce sk³adowania danych/wiedzy)
+Takie podejœcie jest bardzo u¿yteczne, gdy chcemy mieæ taki przep³yw:
+
+Generacja data seta -> Generacja regu³ -> Wybór najlepszych regu³ N (np.  5) dostêpnych
+
+sieci petriego pozwalaj¹ u¿ytkownikowi nie duplikowaæ N razy pocz¹tkowego  elementu grafu
+odpowiedzialnego za generacje data setu i regu³.
+
+Sieci petriego jednak s¹ trudniejsze w realizacji i zaciemniaj¹ graf jeœli  mamy przypadek
+taki, ¿e potrzebujemy tylko jeden element (czyli tak jak pomiêdzy  pierwszymi dwoma elementami przyk³adu
+jeden data set l¹duje do generacji regu³). Dlatego zdecydowaliœmy siê na  rozwi¹zanie hybrydowe :-)))
+
+Wêz³ami s¹ tylko pluginy i nie ma obowi¹zku wstawiania wêz³ów stanów.
+Dopuszczamy jednak mo¿liwoœæ wstawienia wêz³a "zbieraj¹æego" (stanu).
+
+Zyskujemy przez to maksymaln¹ przejrzystoœæ grafu (dla przypadków z  przep³ywem jednego tokena
+nie trzeba dodatkowych elementów, dla naszego przypadku nie trzeba piêcio  krotnie kopiowaæ grafów)
+
+
+Workaround dla pierwszego przyk³adu:
+
+- jak ju¿ wspomina³em - copy paste Twoim przyjacielem (dla dostatecznie  ma³ego N :-)
+
+- napisanie takich pluginów, które w konfiguracji zwracaj¹ ju¿ 5 elementów
+minusem takiego podejœcia jest brak mo¿liwoœci rozproszenia.
+Praca pluginu jest atomowa wiêc taki plugin który bêdzie generowa³ 5 rule  setów
+nie bêdzie móg³ byæ rozdzielony pomiêdzy ró¿ne instancje. Silnik nie  bêdzie nic wiedzia³
+¿e wykonywana jest w pluginie praca któr¹ mo¿na rozdzieliæ. Wiêc nasz  przyk³ad
+wykona siê sekwencyjnie na jednym hoscie.
+
+To tylko plany :-) I na razie nie bêdziemy realizowaæ tego typu elementu  :-(
+Najwa¿niejsze, ¿eby dzia³o definiowanie chocia¿ sekcyjnego przep³ywu.
+
+
 \end{document}
