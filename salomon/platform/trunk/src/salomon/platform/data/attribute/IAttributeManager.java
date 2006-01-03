@@ -22,6 +22,7 @@
 package salomon.platform.data.attribute;
 
 import salomon.platform.IUniqueId;
+import salomon.platform.data.attribute.description.IAttributeDescription;
 import salomon.platform.data.attribute.description.IDateAttributeDescription;
 import salomon.platform.data.attribute.description.IEnumAttributeDescription;
 import salomon.platform.data.attribute.description.IIntegerAttributeDescription;
@@ -46,7 +47,7 @@ public interface IAttributeManager
 	 * Creates a new empty attribute set.
 	 * @return the new attribute set
 	 */
-	IAttributeSet createAttributeSet();
+	IAttributeSet createAttributeSet(IAttributeDescription[] descriptions);
 
 	/**
 	 * Creates a new date attribute description
