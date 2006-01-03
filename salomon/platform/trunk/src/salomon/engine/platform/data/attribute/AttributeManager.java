@@ -27,6 +27,7 @@ import salomon.engine.solution.ShortSolutionInfo;
 import salomon.platform.IUniqueId;
 import salomon.platform.data.attribute.IAttributeManager;
 import salomon.platform.data.attribute.IAttributeSet;
+import salomon.platform.data.attribute.description.IAttributeDescription;
 import salomon.platform.data.attribute.description.IDateAttributeDescription;
 import salomon.platform.data.attribute.description.IEnumAttributeDescription;
 import salomon.platform.data.attribute.description.IIntegerAttributeDescription;
@@ -55,7 +56,7 @@ public final class AttributeManager implements IAttributeManager
 				"Method AttributeManager.add() not implemented yet!");
 	}
 
-	public IAttributeSet createAttributeSet()
+	public IAttributeSet createAttributeSet(IAttributeDescription[] descriptions)
 	{
 		throw new UnsupportedOperationException(
 				"Method AttributeManager.createAttributeSet() not implemented yet!");
