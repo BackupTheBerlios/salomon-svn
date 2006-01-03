@@ -77,41 +77,41 @@ Utworzenie nowego wêz³a bêdzie przebiegaæ nastêpuj¹co:
 Po stworzeniu grafu przep³ywu mo¿na uruchomiæ przetwarzanie poprzez naciœniêcie odpowiedniego przycisku. Aktualnie przetwarzane zadanie bêdzie wyró¿nione, a po zakoñczeniu wykonania zadañ mo¿na sprawdziæ rezultaty ka¿dego z nich poprzez klikniêcie prawym przyciskiem na danym wêŸle i wybraniu opcji \emph{Result} z menu kontekstowego.
 
 
--- REMOVE IT -- 
-
-Zastanawialiœmy siê nad u¿yciem sieci petriego.
-(dwa typy wêz³ów: 1 (tranzycje) - pluginy które coœ robi¹, 2 (stany) -  miejsce sk³adowania danych/wiedzy)
-Takie podejœcie jest bardzo u¿yteczne, gdy chcemy mieæ taki przep³yw:
-
-Generacja data seta -> Generacja regu³ -> Wybór najlepszych regu³ N (np.  5) dostêpnych
-
-sieci petriego pozwalaj¹ u¿ytkownikowi nie duplikowaæ N razy pocz¹tkowego  elementu grafu
-odpowiedzialnego za generacje data setu i regu³.
-
-Sieci petriego jednak s¹ trudniejsze w realizacji i zaciemniaj¹ graf jeœli  mamy przypadek
-taki, ¿e potrzebujemy tylko jeden element (czyli tak jak pomiêdzy  pierwszymi dwoma elementami przyk³adu
-jeden data set l¹duje do generacji regu³). Dlatego zdecydowaliœmy siê na  rozwi¹zanie hybrydowe :-)))
-
-Wêz³ami s¹ tylko pluginy i nie ma obowi¹zku wstawiania wêz³ów stanów.
-Dopuszczamy jednak mo¿liwoœæ wstawienia wêz³a "zbieraj¹æego" (stanu).
-
-Zyskujemy przez to maksymaln¹ przejrzystoœæ grafu (dla przypadków z  przep³ywem jednego tokena
-nie trzeba dodatkowych elementów, dla naszego przypadku nie trzeba piêcio  krotnie kopiowaæ grafów)
-
-
-Workaround dla pierwszego przyk³adu:
-
-- jak ju¿ wspomina³em - copy paste Twoim przyjacielem (dla dostatecznie  ma³ego N :-)
-
-- napisanie takich pluginów, które w konfiguracji zwracaj¹ ju¿ 5 elementów
-minusem takiego podejœcia jest brak mo¿liwoœci rozproszenia.
-Praca pluginu jest atomowa wiêc taki plugin który bêdzie generowa³ 5 rule  setów
-nie bêdzie móg³ byæ rozdzielony pomiêdzy ró¿ne instancje. Silnik nie  bêdzie nic wiedzia³
-¿e wykonywana jest w pluginie praca któr¹ mo¿na rozdzieliæ. Wiêc nasz  przyk³ad
-wykona siê sekwencyjnie na jednym hoscie.
-
-To tylko plany :-) I na razie nie bêdziemy realizowaæ tego typu elementu  :-(
-Najwa¿niejsze, ¿eby dzia³o definiowanie chocia¿ sekcyjnego przep³ywu.
-
-
+%-- REMOVE IT -- 
+%
+%Zastanawialiœmy siê nad u¿yciem sieci petriego.
+%(dwa typy wêz³ów: 1 (tranzycje) - pluginy które coœ robi¹, 2 (stany) -  miejsce sk³adowania danych/wiedzy)
+%Takie podejœcie jest bardzo u¿yteczne, gdy chcemy mieæ taki przep³yw:
+%
+%Generacja data seta -> Generacja regu³ -> Wybór najlepszych regu³ N (np.  5) dostêpnych
+%
+%sieci petriego pozwalaj¹ u¿ytkownikowi nie duplikowaæ N razy pocz¹tkowego  elementu grafu
+%odpowiedzialnego za generacje data setu i regu³.
+%
+%Sieci petriego jednak s¹ trudniejsze w realizacji i zaciemniaj¹ graf jeœli  mamy przypadek
+%taki, ¿e potrzebujemy tylko jeden element (czyli tak jak pomiêdzy  pierwszymi dwoma elementami przyk³adu
+%jeden data set l¹duje do generacji regu³). Dlatego zdecydowaliœmy siê na  rozwi¹zanie hybrydowe :-)))
+%
+%Wêz³ami s¹ tylko pluginy i nie ma obowi¹zku wstawiania wêz³ów stanów.
+%Dopuszczamy jednak mo¿liwoœæ wstawienia wêz³a "zbieraj¹æego" (stanu).
+%
+%Zyskujemy przez to maksymaln¹ przejrzystoœæ grafu (dla przypadków z  przep³ywem jednego tokena
+%nie trzeba dodatkowych elementów, dla naszego przypadku nie trzeba piêcio  krotnie kopiowaæ grafów)
+%
+%
+%Workaround dla pierwszego przyk³adu:
+%
+%- jak ju¿ wspomina³em - copy paste Twoim przyjacielem (dla dostatecznie  ma³ego N :-)
+%
+%- napisanie takich pluginów, które w konfiguracji zwracaj¹ ju¿ 5 elementów
+%minusem takiego podejœcia jest brak mo¿liwoœci rozproszenia.
+%Praca pluginu jest atomowa wiêc taki plugin który bêdzie generowa³ 5 rule  setów
+%nie bêdzie móg³ byæ rozdzielony pomiêdzy ró¿ne instancje. Silnik nie  bêdzie nic wiedzia³
+%¿e wykonywana jest w pluginie praca któr¹ mo¿na rozdzieliæ. Wiêc nasz  przyk³ad
+%wykona siê sekwencyjnie na jednym hoscie.
+%
+%To tylko plany :-) I na razie nie bêdziemy realizowaæ tego typu elementu  :-(
+%Najwa¿niejsze, ¿eby dzia³o definiowanie chocia¿ sekcyjnego przep³ywu.
+%
+%
 \end{document}
