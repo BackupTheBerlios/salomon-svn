@@ -21,6 +21,7 @@
 
 package salomon.platform.data.attribute;
 
+import salomon.platform.IUniqueId;
 import salomon.platform.exception.PlatformException;
 
 /**
@@ -29,12 +30,40 @@ import salomon.platform.exception.PlatformException;
 public interface IAttributeManager
 {
 	/**
-	 * Returns the array of all attributes with the current solution.
-	 * @return The array of attributes
-	 * @throws PlatformException
+	 * Adds the attribute set to the storage.
 	 * 
-	 * @pre $none
-	 * @post $result != null
+	 * @param attributeSet the attribute set to add
+	 * 
 	 */
-	IAttribiute[] getAttributes() throws PlatformException;
+	void add(IAttributeSet attributeSet) throws PlatformException;
+
+	/**
+	 * Gets all attribute sets.
+	 * 
+	 * @return the all attribute sets
+	 */
+	IAttributeSet[] getAll() throws PlatformException;
+
+	/**
+	 * Gets a attribute set with the given id.
+	 * 
+	 * @param id data set id
+	 * @return wanted attribute set
+	 */
+	IAttributeSet getAttributeSet(IUniqueId id) throws PlatformException;
+
+	/**
+	 * Removes the given attribute set from the storage.
+	 * 
+	 * @param attributeSet the attribute set to remove
+	 * @throws PlatformException
+	 */
+	void remove(IAttributeSet attributeSet) throws PlatformException;
+	
+	/**
+	 * Creates a new empty attribute set.
+	 * @return the new attribute set
+	 */
+	IAttributeSet createAttributeSet();
+
 }

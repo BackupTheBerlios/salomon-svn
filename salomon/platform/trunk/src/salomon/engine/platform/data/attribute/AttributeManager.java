@@ -23,10 +23,10 @@ package salomon.engine.platform.data.attribute;
 
 import salomon.engine.database.DBManager;
 import salomon.engine.solution.ShortSolutionInfo;
-import salomon.engine.solution.SolutionInfo;
 
-import salomon.platform.data.attribute.IAttribiute;
+import salomon.platform.IUniqueId;
 import salomon.platform.data.attribute.IAttributeManager;
+import salomon.platform.data.attribute.IAttributeSet;
 import salomon.platform.exception.PlatformException;
 
 /**
@@ -35,6 +35,7 @@ import salomon.platform.exception.PlatformException;
 public final class AttributeManager implements IAttributeManager
 {
 	private DBManager _dbManager;
+
 	private ShortSolutionInfo _solutionInfo;
 
 	public AttributeManager(DBManager dbManager, ShortSolutionInfo solutionInfo)
@@ -43,13 +44,34 @@ public final class AttributeManager implements IAttributeManager
 		_solutionInfo = solutionInfo;
 	}
 
-	/**
-	 * @see salomon.platform.data.attribute.IAttributeManager#getAttributes()
-	 */
-	public IAttribiute[] getAttributes() throws PlatformException
+	public void add(IAttributeSet attributeSet) throws PlatformException
 	{
 		throw new UnsupportedOperationException(
-				"Method getAttributes() not implemented yet!");
+				"Method AttributeManager.add() not implemented yet!");
+	}
+
+	public IAttributeSet createAttributeSet()
+	{
+		throw new UnsupportedOperationException(
+				"Method AttributeManager.createAttributeSet() not implemented yet!");
+	}
+
+	public IAttributeSet[] getAll() throws PlatformException
+	{
+		throw new UnsupportedOperationException(
+				"Method AttributeManager.getAll() not implemented yet!");
+	}
+
+	public IAttributeSet getAttributeSet(IUniqueId id) throws PlatformException
+	{
+		throw new UnsupportedOperationException(
+				"Method AttributeManager.getAttributeSet() not implemented yet!");
+	}
+
+	public void remove(IAttributeSet attributeSet) throws PlatformException
+	{
+		throw new UnsupportedOperationException(
+				"Method AttributeManager.remove() not implemented yet!");
 	}
 
 } // end AttributeManager

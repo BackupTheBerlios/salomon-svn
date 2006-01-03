@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004 Salomon Team
+ * Copyright (C) 2005 Salomon Team
  *
  * This file is part of Salomon.
  *
@@ -21,10 +21,23 @@
 
 package salomon.platform.data.attribute;
 
-/**
- * 
- */
-public interface IAttribiute
+import salomon.platform.exception.PlatformException;
+
+public interface IAttributeSet
 {
-	//TODO: add methods
+	void close() throws PlatformException;
+
+	IAttribute[] getAttributes() throws PlatformException;
+
+	IAttribute getData(IAttributeDescription attributeDescription)
+			throws PlatformException;
+
+	IAttributeDescription[] getDesciptions() throws PlatformException;
+
+	boolean hasNext() throws PlatformException;
+
+	boolean next() throws PlatformException;
+	
+	void add(IAttribute[] attributes) throws PlatformException;
+
 }
