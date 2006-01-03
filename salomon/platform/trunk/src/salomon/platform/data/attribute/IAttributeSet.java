@@ -21,6 +21,7 @@
 
 package salomon.platform.data.attribute;
 
+import salomon.platform.data.attribute.description.IAttributeDescription;
 import salomon.platform.exception.PlatformException;
 
 public interface IAttributeSet
@@ -29,12 +30,10 @@ public interface IAttributeSet
 
 	IAttribute[] getAttributes() throws PlatformException;
 
-	IAttribute getData(IAttributeDescription attributeDescription)
+	IAttribute getAttribute(IAttributeDescription attributeDescription)
 			throws PlatformException;
 
 	IAttributeDescription[] getDesciptions() throws PlatformException;
-
-	boolean hasNext() throws PlatformException;
 
 	boolean next() throws PlatformException;
 	

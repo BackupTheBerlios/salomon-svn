@@ -19,7 +19,7 @@
  * 
  */
 
-package salomon.platform.data.attribute;
+package salomon.platform.data.attribute.description;
 
 /**
  * 

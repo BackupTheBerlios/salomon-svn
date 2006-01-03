@@ -19,9 +19,9 @@
  * 
  */
 
-package salomon.platform.data.attribute;
+package salomon.platform.data.attribute.description;
 
-public interface IDateAttributeDescription extends IAttributeDescription
+public interface IIntegerAttributeDescription
 {
-
+	// empty body
 }

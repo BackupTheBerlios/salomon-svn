@@ -27,6 +27,11 @@ import salomon.engine.solution.ShortSolutionInfo;
 import salomon.platform.IUniqueId;
 import salomon.platform.data.attribute.IAttributeManager;
 import salomon.platform.data.attribute.IAttributeSet;
+import salomon.platform.data.attribute.description.IDateAttributeDescription;
+import salomon.platform.data.attribute.description.IEnumAttributeDescription;
+import salomon.platform.data.attribute.description.IIntegerAttributeDescription;
+import salomon.platform.data.attribute.description.IRealAttributeDescription;
+import salomon.platform.data.attribute.description.IStringAttributeDescription;
 import salomon.platform.exception.PlatformException;
 
 /**
@@ -72,6 +77,39 @@ public final class AttributeManager implements IAttributeManager
 	{
 		throw new UnsupportedOperationException(
 				"Method AttributeManager.remove() not implemented yet!");
+	}
+
+	public IDateAttributeDescription createDateAttributeDescription(String name)
+	{
+		throw new UnsupportedOperationException(
+				"Method AttributeManager.createDateAttributeDescription() not implemented yet!");
+	}
+
+	public IEnumAttributeDescription createEnumAttributeDescription(
+			String name, Object[] possibleValues)
+	{
+		throw new UnsupportedOperationException(
+				"Method AttributeManager.createEnumAttributeDescription() not implemented yet!");
+	}
+
+	public IIntegerAttributeDescription createIntegerAttributeDescription(
+			String name)
+	{
+		throw new UnsupportedOperationException(
+				"Method AttributeManager.createIntegerAttributeDescription() not implemented yet!");
+	}
+
+	public IRealAttributeDescription createRealAttributeDescription(String name)
+	{
+		throw new UnsupportedOperationException(
+				"Method AttributeManager.createRealAttributeDescription() not implemented yet!");
+	}
+
+	public IStringAttributeDescription createStringAttributeDescription(
+			String name)
+	{
+		throw new UnsupportedOperationException(
+				"Method AttributeManager.createStringAttributeDescription() not implemented yet!");
 	}
 
 } // end AttributeManager

@@ -22,6 +22,11 @@
 package salomon.platform.data.attribute;
 
 import salomon.platform.IUniqueId;
+import salomon.platform.data.attribute.description.IDateAttributeDescription;
+import salomon.platform.data.attribute.description.IEnumAttributeDescription;
+import salomon.platform.data.attribute.description.IIntegerAttributeDescription;
+import salomon.platform.data.attribute.description.IRealAttributeDescription;
+import salomon.platform.data.attribute.description.IStringAttributeDescription;
 import salomon.platform.exception.PlatformException;
 
 /**
@@ -36,6 +41,54 @@ public interface IAttributeManager
 	 * 
 	 */
 	void add(IAttributeSet attributeSet) throws PlatformException;
+
+	/**
+	 * Creates a new empty attribute set.
+	 * @return the new attribute set
+	 */
+	IAttributeSet createAttributeSet();
+
+	/**
+	 * Creates a new date attribute description
+	 * 
+	 * @param name the name
+	 * @return a new date arribute description
+	 */
+	IDateAttributeDescription createDateAttributeDescription(String name);
+
+	/**
+	 * Creates a new enum attribute description.
+	 * 
+	 * @param name the name
+	 * @param possibleValues the possible values
+	 * @return a new enum attribute description
+	 */
+	IEnumAttributeDescription createEnumAttributeDescription(String name,
+			Object[] possibleValues);
+
+	/**
+	 * Creates a new integer attribute description
+	 * 
+	 * @param name the name
+	 * @return a new integer arribute description
+	 */
+	IIntegerAttributeDescription createIntegerAttributeDescription(String name);
+
+	/**
+	 * Creates a new real attribute description
+	 * 
+	 * @param name the name
+	 * @return a new real arribute description
+	 */
+	IRealAttributeDescription createRealAttributeDescription(String name);
+
+	/**
+	 * Creates a new string attribute description
+	 * 
+	 * @param name the name
+	 * @return a new string arribute description
+	 */
+	IStringAttributeDescription createStringAttributeDescription(String name);
 
 	/**
 	 * Gets all attribute sets.
@@ -59,11 +112,5 @@ public interface IAttributeManager
 	 * @throws PlatformException
 	 */
 	void remove(IAttributeSet attributeSet) throws PlatformException;
-	
-	/**
-	 * Creates a new empty attribute set.
-	 * @return the new attribute set
-	 */
-	IAttributeSet createAttributeSet();
 
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004 Salomon Team
+ * Copyright (C) 2005 Salomon Team
  *
  * This file is part of Salomon.
  *
@@ -19,24 +19,9 @@
  * 
  */
 
-package salomon.platform.data.attribute;
+package salomon.platform.data.attribute.description;
 
-import salomon.platform.data.attribute.description.IAttributeDescription;
-
-/**
- * 
- */
-public interface IAttribute
+public interface IRealAttributeDescription
 {
-	/**
-	 * Returns the description of the attribute.
-	 * @return the description
-	 */
-	IAttributeDescription getDescription();
-
-	/**
-	 * Returns the value of the description
-	 * @return the value of attribute
-	 */
-	Object getValue();
+	// empty body
 }
