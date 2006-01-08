@@ -113,5 +113,16 @@ public interface IAttributeManager
 	 * @throws PlatformException
 	 */
 	void remove(IAttributeSet attributeSet) throws PlatformException;
+	
+	/**
+	 * Sets restrictive type checking (slower)
+	 * @param restrictiveTypeCheck
+	 */
+	void setRestrictiveTypeCheck(boolean restrictiveTypeCheck);
+	
+	/**
+	 * @return restrictive type checking switch
+	 */
+	boolean getRestrictiveTypeCheck();
 
 }

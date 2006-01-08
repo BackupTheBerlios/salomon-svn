@@ -38,5 +38,15 @@ public interface IAttributeSet
 	boolean next() throws PlatformException;
 	
 	void add(IAttribute[] attributes) throws PlatformException;
-
+	
+	String getName();
+	
+	void setName(String name);
+	
+	String getInfo();
+	
+	void setInfo(String info);
+	
+	public int getAttributeSetId();
+	
 }

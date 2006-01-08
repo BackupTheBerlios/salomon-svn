@@ -25,4 +25,6 @@ package salomon.platform.data.attribute.description;
 public interface IEnumAttributeDescription extends IAttributeDescription
 {
 	Object[] getPossibleValues();
+	
+	void addPossibleValue(Object obj);
 }

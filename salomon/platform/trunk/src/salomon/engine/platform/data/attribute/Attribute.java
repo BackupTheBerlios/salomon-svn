@@ -21,40 +21,27 @@
 
 package salomon.engine.platform.data.attribute;
 
+import salomon.platform.data.attribute.IAttribute;
+import salomon.platform.data.attribute.description.IAttributeDescription;
+
 /**
  * Not used yet.
  */
-class Attribute
+public class Attribute implements IAttribute
 {
-	///////////////////////////////////////
-	// attributes
-	/**
-	 * Represents ...
-	 */
-	private String name;
+	private IAttributeDescription _description;
+	private Object _value;
+	
+	public Attribute(IAttributeDescription description, Object value){
+		_description=description;
+		_value=value;
+	}
+	public IAttributeDescription getDescription() {
+		return _description;
+	}
 
-	/**
-	 * Represents ...
-	 */
-	private int info;
-
-	/**
-	 * Represents ...
-	 */
-	private int type;
-
-	/**
-	 * Represents ...
-	 */
-	private int epsilon;
-
-	///////////////////////////////////////
-	// associations
-	/**
-	 * 
-	 * @uml.property name="attributeManager"
-	 * @uml.associationEnd multiplicity="(0 1)"
-	 */
-	public AttributeManager attributeManager;
+	public Object getValue() {
+		return _value;
+	}
 
 } // end Attribute

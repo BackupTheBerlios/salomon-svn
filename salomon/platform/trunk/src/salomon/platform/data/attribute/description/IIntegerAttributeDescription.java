@@ -21,7 +21,7 @@
 
 package salomon.platform.data.attribute.description;
 
-public interface IIntegerAttributeDescription
+public interface IIntegerAttributeDescription extends IAttributeDescription
 {
 	// empty body
 }

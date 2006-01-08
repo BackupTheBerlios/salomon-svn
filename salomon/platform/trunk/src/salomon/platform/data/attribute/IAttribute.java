@@ -35,7 +35,7 @@ public interface IAttribute
 	IAttributeDescription getDescription();
 
 	/**
-	 * Returns the value of the description
+	 * Returns the value of the attribute
 	 * @return the value of attribute
 	 */
 	Object getValue();
