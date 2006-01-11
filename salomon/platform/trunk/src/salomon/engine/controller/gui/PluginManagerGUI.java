@@ -25,6 +25,7 @@ import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -32,6 +33,7 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
 import javax.swing.JComponent;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -53,8 +55,10 @@ import salomon.engine.plugin.IPluginManager;
 import salomon.engine.plugin.LocalPlugin;
 import salomon.engine.plugin.PluginInfo;
 import salomon.engine.plugin.PluginManager;
-import salomon.platform.exception.PlatformException;
+
 import salomon.util.gui.Utils;
+
+import salomon.platform.exception.PlatformException;
 
 public final class PluginManagerGUI
 {
@@ -88,6 +92,8 @@ public final class PluginManagerGUI
 
 	private JPopupMenu _pluginPopup;
 
+	private JPopupMenu _pluginPopupAdd;
+	
 	private JFrame _pluginsViewerFrame;
 
 	private MouseListener _popupListener;
@@ -100,7 +106,7 @@ public final class PluginManagerGUI
 
 	private JTextField _txtPluginLocation;
 
-	private JTextField _txtPluginName;
+	private JTextField _txtPluginName;	
 
 	/**
 	 * 
@@ -118,6 +124,7 @@ public final class PluginManagerGUI
 		_pluginList.addListSelectionListener(new PluginSelectionListener());
 	}
 
+	
 	public void addPlugin()
 	{
 		// TODO: change it
@@ -180,10 +187,11 @@ public final class PluginManagerGUI
 			_pluginManager.clearPluginList();
 			plugins = _pluginManager.getPlugins();
 
-			for (ILocalPlugin plugin : plugins) {
-				LOGGER.debug("adding plugin:" + plugin);
-				_pluginListModel.addElement(plugin);
-			}
+			if( plugins != null)
+				for (ILocalPlugin plugin : plugins) {
+					LOGGER.debug("adding plugin:" + plugin);
+					_pluginListModel.addElement(plugin);
+				}
 		} catch (PlatformException e) {
 			LOGGER.fatal("", e);
 			Utils.showErrorMessage("Cannot load plugin list");
@@ -328,6 +336,20 @@ public final class PluginManagerGUI
 		return _pluginPopup;
 	}
 
+	private JPopupMenu getPluginPopupAdd()
+	{
+		if (_pluginPopupAdd == null) {
+			_pluginPopupAdd = new JPopupMenu();
+
+			JMenuItem itmAdd = new JMenuItem(
+					_actionManager.getAddPluginAction());
+			itmAdd.setText(Messages.getString("MNU_ADD_PLUGIN")); //$NON-NLS-1$
+
+			_pluginPopupAdd.add(itmAdd);
+		}
+		return _pluginPopupAdd;
+	}
+	
 	private final class PluginEditPanel extends JPanel
 	{
 
@@ -367,6 +389,7 @@ public final class PluginManagerGUI
 		}
 	}
 
+	
 	private final class PluginSelectionListener
 			implements ListSelectionListener
 	{
@@ -396,7 +419,10 @@ public final class PluginManagerGUI
 				_selectedItem = list.locationToIndex(e.getPoint());
 				if (_selectedItem >= 0) {
 					getPluginPopup().show(e.getComponent(), e.getX(), e.getY());
+				} else {
+					getPluginPopupAdd().show(e.getComponent(), e.getX(), e.getY());
 				}
+				
 			}
 		}
 	}
