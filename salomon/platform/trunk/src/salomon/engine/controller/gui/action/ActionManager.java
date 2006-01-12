@@ -47,6 +47,10 @@ public final class ActionManager
 	 */
 	private AddTaskAction _addTaskAction;
 
+	private ChoosePluginFileAction _choosePluginFileAction;
+	
+	private SwitchPluginLocationTypeAction _switchPluginLocationTypeAction;
+	
 	/**
 	 * @uml.property name="_editProjectAction"
 	 * @uml.associationEnd multiplicity="(0 1)"
@@ -104,10 +108,10 @@ public final class ActionManager
 
 	/**
 	 * 
-	 * @uml.property name="_pluginMangerGUI"
+	 * @uml.property name="_pluginManagerGUI"
 	 * @uml.associationEnd multiplicity="(0 1)"
 	 */
-	private PluginManagerGUI _pluginMangerGUI;
+	private PluginManagerGUI _pluginManagerGUI;
 
 	/**
 	 * 
@@ -213,7 +217,7 @@ public final class ActionManager
 	{
 		_projectManagerGUI = projectManagerGUI;
 		_taskManagerGUI = taskManagerGUI;
-		_pluginMangerGUI = pluginMangerGUI;
+		_pluginManagerGUI = pluginMangerGUI;
 	}
 
 	/**
@@ -230,7 +234,7 @@ public final class ActionManager
 		_solutionManagerGUI = solutionManagerGUI;
 		_projectManagerGUI = projectManagerGUI;
 		_taskManagerGUI = taskManagerGUI;
-		_pluginMangerGUI = pluginMangerGUI;
+		_pluginManagerGUI = pluginMangerGUI;
 	}
 
 	/**
@@ -241,7 +245,7 @@ public final class ActionManager
 	public AddPluginAction getAddPluginAction()
 	{
 		if (_addPluginAction == null) {
-			_addPluginAction = new AddPluginAction(_pluginMangerGUI);
+			_addPluginAction = new AddPluginAction(_pluginManagerGUI);
 		}
 		return _addPluginAction;
 	}
@@ -253,6 +257,16 @@ public final class ActionManager
 		}
 		return _addTaskAction;
 	}
+
+	public ChoosePluginFileAction getChoosePluginFileAction()
+	{
+		if (_choosePluginFileAction == null) {
+			_choosePluginFileAction  = new ChoosePluginFileAction(_pluginManagerGUI);
+		}
+		return _choosePluginFileAction ;
+	}
+	
+	
 
 	/**
 	 * Returns the editProjectAction.
@@ -368,7 +382,7 @@ public final class ActionManager
 	public RemovePluginAction getRemovePluginAction()
 	{
 		if (_removePluginAction == null) {
-			_removePluginAction = new RemovePluginAction(_pluginMangerGUI);
+			_removePluginAction = new RemovePluginAction(_pluginManagerGUI);
 		}
 		return _removePluginAction;
 	}
@@ -402,7 +416,7 @@ public final class ActionManager
 	public SavePluginAction getSavePluginAction()
 	{
 		if (_savePluginAction == null) {
-			_savePluginAction = new SavePluginAction(_pluginMangerGUI);
+			_savePluginAction = new SavePluginAction(_pluginManagerGUI);
 		}
 		return _savePluginAction;
 	}
@@ -432,11 +446,24 @@ public final class ActionManager
 		}
 		return _saveSolutionAction;
 	}
+	
+	/**
+	 * Returns an instance of SwitchPluginLocationTypeAction.
+	 * 
+	 * @return an instance of SwitchPluginLocationTypeAction.
+	 */
+	public SwitchPluginLocationTypeAction getSwitchPluginLocationTypeAction()
+	{
+		if (_switchPluginLocationTypeAction == null) {
+			_switchPluginLocationTypeAction  = new SwitchPluginLocationTypeAction(_pluginManagerGUI);
+		}
+		return _switchPluginLocationTypeAction ;
+	}
 
 	public ViewPluginsAction getViewPluginsAction()
 	{
 		if (_viewPluginsAction == null) {
-			_viewPluginsAction = new ViewPluginsAction(_pluginMangerGUI);
+			_viewPluginsAction = new ViewPluginsAction(_pluginManagerGUI);
 		}
 		return _viewPluginsAction;
 	}

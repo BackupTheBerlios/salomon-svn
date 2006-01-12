@@ -21,17 +21,17 @@
 
 package salomon.engine.controller.gui;
 
-import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import javax.swing.Box;
-import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
 import javax.swing.DefaultListModel;
+import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -41,11 +41,15 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
+import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import org.apache.log4j.Logger;
+
+import com.jgoodies.forms.layout.CellConstraints;
+import com.jgoodies.forms.layout.FormLayout;
 
 import salomon.engine.Messages;
 import salomon.engine.controller.gui.action.ActionManager;
@@ -62,59 +66,71 @@ import salomon.platform.exception.PlatformException;
 
 public final class PluginManagerGUI
 {
-
+	
 	/**
 	 * 
 	 * @uml.property name="_actionManager"
 	 * @uml.associationEnd multiplicity="(0 1)"
 	 */
 	private ActionManager _actionManager;
-
+	
 	private JComponent _editPluginPanel;
-
+	
+	private JFileChooser _fileChooserPlugin;
+	
 	/**
 	 * 
 	 * @uml.property name="_parent"
 	 * @uml.associationEnd multiplicity="(0 1)"
 	 */
 	private ControllerFrame _parent;
-
+	
 	private JList _pluginList;
-
+	
 	private DefaultListModel _pluginListModel;
-
+	
 	/**
 	 * 
 	 * @uml.property name="_pluginManager"
 	 * @uml.associationEnd multiplicity="(0 1)"
 	 */
 	private IPluginManager _pluginManager;
-
+	
 	private JPopupMenu _pluginPopup;
-
+	
 	private JPopupMenu _pluginPopupAdd;
 	
 	private JFrame _pluginsViewerFrame;
-
+	
 	private MouseListener _popupListener;
-
+	
 	private int _selectedItem;
-
+	
 	private StatusBar _statusBar;
-
+	
 	private JTextField _txtPluginDescription;
-
+	
 	private JTextField _txtPluginLocation;
-
-	private JTextField _txtPluginName;	
-
+	
+	private JTextField _txtPluginName;
+	
+	private JRadioButton _radioLocationUrl;
+	
+	private JRadioButton _radioLocationFile;
+	
+	private ButtonGroup _buttonGroupLocation;
+	
+	private JButton _btnPluginFileLoad;
+	
+	private FormLayout _layout;
+	
 	/**
 	 * 
 	 */
 	public PluginManagerGUI(IPluginManager pluginManager)
 	{
 		_pluginManager = pluginManager;
-
+		
 		_pluginListModel = new DefaultListModel();
 		_pluginList = new JList(_pluginListModel);
 		// adding listener
@@ -123,8 +139,11 @@ public final class PluginManagerGUI
 		// TODO:
 		_pluginList.addListSelectionListener(new PluginSelectionListener());
 	}
-
 	
+	
+	/**
+	 * 
+	 */
 	public void addPlugin()
 	{
 		// TODO: change it
@@ -158,7 +177,7 @@ public final class PluginManagerGUI
 				desc.setName(_txtPluginName.getText());
 				desc.setLocation(url);
 				desc.setInfo(_txtPluginDescription.getText());
-
+				
 				wasOk = _pluginManager.savePlugin(plugin);
 			} catch (PlatformException e) {
 				LOGGER.error("", e);
@@ -171,22 +190,62 @@ public final class PluginManagerGUI
 			}
 		}
 	}
+	
+	/**
+	 * Shows FileDialog in which plugin file can be choosen
+	 */
+	public void choosePluginFile(){
+		int returnVal = _fileChooserPlugin.showOpenDialog(_editPluginPanel);
+		
+		if (returnVal == JFileChooser.APPROVE_OPTION) {
+			File file = _fileChooserPlugin.getSelectedFile();
+			
+			try {
+				_txtPluginLocation.setText(file.toURL().toExternalForm());
+			} catch (IOException e) {
+				LOGGER.fatal("File choosing error: ", e);
+			}
+			LOGGER.debug("Opening: " + file.getName());
+		} 
+		
+	}
+	
+	
+	/**
+	 * Switch between FILE and URL type of plugin location
+	 */
+	public void switchPluginLocationType()
+	{
+		if(_radioLocationFile.isSelected()){
+			_btnPluginFileLoad.setEnabled(true);
+			_txtPluginLocation.setText("file://");
+		} 
+		if( _radioLocationUrl.isSelected()){
+			_btnPluginFileLoad.setEnabled(false);
+			_txtPluginLocation.setText("http://");
+		}
+	}
 
+	
+	
 	public JList getPluginList()
 	{
 		return _pluginList;
 	}
-
+	
+	/**
+	 * Reload plugin list and refresh GUI
+	 */
 	public void refresh()
 	{
 		LOGGER.debug("reloading plugins");
-
+		
 		ILocalPlugin[] plugins = null;
 		try {
 			_pluginListModel.removeAllElements();
 			_pluginManager.clearPluginList();
 			plugins = _pluginManager.getPlugins();
-
+			
 			if( plugins != null)
 				for (ILocalPlugin plugin : plugins) {
 					LOGGER.debug("adding plugin:" + plugin);
@@ -198,20 +257,23 @@ public final class PluginManagerGUI
 			return;
 		}
 	}
-
+	
+	/**
+	 * removes plugin
+	 */
 	public void removePlugin()
 	{
 		if (Utils.showQuestionMessage(Messages.getString("TIT_WARN"),
 				Messages.getString("TXT_REMOVE_PLUGIN_QUESTION"))) {
 			ILocalPlugin plugin = (LocalPlugin) _pluginListModel.get(_selectedItem);
-
+			
 			boolean wasOk = false;
 			try {
 				wasOk = _pluginManager.removePlugin(plugin);
 			} catch (PlatformException e) {
 				LOGGER.error("", e);
 			}
-
+			
 			if (wasOk) {
 				_pluginListModel.remove(_selectedItem);
 				_parent.refreshGui();
@@ -220,7 +282,10 @@ public final class PluginManagerGUI
 			}
 		}
 	}
-
+	
+	/**
+	 * saves plugin data in database
+	 */
 	public void savePlugin()
 	{
 		LocalPlugin plugin = (LocalPlugin) _pluginListModel.get(_selectedItem);
@@ -254,13 +319,13 @@ public final class PluginManagerGUI
 				pluginInfo.setName(_txtPluginName.getText());
 				pluginInfo.setLocation(url);
 				pluginInfo.setInfo(_txtPluginDescription.getText());
-
+				
 				wasOk = _pluginManager.savePlugin(plugin);
 			} catch (PlatformException e) {
 				LOGGER.error("", e);
 				Utils.showErrorMessage(Messages.getString("ERR_CANNOT_SAVE_PLUGIN"));
 			}
-
+			
 			if (wasOk) {
 				// refresh();
 			} else {
@@ -268,12 +333,15 @@ public final class PluginManagerGUI
 			}
 		}
 	}
-
+	
+	/**
+	 * @param actionManager
+	 */
 	public void setActionManager(ActionManager actionManager)
 	{
 		_actionManager = actionManager;
 	}
-
+	
 	/**
 	 * @param parent The parent to set.
 	 */
@@ -281,7 +349,7 @@ public final class PluginManagerGUI
 	{
 		_parent = parent;
 	}
-
+	
 	/**
 	 * Set the value of statusBar field.
 	 * 
@@ -291,7 +359,7 @@ public final class PluginManagerGUI
 	{
 		_statusBar = statusBar;
 	}
-
+	
 	public void viewPlugins()
 	{
 		if (_pluginsViewerFrame == null) {
@@ -304,25 +372,27 @@ public final class PluginManagerGUI
 		_pluginsViewerFrame.setLocation(Utils.getCenterLocation(_pluginsViewerFrame));
 		_pluginsViewerFrame.setVisible(true);
 	}
-
+	
+	/**
+	 * @return JComponent Panel responsible for edition of plugin parameters
+	 */
 	private JComponent getEditPluginPanel()
 	{
 		if (_editPluginPanel == null) {
 			_editPluginPanel = new PluginEditPanel();
 		}
-
 		return _editPluginPanel;
 	}
-
+	
 	private JPopupMenu getPluginPopup()
 	{
 		if (_pluginPopup == null) {
 			_pluginPopup = new JPopupMenu();
-
+			
 			JMenuItem itmAdd = new JMenuItem(
 					_actionManager.getAddPluginAction());
 			itmAdd.setText(Messages.getString("MNU_ADD_PLUGIN")); //$NON-NLS-1$
-
+			
 			JMenuItem itmEdit = new JMenuItem(
 					_actionManager.getSavePluginAction()); //$NON-NLS-1$
 			itmEdit.setText(Messages.getString("MNU_EDIT_PLUGIN"));
@@ -335,63 +405,81 @@ public final class PluginManagerGUI
 		}
 		return _pluginPopup;
 	}
-
+	
 	private JPopupMenu getPluginPopupAdd()
 	{
 		if (_pluginPopupAdd == null) {
 			_pluginPopupAdd = new JPopupMenu();
-
+			
 			JMenuItem itmAdd = new JMenuItem(
 					_actionManager.getAddPluginAction());
 			itmAdd.setText(Messages.getString("MNU_ADD_PLUGIN")); //$NON-NLS-1$
-
+			
 			_pluginPopupAdd.add(itmAdd);
 		}
 		return _pluginPopupAdd;
 	}
 	
+	
 	private final class PluginEditPanel extends JPanel
-	{
-
-		private Dimension _labelDim = new Dimension(100, 20);
-
-		private Dimension _textDim = new Dimension(250, 20);
-
+	{				
 		public PluginEditPanel()
 		{
+			
+			CellConstraints cc = new CellConstraints();
+			
+			_fileChooserPlugin = new JFileChooser();
 			_txtPluginName = new JTextField();
 			_txtPluginLocation = new JTextField();
 			_txtPluginDescription = new JTextField();
-			this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-			this.add(createLabeledText(Messages.getString("TXT_PLUGIN_NAME"),
-					_txtPluginName));
-			this.add(createLabeledText(
-					Messages.getString("TXT_PLUGIN_LOCATION"),
-					_txtPluginLocation));
-			this.add(createLabeledText(Messages.getString("TXT_PLUGIN_INFO"),
-					_txtPluginDescription));
-		}
-
-		private Box createLabeledText(String labelText, JTextField textField)
-		{
-			Box box = Box.createHorizontalBox();
-			JLabel label = new JLabel(labelText);
-			label.setPreferredSize(_labelDim);
-			label.setMinimumSize(_labelDim);
-			label.setMaximumSize(_labelDim);
-			textField.setPreferredSize(_textDim);
-			textField.setMinimumSize(_textDim);
-			textField.setMaximumSize(_textDim);
-			box.add(label);
-			box.add(textField);
-
-			return box;
-		}
+			_radioLocationUrl = new JRadioButton(Messages.getString("PLUGIN_URL") , false);
+			_radioLocationFile = new JRadioButton(Messages.getString("PLUGIN_FILE") , true);
+			_buttonGroupLocation = new ButtonGroup();
+			_btnPluginFileLoad = new JButton();
+			
+			_layout = new FormLayout(
+					"pref, 4dlu, 120dlu, 4dlu, pref, 4dlu, pref", 
+			"pref, 2dlu, pref, 2dlu, pref , 2dlu , pref, 2dlu, pref"); 
+			
+			
+			_buttonGroupLocation.add(_radioLocationFile);
+			_buttonGroupLocation.add(_radioLocationUrl);
+			
+			_radioLocationUrl.setAction(_actionManager.getSwitchPluginLocationTypeAction());
+			_radioLocationFile.setAction(_actionManager.getSwitchPluginLocationTypeAction());			
+			_btnPluginFileLoad.setAction(_actionManager.getChoosePluginFileAction());
+			
+			_btnPluginFileLoad.setText(Messages.getString("BTN_BROWSE"));			
+			
+			_layout.setRowGroups(new int[][]{{1, 3, 5, 7, 9}});
+			
+			this.setLayout(_layout);
+			
+			this.add(new JLabel(Messages.getString("TXT_PLUGIN_NAME")), cc.xy (1, 1));
+			this.add(_txtPluginName, cc.xyw(3, 1, 5));
+			
+			this.add(new JLabel(Messages.getString("TXT_PLUGIN_LOCATION")), cc.xy (1, 3));
+			this.add(_txtPluginLocation, cc.xyw(3, 3,3));
+			this.add(_btnPluginFileLoad, cc.xy(7, 3) );
+			
+			this.add(new JLabel(Messages.getString("TXT_PLUGIN_INFO")), cc.xy (1, 5));
+			this.add(_txtPluginDescription, cc.xyw(3, 5, 5));
+			
+			this.add(new JLabel(Messages.getString("PLUGIN_FILE")), cc.xy (1, 7));
+			this.add(_radioLocationFile, cc.xy(3, 7));
+			this.add(new JLabel(Messages.getString("PLUGIN_URL")), cc.xy (1, 9));
+			this.add(_radioLocationUrl, cc.xy(3, 9));
+			
+			_btnPluginFileLoad.setEnabled(true);
+			_txtPluginLocation.setText("file://");
+			
+		}	
 	}
-
+	
+	
 	
 	private final class PluginSelectionListener
-			implements ListSelectionListener
+	implements ListSelectionListener
 	{
 		public void valueChanged(ListSelectionEvent e)
 		{
@@ -399,19 +487,19 @@ public final class PluginManagerGUI
 					(LocalPlugin) ((JList) e.getSource()).getSelectedValue());
 		}
 	}
-
+	
 	private final class PopupListener extends MouseAdapter
 	{
 		public void mousePressed(MouseEvent e)
 		{
 			maybeShowPopup(e);
 		}
-
+		
 		public void mouseReleased(MouseEvent e)
 		{
 			maybeShowPopup(e);
 		}
-
+		
 		private void maybeShowPopup(MouseEvent e)
 		{
 			if (e.isPopupTrigger()) {
@@ -426,6 +514,7 @@ public final class PluginManagerGUI
 			}
 		}
 	}
-
+	
 	private static final Logger LOGGER = Logger.getLogger(PluginManagerGUI.class);
+	
 }

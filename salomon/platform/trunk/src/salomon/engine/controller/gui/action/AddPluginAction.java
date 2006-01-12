@@ -35,7 +35,7 @@ public final class AddPluginAction extends AbstractPluginAction
 	 * Sets an object which method is called in implementation of
 	 * actionPerformed() method
 	 * 
-	 * @param pluginManager an instance of TaskManagerGUI
+	 * @param pluginManager an instance of PluginManagerGUI
 	 */
 	public AddPluginAction(PluginManagerGUI pluginManager)
 	{
