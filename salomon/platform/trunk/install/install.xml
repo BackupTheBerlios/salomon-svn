@@ -85,14 +85,21 @@ Installation file for salomon project
 	    <file src="../db/salomon.gdb" targetdir="$INSTALL_PATH/db"/>
 	    
 	    <!-- external lib jars -->
-	    <file src="../lib/firebirdsql.jar" targetdir="$INSTALL_PATH/lib"/>
-	    <file src="../lib/log4j-1.2.8.jar" targetdir="$INSTALL_PATH/lib"/>
+        <file src="../lib/colt.jar" targetdir="$INSTALL_PATH/lib"/>
+        <file src="../lib/commons-collections-3.1.jar" targetdir="$INSTALL_PATH/lib"/>
+        <file src="../lib/firebirdsql.jar" targetdir="$INSTALL_PATH/lib"/>
+        <file src="../lib/forms-1.0.5.jar" targetdir="$INSTALL_PATH/lib"/>
+        <file src="../lib/jung-1.7.2.jar" targetdir="$INSTALL_PATH/lib"/>
+        <file src="../lib/log4j-1.2.8.jar" targetdir="$INSTALL_PATH/lib"/>
+        <file src="../lib/looks-1.3.2.jar" targetdir="$INSTALL_PATH/lib"/>
 	    <file src="../lib/mini-j2ee.jar" targetdir="$INSTALL_PATH/lib"/>
 
+
+        
             <!-- plugins -->
 	    <!--<file src="../plugins/AveragePrice.jar" targetdir="$INSTALL_PATH/plugins"/>
 	    <file src="../plugins/SimpleSQLConsole.jar" targetdir="$INSTALL_PATH/plugins"/> src-->
-	<file src="../plugins/datasetunion.jar" targetdir="$INSTALL_PATH/plugins"/>
+        <!-- <file src="../plugins/datasetunion.jar" targetdir="$INSTALL_PATH/plugins"/> -->
 	    
 	    
 	    <file src="../salomon.jar" targetdir="$INSTALL_PATH"/>
@@ -102,12 +109,13 @@ Installation file for salomon project
 	    <file src="../jaybird.dll" targetdir="$INSTALL_PATH"/>
 	    
 	    <!-- configurations -->
-	    <file src="../bin/config.properties" targetdir="$INSTALL_PATH"/>
 	    <file src="../bin/messages.properties" targetdir="$INSTALL_PATH"/>
+	    <file src="../bin/version.properties" targetdir="$INSTALL_PATH"/>
+	    <file src="../bin/config.properties" targetdir="$INSTALL_PATH"/>
 	    <file src="../bin/resources.properties" targetdir="$INSTALL_PATH"/>
-	    <file src="../log.conf" targetdir="$INSTALL_PATH"/>
-	    <file src="../all.policy" targetdir="$INSTALL_PATH"/>
-	    <file src="../run.bat" targetdir="$INSTALL_PATH"/>
+        <file src="../bin/log.conf" targetdir="$INSTALL_PATH"/>
+        <file src="../bin/all.policy" targetdir="$INSTALL_PATH"/>
+        <file src="../bin/run.bat" targetdir="$INSTALL_PATH"/>
 	    
 	    <!-- resources -->
 	    <fileset dir="../res" targetdir="$INSTALL_PATH/res" defaultexcludes="yes"/>
@@ -125,10 +133,10 @@ Installation file for salomon project
 	    <file src="../Winsalomon.dll" targetdir="$INSTALL_PATH"/> <!-- Reccursive adding -->
         <file src="../run_test.bat" targetdir="$INSTALL_PATH"/> <!-- Reccursive adding -->
         </pack>
-      
+        
         <pack name="Docs" required="no">
             <description>The documentation</description>
-	    <file src="../docs/latex/salomon.pdf" targetdir="$INSTALL_PATH/docs"/> <!-- Reccursive adding -->
+	    <file src="../docs/documentation/salomon.pdf" targetdir="$INSTALL_PATH/docs"/> <!-- Reccursive adding -->
         </pack>
         
         <pack name="Sources" required="no">
