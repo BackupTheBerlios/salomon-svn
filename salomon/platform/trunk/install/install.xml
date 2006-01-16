@@ -110,12 +110,12 @@ Installation file for salomon project
 	    
 	    <!-- configurations -->
 	    <file src="../bin/messages.properties" targetdir="$INSTALL_PATH"/>
-	    <file src="../bin/version.properties" targetdir="$INSTALL_PATH"/>
+	    <file src="../src/version.properties" targetdir="$INSTALL_PATH"/>
 	    <file src="../bin/config.properties" targetdir="$INSTALL_PATH"/>
 	    <file src="../bin/resources.properties" targetdir="$INSTALL_PATH"/>
         <file src="../bin/log.conf" targetdir="$INSTALL_PATH"/>
         <file src="../bin/all.policy" targetdir="$INSTALL_PATH"/>
-        <file src="../bin/run.bat" targetdir="$INSTALL_PATH"/>
+        <file src="../install/run.bat" targetdir="$INSTALL_PATH"/>
 	    
 	    <!-- resources -->
 	    <fileset dir="../res" targetdir="$INSTALL_PATH/res" defaultexcludes="yes"/>
@@ -126,13 +126,6 @@ Installation file for salomon project
 		<description>Java Runtime Environment</description>
 		<fileset dir="../jre" targetdir="$INSTALL_PATH/jre" defaultexcludes="yes"/>
         </pack>       
- 
-        <pack name="WinSalomon" required="no">
-        <description>WinSalomon library</description>
-	    <file src="../ConsoleTest.exe" targetdir="$INSTALL_PATH"/> <!-- Reccursive adding -->
-	    <file src="../Winsalomon.dll" targetdir="$INSTALL_PATH"/> <!-- Reccursive adding -->
-        <file src="../run_test.bat" targetdir="$INSTALL_PATH"/> <!-- Reccursive adding -->
-        </pack>
         
         <pack name="Docs" required="no">
             <description>The documentation</description>

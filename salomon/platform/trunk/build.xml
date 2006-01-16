@@ -42,22 +42,22 @@
 	</path>
 
 	
-	<target name="build_unionset_jar">
+	<!-- target name="build_unionset_jar">
 		<jar destfile="${plugin_dir}/UnionSet.jar" basedir="${bin_dir}" includes="pl/**/unionset/**">
 			<manifest>
 				<attribute name="Main-Class" value="pl.edu.agh.icsr.salomon.plugin.averageprice.UnionSet" />
 			</manifest>
 		</jar>
-	</target>
+	</target -->
 
-	<target name="build_simpleconsole_jar">
+	<!-- target name="build_simpleconsole_jar">
 		<jar destfile="${plugin_dir}/SimpleSQLConsole.jar" basedir="${bin_dir}" includes="pl/**/simpleconsole/**">
 			<manifest>
 				<attribute name="Main-Class" value="pl.edu.agh.icsr.salomon.plugin.simpleconsole.SimpleSQLConsole" />
 			</manifest>
 		</jar>
 
-	</target>
+	</target -->
 
 	<target name="init">
 		<mkdir dir="${bin_dir}" />
@@ -166,7 +166,7 @@
 
 	<!-- creating installtor file -->
 	<target name="installator" depends="deploy">
-		<izpack input="${basedir}/install/install.xml" output="${basedir}/install.jar" installerType="standard" basedir="${basedir}/install" izPackDir="${izpackdir}/" />
+		<izpack input="${basedir}/install/install.xml" output="${basedir}/install.jar" installerType="standard" basedir="${basedir}/install" izPackDir="${izpack_dir}/" />
 	</target>
 	<target name="get_version">
 		<svn>
