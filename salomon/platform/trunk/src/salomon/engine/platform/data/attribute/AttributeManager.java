@@ -26,8 +26,6 @@ import java.sql.SQLException;
 import java.sql.Date;
 import java.util.Enumeration;
 import java.util.Hashtable;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Vector;
 
 import org.apache.log4j.Logger;
@@ -65,6 +63,9 @@ public final class AttributeManager implements IAttributeManager {
 		_dbManager = dbManager;
 	}
 
+	/* (non-Javadoc)
+	 * @see salomon.platform.data.attribute.IAttributeManager#add(salomon.platform.data.attribute.IAttributeSet)
+	 */
 	public void add(IAttributeSet attributeSet) throws PlatformException {
 		// first we insert the attribute set
 		SQLInsert insertAttrSet = new SQLInsert();
@@ -141,6 +142,9 @@ public final class AttributeManager implements IAttributeManager {
 
 	}
 
+	/* (non-Javadoc)
+	 * @see salomon.platform.data.attribute.IAttributeManager#createAttributeSet(salomon.platform.data.attribute.description.IAttributeDescription[])
+	 */
 	public IAttributeSet createAttributeSet(IAttributeDescription[] descriptions) {
 		return new AttributeSet(descriptions, true);
 	}
@@ -206,6 +210,9 @@ public final class AttributeManager implements IAttributeManager {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see salomon.platform.data.attribute.IAttributeManager#getAll()
+	 */
 	public IAttributeSet[] getAll() throws PlatformException {
 		Vector<IAttributeSet> attributeSets = new Vector<IAttributeSet>();
 
@@ -280,6 +287,9 @@ public final class AttributeManager implements IAttributeManager {
 		return  iArray;
 	}
 
+	/* (non-Javadoc)
+	 * @see salomon.platform.data.attribute.IAttributeManager#getAttributeSet(salomon.platform.IUniqueId)
+	 */
 	public IAttributeSet getAttributeSet(IUniqueId id) throws PlatformException {
 		SQLSelect select = new SQLSelect();
 		select.addTable(AttributeManager.ATTRIBUTE_SETS_TABLE_NAME + " d");
@@ -333,6 +343,9 @@ public final class AttributeManager implements IAttributeManager {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see salomon.platform.data.attribute.IAttributeManager#remove(salomon.platform.data.attribute.IAttributeSet)
+	 */
 	public void remove(IAttributeSet attributeSet) throws PlatformException {
 		// deleting data set
 		// others should be deleted cascadly
@@ -351,24 +364,39 @@ public final class AttributeManager implements IAttributeManager {
 		LOGGER.debug("rows deleted: " + rows);
 	}
 
+	/* (non-Javadoc)
+	 * @see salomon.platform.data.attribute.IAttributeManager#createDateAttributeDescription(java.lang.String)
+	 */
 	public IDateAttributeDescription createDateAttributeDescription(String name) {
 		return new DateAttributeDescription(name);
 	}
 
+	/* (non-Javadoc)
+	 * @see salomon.platform.data.attribute.IAttributeManager#createEnumAttributeDescription(java.lang.String, java.lang.Object[])
+	 */
 	public IEnumAttributeDescription createEnumAttributeDescription(
 			String name, Object[] possibleValues) {
 		return new EnumAttributeDescription(name, possibleValues);
 	}
 
+	/* (non-Javadoc)
+	 * @see salomon.platform.data.attribute.IAttributeManager#createIntegerAttributeDescription(java.lang.String)
+	 */
 	public IIntegerAttributeDescription createIntegerAttributeDescription(
 			String name) {
 		return new IntegerAttributeDescription(name);
 	}
 
+	/* (non-Javadoc)
+	 * @see salomon.platform.data.attribute.IAttributeManager#createRealAttributeDescription(java.lang.String)
+	 */
 	public IRealAttributeDescription createRealAttributeDescription(String name) {
 		return new RealAttributeDescription(name);
 	}
 
+	/* (non-Javadoc)
+	 * @see salomon.platform.data.attribute.IAttributeManager#createStringAttributeDescription(java.lang.String)
+	 */
 	public IStringAttributeDescription createStringAttributeDescription(
 			String name) {
 		return new StringAttributeDescription(name);
@@ -393,11 +421,17 @@ public final class AttributeManager implements IAttributeManager {
 
 	public static final int ATTRIBUTE_TYPE_DATE = 4;
 
+	/* (non-Javadoc)
+	 * @see salomon.platform.data.attribute.IAttributeManager#setRestrictiveTypeCheck(boolean)
+	 */
 	public void setRestrictiveTypeCheck(boolean restrictiveTypeCheck) {
 		_restrictiveTypeCheck = restrictiveTypeCheck;
 
 	}
 
+	/* (non-Javadoc)
+	 * @see salomon.platform.data.attribute.IAttributeManager#getRestrictiveTypeCheck()
+	 */
 	public boolean getRestrictiveTypeCheck() {
 		return _restrictiveTypeCheck;
 	}

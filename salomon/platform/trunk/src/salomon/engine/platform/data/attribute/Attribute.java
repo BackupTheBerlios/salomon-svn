@@ -32,14 +32,21 @@ public class Attribute implements IAttribute
 	private IAttributeDescription _description;
 	private Object _value;
 	
-	public Attribute(IAttributeDescription description, Object value){
+	protected Attribute(IAttributeDescription description, Object value){
 		_description=description;
 		_value=value;
 	}
+	
+	/* (non-Javadoc)
+	 * @see salomon.platform.data.attribute.IAttribute#getDescription()
+	 */
 	public IAttributeDescription getDescription() {
 		return _description;
 	}
 
+	/* (non-Javadoc)
+	 * @see salomon.platform.data.attribute.IAttribute#getValue()
+	 */
 	public Object getValue() {
 		return _value;
 	}

@@ -1,20 +1,15 @@
 /**
  * 
  */
+
 package salomon.engine.platform.data.attribute;
 
-import java.sql.SQLException;
 import java.util.*;
-
-import javax.swing.plaf.basic.BasicInternalFrameTitlePane.RestoreAction;
 
 import org.apache.log4j.Logger;
 
-import salomon.engine.database.DBManager;
-import salomon.engine.database.queries.SQLDelete;
 import salomon.platform.data.attribute.*;
 import salomon.platform.data.attribute.description.IAttributeDescription;
-import salomon.platform.exception.DBException;
 import salomon.platform.exception.PlatformException;
 
 /**
@@ -42,6 +37,9 @@ public class AttributeSet implements IAttributeSet {
 		_restrictiveTypeCheck = restrictiveTypeCheck;
 	}
 
+	/* (non-Javadoc)
+	 * @see salomon.platform.data.attribute.IAttributeSet#getAttributeSetId()
+	 */
 	public int getAttributeSetId(){
 		return _attributeSetId;
 	}
@@ -139,10 +137,16 @@ public class AttributeSet implements IAttributeSet {
 
 	private static final Logger LOGGER = Logger.getLogger(AttributeSet.class);
 
+	/* (non-Javadoc)
+	 * @see salomon.platform.data.attribute.IAttributeSet#getName()
+	 */
 	public String getName() {
 		return _name;
 	}
 
+	/* (non-Javadoc)
+	 * @see salomon.platform.data.attribute.IAttributeSet#setName(java.lang.String)
+	 */
 	public void setName(String name) {
 		_name = name;
 		if(_name.length()>10){
@@ -151,10 +155,16 @@ public class AttributeSet implements IAttributeSet {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see salomon.platform.data.attribute.IAttributeSet#getInfo()
+	 */
 	public String getInfo() {
 		return _info;
 	}
 
+	/* (non-Javadoc)
+	 * @see salomon.platform.data.attribute.IAttributeSet#setInfo(java.lang.String)
+	 */
 	public void setInfo(String info) {
 		this._info = info;
 		if(_info.length()>250){
