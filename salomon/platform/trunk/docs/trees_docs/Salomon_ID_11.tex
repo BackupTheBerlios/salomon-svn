@@ -1,0 +1,121 @@
+\documentclass[a4paper, 12pt]{article}
+%\usepackage[polish]{babel}
+\usepackage[cp1250]{inputenc}
+%\usepackage[latin2]{inputenc}
+%\usepackage{polski}
+\usepackage{amsfonts}
+\usepackage[T1]{fontenc}
+\usepackage[dvips]{graphicx}
+
+
+
+
+\pagestyle{headings}
+\textwidth      15.5cm
+\oddsidemargin    .1cm
+\evensidemargin   .1cm
+
+
+
+
+
+
+
+\begin{document}
+
+
+
+\thispagestyle{empty}
+
+\begin{minipage}{5cm}
+%\includegraphics[scale=0.3]{logo.eps}
+\end{minipage}
+\begin{minipage}{10cm}
+\begin{center}
+{\Large Salomon\\
+System przetwarzania wiedzy\\}
+\end{center}
+\end{minipage}
+
+
+\[\]
+\begin{flushright}
+{\Large \emph{Iteration Description for Construction -- 1.1\\
+Wersja 1.0}}
+
+\[\]
+
+
+
+\end{flushright}
+
+\vspace{7cm}
+
+\[\]
+
+
+
+\begin{center}
+
+\begin{tabular}{|p{3.5cm}|p{3.5cm}|p{3.5cm}|p{3.5cm}|}
+
+  \hline
+
+  Data & Wersja & Opis & Autor \\
+
+  \hline
+
+
+  10-01-2006 & 1.0 & Wersja pocz¹tkowa & Dominik Seweryn \\
+
+  \hline
+
+
+ &  &  & \\
+
+
+  \hline
+
+\end{tabular}
+
+\end{center}
+
+
+\newpage
+
+
+
+\section{Zadania dla iteracji}
+\subsection{Implementacja pluginu wnioskuj¹cego} Plugin ten na podstawie stworzonego drzewa, bêdzie przeprowadza³ klasyfikacje nowych danych i przypisywa³ je do ju¿ istniej¹cych grup.
+
+
+
+\section{Produkt iteracji}
+Przy tworzeniu wersji 1.1 rozszerzenia do platformy Salomon nie ma podstaw, aby w cyklu w którejœ z
+faz wprowadziæ wiêcej ni¿ jedn¹ iteracjê, st¹d te¿ wszystkie etapy bêd¹ zawiera³y tylko jedn¹
+iteracjê. W wyniku omawianej iteracji fazy Construction przewidywane jest powstanie zupe³nie nowego
+pluginu, umo¿liwiaj¹cego wnioskowanie na nowych danych z wykorzystaniem istniej¹cego drzewa
+decyzyjnego i decydowanie gdzie zakwalifikowaæ w³aœnie analizowane dane.
+
+
+\section{Plan testów}
+Podobnie jak w poprzednich cyklach przy testowaniu wykorzystywana bêdzie technologia jUnit.
+Niektóre testy, bêd¹ te¿ przeprowadzane rêcznie.
+
+    Testy bêd¹ obejmowa³y sprawdzenie poprawnoœci:
+    \begin{itemize}
+        \item dzia³ania poszczególnych klas, interfejsów, w tym tak¿e interfejsy szkieletowe (np. realizuj¹ce operacje dzia³ania na bazie danych).
+        \item dzia³ania pluginu realizuj¹cego budowê drzew decyzyjnych.
+        \item dzia³ania pluginu wizualizacyjnego.
+        \item dzia³ania pluginu wnioskuj¹cego.
+        \item dzia³ania ca³oœci zrealizowanej funkcjonalnoœci.
+    \end{itemize}
+
+
+
+\section{Efekt wykonania iteracji}
+Zgodnie z planem powsta³ zupe³nie nowy plugin realizuj¹cy wnioskowanie wykonywane na nowych,
+nieznanych dot¹d danych. Plan zrealizowano w stu procentach.
+
+
+\end{document}
