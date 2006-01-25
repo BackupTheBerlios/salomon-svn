@@ -40,39 +40,22 @@
 			<include name="**/*.jar"/>
 		</fileset>
 	</path>
-
 	
-	<!-- target name="build_unionset_jar">
-		<jar destfile="${plugin_dir}/UnionSet.jar" basedir="${bin_dir}" includes="pl/**/unionset/**">
-			<manifest>
-				<attribute name="Main-Class" value="pl.edu.agh.icsr.salomon.plugin.averageprice.UnionSet" />
-			</manifest>
-		</jar>
-	</target -->
-
-	<!-- target name="build_simpleconsole_jar">
-		<jar destfile="${plugin_dir}/SimpleSQLConsole.jar" basedir="${bin_dir}" includes="pl/**/simpleconsole/**">
-			<manifest>
-				<attribute name="Main-Class" value="pl.edu.agh.icsr.salomon.plugin.simpleconsole.SimpleSQLConsole" />
-			</manifest>
-		</jar>
-
-	</target -->
 
 	<target name="init">
 		<mkdir dir="${bin_dir}" />
 	</target>
 
-	<target name="build_salomon_jar">
+	<target name="build_salomon_jar" depends="compile_salomon">
         <copy todir="${bin_dir}">
-        	<fileset dir="." includes="${src_dir}/*.properties" />
+        	<fileset dir="${src_dir}" includes="*.properties" />
         </copy>
         <copy file="all.policy" todir="${bin_dir}" />
 		<copy file="log.conf" todir="${bin_dir}" />
 		<jar destfile="salomon.jar" basedir="${bin_dir}" includes="salomon/** *.properties log.conf all.policy">
 			<manifest>
 				<attribute name="Main-Class" value="salomon.engine.Starter" />
-				<attribute name="Class-Path" value="${lib_dir}/firebirdsql.jar ${lib_dir}/log4j-1.2.8.jar ${lib_dir}/mini-j2ee.jar ." />
+				<attribute name="Class-Path" value="${lib_dir}/firebirdsql.jar ${lib_dir}/log4j-1.2.8.jar ${lib_dir}/mini-j2ee.jar ${lib_dir}/colt.jar ${lib_dir}/commons-collections-3.1.jar ${lib_dir}/forms-1.0.5.jar ${lib_dir}/jung-1.7.2.jar ${lib_dir}/looks-1.3.2.jar ." />
 			</manifest>
 		</jar>
 	</target>
@@ -83,8 +66,6 @@
 		<jar destfile="${plugin_dev_dir}/plugin.jar" basedir="${bin_dir}" includes="salomon/plugin/**"/>
 		<jar destfile="${plugin_dev_dir}/util.jar" basedir="${bin_dir}" includes="salomon/util/**"/>
 	</target>
-
-	<target name="build_jars" depends="build_plugin_jars, build_salomon_jar" />
 
 	<target name="copy_data_base">
 		<mkdir dir="${release_dir}/${db_dir}" />
