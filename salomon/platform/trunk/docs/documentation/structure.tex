@@ -53,6 +53,11 @@ na nich.
 Zarz¹dza regu³ami. Pozwala tworzyæ nowe regu³y oraz
 zarz¹dza dostêpem do ju¿ istniej¹cych.
 
+\paragraph{AttributeManager}
+
+Zarz¹dza atrybutami. Pozwala tworzyæ nowe atrybuty oraz
+zarz¹dza dostêpem do ju¿ istniej¹cych.
+
 
 \paragraph{IManagerEngine}
 
@@ -71,11 +76,11 @@ i udostêpnia je pozosta³ym klasom z platformy.
 Zarz¹dza projektami. Pozwala na utworzenie nowego
 projektu, zapisanie bie¿¹cego do bazy danych oraz na za³adowanie z bazy.
 
-\paragraph{IPluginManger}
+\paragraph{IPluginManager}
 
 Zarz¹dza pluginami. Pozwala na utworzenie zapisanie informacji o nowym pluginie (jego nazwa, lokalizacja) oraz na pobranie listy dostêpnych pluginów.
 
-\paragraph{ITaskManger}
+\paragraph{ITaskManager}
 
 Zarz¹dza zadaniami. 
 
@@ -97,9 +102,10 @@ wtyczkami i zadaniami.
 \paragraph{MasterController}
 
 Zadaniem tego kontrolera jest dostarczenie interfejsu do
-zarz¹dzania zdalnymi kontrolerami (\emph{ServantController}). Po
-uruchomieniu nas³uchuje na po³¹czenia od klientów, rozdziela
-zadania oraz wyœwietla ich wyniki.
+zarz¹dzania zdalnymi kontrolerami (\emph{ServantController}). 
+Po dodaniu warstwy \emph{Solution} kontroler ten musi zostaæ zmodyfikowany, co planowane jest w nastêpnej wersji systemu.
+%Po uruchomieniu nas³uchuje na po³¹czenia od klientów, rozdziela
+%zadania oraz wyœwietla ich wyniki.
 
 \paragraph{ServantController}
 
@@ -107,6 +113,7 @@ Zadaniem tego kontrolera jest odszukanie g³ównego kontrolera
 (\emph{MasterController}), zarejestrowanie siê i udostêpnianie mu
 swoich us³ug. Ta wersja kontrolera nie posiada GUI, zarz¹dzanie
 nim odbywa siê za pomoc¹ klasy \emph{MasterController}.
+Podobnie jak w przypadku klasy \emph{MasterController}, kontroler ten musi zostaæ zmodyfikowany.
 
 %\paragraph{WinSalomon}
 
