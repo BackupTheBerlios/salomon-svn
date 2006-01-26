@@ -3,38 +3,31 @@
 System zosta³ podzielony na 3 g³ówne czêœci: platformê, kontrolery
 i~pluginy.
 
-\begin{figure}[ht]
-	\centering
-		\includegraphics[width=0.90\textwidth]{img/uml/core.jpg}
-	\caption{G³ówne klasy systemu}
-	\label{fig:core}
-\end{figure}
-
 \subsection{Platforma}
 
 Dostarcza podstawowej funkcjonalnoœci  umo¿liwiaj¹cej pracê ca³ego
 systemu,  ³aduje odpowiedni kontroler, wczytuje wtyczki, uruchamia
-zadania. Opodwiada za komunikacje miêdzy innymi instancjami \emph{Salomona}.
+zadania. Odpowiada za komunikacje miêdzy innymi instancjami \emph{Salomona}.
+
+\begin{figure}[H]
+	\centering
+		\includegraphics[width=1.00\textwidth]{img/uml/manager_engine.png}
+	\caption{G³ówne klasy platformy}
+	\label{fig:core}
+\end{figure}
 
 Za poszczególne zadania odpowiadaj¹ odpowiednie menad¿ery.
 Menad¿ery nie s¹ dostêpne bezpoœrednio z platformy, ale
-przekazywane s¹ wtyczk¹ poprzez klasê \emph{DataEngine}. Dotyczy
-to tylko klasy \emph{DataSetManager} i \emph{RuleSetManager},
+przekazywane s¹ wtyczk¹ poprzez klasê \emph{IDataEngine}. Dotyczy
+to tylko klasy \emph{IDataSetManager} i \emph{IRuleSetManager},
 pozosta³e nie s¹ dostêpne dla wtyczek. Plugin, zale¿nie od
 potrzeb, pobiera z niego potrzebny mu menad¿er i za jego
 poœrednictwem wykonuje operacje na bazie danych.
 
-\paragraph{DataEngine}
+\paragraph{IDataEngine}
 
-\begin{figure}[htb]
-	\centering
-		\includegraphics[width=0.90\textwidth]{img/uml/data_engine.jpg}
-	\caption{Schemat powi¹zañ klas zarz¹dzaj¹cych z DataEngine}
-	\label{fig:data_engine}
-\end{figure}
-
-Klasa przekazywana wtyczk¹ podczas ich wykonania.
-Za pomoc¹ pobieranych z niej menad¿erów (\emph{DataSetManager}, \emph{RuleSetManager}, w przysz³oœci \emph{AttributeManager} i inne) wtyczki mog¹ operowaæ na danych znajduj¹cych siê w bazie.
+Obiekt implementuj¹cy ten interfejs przekazywany jest wtyczkom podczas ich wykonania.
+Za pomoc¹ pobieranych z niego menad¿erów (\emph{IDataSetManager}, \emph{IAttributeManager}, w przysz³oœci \emph{IRuleSetManager} i inne) wtyczki mog¹ operowaæ na danych znajduj¹cych siê w bazie.
 
 \paragraph{DBManager}
 
@@ -42,18 +35,18 @@ Odpowiada za po³¹czenie z baz¹ danych. Dostarcza metody
 zapewniaj¹ce dostêp do danych przechowywanych w bazie. Swoj¹
 funkcjonalnoœæ udostêpnia odpowiednim menad¿erom.
 
-\paragraph{DataSetManager}
+\paragraph{IDataSetManager}
 
 Zarz¹dza zbiorami danych. Pozwala tworzyæ nowe podzbiory danych na
 podstawie zawartych w bazie informacji oraz umo¿liwia operowanie
 na nich.
 
-\paragraph{RuleSetManager}
+\paragraph{IRuleSetManager}
 
 Zarz¹dza regu³ami. Pozwala tworzyæ nowe regu³y oraz
 zarz¹dza dostêpem do ju¿ istniej¹cych.
 
-\paragraph{AttributeManager}
+\paragraph{IAttributeManager}
 
 Zarz¹dza atrybutami. Pozwala tworzyæ nowe atrybuty oraz
 zarz¹dza dostêpem do ju¿ istniej¹cych.
@@ -61,15 +54,14 @@ zarz¹dza dostêpem do ju¿ istniej¹cych.
 
 \paragraph{IManagerEngine}
 
-Klasa zarz¹dza pozosta³ymi menad¿erami. Utrzymuje jedn¹ instancjê ka¿dego z nich 
+Zarz¹dza pozosta³ymi menad¿erami. Utrzymuje jedn¹ instancjê ka¿dego z nich 
 i udostêpnia je pozosta³ym klasom z platformy.
 
-\begin{figure}[htb]
-	\centering
-		\includegraphics[width=0.90\textwidth]{img/uml/manager_engine.jpg}
-	\caption{G³ówna klasa zarz¹dzaj¹ca}
-	\label{fig:manager_engine}
-\end{figure}
+\paragraph{ISolutionManager}
+
+Zarz¹dza obiektami implementuj¹cymi interfejs \emph{ISolution}. 
+Dostarcza metod pozwalaj¹cych na utworzenie nowego obiektu \emph{ISolution},
+modyfikacjê aktualnego, za³adowanie wczeœniej stworzonego lub zwrócenie wszystkich obiektów \emph{ISolution}.
 
 \paragraph{IProjectManager}
 
@@ -78,11 +70,11 @@ projektu, zapisanie bie¿¹cego do bazy danych oraz na za³adowanie z bazy.
 
 \paragraph{IPluginManager}
 
-Zarz¹dza pluginami. Pozwala na utworzenie zapisanie informacji o nowym pluginie (jego nazwa, lokalizacja) oraz na pobranie listy dostêpnych pluginów.
+Zarz¹dza pluginami. Pozwala na zapisanie informacji o nowym pluginie (jego nazwa, lokalizacja) oraz na pobranie listy dostêpnych pluginów.
 
 \paragraph{ITaskManager}
 
-Zarz¹dza zadaniami. 
+Zarz¹dza zadaniami. Jego zadaniem jest nie tylko umo¿liwienie utworzenia lub edycji istniej¹cych zadañ, ale tak¿e nadzorowanie ich uruchamiania.
 
 \subsection{Kontrolery}
 Kontrolery odpowiadaj¹ za interakcjê
@@ -138,7 +130,7 @@ na którym prezentowane s¹ wyniki jego dzia³ania.
 
 Posiada tylko jedn¹ metodê \emph{doJob()}. Przyjmuje ona jako
 parametry obiekt klasy \emph{Environment}, reprezentuj¹cy aktualny
-stan systemu; \emph{DataEngine}, który umo¿liwia operowanie na
+stan systemu; \emph{IDataEngine}, który umo¿liwia operowanie na
 bazie danych i \emph{ISettings}, reprezentuj¹cy ustawienia
 wtyczki. Zwracany jest obiekt klasy \emph{IResult}, stanowi¹cy
 rezultat wykonania zadania.
