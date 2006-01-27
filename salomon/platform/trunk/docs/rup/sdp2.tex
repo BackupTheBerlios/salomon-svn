@@ -77,7 +77,85 @@ Stworzenie harmonogramu pozwoli oceniæ postêp prac i odpowiedzieæ na pytanie, cz
   		Developer & all \\
   		\hline
   		Tester & Jakub Ga³kowski \\
-  		\hline
+  		\hline\documentclass[a4paper]{article}
+\usepackage[polish]{babel}
+\usepackage[cp1250]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[dvips]{graphicx}
+
+\pagestyle{headings}
+\textwidth      15.5cm
+\oddsidemargin    .1cm
+\evensidemargin   .1cm
+
+\begin{document}
+
+\thispagestyle{empty}
+
+\begin{minipage}{5cm}
+\includegraphics[scale=0.7]{salomon.eps}
+\end{minipage}
+\begin{minipage}{10cm}
+\begin{center}
+{\Large Salomon\\
+System przetwarzania wiedzy\\}
+\end{center}
+\end{minipage}
+
+\vspace*{0.5cm}
+
+\hrulefill
+
+\vspace*{1cm}
+
+
+\begin{flushright}
+{\Large \emph{Iteration Description --- C2, ver 1.0} }
+\end{flushright}
+
+
+
+\begin{flushleft}
+{ \Large Historia wersji }\[\]
+\begin{tabular}{|p{2.5cm}||p{1.5cm}|p{6cm}|p{3.5cm}|}
+  \hline
+  Data & Wersja & Opis & Autor \\
+  \hline \hline
+  18.01.2006 & 1.0 & utworzenie & \emph{Leszek Grzanka}\\
+  \hline
+\end{tabular}
+\end{flushleft}
+
+\newpage
+
+
+\section{Zadania dla iteracji } 
+
+Rozbudowa interfejsu u¿ytkownika umo¿liwiaj¹c¹ zarz¹dzanie warstw¹ \emph{Solution}, w szczególnoœci: rozbudowa procesu dodawania i wyboru aktualnego obiektu Solution.
+
+Poprawienie ergonomii pracy poprzez rozbudowê mo¿liwoœci przegl¹dania obiektów poszczególnych warstw, uporz¹dkowanie menu i przycisków.
+
+\section{Produkt iteracji} 
+Ulepszone GUI platformy, realizuj¹ce wymagania stawiane przed nim w tej iteracji.
+
+
+\section{Plan testów} 
+Wykonanie odpowiednich akcji na interfejsie graficznym. Subiektywna ocena ergonomii, oraz intuicyjnoœci obs³ugi.
+
+
+\section{Efekt wykonania iteracji}
+
+Efektem by³o:
+\begin{itemize}
+	\item dodanie do GUI odpowiedniej funkcjonalnoœci,
+	\item projekt i wykonanie odpowiedniej obs³ugi zdarzeñ,
+	\item naprawienie kilku b³êdów zg³oszonych przez u¿ytkowników
+\end{itemize}
+
+
+\end{document}
+
+
 		\end{tabular}
 	\end{flushleft}
 
@@ -93,13 +171,11 @@ Stworzenie harmonogramu pozwoli oceniæ postêp prac i odpowiedzieæ na pytanie, cz
   		\hline
   		Eleboration & E1 & Budowa prototypowych rozwi¹zañ & Dokument SAD i prototypy metod & 15.11.2005 \\
   		\hline
-  		Construction & C1 & Implementacja datasetów, podpiêcie algorytmów Weki & Engine umo¿liwiaj¹cy obs³ugê datasetów, wtyczki realizuj¹ce algorytmy Weki & 15.12.2005 \\
+  		Construction & C1 & Implementacja datasetów & Engine umo¿liwiaj¹cy obs³ugê datasetów & 15.12.2005 \\
   		\hline
   		Construction & C2 & Poprawienie ergonomii aplikacji & Rozbudowane GUI &  20.12.2005\\
   		\hline
 		Construction & C3 & Budowa kompletnej dokumentacji & Podrêczniki, HOWTO, tutorial, strona WWW &  15.01.2005\\
-  		\hline
-		Construction & C4 & Grafowe wykonanie zadañ & Zmodyfikowany engine Salomona &  15.01.2005\\
   		\hline
   		Transition & T1 & Dostarczenie finalnej wersji, prezentacja w sieci & Wersja standalone &  30.01.2006\\
   		\hline
@@ -111,15 +187,12 @@ Stworzenie harmonogramu pozwoli oceniæ postêp prac i odpowiedzieæ na pytanie, cz
  	\item[E1] 	
  	\begin{itemize}
 		\item stworzenie projektu i wstêpnej wersji obs³ugi datasetów
- 		\item zapoznanie siê z algorytmami udostêpnianymi przez Wekê
 %		\item ???
  	\end{itemize}
  	\item[C1]	
  	\begin{itemize}
 		\item implementacja datasetów
 		\item specyfikacja interfejsów dla atrybutów 
- 		\item wtyczka realizuj¹ca przyk³adowy algorytm Weki
-		\item metodologia pisania wtyczek realizuj¹cych inne algorytmy
 %		\item ???
  	\end{itemize}
  	\item[C2] 	
@@ -134,19 +207,14 @@ Stworzenie harmonogramu pozwoli oceniæ postêp prac i odpowiedzieæ na pytanie, cz
  		\item utworzenie strony WWW dla projektu
 %		\item ???
  	\end{itemize}
- 	\item[C4] 	
- 	\begin{itemize}
- 		\item rozbudowa mechanizmu wykonywania zadañ o mo¿liwoœæ ich kolejkowania w formie grafów przep³ywu
-%		\item ???
- 	\end{itemize}		
  \end{itemize}
 
 \section{Plan akceptacji produktu}
 Akceptacja produktu bêdzie kilkuetapowa:
 \begin{itemize}
 	\item przedstawienie klientowi do akceptacji produktu fazy \emph{Elaboration}
- 	\item wszystkie testy jednostkowe bezb³êdne
+	\item wszystkie testy jednostkowe bezb³êdne
 	\item testy ca³oœciowe bezb³êdne
 \end{itemize}
-\end{document}
 
+\end{document}
