@@ -23,11 +23,13 @@ package salomon.engine.controller.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.GridLayout;
 import java.awt.Point;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
 
 import javax.swing.Action;
 import javax.swing.BorderFactory;
@@ -35,19 +37,26 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import org.apache.log4j.Logger;
 
+import com.jgoodies.forms.builder.DefaultFormBuilder;
+import com.jgoodies.forms.layout.FormLayout;
+
+import salomon.engine.Config;
 import salomon.engine.Messages;
 import salomon.engine.Starter;
 import salomon.engine.controller.gui.action.ActionManager;
+import salomon.engine.controller.gui.common.SearchFileFilter;
 import salomon.engine.controller.gui.viewer.SolutionViewer;
+import salomon.engine.database.ExternalDBManager;
 import salomon.engine.project.IProject;
 import salomon.engine.solution.ISolution;
 import salomon.engine.solution.ISolutionManager;
@@ -77,6 +86,8 @@ public final class SolutionManagerGUI
 
 	private JComboBox _comboSolutionList;
 
+	private JFileChooser _dbFileChooser;
+
 	private ControllerFrame _parent;
 
 	private JPanel _pnlSolutionController;
@@ -104,7 +115,7 @@ public final class SolutionManagerGUI
 
 	private JTextField _txtPasswd;
 
-	private JTextField _txtSolutionInfo;
+	private JTextArea _txtSolutionInfo;
 
 	private JTextField _txtSolutionName;
 
@@ -269,46 +280,6 @@ public final class SolutionManagerGUI
 		_parent.setVisible(true);
 	}
 
-	public void showSolutionChooser()
-	{
-		JPanel panel = new JPanel();
-		panel.setBorder(BorderFactory.createEmptyBorder(4, 4, 4, 4));
-
-		JPanel pnlManagerButtons = new JPanel();
-		pnlManagerButtons.setLayout(new BoxLayout(pnlManagerButtons,
-				BoxLayout.Y_AXIS));
-		pnlManagerButtons.add(Box.createVerticalGlue());
-		pnlManagerButtons.add(getBtnOpen());
-		pnlManagerButtons.add(getBtnNew());
-		pnlManagerButtons.add(Box.createVerticalStrut(10));
-		pnlManagerButtons.add(getBtnExit());
-		pnlManagerButtons.add(Box.createVerticalGlue());
-
-		panel.setLayout(new BorderLayout());
-		panel.add(getSolutionsPanel(), BorderLayout.CENTER);
-		panel.add(pnlManagerButtons, BorderLayout.EAST);
-
-		_solutionChooserFrame = new JFrame(Messages.getString("TIT_SOLUTIONS"));
-		_solutionChooserFrame.setResizable(false);
-
-		_solutionChooserFrame.getContentPane().add(panel);
-		_solutionChooserFrame.pack();
-
-		_solutionChooserFrame.addWindowListener(new WindowAdapter() {
-			public void windowClosing(WindowEvent e)
-			{
-				Starter.exit();
-			}
-		});
-
-		Point location = new Point();
-		location.x = (Toolkit.getDefaultToolkit().getScreenSize().width - _solutionChooserFrame.getWidth()) / 2;
-		location.y = (Toolkit.getDefaultToolkit().getScreenSize().height - _solutionChooserFrame.getHeight()) / 2;
-		_solutionChooserFrame.setLocation(location);
-
-		_solutionChooserFrame.setVisible(true);
-	}
-
 	public void saveSolution()
 	{
 		try {
@@ -352,26 +323,7 @@ public final class SolutionManagerGUI
 		boolean approved = false;
 		Solution solution = (Solution) iSolution;
 		if (_pnlSolutionProperties == null) {
-			_pnlSolutionProperties = new JPanel();
-			_pnlSolutionProperties.setLayout(new GridLayout(6, 2));
-			_txtSolutionName = new JTextField();
-			_txtSolutionInfo = new JTextField();
-			_txtHostname = new JTextField();
-			_txtDBPath = new JTextField();
-			_txtUsername = new JTextField();
-			_txtPasswd = new JPasswordField();
-			_pnlSolutionProperties.add(new JLabel("Solution name"));
-			_pnlSolutionProperties.add(_txtSolutionName);
-			_pnlSolutionProperties.add(new JLabel("Solution info"));
-			_pnlSolutionProperties.add(_txtSolutionInfo);
-			_pnlSolutionProperties.add(new JLabel("Hostname"));
-			_pnlSolutionProperties.add(_txtHostname);
-			_pnlSolutionProperties.add(new JLabel("DB Path"));
-			_pnlSolutionProperties.add(_txtDBPath);
-			_pnlSolutionProperties.add(new JLabel("Username"));
-			_pnlSolutionProperties.add(_txtUsername);
-			_pnlSolutionProperties.add(new JLabel("Password"));
-			_pnlSolutionProperties.add(_txtPasswd);
+			_pnlSolutionProperties = createSolutionPanel();
 		}
 
 		String name = solution.getInfo().getName();
@@ -417,6 +369,46 @@ public final class SolutionManagerGUI
 		_statusBar.addItem(SB_CUR_SOLUTION);
 	}
 
+	public void showSolutionChooser()
+	{
+		JPanel panel = new JPanel();
+		panel.setBorder(BorderFactory.createEmptyBorder(4, 4, 4, 4));
+
+		JPanel pnlManagerButtons = new JPanel();
+		pnlManagerButtons.setLayout(new BoxLayout(pnlManagerButtons,
+				BoxLayout.Y_AXIS));
+		pnlManagerButtons.add(Box.createVerticalGlue());
+		pnlManagerButtons.add(getBtnOpen());
+		pnlManagerButtons.add(getBtnNew());
+		pnlManagerButtons.add(Box.createVerticalStrut(10));
+		pnlManagerButtons.add(getBtnExit());
+		pnlManagerButtons.add(Box.createVerticalGlue());
+
+		panel.setLayout(new BorderLayout());
+		panel.add(getSolutionsPanel(), BorderLayout.CENTER);
+		panel.add(pnlManagerButtons, BorderLayout.EAST);
+
+		_solutionChooserFrame = new JFrame(Messages.getString("TIT_SOLUTIONS"));
+		_solutionChooserFrame.setResizable(false);
+
+		_solutionChooserFrame.getContentPane().add(panel);
+		_solutionChooserFrame.pack();
+
+		_solutionChooserFrame.addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent e)
+			{
+				Starter.exit();
+			}
+		});
+
+		Point location = new Point();
+		location.x = (Toolkit.getDefaultToolkit().getScreenSize().width - _solutionChooserFrame.getWidth()) / 2;
+		location.y = (Toolkit.getDefaultToolkit().getScreenSize().height - _solutionChooserFrame.getHeight()) / 2;
+		_solutionChooserFrame.setLocation(location);
+
+		_solutionChooserFrame.setVisible(true);
+	}
+
 	public void viewSolutions()
 	{
 
@@ -443,6 +435,60 @@ public final class SolutionManagerGUI
 		return button;
 	}
 
+	private JPanel createSolutionPanel()
+	{
+		FormLayout layout = new FormLayout(
+				"left:pref, 3dlu, right:100dlu, 3dlu, right:20dlu", "");
+		DefaultFormBuilder builder = new DefaultFormBuilder(layout);
+		builder.setDefaultDialogBorder();
+		builder.setRowGroupingEnabled(true);
+		builder.appendSeparator("Solution data");
+
+		int size = 100;
+
+		_txtSolutionName = new JTextField(size);
+		_txtHostname = new JTextField(size);
+		_txtDBPath = new JTextField(size);
+		_txtUsername = new JTextField(size);
+		_txtPasswd = new JPasswordField(size);
+		_txtSolutionInfo = new JTextArea(3, 10);
+		JButton btnChooseDB = new JButton(Messages.getString("BTN_BROWSE"));
+		btnChooseDB.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e)
+			{
+				searchDataBase();
+			}
+		});
+
+		JButton btnTestConnect = new JButton("Test connection");
+		btnTestConnect.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e)
+			{
+				testConnect();
+			}
+		});
+
+		builder.append("Solution name");
+		builder.append(_txtSolutionName, 3);
+		builder.append("Hostname", _txtHostname, 3);
+		builder.append("Database path");
+		builder.append(_txtDBPath, btnChooseDB);
+		builder.append("Username", _txtUsername, 3);
+		builder.append("Password", _txtPasswd, 3);
+
+		builder.appendSeparator("Test connection");
+		builder.append("", btnTestConnect, 2);
+
+		builder.appendSeparator("Solution info");
+		// CellConstraints cc = new CellConstraints();
+		// builder.appendRow(new RowSpec("0:grow"));
+		// builder.add(new JLabel(""));
+		// builder.add(new JScrollPane(_txtSolutionInfo), cc.xywh(
+		// builder.getColumn(), builder.getRow(), 1, 2));
+
+		return builder.getPanel();
+	}
+
 	private JComboBox getSolutionsCombo()
 	{
 		if (_comboSolutionList == null) {
@@ -456,6 +502,43 @@ public final class SolutionManagerGUI
 		}
 		return _comboSolutionList;
 	}
+
+	private void searchDataBase()
+	{
+		if (_dbFileChooser == null) {
+			_dbFileChooser = new JFileChooser(".");
+			_dbFileChooser.setFileFilter(new SearchFileFilter(DB_EXT, DB_DESC));
+		}
+		int retVal = _dbFileChooser.showOpenDialog(_parent);
+		if (retVal == JFileChooser.APPROVE_OPTION) {
+			File file = _dbFileChooser.getSelectedFile();
+			// FIXME: supports only relative paths !!!
+			_txtDBPath.setText("db\\" + file.getName());
+			LOGGER.debug("Opening: " + file.getName());
+		}
+	}
+
+	private void testConnect()
+	{
+		ExternalDBManager externalDBManager = new ExternalDBManager();
+		String host = _txtHostname.getText();
+		String dataBasePath = _txtDBPath.getText();
+		String user = _txtUsername.getText();
+		String passwd = _txtDBPath.getText();
+
+		try {
+			externalDBManager.connect(host, dataBasePath, user, passwd);
+			externalDBManager.disconnect();
+			Utils.showInfoMessage("Successfully connected to database.");
+		} catch (Exception e) {
+			LOGGER.fatal("", e);
+			Utils.showErrorMessage("Cannot connect to database");
+		}
+	}
+
+	private final static String DB_DESC = "Database files";
+
+	private final static String DB_EXT = "gdb";
 
 	private static final Logger LOGGER = Logger.getLogger(SolutionManagerGUI.class);
 

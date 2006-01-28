@@ -147,6 +147,7 @@ public final class DBManager
 		if (_connection != null) {
 			_connection.close();
 		}
+		LOGGER.info("disconected from database");
 	}
 
 	/**
