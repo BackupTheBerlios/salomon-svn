@@ -1,0 +1,173 @@
+<project name="salomon" default="build" basedir=".">
+
+	<!-- Allows us to use the IzPack Ant task -->
+	<taskdef name="izpack" classpath="${basedir}/ext/compiler.jar" classname="com.izforge.izpack.ant.IzPackTask" />
+	<taskdef name="svn" classpath="${basedir}/ext/svn/svnant.jar;${basedir}/ext/svn/svnClientAdapter.jar;${basedir}/ext/svn/svnjavahl.jar" classname="org.tigris.subversion.svnant.SvnTask" />
+    <taskdef name="SetBuildProperties" classpath="config/" classname="SetBuildProperties" />
+    <!--	resource="svntask.properties"/> -->
+
+    <SetBuildProperties />    
+	<property name="src_dir" value="src" />
+	<property name="bin_dir" value="bin" />
+	<property name="lib_dir" value="lib" />
+	<property name="res_dir" value="res" />
+	<property name="plugin_dir" value="plugins" />
+	<property name="plugin_dev_dir" value="dev" />
+	<property name="db_dir" value="db" />
+	<property name="install_dir" value="install" />
+	<property name="empty_db_file" value="empty.gdb" />	
+	<property name="db_file" value="salomon.gdb" />
+    <property name="db_user" value="sysdba" />
+	<property name="db_password" value="masterkey" />	
+	<property name="crebas_file" value="crebas.sql" />
+	<property name="views_file" value="views.sql" />
+	<property name="run_script" value="run.bat" />
+	<property name="release_dir" value="_release" />
+	<property name="controller" value="local" />
+	
+    <property file="config/hosts/${build.host}/build.properties" />
+    <property file="config/users/${build.user}/build.properties" />
+
+            
+	<target name="compile_salomon" depends="init">
+		<echo message="Build salomon core" />
+		<javac srcdir="${src_dir}/" includes="salomon/**" classpathref="project.class.path" destdir="${bin_dir}" source="1.5"/>
+	</target>
+
+	
+	<path id="project.class.path">
+		<fileset dir="${lib_dir}">
+			<include name="**/*.jar"/>
+		</fileset>
+	</path>
+	
+
+	<target name="init">
+		<mkdir dir="${bin_dir}" />
+	</target>
+
+	<target name="build_salomon_jar" depends="compile_salomon">
+        <copy todir="${bin_dir}">
+        	<fileset dir="${src_dir}" includes="*.properties" />
+        </copy>
+        <copy file="all.policy" todir="${bin_dir}" />
+		<copy file="log.conf" todir="${bin_dir}" />
+		<jar destfile="salomon.jar" basedir="${bin_dir}" includes="salomon/** *.properties log.conf all.policy">
+			<manifest>
+				<attribute name="Main-Class" value="salomon.engine.Starter" />
+				<attribute name="Class-Path" value="${lib_dir}/firebirdsql.jar ${lib_dir}/log4j-1.2.8.jar ${lib_dir}/mini-j2ee.jar ${lib_dir}/colt.jar ${lib_dir}/commons-collections-3.1.jar ${lib_dir}/forms-1.0.5.jar ${lib_dir}/jung-1.7.2.jar ${lib_dir}/looks-1.3.2.jar ." />
+			</manifest>
+		</jar>
+	</target>
+
+	<target name="build_plugin_jars" depends="compile_salomon">
+		<mkdir dir="${plugin_dev_dir}" />
+		<jar destfile="${plugin_dev_dir}/platform.jar" basedir="${bin_dir}" includes="salomon/platform/**"/>
+		<jar destfile="${plugin_dev_dir}/plugin.jar" basedir="${bin_dir}" includes="salomon/plugin/**"/>
+		<jar destfile="${plugin_dev_dir}/util.jar" basedir="${bin_dir}" includes="salomon/util/**"/>
+	</target>
+
+	<target name="copy_data_base">
+		<mkdir dir="${release_dir}/${db_dir}" />
+		<copy file="${db_dir}/${db_file}" todir="${release_dir}/${db_dir}" />
+	</target>
+
+	<target name="copy_init_db">
+		<mkdir dir="${release_dir}/${db_dir}" />
+		<copy file="${db_dir}/${crebas_file}" todir="${release_dir}/${db_dir}" />
+	</target>
+
+	<target name="copy_res">
+		<mkdir dir="${release_dir}/${res_dir}" />
+		<copy todir="${release_dir}/${res_dir}">
+			<fileset dir="${basedir}/${res_dir}" />
+		</copy>
+	</target>
+
+	<target name="copy_config">
+		<mkdir dir="${release_dir}" />
+		<copy todir="${release_dir}">
+			<fileset file="*.conf" />
+			<!--this goes to jar: fileset file="${src_dir}/*.properties" / -->
+		</copy>
+	</target>
+
+	<target name="copy_plugins" depends="build_plugin_jars">
+		<mkdir dir="${release_dir}/${plugin_dir}" />
+		<copy todir="${release_dir}/${plugin_dir}">
+			<fileset file="${plugin_dir}/*.jar" />
+		</copy>
+	</target>
+
+	<target name="copy_libs">
+		<mkdir dir="${release_dir}/${lib_dir}" />
+		<copy todir="${release_dir}/${lib_dir}">
+			<fileset file="${lib_dir}/*.jar" />
+		</copy>
+	</target>
+
+	<target name="copy_drivers">
+		<mkdir dir="${release_dir}" />
+		<copy todir="${release_dir}">
+			<fileset file="*.dll" />
+		</copy>
+	</target>
+
+	<target name="copy_run_files">
+		<copy  file="${install_dir}/${run_script}" todir="${release_dir}" />
+		<!-- goes to jar: copy file="all.policy" todir="${release_dir}" /-->
+	</target>
+
+	<target name="copy_salomon" depends="build_salomon_jar">
+		<mkdir dir="${release_dir}" />
+		<copy file="salomon.jar" todir="${release_dir}" />
+	</target>
+	
+	<target name="create_new_database">
+                <copy file="${db_dir}/${empty_db_file}" tofile="${db_dir}/${db_file}" overwrite="true"/>
+        <exec executable="${isql_dir}isql" >
+			<arg line="${db_dir}/${db_file} -u ${db_user} -p ${db_password} -i ${db_dir}/${crebas_file}" />
+		</exec>		
+        <exec executable="${isql_dir}isql" >
+			<arg line="${db_dir}/${db_file} -u ${db_user} -p ${db_password} -i ${db_dir}/${views_file}" />
+		</exec>		
+	</target>
+	
+	<target name="deploy" depends="copy_salomon, copy_plugins, 
+		copy_libs, copy_drivers, copy_data_base,
+		copy_res, copy_config, copy_run_files, get_version" />
+
+	<target name="compress" depends="deploy">
+		<zip destfile="salomon.zip" basedir="${release_dir}" />
+	</target>
+
+	<target name="clean">
+		<delete dir="${bin_dir}" />
+	</target>
+
+	<!-- creating installtor file -->
+	<target name="installator" depends="deploy">
+		<izpack input="${basedir}/install/install.xml" output="${basedir}/install.jar" installerType="standard" basedir="${basedir}/install" izPackDir="${izpack_dir}/" />
+	</target>
+	<target name="get_version">
+		<svn>
+			<status path="${basedir}" revisionProperty="testStatus.revision" />
+
+		</svn>
+		<echo message="REVISION_VERSION=${testStatus.revision}" file="${src_dir}/version.properties" />
+	</target>
+	
+	<target name="start" depends="deploy">
+        <java dir="${release_dir}" fork="true" classname="salomon.engine.Starter" classpathref="project.class.path">
+        	<classpath path="${release_dir}/salomon.jar" />
+        	<jvmarg value="-Djava.rmi.server.RMIClassLoaderSpi=salomon.core.plugin.PluginRMIClassLoaderSpi"/>
+		    <jvmarg value="-Djava.security.policy=all.policy" />
+        	<arg value="-${controller}" />
+		</java>
+	</target>
+	
+	<target name="build" depends="build_salomon_jar">
+	</target>
+	
+	
+</project>

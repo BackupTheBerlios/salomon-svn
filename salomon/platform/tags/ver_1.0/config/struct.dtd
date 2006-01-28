@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Generated from struct.xml by XMLBuddy -->
+<!ELEMENT int EMPTY>
+<!ATTLIST int
+	name NMTOKEN #REQUIRED
+	value NMTOKEN #REQUIRED
+>
+<!ELEMENT string EMPTY>
+<!ATTLIST string
+	name NMTOKEN #REQUIRED
+	value NMTOKEN #REQUIRED
+>
+<!ELEMENT struct (string*|int*|struct*)*>
+<!ATTLIST struct name NMTOKEN #REQUIRED>

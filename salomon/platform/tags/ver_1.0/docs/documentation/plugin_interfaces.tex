@@ -1,0 +1,76 @@
+\section{Interfejsy pluginów}
+
+System, dziêki swej elastycznej architekturze, pozwala u¿ytkownikowi na rozszerzanie jego mo¿liwoœci poprzez definiowanie przez niego w³asnych pluginów. 
+Ca³a funkcjonalnoœæ zwi¹zana z przetwarzaniem pluginów, konfigurowaniem ich, prezentacj¹ wyników ich dzia³ania oraz komunikacj¹ przez sieæ ukryta jest przed twórc¹ pluginu i nie musi byæ brana pod uwagê przy jego projektowaniu i implementacji. Jedyne co musi on zrobiæ to zaimplementowaæ opisane wy¿ej interfejsy.
+By system móg³ skorzystaæ z nowych pluginów nale¿y dodaæ do tabeli plugins odpowiedni wpis, umo¿liwiaj¹cy systemowi zlokalizowanie i œci¹gniêcie pluginu. 
+Obecna wersja systemu obs³uguje tylko pluginy w postaci archiwów jar.
+
+Ka¿dy plugin by móg³ byæ przetwarzany przez system musi
+implementowaæ nastêpuj¹ce interfejsy:
+
+\subsection{IPlugin}
+
+    \paragraph{getDescription()} - zwraca obiekt klasy
+    \emph{Description} zawieraj¹cy opis pluginu (nazwê, lokalizacjê,
+    wersjê itp.)
+
+\subsection{IDataPlugin}
+    \paragraph{doJob()} - metoda wykonuje g³ówne zadanie pluginu
+
+\subsection{IGraphicPlugin}
+
+    \paragraph{getSettingComponent()} - zwraca obiekt
+    implementuj¹cy interfejs \emph{ISettingComponent}
+
+    \paragraph{getResultComponent()} - zwraca obiekt implementuj¹cy
+    interfejs \emph{IResultComponent}\\
+
+
+
+Interfejs \emph{IGraphicComponent} zapewnia interakcjê z
+u¿ytkownikiem. Jego metody zwracaj¹ komponenty pozwalaj¹ce na
+modyfikacjê ustawieñ pluginu oraz na wyœwietlenie rezultatu jego
+dzia³ania. Obiekty zwracane przez metody tego interfejsu
+implementuj¹ interfejsy:
+
+\subsection{ISettingComponent}
+
+    \paragraph{getComponent(ISettings settings)} - zwraca graficzny
+    komponent s³u¿¹cy do edycji ustawieñ pluginu. Jest on wype³niany
+    wartoœciami przekazanymi w obiekcie \emph{ISettings}.
+
+    \paragraph{getSettings()} - zwraca ustawienia pluginu
+
+    \paragraph{getDefaultSettings()} - zwraca domyœlne ustawienia
+    pluginu. Wykorzystywana gdy u¿ytkownik nie wprowadzi³ w³asnych
+    ustawieñ
+
+\subsection{IResultComponent}
+
+    \paragraph{getComponent(IResult result)} - zwraca graficzny
+    komponent wyœwietlaj¹cy rezultat wykonania pluginu. Wype³niany
+    jest on na podstawie obiektu  \emph{IResult} zwróconego wczeœniej
+    przez metodê \emph{doJob()}.
+
+    \paragraph{getDefaultResult()} - zwraca domyœlny rezultat wykonania pluginu
+
+\subsection{ISettings}Implementowany przez obiekt reprezentuj¹cy
+ustawienia pluginu.
+
+    \paragraph{parseSettings(String settings)} - metoda inicjalizuje obiekt klasy
+    \emph{ISettings}  na podstawie jego  tekstowej reprezentacji.
+    U¿ywana przy ³adowaniu ustawieñ pluginu z  bazy danych
+
+    \paragraph{settingsToString()} - zwraca tekstow¹ reprezentacjê
+    obiektu klasy \emph{ISettings}. U¿ywana przy zapisie ustawieñ pluginu do
+    bazy danych
+
+\subsection{IResult} Implementowany przez obiekt reprezentuj¹cy rezultat
+dzia³ania pluginu.
+
+    \paragraph{parseResult(String result)}- metoda inicjalizuje obiekt klasy
+    \emph{IResult}  na podstawie jego  tekstowej reprezentacji.
+    U¿ywana przy ³adowaniu rezultatu dzia³ania pluginu z bazy danych
+
+    \paragraph{resultToString()} - zwraca tekstow¹ reprezentacjê obiektu klasy
+    \emph{IResult}. U¿ywana przy zapisie rezultatu dzia³ania pluginu do bazy danych

@@ -1,0 +1,58 @@
+\documentclass[11pt,a4paper,twocolumn]{article}
+\usepackage{msk}
+\usepackage[polish]{babel}
+\usepackage[cp1250]{inputenc}
+\usepackage[OT4]{fontenc}
+\usepackage{graphicx}
+\usepackage{indentfirst}
+\usepackage[urlcolor=black,colorlinks=false,bookmarks=true,bookmarksnumbered=true]{hyperref}
+
+
+\title{\emph{Salomon} -- komponentowa architektura indukcyjnej bazy
+  danych jako platformy uczenia maszynowego}
+
+\author{Nikodem Jura, Krzysztof Rajda,
+ Marek Kisiel-Dorohinicki,
+ Bart³omiej Œnie¿yñski}
+
+\institute{Akademia Górniczo-Hutnicza, Katedra Informatyki,
+Kraków\\
+\href{mailto:nico@icslab.agh.edu.pl}{nico@icslab.agh.edu.pl},
+\href{mailto:krzysztof@rajda.name}{krzysztof@rajda.name},
+\href{mailto:doroh@agh.edu.pl}{doroh@agh.edu.pl},
+\href{mailto:sniezyn@agh.edu.pl}{sniezyn@agh.edu.pl}}
+
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+Nowym kierunkiem ³¹cz¹cym technologie baz danych z nowoczesnymi
+metodami indukcyjnego generowania wiedzy s¹ indukcyjne bazy
+danych. Po³¹czenie takie pozwala na jednolity dostêp do wiedzy
+zawartej w~danych bezpoœrednio i wiedzy wygenerowanej z tych
+danych za pomoc¹ algorytmów uczenia maszynowego. W~niniejszej
+pracy przedstawiona zosta³a architektura i~wybrane aspekty
+implementacji platformy \emph{Salomon}, komponentowej realizacji
+indukcyjnej bazy danych. Dziêki budowie modu³owej uda³o siê
+uzyskaæ du¿o lepsz¹ elastycznoœæ systemu w~stosunku do innych,
+zbli¿onych rozwi¹zañ.
+
+
+\end{abstract}
+
+
+\input{introduction}
+\input{others}
+\input{conception}
+\input{architecture}
+\input{sample_use}
+\input{summary}
+\input{bibliography}
+
+%wylaczenie numerowania na I stronie
+\thispagestyle{empty}
+
+
+\end{document}

@@ -1,0 +1,238 @@
+\documentclass[a4paper, 12pt]{article}  %definiujemy typ dokumentu
+\usepackage[cp1250]{inputenc}
+%\usepackage[latin2]{inputenc}  %pakiet okreslna kodowanie znakow
+\usepackage[polish]{babel}  %pakiet okreslajacy lamanie wyrazow
+\usepackage[T1]{fontenc}         %czcionki dla jezyka polskiego
+\usepackage{indentfirst}     %pakiet gwarantuje wciecie podczas pierwszego akapitu
+\usepackage[dvips]{graphicx} %umozwliwia  umieszczenie grafiki eps
+\usepackage{colortbl}                %umozliwia dodatkowe umieszczenie png
+
+\pagestyle{headings}
+\textwidth      15.5cm
+\oddsidemargin    .1cm
+\evensidemargin   .1cm
+
+
+\begin{document}
+
+\thispagestyle{empty}
+
+\begin{minipage}{3cm}
+\includegraphics[scale=0.2]{sad_files/salomon.eps}
+\end{minipage}
+\begin{minipage}{10cm}
+\begin{center}
+{\Large Salomon\\
+System przetwarzania wiedzy\\}
+\end{center}
+\end{minipage}
+
+\hrulefill
+
+\vspace*{4.5cm}
+\begin{minipage}{10cm}
+\begin{center}
+{\Large Modu³:\\
+Drzewa decyzyjne\\}
+\end{center}
+\end{minipage}
+
+
+\vspace*{2cm}
+
+
+\begin{flushright}
+{\Large \emph{Software Architect Document, ver 1.1} }
+\end{flushright}
+
+\vspace{3cm}
+
+\begin{flushleft}
+{ \Large Historia wersji }\[\]
+\begin{tabular}{|l|l|l|l|}
+  \hline
+  Data & Wersja & Opis & Autorzy \\
+  \hline \hline
+  18-04-2005 & 1.0 & Pierwsza wersja dokumentu & Mateusz Nowakowski\\
+  \hline
+  30-09-2005 & 1.1 & Aktualizacja po zaimplementowaniu & Mateusz Nowakowski\\
+             &     & pierwszej wersji produktu &                   \\
+  \hline
+  08-11-2005 & 1.2 & Opis pluginu wnioskuj¹cego & Mateusz Nowakowski\\
+             &     & Aktualizacja wiêkszoœci rozdzia³ów &            \\
+  \hline
+  15-11-2005 & 1.3 & Poprawa rozdzia³u 3. Przypadki   & Mateusz Nowakowski\\
+             &     & u¿ycia &            \\
+  
+
+\end{tabular}
+\end{flushleft}
+
+
+
+
+\newpage
+\tableofcontents
+\listoffigures
+\newpage
+\section{Wprowadzenie}
+
+Celem dokumentu jest okreœlenie architektury modu³u Salomona obs³uguj¹cego drzewa decyzyjne.
+
+\section{Za³o¿enia oraz cele architekturalne}
+\subsection{Za³o¿enia, ograniczenia}
+Modu³ s³u¿¹cy do obs³ugi drzew decyzyjnych jest czêœci¹ platformy Salomon, w zwi¹zku z tym zosta³y na niego na³o¿one nastêpuj¹ce ograniczenia:
+\begin{itemize}
+\item Konfiguracja oraz model drzew decyzyjnych musz¹ siê znajdowaæ w tej samej bazie. Dostêp do jakichkolwiek Ÿróde³ danych musi zapewniaæ Salomon.
+\item Salomon narzuca architekturê pluginow¹. API obs³ugi drzew decyzyjnych musi byæ doimplementowany do Salomona, natomiast ca³a obs³uga drzew decyzyjnych musi znajdowaæ siê w pluginach.
+\item Uk³ad pakietów. Interfejsy drzew musz¹ znajdowaæ siê w \\\textit{salomon.platform.data.tree}, natomiast ich implementacja w \\ \textit{salomon.engine.data.tree}
+\item Platforma Salomon zak³ada mo¿liwoœæ obs³ugi zdalnych obiektów. W zwi¹zku z tym pluginy nie tworz¹ ani nie zarz¹dzaj¹ bezpoœrednio danymi. Tworz¹, modyfikuj¹ dane tylko i wy³¹cznie za pomoc¹ metod wystawianych przez zestaw manager`ów. Pluginy operuj¹ równie¿ tylko za pomoc¹ interfejsów, a nie konkretnych instancji klas.
+\end{itemize}
+
+Modu³ drzew decyzyjnych korzysta równie¿ z realizowanych w³aœnie rozszerzeñ Salomona o tzw.\textit{ rozwi¹zania }(\textsl{solution}). Ograniczenia i mo¿liwoœci z tego p³yn¹ce s¹ nastêpuj¹ce:
+\begin{itemize}
+\item Pluginy uruchamiane s¹ z poziomu rozwi¹zania, co umo¿liwia dostêp do dwóch baz danych:
+\item Bazy definicyjnej - bazy przechowuj¹cej konfiguracjê Salomona. Wszelkie informacje dotycz¹ce zbudowanych drzew decyzyjnych bêd¹ siê znajdowaæ w tej bazie
+\item Baza wejœciowa - dodatkowa baza okreœlona w rozwi¹zaniu. Z punktu widzenia modu³u drzew decyzyjnych jest to baza przechowuj¹ca potencjalne dane, na podstawie których mog¹ byæ stworzone drzewa decyzyjne
+\end{itemize}
+
+\subsection{Cele architekturalne}
+
+Cele architekturalne wynikaj¹ce z powy¿szych ograniczeñ oraz z za³o¿eñ funkcjonalnych s¹ nastêpuj¹ce:
+\begin{itemize}
+\item Rozszerzyæ core platformy Salomon o obs³ugê drzew decyzyjnych. Udostêpniæ API pluginom umo¿liwiaj¹ce im tworzenie usuwanie, przegl¹danie oraz usuwanie drzew decyzyjnych.
+\item Stworzyæ zestaw pluginów obs³uguj¹cych powy¿sze operacje na drzewach decyzyjnych.
+\end{itemize}
+
+\section{Przypadki u¿ycia}
+Poni¿szy opis zak³ada ¿e u¿ytkownik uruchomi³ platformê Salomon oraz poprawnie zdefiniowa³ \textit{solution} oraz pragnie wykonaæ operacje na drzewach decyzyjnych.
+
+Poni¿szy diagram przedstawia punkt widzenia u¿ytkownika.
+
+\begin{figure}[ht]
+		\center
+    \includegraphics[width=0.40\textheight]{sad_files/use_case.png}
+    \caption{Diagram przypadków u¿ycia}
+    \label{fig:use_case_view}
+\end{figure}
+
+Aby zdefiniowaæ jakiekolwiek drzewo decyzyjne u¿ytkownik musi okreœliæ na jakich danych pragnie je stworzyæ. Tworzenie drzewa polega na wyborze algorytmu buduj¹cego oraz odpowiednie skonfigurowanie jego parametrów. U¿ytkownik musi równie¿ mieæ mo¿liwoœæ zarz¹dzania istniej¹cymi drzewami oraz móc je odpowiednio wizualizowaæ. Drzewa decyzyjne tworzy siê na pewnym ma³ym zbiorze danych by nastêpnie zweryfikowaæ ich poprawnoœæ na wiekszym zbiorze danych. U¿ytkownik zatem powinien mieæ mo¿liwoœc wykorzystania drzew w praktyce.
+
+Powy¿sze przypadki u¿ycia oraz za³o¿enia platfomy Salomon prowadza do nastêpuj¹cych operacji u¿ytkownika w ramach platformy.
+
+U¿ytkownik wybiera najpierw tzw. \textit{plugin wejœciowy}. Nastêpnie u¿ytkownik wybiera zdefiniowane wczeœniej dla obecnego \textit{solution}`a dane wejœciowe lub  nowe poprzez zdefiniowanie nazwy danych wejœciowych (dla póŸniejszej identyfikacji),
+wybiera tabelê a nastêpnie kolumnê reprezentuj¹c¹ wynik decyzji --  \textit{kolumna decyzyjna} oraz listê kolumn reprezentuj¹ce przes³anki decyzji -- \textit{kolumny decyduj¹ce}. Nastêpnie musi okreœliæ, na których wierszach bêdzie budowane drzewo decyzyjne. U¿ytkownik mo¿e wybraæ wiêcej ni¿ jedno Ÿród³o danych, z których potem bêd¹ generowane drzewa decyzyjne. 
+
+Nastêpnie u¿ytkownik wybiera pluginy algorytmiczne, które utworz¹ drzewa decyzyjne na podstawie wczeœniej zdefiniowanych danych wejœciowych. Konfiguracj¹ pluginów algorytmicznych opiera siê (je¿eli jakakolwiek wystêpuje) na zdefiniowaniu parametrów algorytmu, ktorego u¿ywa plugin.
+
+Jeœli u¿ytkownik sobie ¿yczy mo¿e wybraæ równie¿ plugin wizualizacyjny, który przedstawi stworzone wczeœniej drzewa. Plugin ten ma mo¿liwoœæ dzia³aæ równie¿ samodzielnie. U¿ytkownik konfiguruj¹c plugin mo¿e sam okreœliæ jakie istniej¹ce drzewa maj¹ zostaæ zwizualizowane. Mo¿e równie¿ usun¹æ wybrane drzewa decyzyjne.
+
+Ka¿de drzewo decyzyjne mo¿na zweryfikowaæ. Samodzielny plugin wnioskuj¹cy umo¿liwia przeprowadzenie wnioskowania za pomoc¹ wybranego drzewa na innym zbiorze danych. U¿ytkownik wybiera drzewo oraz zbiór danych, nastêpniê w oknie wyników przedstawione s¹ wnioski np. procent poprawnoœci, które wiersze zawieraj¹ inny wynik ni¿ spodziewany itp.
+
+\subsection{Developer Use-Case View}
+
+Osoby chc¹ce rozwijaæ modu³ drzew decyzyjnych mog¹ w zasadzie rozwijaæ go tylko o dodatkowe pluginy algorytmiczne, gdy¿ plugin wejœciowy oraz plugin wizualizacyjny s¹  wspólne.
+Deweloper bêdzie musia³ zaimplementowaæ tylko okreœlony interfejs lub klasê abstrakcyjn¹ (decyzja na poziomie implementacji).
+\[\]
+
+
+\section{Model logiczny}
+\subsection{Ogólne za³o¿enia}
+Modu³ drzew decyzyjnych sk³ada siê z dwóch czêœci:
+\begin{itemize}
+\item Rozszerzenia j¹dra platformy Salomon o podstawow¹ obs³ugê drzew decyzyjnych
+\item Zestawu 4 typów pluginów: pluginu definiuj¹cego dane wejœciowe, pluginu algorytmicznego, pluginu wizualizuj¹cego, zarz¹dzaj¹cego drzewami oraz pluginu wnioskuj¹cego
+\end{itemize}
+
+\subsection{Model rozszerzeñ j¹dra Salomona}
+Rozszerzenia j¹dra Salomona polega na dostarczeniu interfejsów oraz ich implementacji definiuj¹cych i zarz¹dzaj¹cych drzewami decyzyjnymi. J¹dro Salomona bêdzie dostarczaæ mechanizmów zapisu nowych oraz odczytu informacji o istniej¹cych drzewach decyzyjnych i nic wiêcej. Resztê implementuj¹ pluginy.
+
+Poni¿szy diagram przedstawia uk³ad interfejsów do zaimplementowania:
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.55\textheight]{sad_files/tree_interfaces.png}
+    \caption{Model rozszerzeñ}
+    \label{fig:ex_model}
+\end{figure}
+
+
+\[\]
+\subsection{Architektura pluginów}
+Jak wczeœniej wspomniano bêd¹ 4 rodzaje pluginów:
+\begin{itemize}
+\item Plugin wejœciowy - definiuj¹cy dane na podstawie których bêd¹ tworzone drzewa decyzyjne.
+\item Plugin algorytmiczny - tworz¹cy drzewa na podstawie okreœlonych danych wejœciowych
+\item Plugin wizualizacyjny, zarz¹dzaj¹cy drzewami istniej¹cymi drzewami.
+\item Plugin wnioskuj¹cy - przeprowadzajacy testy drzew na zbiorach danych.
+\end{itemize}
+Pluginy s¹ zgodne a architektur¹ Salomona i sposób ich budowania jest przez ni¹ okreœlony.
+
+\subsubsection{Plugin wejœciowy}
+Plugin wejœciowy zarz¹dza istniej¹cymi definicjami danych wejœciowych (dodaje, usuwa) jak równie¿ okreœla, na podstawie jakich danych wejœciowych póŸniejsze w kolejce pluginy algorytmiczne maj¹ tworzyæ drzewa.
+
+Pluginy komunikuj¹ siê poprzez œrodowisko ustawiaj¹c w nich zmienne. Plugin, po wyborze zestawu danych wejœciowych ustawia w œrodowisku listê identyfikatorów danych wejœciowych i koñczy pracê.
+\subsubsection{Plugin algorytmiczny}
+Plugin algorytmiczny ma niezale¿n¹ konfiguracjê oraz dzia³anie (zale¿ne od algorytmu). Natomiast komunikacja z s¹siednimi pluginami jest œciœle okreœlona. Ka¿dy plugin algorytmiczny w kolejce sprawdza zawartoœæ zmiennej œrodowiskowej Salomona z list¹ identyfikatorów danych wejœciowych, pobiera z j¹dra Salomona szczegó³owe informacje o nich i tworzy drzewo decyzyjne, zapisuje je do bazy oraz umieszcza identyfikator w zmiennej w œrodowisku.
+
+Plugin algorytmiczny bêdzie dziedziczy³ z abstrakcyjnej klasy TreeAlgorithmPlugin, która wykona za dewelopera kwestiê komunikacji z s¹siednimi pluginami (decyzja na poziomie implementacji).
+
+\subsubsection{Plugin wizualizacyjny, zarz¹dzaj¹cy}
+
+Plugin ten podobnie jak plugin wejœciowy pracuje w dwóch trybach. Jako samodzielny plugin s³u¿y do wizualizacji istniej¹cych w bazie drzew decyzyjnych oraz umo¿liwia usuwanie drzew wygenerowanych drzew decyzyjnych.
+
+Je¿eli przed tym pluginem mia³ miejsce plugin algorytmiczny i odpowiednia zmienna z list¹ stworzonych identyfikatorów drzew znajduje siê w œrodowisku, wówczas plugin ten wizualizuje ka¿de drzewo na tej liœcie.
+
+Panel z ustawieniami bêdzie siê sk³ada³ z trzech elementów. Listy rozwijanej z której bêdzie mo¿na
+wybraæ drzewo do wizualizacji, gdy Plugin bêdzie dzia³a³ w trybie niezale¿nym. Bêdzie posiada³
+checkbox do wyboru czy chcemy ¿eby plugin wizualizowa³ drzewo z listy, czy te¿ ma dzia³aæ z innymi
+pluginami i wizualizowaæ drzewo stworzone przez nie. Trzecim elementem panelu z ustawieniami bêdzie
+przycisk Usuñ drzewo, który bêdzie pozwala³ nam skasowaæ drzewo wybrane na liœcie. Natomiast panel
+z wynikiem bêdzie wyœwietla³ nam albo komunikat o tym co nale¿y zrobiæ aby wizualizowaæ drzewo,
+jeœli zrobimy coœ nie tak, albo te¿ bêdzie nam wyœwietla³ stworzone przez nas drzewo w postaci
+JTree.
+
+\subsubsection{Plugin wnioskuj¹cy}
+
+Plugin wnioskuj¹cy mo¿e równie¿ pracowaæ w dwóch trybach. Jednak zalecana jest praca samodzielna. W przypadku gdy w œrodowisku znajdujê siê lista identyfikatorów drzew wówczas plugin uruchamia wnioskowanie dla ka¿dego drzewa z tej listy. Danymi wejœciowymi s¹ tabele, z których drzewa powsta³y pomijaj¹c wiersze, z których przeprowadzane by³o budowanie drzewa. Plugin w oknie rezultatów przedstawia wnioski z testów dla ka¿dego drzewa w postaci ogólnych informacji o drzewie (jego nazwa, zbiór danych, z którego powsta³), informacja na jakich wierszach by³o przeprowadzone testowanie oraz wynik testów:
+\begin{itemize}
+\item Procent zgodnoœci - stosunek liczby wierszy z poprawnym wynikiem testu do ogólnej liczby testowanych wierszy
+\item Lista wierszy (przedzia³ów) dla których wynik testu by³ nieprawid³owy
+\end{itemize}
+
+W przypadku pracy samodzielnej (tzn. w sytuacji kiedy plugin nie wykryje obecnoœci listy drzew w œrodowisku) u¿ytkownik wybiera drzewo, które chce testowaæ, oraz okreœla zbiór danych do testowania. Zbiór danych musi nale¿eæ do tej samej tabeli z której drzewo powsta³o, ale musi zawieraæ inne wiersze. Wynik wnioskowania jest identyczny jak w przypadku pracy niesamodzielnej.
+
+
+
+\section{Model danych}
+Modu³ drzew decyzyjnych, zgodnie z logik¹ rozwi¹zañ w Salomonie, korzysta z dwóch baz danych. Jedna z nich -- \textit{baza definicyjna} przechowuje informacjê o budowie ju¿ istniej¹cych drzew oraz wszystkie niezbêdne informacje potrzebne do zbudowania drzewa. Druga zewnêtrzna -- \textit{baza wejœciowa}, jest skojarzona z aktualnym rozwi¹zaniem i przechowuje dane wejœciowe drzew decyzyjnych.
+
+\subsection{Baza wejœciowa}
+
+Baza wejœciowa musi zawieraæ tabelki lub widoki zawieraj¹ce dane. W celu okreœlenia danych wejœciowych u¿ytkownik musi wybraæ tabelê a nastêpnie kolumnê reprezentuj¹c¹ wynik decyzji, nazwijmy j¹ kolumn¹ decyzyjn¹ oraz listê kolumn reprezentuj¹ce przes³anki decyzji, nazwijmy je kolumnami decyduj¹cymi. Nastêpnie u¿ytkownik definiujê podzbiór tabeli lub widoku, na których bêdzie budowane drzewo. Innymi s³owy format danych wejœciowych jest zwyk³¹ tabelk¹. Wybrana tabela i kolumny wraz z definicj¹ bazy danych zostaje zapisana w bazie definicyjnej do póŸniejszego u¿ycia przez pluginy algorytmiczne.
+
+\subsection{Baza definicyjna}
+Baza definicyjna ma za zadanie przechowaæ strukturê drzewa oraz parametry z nim zwi¹zane.  Do opisu drzew zdefiniowane s¹ 3 tabele przedstawione na poni¿szym diagramie ERD:
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.7\textheight]{sad_files/erd.png}
+    \caption{Diagram ERD}
+    \label{fig:erd}
+\end{figure}
+
+Diagram nie przedstawia powi¹zañ miêdzy powy¿szymi tabelami a pozosta³ymi tabelami definicyjnymi Salomona.
+
+Dane przechowywane w poszczególnych tabelach s¹ nastêpuj¹ce:
+\begin{itemize}
+\item TREE\_NODES  - tabela przechowuje wêz³y drzew. Ka¿dy wêze³ zawiera informacjê o poprzedzaj¹cym go wêŸle (null jeœli takowego nie posiada, czyli jest korzeniem drzewa), o poprzedzaj¹cej krawêdzi oraz o wartoœci zapisanej w wêŸle. Wartoœæ w wêŸle mo¿e byæ zarówno nazw¹ kolumny lub wartoœci¹ (zbiorem wartoœci) kolumny decyzyjnej (wówczas jest to liœæ drzewa)
+\item TREE\_DATA\_SOURCES - tabela reprezentuj¹ce wybrane przez u¿ytkownika dane wejœciowe potrzebne do zbudowania drzewa. Zawiera m.in.: wskaŸnik do rozwi¹zania (solution) oraz nazwy wybranej wraz z wybranymi kolumnami: kolumnê decyzyjnej i kolumny decyduj¹ce, numer pierwszego i ostatniego wiersza. Informacja o rozwi¹zaniu potrzebna jest w celu zidentyfikowania parametrów bazy wejœciowej oraz w celu umo¿liwienia korzystania z danych wejœciowych przez wszystkie projekty w rozwi¹zaniu.
+\item TREES -  tabela opisuj¹ca zbiorczo informacjê o drzewie. Zawiera m.in.:nazwê drzewa, wskaŸnik do taska pluginu algorytmicznego, wskaŸnik do wêz³a drzewa reprezentuj¹cy korzeñ oraz wskaŸnik do tabeli opisuj¹cej dane wejœciowe.
+\end{itemize}
+
+Plugin wejœciowy miêdzy innymi ma za zadanie wype³niæ tabelê \\
+TREE\_DATA\_SOURCES. Natomiast plugin algorytmiczny pozosta³e tabele.
+
+\[\]
+
+\end{document}

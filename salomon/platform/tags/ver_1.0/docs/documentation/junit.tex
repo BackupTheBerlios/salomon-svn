@@ -1,0 +1,126 @@
+\section{Testy}
+\subsection{JUnit}
+
+\subsubsection*{Wrappery na obiekty}
+${salomon.engine.serialization.IObjectComparatorTest}$\\
+\begin{enumerate}
+	\item testCompareInt()\\
+	Tworzy dwie klasy \texttt{SimpleInteger}(implementacja \texttt{IInteger}) i inicjuje je tymi samymi wartoœciami. Nastêpnie wykonywany jest
+	
+\begin{verbatim}
+assertTrue(int1.equals(int2));
+\end{verbatim}
+Tworzymy te¿ 3 obiekt, który inicjujemy inn¹ wartoœci¹ i wykonujemy:
+\begin{verbatim}
+assertFalse(int1.equals(int3));
+\end{verbatim}
+
+	\item testCompareString()\\
+	Analogiczny test, tyle ¿e dla obiektów 	\texttt{SimpleString}(implementacja \texttt{IString})
+
+	\item testCompareStuct()\\
+	Analogiczny test, tyle ¿e dla obiektów 	\texttt{SimpleStruct}(implementacja \texttt{IStruct})
+
+\end{enumerate}
+
+\subsubsection*{Klasy rdzenia}
+${salomon.engine.solution.SolutionManagerTest}$\\
+Test obejmuje wszystkie dzia³ania na "`Rozwi¹zaniach"' takie jak tworzenie samego Rozwi¹zania oraz dodanie do niego poszczególnych projektów, testowane jest równie¿ przechowywanie rozwi¹zañ w bazie danych i pobieranie ich do uruchomienia.
+Funkcjonalnoœæ jest nowa wiêc test bêdzie sie rozrasta³ w miarê jej rozbudowywania 
+\begin{enumerate}
+	\item testCreateSolution()\\
+		Test tworzenia "`Rozwi¹zañ"'
+	\item testGetAddSolution()\\
+		Test dodaje kilka rozwi¹zañ do SolutionManagera oraz próbuje je pograæ jako listê
+	\item testGetSolution()\\
+	  Analogiczny test do poprzedniego lecz tym razem pobieramy Rozwi¹zanie o konkretnej nazwie  
+\end{enumerate}
+
+
+\textbf{Solution Test}\\
+${salomon.engine.solution.SolutionTest}$\\
+Testuje dostêpne narazie funkcjonalnoœæ "`Rozwi¹zania"'. Jako ¿e rozwi¹zanie jest tworzone przez SolutionManagera przetestowanego powy¿ej, test sprowadza sie do wyci¹gania informacji ze stworzonego rozwi¹zania
+Funkcjonalnoœæ jest nowa, wiêc test bêdzie sie rozrasta³ w miarê dodawania nowej funkcjonalnoœci 
+
+
+\textbf{Test Mened¿era Zadañ}
+${salomon.engine.solution.TaskManagerTest}$\\
+Testowana jest tutaj funkcjonalnoœæ zwi¹zana z zarz¹dzaniem zadaniami. Test obejmuje kompleksowe tworzenie Zadania do wykonania, dodawanie zadañ do wykonania/usuwania, dodawania zadañ do projektu itd. 
+\begin{enumerate}
+\item testCreateTask\\
+			Testuje tworzenie zadañ 
+\item testAddTask\\
+			Test dodawania/pobierania zadañ do wykonania, jako ¿e zadania s¹ przechowywane w bazie danych test obejmuje g³ówne funkcjonowanie bazy
+\item testClearTasks\\
+			Test usuwania zadañ z bazy
+\item testGetCurrentTask\\
+			Pobiera aktualnie wykonywane zadanie
+\item testSetProjectManager\\
+			Testuje ustawienia projektu do wykonania
+\end{enumerate}
+
+\textbf{Test Pojedynczego zadania}
+${salomon.engine.solution.TaskTest}$\\
+Analogiczny do poprzedniego zestawu testów lecz skupia siê bardziej na operowaniu samym zadaniem nie ich zbiorem
+
+\textbf{Test Mened¿era projektów}
+${salomon.engine.project.ProjectManagerTest}$\\
+Testy analogiczne do SolutionManagera, dodawanie/usuwanie projektów do Managera, zachowywanie projektów do bazy itd.
+
+\textbf{Test Pojedynczego projektu}
+${salomon.engine.project.ProjectTest}$\\
+Testy operuj¹ce na samum projekcie g³ównie ³adowanie, zachowywanie, usuwanie projektów 
+
+\subsubsection*{Baza Danych}
+Ca³a komunikacja z baz¹ danych zosta³a owrappowana w klasy odpowiadaj¹ce odpowiednim zapytaniom , testy w tej sekcji s¹ zaprojektowane aby testowa³y ich funkcjonalnoœæ. Ka¿da klasa testów odpowiada jednemu typowi zapytañ i zawiera po kilka testów.\\
+
+\textbf{Usuwanie danych z bazy}
+${salomon.engine.database.queries.SQLDeleteTest}$\\
+	Testy usuwania rekordów z baz danych\\
+	
+\textbf{Dodawanie danych z bazy}
+${salomon.engine.database.queries.SQLInsertTest}$\\
+	Testy dodawania rekordów\\
+	
+\textbf{Zapytania do bazy}
+${salomon.engine.database.queries.SQLSelectTest}$\\
+	Testy zapytañ do bazy\\
+	
+\textbf{Zmiana rekordów w bazie}\\
+${salomon.engine.database.queries.SQLUpdateTest}$\\
+	Testy zmiany zawartoœci rekordów
+	 
+\subsubsection*{Pluginy}
+
+\textbf{Test Mened¿era pluginów}
+${salomon.engine.plugin.PluginManagerTest}$\\
+	Testy funkcjonalnoœci zwi¹zanej z pluginami, jak ³adowanie/dodawanie/usuwanie pluginów z systemu, operacje na pluginach\\
+	
+\subsubsection*{Serializacja do XMLa}
+${salomon.engine.serialization.SerializerTest}$\\
+Jako przyk³adowe dane wykorzystuje ona plik:
+
+\begin{Verbatim}
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struct SYSTEM "config/struct.dtd">
+
+<struct name="str1">
+  <int name="int1" value="2301"/>
+  <string name="string1" value="test_val_1"/>
+  <struct name="str1_2">
+    <string name="string2" value="val2"/>
+    <int name="int2" value="666"/>
+  </struct>
+</struct>
+\end{Verbatim}
+
+
+Test zawiera metody:
+\begin{itemize}
+	\item testDeserialize()\\
+	Testuje serializacjê z XML do obiektu
+	\item testSerialize()\\
+	Testuje serializacjê z obiektu do XML
+	\item testSymetric()\\
+	Wykonuje serializacjê i deserializacjê i sprawdza czy dostaliœmy to samo.
+\end{itemize}

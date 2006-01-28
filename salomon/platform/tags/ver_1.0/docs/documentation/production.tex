@@ -1,0 +1,64 @@
+\section{Za³o¿enie implementacyjne}
+W czasie produkcji systemu stosowaliœmy nastêpuj¹ce zasady:
+
+\subsection{Kontrola wersji}
+Ca³y kod oraz inne zasoby wykorzystywane w programie znajduj¹ siê pod kontrol¹ wersji. U¿ywany do tego jest  \emph{Subversion} (nastêpca CVS-a) i odpowiednie pluginy zapewniaj¹ce jego integracjê z edytorem oraz systemem operacyjnym. Zapewnia to pe³n¹ synchronizacjê kodu na wszystkich komputerach, na których mo¿e on byæ modyfikowany.
+
+\subsection{Wspólny edytor}
+U¿ywany jest wspólny edytor - \emph{Eclipse}. Dziêki mo¿liwoœci eksportowania ustawieñ u¿ywane jest  identyczne formatowanie kodu, co pomaga utrzymaæ przejrzystoœæ i czytelnoœæ kodu. 
+
+\subsection{Testowanie jednostkowe} 
+W celu testowania funkcjonalnoœci wykorzystujemy mechanizm \emph{JUnit}. 
+
+\subsection{GUI testowanie}
+W celu weryfikowania poprawnoœci interfejsu u¿ytkownika stworzone zosta³y skrypty dla programu Abbot. Jego zadaniem jest odtworzenie nagranych sekwencji wykonywanych  przez  u¿ytkownika w czasie obs³ugi programu. W po³¹czeniu z runtime-ow¹ weryfikacj¹ kontraktów stanowi to silny mechanizm weryfikacji jakoœci produktu
+
+\subsection{Kontrakty}
+W kodzie zosta³y wprowadzone mechanizmy zaczerpniête z jêzyka  \emph{Eiffel} - tzw. kontrakty. Polega to na tym, ¿e w komentarzach dla klas oraz metod zawarte s¹ warunki, sprawdzaj¹ce poprawnoœæ stanu, w jakim znajduje siê system. Kontrakty stanowi¹ dodatkow¹ informacjê dla programisty wykorzystuj¹cego dan¹ klasê lub interfejs. Dodatkowo wykorzystywany jest kompilator, który kompiluje tak¿e kod kontraktów i w razie ich z³amania rzuca wyj¹tki.
+
+\subsection{Automatyczne budowanie projektu} 
+W celu zautomatyzowania procesu budowania projektu wykorzystany zosta³ program  \emph{Ant}. Automatyzuje on proces tworzenia projektu od kompilacji, a¿ do wygenerowania instalatora.
+
+\subsection{Instalator}
+By uproœciæ proces instalacji dla u¿ytkownika koñcowego utworzone zosta³y skrypty tworz¹ce instalator. Jako program do utworzenia instalatora wykorzystywany jest program  \emph{IzPack}.
+
+\subsection{Mechanizmy lokalizacyjne}
+Wszystkie teksty u¿yte w interfejsie u¿ytkownika pobierane s¹ z odpowiednich plików, co pozwala na ³atw¹ lokalizacjê programu
+
+\subsection{Konfiguracja}
+Konfiguracja programu wczytywana jest z odpowiednich plików konfiguracyjnych. Pozwala to na ³atw¹ zmianê zachowania programu (np. zmianê kontrolera). 
+
+\subsection{Logowanie}
+Do œledzenia przebiegu wykonania programu wykorzystywany jest log4j. Wprowadza on elastyczny model logowania. 
+
+\subsection{Zarz¹dzanie projektem}
+Jak system zarz¹dzania projektem wybraliœmy Gemini - system wspomagania pracy grupowej oparty na ASP.NET. System wspomaga wszelkie dziedziny ¿ycia projektu, poczynaj¹c od przydzia³u zadañ dla poszczególnych developerów, kontroli stanu ich wykonania, estymacji czasu pracy nad danym zagadnieniem, po zarz¹dzanie projektem jak ca³oœci¹ czyli wyznaczanie milestone'ów oraz przypisywania do nich zadañ, generacja diagramów Gantta, zarz¹dzanie zasobami ludzkimi itp. 
+
+%\subsection{CMS}
+%Jako CMS(Content Management System) dla naszej strony zosta³ u¿yty projekt Mambo 4.9.1a. Jest to bardzo wygodny i %elastyczny w u¿ytkowaniu system kontroli treœci. System ma budowê modu³ow¹ dziêki czemu mo¿emy w ka¿dej chwili rozszerzyæ %jego funkcjonaloœæ. Oprócz standardowych modu³ów jakie dostarczane s¹ z dystrybucj¹ Mambo do³¹czyliœmy Forum dyskusyjne %(SimpleBoard) oraz galeriê (RSGallery). Dodatkow¹ mo¿liwoœci¹ jest wrappowanie innych projektów dziêki czemu uda³o nam %sie bez wiêkszych problemów dodaæ modu³y bezpoœrednio nie wspierane przez Mambo, jak Bugzilla czy Wiki.
+
+
+%\subsection{Maven}
+%W projekcie u¿yliœmy równie¿ mavena. Jest to bardzo u¿yteczne narzêdzie do zarz¹dzania buildami, jak równie¿ tworzeniem raportów na temat posuwaj¹cych siê prac. Aktualnie podpiêliœmy nastêpuj¹ce raporty:
+%\begin{itemize}
+%	\item Changes\\
+%	w estetyczny sposób pokazuje wersje, i zmiany jakie w nich zasz³y
+%	\item Checkstyle\\
+%	raport z checkstyle'a \href{http://checkstyle.sourceforge.net/}{http://checkstyle.sourceforge.net/}, najpopularniejszego chyba darmowego narzêdzia do statycznej analizy kodu)
+%	\item Unit tests\\
+%	Raport z przebiegu testów wykonanych za pomoc¹ JUnita
+%	\item File activity\\
+%	Pokazuje jak czêsto zmienia³y siê poszczególne pliki
+%	\item Change log\\
+%	Pokazuje komentarze z wszystkich commitów do repozytorium
+%	\item PMD report\\
+%	to narzêdzie(\href{http://pmd.sourceforge.net/}{http://pmd.sourceforge.net/}) wykrywa potencjalne b³êdy, takie jak:
+	
+%		\begin{itemize}
+%			\item puste bloki try/catch/finally/switch
+%			\item nieu¿ywane lokalne zmienne, parametry i metody prywatne
+%			\item puste warunki: if/while
+%		\end{itemize}
+%	\item Javadocs
+%	\item Kod w postaci plików html
+%\end{itemize}

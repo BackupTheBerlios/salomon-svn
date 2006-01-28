@@ -1,0 +1,77 @@
+\section{Bezpieczeñstwo}
+
+\subsection{Miejsca nara¿one na ataki}
+\subsubsection{Sieæ}
+Obliczenia sieciowe s¹ zorganizowane na bazie architektury klient-serwer zrealizowanej za pomoc¹ RMI, klienci rejestruj¹ swoj¹ gotowoœæ do prowadzenia obliczeñ na serwerze, nastêpnie serwer posy³a ka¿demu z klientów zadanie do wykonania. Nastêpnie klient sprawdza w bazie danych jakie pluginy s¹ mu potrzebne do wykonania zadania oraz œci¹ga je ze znalezionego adresu URL. Serwer, co pewien czas, pyta o klientów o wyniki.\\
+
+\begin{figure}[h]
+	\centering
+		\includegraphics[width=\textwidth]{img/security/nofirewall.png}
+	\caption{Architektura}
+	\label{fig:arch}
+\end{figure}
+
+Pierwszym problemem bezpieczeñstwa jest brak kontroli nad tym kto mo¿e siê po³¹czyæ jako klient. Poniewa¿ po po³¹czeniu, wszystkie metody s¹ wywo³ywane przez serwer na kliencie nie wzrasta w ten sposób podatnoœci na ataki DOS a podatnoœæ na Synflood jest taka jak ca³ego systemu , mimo to stanowi to zagro¿enie dla spójnoœci obliczeñ poniewa¿ fa³szywy klient mo¿e zwracaæ niepoprawne wyniki zarówno ze wzglêdu na wartoœci nie oczekiwane przez program, co mo¿e spowodowaæ zawieszenie w przypadku  b³êdu w serwerze, jaki i dane niepoprawne merytorycznie co zak³óci przebieg obliczenia. Sugerowan¹ metod¹ przeciwdzia³ania by³o by wprowadzenie list dostêpu na serwerze lub ich implementacja na firewallu. Mo¿na ewentualnie wprowadziæ has³a przy logowania ale ich u¿ytecznoœæ by³a by znikoma poniewa¿ klient a nie serwer udostêpnia tutaj zasoby (chyba ¿e komuœ mog³o by zale¿eæ na kradzie¿y tej porcji danych która zostanie wys³ana klientowi).\\
+
+\begin{figure}[h]
+	\centering
+		\includegraphics[width=\textwidth]{img/security/firewall.png}
+	\caption{Rozwi¹zanie 1}
+	\label{fig:resolution_1}
+\end{figure}
+          
+Istnieje mo¿liwoœæ przeprowadzenia ataku DOS jeœli metoda klienta odpowiedzialna za przyjêcie zadania do wykonania wejdzie w nieskoñczon¹ pêtlê. W¹tek serwera bêdzie czeka³ na powrót metody od klienta co w przypadku zmasowanych po³¹czeñ tak spreparowanych klientów mo¿e doprowadziæ do wyczerpania puli w¹tków co spowoduje ¿e serwer nie bêdzie przyjmowa³ nowych po³¹czeñ. Nie mo¿emy siê ca³kowicie obroniæ przed tego typu atakiem ale mo¿emy znacznie ograniczyæ szkody nim wywo³ane poprzez wprowadzanie timeoutów dla w¹tków obs³ugi klientów bêd¹cych w stanie oczekiwania na odpowiedŸ od klienta.\\
+
+Nastêpnym mo¿liwym problemem jest pobieranie listy pluginów z bazy danych. Atakuj¹cy potrafi¹cy z³amaæ zabezpieczenia bazy danych b¹dŸ porwaæ po³¹czenie, jest wstanie wskazaæ swoje w³asne Ÿród³o pluginów co mo¿e doprowadziæ do wykonania obcego kodu u klienta. Na zapewnienie bezpieczeñstwa bazie danych mamy wp³yw tylko œrodkami ogólnosystemowymi. Zalecane jest jednak aby tunelowaæ po³¹czenie do bazy poprzez szyfrowane po³¹czenie co utrudni jego przechwycenie raz zdobycie has³a do bazy. Mo¿liwoœci wykonania obcego kodu s¹ ograniczone przez maszynê wirtualn¹ javy i bêd¹ omówione w rozdziale dotycz¹cym bezpieczeñstwa lokalnego.
+
+\begin{figure}[h]
+	\centering
+		\includegraphics[width=\textwidth]{img/security/ssl.png}
+	\caption{Rozwi¹zanie 2}
+	\label{fig:resolution_2}
+\end{figure}
+
+\subsubsection{U¿ytkownik lokalny}
+Wiêkszoœæ spraw bezpieczeñstwa wykonania kodu jest kontrolowana przez œrodowisko tj. Wirtualn¹ Maszynê Javy. Odpada dziêki temu ca³kiem spora klasa ataków typu buffer overflow, Zakresy tablic s¹ kontrolowane przez Javê co nie pozwala na wyjœcie poza swoj¹ pamiêæ i nadpisanie stosu. Dziêki odpowiednio ustawionej polityce bezpieczeñstwa maszyny wirtualnej mo¿emy zabroniæ jakichkolwiek prób komunikacji pluginów ze œrodowiskiem. 
+Bardzo wa¿nym jest aby zabroniæ pluginom wiêkszoœci rzeczy z grupy runtime tak jak ³adowanie bibliotek z natywnym kodem (praktycznie nieograniczone mo¿liwoœci), zamkniêcia maszyny (denial-of-service), tworzenia w³asnych ClassLoaderów (Wykonanie niebezpiecznego kodu) czy ustawiania w³asnych fabryk dla gniazd (Mo¿liwoœæ podmiany implementacji gniazda a co za tym idzie zmiana danych które przez nie przechodz¹). Ca³ej aplikacji musi byæ wolno u¿ywaæ JDBC oraz otwieraæ gniazda, pluginy bêd¹ korzysta³y tylko z klas engine'u salomona wiec i tej funkcjonalnoœci nie potrzebuj¹.
+\newpage
+
+\subsection{Propozycje bezpiecznej konfiguracji}
+Jak widaæ zagro¿eñ jest wiele, jednak ca³e œrodowisko obliczeniowe by³o projektowane z myœl¹ o uruchomieniu go w sieci odseparowanej od internetu b¹dŸ poprzez VPN a przy takim opakowaniu wymienione luki staj¹ siê ma³o groŸne, nie mo¿emy jednak polegaæ na bezpieczeñstwie opartym na niewiedzy o lukach gdy¿ w przypadku w³amania do wewn¹trz sieci mog¹ stanowiæ one cel ataków.
+\subsubsection{Plik salomon.policy}
+Plik salomon.policy okreœla prawa kodu do wykonania potencjalnie niebezpiecznych dla u¿ytkownika akcji 
+oraz wszelkich dzia³añ poza "`piaskownic¹"' maszyny wirtualnej Javy. Projekt posiada wie domeny bezpieczeñstwa, jedn¹ dla kodu samego salomona, drug¹ o wiele bardziej restrykcyjn¹ dla pluginów u¿ytkowników. 
+
+\begin{verbatim}
+grant codeBase "file:/${installdir}/bin" {
+  permission java.awt.AWTPermission "listenToAllAWTEvents";
+  permission java.io.FilePermission "${installdir}${/}-", "read, write";
+  permission java.lang.RuntimePermission "createClassLoader";
+  permission java.lang.RuntimePermission "exitVM";
+  permission java.sql.SQLPermission "setLog";
+  permission java.util.PropertyPermission "*", "read";
+  permission java.awt.AWTPermission "showWindowWithoutWarningBanner";
+  permission java.lang.RuntimePermission "loadLibrary.*";
+  permission java.lang.RuntimePermission "shutdownHooks";
+  permission java.lang.RuntimePermission "stopThread";
+  permission java.util.logging.LoggingPermission "control";
+};
+
+
+\end{verbatim}
+
+Poniewa¿ engine zajmuje siê po³¹czeniami z baz¹ danych oraz obs³ug¹ sieci, domenie \texttt{bin/} zosta³y przydzielone pozwolenia na korzystanie z sieci, dodatkowe dla JDBC,  zezwolenie na ³adowanie bibliotek natywnych oraz ustawianie logowanie SQLa. Bardzo wa¿nym jest przydzielenie pozwoleñ z klasy Runtime. Engine zajmuje siê ³adowanie pluginów z sieci wiêc potrzebny mu jest w³asny ClassLoader, zosta³o wiec  przydzielone pozwolenie "`createClassLoader"', dodatkowo przydzielono zezwolenia na zamkniêcie maszyny oraz na kontrole nad w¹tkami, pozwolenie to jest szczególnie przydatne podczas kontroli klientów oczekuj¹cych na w¹tkach. Zezwolenia na u¿ycie AWT pozwol¹ na wyœwietlenie GUI
+\begin{verbatim}
+grant codeBase "file:/${installdir}/plugins" {
+  permission java.awt.AWTPermission "listenToAllAWTEvents";
+  permission java.awt.AWTPermission "showWindowWithoutWarningBanner";
+};
+
+
+\end{verbatim}
+Pluginom ze wzglêdów bezpieczeñstwa zosta³o zabrane wiêkszoœæ pozwoleñ. Pluginy same wyœwietlaj¹ swoje GUI z  konfiguracj¹ wiêc potrzebuj¹ zezwolenie na u¿ycie AWT. Jednak¿e danie im zezwoleñ na wszelkie akcje z klasy Runtime by³o by wysoce niebezpieczne poniewa¿ szkodliwy plugin móg³ by za³adowaæ swoje klasy z poza domeny i tym samy obejœæ wszystkie zabezpieczenia
+
+
+
+
+\newpage

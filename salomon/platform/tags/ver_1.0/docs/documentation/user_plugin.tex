@@ -1,0 +1,90 @@
+\section{Tworzenie w³asnej wtyczki}
+
+System, dziêki swej elastycznej architekturze, pozwala u¿ytkownikowi na rozszerzanie jego mo¿liwoœci poprzez definiowanie przez niego w³asnych pluginów. Ca³a funkcjonalnoœæ zwi¹zana z przetwarzaniem pluginów, konfigurowaniem ich, prezentacj¹ wyników ich dzia³ania oraz komunikacj¹ przez sieæ ukryta jest przed twórc¹ wtyczki i nie musi byæ brana pod uwagê przy jego projektowaniu i implementacji. Jedyne, co musi on zrobiæ to zaimplementowaæ opisane poni¿ej interfejsy.
+By system móg³ skorzystaæ z nowych wtyczek nale¿y podaæ ich lokalizacje, umo¿liwiaj¹c systemowi tym samym œci¹gniêcie i za³adowanie wtyczki. 
+Obecna wersja systemu obs³uguje tylko pluginy w postaci archiwów jar.
+
+Poni¿ej zamieszczony jest schemat przyk³adowego pluginu:
+
+\begin{figure}[!hb]
+	\centering
+		\includegraphics[scale=0.40]{img/uml/average_price_plugin.jpg}
+	\caption{Przyk³adowy plugin}
+	\label{fig:AveragePricePlugin}
+\end{figure}
+
+Klasy zaznaczone na zielono i rozpoczynaj¹ce siê od liter \emph{AP} to przyk³adowe implementacje interfejsów plugniów (kolor ¿ó³ty).  
+
+\subsection{Interfejsy pluginów}
+
+Ka¿da wtyczka aby móg³a byæ przetwarzana przez system, musi
+implementowaæ nastêpuj¹ce \mbox{interfejsy:}
+
+\subsubsection{IPlugin}
+
+\begin{itemize}
+	\item \emph{getDescription()} - zwraca obiekt klasy
+    \emph{Description} zawieraj¹cy opis pluginu (nazwê, lokalizacjê,
+    wersjê itp.)
+\end{itemize}    
+
+\subsubsection{IDataPlugin}
+	\begin{itemize}
+		\item \emph{doJob()} - metoda wykonuje g³ówne zadanie pluginu
+	\end{itemize}
+    
+
+\subsubsection{IGraphicPlugin}
+\begin{itemize}
+	\item \emph{getSettingComponent()} - zwraca obiekt
+    implementuj¹cy interfejs \emph{ISettingComponent}
+	\item \emph{getResultComponent()} - zwraca obiekt implementuj¹cy
+    interfejs \emph{IResultComponent}\\    
+\end{itemize}
+
+Interfejs \emph{IGraphicComponent} zapewnia interakcjê z
+u¿ytkownikiem. Jego metody zwracaj¹ komponenty pozwalaj¹ce na
+modyfikacjê ustawieñ pluginu oraz na wyœwietlenie rezultatu jego
+dzia³ania. Obiekty zwracane przez metody tego interfejsu
+implementuj¹ interfejsy:
+
+\subsubsection{ISettingComponent}
+\begin{itemize}
+	\item \emph{getComponent(ISettings settings)} - zwraca graficzny
+    komponent s³u¿¹cy do edycji ustawieñ pluginu. Jest on wype³niany
+    wartoœciami przekazanymi w obiekcie \emph{ISettings}.
+	\item \emph{getSettings()} - zwraca ustawienia pluginu.    
+	\item \emph{getDefaultSettings()} - zwraca domyœlne ustawienia
+    pluginu. Wykorzystywane, gdy u¿ytkownik nie wprowadzi³ w³asnych
+    ustawieñ.    
+\end{itemize}    
+
+\subsubsection{IResultComponent}
+\begin{itemize}
+	\item \emph{getComponent(IResult result)} - zwraca graficzny
+    komponent wyœwietlaj¹cy rezultat wykonania wtyczki. Wype³niany
+    jest on na podstawie obiektu  \emph{IResult} zwróconego wczeœniej
+    przez metodê \emph{doJob()}.
+	\item  \emph{getDefaultResult()} - zwraca domyœlny rezultat wykonania wtyczki.
+\end{itemize}    
+
+\subsubsection{ISettings}Implementowany przez obiekt reprezentuj¹cy
+	ustawienia wtyczki.
+\begin{itemize}
+	\item \emph{parseSettings(String settings)} - metoda inicjalizuje obiekt klasy
+    \emph{ISettings}  na podstawie jego  tekstowej reprezentacji.
+    U¿ywana przy ³adowaniu ustawieñ pluginu z  bazy danych.
+	\item \emph{settingsToString()} - zwraca tekstow¹ reprezentacjê
+    obiektu klasy \emph{ISettings}. U¿ywana przy zapisie ustawieñ pluginu do
+    bazy danych.    
+\end{itemize}    
+
+\subsubsection{IResult} Implementowany przez obiekt reprezentuj¹cy rezultat dzia³ania wtyczki.
+\begin{itemize}
+	\item \emph{parseResult(String result)} - metoda inicjalizuje obiekt klasy
+    \emph{IResult}  na podstawie jego  tekstowej reprezentacji.
+    U¿ywana przy ³adowaniu rezultatu dzia³ania pluginu z bazy danych.
+	\item \emph{resultToString()} - zwraca tekstow¹ reprezentacjê obiektu klasy
+    \emph{IResult}. U¿ywana przy zapisie rezultatu dzia³ania pluginu do bazy danych.
+\end{itemize}   
+

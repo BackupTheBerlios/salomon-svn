@@ -1,0 +1,225 @@
+\documentclass[a4paper, 12pt]{article}
+%\usepackage[polish]{babel}
+%\usepackage[cp1250]{inputenc}
+\usepackage[latin2]{inputenc}
+%\usepackage{polski}
+\usepackage{amsfonts}
+\usepackage[T1]{fontenc}
+\usepackage[dvips]{graphicx}
+
+%\usepackage{pldoc}
+
+
+
+
+
+
+
+\pagestyle{headings}
+\textwidth      15.5cm
+\oddsidemargin    .1cm
+\evensidemargin   .1cm
+
+\begin{document}
+
+\thispagestyle{empty}
+
+\begin{minipage}{5cm}
+%\includegraphics[scale=0.3]{logo.eps}
+\end{minipage}
+\begin{minipage}{10cm}
+\begin{center}
+{\Large Salomon\\
+System przetwarzania wiedzy\\}
+\end{center}
+\end{minipage}
+
+\vspace*{0.5cm}
+
+\hrulefill
+
+\vspace*{1cm}
+
+
+\begin{flushright}
+{\Large \emph{Vision Scope, ver 1.1} }
+\end{flushright}
+
+\vspace{7cm}
+
+\begin{flushleft}
+{ \Large Historia wersji }\[\]
+\begin{tabular}{|p{2.5cm}||p{1.5cm}|p{4.5cm}|p{5.5cm}|}
+  \hline
+  Data & Wersja & Opis & Autorzy \\
+  \hline \hline
+  18-04-2005 & 1.0 & Pocz±tkowa wersja Vision pierwszego cyklu & Przemys³aw Misiuda, Dominik Seweryn\\
+  \hline
+  27-04-2005 & 1.1 & Poprawiona wersja Vision & Przemys³aw Misiuda, Dominik Seweryn\\  \hline
+\end{tabular}
+\end{flushleft}
+
+\[\] \[\] \[\] \[\] \[\] \[\] \[\] \[\] \[\]
+
+%\begin{flushleft}
+%{ \Large Autor} \[\]
+%\begin{tabular}{|p{3.5cm}|p{3.5cm}|p{3.5cm}|p{3.5cm}|}
+%  \hline
+%  Imiê Nazwisko & Pozycja & adres@e-mail.pl & data \\
+%  \hline
+%\end{tabular}
+%\end{flushleft}
+
+\newpage
+
+\section{Cel}
+Celem projektu jest rozbudowa platformy Salomon o obs³ugê drzew decyzyjnych oraz implementacja algorytmów budowy i wizualizacji drzew decyzyjnych.
+%\subsection{S³ownik}
+%\subsection{Odno¶niki}
+
+\section{Ramy i za³o¿enia projektowe}
+Mamy do dyspozycji platformê Salomon s³u¿±c± jako platforma do uruchamiania zadañ. Platformê t± bêdziemy rozbudowywaæ o now± funkcjonalno¶æ - obs³ugê drzew decyzyjnych, polegaj±c± na opracowaniu struktury w bazie danych przeznaczonej do przechowywania drzew decyzyjnych i obs³udze takich struktur. Implementacja algorytmów budowy drzew decyzyjnych oraz wstêpnej wizualizacji bêdzie realizowana w postaci pluginów obs³ugiwanych przez t± platformê.
+%\subsection{Nie objête zakresem problemu}
+
+\section{Opis u¿ytkownika}
+W przypadku niniejszego projektu bêdziemy mieli do czynienia z dwoma rodzajami u¿ytkowników.
+Pierwszy z nich to tzn. u¿ytkownik koñcowy - osoba pragn±ca korzystaæ
+z funkcjonalno¶ci, jak± chcemy zaoferowaæ w zakresie budowy drzew decyzyjnych -  korzystania z zaimplementowanych przez nas algorytmów. Tu istotne bêd± funkcje zwi±zane bezpo¶rednio z przygotowaniem danych na potrzeby algorytmu, wyborem typu algorytmu, prezentacj± uzyskanych wyników.
+Drugi rodzaj u¿ytkownika to kto¶ pragn±cy w przysz³o¶ci wykorzystaæ rozbudowan± w tym projekcie funkcjonalno¶æ platformy o reprezentacjê drzew decyzyjnych. W tym przypadku wa¿ne bêd± informacje o interfejsach i opis ich funkcji.
+
+\section{Wymagania projektowe}
+\subsection{Funkcjonalne}
+\subsubsection{Wymagania funkcjonalne interfejs}
+Interfejs:
+\begin{itemize}
+\item ekran do wyboru ¼ród³a danych (baza, tabela)
+\item ustalanie które atrybuty (które kolumny tabeli) maj± byæ u¿yte
+\item ustalanie zale¿nych/niezale¿nych atrybutów
+\item ustalanie miejsca sk³adowania wyników dzia³ania algorytmu (* - tylko je¿eli bêdziemy wyniki sk³adowaæ w jakiej¶ tabeli ? zale¿nie od decyzji podjêtej w fazie projektowej)
+\item ustalanie jawne na których z dostêpnych dla Salomona platformach maj± byæ prowadzone obliczenia
+\item wybór algorytmu tworzenie drzewa
+\item uruchamianie
+\item informacje o statusie: busy, idle, error, unconfirmed itp.
+\item okienko ,,DEBUG'', w którym bêd± wypisywane informacje o dzia³aniu algorytmu, np. wyliczone entropie dla wêz³ów, wybór parametru itp.
+\item postêp obliczeñ (je¿eli w fazie projektowej ustalimy, ¿e da siê to osi±gn±æ)
+\item wizualizowanie wyników obliczeñ - graf ilustruj±cy stworzone zale¿no¶ci
+\item redukcja/optymalizowanie drzewa decyzyjnego
+\end{itemize}
+
+\subsection{Niefunkcjonalne}
+\subsubsection{Systemowe}
+\begin{itemize}
+\item Stworzenie kodu i api umo¿liwiaj±cego ³atwe do³±czenie innych implementacji algorytmu tworzenia drzew decyzyjnych.
+\item Napisanie intuicyjnej dokumentacji u¿ytkownika i dokumentacji do kodu.
+\item Stworzenie przyk³adów ilustruj±cych dzia³anie pluginu.
+\end{itemize}
+
+\subsubsection{Jako¶ciowe}
+\begin{itemize}
+\item Napisanie wydajnego algorytmu budowy drzew decyzyjnych
+\item Reprezentacja drzew decyzyjnych w sposób umo¿liwiaj±cych ich ³atw± wizualizacjê
+\end{itemize}
+%\section{Funkcjonalno¶ci produktu}
+%\subsection{Cecha 1}
+%\subsection{Cecha 2}
+%\subsection{Priorytety funkcjonalno¶ci }
+
+\section{Architektura i narzêdzia}
+System nasz bêdzie rozbudowywa³ platformê Salomon (o obs³ugê drzew decyzyjnych) oraz dostarcza³ dwa pluginy dla tej platformy - jeden dla algorytmu do tworzenia drzew decyzyjnych, drugi dla wizualizacji tych drzew. Wiêkszo¶æ procesu kodowania systemu bêdzie polega³a na zaimplementowaniu zdefiniowanych przez twórców platformy Salomon interfejsów. Z tej przyczyny nie bêd± nas interesowa³y zagadnienia po³±czenia z baz± danych, warstwy sieciowej itp., bêd± one obs³ugiwane przez platformê Salomon. Konfigurowanie pluginów bêdzie dokonywane przez graficzny interfejs u¿ytkownika ukazuj±cy siê po wybraniu odpowiedniej wtyczki.
+W procesie kodowania bêdziemy u¿ywaæ IDE Eclipse Dziêki mo¿liwo¶ci eksportowania ustawieñ bêdziemy mogli korzystaæ z tych samych ustawieñ, co twórcy platformy Salomon.
+
+\section{Ryzyka}
+
+\subsection{Nieprzewidziane sytuacje zwi±zane ze wspó³prac± z platforma Salomon}
+
+\subsubsection{Opis ryzyka}
+
+Zagro¿eniem mo¿e tu byæ m.in. wykrycie nieudokumentowanych b³êdów w dzia³aniu platformy czy
+nieukoñczona implementacja zak³adanej funkcjonalno¶ci.
+
+\subsubsection{Ranga ryzyka}
+
+¶rednia.
+
+\subsubsection{Wp³yw na projekt}
+
+Du¿y. Mo¿e spowodowaæ znaczne opó¼nienia w realizacji projektu o czas potrzebny na jego
+zlokalizowanie i naprawê przez zespó³ kooperuj±cy.
+
+\subsubsection{Metody wykrywania}
+
+Tego typu zagro¿nie moze byc trudne do wykrycia, zw³aszcza w pocz±tkowej fazie implementowania.
+Podejrzenia powinna budziæ sytuacja, w której po przetestowaniu poszczególnych klas, ca³ych
+pluginów i interfejsów, zaczn± pojawiaæ siê b³êdy w trakcie testowania funkcjonowania ca³o¶ci na
+platformie, a wiêc zaimplementowanych interfejsów oraz stworzonych pluginów. Nie musi to oznaczaæ
+od razu b³êdu platformy, ale nale¿y wówczas braæ tak¿e  mo¿liwo¶c pod uwagê.
+
+\subsubsection{Strategia redukcji zagro¿enia}
+
+Jeszcze nie opracowana.
+
+\subsection{Trudno¶ci we wspó³pracy z zespo³em kooperuj±cym}
+
+\subsubsection{Opis ryzyka}
+
+Brane jest pod uwagê ryzyko zwi±zane z trudno¶ciami komunikacyjnymi z zespo³em kooperuj±cym w
+przypadku
+
+\subsubsection{Ranga ryzyka}
+
+Niewielka.
+
+\subsubsection{Wp³yw na projekt}
+
+Wp³yw nie jest bardzo istotny, choæ w przypadku pojawienia siê jaki¶ pytañ lub w±tpliwo¶ci odno¶nie
+funkcjonowania platformy dobrze by³oby uzyskañ w miarê szybko odpowied¼ i najlepiej pochodz±cê od
+,,¼ród³a''. Trudno¶ci na tej p³aszczy¼nie mog± wprowadzaæ niewielkie opó¼nienie w pracach.
+
+\subsubsection{Metody wykrywania}
+
+Czas odpowiedzi na maile. Sk³onno¶æ do organizowania roboczych spotkañ w przypadku zaistnienia
+takiej potrzeby.
+
+\subsubsection{Strategia redukcji zagro¿enia}
+
+Zachowywanie przyjaznych stosunków w relacjach z grup± kooperuj±c±.
+
+\subsection{Niezrozumienie architektury platformy Salomon}
+
+\subsubsection{Opis ryzyka}
+
+Mog± pojawiæ siê problemy w trakcie realizacji projektu zwi±zane z nieznajomo¶ci± platformy i
+trudno¶ciami z pe³nym zrozumieniem jej architektury
+
+\subsubsection{Ranga ryzyka}
+
+¶rednie.
+
+\subsubsection{Wp³yw na projekt}
+
+Mo¿e spowodowaæ opó¼nienia w realizacji projektu, zw³aszcza gdy czê¶æ pracy zosta³a wykonana w
+stanie b³êdnej wiedzy i niezbêdne bêdzie cofniêcie siê w pracach aby ten b³±d naprawiæ.
+
+\subsubsection{Metody wykrywania}
+
+Pojawiaj±ce siê wszelkie w±tpliwo¶ci co do mechanizmów dzia³ania platformy i szczegó³ów jej
+architektury powinny by³ sygna³em do skonsultowania siê z zespo³em kooperuj±cym. Zak³ada siê przy
+tym ¿e wcze¶niej zaznajomiono sie z istniej±c± dokumentacj±.
+
+\subsubsection{Strategia redukcji zagro¿enia}
+
+Staranne i dok³adne zapoznanie siê z dokumentacj± platformy zw³aszcza w zakresie jej architektury.
+Wszelkie powsta³e w±tpliwo¶ci nale¿y staraæ siê rozwiewaæ, prosz±c o pomoc zespó³ kooperuj±cy.
+%\subsection{Stosowane standardy}
+%\subsection{Wymagania dla systemu}
+%\subsection{Wymagania wydajno¶ciowe}
+
+%\section{Wymagania stawiane dokumentacji}
+%\subsection{Podrêcznik u¿ytkownika}
+%\subsection{Opis instalacji i konfiguracji}
+%\subsection{Wersjonowanie i pakiety}
+
+
+
+
+\end{document}

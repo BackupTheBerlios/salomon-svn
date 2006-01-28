@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<editmodel:ClassDiagramEditModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:editmodel="editmodel.xmi" xmlns:options="options.xmi" size="1402,1570" id="salomon.platform.data.tree" metadata="uml2-1.0" initialized="true" tag="1000" key="32303035303930362053616C6F6D6F6E2F6D6E6F77616B6F77736B69">
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.3/@sourceConnections.0" name="ShortSolutionInfo" location="372,10" size="313,85" id="salomon.engine.solution/ShortSolutionInfo">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="112,36">
+      <children xsi:type="editmodel:MethodEditModel" name="ShortSolutionInfo" id="salomon.engine.solution/ShortSolutionInfo#ShortSolutionInfo(I)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getId" id="salomon.engine.solution/ShortSolutionInfo#getId()"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:InterfaceEditModel" targetConnections="//@children.4/@sourceConnections.1" name="ITree" location="111,450" size="125,279" stereotype="interface" id="salomon.platform.data.tree/ITree">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="102,216">
+      <children xsi:type="editmodel:MethodEditModel" name="getCreateDate" id="salomon.platform.data.tree/ITree#getCreateDate()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getDataSource" id="salomon.platform.data.tree/ITree#getDataSource()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getId" location="30,84" id="salomon.platform.data.tree/ITree#getId()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getInfo" id="salomon.platform.data.tree/ITree#getInfo()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getName" id="salomon.platform.data.tree/ITree#getName()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getRoot" id="salomon.platform.data.tree/ITree#getRoot()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="setCreateDate" id="salomon.platform.data.tree/ITree#setCreateDate(Ljava.util.Date;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="setDataSource" id="salomon.platform.data.tree/ITree#setDataSource(Lsalomon.platform.data.tree.IDataSource;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="setId" id="salomon.platform.data.tree/ITree#setId(I)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="setInfo" id="salomon.platform.data.tree/ITree#setInfo(Ljava.lang.String;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="setName" id="salomon.platform.data.tree/ITree#setName(Ljava.lang.String;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="setRoot" id="salomon.platform.data.tree/ITree#setRoot(Lsalomon.platform.data.tree.INode;)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <sourceConnections xsi:type="editmodel:DependencyEditModel" id="salomon.platform.data.tree/ITree->salomon.platform.data.tree/INode" source="//@children.1" target="//@children.2" targetEnd="//@children.1/@sourceConnections.0/@children.1" sourceEnd="//@children.1/@sourceConnections.0/@children.0" connectionRouterKind="Manhattan">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="115,9" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="0,258"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="salomon.platform.data.tree/ITree->salomon.platform.data.tree/IDataSource" source="//@children.1" target="//@children.3" targetEnd="//@children.1/@sourceConnections.1/@children.2" label="//@children.1/@sourceConnections.1/@children.0" sourceEnd="//@children.1/@sourceConnections.1/@children.1" connectionRouterKind="Manhattan">
+      <children xsi:type="editmodel:WireLabelEditModel" name="«import»" location="0,440" size="41,14" fontInfo="Arial-8-0" automaticRelocationAllowed="false" locationOnWireFromSource="-44.0" distanceFromWire="263.0" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="62,0" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="93,297"/>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:InterfaceEditModel" targetConnections="//@children.4/@sourceConnections.0 //@children.1/@sourceConnections.0" name="INode" location="250,160" size="123,488" stereotype="interface" id="salomon.platform.data.tree/INode">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="100,324">
+      <children xsi:type="editmodel:MethodEditModel" name="addChild" id="salomon.platform.data.tree/INode#addChild(Lsalomon.platform.data.tree.INode;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="addChildren" id="salomon.platform.data.tree/INode#addChildren([Lsalomon.platform.data.tree.INode;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getChildren" id="salomon.platform.data.tree/INode#getChildren()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getId" id="salomon.platform.data.tree/INode#getId()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getLeafs" id="salomon.platform.data.tree/INode#getLeafs()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getParent" id="salomon.platform.data.tree/INode#getParent()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getParentEdge" id="salomon.platform.data.tree/INode#getParentEdge()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getRoot" location="255,175" id="salomon.platform.data.tree/INode#getRoot()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getType" id="salomon.platform.data.tree/INode#getType()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getValue" id="salomon.platform.data.tree/INode#getValue()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="isLeaf" id="salomon.platform.data.tree/INode#isLeaf()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="isRoot" id="salomon.platform.data.tree/INode#isRoot()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="setChildren" id="salomon.platform.data.tree/INode#setChildren([Lsalomon.platform.data.tree.INode;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="setId" id="salomon.platform.data.tree/INode#setId(I)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="setParent" id="salomon.platform.data.tree/INode#setParent(Lsalomon.platform.data.tree.INode;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="setParentEdge" id="salomon.platform.data.tree/INode#setParentEdge(Ljava.lang.String;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="setType" id="salomon.platform.data.tree/INode#setType(Lsalomon.platform.data.tree.INode.Type;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="setValue" id="salomon.platform.data.tree/INode#setValue(Ljava.lang.String;)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="94,91">
+      <children xsi:type="editmodel:EnumerationEditModel" name="Type" location="399,0" size="94,89" stereotype="enumeration" id="salomon.platform.data.tree/INode$Type">
+        <children xsi:type="editmodel:CompartmentEditModel" size="62,36">
+          <children xsi:type="editmodel:EnumerationLiteralEditModel" name="COLUMN" id="salomon.platform.data.tree/INode$Type#COLUMN%"/>
+          <children xsi:type="editmodel:EnumerationLiteralEditModel" name="VALUE" id="salomon.platform.data.tree/INode$Type#VALUE%"/>
+        </children>
+      </children>
+    </children>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:InterfaceEditModel" targetConnections="//@children.1/@sourceConnections.1 //@children.4/@sourceConnections.2" name="IDataSource" location="80,60" size="156,297" stereotype="interface" id="salomon.platform.data.tree/IDataSource">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="133,234">
+      <children xsi:type="editmodel:MethodEditModel" name="getCreateDate" id="salomon.platform.data.tree/IDataSource#getCreateDate()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getDecioningColumns" id="salomon.platform.data.tree/IDataSource#getDecioningColumns()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getDecisionedColumn" location="-54,40" id="salomon.platform.data.tree/IDataSource#getDecisionedColumn()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getId" id="salomon.platform.data.tree/IDataSource#getId()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getInfo" id="salomon.platform.data.tree/IDataSource#getInfo()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getName" id="salomon.platform.data.tree/IDataSource#getName()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getSolution" id="salomon.platform.data.tree/IDataSource#getSolution()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getTableName" id="salomon.platform.data.tree/IDataSource#getTableName()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="setDecioningColumns" id="salomon.platform.data.tree/IDataSource#setDecioningColumns([Ljava.lang.String;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="setDecisionedColumn" id="salomon.platform.data.tree/IDataSource#setDecisionedColumn(Ljava.lang.String;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="setInfo" id="salomon.platform.data.tree/IDataSource#setInfo(Ljava.lang.String;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="setName" id="salomon.platform.data.tree/IDataSource#setName(Ljava.lang.String;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="setTableName" id="salomon.platform.data.tree/IDataSource#setTableName(Ljava.lang.String;)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="salomon.platform.data.tree/IDataSource->salomon.engine.solution/ShortSolutionInfo" source="//@children.3" target="//@children.0" targetEnd="//@children.3/@sourceConnections.0/@children.1" sourceEnd="//@children.3/@sourceConnections.0/@children.0" connectionRouterKind="Manhattan">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="156,17" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="54,67"/>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:InterfaceEditModel" name="ITreeManager" location="530,110" size="169,297" stereotype="interface" id="salomon.platform.data.tree/ITreeManager">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="146,234">
+      <children xsi:type="editmodel:MethodEditModel" name="addTree" id="salomon.platform.data.tree/ITreeManager#addTree(Lsalomon.platform.data.tree.ITree;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="addTreeDataSource" id="salomon.platform.data.tree/ITreeManager#addTreeDataSource(Lsalomon.platform.data.tree.IDataSource;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="createNode" id="salomon.platform.data.tree/ITreeManager#createNode(Lsalomon.platform.data.tree.INode;Ljava.lang.String;Lsalomon.platform.data.tree.INode.Type;Ljava.lang.String;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="createTree" id="salomon.platform.data.tree/ITreeManager#createTree(ILjava.lang.String;Ljava.lang.String;Lsalomon.platform.data.tree.INode;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="createTree" id="salomon.platform.data.tree/ITreeManager#createTree()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="createTreeDataSource" id="salomon.platform.data.tree/ITreeManager#createTreeDataSource()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getTree" id="salomon.platform.data.tree/ITreeManager#getTree(I)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getTreeDataSource" id="salomon.platform.data.tree/ITreeManager#getTreeDataSource(I)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getTreeDataSourceData" id="salomon.platform.data.tree/ITreeManager#getTreeDataSourceData(Lsalomon.platform.data.tree.IDataSource;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getTreeDataSources" id="salomon.platform.data.tree/ITreeManager#getTreeDataSources()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getTrees" id="salomon.platform.data.tree/ITreeManager#getTrees()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="removeTree" id="salomon.platform.data.tree/ITreeManager#removeTree(I)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="removeTreeDataSource" id="salomon.platform.data.tree/ITreeManager#removeTreeDataSource(I)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="salomon.platform.data.tree/ITreeManager->salomon.platform.data.tree/INode" source="//@children.4" target="//@children.2" targetEnd="//@children.4/@sourceConnections.0/@children.2" label="//@children.4/@sourceConnections.0/@children.0" sourceEnd="//@children.4/@sourceConnections.0/@children.1" connectionRouterKind="Manhattan">
+      <children xsi:type="editmodel:WireLabelEditModel" name="«import»" location="0,460" size="41,14" fontInfo="Arial-8-0" automaticRelocationAllowed="false" locationOnWireFromSource="541.0" distanceFromWire="184.00000000000017" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="0,173" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="123,123"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:DependencyEditModel" id="salomon.platform.data.tree/ITreeManager->salomon.platform.data.tree/ITree" source="//@children.4" target="//@children.1" targetEnd="//@children.4/@sourceConnections.1/@children.2" label="//@children.4/@sourceConnections.1/@children.0" sourceEnd="//@children.4/@sourceConnections.1/@children.1" connectionRouterKind="Manhattan">
+      <children xsi:type="editmodel:WireLabelEditModel" name="«import»" location="0,505" size="41,14" fontInfo="Arial-8-0" automaticRelocationAllowed="false" locationOnWireFromSource="-23.0" distanceFromWire="-473.00000000000006" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="0,287" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="125,223"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:DependencyEditModel" id="salomon.platform.data.tree/ITreeManager->salomon.platform.data.tree/IDataSource" source="//@children.4" target="//@children.3" targetEnd="//@children.4/@sourceConnections.2/@children.2" label="//@children.4/@sourceConnections.2/@children.0" sourceEnd="//@children.4/@sourceConnections.2/@children.1" connectionRouterKind="Manhattan">
+      <children xsi:type="editmodel:WireLabelEditModel" name="«import»" location="0,430" size="41,14" fontInfo="Arial-8-0" automaticRelocationAllowed="false" locationOnWireFromSource="-269.0" distanceFromWire="473.00000000000006" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="0,78" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="156,88"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:DependencyEditModel" autoLocated="true" id="salomon.platform.data.tree/ITreeManager->salomon.platform.exception/PlatformException" source="//@children.4" target="//@children.5" targetEnd="//@children.4/@sourceConnections.3/@children.2" label="//@children.4/@sourceConnections.3/@children.0" sourceEnd="//@children.4/@sourceConnections.3/@children.1" connectionRouterKind="Manhattan">
+      <children xsi:type="editmodel:WireLabelEditModel" name="«send»" size="36,14" fontInfo="Arial-8-0" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="84,297" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="214,0"/>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.4/@sourceConnections.3" name="PlatformException" location="400,556" size="341,67" id="salomon.platform.exception/PlatformException">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="116,18">
+      <children xsi:type="editmodel:MethodEditModel" name="PlatformException" id="salomon.platform.exception/PlatformException#PlatformException(Ljava.lang.String;)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showAttributeProperty="true"/>
+  </children>
+  <diagramOptions xsi:type="options:ClassDiagramOptions" properties="wireOptions=5" autoName="false"/>
+  <boardSetting snapToGeometry="true" gridEnabled="true" gridSpacing="10,10" gridOrigin="0,0" rulerUnit="pixel">
+    <leftRuler/>
+    <topRuler/>
+  </boardSetting>
+  <classDiagramPreferences xsi:type="editmodel:UMLClassDiagramPreference" attributeSorter="Natural" methodSorter="Natural" showClassStereotype="true" showPackageStereotype="true" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" showInterfaceStereotype="true" showAttributeProperty="true"/>
+</editmodel:ClassDiagramEditModel>
