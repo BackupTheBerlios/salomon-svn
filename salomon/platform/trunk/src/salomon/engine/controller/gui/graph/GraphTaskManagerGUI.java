@@ -21,13 +21,38 @@
 
 package salomon.engine.controller.gui.graph;
 
-import javax.swing.JPanel;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.GridLayout;
+import java.text.DateFormat;
+import java.util.Date;
 
+import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+import org.apache.log4j.Logger;
+
+import salomon.engine.Messages;
 import salomon.engine.controller.gui.ControllerFrame;
 import salomon.engine.controller.gui.StatusBar;
 import salomon.engine.controller.gui.action.ActionManager;
-import salomon.engine.plugin.LocalPlugin;
+import salomon.engine.task.ITask;
 import salomon.engine.task.ITaskManager;
+import salomon.engine.task.Task;
+
+import salomon.util.gui.Utils;
+
+import salomon.platform.IDataEngine;
+import salomon.platform.exception.PlatformException;
+
+import salomon.plugin.IPlugin;
+import salomon.plugin.IResult;
+import salomon.plugin.IResultComponent;
+import salomon.plugin.ISettingComponent;
+import salomon.plugin.ISettings;
 
 public final class GraphTaskManagerGUI
 {
@@ -36,25 +61,42 @@ public final class GraphTaskManagerGUI
 
 	private ControllerFrame _parent;
 
+	private JPanel _pnlTaskProperties;
+
+	private JComponent _positionComponent;
+
 	private StatusBar _statusBar;
 
 	private ITaskManager _taskManager;
+
+	private JTextField _txtTaskCrDate;
+
+	private JTextField _txtTaskInfo;
+
+	private JTextField _txtTaskLastMod;
+
+	private JTextField _txtTaskName;
+
+	private JTextField _txtTaskStatus;
 
 	public GraphTaskManagerGUI(ITaskManager tasksManager)
 	{
 		_taskManager = tasksManager;
 	}
 
-	public void addTask(LocalPlugin plugin)
+	public ITask createTask()
 	{
-		throw new UnsupportedOperationException(
-				"Method addTask() not implemented yet!");
+		//FIXME
+		return null;
 	}
 
-	public void editTask()
+	public void editTask(ITask task)
 	{
-		throw new UnsupportedOperationException(
-				"Method editTask() not implemented yet!");
+		try {
+			setTaskProperties(task);
+		} catch (PlatformException e) {
+			LOGGER.fatal("Exception was thrown!", e);
+		}
 	}
 
 	/**
@@ -70,7 +112,7 @@ public final class GraphTaskManagerGUI
 	public JPanel getGraphPanel()
 	{
 		// FIXME:
-		return new TaskGraphEditor();
+		return new TaskGraphEditor(this);
 	}
 
 	public void refresh()
@@ -125,10 +167,150 @@ public final class GraphTaskManagerGUI
 		_statusBar = statusBar;
 	}
 
+	public void showResultPanel(ITask task)
+	{
+
+		IPlugin plugin = null;
+		IResult result = null;
+		Component comp = null;
+		try {
+			plugin = task.getPlugin();
+			IResultComponent resultComponent = plugin.getResultComponent();
+			result = task.getResult();
+			comp = resultComponent.getComponent(result);
+		} catch (PlatformException e) {
+			LOGGER.fatal("", e);
+			Utils.showErrorMessage("ERR_CANNOT_SHOW_TASK_RESULT");
+			return;
+		}
+
+		Dimension maxDim = new Dimension(400, 300);
+		Dimension prefDim = comp.getPreferredSize();
+		// setting maximum size
+		if (prefDim.height > maxDim.height) {
+			prefDim.height = maxDim.height;
+		}
+		if (prefDim.width > maxDim.width) {
+			prefDim.width = maxDim.width;
+		}
+		comp.setSize(prefDim);
+		JOptionPane.showMessageDialog(
+				_positionComponent,
+				comp,
+				Messages.getString("TIT_PLUGIN_RESULT"), JOptionPane.PLAIN_MESSAGE); //$NON-NLS-1$
+	}
+
+	public void showSettingsPanel(ITask task)
+	{
+		IPlugin plugin = null;
+		ISettingComponent settingComponent = null;
+		ISettings inputSettings = null;
+		try {
+			plugin = task.getPlugin();
+			settingComponent = plugin.getSettingComponent();
+			inputSettings = task.getSettings();
+		} catch (PlatformException e1) {
+			LOGGER.fatal("", e1);
+			Utils.showErrorMessage("ERR_CANNOT_SHOW_TASK_SETTINGS");
+			return;
+		}
+		if (inputSettings == null) {
+			inputSettings = plugin.getSettingComponent().getDefaultSettings();
+		}
+		// FIXME needed by DataSet
+		IDataEngine dataEngine = null;
+		try {
+			dataEngine = _taskManager.getProject().getProjectManager().getSolution().getDataEngine();
+		} catch (PlatformException e) {
+			LOGGER.fatal("", e);
+			Utils.showErrorMessage("ERR_CANNOT_SHOW_TASK_SETTINGS");
+			return;
+		}
+		Component taskSettings = settingComponent.getComponent(inputSettings,
+				dataEngine);
+		int result = JOptionPane.showConfirmDialog(_positionComponent,
+				taskSettings, Messages.getString("TIT_PLUGIN_SETTINGS"), //$NON-NLS-1$
+				JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+		if (result == JOptionPane.OK_OPTION) {
+			ISettings settings = settingComponent.getSettings();
+			LOGGER.info("settings: " + settings); //$NON-NLS-1$
+			try {
+				task.setSettings(settings);
+				task.getInfo().save();
+			} catch (Exception e) {
+				LOGGER.fatal("", e);
+				Utils.showErrorMessage("ERR_CANNOT_SET_TASK_SETTINGS");
+			}
+		}
+	}
+
 	public void viewTasks()
 	{
 		throw new UnsupportedOperationException(
 				"Method viewTasks() not implemented yet!");
 	}
+
+	private void setTaskProperties(ITask iTask) throws PlatformException
+	{
+		Task task = (Task) iTask;
+
+		if (_pnlTaskProperties == null) {
+			_pnlTaskProperties = new JPanel();
+			_pnlTaskProperties.setLayout(new GridLayout(5, 2));
+
+			_txtTaskName = new JTextField();
+			_txtTaskInfo = new JTextField();
+
+			_txtTaskCrDate = new JTextField();
+			_txtTaskCrDate.setEnabled(false);
+			_txtTaskLastMod = new JTextField();
+			_txtTaskLastMod.setEnabled(false);
+			_txtTaskStatus = new JTextField();
+			_txtTaskStatus.setEnabled(false);
+
+			_pnlTaskProperties.add(new JLabel("Task name"));
+			_pnlTaskProperties.add(_txtTaskName);
+			_pnlTaskProperties.add(new JLabel("Task info"));
+			_pnlTaskProperties.add(_txtTaskInfo);
+
+			_pnlTaskProperties.add(new JLabel("Creation Date"));
+			_pnlTaskProperties.add(_txtTaskCrDate);
+			_pnlTaskProperties.add(new JLabel("Last Modification Date"));
+			_pnlTaskProperties.add(_txtTaskLastMod);
+			_pnlTaskProperties.add(new JLabel("Task Status"));
+			_pnlTaskProperties.add(_txtTaskStatus);
+		}
+
+		String name = task.getInfo().getName();
+		String info = task.getInfo().getInfo();
+		Date dcdate = new Date(); // TODO: NYI
+		// task.getInfo().getCreationDate() ;
+		Date dmdate = new Date(); // TODO: NYI
+		// task.getInfo().getLastModificationDate(
+		String cdate = "NYI! " + DateFormat.getDateInstance().format(dcdate)
+				+ " " + DateFormat.getTimeInstance().format(dcdate);
+		String mdate = "NYI! " + DateFormat.getDateInstance().format(dmdate)
+				+ " " + DateFormat.getTimeInstance().format(dmdate);
+		String status = task.getInfo().getStatus();
+
+		_txtTaskName.setText(name == null ? "" : name);
+		_txtTaskInfo.setText(info == null ? "" : info);
+		_txtTaskCrDate.setText(cdate == null ? "" : cdate);
+		_txtTaskLastMod.setText(mdate == null ? "" : mdate);
+		_txtTaskStatus.setText(status == null ? "" : status);
+
+		int result = JOptionPane.showConfirmDialog(_parent, _pnlTaskProperties,
+				"Enter Task properties", JOptionPane.OK_CANCEL_OPTION,
+				JOptionPane.PLAIN_MESSAGE);
+
+		if (result == JOptionPane.OK_OPTION) {
+			task.getInfo().setName(_txtTaskName.getText());
+			task.getInfo().setInfo(_txtTaskInfo.getText());
+
+			_taskManager.saveTasks();
+		}
+	}
+
+	private static final Logger LOGGER = Logger.getLogger(GraphTaskManagerGUI.class);
 
 }
