@@ -44,11 +44,12 @@ public final class SalomonEditingModalGraphMouse extends EditingModalGraphMouse
 	public void setVertexLocations(
 			SettableVertexLocationFunction vertexLocations)
 	{
+		loadPluginsImpl();
 		((SalomonEditingGraphMousePlugin) editingPlugin).setVertexLocations(vertexLocations);
 	}
 
-	@Override
-	protected void loadPlugins()
+	//	@Override
+	protected void loadPluginsImpl()
 	{
 		pickingPlugin = new PickingGraphMousePlugin();
 		animatedPickingPlugin = new AnimatedPickingGraphMousePlugin();
@@ -61,6 +62,12 @@ public final class SalomonEditingModalGraphMouse extends EditingModalGraphMouse
 
 		add(scalingPlugin);
 		setMode(Mode.EDITING);
+	}
+
+	@Override
+	protected void loadPlugins()
+	{
+		// do nothing
 	}
 
 }
