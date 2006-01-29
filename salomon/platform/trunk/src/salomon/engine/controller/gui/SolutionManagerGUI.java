@@ -39,18 +39,21 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import org.apache.log4j.Logger;
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
+import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
+import com.jgoodies.forms.layout.RowSpec;
 
-import salomon.engine.Config;
 import salomon.engine.Messages;
 import salomon.engine.Starter;
 import salomon.engine.controller.gui.action.ActionManager;
@@ -67,7 +70,7 @@ import salomon.platform.exception.PlatformException;
 import salomon.util.gui.Utils;
 
 /**
- * Class used to manage with projects editing.
+ * Class used to manage with solutions editing.
  */
 public final class SolutionManagerGUI
 {
@@ -441,7 +444,6 @@ public final class SolutionManagerGUI
 				"left:pref, 3dlu, right:100dlu, 3dlu, right:20dlu", "");
 		DefaultFormBuilder builder = new DefaultFormBuilder(layout);
 		builder.setDefaultDialogBorder();
-		builder.setRowGroupingEnabled(true);
 		builder.appendSeparator("Solution data");
 
 		int size = 100;
@@ -479,12 +481,8 @@ public final class SolutionManagerGUI
 		builder.appendSeparator("Test connection");
 		builder.append("", btnTestConnect, 2);
 
-		builder.appendSeparator("Solution info");
-		// CellConstraints cc = new CellConstraints();
-		// builder.appendRow(new RowSpec("0:grow"));
-		// builder.add(new JLabel(""));
-		// builder.add(new JScrollPane(_txtSolutionInfo), cc.xywh(
-		// builder.getColumn(), builder.getRow(), 1, 2));
+		builder.appendSeparator("Solution info");		
+		builder.append(new JScrollPane(_txtSolutionInfo), 5);	
 
 		return builder.getPanel();
 	}
