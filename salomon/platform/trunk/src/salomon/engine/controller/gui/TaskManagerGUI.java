@@ -484,7 +484,7 @@ public final class TaskManagerGUI
 			});
 
 			JMenuItem itmEdit = new JMenuItem(Messages.getString("MNU_EDIT")); //$NON-NLS-1$
-			itmEdit.addActionListener(_actionManager.getEditTaskAction());
+//FIXME			itmEdit.addActionListener(_actionManager.getEditTaskAction());
 
 			_taskPopup.add(itmEdit);
 			_taskPopup.addSeparator();

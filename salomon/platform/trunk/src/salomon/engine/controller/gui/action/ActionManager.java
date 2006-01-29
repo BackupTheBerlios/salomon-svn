@@ -25,6 +25,7 @@ import salomon.engine.controller.gui.PluginManagerGUI;
 import salomon.engine.controller.gui.ProjectManagerGUI;
 import salomon.engine.controller.gui.SolutionManagerGUI;
 import salomon.engine.controller.gui.graph.GraphTaskManagerGUI;
+import salomon.engine.task.ITask;
 
 /**
  * Class manages with actions. It creates and holds actions used to create most
@@ -293,10 +294,10 @@ public final class ActionManager
 		return _editSolutionAction;
 	}
 
-	public EditTaskAction getEditTaskAction()
+	public EditTaskAction getEditTaskAction(ITask task)
 	{
 		if (_editTaskAction == null) {
-			_editTaskAction = new EditTaskAction(_taskManagerGUI);
+			_editTaskAction = new EditTaskAction(_taskManagerGUI, task);
 		}
 		return _editTaskAction;
 	}

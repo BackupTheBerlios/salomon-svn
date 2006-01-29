@@ -49,7 +49,7 @@ public final class AddTaskAction extends AbstractTaskAction
 	 */
 	public void actionPerformed(ActionEvent e)
 	{
-		_taskManagerGUI.addTask(_plugin);
+//FIXME		_taskManagerGUI.addTask();
 	}
 
 	public void setPlugin(LocalPlugin plugin)

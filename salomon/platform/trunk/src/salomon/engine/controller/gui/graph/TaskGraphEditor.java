@@ -36,6 +36,8 @@ import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import salomon.engine.controller.gui.action.ActionManager;
+
 import edu.uci.ics.jung.graph.ArchetypeVertex;
 import edu.uci.ics.jung.graph.Graph;
 import edu.uci.ics.jung.graph.decorators.DefaultToolTipFunction;
@@ -109,7 +111,7 @@ public final class TaskGraphEditor extends JPanel
 	 * create a graph.
 	 * 
 	 */
-	public TaskGraphEditor(GraphTaskManagerGUI taskManagerGUI)
+	public TaskGraphEditor(GraphTaskManagerGUI graphTaskManagerGUI)
 	{
 
 		// allows the precise setting of initial vertex locations

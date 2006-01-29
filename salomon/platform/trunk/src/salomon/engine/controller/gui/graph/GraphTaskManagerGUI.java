@@ -111,7 +111,6 @@ public final class GraphTaskManagerGUI
 
 	public JPanel getGraphPanel()
 	{
-		// FIXME:
 		return new TaskGraphEditor(this);
 	}
 
