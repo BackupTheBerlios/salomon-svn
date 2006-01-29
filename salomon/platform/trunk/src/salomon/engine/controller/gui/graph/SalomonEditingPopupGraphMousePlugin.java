@@ -35,7 +35,6 @@ import edu.uci.ics.jung.graph.Edge;
 import edu.uci.ics.jung.graph.Graph;
 import edu.uci.ics.jung.graph.Vertex;
 import edu.uci.ics.jung.graph.impl.DirectedSparseEdge;
-import edu.uci.ics.jung.graph.impl.SparseVertex;
 import edu.uci.ics.jung.visualization.Layout;
 import edu.uci.ics.jung.visualization.PickSupport;
 import edu.uci.ics.jung.visualization.PickedState;
@@ -43,16 +42,22 @@ import edu.uci.ics.jung.visualization.SettableVertexLocationFunction;
 import edu.uci.ics.jung.visualization.VisualizationViewer;
 import edu.uci.ics.jung.visualization.control.AbstractPopupGraphMousePlugin;
 
+import salomon.engine.task.ITask;
+
 public final class SalomonEditingPopupGraphMousePlugin
 		extends
 			AbstractPopupGraphMousePlugin
 {
 	private SettableVertexLocationFunction _vertexLocations;
 
+	private GraphTaskManagerGUI _managerGUI;
+
 	public SalomonEditingPopupGraphMousePlugin(
-			SettableVertexLocationFunction vertexLocations)
+			SettableVertexLocationFunction vertexLocations,
+			GraphTaskManagerGUI managerGUI)
 	{
 		_vertexLocations = vertexLocations;
+		_managerGUI = managerGUI;
 	}
 
 	protected void handlePopup(MouseEvent e)
@@ -88,21 +93,6 @@ public final class SalomonEditingPopupGraphMousePlugin
 							}
 						});
 					}
-//					JMenu undirectedMenu = new JMenu("Create Edge");
-//					popup.add(undirectedMenu);
-//					for (Iterator iterator = picked.iterator(); iterator.hasNext();) {
-//						final Vertex other = (Vertex) iterator.next();
-//						undirectedMenu.add(new AbstractAction("[" + other + ","
-//								+ vertex + "]") {
-//							public void actionPerformed(ActionEvent e)
-//							{
-//								Edge newEdge = new UndirectedSparseEdge(other,
-//										vertex);
-//								graph.addEdge(newEdge);
-//								vv.repaint();
-//							}
-//						});
-//					}
 				}
 				popup.add(new AbstractAction("Delete Task") {
 					public void actionPerformed(ActionEvent e)
@@ -115,25 +105,22 @@ public final class SalomonEditingPopupGraphMousePlugin
 				popup.add(new AbstractAction("Edit") {
 					public void actionPerformed(ActionEvent e)
 					{
-						pickedState.pick(vertex, false);
-						graph.removeVertex(vertex);
-						vv.repaint();
+						TaskVertex taskVertex = (TaskVertex) vertex;
+						_managerGUI.editTask(taskVertex.getTask());
 					}
 				});
 				popup.add(new AbstractAction("Show Settings") {
 					public void actionPerformed(ActionEvent e)
 					{
-						pickedState.pick(vertex, false);
-						graph.removeVertex(vertex);
-						vv.repaint();
+						TaskVertex taskVertex = (TaskVertex) vertex;
+						_managerGUI.showSettingsPanel(taskVertex.getTask());
 					}
 				});
 				popup.add(new AbstractAction("Show Results") {
 					public void actionPerformed(ActionEvent e)
 					{
-						pickedState.pick(vertex, false);
-						graph.removeVertex(vertex);
-						vv.repaint();
+						TaskVertex taskVertex = (TaskVertex) vertex;
+						_managerGUI.showResultPanel(taskVertex.getTask());
 					}
 				});
 			} else if (edge != null) {
@@ -149,12 +136,15 @@ public final class SalomonEditingPopupGraphMousePlugin
 				popup.add(new AbstractAction("Create Task") {
 					public void actionPerformed(ActionEvent e)
 					{
-						Vertex newVertex = new SparseVertex();
-						_vertexLocations.setLocation(newVertex,
-								vv.inverseTransform(p));
-						graph.addVertex(newVertex);
-						layout.restart();
-						vv.repaint();
+						ITask task = _managerGUI.createTask();
+						if (task != null) {
+							Vertex newVertex = new TaskVertex(task);
+							_vertexLocations.setLocation(newVertex,
+									vv.inverseTransform(p));
+							graph.addVertex(newVertex);
+							layout.restart();
+							vv.repaint();
+						}
 					}
 				});
 			}

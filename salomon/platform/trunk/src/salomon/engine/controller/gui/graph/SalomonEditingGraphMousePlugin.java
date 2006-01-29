@@ -33,6 +33,8 @@ import java.awt.geom.CubicCurve2D;
 import java.awt.geom.Point2D;
 import java.util.Iterator;
 
+import salomon.engine.task.ITask;
+
 import edu.uci.ics.jung.graph.Graph;
 import edu.uci.ics.jung.graph.Vertex;
 import edu.uci.ics.jung.graph.impl.DirectedSparseEdge;
@@ -70,9 +72,14 @@ public class SalomonEditingGraphMousePlugin extends AbstractGraphMousePlugin
 
 	private boolean edgeIsDirected;
 
-	public SalomonEditingGraphMousePlugin()
+	private GraphTaskManagerGUI _graphTaskManagerGUI;
+
+	public SalomonEditingGraphMousePlugin(
+			GraphTaskManagerGUI graphTaskManagerGUI)
 	{
 		this(MouseEvent.BUTTON1_MASK);
+
+		_graphTaskManagerGUI = graphTaskManagerGUI;
 	}
 
 	/**
@@ -132,20 +139,24 @@ public class SalomonEditingGraphMousePlugin extends AbstractGraphMousePlugin
 						vv.addPostRenderPaintable(arrowPaintable);
 					}
 				} else { // make a new vertex
-					Graph graph = vv.getGraphLayout().getGraph();
-					Vertex newVertex = new SparseVertex();
-					vertexLocations.setLocation(newVertex,
-							vv.inverseTransform(e.getPoint()));
-					Layout layout = vv.getGraphLayout();
-					for (Iterator iterator = graph.getVertices().iterator(); iterator.hasNext();) {
-						layout.lockVertex((Vertex) iterator.next());
+					ITask task = _graphTaskManagerGUI.createTask();
+					if (task != null) {
+
+						Graph graph = vv.getGraphLayout().getGraph();
+						Vertex newVertex = new SparseVertex();
+						vertexLocations.setLocation(newVertex,
+								vv.inverseTransform(e.getPoint()));
+						Layout layout = vv.getGraphLayout();
+						for (Iterator iterator = graph.getVertices().iterator(); iterator.hasNext();) {
+							layout.lockVertex((Vertex) iterator.next());
+						}
+						graph.addVertex(newVertex);
+						vv.getModel().restart();
+						for (Iterator iterator = graph.getVertices().iterator(); iterator.hasNext();) {
+							layout.unlockVertex((Vertex) iterator.next());
+						}
+						vv.repaint();
 					}
-					graph.addVertex(newVertex);
-					vv.getModel().restart();
-					for (Iterator iterator = graph.getVertices().iterator(); iterator.hasNext();) {
-						layout.unlockVertex((Vertex) iterator.next());
-					}
-					vv.repaint();
 				}
 			}
 		}
@@ -167,13 +178,12 @@ public class SalomonEditingGraphMousePlugin extends AbstractGraphMousePlugin
 				final Vertex vertex = pickSupport.getVertex(p.getX(), p.getY());
 				if (vertex != null && startVertex != null) {
 					Graph graph = vv.getGraphLayout().getGraph();
-//					if (edgeIsDirected) {
-						graph.addEdge(new DirectedSparseEdge(startVertex,
-								vertex));
-//					} else {
-//						graph.addEdge(new UndirectedSparseEdge(startVertex,
-//								vertex));
-//					}
+					//					if (edgeIsDirected) {
+					graph.addEdge(new DirectedSparseEdge(startVertex, vertex));
+					//					} else {
+					//						graph.addEdge(new UndirectedSparseEdge(startVertex,
+					//								vertex));
+					//					}
 					vv.repaint();
 				}
 			}

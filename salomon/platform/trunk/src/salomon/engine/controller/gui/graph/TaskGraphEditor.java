@@ -143,7 +143,7 @@ public final class TaskGraphEditor extends JPanel
 				_visualazationViewer);
 		setLayout(new BorderLayout());
 		add(panel, BorderLayout.CENTER);
-		final EditingModalGraphMouse graphMouse = new SalomonEditingModalGraphMouse();
+		final EditingModalGraphMouse graphMouse = new SalomonEditingModalGraphMouse(graphTaskManagerGUI);
 
 		// the EditingGraphMouse will pass mouse event coordinates to the
 		// vertexLocations function to set the locations of the vertices as
@@ -151,7 +151,7 @@ public final class TaskGraphEditor extends JPanel
 		graphMouse.setVertexLocations(_vertexLocations);
 		_visualazationViewer.setGraphMouse(graphMouse);
 		//        graphMouse.add(new EditingPopupGraphMousePlugin(_vertexLocations));
-		graphMouse.add(new SalomonEditingPopupGraphMousePlugin(_vertexLocations));
+		graphMouse.add(new SalomonEditingPopupGraphMousePlugin(_vertexLocations, graphTaskManagerGUI));
 		graphMouse.setMode(ModalGraphMouse.Mode.EDITING);
 
 		final ScalingControl scaler = new CrossoverScalingControl();

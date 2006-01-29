@@ -32,25 +32,35 @@ import edu.uci.ics.jung.visualization.control.RotatingGraphMousePlugin;
 import edu.uci.ics.jung.visualization.control.ShearingGraphMousePlugin;
 import edu.uci.ics.jung.visualization.control.TranslatingGraphMousePlugin;
 
-public class SalomonEditingModalGraphMouse extends EditingModalGraphMouse
+public final class SalomonEditingModalGraphMouse extends EditingModalGraphMouse
 {
+	private GraphTaskManagerGUI _graphTaskManagerGUI;
+
+	public SalomonEditingModalGraphMouse(GraphTaskManagerGUI graphTaskManagerGUI)
+	{
+		_graphTaskManagerGUI = graphTaskManagerGUI;
+	}
+
+	public void setVertexLocations(
+			SettableVertexLocationFunction vertexLocations)
+	{
+		((SalomonEditingGraphMousePlugin) editingPlugin).setVertexLocations(vertexLocations);
+	}
+
 	@Override
 	protected void loadPlugins()
 	{
-        pickingPlugin = new PickingGraphMousePlugin();
-        animatedPickingPlugin = new AnimatedPickingGraphMousePlugin();
-        translatingPlugin = new TranslatingGraphMousePlugin(InputEvent.BUTTON1_MASK);
-        scalingPlugin = new CrossoverScalingGraphMousePlugin(in, out);
-        rotatingPlugin = new RotatingGraphMousePlugin();
-        shearingPlugin = new ShearingGraphMousePlugin();
-        editingPlugin = new SalomonEditingGraphMousePlugin();
-        
-        add(scalingPlugin);
-        setMode(Mode.EDITING);
+		pickingPlugin = new PickingGraphMousePlugin();
+		animatedPickingPlugin = new AnimatedPickingGraphMousePlugin();
+		translatingPlugin = new TranslatingGraphMousePlugin(
+				InputEvent.BUTTON1_MASK);
+		scalingPlugin = new CrossoverScalingGraphMousePlugin(in, out);
+		rotatingPlugin = new RotatingGraphMousePlugin();
+		shearingPlugin = new ShearingGraphMousePlugin();
+		editingPlugin = new SalomonEditingGraphMousePlugin(_graphTaskManagerGUI);
+
+		add(scalingPlugin);
+		setMode(Mode.EDITING);
 	}
-	
-    public void setVertexLocations(SettableVertexLocationFunction vertexLocations) {
-        ((SalomonEditingGraphMousePlugin)editingPlugin).setVertexLocations(vertexLocations);
-    }
 
 }
