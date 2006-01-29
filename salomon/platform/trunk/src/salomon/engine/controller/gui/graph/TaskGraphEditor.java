@@ -210,30 +210,4 @@ public final class TaskGraphEditor extends JPanel
         }
     }
 
-    /**
-     * a driver for this demo
-     */
-    public static void main(String[] args) {
-        JFrame frame = new JFrame();
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        final SalomonGraphEditorDemo demo = new SalomonGraphEditorDemo();
-        
-        JMenu menu = new JMenu("File");
-        menu.add(new AbstractAction("Print") {
-            public void actionPerformed(ActionEvent e) {
-                JFileChooser chooser  = new JFileChooser();
-                int option = chooser.showSaveDialog(demo);
-                if(option == JFileChooser.APPROVE_OPTION) {
-                    File file = chooser.getSelectedFile();
-                    demo.writeJPEGImage(file);
-                }
-            }});
-        JMenuBar menuBar = new JMenuBar();
-        menuBar.add(menu);
-        frame.setJMenuBar(menuBar);
-        frame.getContentPane().add(demo);
-        frame.pack();
-        frame.setVisible(true);
-    }
-
 }
