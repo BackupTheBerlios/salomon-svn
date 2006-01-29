@@ -52,16 +52,21 @@ import salomon.engine.Starter;
 import salomon.engine.controller.gui.AboutPanel;
 import salomon.engine.controller.gui.ControllerFrame;
 import salomon.engine.controller.gui.ControllerPanel;
+import salomon.engine.controller.gui.IControllerPanel;
 import salomon.engine.controller.gui.PluginManagerGUI;
 import salomon.engine.controller.gui.ProjectManagerGUI;
 import salomon.engine.controller.gui.SolutionManagerGUI;
 import salomon.engine.controller.gui.SplashScreen;
 import salomon.engine.controller.gui.TaskManagerGUI;
 import salomon.engine.controller.gui.action.ActionManager;
+import salomon.engine.controller.gui.graph.GraphControllerPanel;
+
+import salomon.util.gui.Utils;
+
+import salomon.platform.exception.PlatformException;
+
 import salomon.engine.platform.IManagerEngine;
 import salomon.engine.platform.ManagerEngine;
-import salomon.platform.exception.PlatformException;
-import salomon.util.gui.Utils;
 
 /**
  * Local implementation of IController interface.
@@ -81,7 +86,8 @@ public final class LocalController implements IController
 	 * @uml.property name="_contentPane"
 	 * @uml.associationEnd multiplicity="(0 1)"
 	 */
-	private ControllerPanel _contentPane;
+	private IControllerPanel _contentPane;
+//	private JPanel _contentPane;
 
 	/**
 	 * 
@@ -130,24 +136,36 @@ public final class LocalController implements IController
 	private JToolBar _toolBar;
 
 	/**
-	 * 
-	 * @see salomon.engine.controller.IController#exit()
+	 * @see salomon.engine.controller.gui.IControllerPanel#exit()
 	 */
 	public void exit()
 	{
 		//nothing to do
 	}
 
+	/**
+	 * @see salomon.engine.controller.gui.IControllerPanel#getJContentPane()
+	 */
 	public JComponent getJContentPane()
 	{
+//		String useGraphsString = Config.getString("USE_GRAPHS");
+//		boolean useGraphs = "true".equalsIgnoreCase(useGraphsString);
+		boolean useGraphs = true;
 		if (_contentPane == null) {
-			_contentPane = new ControllerPanel(_solutionManagerGUI,
-					_projectManagerGUI, _taskManagerGUI, _pluginMangerGUI,
-					_actionManager);
+			if (useGraphs) {
+				_contentPane = new GraphControllerPanel(_solutionManagerGUI);
+			} else {
+				_contentPane = new ControllerPanel(_solutionManagerGUI,
+						_projectManagerGUI, _taskManagerGUI, _pluginMangerGUI,
+						_actionManager);
+			}
 		}
-		return _contentPane;
+		return _contentPane.getComponent();
 	}
 
+	/**
+	 * @see salomon.engine.controller.gui.IControllerPanel#getJMenuBar()
+	 */
 	public JMenuBar getJMenuBar()
 	{
 		if (_menuBar == null) {
@@ -194,6 +212,9 @@ public final class LocalController implements IController
 		return _menuBar;
 	}
 
+	/**
+	 * @see salomon.engine.controller.gui.IControllerPanel#getToolBar()
+	 */
 	public JToolBar getToolBar()
 	{
 		if (_toolBar == null) {
@@ -208,7 +229,7 @@ public final class LocalController implements IController
 	}
 
 	/**
-	 * @see salomon.engine.controller.IController#start(salomon.engine.platform.IManagerEngine)
+	 * @see salomon.engine.controller.gui.IControllerPanel#start(salomon.engine.platform.IManagerEngine)
 	 */
 	public void start(IManagerEngine managerEngine)
 	{

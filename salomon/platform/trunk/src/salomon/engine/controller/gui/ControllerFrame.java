@@ -48,7 +48,7 @@ public final class ControllerFrame extends JFrame
 	 * @uml.property name="_controllerPanel"
 	 * @uml.associationEnd multiplicity="(0 1)"
 	 */
-	private ControllerPanel _controllerPanel;
+	private IControllerPanel _controllerPanel;
 
 	//	private String _resourcesDir;
 
@@ -76,7 +76,7 @@ public final class ControllerFrame extends JFrame
 	 * TODO: add comment.
 	 * @param controllerPanel
 	 */
-	public void setControllerPanel(ControllerPanel controllerPanel)
+	public void setControllerPanel(IControllerPanel controllerPanel)
 	{
 		_controllerPanel = controllerPanel;
 	}

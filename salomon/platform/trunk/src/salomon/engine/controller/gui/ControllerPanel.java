@@ -29,6 +29,7 @@ import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
@@ -43,7 +44,7 @@ import salomon.engine.controller.gui.action.ActionManager;
  * Class represents main panel - list of tasks and available plugins, buttons to
  * manage them.
  */
-public final class ControllerPanel extends JPanel
+public final class ControllerPanel extends JPanel implements IControllerPanel
 {
 
 	/**
@@ -130,14 +131,22 @@ public final class ControllerPanel extends JPanel
 		this.add(getPnlInit(), BorderLayout.CENTER);
 	}
 
+	public JComponent getComponent()
+	{
+		return this;
+	}
+
 	/**
-	 * @return Returns the taskEditionManager.
+	 * @see salomon.engine.controller.gui.IControllerPanel#getTaskEditionManager()
 	 */
 	public TaskManagerGUI getTaskEditionManager()
 	{
 		return _taskManagerGUI;
 	}
 
+	/**
+	 * @see salomon.engine.controller.gui.IControllerPanel#refresh()
+	 */
 	public void refresh()
 	{
 		LOGGER.debug("ControllerPane: refreshing...");
@@ -147,7 +156,7 @@ public final class ControllerPanel extends JPanel
 	}
 
 	/**
-	 * @param taskEditionManager The taskEditionManager to set.
+	 * @see salomon.engine.controller.gui.IControllerPanel#setTaskEditionManager(salomon.engine.controller.gui.TaskManagerGUI)
 	 */
 	public void setTaskEditionManager(TaskManagerGUI taskEditionManager)
 	{
