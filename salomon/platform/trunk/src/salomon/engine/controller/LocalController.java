@@ -21,21 +21,14 @@
 
 package salomon.engine.controller;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -56,6 +49,7 @@ import salomon.engine.Messages;
 import salomon.engine.Resources;
 import salomon.engine.SQLConsole;
 import salomon.engine.Starter;
+import salomon.engine.controller.gui.AboutPanel;
 import salomon.engine.controller.gui.ControllerFrame;
 import salomon.engine.controller.gui.ControllerPanel;
 import salomon.engine.controller.gui.PluginManagerGUI;
@@ -64,13 +58,10 @@ import salomon.engine.controller.gui.SolutionManagerGUI;
 import salomon.engine.controller.gui.SplashScreen;
 import salomon.engine.controller.gui.TaskManagerGUI;
 import salomon.engine.controller.gui.action.ActionManager;
-
-import salomon.util.gui.Utils;
-
-import salomon.platform.exception.PlatformException;
-
 import salomon.engine.platform.IManagerEngine;
 import salomon.engine.platform.ManagerEngine;
+import salomon.platform.exception.PlatformException;
+import salomon.util.gui.Utils;
 
 /**
  * Local implementation of IController interface.
@@ -121,8 +112,6 @@ public final class LocalController implements IController
 	 * @uml.associationEnd multiplicity="(0 1)"
 	 */
 	private ProjectManagerGUI _projectManagerGUI;
-
-	private JFrame _solutionChooserFrame;
 
 	/**
 	 * 
@@ -271,49 +260,8 @@ public final class LocalController implements IController
 		frame.setControllerPanel(_contentPane);
 		Utils.setParent(frame);
 
-		//showSolutionChooser();
 		_solutionManagerGUI.showSolutionChooser();
 	}
-
-	//	private void showSolutionChooser()
-	//	{
-	//		JPanel panel = new JPanel();
-	//
-	//		JPanel pnlManagerButtons = new JPanel();
-	//		pnlManagerButtons.setLayout(new BoxLayout(pnlManagerButtons,
-	//				BoxLayout.Y_AXIS));
-	//		pnlManagerButtons.add(Box.createVerticalGlue());
-	//		pnlManagerButtons.add(_solutionManagerGUI.getBtnOpen());
-	//		pnlManagerButtons.add(_solutionManagerGUI.getBtnNew());
-	//		pnlManagerButtons.add(Box.createVerticalStrut(10));
-	//		pnlManagerButtons.add(_solutionManagerGUI.getBtnExit());
-	//		pnlManagerButtons.add(Box.createVerticalGlue());
-	//
-	//		panel.setLayout(new BorderLayout());
-	//		panel.add(_solutionManagerGUI.getSolutionsPanel(), BorderLayout.CENTER);
-	//		panel.add(pnlManagerButtons, BorderLayout.EAST);
-	//
-	//		_solutionChooserFrame = new JFrame(Messages.getString("TIT_SOLUTIONS"));
-	//		_solutionChooserFrame.setResizable(false);
-	//
-	//		_solutionChooserFrame.getContentPane().add(panel);
-	//		_solutionChooserFrame.pack();
-	//
-	//		_solutionChooserFrame.addWindowListener(new WindowAdapter() {
-	//			public void windowClosing(WindowEvent e)
-	//			{
-	//				Starter.exit();
-	//			}
-	//		});
-	//
-	//		Point location = new Point();
-	//		location.x = (Toolkit.getDefaultToolkit().getScreenSize().width - _solutionChooserFrame.getWidth()) / 2;
-	//		location.y = (Toolkit.getDefaultToolkit().getScreenSize().height - _solutionChooserFrame.getHeight()) / 2;
-	//		_solutionChooserFrame.setLocation(location);
-	//
-	//		_solutionChooserFrame.setVisible(true);
-	//
-	//	}
 
 	private final class LocalGUIMenu
 	{
@@ -635,7 +583,7 @@ public final class LocalController implements IController
 		JPanel getPnlAbout()
 		{
 			if (_pnlAbout == null) {
-				_pnlAbout = getAboutPanel();
+				_pnlAbout = new AboutPanel().getPanel();
 			}
 			return _pnlAbout;
 		}
@@ -651,70 +599,6 @@ public final class LocalController implements IController
 		void showSQLConsole()
 		{
 			new SQLConsole(((ManagerEngine) _managerEngine).getDbManager());
-		}
-
-		private JPanel getAboutPanel()
-		{
-			if (_pnlAbout == null) {
-				_pnlAbout = new JPanel();
-				_pnlAbout.setLayout(new BorderLayout());
-				_pnlAbout.setBorder(BorderFactory.createEmptyBorder(30, 0, 30,
-						0));
-				//
-				// application name
-				//
-				JLabel lblAppName = new JLabel(new ImageIcon(_resourcesDir
-						+ Config.FILE_SEPARATOR + "logo.jpg")); //$NON-NLS-1$
-				//
-				// version and author panel
-				//
-				JPanel detailsPanel = new JPanel();
-				detailsPanel.setLayout(new BoxLayout(detailsPanel,
-						BoxLayout.Y_AXIS));
-
-				JLabel lblVersionTitle = new JLabel(
-						Messages.getString("TIT_VERSION")); //$NON-NLS-1$
-				JLabel lblVersion = new JLabel(Messages.getString("VERSION")); //$NON-NLS-1$
-				lblVersion.setForeground(Color.RED);
-				Box versionBox = Box.createHorizontalBox();
-				versionBox.add(lblVersionTitle);
-				versionBox.add(Box.createHorizontalGlue());
-				versionBox.add(lblVersion);
-
-				JLabel lblAuthorsTitle = new JLabel(
-						Messages.getString("TIT_AUTHORS")); //$NON-NLS-1$
-				Box authorsBox = Box.createHorizontalBox();
-				authorsBox.add(lblAuthorsTitle);
-
-				detailsPanel.add(versionBox);
-				detailsPanel.add(authorsBox);
-				detailsPanel.add(this.getAuthorLabel("Nikodem Jura", //$NON-NLS-1$
-						"nico@icslab.agh.edu.pl")); //$NON-NLS-1$
-				detailsPanel.add(this.getAuthorLabel("Krzysztof Rajda", //$NON-NLS-1$
-						"krzysztof@rajda.name")); //$NON-NLS-1$
-				detailsPanel.add(this.getAuthorLabel("Jakub Galkowski", //$NON-NLS-1$
-						"avi@student.uci.agh.edu.pl")); //$NON-NLS-1$
-				detailsPanel.add(this.getAuthorLabel("Leszek Grzanka", //$NON-NLS-1$
-						"grzanka@student.uci.agh.edu.pl")); //$NON-NLS-1$
-				detailsPanel.setBorder(BorderFactory.createEmptyBorder(30, 0,
-						0, 0));
-				// adding componens
-				_pnlAbout.add(lblAppName, BorderLayout.CENTER);
-				_pnlAbout.add(detailsPanel, BorderLayout.SOUTH);
-			}
-			return _pnlAbout;
-		}
-
-		private JComponent getAuthorLabel(String name, String email)
-		{
-			Box box = Box.createHorizontalBox();
-			JLabel lblName = new JLabel(name);
-			JLabel lblEmail = new JLabel(email);
-			lblEmail.setForeground(Color.BLUE);
-			box.add(lblName);
-			box.add(Box.createHorizontalGlue());
-			box.add(lblEmail);
-			return box;
 		}
 
 		/** Method shows about dialog. */
