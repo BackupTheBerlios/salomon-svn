@@ -24,7 +24,7 @@ package salomon.engine.controller.gui.action;
 import salomon.engine.controller.gui.PluginManagerGUI;
 import salomon.engine.controller.gui.ProjectManagerGUI;
 import salomon.engine.controller.gui.SolutionManagerGUI;
-import salomon.engine.controller.gui.TaskManagerGUI;
+import salomon.engine.controller.gui.graph.GraphTaskManagerGUI;
 
 /**
  * Class manages with actions. It creates and holds actions used to create most
@@ -176,7 +176,7 @@ public final class ActionManager
 	 * @uml.property name="_taskManagerGUI"
 	 * @uml.associationEnd multiplicity="(0 1)"
 	 */
-	private TaskManagerGUI _taskManagerGUI;
+	private GraphTaskManagerGUI _taskManagerGUI;
 
 	/**
 	 * 
@@ -213,7 +213,7 @@ public final class ActionManager
 	 * @param projectManagerGUI
 	 */
 	public ActionManager(ProjectManagerGUI projectManagerGUI,
-			TaskManagerGUI taskManagerGUI, PluginManagerGUI pluginMangerGUI)
+			GraphTaskManagerGUI taskManagerGUI, PluginManagerGUI pluginMangerGUI)
 	{
 		_projectManagerGUI = projectManagerGUI;
 		_taskManagerGUI = taskManagerGUI;
@@ -228,7 +228,7 @@ public final class ActionManager
 	 * @param pluginMangerGUI
 	 */
 	public ActionManager(SolutionManagerGUI solutionManagerGUI,
-			ProjectManagerGUI projectManagerGUI, TaskManagerGUI taskManagerGUI,
+			ProjectManagerGUI projectManagerGUI, GraphTaskManagerGUI taskManagerGUI,
 			PluginManagerGUI pluginMangerGUI)
 	{
 		_solutionManagerGUI = solutionManagerGUI;

@@ -23,7 +23,7 @@ package salomon.engine.controller.gui.action;
 
 import javax.swing.AbstractAction;
 
-import salomon.engine.controller.gui.TaskManagerGUI;
+import salomon.engine.controller.gui.graph.GraphTaskManagerGUI;
 
 /**
  * Represents abstract action caused while editing tasks.
@@ -38,9 +38,9 @@ abstract class AbstractTaskAction extends AbstractAction
 	 * @uml.property name="_taskManagerGUI"
 	 * @uml.associationEnd multiplicity="(0 1)"
 	 */
-	protected TaskManagerGUI _taskManagerGUI = null;
+	protected GraphTaskManagerGUI _taskManagerGUI = null;
 
-	protected AbstractTaskAction(TaskManagerGUI taskManagerGUI)
+	protected AbstractTaskAction(GraphTaskManagerGUI taskManagerGUI)
 	{
 		_taskManagerGUI = taskManagerGUI;
 	}

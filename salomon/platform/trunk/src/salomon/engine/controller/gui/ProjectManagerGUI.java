@@ -37,6 +37,7 @@ import javax.swing.JTextField;
 import org.apache.log4j.Logger;
 
 import salomon.engine.Messages;
+import salomon.engine.controller.gui.graph.GraphTaskManagerGUI;
 import salomon.engine.controller.gui.viewer.ProjectViewer;
 import salomon.engine.project.IProject;
 import salomon.engine.project.IProjectManager;
@@ -76,7 +77,7 @@ public final class ProjectManagerGUI
 	 * @uml.property name="_taskManagerGUI"
 	 * @uml.associationEnd multiplicity="(0 1)"
 	 */
-	private TaskManagerGUI _taskManagerGUI;
+	private GraphTaskManagerGUI _taskManagerGUI;
 
 	private JTextField _txtProjectInfo;
 
@@ -223,7 +224,7 @@ public final class ProjectManagerGUI
 		_statusBar.addItem(SB_CUR_PROJECT);
 	}
 
-	public void setTaskManagerGUI(TaskManagerGUI taskManagerGUI)
+	public void setTaskManagerGUI(GraphTaskManagerGUI taskManagerGUI)
 	{
 		_taskManagerGUI = taskManagerGUI;
 	}

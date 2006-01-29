@@ -57,16 +57,12 @@ import salomon.engine.controller.gui.PluginManagerGUI;
 import salomon.engine.controller.gui.ProjectManagerGUI;
 import salomon.engine.controller.gui.SolutionManagerGUI;
 import salomon.engine.controller.gui.SplashScreen;
-import salomon.engine.controller.gui.TaskManagerGUI;
 import salomon.engine.controller.gui.action.ActionManager;
-import salomon.engine.controller.gui.graph.GraphControllerPanel;
-
-import salomon.util.gui.Utils;
-
-import salomon.platform.exception.PlatformException;
-
+import salomon.engine.controller.gui.graph.GraphTaskManagerGUI;
 import salomon.engine.platform.IManagerEngine;
 import salomon.engine.platform.ManagerEngine;
+import salomon.platform.exception.PlatformException;
+import salomon.util.gui.Utils;
 
 /**
  * Local implementation of IController interface.
@@ -87,7 +83,8 @@ public final class LocalController implements IController
 	 * @uml.associationEnd multiplicity="(0 1)"
 	 */
 	private IControllerPanel _contentPane;
-//	private JPanel _contentPane;
+
+	// private JPanel _contentPane;
 
 	/**
 	 * 
@@ -131,7 +128,7 @@ public final class LocalController implements IController
 	 * @uml.property name="_taskManagerGUI"
 	 * @uml.associationEnd multiplicity="(0 1)"
 	 */
-	private TaskManagerGUI _taskManagerGUI;
+	private GraphTaskManagerGUI _taskManagerGUI;
 
 	private JToolBar _toolBar;
 
@@ -140,7 +137,7 @@ public final class LocalController implements IController
 	 */
 	public void exit()
 	{
-		//nothing to do
+		// nothing to do
 	}
 
 	/**
@@ -148,18 +145,8 @@ public final class LocalController implements IController
 	 */
 	public JComponent getJContentPane()
 	{
-//		String useGraphsString = Config.getString("USE_GRAPHS");
-//		boolean useGraphs = "true".equalsIgnoreCase(useGraphsString);
-		boolean useGraphs = true;
-		if (_contentPane == null) {
-			if (useGraphs) {
-				_contentPane = new GraphControllerPanel(_solutionManagerGUI);
-			} else {
-				_contentPane = new ControllerPanel(_solutionManagerGUI,
-						_projectManagerGUI, _taskManagerGUI, _pluginMangerGUI,
-						_actionManager);
-			}
-		}
+		_contentPane = new ControllerPanel(_solutionManagerGUI,
+				_projectManagerGUI, _taskManagerGUI, _pluginMangerGUI);
 		return _contentPane.getComponent();
 	}
 
@@ -205,7 +192,7 @@ public final class LocalController implements IController
 			help.setMnemonic('h');
 			help.add(_guiMenu.getItmAbout());
 			_menuBar.add(solution);
-			//_menuBar.add(project);
+			// _menuBar.add(project);
 			_menuBar.add(tools);
 			_menuBar.add(help);
 		}
@@ -242,13 +229,13 @@ public final class LocalController implements IController
 		} catch (Exception e) {
 			LOGGER.warn("Cannot set look&feel!", e); //$NON-NLS-1$
 		}
-		//TODO: add cascade model support (?)
+		// TODO: add cascade model support (?)
 		try {
 			_solutionManagerGUI = new SolutionManagerGUI(
 					_managerEngine.getSolutionManager());
 			_projectManagerGUI = new ProjectManagerGUI(
 					_managerEngine.getProjectManager());
-			_taskManagerGUI = new TaskManagerGUI(
+			_taskManagerGUI = new GraphTaskManagerGUI(
 					_managerEngine.getTasksManager());
 			_pluginMangerGUI = new PluginManagerGUI(
 					_managerEngine.getPluginManager());
@@ -337,6 +324,7 @@ public final class LocalController implements IController
 
 		/**
 		 * creates LocalGUIMenu
+		 * 
 		 * @param actionManager
 		 */
 		public LocalGUIMenu(ActionManager actionManager)
@@ -351,8 +339,7 @@ public final class LocalController implements IController
 				_btnNewProject = new JButton(
 						_actionManager.getNewProjectAction());
 				_btnNewProject.setIcon(new ImageIcon(_resourcesDir
-						+ Config.FILE_SEPARATOR
-						+ "")); //$NON-NLS-1$
+						+ Config.FILE_SEPARATOR + "")); //$NON-NLS-1$
 			}
 			return _btnNewProject;
 		}
@@ -374,8 +361,7 @@ public final class LocalController implements IController
 				_btnOpenProject = new JButton(
 						_actionManager.getOpenProjectAction());
 				_btnOpenProject.setIcon(new ImageIcon(_resourcesDir
-						+ Config.FILE_SEPARATOR
-						+ "")); //$NON-NLS-1$                
+						+ Config.FILE_SEPARATOR + "")); //$NON-NLS-1$                
 			}
 			return _btnOpenProject;
 		}
@@ -398,8 +384,7 @@ public final class LocalController implements IController
 				_btnSaveProject = new JButton(
 						_actionManager.getSaveProjectAction());
 				_btnSaveProject.setIcon(new ImageIcon(_resourcesDir
-						+ Config.FILE_SEPARATOR
-						+ "")); //$NON-NLS-1$
+						+ Config.FILE_SEPARATOR + "")); //$NON-NLS-1$
 			}
 			return _btnSaveProject;
 		}
@@ -420,7 +405,7 @@ public final class LocalController implements IController
 			if (_itmAbout == null) {
 				_itmAbout = new JMenuItem(Messages.getString("MNU_ABOUT"));
 				_itmAbout.setMnemonic('a');
-				
+
 				_itmAbout.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e)
 					{
@@ -447,7 +432,8 @@ public final class LocalController implements IController
 				_itmEditSolution = new JMenuItem();
 				_itmEditSolution.setText(Messages.getString("MNU_EDIT")); //$NON-NLS-1$
 				_itmEditSolution.setMnemonic('e');
-				_itmEditSolution.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E, InputEvent.CTRL_MASK));
+				_itmEditSolution.setAccelerator(KeyStroke.getKeyStroke(
+						KeyEvent.VK_E, InputEvent.CTRL_MASK));
 
 				_itmEditSolution.addActionListener(_actionManager.getEditSolutionAction());
 			}
@@ -485,8 +471,9 @@ public final class LocalController implements IController
 				_itmNewSolution = new JMenuItem(Messages.getString("MNU_NEW"), //$NON-NLS-1$
 						getMenuIcon("ICO_PROJECT_NEW")); //$NON-NLS-1$
 				_itmNewSolution.setMnemonic('n');
-				_itmNewSolution.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, InputEvent.CTRL_MASK));
-				
+				_itmNewSolution.setAccelerator(KeyStroke.getKeyStroke(
+						KeyEvent.VK_N, InputEvent.CTRL_MASK));
+
 				_itmNewSolution.addActionListener(_actionManager.getNewSolutionAction());
 			}
 			return _itmNewSolution;
@@ -507,7 +494,8 @@ public final class LocalController implements IController
 				_itmOpenSolution = new JMenuItem(
 						Messages.getString("MNU_OPEN"), getMenuIcon("ICO_PROJECT_OPEN")); //$NON-NLS-1$ //$NON-NLS-2$
 				_itmOpenSolution.setMnemonic('o');
-				_itmOpenSolution.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, InputEvent.CTRL_MASK));
+				_itmOpenSolution.setAccelerator(KeyStroke.getKeyStroke(
+						KeyEvent.VK_O, InputEvent.CTRL_MASK));
 
 				_itmOpenSolution.addActionListener(_actionManager.getOpenSolutionAction());
 			}
@@ -530,18 +518,19 @@ public final class LocalController implements IController
 				_itmSaveSolution = new JMenuItem(
 						Messages.getString("MNU_SAVE"), getMenuIcon("ICO_PROJECT_SAVE")); //$NON-NLS-1$ //$NON-NLS-2$
 				_itmSaveSolution.setMnemonic('s');
-				_itmSaveSolution.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_MASK));
-				
+				_itmSaveSolution.setAccelerator(KeyStroke.getKeyStroke(
+						KeyEvent.VK_S, InputEvent.CTRL_MASK));
+
 				_itmSaveSolution.addActionListener(_actionManager.getSaveSolutionAction());
 			}
 			return _itmSaveSolution;
 		}
-		
+
 		private ImageIcon getMenuIcon(String iconKey)
 		{
 			String iconFileName = Resources.getString(iconKey);
-			String iconPath = _resourcesDir
-					+ Config.FILE_SEPARATOR + iconFileName;
+			String iconPath = _resourcesDir + Config.FILE_SEPARATOR
+					+ iconFileName;
 
 			return new ImageIcon(iconPath);
 		}

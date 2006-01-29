@@ -34,6 +34,7 @@ import org.apache.log4j.Logger;
 import salomon.engine.Config;
 import salomon.engine.Messages;
 import salomon.engine.Resources;
+import salomon.engine.controller.gui.graph.GraphTaskManagerGUI;
 
 /**
  * Class agregates all buttons used in GUIController.
@@ -56,12 +57,6 @@ public final class GUIButtons
 
 	private JButton _btnUp = null;
 
-	/**
-	 * 
-	 * @uml.property name="_manipulationListener"
-	 * @uml.associationEnd multiplicity="(0 1)"
-	 */
-	private ManipulationListener _manipulationListener = null;
 
 	private String _resourcesDir = null;
 
@@ -70,18 +65,12 @@ public final class GUIButtons
 	 * @uml.property name="_taskManagerGUI"
 	 * @uml.associationEnd multiplicity="(0 1)"
 	 */
-	private TaskManagerGUI _taskManagerGUI = null;
+	private GraphTaskManagerGUI _taskManagerGUI = null;
 
-	public GUIButtons(TaskManagerGUI taskManagerGUI)
+	public GUIButtons(GraphTaskManagerGUI taskManagerGUI)
 	{
 		_taskManagerGUI = taskManagerGUI;
-		_manipulationListener = new ManipulationListener();
 		_resourcesDir = Config.getString("RESOURCES_DIR");
-	}
-
-	public void setEditionManager(TaskManagerGUI manager)
-	{
-		_taskManagerGUI = manager;
 	}
 
 	/**
@@ -219,7 +208,6 @@ public final class GUIButtons
 
 		button.setIcon(new ImageIcon(_resourcesDir + Config.FILE_SEPARATOR
 				+ text));
-		button.addActionListener(_manipulationListener);
 		button.setToolTipText(tooltip);
 		setButtonDimension(button);
 
@@ -232,28 +220,6 @@ public final class GUIButtons
 		button.setPreferredSize(dim);
 		button.setMinimumSize(dim);
 		button.setMaximumSize(dim);
-	}
-
-	/**
-	 * Class handles events from buttons, which are used to manage tasks.
-	 */
-	private class ManipulationListener implements ActionListener
-	{
-		public void actionPerformed(ActionEvent e)
-		{
-			Object object = e.getSource();
-			if (object == _btnUp) {
-				_taskManagerGUI.moveUp();
-			} else if (object == _btnDown) {
-				_taskManagerGUI.moveDown();
-			} else if (object == _btnFirst) {
-				_taskManagerGUI.moveFirst();
-			} else if (object == _btnLast) {
-				_taskManagerGUI.moveLast();
-			} else {
-				LOGGER.error("Not supported button: " + object); //$NON-NLS-1$
-			}
-		}
 	}
 
 	private static final Logger LOGGER = Logger.getLogger(GUIButtons.class);

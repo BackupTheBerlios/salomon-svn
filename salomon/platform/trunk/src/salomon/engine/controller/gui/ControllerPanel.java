@@ -28,7 +28,6 @@ import java.awt.GridLayout;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JList;
 import javax.swing.JPanel;
@@ -36,9 +35,8 @@ import javax.swing.border.TitledBorder;
 
 import org.apache.log4j.Logger;
 
-import salomon.engine.Config;
 import salomon.engine.Messages;
-import salomon.engine.controller.gui.action.ActionManager;
+import salomon.engine.controller.gui.graph.GraphTaskManagerGUI;
 
 /**
  * Class represents main panel - list of tasks and available plugins, buttons to
@@ -46,18 +44,6 @@ import salomon.engine.controller.gui.action.ActionManager;
  */
 public final class ControllerPanel extends JPanel implements IControllerPanel
 {
-
-	/**
-	 * 
-	 * @uml.property name="_actionManager"
-	 * @uml.associationEnd multiplicity="(0 1)"
-	 */
-	private ActionManager _actionManager;
-
-	private JButton _btnApply;
-
-	private JPanel _contentPane;
-
 	/**
 	 * 
 	 * @uml.property name="_guiButtons"
@@ -67,7 +53,7 @@ public final class ControllerPanel extends JPanel implements IControllerPanel
 
 	private JList _lstPlugins;
 
-	private JList _lstTasks;
+	private JPanel _graphPanel;
 
 	/**
 	 * 
@@ -77,8 +63,6 @@ public final class ControllerPanel extends JPanel implements IControllerPanel
 	private PluginManagerGUI _pluginMangerGUI;
 
 	private JPanel _pnlInit;
-
-	private JPanel _pnlManagerButtons;
 
 	private JPanel _pnlPluginButtons;
 
@@ -90,33 +74,27 @@ public final class ControllerPanel extends JPanel implements IControllerPanel
 
 	private ProjectManagerGUI _projectManagerGUI;
 
-	private String _resourcesDir;
-
 	private SolutionManagerGUI _solutionManagerGUI;
 
 	private StatusBar _statusBar;
 
 	private int _strutHeight = 10;
 
-	private int _strutWidth = 10;
-
 	/**
 	 * 
 	 * @uml.property name="_taskManagerGUI"
 	 * @uml.associationEnd multiplicity="(0 1)"
 	 */
-	private TaskManagerGUI _taskManagerGUI;
+	private GraphTaskManagerGUI _taskManagerGUI;
 
 	public ControllerPanel(SolutionManagerGUI solutionManagerGUI,
-			ProjectManagerGUI projectManagerGUI, TaskManagerGUI taskManagerGUI,
-			PluginManagerGUI pluginMangerGUI, ActionManager actionManager)
+			ProjectManagerGUI projectManagerGUI, GraphTaskManagerGUI taskManagerGUI,
+			PluginManagerGUI pluginMangerGUI)
 	{
-		_actionManager = actionManager;
 		_solutionManagerGUI = solutionManagerGUI;
 		_projectManagerGUI = projectManagerGUI;
 		_taskManagerGUI = taskManagerGUI;
-		_pluginMangerGUI = pluginMangerGUI;
-		_resourcesDir = Config.getString("RESOURCES_DIR");
+		_pluginMangerGUI = pluginMangerGUI;	
 		_guiButtons = new GUIButtons(_taskManagerGUI);
 		_statusBar = new StatusBar();
 
@@ -137,14 +115,6 @@ public final class ControllerPanel extends JPanel implements IControllerPanel
 	}
 
 	/**
-	 * @see salomon.engine.controller.gui.IControllerPanel#getTaskEditionManager()
-	 */
-	public TaskManagerGUI getTaskEditionManager()
-	{
-		return _taskManagerGUI;
-	}
-
-	/**
 	 * @see salomon.engine.controller.gui.IControllerPanel#refresh()
 	 */
 	public void refresh()
@@ -153,14 +123,6 @@ public final class ControllerPanel extends JPanel implements IControllerPanel
 		super.validate();
 		_pluginMangerGUI.refresh();
 		_taskManagerGUI.refresh();
-	}
-
-	/**
-	 * @see salomon.engine.controller.gui.IControllerPanel#setTaskEditionManager(salomon.engine.controller.gui.TaskManagerGUI)
-	 */
-	public void setTaskEditionManager(TaskManagerGUI taskEditionManager)
-	{
-		_taskManagerGUI = taskEditionManager;
 	}
 
 	/**
@@ -181,16 +143,16 @@ public final class ControllerPanel extends JPanel implements IControllerPanel
 	/**
 	 * This method initializes _lstTasks
 	 * 
-	 * @return JList
+	 * @return JPanel
 	 */
-	private JList getLstTasks()
+	private JPanel getLstTasks()
 	{
-		if (_lstTasks == null) {
-			_lstTasks = _taskManagerGUI.getTaskList();
-			_lstTasks.setBorder(BorderFactory.createLoweredBevelBorder());
-			_lstTasks.setPreferredSize(new Dimension(100, 200));
+		if (_graphPanel == null) {
+			_graphPanel = _taskManagerGUI.getGraphPanel();
+			_graphPanel.setBorder(BorderFactory.createLoweredBevelBorder());
+			_graphPanel.setPreferredSize(new Dimension(100, 200));
 		}
-		return _lstTasks;
+		return _graphPanel;
 	}
 
 	private JPanel getPnlInit()
@@ -257,15 +219,6 @@ public final class ControllerPanel extends JPanel implements IControllerPanel
 			_pnlTaskButtons = new JPanel();
 			_pnlTaskButtons.setLayout(new BoxLayout(_pnlTaskButtons,
 					BoxLayout.Y_AXIS));
-			_pnlTaskButtons.add(Box.createVerticalGlue());
-			_pnlTaskButtons.add(_guiButtons.getBtnFirst());
-			_pnlTaskButtons.add(Box.createVerticalStrut(_strutHeight));
-			_pnlTaskButtons.add(_guiButtons.getBtnUp());
-			_pnlTaskButtons.add(Box.createVerticalStrut(_strutHeight));
-			_pnlTaskButtons.add(_guiButtons.getBtnDown());
-			_pnlTaskButtons.add(Box.createVerticalStrut(_strutHeight));
-			_pnlTaskButtons.add(_guiButtons.getBtnLast());
-			_pnlTaskButtons.add(Box.createVerticalGlue());
 			_pnlTaskButtons.add(_guiButtons.getBtnRun());
 		}
 		return _pnlTaskButtons;
@@ -291,4 +244,16 @@ public final class ControllerPanel extends JPanel implements IControllerPanel
 	}
 
 	private static final Logger LOGGER = Logger.getLogger(ControllerFrame.class);
+
+	public GraphTaskManagerGUI getTaskEditionManager()
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void setTaskEditionManager(GraphTaskManagerGUI taskEditionManager)
+	{
+		// TODO Auto-generated method stub
+		
+	}
 }

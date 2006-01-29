@@ -29,7 +29,6 @@ import javax.swing.JPanel;
 import salomon.engine.controller.gui.IControllerPanel;
 import salomon.engine.controller.gui.SolutionManagerGUI;
 import salomon.engine.controller.gui.StatusBar;
-import salomon.engine.controller.gui.TaskManagerGUI;
 
 public final class GraphControllerPanel extends JPanel
 		implements IControllerPanel
@@ -54,23 +53,11 @@ public final class GraphControllerPanel extends JPanel
 		return this;
 	}
 
-	public TaskManagerGUI getTaskEditionManager()
-	{
-		return null;
-//		throw new UnsupportedOperationException(
-//				"Method GraphControllerPanel.getTaskEditionManager() not implemented yet!");
-	}
-
 	public void refresh()
 	{
 //		throw new UnsupportedOperationException(
 //				"Method GraphControllerPanel.refresh() not implemented yet!");
 	}
 
-	public void setTaskEditionManager(TaskManagerGUI taskEditionManager)
-	{
-		throw new UnsupportedOperationException(
-				"Method GraphControllerPanel.setTaskEditionManager() not implemented yet!");
-	}
 
 }

@@ -49,24 +49,20 @@ import org.apache.log4j.Logger;
 import salomon.engine.Config;
 import salomon.engine.Messages;
 import salomon.engine.Resources;
-import salomon.engine.controller.gui.ControllerFrame;
 import salomon.engine.controller.gui.ControllerPanel;
 import salomon.engine.controller.gui.PluginManagerGUI;
 import salomon.engine.controller.gui.ProjectManagerGUI;
 import salomon.engine.controller.gui.RemoteControllerGUI;
 import salomon.engine.controller.gui.RemoteControllerPanel;
 import salomon.engine.controller.gui.SplashScreen;
-import salomon.engine.controller.gui.TaskManagerGUI;
 import salomon.engine.controller.gui.action.ActionManager;
+import salomon.engine.controller.gui.graph.GraphTaskManagerGUI;
 import salomon.engine.holder.ManagerEngineHolder;
+import salomon.engine.platform.IManagerEngine;
 import salomon.engine.remote.CentralController;
 import salomon.engine.remote.ICentralController;
 import salomon.engine.remote.event.IMasterControllerListener;
 import salomon.engine.remote.event.RemoteControllerEvent;
-
-import salomon.util.gui.Utils;
-
-import salomon.engine.platform.IManagerEngine;
 
 /**
  * Server side implementation of IController interface.
@@ -143,7 +139,7 @@ public final class MasterController implements IController
 	 * @uml.property name="_taskManagerGUI"
 	 * @uml.associationEnd multiplicity="(0 1)"
 	 */
-	private TaskManagerGUI _taskManagerGUI;
+	private GraphTaskManagerGUI _taskManagerGUI;
 
 	private JToolBar _toolBar;
 
@@ -188,8 +184,9 @@ public final class MasterController implements IController
 					_managerEngineHolder);
 			_splitPane.setLeftComponent(_remoteControllerPanel.getControllerPanel());
 			//FIXME: create solutionManagerGUI in correct way
-			_controllerPanel = new ControllerPanel(null, _projectManagerGUI, _taskManagerGUI,
-					_pluginMangerGUI, _actionManager);
+//FIXME: uncomment			
+//			_controllerPanel = new ControllerPanel(null, _projectManagerGUI, _taskManagerGUI,
+//					_pluginMangerGUI, _actionManager);
 			_splitPane.setRightComponent(_controllerPanel);
 			_contentPane.add(_splitPane);
 		}
@@ -243,26 +240,28 @@ public final class MasterController implements IController
 		//		_projectManagerGUI = new ProjectManagerGUI(_managerEngineHolder.getProjectManager());
 		//		_taskManagerGUI = new TaskManagerGUI)_managerEngineHolder);
 		//		_pluginMangerGUI = new PluginManagerGUI(_managerEngineHolder);
-		_actionManager = new ActionManager(_projectManagerGUI, _taskManagerGUI,
-				_pluginMangerGUI);
-		_guiMenu = new MasterGUIMenu(_actionManager);
-		ControllerFrame frame = new ControllerFrame();
-		// frame.setContentPane(getJContentPane());
-		_pluginMangerGUI.setActionManager(_actionManager);
-		_taskManagerGUI.setActionManager(_actionManager);
-		// FIXME
-		_projectManagerGUI.setTaskManagerGUI(_taskManagerGUI);
-		frame.setMainPanel(getJContentPane());
-		frame.setJMenuBar(getJMenuBar());
-		frame.setJToolBar(getToolBar());
-		frame.setControllerPanel(_controllerPanel);
-		_taskManagerGUI.setParent(frame);
-		_projectManagerGUI.setParent(frame);
-		_remoteControllerPanel.setParent(frame);
 
-		Utils.setParent(frame);
-		SplashScreen.hide();
-		frame.setVisible(true);
+//FIXME: uncomment		
+//		_actionManager = new ActionManager(_projectManagerGUI, _taskManagerGUI,
+//				_pluginMangerGUI);
+//		_guiMenu = new MasterGUIMenu(_actionManager);
+//		ControllerFrame frame = new ControllerFrame();
+//		// frame.setContentPane(getJContentPane());
+//		_pluginMangerGUI.setActionManager(_actionManager);
+//		_taskManagerGUI.setActionManager(_actionManager);
+//		// FIXME
+//		_projectManagerGUI.setTaskManagerGUI(_taskManagerGUI);
+//		frame.setMainPanel(getJContentPane());
+//		frame.setJMenuBar(getJMenuBar());
+//		frame.setJToolBar(getToolBar());
+//		frame.setControllerPanel(_controllerPanel);
+//		_taskManagerGUI.setParent(frame);
+//		_projectManagerGUI.setParent(frame);
+//		_remoteControllerPanel.setParent(frame);
+
+//		Utils.setParent(frame);
+//		SplashScreen.hide();
+//		frame.setVisible(true);
 	}
 
 	//	private void initialize()

@@ -23,7 +23,7 @@ package salomon.engine.controller.gui.action;
 
 import java.awt.event.ActionEvent;
 
-import salomon.engine.controller.gui.TaskManagerGUI;
+import salomon.engine.controller.gui.graph.GraphTaskManagerGUI;
 
 /**
  * 
@@ -34,7 +34,7 @@ public final class RemoveTaskAction extends AbstractTaskAction
 	/**
 	 * @param editionManager
 	 */
-	protected RemoveTaskAction(TaskManagerGUI editionManager)
+	protected RemoveTaskAction(GraphTaskManagerGUI editionManager)
 	{
 		super(editionManager);
 		// TODO Auto-generated constructor stub

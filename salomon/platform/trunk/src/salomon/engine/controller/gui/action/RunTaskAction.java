@@ -23,7 +23,7 @@ package salomon.engine.controller.gui.action;
 
 import java.awt.event.ActionEvent;
 
-import salomon.engine.controller.gui.TaskManagerGUI;
+import salomon.engine.controller.gui.graph.GraphTaskManagerGUI;
 
 /**
  * TODO: add comment.
@@ -36,7 +36,7 @@ public final class RunTaskAction extends AbstractTaskAction
 	 * 
 	 * @param editionManager an instance of TaskManagerGUI
 	 */
-	public RunTaskAction(TaskManagerGUI taskEditionManager)
+	public RunTaskAction(GraphTaskManagerGUI taskEditionManager)
 	{
 		super(taskEditionManager);
 	}

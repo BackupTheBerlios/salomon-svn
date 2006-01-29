@@ -23,21 +23,12 @@ package salomon.engine.controller.gui;
 
 import javax.swing.JComponent;
 
+import salomon.engine.controller.gui.graph.GraphTaskManagerGUI;
+
 public interface IControllerPanel
 {
-
-	/**
-	 * @return Returns the taskEditionManager.
-	 */
-	TaskManagerGUI getTaskEditionManager();
-
 	void refresh();
 
-	/**
-	 * @param taskEditionManager The taskEditionManager to set.
-	 */
-	void setTaskEditionManager(TaskManagerGUI taskEditionManager);
-	
 	JComponent getComponent();
 
 }

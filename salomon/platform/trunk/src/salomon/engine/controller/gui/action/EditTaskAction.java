@@ -2,7 +2,7 @@ package salomon.engine.controller.gui.action;
 
 import java.awt.event.ActionEvent;
 
-import salomon.engine.controller.gui.TaskManagerGUI;
+import salomon.engine.controller.gui.graph.GraphTaskManagerGUI;
 
 
 
@@ -15,7 +15,7 @@ public class EditTaskAction extends AbstractTaskAction {
 	 * 
 	 * @param taskManagerGUI an instance of TaskManagerGUI
 	 */
-	public EditTaskAction(TaskManagerGUI taskManagerGUI)
+	public EditTaskAction(GraphTaskManagerGUI taskManagerGUI)
 	{
 		super(taskManagerGUI );
 	}
