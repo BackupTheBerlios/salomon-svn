@@ -111,6 +111,15 @@ public final class GraphTaskManagerGUI
 	{
 		ITask newTask = null;
 		try {
+//<<<<<<< .mine
+//			LocalPlugin localPlugin = (LocalPlugin) _pluginManager.getPlugins()[0];
+//			if (localPlugin == null) {
+//				LOGGER.debug("LocalPLugin == null");
+//				Utils.showErrorMessage(Messages.getString("ERR_PLUGIN_NOT_SELECTED"));
+//				return null;
+//			}
+//=======
+//>>>>>>> .r1044
 
 			// creating task
 			newTask = _taskManager.createTask();
@@ -198,16 +207,17 @@ public final class GraphTaskManagerGUI
 	public JPanel getGraphPanel()
 	{
 
-		TaskGraphEditor taskGraphEditor = new TaskGraphEditor(this);
-		_graph = taskGraphEditor.getGraph();
-		return taskGraphEditor;
+		_taskGraphEditor = new TaskGraphEditor(this);
+		_graph = _taskGraphEditor.getGraph();
+		
+		return _taskGraphEditor;
 	}
 
 	public void refresh()
 	{
 		LOGGER.debug("reloading tasks");
-		_graph.removeAllEdges();
-		_graph.removeAllVertices();
+//		_graph.removeAllEdges();
+//		_graph.removeAllVertices();
 		ITask[] tasks = null;
 		try {
 			// TODO: change it
@@ -219,18 +229,7 @@ public final class GraphTaskManagerGUI
 			return;
 		}
 
-		Vertex previousVertex = null;
-		for (ITask task : tasks) {
-			LOGGER.debug("adding task");
-			TaskVertex vertex = new TaskVertex(task);
-			_graph.addVertex(vertex);
-			if (previousVertex != null) {
-				DirectedSparseEdge edge = new DirectedSparseEdge(
-						previousVertex, vertex);
-				_graph.addEdge(edge);
-			}
-			previousVertex = vertex;
-		}
+		_taskGraphEditor.loadTasks(tasks);
 	}
 
 	public void removeAllTasks()
@@ -247,7 +246,7 @@ public final class GraphTaskManagerGUI
 
 	public void runTasks()
 	{
-		List<ITask> executionPlan = GraphPlanner.makePlan(_graph);
+		List<ITask> executionPlan = GraphPlanner.makePlan(_taskGraphEditor.getGraph());
 		if (executionPlan == null) {
 			JOptionPane.showMessageDialog(_positionComponent,
 					"Cannot create plan. There is a loop!",
@@ -467,5 +466,7 @@ public final class GraphTaskManagerGUI
 	}
 
 	private static final Logger LOGGER = Logger.getLogger(GraphTaskManagerGUI.class);
+
+	private TaskGraphEditor _taskGraphEditor;
 
 }

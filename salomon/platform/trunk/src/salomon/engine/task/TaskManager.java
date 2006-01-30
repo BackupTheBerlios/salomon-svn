@@ -119,7 +119,7 @@ public final class TaskManager implements ITaskManager
 	}
 
 	/**
-	 * @see salomon.engine.task.ITaskManager#addTask(salomon.platform.task.ITask)
+	 * @see salomon.engine.task.ITaskManager#loadTasks(salomon.platform.task.ITask)
 	 */
 	public void addTask(ITask task) throws PlatformException
 	{

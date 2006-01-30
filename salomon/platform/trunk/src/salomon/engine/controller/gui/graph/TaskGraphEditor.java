@@ -25,10 +25,13 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.Iterator;
 
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
@@ -36,14 +39,16 @@ import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import salomon.engine.controller.gui.action.ActionManager;
+import org.apache.log4j.Logger;
 
 import edu.uci.ics.jung.graph.ArchetypeVertex;
 import edu.uci.ics.jung.graph.Graph;
+import edu.uci.ics.jung.graph.Vertex;
 import edu.uci.ics.jung.graph.decorators.DefaultToolTipFunction;
 import edu.uci.ics.jung.graph.decorators.EdgeShape;
 import edu.uci.ics.jung.graph.decorators.VertexStringer;
 import edu.uci.ics.jung.graph.impl.DirectedSparseGraph;
+import edu.uci.ics.jung.utils.GraphUtils;
 import edu.uci.ics.jung.visualization.AbstractLayout;
 import edu.uci.ics.jung.visualization.DefaultSettableVertexLocationFunction;
 import edu.uci.ics.jung.visualization.FRLayout;
@@ -51,20 +56,25 @@ import edu.uci.ics.jung.visualization.GraphZoomScrollPane;
 import edu.uci.ics.jung.visualization.PluggableRenderer;
 import edu.uci.ics.jung.visualization.ShapePickSupport;
 import edu.uci.ics.jung.visualization.StaticLayout;
+import edu.uci.ics.jung.visualization.VertexLocationFunction;
 import edu.uci.ics.jung.visualization.VisualizationViewer;
 import edu.uci.ics.jung.visualization.control.CrossoverScalingControl;
 import edu.uci.ics.jung.visualization.control.EditingModalGraphMouse;
 import edu.uci.ics.jung.visualization.control.ModalGraphMouse;
 import edu.uci.ics.jung.visualization.control.ScalingControl;
 
+import salomon.engine.task.ITask;
+
 public final class TaskGraphEditor extends JPanel
 {
+	private AbstractLayout _automaticLayout;
+
 	/**
 	 * the graph
 	 */
 	private Graph _graph;
 
-	private AbstractLayout _layout;
+	private StaticLayout _staticLayout;
 
 	private DefaultSettableVertexLocationFunction _vertexLocations;
 
@@ -122,10 +132,13 @@ public final class TaskGraphEditor extends JPanel
 		_graph = new DirectedSparseGraph();// SparseGraph();
 
 		PluggableRenderer pr = new PluggableRenderer();
-		this._layout = new StaticLayout(_graph);
-		_layout.initialize(new Dimension(600, 600), _vertexLocations);
+		_staticLayout = new StaticLayout(_graph);
+		_staticLayout.initialize(new Dimension(600, 600), _vertexLocations);
 
-		_visualazationViewer = new VisualizationViewer(_layout, pr);
+		_automaticLayout = new FRLayout(_graph);
+		_automaticLayout.initialize(new Dimension(600, 600), _vertexLocations);
+
+		_visualazationViewer = new VisualizationViewer(_staticLayout, pr);
 		_visualazationViewer.setBackground(Color.white);
 		_visualazationViewer.setPickSupport(new ShapePickSupport());
 		pr.setEdgeShapeFunction(new EdgeShape.QuadCurve());
@@ -137,9 +150,6 @@ public final class TaskGraphEditor extends JPanel
 				return v.toString();
 			}
 		});
-		
-//		FRLayout layout = new FRLayout(_graph);
-//		layout.restart();
 
 		_visualazationViewer.setToolTipFunction(new DefaultToolTipFunction());
 
@@ -147,7 +157,8 @@ public final class TaskGraphEditor extends JPanel
 				_visualazationViewer);
 		setLayout(new BorderLayout());
 		add(panel, BorderLayout.CENTER);
-		final EditingModalGraphMouse graphMouse = new SalomonEditingModalGraphMouse(graphTaskManagerGUI);
+		final EditingModalGraphMouse graphMouse = new SalomonEditingModalGraphMouse(
+				graphTaskManagerGUI);
 
 		// the EditingGraphMouse will pass mouse event coordinates to the
 		// vertexLocations function to set the locations of the vertices as
@@ -155,7 +166,8 @@ public final class TaskGraphEditor extends JPanel
 		graphMouse.setVertexLocations(_vertexLocations);
 		_visualazationViewer.setGraphMouse(graphMouse);
 		//        graphMouse.add(new EditingPopupGraphMousePlugin(_vertexLocations));
-		graphMouse.add(new SalomonEditingPopupGraphMousePlugin(_vertexLocations, graphTaskManagerGUI));
+		graphMouse.add(new SalomonEditingPopupGraphMousePlugin(
+				_vertexLocations, graphTaskManagerGUI));
 		graphMouse.setMode(ModalGraphMouse.Mode.EDITING);
 
 		final ScalingControl scaler = new CrossoverScalingControl();
@@ -186,19 +198,77 @@ public final class TaskGraphEditor extends JPanel
 			}
 		});
 
+		final FRLayout layout = new FRLayout(_graph);
+		//		layout.initialize(new Dimension(100, 100), _vertexLocations);
+		//		layout.restart();
+		//		_visualazationViewer.setGraphLayout(layout);
+		//		_visualazationViewer.removeG
+		//		JButton layoutButton = new JButton("Layout");
+		//		layoutButton.addActionListener(new ActionListener() {
+		//
+		//			public void actionPerformed(ActionEvent e)
+		//			{
+		//				layout.restart();
+		////				JOptionPane.showMessageDialog(_visualazationViewer,
+		////						instructions);
+		//			}
+		//		});
+
 		JPanel controls = new JPanel();
 		controls.add(plus);
 		controls.add(minus);
 		JComboBox modeBox = graphMouse.getModeComboBox();
 		controls.add(modeBox);
 		controls.add(help);
+		//		controls.add(layoutButton);
 		add(controls, BorderLayout.SOUTH);
+	}
+
+	public void loadTasks(ITask[] tasks)
+	{
+		//TODO: clean below code!!!
+		_graph.removeAllEdges();
+		_graph.removeAllVertices();
+		_vertexLocations.reset();
+		Vertex previousVertex = null;
+
+		_visualazationViewer.stop();
+		_visualazationViewer.setGraphLayout(_automaticLayout);
+		_visualazationViewer.restart();
+		
+		for (ITask task : tasks) {
+			LOGGER.debug("adding task");
+			TaskVertex vertex = new TaskVertex(task);
+			_vertexLocations.setLocation(vertex, new Point(0, 0));
+			_graph.addVertex(vertex);
+			if (previousVertex != null) {
+				GraphUtils.addEdge(_graph, previousVertex, vertex);
+			}
+			previousVertex = vertex;
+		}
+		_automaticLayout.restart();
+		_visualazationViewer.getModel().restart();
+
+		// copy locations from automatiLyouter to _vertexLocations
+		for (Iterator iterator = _graph.getVertices().iterator(); iterator.hasNext();) {
+			Vertex vertex = (Vertex) iterator.next();
+			Point2D position = _automaticLayout.getLocation(vertex);
+			_vertexLocations.setLocation(vertex, position);
+		}
+
+		_visualazationViewer.stop();
+		_visualazationViewer.setGraphLayout(_staticLayout);
+		_visualazationViewer.restart();
+		_visualazationViewer.getModel().restart();
+		_visualazationViewer.repaint();
+
 	}
 
 	public Graph getGraph()
 	{
 		return _graph;
 	}
+
 	/**
 	 * copy the visible part of the graph to a file as a jpeg image
 	 * @param file
@@ -221,4 +291,5 @@ public final class TaskGraphEditor extends JPanel
 		}
 	}
 
+	private static final Logger LOGGER = Logger.getLogger(TaskGraphEditor.class);
 }

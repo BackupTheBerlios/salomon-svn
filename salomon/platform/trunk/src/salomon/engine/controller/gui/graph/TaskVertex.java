@@ -21,9 +21,14 @@
 
 package salomon.engine.controller.gui.graph;
 
+import org.apache.log4j.Logger;
+
 import edu.uci.ics.jung.graph.impl.SparseVertex;
 
 import salomon.engine.task.ITask;
+import salomon.engine.task.Task;
+
+import salomon.platform.exception.PlatformException;
 
 public final class TaskVertex extends SparseVertex
 {
@@ -45,7 +50,21 @@ public final class TaskVertex extends SparseVertex
 	@Override
 	public String toString()
 	{
-		return _task.toString();
+		String name = "";
+		try {
+			name = ((Task)_task).getInfo().getName();
+		} catch (PlatformException e) {
+			LOGGER.fatal("", e);
+		}
+		// plugin cannot be NULL!
+		String plugin = "ERROR";
+		try {
+			plugin = _task.getPlugin().toString();
+		} catch (PlatformException e) {
+			LOGGER.fatal("", e);
+		}
+		return (name != null ? name : "") + " [" + plugin + "]";
 	}
 
+	private static final Logger LOGGER = Logger.getLogger(TaskVertex.class);
 }
