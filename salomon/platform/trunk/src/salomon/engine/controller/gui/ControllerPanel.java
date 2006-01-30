@@ -23,7 +23,6 @@ package salomon.engine.controller.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.GridLayout;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -31,6 +30,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JComponent;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JSplitPane;
 import javax.swing.border.TitledBorder;
 
 import org.apache.log4j.Logger;
@@ -44,6 +44,8 @@ import salomon.engine.controller.gui.graph.GraphTaskManagerGUI;
  */
 public final class ControllerPanel extends JPanel implements IControllerPanel
 {
+	private JPanel _graphPanel;
+
 	/**
 	 * 
 	 * @uml.property name="_guiButtons"
@@ -53,8 +55,6 @@ public final class ControllerPanel extends JPanel implements IControllerPanel
 
 	private JList _lstPlugins;
 
-	private JPanel _graphPanel;
-
 	/**
 	 * 
 	 * @uml.property name="_pluginMangerGUI"
@@ -62,7 +62,7 @@ public final class ControllerPanel extends JPanel implements IControllerPanel
 	 */
 	private PluginManagerGUI _pluginMangerGUI;
 
-	private JPanel _pnlInit;
+	private JComponent _pnlInit;
 
 	private JPanel _pnlPluginButtons;
 
@@ -88,13 +88,13 @@ public final class ControllerPanel extends JPanel implements IControllerPanel
 	private GraphTaskManagerGUI _taskManagerGUI;
 
 	public ControllerPanel(SolutionManagerGUI solutionManagerGUI,
-			ProjectManagerGUI projectManagerGUI, GraphTaskManagerGUI taskManagerGUI,
-			PluginManagerGUI pluginMangerGUI)
+			ProjectManagerGUI projectManagerGUI,
+			GraphTaskManagerGUI taskManagerGUI, PluginManagerGUI pluginMangerGUI)
 	{
 		_solutionManagerGUI = solutionManagerGUI;
 		_projectManagerGUI = projectManagerGUI;
 		_taskManagerGUI = taskManagerGUI;
-		_pluginMangerGUI = pluginMangerGUI;	
+		_pluginMangerGUI = pluginMangerGUI;
 		_guiButtons = new GUIButtons(_taskManagerGUI);
 		_statusBar = new StatusBar();
 
@@ -114,6 +114,12 @@ public final class ControllerPanel extends JPanel implements IControllerPanel
 		return this;
 	}
 
+	public GraphTaskManagerGUI getTaskEditionManager()
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	/**
 	 * @see salomon.engine.controller.gui.IControllerPanel#refresh()
 	 */
@@ -123,6 +129,12 @@ public final class ControllerPanel extends JPanel implements IControllerPanel
 		super.validate();
 		_pluginMangerGUI.refresh();
 		_taskManagerGUI.refresh();
+	}
+
+	public void setTaskEditionManager(GraphTaskManagerGUI taskEditionManager)
+	{
+		// TODO Auto-generated method stub
+
 	}
 
 	/**
@@ -155,13 +167,16 @@ public final class ControllerPanel extends JPanel implements IControllerPanel
 		return _graphPanel;
 	}
 
-	private JPanel getPnlInit()
+	private JComponent getPnlInit()
 	{
 		if (_pnlInit == null) {
-			_pnlInit = new JPanel();
-			_pnlInit.setLayout(new GridLayout(1, 2));
-			_pnlInit.add(getPnlPlugins());
-			_pnlInit.add(getPnlTasks());
+			JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
+					getPnlPlugins(), getPnlTasks());
+			splitPane.setOneTouchExpandable(true);
+			_pnlInit = splitPane;
+			//			_pnlInit.setLayout(new GridLayout(1, 2));
+			//			_pnlInit.add(getPnlPlugins());
+			//			_pnlInit.add(getPnlTasks());
 		}
 		return _pnlInit;
 	}
@@ -244,16 +259,4 @@ public final class ControllerPanel extends JPanel implements IControllerPanel
 	}
 
 	private static final Logger LOGGER = Logger.getLogger(ControllerFrame.class);
-
-	public GraphTaskManagerGUI getTaskEditionManager()
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public void setTaskEditionManager(GraphTaskManagerGUI taskEditionManager)
-	{
-		// TODO Auto-generated method stub
-		
-	}
 }

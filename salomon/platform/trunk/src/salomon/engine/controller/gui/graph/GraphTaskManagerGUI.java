@@ -26,6 +26,7 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.text.DateFormat;
 import java.util.Date;
+import java.util.List;
 
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -35,10 +36,17 @@ import javax.swing.JTextField;
 
 import org.apache.log4j.Logger;
 
+import edu.uci.ics.jung.graph.Graph;
+import edu.uci.ics.jung.graph.Vertex;
+import edu.uci.ics.jung.graph.impl.DirectedSparseEdge;
+
 import salomon.engine.Messages;
 import salomon.engine.controller.gui.ControllerFrame;
 import salomon.engine.controller.gui.StatusBar;
+import salomon.engine.controller.gui.TaskGUI;
 import salomon.engine.controller.gui.action.ActionManager;
+import salomon.engine.plugin.IPluginManager;
+import salomon.engine.plugin.LocalPlugin;
 import salomon.engine.task.ITask;
 import salomon.engine.task.ITaskManager;
 import salomon.engine.task.Task;
@@ -59,7 +67,11 @@ public final class GraphTaskManagerGUI
 
 	private ActionManager _actionManager;
 
+	private Graph _graph;
+
 	private ControllerFrame _parent;
+
+	private IPluginManager _pluginManager;
 
 	private JPanel _pnlTaskProperties;
 
@@ -79,15 +91,45 @@ public final class GraphTaskManagerGUI
 
 	private JTextField _txtTaskStatus;
 
-	public GraphTaskManagerGUI(ITaskManager tasksManager)
+	public GraphTaskManagerGUI(ITaskManager tasksManager,
+			IPluginManager pluginManager)
 	{
 		_taskManager = tasksManager;
+		_pluginManager = pluginManager;
 	}
 
 	public ITask createTask()
 	{
-		//FIXME
-		return null;
+		ITask newTask = null;
+		try {
+			LocalPlugin localPlugin = (LocalPlugin) _pluginManager.getPlugins()[4];
+			if (localPlugin == null) {
+				LOGGER.debug("LocalPLugin == null");
+				Utils.showErrorMessage(Messages.getString("ERR_PLUGIN_NOT_SELECTED"));
+				return null;
+			}
+
+			// loading plugin
+			localPlugin.load();
+
+			// creating task
+			newTask = _taskManager.createTask();
+
+			// setting some params from GUI
+			TaskGUI taskGUI = new TaskGUI(newTask);
+			taskGUI.getTask().getInfo().setName(getTaskName());
+			taskGUI.getTask().setPlugin(localPlugin);
+
+			// adding task to managers
+			_taskManager.addTask(newTask);
+			//			_taskListModel.addElement(taskGUI);
+
+		} catch (Exception e) {
+			LOGGER.fatal("", e); //$NON-NLS-1$				
+			Utils.showErrorMessage(Messages.getString("ERR_CANNOT_LOAD_PLUGIN"));
+		}
+
+		return newTask;
 	}
 
 	public void editTask(ITask task)
@@ -111,12 +153,40 @@ public final class GraphTaskManagerGUI
 
 	public JPanel getGraphPanel()
 	{
-		return new TaskGraphEditor(this);
+
+		TaskGraphEditor taskGraphEditor = new TaskGraphEditor(this);
+		_graph = taskGraphEditor.getGraph();
+		return taskGraphEditor;
 	}
 
 	public void refresh()
 	{
-		//FIXME:
+		LOGGER.debug("reloading tasks");
+		_graph.removeAllEdges();
+		_graph.removeAllVertices();
+		ITask[] tasks = null;
+		try {
+			// TODO: change it
+			_taskManager.clearTasks();
+			tasks = _taskManager.getTasks();
+		} catch (PlatformException e1) {
+			LOGGER.fatal("", e1);
+			Utils.showErrorMessage("Cannot load task list");
+			return;
+		}
+
+		Vertex previousVertex = null;
+		for (ITask task : tasks) {
+			LOGGER.debug("adding task");
+			TaskVertex vertex = new TaskVertex(task);
+			_graph.addVertex(vertex);
+			if (previousVertex != null) {
+				DirectedSparseEdge edge = new DirectedSparseEdge(
+						previousVertex, vertex);
+				_graph.addEdge(edge);
+			}
+			previousVertex = vertex;
+		}
 	}
 
 	public void removeAllTasks()
@@ -133,8 +203,21 @@ public final class GraphTaskManagerGUI
 
 	public void runTasks()
 	{
-		throw new UnsupportedOperationException(
-				"Method runTasks() not implemented yet!");
+		List<ITask> executionPlan = GraphPlanner.makePlan(_graph);
+		if (executionPlan == null) {
+			JOptionPane.showMessageDialog(_positionComponent,
+					"Cannot create plan. There is a loop!",
+					"Cannot create plan!", JOptionPane.PLAIN_MESSAGE); //$NON-NLS-1$			
+		} else {
+			try {
+				for (ITask task : executionPlan) {
+					_taskManager.addTask(task);
+				}
+				_taskManager.start();
+			} catch (PlatformException e) {
+				LOGGER.fatal("Exception was thrown!", e);
+			}
+		}
 	}
 
 	public boolean saveTasks()
@@ -247,6 +330,17 @@ public final class GraphTaskManagerGUI
 	{
 		throw new UnsupportedOperationException(
 				"Method viewTasks() not implemented yet!");
+	}
+
+	private String getTaskName()
+	{
+		JTextField txtTaskName = new JTextField();
+		JOptionPane.showMessageDialog(
+				_positionComponent,
+				txtTaskName,
+				Messages.getString("TXT_ENTER_TASK_NAME"), JOptionPane.INFORMATION_MESSAGE); //$NON-NLS-1$
+
+		return txtTaskName.getText();
 	}
 
 	private void setTaskProperties(ITask iTask) throws PlatformException

@@ -39,7 +39,6 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
@@ -50,9 +49,7 @@ import javax.swing.JTextField;
 import org.apache.log4j.Logger;
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
-import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.forms.layout.RowSpec;
 
 import salomon.engine.Messages;
 import salomon.engine.Starter;
@@ -65,9 +62,11 @@ import salomon.engine.solution.ISolution;
 import salomon.engine.solution.ISolutionManager;
 import salomon.engine.solution.Solution;
 import salomon.engine.solution.SolutionManager;
+
+import salomon.util.gui.Utils;
+
 import salomon.platform.IUniqueId;
 import salomon.platform.exception.PlatformException;
-import salomon.util.gui.Utils;
 
 /**
  * Class used to manage with solutions editing.

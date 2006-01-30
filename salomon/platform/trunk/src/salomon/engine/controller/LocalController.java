@@ -236,7 +236,7 @@ public final class LocalController implements IController
 			_projectManagerGUI = new ProjectManagerGUI(
 					_managerEngine.getProjectManager());
 			_taskManagerGUI = new GraphTaskManagerGUI(
-					_managerEngine.getTasksManager());
+					_managerEngine.getTasksManager(), _managerEngine.getPluginManager());
 			_pluginMangerGUI = new PluginManagerGUI(
 					_managerEngine.getPluginManager());
 		} catch (PlatformException e) {

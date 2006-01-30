@@ -41,5 +41,11 @@ public final class TaskVertex extends SparseVertex
 	{
 		return _task;
 	}
+	
+	@Override
+	public String toString()
+	{
+		return _task.toString();
+	}
 
 }

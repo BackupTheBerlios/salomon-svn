@@ -33,13 +33,9 @@ import java.awt.geom.CubicCurve2D;
 import java.awt.geom.Point2D;
 import java.util.Iterator;
 
-import salomon.engine.task.ITask;
-
 import edu.uci.ics.jung.graph.Graph;
 import edu.uci.ics.jung.graph.Vertex;
 import edu.uci.ics.jung.graph.impl.DirectedSparseEdge;
-import edu.uci.ics.jung.graph.impl.SparseVertex;
-import edu.uci.ics.jung.graph.impl.UndirectedSparseEdge;
 import edu.uci.ics.jung.visualization.ArrowFactory;
 import edu.uci.ics.jung.visualization.Layout;
 import edu.uci.ics.jung.visualization.PickSupport;
@@ -47,6 +43,8 @@ import edu.uci.ics.jung.visualization.SettableVertexLocationFunction;
 import edu.uci.ics.jung.visualization.VisualizationViewer;
 import edu.uci.ics.jung.visualization.VisualizationViewer.Paintable;
 import edu.uci.ics.jung.visualization.control.AbstractGraphMousePlugin;
+
+import salomon.engine.task.ITask;
 
 public class SalomonEditingGraphMousePlugin extends AbstractGraphMousePlugin
 		implements MouseListener, MouseMotionListener
@@ -143,7 +141,7 @@ public class SalomonEditingGraphMousePlugin extends AbstractGraphMousePlugin
 					if (task != null) {
 
 						Graph graph = vv.getGraphLayout().getGraph();
-						Vertex newVertex = new SparseVertex();
+						Vertex newVertex = new TaskVertex(task);
 						vertexLocations.setLocation(newVertex,
 								vv.inverseTransform(e.getPoint()));
 						Layout layout = vv.getGraphLayout();

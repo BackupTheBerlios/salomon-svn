@@ -47,31 +47,37 @@ public final class GraphPlanner
 				LOGGER.debug("Cannot create plan!");
 				return null;
 			}
-			
+
 			notPlannedVertices.remove(nextVertex);
+			LOGGER.debug("Adding vertex to plan: " + nextVertex.toString());
 			result.add(((TaskVertex) nextVertex).getTask());
 		}
-		
+
 		return result;
 	}
-	
+
+	/**
+	 * Finds a next vertex
+	 * @param notPlannedVertices
+	 * @return the new vertex
+	 */
 	private static Vertex getNextVertex(Set<Vertex> notPlannedVertices)
 	{
 		Vertex result = null;
-		for (Vertex vertex : notPlannedVertices) {
+
+		vertex_loop : for (Vertex vertex : notPlannedVertices) {
 			Set<Edge> inEdges = vertex.getInEdges();
 			for (Edge edge : inEdges) {
-				//////// first or second
 				Vertex previousVertex = (Vertex) edge.getEndpoints().getFirst();
 				if (notPlannedVertices.contains(previousVertex)) {
-					continue;
+					continue vertex_loop;
 				}
 			}
 			return vertex;
 		}
-		
+
 		return result;
 	}
-	
+
 	private static final Logger LOGGER = Logger.getLogger(GraphPlanner.class);
 }

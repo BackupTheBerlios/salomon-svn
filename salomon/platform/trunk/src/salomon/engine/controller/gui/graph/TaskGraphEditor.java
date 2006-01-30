@@ -46,6 +46,7 @@ import edu.uci.ics.jung.graph.decorators.VertexStringer;
 import edu.uci.ics.jung.graph.impl.DirectedSparseGraph;
 import edu.uci.ics.jung.visualization.AbstractLayout;
 import edu.uci.ics.jung.visualization.DefaultSettableVertexLocationFunction;
+import edu.uci.ics.jung.visualization.FRLayout;
 import edu.uci.ics.jung.visualization.GraphZoomScrollPane;
 import edu.uci.ics.jung.visualization.PluggableRenderer;
 import edu.uci.ics.jung.visualization.ShapePickSupport;
@@ -65,12 +66,12 @@ public final class TaskGraphEditor extends JPanel
 
 	private AbstractLayout _layout;
 
+	private DefaultSettableVertexLocationFunction _vertexLocations;
+
 	/**
 	 * the visual component and renderer for the graph
 	 */
 	private VisualizationViewer _visualazationViewer;
-
-	private DefaultSettableVertexLocationFunction _vertexLocations;
 
 	private String instructions = "<html>"
 			+ "<h3>All Modes:</h3>"
@@ -136,6 +137,9 @@ public final class TaskGraphEditor extends JPanel
 				return v.toString();
 			}
 		});
+		
+//		FRLayout layout = new FRLayout(_graph);
+//		layout.restart();
 
 		_visualazationViewer.setToolTipFunction(new DefaultToolTipFunction());
 
@@ -191,6 +195,10 @@ public final class TaskGraphEditor extends JPanel
 		add(controls, BorderLayout.SOUTH);
 	}
 
+	public Graph getGraph()
+	{
+		return _graph;
+	}
 	/**
 	 * copy the visible part of the graph to a file as a jpeg image
 	 * @param file
