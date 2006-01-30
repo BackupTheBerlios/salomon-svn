@@ -29,6 +29,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.swing.JComponent;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -45,11 +46,13 @@ import salomon.engine.controller.gui.ControllerFrame;
 import salomon.engine.controller.gui.StatusBar;
 import salomon.engine.controller.gui.TaskGUI;
 import salomon.engine.controller.gui.action.ActionManager;
+import salomon.engine.controller.gui.viewer.TaskViewer;
 import salomon.engine.plugin.IPluginManager;
 import salomon.engine.plugin.LocalPlugin;
 import salomon.engine.task.ITask;
 import salomon.engine.task.ITaskManager;
 import salomon.engine.task.Task;
+import salomon.engine.task.TaskManager;
 
 import salomon.util.gui.Utils;
 
@@ -90,6 +93,8 @@ public final class GraphTaskManagerGUI
 	private JTextField _txtTaskName;
 
 	private JTextField _txtTaskStatus;
+	
+	private JFrame _tasksViewerFrame;	
 
 	public GraphTaskManagerGUI(ITaskManager tasksManager,
 			IPluginManager pluginManager)
@@ -122,7 +127,7 @@ public final class GraphTaskManagerGUI
 
 			// adding task to managers
 			_taskManager.addTask(newTask);
-			//			_taskListModel.addElement(taskGUI);
+			// _taskListModel.addElement(taskGUI);
 
 		} catch (Exception e) {
 			LOGGER.fatal("", e); //$NON-NLS-1$				
@@ -213,6 +218,7 @@ public final class GraphTaskManagerGUI
 				for (ITask task : executionPlan) {
 					_taskManager.addTask(task);
 				}
+				_taskManager.saveTasks();
 				_taskManager.start();
 			} catch (PlatformException e) {
 				LOGGER.fatal("Exception was thrown!", e);
@@ -222,8 +228,15 @@ public final class GraphTaskManagerGUI
 
 	public boolean saveTasks()
 	{
-		throw new UnsupportedOperationException(
-				"Method saveTasks() not implemented yet!");
+		boolean success = false;
+		try {
+			_taskManager.saveTasks();
+			success = true;
+		} catch (PlatformException e) {
+			LOGGER.fatal("", e);
+			Utils.showErrorMessage(Messages.getString("ERR_CANNOT_SAVE_TASKS"));
+		}
+		return success;
 	}
 
 	public void setActionManager(ActionManager actionManager)
@@ -328,8 +341,14 @@ public final class GraphTaskManagerGUI
 
 	public void viewTasks()
 	{
-		throw new UnsupportedOperationException(
-				"Method viewTasks() not implemented yet!");
+		if (_tasksViewerFrame == null) {
+			_tasksViewerFrame = new JFrame(Messages.getString("TIT_TASKS"));
+			_tasksViewerFrame.getContentPane().add(
+					new TaskViewer(((TaskManager) _taskManager).getDBManager()));
+			_tasksViewerFrame.pack();
+		}
+		_tasksViewerFrame.setLocation(Utils.getCenterLocation(_tasksViewerFrame));
+		_tasksViewerFrame.setVisible(true);
 	}
 
 	private String getTaskName()
