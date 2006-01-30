@@ -43,12 +43,10 @@ import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.layout.FormLayout;
 
 import edu.uci.ics.jung.graph.Graph;
-import edu.uci.ics.jung.graph.Vertex;
-import edu.uci.ics.jung.graph.impl.DirectedSparseEdge;
+
 import salomon.engine.Messages;
 import salomon.engine.controller.gui.ControllerFrame;
 import salomon.engine.controller.gui.StatusBar;
-import salomon.engine.controller.gui.TaskGUI;
 import salomon.engine.controller.gui.action.ActionManager;
 import salomon.engine.controller.gui.viewer.TaskViewer;
 import salomon.engine.plugin.IPluginManager;
@@ -57,20 +55,25 @@ import salomon.engine.task.ITask;
 import salomon.engine.task.ITaskManager;
 import salomon.engine.task.Task;
 import salomon.engine.task.TaskManager;
+
+import salomon.util.gui.Utils;
+
 import salomon.platform.IDataEngine;
 import salomon.platform.IUniqueId;
 import salomon.platform.exception.PlatformException;
+
 import salomon.plugin.IPlugin;
 import salomon.plugin.IResult;
 import salomon.plugin.IResultComponent;
 import salomon.plugin.ISettingComponent;
 import salomon.plugin.ISettings;
-import salomon.util.gui.Utils;
 
 public final class GraphTaskManagerGUI
 {
 
 	private ActionManager _actionManager;
+
+	private JComboBox _cmbPlugins;
 
 	private Graph _graph;
 
@@ -84,7 +87,11 @@ public final class GraphTaskManagerGUI
 
 	private StatusBar _statusBar;
 
+	private TaskGraphEditor _taskGraphEditor;
+
 	private ITaskManager _taskManager;
+
+	private JFrame _tasksViewerFrame;
 
 	private JTextField _txtTaskCrDate;
 
@@ -95,10 +102,6 @@ public final class GraphTaskManagerGUI
 	private JTextField _txtTaskName;
 
 	private JTextField _txtTaskStatus;
-
-	private JFrame _tasksViewerFrame;
-
-	private JComboBox _cmbPlugins;
 
 	public GraphTaskManagerGUI(ITaskManager tasksManager,
 			IPluginManager pluginManager)
@@ -111,16 +114,6 @@ public final class GraphTaskManagerGUI
 	{
 		ITask newTask = null;
 		try {
-//<<<<<<< .mine
-//			LocalPlugin localPlugin = (LocalPlugin) _pluginManager.getPlugins()[0];
-//			if (localPlugin == null) {
-//				LOGGER.debug("LocalPLugin == null");
-//				Utils.showErrorMessage(Messages.getString("ERR_PLUGIN_NOT_SELECTED"));
-//				return null;
-//			}
-//=======
-//>>>>>>> .r1044
-
 			// creating task
 			newTask = _taskManager.createTask();
 
@@ -141,48 +134,6 @@ public final class GraphTaskManagerGUI
 		}
 
 		return newTask;
-	}
-
-	private JPanel createTaskPanel()
-	{
-		FormLayout layout = new FormLayout(
-				"left:pref, 3dlu, right:100dlu:grow", "");
-		DefaultFormBuilder builder = new DefaultFormBuilder(layout);
-		builder.setDefaultDialogBorder();
-
-		builder.appendSeparator("Task Data");
-
-		Dimension size = new Dimension(150, 20);
-		_txtTaskName = new JTextField();
-		_txtTaskName.setPreferredSize(size);
-
-		_cmbPlugins = new JComboBox();
-		_cmbPlugins.setPreferredSize(size);
-
-		_txtTaskCrDate = new JTextField();
-		_txtTaskCrDate.setEnabled(false);
-		_txtTaskCrDate.setPreferredSize(size);
-
-		_txtTaskLastMod = new JTextField();
-		_txtTaskLastMod.setEnabled(false);
-		_txtTaskLastMod.setPreferredSize(size);
-
-		_txtTaskStatus = new JTextField();
-		_txtTaskStatus.setEnabled(false);
-		_txtTaskStatus.setPreferredSize(size);
-
-		_txtTaskInfo = new JTextArea(3, 10);
-
-		builder.append(new JLabel("Task name"), _txtTaskName);
-		builder.append(new JLabel("Plugin"), _cmbPlugins);
-		builder.append(new JLabel("Task Status"), _txtTaskStatus);
-		builder.append(new JLabel("Creation Date"), _txtTaskCrDate);
-		builder.append(new JLabel("Last Modification Date"), _txtTaskLastMod);
-
-		builder.appendSeparator("Task Info");
-		builder.append(new JScrollPane(_txtTaskInfo), 3);
-
-		return builder.getPanel();
 	}
 
 	public void editTask(ITask task)
@@ -209,15 +160,15 @@ public final class GraphTaskManagerGUI
 
 		_taskGraphEditor = new TaskGraphEditor(this);
 		_graph = _taskGraphEditor.getGraph();
-		
+
 		return _taskGraphEditor;
 	}
 
 	public void refresh()
 	{
 		LOGGER.debug("reloading tasks");
-//		_graph.removeAllEdges();
-//		_graph.removeAllVertices();
+		//		_graph.removeAllEdges();
+		//		_graph.removeAllVertices();
 		ITask[] tasks = null;
 		try {
 			// TODO: change it
@@ -389,6 +340,48 @@ public final class GraphTaskManagerGUI
 		_tasksViewerFrame.setVisible(true);
 	}
 
+	private JPanel createTaskPanel()
+	{
+		FormLayout layout = new FormLayout(
+				"left:pref, 3dlu, right:100dlu:grow", "");
+		DefaultFormBuilder builder = new DefaultFormBuilder(layout);
+		builder.setDefaultDialogBorder();
+
+		builder.appendSeparator("Task Data");
+
+		Dimension size = new Dimension(150, 20);
+		_txtTaskName = new JTextField();
+		_txtTaskName.setPreferredSize(size);
+
+		_cmbPlugins = new JComboBox();
+		_cmbPlugins.setPreferredSize(size);
+
+		_txtTaskCrDate = new JTextField();
+		_txtTaskCrDate.setEnabled(false);
+		_txtTaskCrDate.setPreferredSize(size);
+
+		_txtTaskLastMod = new JTextField();
+		_txtTaskLastMod.setEnabled(false);
+		_txtTaskLastMod.setPreferredSize(size);
+
+		_txtTaskStatus = new JTextField();
+		_txtTaskStatus.setEnabled(false);
+		_txtTaskStatus.setPreferredSize(size);
+
+		_txtTaskInfo = new JTextArea(3, 10);
+
+		builder.append(new JLabel("Task name"), _txtTaskName);
+		builder.append(new JLabel("Plugin"), _cmbPlugins);
+		builder.append(new JLabel("Task Status"), _txtTaskStatus);
+		builder.append(new JLabel("Creation Date"), _txtTaskCrDate);
+		builder.append(new JLabel("Last Modification Date"), _txtTaskLastMod);
+
+		builder.appendSeparator("Task Info");
+		builder.append(new JScrollPane(_txtTaskInfo), 3);
+
+		return builder.getPanel();
+	}
+
 	private boolean setTaskProperties(ITask iTask) throws PlatformException
 	{
 		boolean accepted = false;
@@ -447,8 +440,8 @@ public final class GraphTaskManagerGUI
 			// loading plugin
 			try {
 				if (localPlugin == null) {
-					localPlugin = (LocalPlugin) _cmbPlugins.getSelectedItem();					
-				}			
+					localPlugin = (LocalPlugin) _cmbPlugins.getSelectedItem();
+				}
 				localPlugin.load();
 
 				task.setPlugin(localPlugin);
@@ -466,7 +459,5 @@ public final class GraphTaskManagerGUI
 	}
 
 	private static final Logger LOGGER = Logger.getLogger(GraphTaskManagerGUI.class);
-
-	private TaskGraphEditor _taskGraphEditor;
 
 }
