@@ -53,16 +53,15 @@ import com.jgoodies.forms.layout.FormLayout;
 
 import salomon.engine.Messages;
 import salomon.engine.controller.gui.action.ActionManager;
+import salomon.engine.controller.gui.common.SearchFileFilter;
 import salomon.engine.controller.gui.viewer.PluginViewer;
 import salomon.engine.plugin.ILocalPlugin;
 import salomon.engine.plugin.IPluginManager;
 import salomon.engine.plugin.LocalPlugin;
 import salomon.engine.plugin.PluginInfo;
 import salomon.engine.plugin.PluginManager;
-
-import salomon.util.gui.Utils;
-
 import salomon.platform.exception.PlatformException;
+import salomon.util.gui.Utils;
 
 public final class PluginManagerGUI
 {
@@ -428,7 +427,9 @@ public final class PluginManagerGUI
 			
 			CellConstraints cc = new CellConstraints();
 			
-			_fileChooserPlugin = new JFileChooser();
+			_fileChooserPlugin = new JFileChooser(".");
+			_fileChooserPlugin.setFileFilter(new SearchFileFilter(PLUGIN_EXT, PLUGIN_DESC));
+			
 			_txtPluginName = new JTextField();
 			_txtPluginLocation = new JTextField();
 			_txtPluginDescription = new JTextField();
@@ -517,4 +518,7 @@ public final class PluginManagerGUI
 	
 	private static final Logger LOGGER = Logger.getLogger(PluginManagerGUI.class);
 	
+	private static final String PLUGIN_EXT = "jar";
+	
+	private static final String PLUGIN_DESC = "Plugins";
 }
