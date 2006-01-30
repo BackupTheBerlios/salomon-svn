@@ -23,24 +23,28 @@ package salomon.engine.controller.gui.graph;
 
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.GridLayout;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.List;
 
+import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import org.apache.log4j.Logger;
 
+import com.jgoodies.forms.builder.DefaultFormBuilder;
+import com.jgoodies.forms.layout.FormLayout;
+
 import edu.uci.ics.jung.graph.Graph;
 import edu.uci.ics.jung.graph.Vertex;
 import edu.uci.ics.jung.graph.impl.DirectedSparseEdge;
-
 import salomon.engine.Messages;
 import salomon.engine.controller.gui.ControllerFrame;
 import salomon.engine.controller.gui.StatusBar;
@@ -53,17 +57,15 @@ import salomon.engine.task.ITask;
 import salomon.engine.task.ITaskManager;
 import salomon.engine.task.Task;
 import salomon.engine.task.TaskManager;
-
-import salomon.util.gui.Utils;
-
 import salomon.platform.IDataEngine;
+import salomon.platform.IUniqueId;
 import salomon.platform.exception.PlatformException;
-
 import salomon.plugin.IPlugin;
 import salomon.plugin.IResult;
 import salomon.plugin.IResultComponent;
 import salomon.plugin.ISettingComponent;
 import salomon.plugin.ISettings;
+import salomon.util.gui.Utils;
 
 public final class GraphTaskManagerGUI
 {
@@ -86,15 +88,17 @@ public final class GraphTaskManagerGUI
 
 	private JTextField _txtTaskCrDate;
 
-	private JTextField _txtTaskInfo;
+	private JTextArea _txtTaskInfo;
 
 	private JTextField _txtTaskLastMod;
 
 	private JTextField _txtTaskName;
 
 	private JTextField _txtTaskStatus;
-	
-	private JFrame _tasksViewerFrame;	
+
+	private JFrame _tasksViewerFrame;
+
+	private JComboBox _cmbPlugins;
 
 	public GraphTaskManagerGUI(ITaskManager tasksManager,
 			IPluginManager pluginManager)
@@ -107,34 +111,69 @@ public final class GraphTaskManagerGUI
 	{
 		ITask newTask = null;
 		try {
-			LocalPlugin localPlugin = (LocalPlugin) _pluginManager.getPlugins()[4];
-			if (localPlugin == null) {
-				LOGGER.debug("LocalPLugin == null");
-				Utils.showErrorMessage(Messages.getString("ERR_PLUGIN_NOT_SELECTED"));
-				return null;
-			}
-
-			// loading plugin
-			localPlugin.load();
 
 			// creating task
 			newTask = _taskManager.createTask();
 
 			// setting some params from GUI
-			TaskGUI taskGUI = new TaskGUI(newTask);
-			taskGUI.getTask().getInfo().setName(getTaskName());
-			taskGUI.getTask().setPlugin(localPlugin);
-
-			// adding task to managers
-			_taskManager.addTask(newTask);
-			// _taskListModel.addElement(taskGUI);
-
+			if (setTaskProperties(newTask)) {
+				// adding task to managers
+				_taskManager.addTask(newTask);
+				// _taskListModel.addElement(taskGUI);
+			} else {
+				// nulling unneccessary reference
+				// null should be return to indicate
+				// that user cancelled task creation
+				newTask = null;
+			}
 		} catch (Exception e) {
 			LOGGER.fatal("", e); //$NON-NLS-1$				
 			Utils.showErrorMessage(Messages.getString("ERR_CANNOT_LOAD_PLUGIN"));
 		}
 
 		return newTask;
+	}
+
+	private JPanel createTaskPanel()
+	{
+		FormLayout layout = new FormLayout(
+				"left:pref, 3dlu, right:100dlu:grow", "");
+		DefaultFormBuilder builder = new DefaultFormBuilder(layout);
+		builder.setDefaultDialogBorder();
+
+		builder.appendSeparator("Task Data");
+
+		Dimension size = new Dimension(150, 20);
+		_txtTaskName = new JTextField();
+		_txtTaskName.setPreferredSize(size);
+
+		_cmbPlugins = new JComboBox();
+		_cmbPlugins.setPreferredSize(size);
+
+		_txtTaskCrDate = new JTextField();
+		_txtTaskCrDate.setEnabled(false);
+		_txtTaskCrDate.setPreferredSize(size);
+
+		_txtTaskLastMod = new JTextField();
+		_txtTaskLastMod.setEnabled(false);
+		_txtTaskLastMod.setPreferredSize(size);
+
+		_txtTaskStatus = new JTextField();
+		_txtTaskStatus.setEnabled(false);
+		_txtTaskStatus.setPreferredSize(size);
+
+		_txtTaskInfo = new JTextArea(3, 10);
+
+		builder.append(new JLabel("Task name"), _txtTaskName);
+		builder.append(new JLabel("Plugin"), _cmbPlugins);
+		builder.append(new JLabel("Task Status"), _txtTaskStatus);
+		builder.append(new JLabel("Creation Date"), _txtTaskCrDate);
+		builder.append(new JLabel("Last Modification Date"), _txtTaskLastMod);
+
+		builder.appendSeparator("Task Info");
+		builder.append(new JScrollPane(_txtTaskInfo), 3);
+
+		return builder.getPanel();
 	}
 
 	public void editTask(ITask task)
@@ -351,46 +390,14 @@ public final class GraphTaskManagerGUI
 		_tasksViewerFrame.setVisible(true);
 	}
 
-	private String getTaskName()
+	private boolean setTaskProperties(ITask iTask) throws PlatformException
 	{
-		JTextField txtTaskName = new JTextField();
-		JOptionPane.showMessageDialog(
-				_positionComponent,
-				txtTaskName,
-				Messages.getString("TXT_ENTER_TASK_NAME"), JOptionPane.INFORMATION_MESSAGE); //$NON-NLS-1$
-
-		return txtTaskName.getText();
-	}
-
-	private void setTaskProperties(ITask iTask) throws PlatformException
-	{
+		boolean accepted = false;
 		Task task = (Task) iTask;
+		LocalPlugin localPlugin = null;
 
 		if (_pnlTaskProperties == null) {
-			_pnlTaskProperties = new JPanel();
-			_pnlTaskProperties.setLayout(new GridLayout(5, 2));
-
-			_txtTaskName = new JTextField();
-			_txtTaskInfo = new JTextField();
-
-			_txtTaskCrDate = new JTextField();
-			_txtTaskCrDate.setEnabled(false);
-			_txtTaskLastMod = new JTextField();
-			_txtTaskLastMod.setEnabled(false);
-			_txtTaskStatus = new JTextField();
-			_txtTaskStatus.setEnabled(false);
-
-			_pnlTaskProperties.add(new JLabel("Task name"));
-			_pnlTaskProperties.add(_txtTaskName);
-			_pnlTaskProperties.add(new JLabel("Task info"));
-			_pnlTaskProperties.add(_txtTaskInfo);
-
-			_pnlTaskProperties.add(new JLabel("Creation Date"));
-			_pnlTaskProperties.add(_txtTaskCrDate);
-			_pnlTaskProperties.add(new JLabel("Last Modification Date"));
-			_pnlTaskProperties.add(_txtTaskLastMod);
-			_pnlTaskProperties.add(new JLabel("Task Status"));
-			_pnlTaskProperties.add(_txtTaskStatus);
+			_pnlTaskProperties = createTaskPanel();
 		}
 
 		String name = task.getInfo().getName();
@@ -405,6 +412,27 @@ public final class GraphTaskManagerGUI
 				+ " " + DateFormat.getTimeInstance().format(dmdate);
 		String status = task.getInfo().getStatus();
 
+		// selecting plugin
+
+		// trying to get available plugins
+		final int pluginId = task.getInfo().getPluginID();
+		_cmbPlugins.removeAllItems();
+		if (pluginId == 0) {
+			LocalPlugin[] plugins = (LocalPlugin[]) _pluginManager.getPlugins();
+			for (LocalPlugin plugin : plugins) {
+				_cmbPlugins.addItem(plugin);
+			}
+		} else {
+			localPlugin = (LocalPlugin) _pluginManager.getPlugin(new IUniqueId() {
+				public int getId()
+				{
+					return pluginId;
+				}
+			});
+			_cmbPlugins.addItem(localPlugin);
+			_cmbPlugins.setEditable(false);
+		}
+
 		_txtTaskName.setText(name == null ? "" : name);
 		_txtTaskInfo.setText(info == null ? "" : info);
 		_txtTaskCrDate.setText(cdate == null ? "" : cdate);
@@ -416,11 +444,26 @@ public final class GraphTaskManagerGUI
 				JOptionPane.PLAIN_MESSAGE);
 
 		if (result == JOptionPane.OK_OPTION) {
-			task.getInfo().setName(_txtTaskName.getText());
-			task.getInfo().setInfo(_txtTaskInfo.getText());
 
-			_taskManager.saveTasks();
+			// loading plugin
+			try {
+				if (localPlugin == null) {
+					localPlugin = (LocalPlugin) _cmbPlugins.getSelectedItem();					
+				}			
+				localPlugin.load();
+
+				task.setPlugin(localPlugin);
+				task.getInfo().setName(_txtTaskName.getText());
+				task.getInfo().setInfo(_txtTaskInfo.getText());
+
+				_taskManager.saveTasks();
+				accepted = true;
+			} catch (Exception e) {
+				LOGGER.fatal("", e);
+				Utils.showErrorMessage(Messages.getString("ERR_CANNOT_LOAD_PLUGIN"));
+			}
 		}
+		return accepted;
 	}
 
 	private static final Logger LOGGER = Logger.getLogger(GraphTaskManagerGUI.class);

@@ -67,8 +67,9 @@ public final class TaskInfo implements IInfo
 	public TaskInfo(DBManager dbManager)
 	{
 		_dbManager = dbManager;
-		_taskID = 0;
+		_taskID = 0;		
 		_projectID = 0;
+		_pluginID = 0;
 	}
 
 	/**
