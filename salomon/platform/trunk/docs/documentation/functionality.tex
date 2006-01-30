@@ -10,11 +10,12 @@ Terminem \emph{Solution} okreœlamy obiekt grupuj¹cy kilka projektów.
 Mo¿na na nim wykonaæ nastêpuj¹ce operacje:
 
 \begin{itemize}
-	\item Utworzenie nowego	\\
+	\item Utworzenie nowego
 		
 	Zadanie to wymaga konfiguracji, w szczególnoœci wskazania lokacji bazy danych.
 		
-	\item Otworzenie istniej¹cego \\
+	\item Otworzenie istniej¹cego
+	
 	System pozwala na wybór aktualnego \emph{Solutiona}. Mo¿na to zrobiæ przy uruchamianiu programu, kiedy to trzeba albo wskazaæ istniej¹cy \emph{Solution} albo utworzyæ nowy, b¹dŸ w dowolnym innym momencie, poprzez wybór odpowiedniej opcji z menu. Tylko w ten sposób mo¿na zmieniæ parametry ju¿ istniej¹cego obiektu \emph{Solution}.	
 
 \end{itemize}
@@ -22,56 +23,85 @@ Mo¿na na nim wykonaæ nastêpuj¹ce operacje:
 \subsection{Operacje na projektach}
 
 Projekty s³u¿¹ do grupowania zadañ w obrêbie tego samego obiektu \emph{Solution}.			
-Operacje na projekcie:
-		
-	\begin{itemize}
-	
+
+Operacje na projekcie:		
+	\begin{itemize}	
 		\item Utworzenie projektu
 		
 		Nowy projekt tworzony jest automatycznie podczas uruchomienia systemu. Mo¿na te¿ wymusiæ utworzenie nowego projektu poprzez wybór odpowiedniej opcji z menu.
+		
+		\item Edycja bie¿¹cego projektu
+		
+		Operacja ta pozwala na zmianê podstawowych informacji o projekcie, a wiêc jego nazwy i dodatkowych informacji.
 			
 		\item Uruchomienie projektu
 		
-        Akcja ta powoduje wykonanie zadañ zgromadzonych w tym projekcie. Wykonanie tej akcji wymaga wczeœniejszej konfiguracji w postaci specyfikacji listy zadañ do wykonania oraz ich indywidualnej konfiguracji.  
+        Akcja ta powoduje wykonanie zadañ zgromadzonych w tym projekcie. Wykonanie tej akcji wymaga wczeœniejszej konfiguracji w postaci specyfikacji listy zadañ do wykonania oraz ich indywidualnej konfiguracji.
         
-		\item Przerwanie wykonywania projektu
-		
-        Przerywa aktualnie wykonywana listê zadañ. Jeœli aktualnie wykonywane jest zadnie, to czy je przerwaæ le¿y w gestii u¿ytkownika. Jeœli dokona on wyboru, ¿e zadanie ma byæ przerwane natychmiast, wyniki z poprzedniego zadnia nie ulegaj¹ zmianie, w przeciwnym wypadku projekt zostaje zakoñczony po zakoñczeniu bie¿¹cego zadnia
         
-		\item Monitorowanie pracy
-		
-        W podstawowej wersji monitorowanie wykonania zdañ polegaæ bêdzie na wyœwietleniu progress bar'a, którego stan bêdzie zmieniany po ka¿dym wykonaniu zadnia atomowego. W nastêpnych wersjach mo¿e pojawiæ siê mo¿liwoœæ rejestracji zdarzeñ aktualnie wykonywanego zadania informuj¹cych o jego stanie.
-        
-  		\item Przegl¹danie rezultatów
-        
-        Ka¿de zadnie samo specyfikuje jak bêdzie prezentowaæ swoje wyniki, wiêc po wybraniu tej akcji inicjatywa prezentacji wyników spada na zadanie. Domyœlnie prezentowane s¹ wyniki ostatniego zadnia koñcz¹cego przetwarzanie, mo¿emy jednak, podczas wykonywania projektu, przejrzeæ wyniki ka¿dego z zadañ cz¹stkowych z osobna.
 	\end{itemize}
+	
+\subsection{Operacje na wtyczkach}
+
+Wtyczki zawieraj¹ algorytmy, które mog¹ byæ wykonywane przez platformê w ramach poszczególnych zadañ. S¹ one podstawowymi komponentami, które rozszerzaj¹ mo¿liwoœci systemu.
+
+	\begin{itemize}
+	
+		\item Dodanie
+		
+			Operacja ta pozwala na zdefiniowanie nowej wtyczki poprzez wskazanie odpowiedniego pliku j¹ reprezentuj¹cego.
+		
+		\item Edycja
+		
+			Za pomoc¹ tej operacji mo¿na zmieniaæ nazwê i opis wczeœniej zdefiniowanej wtyczki.
+		
+		\item Usuniêcie
+		
+			Pozwala na usuniêcie wtyczki z systemu.
+					
+	\end{itemize}	
+	
 
 \subsection{Operacje na zadaniach}
+
+Definiowanie zadañ do wykonania nale¿y do podstawowych funkcji systemu. Zadania s¹ prezentowane w postaci graficznej jako wêz³y grafu. 
+W obecnej wersji mo¿liwe jest tylko liniowe kolejkowanie zadañ, w przysz³oœci mo¿liwe bêdzie definiowanie ich w postaci grafu, co umo¿liwi ich równoleg³e wykonywanie.
+
 		\begin{itemize}
 			\item Dodanie
 			
-            Akcja dodania nowego zadania polega na wstawieniu do kolejki zadañ do wykonania, pluginu implementuj¹cego funkcjonalnoœæ tego zadania. 
-            Dodatkowo okreœlamy nastêpuj¹ce po nim zadnie oraz zadanie poprzedzaj¹ce, oraz dokonujemy edycji ustawieñ zadania.          
+			Dodanie zadania polega na zdefiniowaniu jego nazwy i wskazaniu wtyczki, która zawiera odpowiedni algorytm.
+			
 			\item Usuniêcie
 			
-            Akcja usuwa aktualnie zaznaczone zadnie. 
-			\item Organizowanie zadañ, ustawianie poprzedników, nastêpników
-			
-            Pozwala na zmianê aktualnej kolejnoœci wykonywania zadañ. 
+            Akcja usuwa aktualnie zaznaczone zadnie.             
+            
+            \item Okreœlanie kolejnoœci wykonania
+            
+            Zadania wykonywane s¹ tak, jak zosta³y po³¹czone krawêdziami. Strza³ki na krawêdziach okreœlaj¹ kolejne zadania do wykonania.
+            
+        \item Definiowanie ustawieñ wtyczki
+        
+        Ka¿de zadanie mo¿e byæ skonfigurowane przed wykonaniem. Sposób konfiguracji zale¿y od poszczególnych wtyczek i to one dostarczaj¹ komponenty pozwalaj¹ce na skonfigurowanie danej wtyczki.
+        
+  		\item Przegl¹danie rezultatów
+        
+        Ka¿de wtyczka, której algorytm przetwarzany jest w ramach zadania, sama specyfikuje jak bêdzie prezentowaæ swoje wyniki. Zdaniem platformy jest jedynie zapewnienie mo¿liwoœci wyœwietlenia zwróconych przez wtyczkê danych.        
 		\end{itemize}
 		
-\subsection{Administaracja}
+\subsection{Administracja}
 	
-		\begin{itemize}
-			\item Operacje na wtyczkach: dodanie, usuniêcie
-			
-            Akcja ta pozwala rozszerzyæ mo¿liwoœci platformy przez dodanie wtyczki. Wtyczki pozwalaj¹ wykonywaæ nowe rodzaje zadañ b¹dŸ rozszerzyæ mo¿liwoœci ju¿ istniej¹cych w systemie i importowaæ wiedzê z nowych Ÿróde³.
+	\begin{itemize}
             
-			\item Konfiguracja
+		\item Przegl¹danie obiektów w systemie
+		
+		W celach administracyjnych mo¿liwe jest przegl¹danie obiektów w taki sposób, w jaki zapisane s¹ w bazie danych.
 			
-            Konfiguracja pozwala nam dostosowaæ system do w³asnych potrzeb, podczas tego kroku mo¿emy wyspecyfikowaæ wszystkie parametry pracy systemu jako ca³oœci, czyli parametry takie jak lokalizacja bazy danych b¹dŸ rozproszenie systemu. 
-		\end{itemize}	
+		\item Zaawansowane operacje
+		
+		Do bardziej zaawansowanych operacji na bazie danych przeznaczona jest specjalna konsola, która pozwala na wykonanie dowolnych operacji na bazie danych.
+		
+	\end{itemize}	
 
 
 
