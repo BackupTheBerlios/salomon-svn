@@ -1,37 +1,53 @@
 \section{Funkcjonalnoœæ}
-Obecnie Salomon pozwala na nastêpuj¹ce rzeczy:
-\begin{enumerate}
-	\item Operacje na \emph{Solution}:	
-	\begin{itemize}
-		\item Stworzenie obiektu \emph{Solution}\\
-		Terminem tym okreœlamy strukturê grupuj¹c¹ kilka projektów. 
-		Zadanie to wymaga konfiguracji, w szczególnoœci wskazania lokacji bazy danych.
-		
-		\item Otworzenie istniej¹cego \emph{Solutiona}\\
-		System pozwala na wybór aktualnego \emph{Solutiona}. Mo¿na to zrobiæ przy uruchamianiu programu, kiedy to trzeba albo wskazaæ istniej¹cy \emph{Solution} albo utworzyæ nowy, b¹dŸ w dowolnym innym momencie, poprzez wybór odpowiedniej opcji z menu.			
-	\end{itemize}	
-			
-	\item Operacje na projekcie:
-		
-		\begin{itemize}
-			\item Uruchomienie projektu
-			
-            Akcja ta powoduje wykonanie zadañ zgromadzonych w tym projekcie. Wykonanie tej akcji wymaga wczeœniejszej konfiguracji w postaci specyfikacji listy zadañ do wykonania oraz ich indywidualnej konfiguracji.  
-            
-			\item Przerwanie wykonywania projektu
-			
-            Przerywa aktualnie wykonywana listê zadañ. Jeœli aktualnie wykonywane jest zadnie, to czy je przerwaæ le¿y w gestii u¿ytkownika. Jeœli dokona on wyboru, ¿e zadanie ma byæ przerwane natychmiast, wyniki z poprzedniego zadnia nie ulegaj¹ zmianie, w przeciwnym wypadku projekt zostaje zakoñczony po zakoñczeniu bie¿¹cego zadnia
-            
-			\item Monitorowanie pracy
-			
-            W podstawowej wersji monitorowanie wykonania zdañ polegaæ bêdzie na wyœwietleniu progress bar'a, którego stan bêdzie zmieniany po ka¿dym wykonaniu zadnia atomowego. W nastêpnych wersjach mo¿e pojawiæ siê mo¿liwoœæ rejestracji zdarzeñ aktualnie wykonywanego zadania informuj¹cych o jego stanie.
-            
-      		\item Przegl¹danie rezultatów
-            
-            Ka¿de zadnie samo specyfikuje jak bêdzie prezentowaæ swoje wyniki, wiêc po wybraniu tej akcji inicjatywa prezentacji wyników spada na zadanie. Domyœlnie prezentowane s¹ wyniki ostatniego zadnia koñcz¹cego przetwarzanie, mo¿emy jednak, podczas wykonywania projektu, przejrzeæ wyniki ka¿dego z zadañ cz¹stkowych z osobna.
-		\end{itemize}
 
-		\item Operacje na zadaniach:
+Podstawowa funkcjonalnoœæ \emph{Salomona} pozwala na definiowanie i zarz¹dzanie obiektami \emph{Solution}, projektami, zadaniami i wtyczkami. 
+
+\emph{Salomon} dostarcza te¿ narzêdzi u³atwiaj¹ce administrowanie danymi zgromadzonymi w systemie -- mo¿liwe jest przegl¹danie wszystkich zapisanych w bazie danych obiektów, a zaawansowani u¿ytkownicy mog¹ wykonaæ dowolne operacje bezpoœrednio na bazie danych za pomoc¹ \emph{SQLConsole}.
+
+\subsection{Operacje na obiekcie Solution}
+
+Terminem \emph{Solution} okreœlamy obiekt grupuj¹cy kilka projektów. 
+Mo¿na na nim wykonaæ nastêpuj¹ce operacje:
+
+\begin{itemize}
+	\item Utworzenie nowego	\\
+		
+	Zadanie to wymaga konfiguracji, w szczególnoœci wskazania lokacji bazy danych.
+		
+	\item Otworzenie istniej¹cego \\
+	System pozwala na wybór aktualnego \emph{Solutiona}. Mo¿na to zrobiæ przy uruchamianiu programu, kiedy to trzeba albo wskazaæ istniej¹cy \emph{Solution} albo utworzyæ nowy, b¹dŸ w dowolnym innym momencie, poprzez wybór odpowiedniej opcji z menu. Tylko w ten sposób mo¿na zmieniæ parametry ju¿ istniej¹cego obiektu \emph{Solution}.	
+
+\end{itemize}
+
+\subsection{Operacje na projektach}
+
+Projekty s³u¿¹ do grupowania zadañ w obrêbie tego samego obiektu \emph{Solution}.			
+Operacje na projekcie:
+		
+	\begin{itemize}
+	
+		\item Utworzenie projektu
+		
+		Nowy projekt tworzony jest automatycznie podczas uruchomienia systemu. Mo¿na te¿ wymusiæ utworzenie nowego projektu poprzez wybór odpowiedniej opcji z menu.
+			
+		\item Uruchomienie projektu
+		
+        Akcja ta powoduje wykonanie zadañ zgromadzonych w tym projekcie. Wykonanie tej akcji wymaga wczeœniejszej konfiguracji w postaci specyfikacji listy zadañ do wykonania oraz ich indywidualnej konfiguracji.  
+        
+		\item Przerwanie wykonywania projektu
+		
+        Przerywa aktualnie wykonywana listê zadañ. Jeœli aktualnie wykonywane jest zadnie, to czy je przerwaæ le¿y w gestii u¿ytkownika. Jeœli dokona on wyboru, ¿e zadanie ma byæ przerwane natychmiast, wyniki z poprzedniego zadnia nie ulegaj¹ zmianie, w przeciwnym wypadku projekt zostaje zakoñczony po zakoñczeniu bie¿¹cego zadnia
+        
+		\item Monitorowanie pracy
+		
+        W podstawowej wersji monitorowanie wykonania zdañ polegaæ bêdzie na wyœwietleniu progress bar'a, którego stan bêdzie zmieniany po ka¿dym wykonaniu zadnia atomowego. W nastêpnych wersjach mo¿e pojawiæ siê mo¿liwoœæ rejestracji zdarzeñ aktualnie wykonywanego zadania informuj¹cych o jego stanie.
+        
+  		\item Przegl¹danie rezultatów
+        
+        Ka¿de zadnie samo specyfikuje jak bêdzie prezentowaæ swoje wyniki, wiêc po wybraniu tej akcji inicjatywa prezentacji wyników spada na zadanie. Domyœlnie prezentowane s¹ wyniki ostatniego zadnia koñcz¹cego przetwarzanie, mo¿emy jednak, podczas wykonywania projektu, przejrzeæ wyniki ka¿dego z zadañ cz¹stkowych z osobna.
+	\end{itemize}
+
+\subsection{Operacje na zadaniach}
 		\begin{itemize}
 			\item Dodanie
 			
@@ -45,8 +61,7 @@ Obecnie Salomon pozwala na nastêpuj¹ce rzeczy:
             Pozwala na zmianê aktualnej kolejnoœci wykonywania zadañ. 
 		\end{itemize}
 		
-	\pagebreak	
-	\item Administracja
+\subsection{Administaracja}
 	
 		\begin{itemize}
 			\item Operacje na wtyczkach: dodanie, usuniêcie
@@ -56,8 +71,7 @@ Obecnie Salomon pozwala na nastêpuj¹ce rzeczy:
 			\item Konfiguracja
 			
             Konfiguracja pozwala nam dostosowaæ system do w³asnych potrzeb, podczas tego kroku mo¿emy wyspecyfikowaæ wszystkie parametry pracy systemu jako ca³oœci, czyli parametry takie jak lokalizacja bazy danych b¹dŸ rozproszenie systemu. 
-		\end{itemize}
-	
-\end{enumerate}
+		\end{itemize}	
+
 
 

@@ -1,9 +1,8 @@
 \section{Interfejs u¿ytkownika}
 
-\subsection{Tryb serwera}
-G³ównym zadaniem systemu jest umo¿liwienie definiowania i wykonywania zadañ w oparciu o dostêpne wtyczki. Gdy program dzia³a w trybie serwera po lewej stronie widoczna jest lista pod³¹czonych klientów. Wszystkie opisane poni¿ej operacje wykonywane s¹ dla aktualnie wybranego klienta.
+G³ównym zadaniem systemu jest umo¿liwienie definiowania i wykonywania zadañ w oparciu o dostêpne wtyczki. 
 
-\subsubsection{Zadania}
+\subsection{Zadania}
 Aby zdefiniowaæ nowe zadanie, nale¿y wybraæ wtyczkê, za pomoc¹ którego bêdzie ono realizowane oraz skonfigurowaæ jego ustawienia. Wtyczkê nale¿y wybraæ z listy dostêpnych, znajduj¹cej siê na œrodku g³ównego okna programu. Po wybraniu wtyczki i naciœniêciu przycisku ze strza³k¹ w prawo znajduj¹cego siê miedzy panelem z wtyczkami a panelem z zadaniami pojawia siê okienko, w którym nale¿y wprowadziæ nazwê zadania. 
 
 \begin{figure}[htb]
@@ -37,7 +36,7 @@ Po wykonaniu zadañ mo¿na obejrzeæ ich rezultaty. W tym celu nale¿y z menu kontek
 \end{figure}
 
 
-\subsubsection{Pluginy}
+\subsection{Pluginy}
 Lista pluginów tworzona jest na podstawie odpowiednich wpisów w bazie danych. Mo¿na j¹ jednak  modyfikowaæ - dodawaæ, usuwaæ lub modyfikowaæ dane pluginy. S³u¿¹ do tego odpowiednie opcje z menu kontekstowego wywo³ywanego dla pluginów. 
 
 \begin{figure}[htb]
@@ -48,7 +47,7 @@ Lista pluginów tworzona jest na podstawie odpowiednich wpisów w bazie danych. Mo
 \end{figure}
 
 
-\subsubsection{Projekty}
+\subsection{Projekty}
 
 Konfiguracja pluginów oraz lista zadañ zapisywana jest w ramach projektów. Dziêki temu mo¿na zdefiniowaæ ró¿ne listy zadañ i wykonywaæ je wielokrotnie, bez potrzeby ich ponownego tworzenia i konfiguracji. Aby za³¹dowaæ istniej¹cy projekt nale¿y z menu g³ównego wybraæ pozycjê \textbf{Projects$\rightarrow$Open Project}. Spowoduje to wyœwietlenie listy zapisanych projektów i umo¿liwi wybór projektu do za³adowania. 
 
@@ -59,12 +58,6 @@ Konfiguracja pluginów oraz lista zadañ zapisywana jest w ramach projektów. Dziêk
 	\label{fig:open_project}
 \end{figure}
 
-
-\subsection{Tryb klienta}
-Program pracuj¹cy w tym trybie nie posiada interfejsu u¿ytkownika, jego konfiguracja odbywa siê z serwera.
-
-\subsection{Tryb lokalny}
-Interfejs dla programu dzia³aj¹cego w trybie lokalnym zbli¿ony jest do programu w trybie serwera. Nie posiada on jednak listy pod³¹czonych klientów, gdy¿ sam wykonuje zdefiniowane zadania, czyli zachowuje siê jak po³¹czenie dwóch programów dzia³aj¹cych w trybie serwera i klienta.
 
 \subsection{SQL Console}
 W trybie serwera oraz w trybie lokalnym z menu Tools dostêpny jest program SQL Console. Pozwala on na wykonywanie zapytañ SQL-owych, przez co umo¿liwia administracjê projektami, pluginami i zadaniami oraz innymi tabelami wykorzystywanymi przez system.
