@@ -1,0 +1,40 @@
+\section{Zadania}
+Jednym z istotnych atutów systemu jest mo¿liwoœæ elastycznego definiowania
+przebiegu pracy systemu w kategoriach tzw.\ \emph{zada\'n}.
+Ekstrakcja wiedzy to proces, który mo¿e
+byæ podzielony na etapy -- w ka¿dym etapie wiedza jest poddawana
+pewnej obróbce (np. dyskretyzowane s¹ atrybuty, tworzone s¹
+regu³y, wiedza jest testowana). Poniewa¿ ka¿dy etap tworzy odrêbn¹
+ca³oœæ, a~czêœæ etapów jest od siebie niezale¿na, zatem mog¹ byæ
+one wykonywane wspó³bie¿nie.
+
+Zadanie to podstawowa jednostka reprezentuj¹ca obliczenia.
+Zdefiniowane jest ono jako: 
+$$
+z=(a, p, we, wy)
+$$
+gdzie:
+\begin{itemize}
+    \item $a$ jest algorytmem, dostarczanym do systemu w postaci komponentu --
+    wtyczki,
+    \item $p$ reprezentuje parametry algorytmu,
+    \item $we$ i $wy$ oznaczaj¹ odpowiednio informacje wejœciowe i
+    wyjœciowe algorytmu.
+\end{itemize}
+Wejœcie i wyjœcie mo¿e mieæ postaæ danych (w~przypadku algorytmów,
+które dokonuj¹ np. selekcji danych), wiedzy (np. wygenerowane
+regu³y) lub danych i wiedzy naraz (np.\ regu³y i~wyj¹tki dla
+nich).
+
+Wyjœcie jednego zadania mo¿e byæ wejœciem pewnej liczby nastêpnych
+zadañ. Aby zadanie mog³o zostaæ wykonane, wszystkie zadania od
+których zale¿y musz¹ byæ wykonane wczeœniej. Powi¹zane zadania
+mog¹ byæ przedstawione w postaci grafu skierowanego. Taki graf z
+zaznaczonym zadaniem pocz¹tkowym tworzy \emph{program}. Dodatkowo,
+ka¿da krawêdŸ mo¿e mieæ przypisany warunek, który jest wymagany,
+aby sterowanie zosta³o przekazane wzd³u¿ tej krawêdzi. Tak
+zdefiniowany program mo¿e byæ ³atwo prezentowany u¿ytkownikowi w postaci
+graficznej. W~systemie bêdzie mo¿na tak¿e
+definiowaæ agentów, którzy reagowa\'c bêd¹ na zmiany w danych i/lub wiedzy
+(np.\ na dodanie nowego rekordu do danych treningowych, czy
+wygenerowanie wiedzy przez innego agenta).
