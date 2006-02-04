@@ -22,32 +22,62 @@
 package pl.edu.agh.iisg.salomon.plugin.datasetcreator.result;
 
 import java.awt.Component;
+import java.awt.Dimension;
+
+import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 import salomon.plugin.IResult;
 import salomon.plugin.IResultComponent;
+import salomon.util.serialization.SimpleString;
 
 /**
  * @author nico
  */
 public class CreatorResultComponent implements IResultComponent
 {
+	private JComponent _resultComponent;
 
-	/**
-	 *
-	 */
-	public Component getComponent(IResult arg0)
+	private JTextField _txtDataSetName;
+
+	public CreatorResultComponent()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		_txtDataSetName = new JTextField();
 	}
 
 	/**
-	 *
+	 * 
+	 */
+	public Component getComponent(IResult result)
+	{
+		if (_resultComponent == null) {
+			_resultComponent = createResultComponent();
+		}
+		CreatorResult cResult = (CreatorResult) result;
+		SimpleString dataSetName = (SimpleString) cResult.getField(CreatorResult.DATA_SET_NAME);
+		_txtDataSetName.setText(dataSetName == null ? "" : dataSetName.getValue());		
+		return _resultComponent;
+	}
+
+	private JComponent createResultComponent()
+	{
+		JComponent panel = new JPanel();
+		panel.add(new JLabel("Data set name"));
+		_txtDataSetName.setPreferredSize(new Dimension(100, 20));		
+		_txtDataSetName.setEditable(false);
+		panel.add(_txtDataSetName);
+
+		return panel;
+	}
+
+	/**
+	 * 
 	 */
 	public IResult getDefaultResult()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return new CreatorResult();
 	}
 
 }
