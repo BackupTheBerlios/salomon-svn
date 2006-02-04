@@ -36,6 +36,18 @@ public final class CreatorSettings extends SimpleStruct implements ISettings
 
 	public static final String CONDITIONS = "conditions";
 
+	// work around
+
+	public static final String ELEM1 = "elem1";
+
+	public static final String ELEM2 = "elem2";
+
+	public static final String ELEM3 = "elem3";
+
+	public static final String ELEM4 = "elem4";
+
+	public static final String ELEM5 = "elem5";
+
 	public void init(IObject o)
 	{
 		IStruct struct = (IStruct) o;

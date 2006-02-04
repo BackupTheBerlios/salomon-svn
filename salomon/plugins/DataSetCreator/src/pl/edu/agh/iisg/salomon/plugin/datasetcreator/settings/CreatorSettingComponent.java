@@ -58,6 +58,7 @@ import salomon.plugin.ISettingComponent;
 import salomon.plugin.ISettings;
 import salomon.util.serialization.SimpleArray;
 import salomon.util.serialization.SimpleString;
+import salomon.util.serialization.SimpleStruct;
 
 /**
  * @author nico
@@ -128,17 +129,42 @@ public class CreatorSettingComponent implements ISettingComponent
 	{
 		CreatorSettings cSettings = (CreatorSettings) settings;
 		SimpleString dataSetName = (SimpleString) cSettings.getField(CreatorSettings.DATA_SET_NAME);
-		SimpleArray condArray = (SimpleArray) cSettings.getField(CreatorSettings.CONDITIONS);
+		// FIXME:
+		// SimpleArray condArray = (SimpleArray)
+		// cSettings.getField(CreatorSettings.CONDITIONS);
 
-		ICondition[] conditions = new ICondition[condArray.size()];
+		SimpleStruct condStruct = (SimpleStruct) cSettings.getField(CreatorSettings.CONDITIONS);
+
+		SimpleString elem1 = (SimpleString) condStruct.getField(CreatorSettings.ELEM1);
+		SimpleString elem2 = (SimpleString) condStruct.getField(CreatorSettings.ELEM2);
+		SimpleString elem3 = (SimpleString) condStruct.getField(CreatorSettings.ELEM3);
+		SimpleString elem4 = (SimpleString) condStruct.getField(CreatorSettings.ELEM4);
+		SimpleString elem5 = (SimpleString) condStruct.getField(CreatorSettings.ELEM5);
 
 		// creating conditions
+		// FIXME: workaround, SimpleArray is not implemented yet!!!
+		// ICondition[] conditions = new ICondition[condArray.size()];
+		// int i = 0;
+		// IObject[] values = condArray.getValue();
+		// if (values != null) {
+		// for (IObject object : values) {
+		// String value = ((SimpleString) object).getValue();
+		// LOGGER.debug("value = " + value);
+		// conditions[i] = _dataEngine.getDataSetManager().createCondition(
+		// value);
+		// ++i;
+		// }
+		// }
+
+		// FIXME:
+		ICondition[] conditions = new ICondition[5];
 		int i = 0;
-		IObject[] values = condArray.getValue();
-		if (values != null) {
-			for (IObject object : values) {
+		IObject[] values = new IObject[]{elem1, elem2, elem3, elem4, elem5};
+		for (IObject object : values) {
+			if (object != null) {
 				String value = ((SimpleString) object).getValue();
 				LOGGER.debug("value = " + value);
+
 				conditions[i] = _dataEngine.getDataSetManager().createCondition(
 						value);
 				++i;
@@ -148,7 +174,9 @@ public class CreatorSettingComponent implements ISettingComponent
 		// setting gui values
 		_txtDataSetName.setText(dataSetName.getValue());
 		for (ICondition condition : conditions) {
-			_conditionListModel.addElement(condition);
+			if (condition != null) {
+				_conditionListModel.addElement(condition);
+			}
 		}
 	}
 
@@ -162,7 +190,7 @@ public class CreatorSettingComponent implements ISettingComponent
 			_defaultSettings.setField(CreatorSettings.DATA_SET_NAME,
 					new SimpleString(""));
 			_defaultSettings.setField(CreatorSettings.CONDITIONS,
-					new SimpleArray());
+					new SimpleStruct());
 		}
 		return _defaultSettings;
 	}
@@ -178,14 +206,21 @@ public class CreatorSettingComponent implements ISettingComponent
 
 		// setting conditions
 		int size = _conditionListModel.getSize();
-		SimpleString[] conditions = new SimpleString[size];
-		for (int i = 0; i < size; ++i) {
-			conditions[i] = new SimpleString(
+		SimpleStruct condStruct = new SimpleStruct();
+		// FIXME:
+		for (int i = 0; i < size && i < 5; ++i) {
+			String name = "elem" + (i + 1);
+			SimpleString elem = new SimpleString(
 					_conditionListModel.get(i).toString());
+			condStruct.setField(name, elem);
 		}
-		SimpleArray array = new SimpleArray(conditions);
+		// FIXME:
+		// SimpleArray array = new SimpleArray(conditions);
+
 		settings.setField(CreatorSettings.DATA_SET_NAME, dataSetName);
-//		settings.setField(CreatorSettings.CONDITIONS, array);
+		// FIXME:
+		// settings.setField(CreatorSettings.CONDITIONS, array);
+		settings.setField(CreatorSettings.CONDITIONS, condStruct);
 
 		return settings;
 	}
