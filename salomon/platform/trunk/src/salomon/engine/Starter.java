@@ -80,7 +80,7 @@ public final class Starter
 			_managerEngine = new ManagerEngine();
 		} catch (Exception e) {
 			LOGGER.fatal("", e);
-			Utils.showErrorMessage("ERR_CONNECTION_ERROR");
+			Utils.showErrorMessage(Messages.getString("ERR_CONNECTION_ERROR"));
 		}
 	}
 

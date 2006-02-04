@@ -32,11 +32,15 @@ import salomon.platform.exception.PlatformException;
 public interface IDataSet
 {
 	/**
-	 * Gets the info of this data set.
+	 * Gets the info of this data set. TODO: remove this method from interface
 	 * 
 	 * @return the data set info
 	 */
 	IInfo getInfo() throws PlatformException;
+
+	String getName() throws PlatformException;
+
+	void setName(String name) throws PlatformException;
 
 	/**
 	 * 

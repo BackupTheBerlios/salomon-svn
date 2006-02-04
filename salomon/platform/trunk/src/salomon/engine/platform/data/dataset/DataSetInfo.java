@@ -194,6 +194,8 @@ final class DataSetInfo implements IInfo
 		try {
 			// saving items
 			for (AbstractCondition condition : _conditions) {
+				// FIXME: why it can be null??? 
+				if (condition != null) {
 				SQLInsert insert = new SQLInsert(ITEMS_TABLE_NAME);
 				insert.addValue("dataset_id", _datasetID);
 				insert.addValue("table_name",
@@ -201,6 +203,7 @@ final class DataSetInfo implements IInfo
 				insert.addValue("condition", condition.toSQL());
 				LOGGER.debug("insert: " + insert.getQuery());
 				_dbManager.insert(insert, "dataset_item_id");
+				}
 			}
 		} catch (SQLException e) {
 			LOGGER.fatal("Exception was thrown!", e);

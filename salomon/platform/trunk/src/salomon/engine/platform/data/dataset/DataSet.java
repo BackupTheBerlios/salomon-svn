@@ -56,6 +56,8 @@ public class DataSet implements IDataSet
 
 	private DataSetInfo _info;
 
+	private String name;
+
 	/**
 	 * Creates data set. This constructor can be used only from DataSetManager.
 	 */
@@ -83,6 +85,11 @@ public class DataSet implements IDataSet
 	public IInfo getInfo() throws PlatformException
 	{
 		return _info;
+	}
+
+	public String getName() throws PlatformException
+	{
+		return (_info == null ? null : _info.getName());
 	}
 
 	public IDataSet intersection(IDataSet dataSet) throws PlatformException
@@ -163,6 +170,13 @@ public class DataSet implements IDataSet
 			throw new DBException(e);
 		}
 		return new Data(resultSet);
+	}
+
+	public void setName(String name) throws PlatformException
+	{
+		if (_info != null) {
+			_info.setName(name);
+		}
 	}
 
 	/*
