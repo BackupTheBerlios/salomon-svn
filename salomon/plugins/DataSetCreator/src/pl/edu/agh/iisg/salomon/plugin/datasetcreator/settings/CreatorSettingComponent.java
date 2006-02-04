@@ -56,7 +56,6 @@ import salomon.platform.exception.PlatformException;
 import salomon.platform.serialization.IObject;
 import salomon.plugin.ISettingComponent;
 import salomon.plugin.ISettings;
-import salomon.util.serialization.SimpleArray;
 import salomon.util.serialization.SimpleString;
 import salomon.util.serialization.SimpleStruct;
 
