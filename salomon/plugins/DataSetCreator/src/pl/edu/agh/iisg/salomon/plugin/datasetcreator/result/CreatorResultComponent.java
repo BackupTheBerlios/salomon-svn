@@ -19,32 +19,23 @@
  * 
  */
 
-package pl.edu.agh.iisg.salomon.plugin.datasetcreator;
+package pl.edu.agh.iisg.salomon.plugin.datasetcreator.result;
 
-import pl.edu.agh.iisg.salomon.plugin.datasetcreator.result.CreatorResultComponent;
-import pl.edu.agh.iisg.salomon.plugin.datasetcreator.settings.CreatorSettingComponent;
-import salomon.platform.IDataEngine;
-import salomon.platform.IEnvironment;
-import salomon.plugin.IPlugin;
+import java.awt.Component;
+
 import salomon.plugin.IResult;
 import salomon.plugin.IResultComponent;
-import salomon.plugin.ISettingComponent;
-import salomon.plugin.ISettings;
 
 /**
  * @author nico
  */
-public final class DataSetCreatorPlugin implements IPlugin
+public class CreatorResultComponent implements IResultComponent
 {
 
-	private ISettingComponent _settingComponent;
-	
-	private IResultComponent _resultComponent;
-	
 	/**
 	 *
 	 */
-	public IResult doJob(IDataEngine dataEngine, IEnvironment env, ISettings settings)
+	public Component getComponent(IResult arg0)
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -53,23 +44,10 @@ public final class DataSetCreatorPlugin implements IPlugin
 	/**
 	 *
 	 */
-	public ISettingComponent getSettingComponent()
+	public IResult getDefaultResult()
 	{
-		if (_settingComponent == null) {
-			_settingComponent = new CreatorSettingComponent();
-		}
-		return _settingComponent;
-	}
-
-	/**
-	 *
-	 */
-	public IResultComponent getResultComponent()
-	{
-		if (_resultComponent == null) {
-			_resultComponent = new CreatorResultComponent();
-		}
-		return _resultComponent;
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
