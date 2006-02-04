@@ -84,5 +84,10 @@ public class SimpleArray implements IArray
 		// TODO Auto-generated method stub
 		//return false;
 	}
+	
+	public int size()
+	{
+		return (_value == null ? 0 : _value.length);
+	}
 
 }

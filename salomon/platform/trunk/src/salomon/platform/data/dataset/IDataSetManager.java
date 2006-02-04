@@ -44,6 +44,8 @@ public interface IDataSetManager
 	ICondition createAndCondition(ICondition condition,
 			ICondition... conditions) throws PlatformException;
 
+	ICondition createCondition(String stringCondition) throws PlatformException;
+
 	ICondition createEqualsCondition(IColumn column, Object value)
 			throws PlatformException;
 

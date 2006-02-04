@@ -48,5 +48,10 @@ public abstract class AbstractCondition implements ICondition
 	public abstract String toSQL();
 
 	protected abstract String getOperator();
-
+	
+	@Override
+	public String toString()
+	{		
+		return toSQL();
+	}
 }

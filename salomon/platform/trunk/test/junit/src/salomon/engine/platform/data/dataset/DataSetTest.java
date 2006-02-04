@@ -75,7 +75,6 @@ public class DataSetTest extends TestCase
 		assertNotNull(dataSet);
 		dataSet.getInfo().delete();
 		_manager.rollback();
-
 	}
 
 	public void testIntersection() throws PlatformException, SQLException
@@ -306,6 +305,7 @@ public class DataSetTest extends TestCase
 			_dataSet1 = mainDataSet.createSubset(conditions);
 			((DataSetInfo) _dataSet1.getInfo()).setName(dataSetName);
 			_dataSetManager.add(_dataSet1);
+			_manager.commit();
 		} else {
 			ResultSet resultSet = _manager.select(select);
 			assertTrue(resultSet.next());

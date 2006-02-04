@@ -32,6 +32,7 @@ import salomon.engine.database.ExternalDBManager;
 import salomon.engine.database.queries.SQLSelect;
 import salomon.engine.platform.data.dataset.condition.AbstractCondition;
 import salomon.engine.platform.data.dataset.condition.AndCondition;
+import salomon.engine.platform.data.dataset.condition.ConditionParser;
 import salomon.engine.platform.data.dataset.condition.EqualsCondition;
 import salomon.engine.platform.data.dataset.condition.GreaterCondition;
 import salomon.engine.platform.data.dataset.condition.LowerCondition;
@@ -84,6 +85,20 @@ public final class DataSetManager implements IDataSetManager
 	{
 		return new AndCondition((AbstractCondition) condition,
 				(AbstractCondition[]) conditions);
+	}
+
+	public ICondition createCondition(String stringCondition)
+			throws PlatformException
+	{
+		ICondition condition = null;
+		try {
+			condition = ConditionParser.parse(_externalDBManager.getMetaData(),
+					stringCondition);
+		} catch (Exception e) {
+			LOGGER.fatal("", e);
+			throw new PlatformException(e);
+		}
+		return condition;
 	}
 
 	public ICondition createEqualsCondition(IColumn column, Object value)

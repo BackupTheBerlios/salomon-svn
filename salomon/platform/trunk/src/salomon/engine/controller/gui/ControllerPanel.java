@@ -214,7 +214,8 @@ public final class ControllerPanel extends JPanel implements IControllerPanel
 		if (_pnlPlugins == null) {
 			_pnlPlugins = new JPanel();
 			_pnlPlugins.setLayout(new BorderLayout());
-			_pnlPlugins.add(getPnlPluginButtons(), BorderLayout.EAST);
+// TODO: remove			
+//			_pnlPlugins.add(getPnlPluginButtons(), BorderLayout.EAST);
 			_pnlPlugins.add(getLstPlugins(), BorderLayout.CENTER);
 			_pnlPlugins.setBorder(BorderFactory.createTitledBorder(null,
 					Messages.getString("TIT_PLUGINS"), TitledBorder.LEFT, //$NON-NLS-1$
