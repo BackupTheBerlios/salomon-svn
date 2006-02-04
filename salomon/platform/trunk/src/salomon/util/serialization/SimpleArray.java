@@ -71,7 +71,7 @@ public class SimpleArray implements IArray
 	 */
 	public IObject.Types getType()
 	{
-		return IObject.Types.STRING;
+		return IObject.Types.ARRAY;
 	}
 
 	/**

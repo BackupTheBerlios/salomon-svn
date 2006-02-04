@@ -64,7 +64,7 @@ public final class XMLSerializer
 			builder.setErrorHandler(new SalomonErrorHandler());
 			document = builder.parse(is);
 			// because node no. 0 is <!doctype....>
-			Node root = document.getChildNodes().item(1);
+			Node root = document.getChildNodes().item(0);
 			result = StructDeserializer.deserialize(root);
 		} catch (Exception e) {
 			LOGGER.error("", e);

@@ -10,11 +10,11 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
+import salomon.platform.serialization.IObject;
+import salomon.util.serialization.SimpleArray;
 import salomon.util.serialization.SimpleInteger;
 import salomon.util.serialization.SimpleString;
 import salomon.util.serialization.SimpleStruct;
-
-import salomon.platform.serialization.IObject;
 
 /**
  * 
@@ -89,11 +89,10 @@ class StructSerializer implements INodeNames
 	private static Node getStringNode(SimpleString object, Document document,
 			String name)
 	{
-		Element result = document.createElement(NODE_INT);
+		Element result = document.createElement(NODE_STRING);
 		result.setAttribute(ATTR_NAME, name);
 		result.setAttribute(ATTR_VALUE, object.getValue());
 
 		return result;
 	}
-
 }

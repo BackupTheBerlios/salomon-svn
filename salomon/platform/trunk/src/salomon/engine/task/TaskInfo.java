@@ -31,7 +31,6 @@ import org.apache.log4j.Logger;
 import salomon.engine.database.DBManager;
 import salomon.engine.database.queries.SQLDelete;
 import salomon.engine.database.queries.SQLUpdate;
-
 import salomon.platform.IInfo;
 import salomon.platform.exception.DBException;
 import salomon.platform.exception.PlatformException;
@@ -67,7 +66,7 @@ public final class TaskInfo implements IInfo
 	public TaskInfo(DBManager dbManager)
 	{
 		_dbManager = dbManager;
-		_taskID = 0;		
+		_taskID = 0;
 		_projectID = 0;
 		_pluginID = 0;
 	}
@@ -79,7 +78,7 @@ public final class TaskInfo implements IInfo
 	 * by TaskManager.
 	 * 
 	 * @return
-	 * @throws DBException 
+	 * @throws DBException
 	 */
 	public boolean delete() throws DBException
 	{
@@ -140,6 +139,14 @@ public final class TaskInfo implements IInfo
 	}
 
 	/**
+	 * @return the settings
+	 */
+	public String getSettings()
+	{
+		return _settings;
+	}
+
+	/**
 	 * @return Returns the status.
 	 */
 	public String getStatus()
@@ -149,6 +156,7 @@ public final class TaskInfo implements IInfo
 
 	/**
 	 * Returns the taskNr.
+	 * 
 	 * @return The taskNr
 	 */
 	public int getTaskNr()
@@ -166,25 +174,17 @@ public final class TaskInfo implements IInfo
 	public void load(ResultSet resultSet) throws DBException
 	{
 		try {
+			// it is not neccessery to set plugin id
+			// plugin is loaded from TaskManager
 			_taskID = resultSet.getInt("task_id");
 			_projectID = resultSet.getInt("project_id");
-			// it is not neccessery to set plugin id
 			_taskNr = resultSet.getInt("task_nr");
 			_name = resultSet.getString("task_name");
 			_info = resultSet.getString("task_info");
 			// setting has to be set
 			_settings = resultSet.getString("plugin_settings");
-			//		if (_plugin != null) {
-			//			LOGGER.debug("loading settings...");
-			//
-			//			ByteArrayInputStream bis = new ByteArrayInputStream(
-			//					settings.getBytes());
-			//			IObject object = XMLSerializer.deserialize(bis);
-			//			_settings = _plugin.getSettingComponent().getDefaultSettings();
-			//			_settings.init(object);
-			//		}
 			// TODO: support result loading?
-			//_result = resultSet.getString("plugin_result");
+			// _result = resultSet.getString("plugin_result");
 			_status = resultSet.getString("status");
 		} catch (SQLException e) {
 			LOGGER.fatal("Exception was thrown!", e);
@@ -198,7 +198,7 @@ public final class TaskInfo implements IInfo
 	 * or new id in case of insert.
 	 * 
 	 * @return unique id
-	 * @throws DBException 
+	 * @throws DBException
 	 */
 	public int save() throws DBException
 	{
@@ -288,6 +288,7 @@ public final class TaskInfo implements IInfo
 
 	/**
 	 * Set the value of taskNr field.
+	 * 
 	 * @param taskNr The taskNr to set
 	 */
 	public void setTaskNr(int taskNr)

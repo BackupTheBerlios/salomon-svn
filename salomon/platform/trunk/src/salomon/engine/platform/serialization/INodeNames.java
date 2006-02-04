@@ -1,7 +1,5 @@
 /*
  *
- * Author: Jakub Pawlowski
- * Created on:2004-12-18 01:47:02
  */
 
 package salomon.engine.platform.serialization;
@@ -19,9 +17,13 @@ interface INodeNames
 {
 	public static final String ATTR_NAME = "name";
 
+	public static final String ATTR_SIZE = "size";
+
 	public static final String ATTR_VALUE = "value";
 
 	public static final Logger LOGGER = Logger.getLogger(StructDeserializer.class);
+
+	public static final String NODE_ARRAY = "array";
 
 	public static final String NODE_INT = "int";
 

@@ -21,6 +21,7 @@
 
 package salomon.engine.task;
 
+import java.io.ByteArrayInputStream;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collection;
@@ -41,12 +42,14 @@ import salomon.util.serialization.SimpleString;
 import salomon.platform.IDataEngine;
 import salomon.platform.IVariable;
 import salomon.platform.exception.PlatformException;
+import salomon.platform.serialization.IObject;
 
 import salomon.plugin.IResult;
 import salomon.plugin.ISettings;
 
 import salomon.engine.platform.Environment;
 import salomon.engine.platform.IManagerEngine;
+import salomon.engine.platform.serialization.XMLSerializer;
 
 /**
  * An implemetation of ITaskManager interface. Class manages with tasks editing
@@ -80,7 +83,7 @@ public final class TaskManager implements ITaskManager
 	 * @uml.property name="_managerEngine"
 	 * @uml.associationEnd multiplicity="(0 1)"
 	 */
-	//	private IProject _project;
+	// private IProject _project;
 	private IManagerEngine _managerEngine;
 
 	/**
@@ -128,7 +131,7 @@ public final class TaskManager implements ITaskManager
 			_dbManager.commit();
 		} catch (Exception e) {
 			_dbManager.rollback();
-			LOGGER.fatal("", e);			
+			LOGGER.fatal("", e);
 			throw new PlatformException(e.getLocalizedMessage());
 		}
 		_tasks.add(task);
@@ -161,7 +164,7 @@ public final class TaskManager implements ITaskManager
 
 	public IProject getProject() throws PlatformException
 	{
-		//FIXME: change it - implement cascade model support 
+		// FIXME: change it - implement cascade model support
 		return _managerEngine.getProjectManager().getCurrentProject();
 	}
 
@@ -175,8 +178,8 @@ public final class TaskManager implements ITaskManager
 	}
 
 	/**
-	 * Returns tasks associated with current project.
-	 * They are returned sorted by task_nr.
+	 * Returns tasks associated with current project. They are returned sorted
+	 * by task_nr.
 	 * 
 	 * @see salomon.engine.task.ITaskManager#getTasks()
 	 */
@@ -186,7 +189,7 @@ public final class TaskManager implements ITaskManager
 		// TODO: use _project in stead of it
 		IProject currProject = _managerEngine.getProjectManager().getCurrentProject();
 		if (_tasks.isEmpty() && currProject != null) {
-			tasks = new LinkedList<ITask>();			
+			tasks = new LinkedList<ITask>();
 			SQLSelect select = new SQLSelect();
 			select.addTable(TaskInfo.TABLE_NAME + " t");
 			select.addTable(PluginInfo.TABLE_NAME + " p");
@@ -213,20 +216,31 @@ public final class TaskManager implements ITaskManager
 			try {
 				resultSet = _dbManager.select(select);
 				while (resultSet.next()) {
-					// TODO: Plugin info shoul not be instantied from outside of pluginManger :-/
+					// TODO: Plugin info shoul not be instantied from outside of
+					// pluginManger :-/
 					PluginInfo pluginInfo = new PluginInfo(_dbManager);
 					pluginInfo.load(resultSet);
 					LocalPlugin localPlugin = (LocalPlugin) _managerEngine.getPluginManager().getPlugin(
 							pluginInfo);
 					localPlugin.load();
-					//FIXME: real settings should be loaded
+					// FIXME: real settings should be loaded
+					// creating default settings
+					// it will be used to parse string representation of
+					// settings
 					ISettings pluginSettings = localPlugin.getSettingComponent().getDefaultSettings();
 
 					Task task = (Task) this.createTask();
-					task.setSettings(pluginSettings);
-					task.setPlugin(localPlugin);
 					// loading task
 					task.getInfo().load(resultSet);
+					// init settings
+					LOGGER.debug("loading settings...");
+					ByteArrayInputStream bis = new ByteArrayInputStream(
+							task.getInfo().getSettings().getBytes());
+					IObject object = XMLSerializer.deserialize(bis);
+					pluginSettings.init(object);
+
+					task.setSettings(pluginSettings);
+					task.setPlugin(localPlugin);
 					tasks.add(task);
 				}
 				resultSet.close();
@@ -246,6 +260,7 @@ public final class TaskManager implements ITaskManager
 		ITask[] tasksArr = new ITask[_tasks.size()];
 		return _tasks.toArray(tasksArr);
 	}
+
 	/**
 	 * Removes all tasks for current project.
 	 * 
@@ -268,7 +283,7 @@ public final class TaskManager implements ITaskManager
 			_dbManager.rollback();
 			LOGGER.fatal("", e);
 			throw new PlatformException(e.getLocalizedMessage());
-		}		
+		}
 		return retVal;
 	}
 
@@ -295,7 +310,7 @@ public final class TaskManager implements ITaskManager
 			_dbManager.rollback();
 			LOGGER.fatal("", e);
 			throw new PlatformException(e.getLocalizedMessage());
-		}		
+		}
 		return retVal;
 	}
 
@@ -377,7 +392,7 @@ public final class TaskManager implements ITaskManager
 					}
 					_dbManager.commit();
 				}
-			}			
+			}
 		}
 
 		private ITask getTask()
