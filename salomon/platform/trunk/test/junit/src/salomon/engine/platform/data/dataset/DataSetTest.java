@@ -107,6 +107,9 @@ public class DataSetTest extends TestCase
 	public void testSave1() throws PlatformException
 	{
 		LOGGER.info("DataSetTest.testSave1()");
+		
+			
+		String dataSetName = "test_" + System.currentTimeMillis(); 
 		DataSet mainDataSet = (DataSet) _dataSetManager.getMainDataSet();
 
 		DBTable table = new DBTable("persons");
@@ -122,7 +125,7 @@ public class DataSetTest extends TestCase
 
 		IDataSet dataSet = mainDataSet.createSubset(condition);
 
-		((DataSetInfo) dataSet.getInfo()).setName("first");
+		((DataSetInfo) dataSet.getInfo()).setName(dataSetName);
 		dataSet.getInfo().save();
 
 		_manager.commit();

@@ -53,7 +53,7 @@ public class Data implements IData
 			_columnCount = metaData.getColumnCount();
 			_header = new String[_columnCount];
 			for (int i = 0; i < _columnCount; ++i) {
-				_header[i] = metaData.getColumnName(i);
+				_header[i] = metaData.getColumnName(i + 1);
 			}
 		} catch (SQLException e) {
 			LOGGER.fatal("", e);

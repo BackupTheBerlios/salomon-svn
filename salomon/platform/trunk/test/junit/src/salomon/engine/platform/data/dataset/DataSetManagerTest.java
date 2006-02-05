@@ -78,8 +78,8 @@ public class DataSetManagerTest extends TestCase
 		conditions[2] = _dataSetManager.createEqualsCondition(column,
 				"Jura");
 		IDataSet dataSet = mainDataSet.createSubset(conditions);
-		((DataSetInfo) dataSet.getInfo()).setName("test add");
-		_dataSetManager.add(dataSet);
+		((DataSetInfo) dataSet.getInfo()).setName("test add" + System.currentTimeMillis());
+		_dataSetManager.add(dataSet);		
 	}
 	
 	public void testRemove() throws PlatformException
@@ -104,7 +104,7 @@ public class DataSetManagerTest extends TestCase
 	public void testGetDataSet() throws PlatformException
 	{
 		DataSet mainDataSet = (DataSet) _dataSetManager.getMainDataSet();			
-
+		
 		DBTable table = new DBTable("persons");
 		// column type is not important
 		IColumn column = new DBColumn(table, "id", "INT");
@@ -135,7 +135,7 @@ public class DataSetManagerTest extends TestCase
 		loadedDataSet = _dataSetManager.getDataSet("second");
 		assertNotNull(loadedDataSet);
 		LOGGER.info(loadedDataSet.getInfo());
-		
+		_dataSetManager.remove(loadedDataSet);		
 	}
 
 	private static final Logger LOGGER = Logger.getLogger(DataSetManagerTest.class);
