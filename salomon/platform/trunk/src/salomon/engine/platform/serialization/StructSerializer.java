@@ -57,8 +57,8 @@ final class StructSerializer implements INodeNames
 		for (String name : names) {
 			IObject field = struct.getField(name);
 
-			Node childNode = serializeSimpleType(document, field);
-			result.setAttribute(ATTR_NAME, name);
+			Element childNode = serializeSimpleType(document, field);
+			childNode.setAttribute(ATTR_NAME, name);
 			result.appendChild(childNode);
 			
 		}
@@ -72,9 +72,9 @@ final class StructSerializer implements INodeNames
 	 * @param name
 	 * @param field
 	 */
-	private static Node serializeSimpleType(Document document, IObject field)
+	private static Element serializeSimpleType(Document document, IObject field)
 	{
-		Node childNode = null;
+		Element childNode = null;
 		if (field.getType() == IObject.Types.INT) {
 			childNode = getIntNode((SimpleInteger) field, document);
 		} else if (field.getType() == IObject.Types.STRING) {
@@ -97,7 +97,7 @@ final class StructSerializer implements INodeNames
 	 * @param name
 	 * @return xml node
 	 */
-	private static Node getIntNode(SimpleInteger object, Document document)
+	private static Element getIntNode(SimpleInteger object, Document document)
 	{
 		Element result = document.createElement(NODE_INT);
 		result.setAttribute(ATTR_VALUE, String.valueOf(object.getValue()));
@@ -112,7 +112,7 @@ final class StructSerializer implements INodeNames
 	 * @param name
 	 * @return xml node
 	 */
-	private static Node getStringNode(SimpleString object, Document document)
+	private static Element getStringNode(SimpleString object, Document document)
 	{
 		Element result = document.createElement(NODE_STRING);
 		result.setAttribute(ATTR_VALUE, object.getValue());
@@ -127,7 +127,7 @@ final class StructSerializer implements INodeNames
 	 * @param document
 	 * @return xml node
 	 */
-	private static Node getArrayNode(SimpleArray arrayObject, Document document)
+	private static Element getArrayNode(SimpleArray arrayObject, Document document)
 	{
 		Element result = document.createElement(NODE_ARRAY);
 		for (IObject item : arrayObject.getValue()) {

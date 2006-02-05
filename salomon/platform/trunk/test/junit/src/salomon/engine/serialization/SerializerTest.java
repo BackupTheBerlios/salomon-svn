@@ -24,6 +24,7 @@ package salomon.engine.serialization;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 
 import junit.framework.TestCase;
 
@@ -133,34 +134,46 @@ public class SerializerTest extends TestCase
 
 	/**
 	 * tests if the element is serialized properly
+	 * @throws Exception 
 	 */
-	public void testSerializeArray()
+	public void testSerializeArray() throws Exception
 	{
 		SimpleStruct struct = new SimpleStruct();
 		SimpleString dataSetName = new SimpleString("dataset");
 
-		SimpleStruct condStruct = new SimpleStruct();
 		SimpleString elem1 = new SimpleString("cond1");
 		SimpleString elem2 = new SimpleString("cond2");
 		SimpleString elem3 = new SimpleString("cond3");
 		SimpleString elem4 = new SimpleString("cond4");
 		SimpleString elem5 = new SimpleString("cond5");
-		condStruct.setField("elem1", elem1);
-		condStruct.setField("elem2", elem2);
-		condStruct.setField("elem3", elem3);
-		condStruct.setField("elem4", elem4);
-		condStruct.setField("elem5", elem5);
+		IObject[] items = new IObject[]{elem1, elem2, elem3, elem4, elem5};
+		SimpleArray simpleArray = new SimpleArray(items);
 
 		struct.setField("dataSetName", dataSetName);
-		struct.setField("conditions", condStruct);
+		struct.setField("conditions", simpleArray);
 
 		FileOutputStream os = null;
 		try {
 			os = new FileOutputStream(OUTPUT_ARRAY_FILE_NAME);
 			XMLSerializer.serialize(struct, os);
-		} catch (FileNotFoundException e) {
-			LOGGER.fatal("", e);
+		} finally {
+			if (os != null) {
+				os.close();
+			}
 		}
+
+		FileInputStream is = null;
+		SimpleStruct outStruct = null;
+		try {
+			is = new FileInputStream(OUTPUT_ARRAY_FILE_NAME);
+			outStruct = XMLSerializer.deserialize(is);
+		} finally {
+			if (is != null) {
+				is.close();
+			}
+		}
+		assertNotNull(outStruct);
+		assertTrue(struct.equals(outStruct));
 	}
 
 	/**

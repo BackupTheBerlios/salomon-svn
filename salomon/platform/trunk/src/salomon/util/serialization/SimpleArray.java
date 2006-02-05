@@ -39,7 +39,7 @@ public class SimpleArray implements IArray
 	 */
 	public SimpleArray()
 	{
-		// empty body
+		_value = new IObject[0];
 	}
 
 	/**
@@ -79,12 +79,32 @@ public class SimpleArray implements IArray
 	 */
 	public boolean equals(IObject object)
 	{
-		throw new UnsupportedOperationException(
-				"Method equals() not implemented yet!");
-		// TODO Auto-generated method stub
-		//return false;
+		if (!(object instanceof SimpleArray)) {
+			return false;
+		}
+		
+		SimpleArray otherArray = (SimpleArray) object;
+		if (_value.length != otherArray._value.length) {
+			return false;
+		}
+		
+		for (int i = 0; i < _value.length; ++i) {
+			IObject item = _value[i];
+			IObject otherItem = otherArray._value[i];
+			if (item == null) {
+				if (otherItem != null) {
+					return false;
+				}
+			} else {
+				if (!item.equals(otherItem)) {
+					return false;
+				}
+			}
+		}
+
+		return true;
 	}
-	
+
 	public int size()
 	{
 		return (_value == null ? 0 : _value.length);

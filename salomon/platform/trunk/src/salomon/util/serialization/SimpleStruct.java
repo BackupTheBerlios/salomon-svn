@@ -34,7 +34,7 @@ import salomon.platform.serialization.IStruct;
 public class SimpleStruct implements IStruct
 {
 
-	private Map<String, IObject> _fields = new HashMap<String, IObject>();
+	private final Map<String, IObject> _fields = new HashMap<String, IObject>();
 
 	/**
 	 * @see salomon.platform.serialization.IObject#equals(salomon.platform.serialization.IObject)
