@@ -120,7 +120,7 @@ public final class GraphTaskManagerGUI
 			// setting some params from GUI
 			if (setTaskProperties(newTask)) {
 				// adding task to managers
-				_taskManager.addTask(newTask);
+//				_taskManager.addTask(newTask);
 				// _taskListModel.addElement(taskGUI);
 			} else {
 				// nulling unneccessary reference

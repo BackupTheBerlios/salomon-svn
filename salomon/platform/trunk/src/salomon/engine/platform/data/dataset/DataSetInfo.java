@@ -268,6 +268,6 @@ final class DataSetInfo implements IInfo
 
 	private static final String GEN_NAME = "gen_dataset_id";
 
-	private static final Logger LOGGER = Logger.getLogger(DataSet.class);
+	private static final Logger LOGGER = Logger.getLogger(DataSetInfo.class);
 
 }
