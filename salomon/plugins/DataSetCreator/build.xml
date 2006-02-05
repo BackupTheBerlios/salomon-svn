@@ -5,7 +5,7 @@
 	<target name="all" description="builds distribution jars" depends="compile">
 		<jar destfile="${dist_dir}/DataSetCreator.jar" basedir="${bin_dir}" includes="pl/**">
 			<manifest>
-				<attribute name="Main-Class" value="pl.edu.agh.capitol.veniTreeCreator.DataSetCreatorPlugin" />
+				<attribute name="Main-Class" value="pl.edu.agh.iisg.salomon.plugin.datasetcreator.DataSetCreatorPlugin" />
 			</manifest>
 		</jar>
 		<copy file="${dist_dir}/DataSetCreator.jar" todir="${jar_loc}"/>
