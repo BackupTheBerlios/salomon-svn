@@ -54,6 +54,7 @@ import salomon.engine.plugin.LocalPlugin;
 import salomon.engine.task.ITask;
 import salomon.engine.task.ITaskManager;
 import salomon.engine.task.Task;
+import salomon.engine.task.TaskInfo;
 import salomon.engine.task.TaskManager;
 
 import salomon.util.gui.Utils;
@@ -120,8 +121,7 @@ public final class GraphTaskManagerGUI
 			// setting some params from GUI
 			if (setTaskProperties(newTask)) {
 				// adding task to managers
-//				_taskManager.addTask(newTask);
-				// _taskListModel.addElement(taskGUI);
+				_taskManager.addTask(newTask);
 			} else {
 				// nulling unneccessary reference
 				// null should be return to indicate
@@ -171,8 +171,6 @@ public final class GraphTaskManagerGUI
 		//		_graph.removeAllVertices();
 		ITask[] tasks = null;
 		try {
-			// TODO: change it
-			_taskManager.clearTasks();
 			tasks = _taskManager.getTasks();
 		} catch (PlatformException e1) {
 			LOGGER.fatal("", e1);
@@ -204,8 +202,10 @@ public final class GraphTaskManagerGUI
 					"Cannot create plan!", JOptionPane.PLAIN_MESSAGE); //$NON-NLS-1$			
 		} else {
 			try {
+				int i = 1;
 				for (ITask task : executionPlan) {
-					_taskManager.addTask(task);
+					// setting task order
+					((TaskInfo)task.getInfo()).setTaskNr(i);
 				}
 				_taskManager.saveTasks();
 				_taskManager.start();
