@@ -29,6 +29,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import salomon.platform.IDataEngine;
 import salomon.plugin.IResult;
 import salomon.plugin.IResultComponent;
 import salomon.util.serialization.SimpleString;
@@ -50,7 +51,7 @@ public class CreatorResultComponent implements IResultComponent
 	/**
 	 * 
 	 */
-	public Component getComponent(IResult result)
+	public Component getComponent(IResult result, IDataEngine dataEngine)
 	{
 		if (_resultComponent == null) {
 			_resultComponent = createResultComponent();
@@ -78,6 +79,6 @@ public class CreatorResultComponent implements IResultComponent
 	public IResult getDefaultResult()
 	{
 		return new CreatorResult();
-	}
+	}	
 
 }
