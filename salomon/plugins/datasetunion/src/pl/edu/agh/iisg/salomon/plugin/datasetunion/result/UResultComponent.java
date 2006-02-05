@@ -19,7 +19,6 @@
  * 
  */
 
-
 package pl.edu.agh.iisg.salomon.plugin.datasetunion.result;
 
 import java.awt.BorderLayout;
@@ -29,9 +28,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import salomon.util.serialization.SimpleString;
+
+import salomon.platform.IDataEngine;
+
 import salomon.plugin.IResult;
 import salomon.plugin.IResultComponent;
-import salomon.util.serialization.SimpleString;
 
 /**
  * 
@@ -39,35 +41,35 @@ import salomon.util.serialization.SimpleString;
  * @author kuba
  * 
  */
-public class UResultComponent implements IResultComponent
+public final class UResultComponent implements IResultComponent
 {
 
 	/**
-	 * @see salomon.plugin.IResultComponent#getComponent(salomon.plugin.IResult)
+	 * @see salomon.plugin.IResultComponent#getComponent(salomon.plugin.IResult, salomon.platform.IDataEngine)
 	 */
-	public Component getComponent(IResult result)
+	public Component getComponent(IResult result, IDataEngine dataEngine)
 	{
-		
-        JPanel resultPanel = new JPanel(new BorderLayout());
-        resultPanel.add(new JLabel("New DataSet"), BorderLayout.NORTH);
-        
-        //TODO add proper values
-        String text = null;
-        if (result != null) {
-         text= ((UResult) result).resultToString();
-        } else { 
-        	text = "";
-        }
-        
-        if (text.equals("ERROR")) {
-            String error = ((SimpleString)((UResult)result).getField(UResult.ERROR_MESSAGE)).getValue() ;
-            text += " - " + error ;
-        }
-        
-        resultPanel.add(new JTextField(text), BorderLayout.CENTER);
 
-        resultPanel.setSize(70, 70);
-        return resultPanel;
+		JPanel resultPanel = new JPanel(new BorderLayout());
+		resultPanel.add(new JLabel("New DataSet"), BorderLayout.NORTH);
+
+		//TODO add proper values
+		String text = null;
+		if (result != null) {
+			text = ((UResult) result).resultToString();
+		} else {
+			text = "";
+		}
+
+		if (text.equals("ERROR")) {
+			String error = ((SimpleString) ((UResult) result).getField(UResult.ERROR_MESSAGE)).getValue();
+			text += " - " + error;
+		}
+
+		resultPanel.add(new JTextField(text), BorderLayout.CENTER);
+
+		resultPanel.setSize(70, 70);
+		return resultPanel;
 	}
 
 	/**
@@ -75,7 +77,7 @@ public class UResultComponent implements IResultComponent
 	 */
 	public IResult getDefaultResult()
 	{
-        IResult result = new UResult();
+		IResult result = new UResult();
 		return result;
 	}
 
