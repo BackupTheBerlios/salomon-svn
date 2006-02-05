@@ -182,18 +182,52 @@ public final class DataSetManager implements IDataSetManager
 	public IDataSet getDataSet(IUniqueId id) throws PlatformException
 	{
 		IDataSet dataSet = this.getMainDataSet();
-
 		// selecting DataSet header
 		SQLSelect dataSetSelect = new SQLSelect();
 		dataSetSelect.addTable(DataSetInfo.TABLE_NAME);
-		dataSetSelect.addColumn("dataset_id");
-		dataSetSelect.addColumn("dataset_name");
-		dataSetSelect.addColumn("info");
 		dataSetSelect.addCondition("dataset_id =", id.getId());
 		// to ensure solution_id consistency
 		dataSetSelect.addCondition("solution_id =",
 				((DataSetInfo) dataSet.getInfo()).getSolutionID());
 
+		return getDataSet(dataSet, dataSetSelect);
+	}
+
+	public IDataSet getDataSet(String name) throws PlatformException
+	{
+		IDataSet dataSet = this.getMainDataSet();
+		// selecting DataSet header
+		SQLSelect dataSetSelect = new SQLSelect();
+		dataSetSelect.addTable(DataSetInfo.TABLE_NAME);
+		dataSetSelect.addCondition("dataset_name =", name);
+		// to ensure solution_id consistency
+		dataSetSelect.addCondition("solution_id =",
+				((DataSetInfo) dataSet.getInfo()).getSolutionID());
+
+		return getDataSet(dataSet, dataSetSelect);
+	}
+
+	public IDataSet getMainDataSet() throws PlatformException
+	{
+		IDataSet dataSet = new DataSet(this, _dbManager, _externalDBManager);
+		((DataSetInfo) dataSet.getInfo()).setSolutionID(_solutionInfo.getId());
+		return dataSet;
+	}
+
+	public void remove(IDataSet dataSet) throws PlatformException
+	{
+		try {
+			dataSet.getInfo().delete();
+			_dbManager.commit();
+		} catch (Exception e) {
+			_dbManager.rollback();
+			LOGGER.fatal("", e);
+		}
+	}
+
+	private IDataSet getDataSet(IDataSet dataSet, SQLSelect dataSetSelect)
+			throws DBException
+	{
 		ResultSet resultSet = null;
 		try {
 			DataSetInfo dataSetInfo = (DataSetInfo) dataSet.getInfo();
@@ -217,7 +251,8 @@ public final class DataSetManager implements IDataSetManager
 			dataSetItemsSelect.addColumn("dataset_id");
 			dataSetItemsSelect.addColumn("table_name");
 			dataSetItemsSelect.addColumn("condition");
-			dataSetItemsSelect.addCondition("dataset_id =", id.getId());
+			dataSetItemsSelect.addCondition("dataset_id =",
+					dataSet.getInfo().getId());
 
 			resultSet = _dbManager.select(dataSetItemsSelect);
 			while (resultSet.next()) {
@@ -233,24 +268,6 @@ public final class DataSetManager implements IDataSetManager
 		LOGGER.info("DataSet successfully loaded.");
 
 		return dataSet;
-	}
-
-	public IDataSet getMainDataSet() throws PlatformException
-	{
-		IDataSet dataSet = new DataSet(this, _dbManager, _externalDBManager);
-		((DataSetInfo) dataSet.getInfo()).setSolutionID(_solutionInfo.getId());
-		return dataSet;
-	}
-
-	public void remove(IDataSet dataSet) throws PlatformException
-	{
-		try {
-			dataSet.getInfo().delete();
-			_dbManager.commit();
-		} catch (Exception e) {
-			_dbManager.rollback();
-			LOGGER.fatal("", e);
-		}
 	}
 
 	private static final Logger LOGGER = Logger.getLogger(DataSetManager.class);

@@ -131,6 +131,11 @@ public class DataSetManagerTest extends TestCase
 		});
 		assertNotNull(loadedDataSet);
 		LOGGER.info(loadedDataSet.getInfo());
+		
+		loadedDataSet = _dataSetManager.getDataSet("second");
+		assertNotNull(loadedDataSet);
+		LOGGER.info(loadedDataSet.getInfo());
+		
 	}
 
 	private static final Logger LOGGER = Logger.getLogger(DataSetManagerTest.class);

@@ -73,6 +73,8 @@ public interface IDataSetManager
 	 */
 	IDataSet getDataSet(IUniqueId id) throws PlatformException;
 
+	IDataSet getDataSet(String name) throws PlatformException;
+	
 	/**
 	 * Returns the data set that describes all data base.
 	 * 
