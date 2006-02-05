@@ -21,8 +21,8 @@
 
 package pl.edu.agh.iisg.salomon.plugin.datasetunion.result;
 
-import salomon.platform.serialization.IObject;
 import salomon.plugin.IResult;
+import salomon.util.serialization.SimpleString;
 import salomon.util.serialization.SimpleStruct;
 
 /**
@@ -44,8 +44,8 @@ public final class UResult extends SimpleStruct implements IResult
 
     public String resultToString()
     {
-        IObject result = getField(DATA_SET_NAME); 
-        return (result == null ? "" : result.toString());
+        SimpleString result = (SimpleString)getField(DATA_SET_NAME); 
+        return (result == null ? "" : result.getValue());
     }
 
     public boolean isSuccessful()

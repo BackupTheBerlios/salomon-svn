@@ -25,10 +25,10 @@ import pl.edu.agh.iisg.salomon.plugin.datasetunion.result.UResult;
 import pl.edu.agh.iisg.salomon.plugin.datasetunion.result.UResultComponent;
 import pl.edu.agh.iisg.salomon.plugin.datasetunion.settings.USettingComponent;
 import pl.edu.agh.iisg.salomon.plugin.datasetunion.settings.USettings;
-import salomon.platform.*;
+import salomon.platform.IDataEngine;
+import salomon.platform.IEnvironment;
 import salomon.platform.data.dataset.IDataSet;
 import salomon.platform.data.dataset.IDataSetManager;
-import salomon.platform.serialization.IObject;
 import salomon.plugin.*;
 import salomon.util.serialization.SimpleString;
 
@@ -44,7 +44,6 @@ public final class UPlugin implements IPlugin
 	 */
 	public UPlugin()
 	{
-		System.out.println("sssss");
 	}
 
 	/**
@@ -59,11 +58,9 @@ public final class UPlugin implements IPlugin
 		UResult uResult = new UResult();
 		
 		try {
-             System.out.println(uSettings.getField(USettings.FIRST_DATA_SET).getClass());
-             System.out.println(uSettings.getField(USettings.FIRST_DATA_SET));
              
-             String first  = uSettings.getField(USettings.FIRST_DATA_SET).toString() ;
-             String second = uSettings.getField(USettings.SECOND_DATA_SET).toString() ;
+             String first  = ((SimpleString)uSettings.getField(USettings.FIRST_DATA_SET)).getValue() ;
+             String second = ((SimpleString)uSettings.getField(USettings.SECOND_DATA_SET)).getValue();
              IDataSet firstDataSet = null ;
              IDataSet secondDataSet = null ; 
              boolean foundFirst = false ;
@@ -73,11 +70,12 @@ public final class UPlugin implements IPlugin
             
              for (int i = 0; i < datasets.length; i++) {
                 if (datasets[i].getName().equals(first)) {
+                 
                     firstDataSet = datasets[i] ;
                     foundFirst = true; 
                 }
                 if (datasets[i].getName().equals(second)) {
-                    firstDataSet = datasets[i] ;
+                    secondDataSet = datasets[i] ;
                     foundSecond = true; 
                 }
                 if (foundFirst && foundSecond) {
@@ -93,7 +91,7 @@ public final class UPlugin implements IPlugin
              }
       
              IDataSet result = firstDataSet.union(secondDataSet) ;
-             result.setName(uSettings.getField(USettings.RESULT_DATA_SET).toString()) ;
+             result.setName(((SimpleString)uSettings.getField(USettings.RESULT_DATA_SET)).getValue()) ;
              dataSetManager.add(result) ;
             
             uResult.setField(UResult.DATA_SET_NAME, new SimpleString(result.getName()));
@@ -101,7 +99,8 @@ public final class UPlugin implements IPlugin
             return uResult ;
 		} catch (Exception e) {
             uResult.setField(UResult.DATA_SET_NAME, new SimpleString("ERROR"));
-            uResult.setField(UResult.ERROR_MESSAGE, new SimpleString(e.getMessage()));
+            uResult.setField(UResult.ERROR_MESSAGE, new SimpleString(e.getClass().getName() + ":"+e.getMessage()));
+            e.printStackTrace() ;
 			uResult.setSuccessful(false);
 		}
 		return uResult;
@@ -124,6 +123,4 @@ public final class UPlugin implements IPlugin
 	{
 		return new USettingComponent();
 	}
-
-	private static final String DESCRIPTION = "Creates dataset which is a union of two other datasets";
 }

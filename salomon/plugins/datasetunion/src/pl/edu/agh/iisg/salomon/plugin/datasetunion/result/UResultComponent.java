@@ -31,6 +31,7 @@ import javax.swing.JTextField;
 
 import salomon.plugin.IResult;
 import salomon.plugin.IResultComponent;
+import salomon.util.serialization.SimpleString;
 
 /**
  * 
@@ -49,6 +50,7 @@ public class UResultComponent implements IResultComponent
 		
         JPanel resultPanel = new JPanel(new BorderLayout());
         resultPanel.add(new JLabel("New DataSet"), BorderLayout.NORTH);
+        
         //TODO add proper values
         String text = null;
         if (result != null) {
@@ -56,12 +58,14 @@ public class UResultComponent implements IResultComponent
         } else { 
         	text = "";
         }
-        resultPanel.add(new JTextField(text), BorderLayout.CENTER);
+        
         if (text.equals("ERROR")) {
-            String error = ((UResult)result).getField(UResult.ERROR_MESSAGE).toString() ;
-            
-            resultPanel.add(new JLabel(error), BorderLayout.SOUTH);
+            String error = ((SimpleString)((UResult)result).getField(UResult.ERROR_MESSAGE)).getValue() ;
+            text += " - " + error ;
         }
+        
+        resultPanel.add(new JTextField(text), BorderLayout.CENTER);
+
         resultPanel.setSize(70, 70);
         return resultPanel;
 	}

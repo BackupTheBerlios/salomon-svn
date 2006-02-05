@@ -33,6 +33,10 @@ import salomon.plugin.ISettings;
  */
 public final class USettings extends SimpleStruct implements ISettings 
 {
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1L;
     public static final String FIRST_DATA_SET = "firstDataSet";
     public static final String SECOND_DATA_SET = "secondDataSet";
     public static final String RESULT_DATA_SET = "resultDataSet";

@@ -125,10 +125,10 @@ public final class USettingComponent implements ISettingComponent
 
 		USettings uSettings = new USettings();
 		uSettings.setField(USettings.FIRST_DATA_SET, new SimpleString(
-				(String) _cmbFirstDataSet.getText()));
+				_cmbFirstDataSet.getText()));
 		// uSettings.setF
 		uSettings.setField(USettings.SECOND_DATA_SET, new SimpleString(
-				(String) _cmbSecondDataSet.getText()));
+				_cmbSecondDataSet.getText()));
 		uSettings.setField(USettings.RESULT_DATA_SET, new SimpleString(
 				_txtResultDataSet.getText()));
 		return uSettings;
