@@ -23,8 +23,10 @@ package pl.edu.agh.iisg.salomon.plugin.datasetvis;
 
 import org.apache.log4j.Logger;
 
+import pl.edu.agh.iisg.salomon.plugin.datasetvis.result.VisResult;
 import pl.edu.agh.iisg.salomon.plugin.datasetvis.result.VisResultComponent;
 import pl.edu.agh.iisg.salomon.plugin.datasetvis.settings.VisSettingComponent;
+import pl.edu.agh.iisg.salomon.plugin.datasetvis.settings.VisSettings;
 import salomon.platform.IDataEngine;
 import salomon.platform.IEnvironment;
 import salomon.plugin.IPlugin;
@@ -32,6 +34,7 @@ import salomon.plugin.IResult;
 import salomon.plugin.IResultComponent;
 import salomon.plugin.ISettingComponent;
 import salomon.plugin.ISettings;
+import salomon.util.serialization.SimpleString;
 
 /**
  * @author nico
@@ -46,10 +49,18 @@ public class DataSetVisPlugin implements IPlugin
 	/**
 	 * 
 	 */
-	public IResult doJob(IDataEngine arg0, IEnvironment arg1, ISettings arg2)
+	public IResult doJob(IDataEngine engine, IEnvironment env, ISettings settings)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		LOGGER.info("DataSetVisPlugin.doJob()");
+		VisResult result = new VisResult();
+		
+		// simply rewrite data set name from settings
+		SimpleString dataSetName = (SimpleString) settings.getField(VisSettings.DATA_SET_NAME);
+		LOGGER.debug("dataSetName: " + ((dataSetName == null) ? "null" : dataSetName.getValue()));
+		result.setField(VisResult.DATA_SET_NAME, dataSetName);
+		
+		result.setSuccessful(true);
+		return result;
 	}
 
 	/**
