@@ -40,6 +40,8 @@ public class Data implements IData
 {
 	private int _columnCount;
 
+	private String[] _header;
+
 	private ResultSet _resultSet;
 
 	public Data(ResultSet resultSet) throws PlatformException
@@ -49,6 +51,10 @@ public class Data implements IData
 		try {
 			metaData = _resultSet.getMetaData();
 			_columnCount = metaData.getColumnCount();
+			_header = new String[_columnCount];
+			for (int i = 0; i < _columnCount; ++i) {
+				_header[i] = metaData.getColumnName(i);
+			}
 		} catch (SQLException e) {
 			LOGGER.fatal("", e);
 			throw new DBException(e);
@@ -87,6 +93,14 @@ public class Data implements IData
 			LOGGER.fatal("", e);
 			throw new PlatformException(e);
 		}
+	}
+
+	/**
+	 * @return the header
+	 */
+	public String[] getHeader()
+	{
+		return _header;
 	}
 
 	public boolean next() throws PlatformException

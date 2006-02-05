@@ -30,6 +30,8 @@ import salomon.platform.exception.PlatformException;
 public interface IData
 {
 	Object[] getData() throws PlatformException;
+	
+	String[] getHeader() throws PlatformException; 
 
 	Object getData(IColumn column) throws PlatformException;
 
