@@ -112,6 +112,8 @@ ALTER TABLE DATASET_ITEMS ADD CONSTRAINT FK_DATASET_ITEMS FOREIGN KEY (DATASET_I
 
 ALTER TABLE SOLUTIONS ADD CONSTRAINT UNQ_SOLUTION_NAME UNIQUE (SOLUTION_NAME);
 
+ALTER TABLE DATASETS ADD CONSTRAINT UNQ_DATASETS_NAME UNIQUE (DATASET_NAME);
+
 /******************************************************************************/
 /****                             Generators                               ****/
 /******************************************************************************/
