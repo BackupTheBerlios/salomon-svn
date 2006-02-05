@@ -1,7 +1,22 @@
 /*
+ * Copyright (C) 2004 Salomon Team
  *
- * Author: Jakub Pawlowski
- * Created on:2004-12-17 20:37:13
+ * This file is part of Salomon.
+ *
+ * Salomon is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * Salomon is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with Salomon; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * 
  */
 
 package salomon.engine.serialization;
@@ -15,12 +30,14 @@ import junit.framework.TestCase;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
-import salomon.engine.platform.serialization.XMLSerializer;
-import salomon.platform.serialization.IObject;
 import salomon.util.serialization.SimpleArray;
 import salomon.util.serialization.SimpleInteger;
 import salomon.util.serialization.SimpleString;
 import salomon.util.serialization.SimpleStruct;
+
+import salomon.platform.serialization.IObject;
+
+import salomon.engine.platform.serialization.XMLSerializer;
 
 /**
  * 
@@ -41,15 +58,6 @@ public class SerializerTest extends TestCase
 		PropertyConfigurator.configure("log.conf");
 	}
 
-	private static final String INPUT_FILE_NAME = "test/junit/res/struct.xml";
-
-	private static final String OUTPUT_FILE_NAME = "test/junit/res/struct_out.xml";
-
-	private static final String INPUT_ARRAY_FILE_NAME = "test/junit/res/array.xml";
-
-	private static final String OUTPUT_ARRAY_FILE_NAME = "test/junit/res/array_out.xml";
-	
-	
 	/**
 	 * tests deserialization of xml
 	 * 
@@ -74,6 +82,28 @@ public class SerializerTest extends TestCase
 		assertEquals(innerInteger.getValue(), 666);
 	}
 
+	public void testDeserializeArray()
+	{
+		SimpleStruct struct = null;
+		try {
+			FileInputStream is = new FileInputStream(INPUT_ARRAY_FILE_NAME);
+			struct = XMLSerializer.deserialize(is);
+		} catch (FileNotFoundException e) {
+			assertTrue("File not found", false);
+		}
+		SimpleString dataSetName = (SimpleString) struct.getField("dataSetName");
+		LOGGER.debug("dataSetaName: " + dataSetName);
+		SimpleArray simpleArray = (SimpleArray) struct.getField("array");
+
+		IObject[] items = simpleArray.getValue();
+		assertEquals(4, items.length);
+		for (int i = 0; i < 4; ++i) {
+			assertEquals(items[i].getClass().getName(),
+					SimpleString.class.getName());
+			assertEquals("cond" + (i + 1), ((SimpleString) items[i]).getValue());
+		}
+	}
+
 	/**
 	 * tests if the element is serialized properly
 	 */
@@ -83,12 +113,12 @@ public class SerializerTest extends TestCase
 		SimpleString name = new SimpleString("nico");
 		SimpleInteger age = new SimpleInteger(22);
 		struct.setField("name", name);
-		struct.setField("age", age);		
-				
+		struct.setField("age", age);
+
 		SimpleInteger one = new SimpleInteger(1);
 		SimpleInteger five = new SimpleInteger(5);
 		SimpleInteger seven = new SimpleInteger(7);
-		IObject[] objArray = new IObject[] {one, five, seven};
+		IObject[] objArray = new IObject[]{one, five, seven};
 		SimpleArray array = new SimpleArray(objArray);
 		struct.setField("intArray", array);
 
@@ -108,8 +138,8 @@ public class SerializerTest extends TestCase
 	{
 		SimpleStruct struct = new SimpleStruct();
 		SimpleString dataSetName = new SimpleString("dataset");
-		
-		SimpleStruct condStruct = new SimpleStruct();		
+
+		SimpleStruct condStruct = new SimpleStruct();
 		SimpleString elem1 = new SimpleString("cond1");
 		SimpleString elem2 = new SimpleString("cond2");
 		SimpleString elem3 = new SimpleString("cond3");
@@ -120,7 +150,7 @@ public class SerializerTest extends TestCase
 		condStruct.setField("elem3", elem3);
 		condStruct.setField("elem4", elem4);
 		condStruct.setField("elem5", elem5);
-		
+
 		struct.setField("dataSetName", dataSetName);
 		struct.setField("conditions", condStruct);
 
@@ -132,33 +162,7 @@ public class SerializerTest extends TestCase
 			LOGGER.fatal("", e);
 		}
 	}
-	
-	public void testDeserializeArray()
-	{
-		SimpleStruct struct = null;
-		try {
-			FileInputStream is = new FileInputStream(INPUT_ARRAY_FILE_NAME);
-			struct = XMLSerializer.deserialize(is);
-		} catch (FileNotFoundException e) {
-			assertTrue("File not found", false);
-		}
-		SimpleString dataSetName = (SimpleString) struct.getField("dataSetName");
-		LOGGER.debug("dataSetaName: " + dataSetName);
-		SimpleStruct condStruct = (SimpleStruct) struct.getField("conditions");
-		
-		SimpleString elem1 = (SimpleString) condStruct.getField("elem1");
-		LOGGER.debug("elem1: " + elem1);
-		SimpleString elem2 = (SimpleString) condStruct.getField("elem2");
-		LOGGER.debug("elem2: " + elem2);
-		SimpleString elem3 = (SimpleString) condStruct.getField("elem3");
-		LOGGER.debug("elem3: " + elem3);
-		SimpleString elem4 = (SimpleString) condStruct.getField("elem4");
-		LOGGER.debug("elem4: " + elem4);
-		SimpleString elem5 = (SimpleString) condStruct.getField("elem5");
-		LOGGER.debug("elem5: " + elem5);
-		
-	}	
-	
+
 	/**
 	 * test serialization/deserializtion
 	 */
@@ -166,6 +170,14 @@ public class SerializerTest extends TestCase
 	{
 		// TODO: add test which checks serialization/deserialization
 	}
-	
+
+	private static final String INPUT_ARRAY_FILE_NAME = "test/junit/res/array.xml";
+
+	private static final String INPUT_FILE_NAME = "test/junit/res/struct.xml";
+
 	private static final Logger LOGGER = Logger.getLogger(SerializerTest.class);
+
+	private static final String OUTPUT_ARRAY_FILE_NAME = "test/junit/res/array_out.xml";
+
+	private static final String OUTPUT_FILE_NAME = "test/junit/res/struct_out.xml";
 }

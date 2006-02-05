@@ -96,8 +96,10 @@ final class StructDeserializer implements INodeNames
 		NodeList childNodeList = arrayNode.getChildNodes();
 		for (int i = 0; i < childNodeList.getLength(); ++i) {
 			Node childNode = childNodeList.item(i);
-			IObject item = deserializeObject(childNode);
-			items.add(item);
+			if (childNode.getNodeType() == Node.ELEMENT_NODE) {
+				IObject item = deserializeObject(childNode);
+				items.add(item);
+			}
 		}
 
 		return new SimpleArray(items.toArray(new IObject[items.size()]));
