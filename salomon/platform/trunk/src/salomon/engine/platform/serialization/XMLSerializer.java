@@ -90,7 +90,7 @@ public final class XMLSerializer
 		} catch (ParserConfigurationException e) {
 			LOGGER.error("", e);
 		}
-		document.appendChild(StructSerializer.serialize(document, value, null));
+		document.appendChild(StructSerializer.serialize(document, value));
 		try {
 			Result result = new StreamResult(os);
 			Source source = new DOMSource(document);
