@@ -23,6 +23,8 @@ package salomon.plugin;
 
 import java.awt.Component;
 
+import salomon.platform.IDataEngine;
+
 /**
  * Interface represents object, which is responsible for showing result of
  * plugin execution.
@@ -36,7 +38,7 @@ public interface IResultComponent
 	 * @param result of plugin execution
 	 * @return component showing given result
 	 */
-	Component getComponent(IResult result);
+	Component getComponent(IResult result, IDataEngine dataEngine);
 
 	/**
 	 * Method returns default result of plugin execution. 

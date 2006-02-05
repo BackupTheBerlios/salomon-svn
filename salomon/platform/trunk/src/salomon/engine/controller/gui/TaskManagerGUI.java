@@ -566,8 +566,10 @@ public final class TaskManagerGUI
 		try {
 			plugin = currentTask.getTask().getPlugin();
 			IResultComponent resultComponent = plugin.getResultComponent();
+			IDataEngine dataEngine = _taskManager.getProject().getProjectManager().getSolution().getDataEngine();
+
 			result = currentTask.getTask().getResult();
-			comp = resultComponent.getComponent(result);
+			comp = resultComponent.getComponent(result, dataEngine);
 		} catch (PlatformException e) {
 			LOGGER.fatal("", e);
 			Utils.showErrorMessage("ERR_CANNOT_SHOW_TASK_RESULT");

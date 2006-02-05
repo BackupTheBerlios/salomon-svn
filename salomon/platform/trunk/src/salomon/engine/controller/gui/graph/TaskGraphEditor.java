@@ -56,7 +56,6 @@ import edu.uci.ics.jung.visualization.GraphZoomScrollPane;
 import edu.uci.ics.jung.visualization.PluggableRenderer;
 import edu.uci.ics.jung.visualization.ShapePickSupport;
 import edu.uci.ics.jung.visualization.StaticLayout;
-import edu.uci.ics.jung.visualization.VertexLocationFunction;
 import edu.uci.ics.jung.visualization.VisualizationViewer;
 import edu.uci.ics.jung.visualization.control.CrossoverScalingControl;
 import edu.uci.ics.jung.visualization.control.EditingModalGraphMouse;
@@ -86,8 +85,8 @@ public final class TaskGraphEditor extends JPanel
 	private String instructions = "<html>"
 			+ "<h3>All Modes:</h3>"
 			+ "<ul>"
-			+ "<li>Right-click an empty area for <b>Create Vertex</b> popup"
-			+ "<li>Right-click on a Vertex for <b>Delete Vertex</b> popup"
+			+ "<li>Right-click an empty area for <b>Create Task</b> popup"
+			+ "<li>Right-click on a Vertex for <b>Delete Task</b> popup"
 			+ "<li>Right-click on a Vertex for <b>Add Edge</b> menus <br>(if there are selected Vertices)"
 			+ "<li>Right-click on an Edge for <b>Delete Edge</b> popup"
 			+ "<li>Mousewheel scales with a crossover value of 1.0.<p>"
@@ -98,19 +97,18 @@ public final class TaskGraphEditor extends JPanel
 			"</ul>"
 			+ "<h3>Editing Mode:</h3>"
 			+ "<ul>"
-			+ "<li>Left-click an empty area to create a new Vertex"
-			+ "<li>Left-click on a Vertex and drag to another Vertex to create an Undirected Edge"
-			+ "<li>Shift+Left-click on a Vertex and drag to another Vertex to create a Directed Edge"
+			+ "<li>Left-click an empty area to create a new Task"
+			+ "<li>Left-click on a Vertex and drag to another Task to create an Edge"
 			+ "</ul>"
 			+ "<h3>Picking Mode:</h3>"
 			+ "<ul>"
-			+ "<li>Mouse1 on a Vertex selects the vertex"
-			+ "<li>Mouse1 elsewhere unselects all Vertices"
-			+ "<li>Mouse1+Shift on a Vertex adds/removes Vertex selection"
-			+ "<li>Mouse1+drag on a Vertex moves all selected Vertices"
-			+ "<li>Mouse1+drag elsewhere selects Vertices in a region"
-			+ "<li>Mouse1+Shift+drag adds selection of Vertices in a new region"
-			+ "<li>Mouse1+CTRL on a Vertex selects the vertex and centers the display on it"
+			+ "<li>Mouse1 on a Task selects the vertex"
+			+ "<li>Mouse1 elsewhere unselects all Tasks"
+			+ "<li>Mouse1+Shift on a Task adds/removes Task selection"
+			+ "<li>Mouse1+drag on a Task moves all selected Tasks"
+			+ "<li>Mouse1+drag elsewhere selects Tasks in a region"
+			+ "<li>Mouse1+Shift+drag adds selection of Tasks in a new region"
+			+ "<li>Mouse1+CTRL on a Task selects the vertex and centers the display on it"
 			+ "</ul>" + "<h3>Transforming Mode:</h3>" + "<ul>"
 			+ "<li>Mouse1+drag pans the graph"
 			+ "<li>Mouse1+Shift+drag rotates the graph"
@@ -235,7 +233,7 @@ public final class TaskGraphEditor extends JPanel
 		_visualazationViewer.stop();
 		_visualazationViewer.setGraphLayout(_automaticLayout);
 		_visualazationViewer.restart();
-		
+
 		for (ITask task : tasks) {
 			LOGGER.debug("adding task");
 			TaskVertex vertex = new TaskVertex(task);
