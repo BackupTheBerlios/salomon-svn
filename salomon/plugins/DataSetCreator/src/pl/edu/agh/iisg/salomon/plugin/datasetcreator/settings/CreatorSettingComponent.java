@@ -89,17 +89,11 @@ public class CreatorSettingComponent implements ISettingComponent
 
 	private ICondition _selectedCondition;
 
-	private ISettings _defaultSettings;
-
 	public CreatorSettingComponent()
 	{
 		_tableListModel = new DefaultListModel();
 		_columnListModel = new DefaultListModel();
 		_conditionListModel = new DefaultListModel();
-
-		_txtColumnName = new JTextField();
-		_txtColumnValue = new JTextField();
-		_txtDataSetName = new JTextField();
 		_operations = new JComboBox(new String[]{"=", "<", ">"});
 	}
 
@@ -111,14 +105,15 @@ public class CreatorSettingComponent implements ISettingComponent
 		if (_settingComponent == null) {
 			_dataEngine = dataEngine;
 			init(dataEngine.getMetaData());
+			_addConditionPanel = getAddConditionPanel();
 			_settingComponent = createSettingComponent();
-			try {
-				initSettingComponent(settings, dataEngine.getMetaData());
-			} catch (PlatformException e) {
-				LOGGER.fatal("", e);
-				// FIXME: where this error should be handled?
-				// handle it by adding throws declaration to interface methods
-			}
+		}
+		try {
+			initSettingComponent(settings, dataEngine.getMetaData());
+		} catch (PlatformException e) {
+			LOGGER.fatal("", e);
+			// FIXME: where this error should be handled?
+			// handle it by adding throws declaration to interface methods
 		}
 		return _settingComponent;
 	}
@@ -126,8 +121,12 @@ public class CreatorSettingComponent implements ISettingComponent
 	private void initSettingComponent(ISettings settings, IMetaData metaData)
 			throws PlatformException
 	{
+		LOGGER.info("CreatorSettingComponent.initSettingComponent()");
 		CreatorSettings cSettings = (CreatorSettings) settings;
 		SimpleString dataSetName = (SimpleString) cSettings.getField(CreatorSettings.DATA_SET_NAME);
+		LOGGER.debug("dataSetName:"
+				+ ((dataSetName == null) ? "null" : dataSetName.getValue()));
+
 		// FIXME:
 		// SimpleArray condArray = (SimpleArray)
 		// cSettings.getField(CreatorSettings.CONDITIONS);
@@ -172,6 +171,7 @@ public class CreatorSettingComponent implements ISettingComponent
 
 		// setting gui values
 		_txtDataSetName.setText(dataSetName.getValue());
+		_conditionListModel.clear();
 		for (ICondition condition : conditions) {
 			if (condition != null) {
 				_conditionListModel.addElement(condition);
@@ -184,14 +184,13 @@ public class CreatorSettingComponent implements ISettingComponent
 	 */
 	public ISettings getDefaultSettings()
 	{
-		if (_defaultSettings == null) {
-			_defaultSettings = new CreatorSettings();
-			_defaultSettings.setField(CreatorSettings.DATA_SET_NAME,
-					new SimpleString(""));
-			_defaultSettings.setField(CreatorSettings.CONDITIONS,
-					new SimpleStruct());
-		}
-		return _defaultSettings;
+
+		ISettings defaultSettings = new CreatorSettings();
+		defaultSettings.setField(CreatorSettings.DATA_SET_NAME,
+				new SimpleString(""));
+		defaultSettings.setField(CreatorSettings.CONDITIONS, new SimpleStruct());
+
+		return defaultSettings;
 	}
 
 	/**
@@ -342,6 +341,10 @@ public class CreatorSettingComponent implements ISettingComponent
 			_addConditionPanel = new JPanel();
 			_addConditionPanel.setLayout(new BoxLayout(_addConditionPanel,
 					BoxLayout.LINE_AXIS));
+			_txtColumnName = new JTextField();
+			_txtColumnValue = new JTextField();
+			_txtDataSetName = new JTextField();
+
 			_txtColumnName.setEditable(false);
 
 			_addConditionPanel.add(_txtColumnName);
@@ -361,6 +364,7 @@ public class CreatorSettingComponent implements ISettingComponent
 
 	private void init(IMetaData metaData)
 	{
+		_tableListModel.clear();
 		for (ITable table : metaData.getTables()) {
 			_tableListModel.addElement(table);
 		}

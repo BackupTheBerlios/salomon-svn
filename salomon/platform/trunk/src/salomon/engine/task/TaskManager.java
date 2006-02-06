@@ -220,9 +220,16 @@ public final class TaskManager implements ITaskManager
 					// pluginManger :-/
 					PluginInfo pluginInfo = new PluginInfo(_dbManager);
 					pluginInfo.load(resultSet);
-					LocalPlugin localPlugin = (LocalPlugin) _managerEngine.getPluginManager().getPlugin(
+					LocalPlugin loadedPlugin = (LocalPlugin) _managerEngine.getPluginManager().getPlugin(
 							pluginInfo);
-					localPlugin.load();
+					
+					// loading plugin
+					loadedPlugin.load();
+					
+					// calculation are made on the new plugin instance
+					// to avoid object sharing
+					LocalPlugin localPlugin = (LocalPlugin) loadedPlugin.clone();					
+					
 					// FIXME: real settings should be loaded
 					// creating default settings
 					// it will be used to parse string representation of
@@ -233,11 +240,15 @@ public final class TaskManager implements ITaskManager
 					// loading task
 					task.getInfo().load(resultSet);
 					// init settings
-					LOGGER.debug("loading settings...");
-					ByteArrayInputStream bis = new ByteArrayInputStream(
-							task.getInfo().getSettings().getBytes());
-					IObject object = XMLSerializer.deserialize(bis);
-					pluginSettings.init(object);
+					LOGGER.debug("loading settings...");					
+					String strSettings = task.getInfo().getSettings();
+					if (strSettings != null) {
+						ByteArrayInputStream bis = new ByteArrayInputStream(
+								strSettings.getBytes());
+						IObject object = XMLSerializer.deserialize(bis);
+						pluginSettings.init(object);
+						LOGGER.debug("settings loaded");
+					}
 
 					task.setSettings(pluginSettings);
 					task.setPlugin(localPlugin);

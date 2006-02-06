@@ -206,6 +206,7 @@ public final class GraphTaskManagerGUI
 				for (ITask task : executionPlan) {
 					// setting task order
 					((TaskInfo)task.getInfo()).setTaskNr(i);
+					++i;
 				}
 				_taskManager.saveTasks();
 				_taskManager.start();
@@ -287,6 +288,8 @@ public final class GraphTaskManagerGUI
 
 	public void showSettingsPanel(ITask task)
 	{
+		LOGGER.info("GraphTaskManagerGUI.showSettingsPanel()");
+		LOGGER.debug("task: " + task);
 		IPlugin plugin = null;
 		ISettingComponent settingComponent = null;
 		ISettings inputSettings = null;
@@ -444,8 +447,9 @@ public final class GraphTaskManagerGUI
 					localPlugin = (LocalPlugin) _cmbPlugins.getSelectedItem();
 				}
 				localPlugin.load();
-
-				task.setPlugin(localPlugin);
+				// adding copy of plugin !!!
+				LocalPlugin pluginCopy = (LocalPlugin) localPlugin.clone();
+				task.setPlugin(pluginCopy);
 				task.getInfo().setName(_txtTaskName.getText());
 				task.getInfo().setInfo(_txtTaskInfo.getText());
 

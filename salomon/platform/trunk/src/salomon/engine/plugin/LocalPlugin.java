@@ -20,7 +20,7 @@ import salomon.plugin.ISettings;
 /**
  * Class helps managing plugin loading
  */
-public final class LocalPlugin implements ILocalPlugin, Serializable
+public final class LocalPlugin implements ILocalPlugin, Serializable, Cloneable
 {
 
 	/**
@@ -105,6 +105,18 @@ public final class LocalPlugin implements ILocalPlugin, Serializable
 	{
 		// TODO: change it to name:version or sth
 		return _pluginInfo.getName();
+	}
+	
+	@Override
+	public Object clone() 
+	{
+		Object newPlugin = null;
+		try {
+			newPlugin = super.clone();
+		} catch (CloneNotSupportedException e) {
+			LOGGER.fatal("", e);
+		}
+		return newPlugin;
 	}
 
 	private static final Logger LOGGER = Logger.getLogger(LocalPlugin.class);

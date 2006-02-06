@@ -152,7 +152,9 @@ public final class TaskManagerGUI
 			// setting some params from GUI
 			TaskGUI taskGUI = new TaskGUI(task);
 			taskGUI.getTask().getInfo().setName(getTaskName());
-			taskGUI.getTask().setPlugin(localPlugin);
+			// adding copyy of plugin !!!
+			LocalPlugin pluginCopy = (LocalPlugin) localPlugin.clone();
+			taskGUI.getTask().setPlugin(pluginCopy);
 
 			// adding task to managers
 			_taskManager.addTask(task);

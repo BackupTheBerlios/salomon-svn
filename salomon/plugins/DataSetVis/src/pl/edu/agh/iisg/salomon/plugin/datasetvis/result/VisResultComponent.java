@@ -63,6 +63,9 @@ public final class VisResultComponent implements IResultComponent
 	private JComponent _resultComponent;
 
 	private JTextField _txtDataSetName;
+	
+	//FIXME: !!!
+	private JTable _table;
 
 	public VisResultComponent()
 	{
@@ -76,6 +79,7 @@ public final class VisResultComponent implements IResultComponent
 	public Component getComponent(IResult result, IDataEngine dataEngine)
 	{
 		_dataEngine = dataEngine;
+		//FIXME: !!!
 		if (_resultComponent == null) {
 			_resultComponent = createResultComponent();
 		}
@@ -94,9 +98,9 @@ public final class VisResultComponent implements IResultComponent
 	private JComponent createResultComponent()
 	{
 		JPanel panel = new JPanel(new BorderLayout());
-		JTable table = new JTable(_dataModel);
-		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		JScrollPane scrollPanel = new JScrollPane(table);
+		_table = new JTable(_dataModel);
+		_table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		JScrollPane scrollPanel = new JScrollPane(_table);
 
 		JButton showButton = new JButton("Show");
 		showButton.addActionListener(new ActionListener() {
@@ -139,14 +143,16 @@ public final class VisResultComponent implements IResultComponent
 		try {
 			IDataSet dataSet = _dataEngine.getDataSetManager().getDataSet(
 					_txtDataSetName.getText());
-
+			//FIXME: !!!
+			_dataModel = new DefaultTableModel();
+			_table.setModel(_dataModel);
 			// selects all data
 			IData data = dataSet.selectData(null, null);
-			String[] header = data.getHeader();
+			String[] header = data.getHeader();			
 			for (int i = 0; i < header.length; ++i) {
 				_dataModel.addColumn(header[i]);
 			}
-
+			
 			while (data.next()) {
 				_dataModel.addRow(data.getData());
 			}
@@ -157,7 +163,7 @@ public final class VisResultComponent implements IResultComponent
 			Utils.showErrorMessage("Cannot show data set");
 		}
 	}
-
+	
 	private static final Logger LOGGER = Logger.getLogger(VisResultComponent.class);
 
 }
