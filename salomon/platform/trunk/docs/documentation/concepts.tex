@@ -8,6 +8,8 @@ Mechanim tworzenia zmiennych œrodowiskowych opiera siê na tym samym modelu co tw
 
 Mechanizm serjalizacji opiera siê na agregacji typów prostych i innych typów z³o¿onych. Za pomoc¹ takich elementów, programista mo¿e stworzyæ hierarchiczne struktury danych. Wprowadzenie takiego mechanizmu podyktowane jest potrzeb¹ ukrycia przed programist¹ sposobu zapisu danych w bazie lub w pliku. W obecnej wersji Salomona, twórca wtyczki musi dostarczyæ mechanizm serializacji oraz deserializacji ustawieñ i rezultatów zadañ do napisu -- taki mechanizm niesie za sob¹ niebezpieczeñstwo niepoprawnoœci oraz nieefektywnoœci implementacji. Dostarczenie spójnego modelu serializacji danych pozwala na niewidoczny dla wtyczek sposób podmiany implementacji na bardziej efektywn¹ itp. Mechanizm ten mo¿e okazaæ siê równie¿ po¿yteczny po dodaniu do Salomona mo¿liwoœci definiowania zadañ w pliku (np. XML). Serializacja danych mo¿e odbywaæ siê do wielu formatów np. XML, CSV, tabel w bazie danych itp.
 
+\input{tasks}
+
 \subsection{Podstawowe pojêcia}
 
 \paragraph{Kontroler}

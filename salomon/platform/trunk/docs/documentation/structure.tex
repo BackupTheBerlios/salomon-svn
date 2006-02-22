@@ -24,7 +24,7 @@ pozosta³e nie s¹ dostêpne dla wtyczek. Plugin, zale¿nie od
 potrzeb, pobiera z niego potrzebny mu menad¿er i za jego
 poœrednictwem wykonuje operacje na bazie danych.
 
-\paragraph{IDataEngine}
+\subsubsection{IDataEngine}
 
 Obiekt implementuj¹cy ten interfejs przekazywany jest wtyczkom podczas ich wykonania.
 Za pomoc¹ pobieranych z niego menad¿erów (\emph{IDataSetManager}, \emph{IAttributeManager}, w przysz³oœci \emph{IRuleSetManager} i inne) wtyczki mog¹ operowaæ na danych znajduj¹cych siê w bazie.
@@ -52,7 +52,7 @@ Zarz¹dza atrybutami. Pozwala tworzyæ nowe atrybuty oraz
 zarz¹dza dostêpem do ju¿ istniej¹cych.
 
 
-\paragraph{IManagerEngine}
+\subsubsection{IManagerEngine}
 
 Zarz¹dza pozosta³ymi menad¿erami. Utrzymuje jedn¹ instancjê ka¿dego z nich 
 i udostêpnia je pozosta³ym klasom z platformy.
