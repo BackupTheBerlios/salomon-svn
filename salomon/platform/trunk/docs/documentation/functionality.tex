@@ -109,3 +109,11 @@ W obecnej wersji mo¿liwe jest tylko liniowe kolejkowanie zadañ, w przysz³oœci mo
 
 
 
+Graficzny komponent do tworzenia zadañ.
+Pierwsze wersje \emph{Salomona} pozwala³y jedynie na definiowanie liniowej listy zadañ.
+Dlatego, aby umo¿liwiæ tworzenie bardziej zaawansowanych struktur zadañ zosta³ stworzony nowy komponent.
+Zadania reprezentowane w nim s¹ jako wêz³y w grafie skierowanym acyklicznym. Krawêdzie reprezentuj¹ przep³yw sterowania (wiedzy/danych).
+Aby dane zadanie mog³o byæ wykonane wszystkie zadania od których zale¿y musz¹ byæ wykonane wczeœniej.
+W obecnej wersji acyklicznoœæ grafu jest wymagana, aby zapewniæ, ¿e wykonanie programu siê zakoñczy.
+W kolejnych wersjach planowane jest umo¿liwienie dodawania warunków na krawêdzie, a tym samym
+mo¿liwoœci tworzenia cykli, które zostan¹ przerwane, jeœli zostanie spe³niony odpowiedni warunek.
