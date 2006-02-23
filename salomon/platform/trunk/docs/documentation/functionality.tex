@@ -1,10 +1,11 @@
 \section{Funkcjonalnoœæ}
 
-Podstawowa funkcjonalnoœæ \emph{Salomona} pozwala na definiowanie i zarz¹dzanie obiektami \emph{Solution}, projektami, zadaniami i wtyczkami. 
+Ca³a funkcjonalnoœæ \emph{Salomona} podporz¹dkowana jest tworzeniu zadañ. Operacje podstawowe, takie jak np. tworzenie projektów czy definiowanie wtyczek s³u¿¹ jedynie stworzeniu œrodowiska, w którym mog¹ byæ wykonywane zadania. Z kolei operacje administracyjne pozwalaj¹ na zaawansowane zarz¹dzanie platform¹ i mog¹ byæ u¿yteczne dla u¿ytkowników bardzo dobrze znaj¹cych system.
 
-\emph{Salomon} dostarcza te¿ narzêdzi u³atwiaj¹ce administrowanie danymi zgromadzonymi w systemie -- mo¿liwe jest przegl¹danie wszystkich zapisanych w bazie danych obiektów, a zaawansowani u¿ytkownicy mog¹ wykonaæ dowolne operacje bezpoœrednio na bazie danych za pomoc¹ \emph{SQLConsole}.
 
-\subsection{Operacje na obiekcie Solution}
+\subsection{Operacje podstawowe}
+
+\subsubsection{Operacje na obiekcie Solution}
 
 Terminem \emph{Solution} okreœlamy obiekt grupuj¹cy kilka projektów. 
 Mo¿na na nim wykonaæ nastêpuj¹ce operacje:
@@ -20,7 +21,7 @@ Mo¿na na nim wykonaæ nastêpuj¹ce operacje:
 
 \end{itemize}
 
-\subsection{Operacje na projektach}
+\subsubsection{Operacje na projektach}
 
 Projekty s³u¿¹ do grupowania zadañ w obrêbie tego samego obiektu \emph{Solution}.			
 
@@ -41,7 +42,7 @@ Operacje na projekcie:
         
 	\end{itemize}
 	
-\subsection{Operacje na wtyczkach}
+\subsubsection{Operacje na wtyczkach}
 
 Wtyczki zawieraj¹ algorytmy, które mog¹ byæ wykonywane przez platformê w ramach poszczególnych zadañ. S¹ one podstawowymi komponentami, które rozszerzaj¹ mo¿liwoœci systemu.
 
@@ -60,12 +61,39 @@ Wtyczki zawieraj¹ algorytmy, które mog¹ byæ wykonywane przez platformê w ramach 
 			Pozwala na usuniêcie wtyczki z systemu.
 					
 	\end{itemize}	
+
+\subsection{Administracja}
+
+\emph{Salomon} dostarcza narzêdzi u³atwiaj¹ce administrowanie danymi zgromadzonymi w systemie -- mo¿liwe jest przegl¹danie wszystkich zapisanych w bazie danych obiektów, a zaawansowani u¿ytkownicy mog¹ wykonaæ dowolne operacje bezpoœrednio na bazie danych za pomoc¹ \emph{SQLConsole}.
 	
+	\begin{itemize}
+            
+		\item Przegl¹danie obiektów w systemie
+		
+		W celach administracyjnych mo¿liwe jest przegl¹danie obiektów w taki sposób, w jaki zapisane s¹ w bazie danych.
+			
+		\item Zaawansowane operacje
+		
+		Do bardziej zaawansowanych operacji na bazie danych przeznaczona jest specjalna konsola (\emph{SQLConsole}), która pozwala na wykonanie dowolnych operacji na bazie danych.
+		
+	\end{itemize}	
+
+
 
 \subsection{Operacje na zadaniach}
 
-Definiowanie zadañ do wykonania nale¿y do podstawowych funkcji systemu. Zadania s¹ prezentowane w postaci graficznej jako wêz³y grafu. 
-W obecnej wersji mo¿liwe jest tylko liniowe kolejkowanie zadañ, w przysz³oœci mo¿liwe bêdzie definiowanie ich w postaci grafu, co umo¿liwi ich równoleg³e wykonywanie.
+Definiowanie zadañ do wykonania nale¿y do podstawowych funkcji systemu, dlatego w obecnej wersji ich definiowanie i konfigurowanie zosta³o znacznie rozbudowane.
+
+Pierwsze wersje \emph{Salomona} pozwala³y jedynie na definiowanie liniowej listy zadañ.
+Dlatego, aby umo¿liwiæ tworzenie bardziej zaawansowanych struktur zadañ zosta³ stworzony nowy komponent oparty o bibliotekê \emph{Jung}.
+Zadania reprezentowane w nim s¹ jako wêz³y w grafie skierowanym acyklicznym. Krawêdzie reprezentuj¹ przep³yw sterowania (wiedzy/danych).
+
+Aby dane zadanie mog³o byæ wykonane wszystkie zadania od których zale¿y musz¹ byæ wykonane wczeœniej.
+W obecnej wersji acyklicznoœæ grafu jest wymagana, aby zapewniæ, ¿e wykonanie programu siê zakoñczy.
+W kolejnych wersjach planowane jest umo¿liwienie dodawania warunków na krawêdzie, a tym samym
+mo¿liwoœci tworzenia cykli, które zostan¹ przerwane, jeœli zostanie spe³niony odpowiedni warunek.
+
+Obecnie obs³ugiwane s¹ nastêpuj¹ce operacje na zadanich:
 
 		\begin{itemize}
 			\item Dodanie
@@ -78,7 +106,7 @@ W obecnej wersji mo¿liwe jest tylko liniowe kolejkowanie zadañ, w przysz³oœci mo
             
             \item Okreœlanie kolejnoœci wykonania
             
-            Zadania wykonywane s¹ tak, jak zosta³y po³¹czone krawêdziami. Strza³ki na krawêdziach okreœlaj¹ kolejne zadania do wykonania.
+            Zadania wykonywane s¹ tak, jak zosta³y po³¹czone krawêdziami. Strza³ki na krawêdziach okreœlaj¹ kolejne zadania do wykonania. Wêz³y grafu, które reprezentuj¹ poszczególne zadania mog¹ byæ w dowolny sposób przemieszczane oraz ³¹czone.
             
         \item Definiowanie ustawieñ zadania
         
@@ -90,30 +118,5 @@ W obecnej wersji mo¿liwe jest tylko liniowe kolejkowanie zadañ, w przysz³oœci mo
         
   		\item Przegl¹danie rezultatów
         
-        Ka¿de wtyczka, której algorytm przetwarzany jest w ramach zadania, sama specyfikuje jak bêdzie prezentowaæ swoje wyniki. Zdaniem platformy jest jedynie zapewnienie mo¿liwoœci wyœwietlenia zwróconych przez wtyczkê danych.        
+        Ka¿de wtyczka, której algorytm przetwarzany jest w ramach zadania, sama specyfikuje jak bêdzie prezentowaæ swoje wyniki. Zdaniem platformy jest jedynie zapewnienie mo¿liwoœci wyœwietlenia zwróconych przez wtyczkê danych.
 		\end{itemize}
-		
-\subsection{Administracja}
-	
-	\begin{itemize}
-            
-		\item Przegl¹danie obiektów w systemie
-		
-		W celach administracyjnych mo¿liwe jest przegl¹danie obiektów w taki sposób, w jaki zapisane s¹ w bazie danych.
-			
-		\item Zaawansowane operacje
-		
-		Do bardziej zaawansowanych operacji na bazie danych przeznaczona jest specjalna konsola, która pozwala na wykonanie dowolnych operacji na bazie danych.
-		
-	\end{itemize}	
-
-
-
-Graficzny komponent do tworzenia zadañ.
-Pierwsze wersje \emph{Salomona} pozwala³y jedynie na definiowanie liniowej listy zadañ.
-Dlatego, aby umo¿liwiæ tworzenie bardziej zaawansowanych struktur zadañ zosta³ stworzony nowy komponent.
-Zadania reprezentowane w nim s¹ jako wêz³y w grafie skierowanym acyklicznym. Krawêdzie reprezentuj¹ przep³yw sterowania (wiedzy/danych).
-Aby dane zadanie mog³o byæ wykonane wszystkie zadania od których zale¿y musz¹ byæ wykonane wczeœniej.
-W obecnej wersji acyklicznoœæ grafu jest wymagana, aby zapewniæ, ¿e wykonanie programu siê zakoñczy.
-W kolejnych wersjach planowane jest umo¿liwienie dodawania warunków na krawêdzie, a tym samym
-mo¿liwoœci tworzenia cykli, które zostan¹ przerwane, jeœli zostanie spe³niony odpowiedni warunek.
