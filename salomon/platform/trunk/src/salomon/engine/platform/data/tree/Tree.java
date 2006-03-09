@@ -28,6 +28,7 @@ import salomon.platform.data.tree.INode;
 import salomon.platform.data.tree.ITree;
 
 /**
+ * Implementacja drzewa
  * 
  * @author Mateusz Nowakowski
  *
@@ -69,10 +70,7 @@ public class Tree implements ITree
 	
 
 	/**
-	 * @param source
-	 * @param info
-	 * @param name
-	 * @param root
+	 * 
 	 */
 	public Tree(IDataSource source, String info, String name, INode root) {
 		dataSource = source;

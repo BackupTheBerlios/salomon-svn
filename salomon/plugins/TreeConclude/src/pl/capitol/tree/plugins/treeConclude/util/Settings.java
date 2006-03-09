@@ -6,10 +6,19 @@ import salomon.plugin.ISettings;
 import salomon.util.serialization.SimpleInteger;
 import salomon.util.serialization.SimpleStruct;
 
+/**
+ * Klasa definiuhe mo¿liwe zmienne u¿ywane w pluginie.
+ * 
+ * @author Mateusz Nowakowski
+ *
+ */
 public class Settings extends SimpleStruct implements ISettings {
     
 	private static final long serialVersionUID = 1L;
 
+	/* (non-Javadoc)
+	 * @see salomon.plugin.ISettings#init(salomon.platform.serialization.IObject)
+	 */
 	public void init(IObject o)
     {
     	IStruct struct = (IStruct) o;

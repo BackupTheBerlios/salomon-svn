@@ -24,6 +24,7 @@ package salomon.platform.data.tree;
 import java.util.Date;
 
 /**
+ * Drzewo decyzyjne
  * 
  * @author Mateusz Nowakowski
  *

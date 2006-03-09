@@ -3,6 +3,7 @@
 	<name>TreeConclude</name>
 	<comment></comment>
 	<projects>
+		<project>Salomon</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

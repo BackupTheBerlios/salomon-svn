@@ -35,7 +35,9 @@ public interface INode
 	int getId();
 	void setId(int id);
 	
+	
 	Type getType();
+	
 	void setType(Type type);
 	
 	String getValue();

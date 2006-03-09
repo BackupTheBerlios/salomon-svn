@@ -24,10 +24,25 @@ import salomon.plugin.IResultComponent;
 import salomon.plugin.ISettingComponent;
 import salomon.plugin.ISettings;
 
+/**
+ * G³ówna klasa realizujaca wnioskowanie.
+ * 
+ * @author Mateusz Nowakowski
+ *
+ */
 public class Plugin implements IPlugin {
 
 	private static final Logger LOGGER = Logger.getLogger(Plugin.class);
 	
+	/**
+	 * Metoda wykonuje wnioskowanie. W przypadku okno ustawieñ ustawi³o zmienn¹ <i>isAlone</i> wówczas
+	 * pobierana jest wartosæ zmiennej <i>treeId</i> z okna ustawieñ, jako identyfikator drzewa do wnioskowania.
+	 * W przeciwnym razie sprawdzana jest zmienna œrodowiskowa <i>tree_name</i>. Test nastepuje na pozosta³ych
+	 * wierszach , które nie by³y u¿yte do jego tworzenia drzewa.
+	 */
+	/* (non-Javadoc)
+	 * @see salomon.plugin.IDataPlugin#doJob(salomon.platform.IDataEngine, salomon.platform.IEnvironment, salomon.plugin.ISettings)
+	 */
 	public IResult doJob(IDataEngine eng, IEnvironment env, ISettings settings) {
 		
 		Results results = null;
@@ -174,10 +189,16 @@ public class Plugin implements IPlugin {
 		return test.substring(index+opLen,test.length()).trim();
 	}
 	
+	/**
+	 * Zwraca komponent definicyjny
+	 */
 	public ISettingComponent getSettingComponent() {
 		return new SettingComponent();
 	}
 
+	/**
+	 * Zwraca komponent z rezultatami
+	 */
 	public IResultComponent getResultComponent() {
 		return new ResultComponent(); 
 	}

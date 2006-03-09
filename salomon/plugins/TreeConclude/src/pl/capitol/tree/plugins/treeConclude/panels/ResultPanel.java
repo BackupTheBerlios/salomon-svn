@@ -10,14 +10,13 @@ import salomon.plugin.IResult;
 import salomon.util.gui.Utils;
 
 /**
- * @author mnowakowski
+ * Wizualizacja okna wyników 
+ * 
+ * @author Mateusz Nowakowski
  *
  */
 public class ResultPanel extends JPanel {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	
 	private Results result;
@@ -46,9 +45,7 @@ public class ResultPanel extends JPanel {
 
 	private JTable resultTable = null;
 
-	/**
-	 * This is the default constructor
-	 */
+
 	public ResultPanel(IResult result) {
 		super();
 		this.result = (Results)result;

@@ -17,7 +17,9 @@ import salomon.plugin.ISettings;
 import salomon.util.serialization.SimpleInteger;
 
 /**
- * @author mnowakowski
+ * Wizualizacja okna ustawieñ
+ *  
+ * @author Mateusz Nowakowski
  *
  */
 public class SettingsPanel extends JPanel {
@@ -45,9 +47,8 @@ public class SettingsPanel extends JPanel {
 	private JLabel titleLabel = null;
 	private JLabel chooseTreeLabel = null;
 	private JLabel errorLabel = null;
-	/**
-	 * This is the default constructor
-	 */
+
+	
 	public SettingsPanel(ISettings settings, IDataEngine dataEngine) {
 		super();
 		this.dataEngine = dataEngine;
@@ -97,8 +98,14 @@ public class SettingsPanel extends JPanel {
 		this.add(chooseTreeLabel, null);
 		this.add(errorLabel, null);
 	}
-	public ISettings getSettings() {
 
+	
+	/**
+	 * Metoda  odczytuje z GUI zmienne i zwraca obiekt przechowuj¹cy zmienne.
+	 * 
+	 * @return zwraca zmienne potrzebne podczas wnioskowania
+	 */
+	public ISettings getSettings() {
 		settings.setField("isAlone",new SimpleInteger((workAloneCheckBox.isSelected() ? 1 : 0)));
 		ITree selectedTree = (ITree)this.chooseTreeComboBox.getSelectedItem();
 		if (selectedTree != null) settings.setField("treeId",new SimpleInteger(selectedTree.getId()));

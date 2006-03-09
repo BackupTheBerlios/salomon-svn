@@ -27,6 +27,7 @@ import salomon.platform.data.tree.INode.Type;
 import salomon.platform.exception.PlatformException;
 
 /**
+ * Interfejs managera umo¿liwiaj¹cy operacje na drzewach
  * 
  * @author Mateusz Nowakowski
  *

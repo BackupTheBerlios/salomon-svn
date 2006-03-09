@@ -28,6 +28,7 @@ import salomon.platform.data.tree.IDataSource;
 import salomon.platform.exception.PlatformException;
 
 /**
+ * Implementacja Ÿród³a danych oparty na tablicy w zewnetrznej bazie danych
  * 
  * @author Mateusz Nowakowski
  *
@@ -47,13 +48,8 @@ public class DataSource implements IDataSource
 	
 	
 	/**
-	 * @param date
-	 * @param columns
-	 * @param column
-	 * @param id
-	 * @param info
-	 * @param name
-	 * @param solution
+	 * Konstruktor ustawiaj¹cy wszystkie pola Ÿród³a danych 
+	 * 
 	 */
 	public DataSource(Date date, String[] columns, String column, int firstRowIndex, int lastRowIndex, int id, String info, String name, ShortSolutionInfo solution) throws PlatformException{
 		if ((firstRowIndex < 1 || lastRowIndex < 1) || (firstRowIndex > lastRowIndex)) throw new PlatformException("Indexy wierszy data sourca musza byc liczbami dodatnimi oraz index pierwszego wiersza nie moze byc wiekszy od indexu wiersza ostatniego");
@@ -72,7 +68,9 @@ public class DataSource implements IDataSource
 	
 	
 	/**
-	 * @param solution
+	 * Konstruktor wymagaj¹cy informacji o aktualnym rozwi¹zaniu
+	 * 
+	 * @param solution aktualne rozwi¹zanie
 	 */
 	public DataSource(ShortSolutionInfo solution) {
 		this.solution = solution;
@@ -84,11 +82,17 @@ public class DataSource implements IDataSource
 	/**
 	 * @return Returns the tableName.
 	 */
+	/* (non-Javadoc)
+	 * @see salomon.platform.data.tree.IDataSource#getTableName()
+	 */
 	public String getTableName() {
 		return tableName;
 	}
 	/**
 	 * @param tableName The tableName to set.
+	 */
+	/* (non-Javadoc)
+	 * @see salomon.platform.data.tree.IDataSource#setTableName(java.lang.String)
 	 */
 	public void setTableName(String tableName) {
 		this.tableName = tableName;
@@ -96,11 +100,17 @@ public class DataSource implements IDataSource
 	/**
 	 * @param id The id to set.
 	 */
+	/**
+	 * @param id
+	 */
 	public void setId(int id) {
 		this.id = id;
 	}
 	/**
 	 * @return Returns the createDate.
+	 */
+	/* (non-Javadoc)
+	 * @see salomon.platform.data.tree.IDataSource#getCreateDate()
 	 */
 	public Date getCreateDate() {
 		return createDate;
@@ -114,11 +124,17 @@ public class DataSource implements IDataSource
 	/**
 	 * @return Returns the decioningColumns.
 	 */
+	/* (non-Javadoc)
+	 * @see salomon.platform.data.tree.IDataSource#getDecioningColumns()
+	 */
 	public String[] getDecioningColumns() {
 		return decioningColumns;
 	}
 	/**
 	 * @param decioningColumns The decioningColumns to set.
+	 */
+	/* (non-Javadoc)
+	 * @see salomon.platform.data.tree.IDataSource#setDecioningColumns(java.lang.String[])
 	 */
 	public void setDecioningColumns(String[] decioningColumns) {
 		this.decioningColumns = decioningColumns;
@@ -126,17 +142,26 @@ public class DataSource implements IDataSource
 	/**
 	 * @return Returns the decisionedColumn.
 	 */
+	/* (non-Javadoc)
+	 * @see salomon.platform.data.tree.IDataSource#getDecisionedColumn()
+	 */
 	public String getDecisionedColumn() {
 		return decisionedColumn;
 	}
 	/**
 	 * @param decisionedColumn The decisionedColumn to set.
 	 */
+	/* (non-Javadoc)
+	 * @see salomon.platform.data.tree.IDataSource#setDecisionedColumn(java.lang.String)
+	 */
 	public void setDecisionedColumn(String decisionedColumn) {
 		this.decisionedColumn = decisionedColumn;
 	}
 	/**
 	 * @return Returns the id.
+	 */
+	/* (non-Javadoc)
+	 * @see salomon.platform.data.tree.IDataSource#getId()
 	 */
 	public int getId() {
 		return id;
@@ -145,11 +170,17 @@ public class DataSource implements IDataSource
 	/**
 	 * @return Returns the info.
 	 */
+	/* (non-Javadoc)
+	 * @see salomon.platform.data.tree.IDataSource#getInfo()
+	 */
 	public String getInfo() {
 		return info;
 	}
 	/**
 	 * @param info The info to set.
+	 */
+	/* (non-Javadoc)
+	 * @see salomon.platform.data.tree.IDataSource#setInfo(java.lang.String)
 	 */
 	public void setInfo(String info) {
 		this.info = info;
@@ -157,11 +188,17 @@ public class DataSource implements IDataSource
 	/**
 	 * @return Returns the name.
 	 */
+	/* (non-Javadoc)
+	 * @see salomon.platform.data.tree.IDataSource#getName()
+	 */
 	public String getName() {
 		return name;
 	}
 	/**
 	 * @param name The name to set.
+	 */
+	/* (non-Javadoc)
+	 * @see salomon.platform.data.tree.IDataSource#setName(java.lang.String)
 	 */
 	public void setName(String name) {
 		this.name = name;
@@ -169,11 +206,17 @@ public class DataSource implements IDataSource
 	/**
 	 * @return Returns the solution.
 	 */
+	/* (non-Javadoc)
+	 * @see salomon.platform.data.tree.IDataSource#getSolution()
+	 */
 	public ShortSolutionInfo getSolution() {
 		return solution;
 	}
 	/**
 	 * @param solution The solution to set.
+	 */
+	/**
+	 * @param solution
 	 */
 	public void setSolution(ShortSolutionInfo solution) {
 		this.solution = solution;
@@ -185,6 +228,9 @@ public class DataSource implements IDataSource
 	/**
 	 * @return Returns the firstRowIndex.
 	 */
+	/* (non-Javadoc)
+	 * @see salomon.platform.data.tree.IDataSource#getFirstRowIndex()
+	 */
 	public int getFirstRowIndex() {
 		return firstRowIndex;
 	}
@@ -194,6 +240,9 @@ public class DataSource implements IDataSource
 
 	/**
 	 * @param firstRowIndex The firstRowIndex to set.
+	 */
+	/* (non-Javadoc)
+	 * @see salomon.platform.data.tree.IDataSource#setFirstRowIndex(int)
 	 */
 	public void setFirstRowIndex(int firstRowIndex) {
 		this.firstRowIndex = firstRowIndex;
@@ -205,6 +254,9 @@ public class DataSource implements IDataSource
 	/**
 	 * @return Returns the lastRowIndex.
 	 */
+	/* (non-Javadoc)
+	 * @see salomon.platform.data.tree.IDataSource#getLastRowIndex()
+	 */
 	public int getLastRowIndex() {
 		return lastRowIndex;
 	}
@@ -214,6 +266,9 @@ public class DataSource implements IDataSource
 
 	/**
 	 * @param lastRowIndex The lastRowIndex to set.
+	 */
+	/* (non-Javadoc)
+	 * @see salomon.platform.data.tree.IDataSource#setLastRowIndex(int)
 	 */
 	public void setLastRowIndex(int lastRowIndex) {
 		this.lastRowIndex = lastRowIndex;

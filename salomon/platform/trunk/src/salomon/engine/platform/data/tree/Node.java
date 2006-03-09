@@ -28,6 +28,7 @@ import java.util.List;
 import salomon.platform.data.tree.INode;
 
 /**
+ * Implementacja elementu drzewa
  * 
  * @author Mateusz Nowakowski
  *
@@ -43,22 +44,15 @@ public class Node implements INode
 	
 	
 	/**
-	 * 
-	 * @param id
-	 * @param parent
-	 * @param edge
-	 * @param type
-	 * @param value
+	 * Konstruktor dodatkowo ustawiajacy identyfikator
 	 */
 	public Node(int id,INode parent, String edge, Type type, String value){
 		this(parent,edge,type,value);
 		this.id = id;
 	}
 	/**
-	 * @param parent
-	 * @param edge
-	 * @param type
-	 * @param value
+	 *
+	 * Konstruktor elementu drzewa. W przypadku gdy lement drzewa jest korzeniem drzewa  - w miejsce parent nalezy umieœciæ null.
 	 */
 	public Node(INode parent, String edge, Type type, String value){
 		this.type = type;
@@ -70,6 +64,9 @@ public class Node implements INode
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see salomon.platform.data.tree.INode#setParent(salomon.platform.data.tree.INode)
+	 */
 	public void setParent(INode parent) {
 		this.parent = parent;
 		for (INode node :parent.getChildren()) if (node.equals(this)) return; 
@@ -77,6 +74,9 @@ public class Node implements INode
 	}
 	
 	
+	/* (non-Javadoc)
+	 * @see salomon.platform.data.tree.INode#addChild(salomon.platform.data.tree.INode)
+	 */
 	public void addChild(INode child){
 		List<INode> childs = new ArrayList<INode>(Arrays.asList(children));
 		childs.add(child);
@@ -84,6 +84,9 @@ public class Node implements INode
 		child.setParent(this);
 	}
 	
+	/* (non-Javadoc)
+	 * @see salomon.platform.data.tree.INode#addChildren(salomon.platform.data.tree.INode[])
+	 */
 	public void addChildren(INode[] ch){
 		List<INode> childs =  new ArrayList<INode>(Arrays.asList(children));
 		childs.addAll(Arrays.asList(ch));
@@ -93,6 +96,9 @@ public class Node implements INode
 		this.children = childs.toArray(new INode[childs.size()]);
 	}
 
+	/* (non-Javadoc)
+	 * @see salomon.platform.data.tree.INode#setChildren(salomon.platform.data.tree.INode[])
+	 */
 	public void setChildren(INode[] children) {
 		this.children = children;
 		for(INode child : children){
@@ -134,6 +140,9 @@ public class Node implements INode
 	/**
 	 * @return Returns the children.
 	 */
+	/* (non-Javadoc)
+	 * @see salomon.platform.data.tree.INode#getChildren()
+	 */
 	public INode[] getChildren() {
 		return children;
 	}
@@ -141,11 +150,17 @@ public class Node implements INode
 	/**
 	 * @return Returns the parent.
 	 */
+	/* (non-Javadoc)
+	 * @see salomon.platform.data.tree.INode#getParent()
+	 */
 	public INode getParent() {
 		return parent;
 	}
 	/**
 	 * @return Returns the parentEdge.
+	 */
+	/* (non-Javadoc)
+	 * @see salomon.platform.data.tree.INode#getParentEdge()
 	 */
 	public String getParentEdge() {
 		return parentEdge;
@@ -153,11 +168,17 @@ public class Node implements INode
 	/**
 	 * @param parentEdge The parentEdge to set.
 	 */
+	/* (non-Javadoc)
+	 * @see salomon.platform.data.tree.INode#setParentEdge(java.lang.String)
+	 */
 	public void setParentEdge(String parentEdge) {
 		this.parentEdge = parentEdge;
 	}
 	/**
 	 * @return Returns the type.
+	 */
+	/* (non-Javadoc)
+	 * @see salomon.platform.data.tree.INode#getType()
 	 */
 	public Type getType() {
 		return type;
@@ -165,17 +186,26 @@ public class Node implements INode
 	/**
 	 * @param type The type to set.
 	 */
+	/* (non-Javadoc)
+	 * @see salomon.platform.data.tree.INode#setType(salomon.platform.data.tree.INode.Type)
+	 */
 	public void setType(Type type) {
 		this.type = type;
 	}
 	/**
 	 * @return Returns the value.
 	 */
+	/* (non-Javadoc)
+	 * @see salomon.platform.data.tree.INode#getValue()
+	 */
 	public String getValue() {
 		return value;
 	}
 	/**
 	 * @param value The value to set.
+	 */
+	/* (non-Javadoc)
+	 * @see salomon.platform.data.tree.INode#setValue(java.lang.String)
 	 */
 	public void setValue(String value) {
 		this.value = value;
@@ -184,12 +214,18 @@ public class Node implements INode
 	/**
 	 * @return Returns the id.
 	 */
+	/* (non-Javadoc)
+	 * @see salomon.platform.data.tree.INode#getId()
+	 */
 	public int getId() {
 		return id;
 	}
 
 	/**
 	 * @param id The id to set.
+	 */
+	/* (non-Javadoc)
+	 * @see salomon.platform.data.tree.INode#setId(int)
 	 */
 	public void setId(int id) {
 		this.id = id;

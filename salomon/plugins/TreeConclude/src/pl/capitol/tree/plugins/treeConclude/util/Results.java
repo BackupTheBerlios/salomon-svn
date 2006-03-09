@@ -4,6 +4,12 @@ import java.util.Collection;
 
 import salomon.plugin.IResult;
 
+/**
+ * Rezultat wnioskowania
+ * 
+ * @author Mateusz Nowakowski
+ *
+ */
 public class Results implements IResult {
 
 	private boolean success = false;

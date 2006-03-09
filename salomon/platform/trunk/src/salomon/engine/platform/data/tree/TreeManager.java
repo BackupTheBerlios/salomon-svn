@@ -43,7 +43,7 @@ import salomon.platform.data.tree.INode.Type;
 import salomon.platform.exception.PlatformException;
 
 /**
- * 
+ * Implementacja Tree manager`a
  * 
  * @author Mateusz Nowakowski
  *
@@ -54,6 +54,13 @@ public final class TreeManager implements ITreeManager
 	private ExternalDBManager _externalDBManager;
 	private ShortSolutionInfo _solutionInfo;
 	
+	/**
+	 * Inicjalizuje tree managera. 
+	 * 
+	 * @param dbManager dostep do wewnetrzna baza salomona
+	 * @param solutionInfo identyfikator rozwi¹zania
+	 * @param externalDBManager dostep do zewnetrznej baza salomona zdefiniowanej przez rozwi¹zanie
+	 */
 	public TreeManager(DBManager dbManager, ShortSolutionInfo solutionInfo,
 			ExternalDBManager externalDBManager)
 	{
@@ -95,11 +102,17 @@ public final class TreeManager implements ITreeManager
 
 
 
+	/* (non-Javadoc)
+	 * @see salomon.platform.data.tree.ITreeManager#createTreeDataSource()
+	 */
 	public IDataSource createTreeDataSource() throws PlatformException {
 		return new DataSource(_solutionInfo);
 	}
 	
 	
+	/* (non-Javadoc)
+	 * @see salomon.platform.data.tree.ITreeManager#addTreeDataSource(salomon.platform.data.tree.IDataSource)
+	 */
 	public int addTreeDataSource(IDataSource dataSource)throws PlatformException
 	{
 		int treeDataSourceId = 0;
@@ -125,6 +138,9 @@ public final class TreeManager implements ITreeManager
 		return treeDataSourceId;
 	}
 	
+	/* (non-Javadoc)
+	 * @see salomon.platform.data.tree.ITreeManager#getTreeDataSourceData(salomon.platform.data.tree.IDataSource)
+	 */
 	public List<Object []> getTreeDataSourceData(IDataSource dataSource) throws PlatformException {
 		if (dataSource == null) return null;
 		List<Object []> returnList = new ArrayList<Object []>();
@@ -162,6 +178,9 @@ public final class TreeManager implements ITreeManager
 	}
 	
 
+	/* (non-Javadoc)
+	 * @see salomon.platform.data.tree.ITreeManager#getRestTreeDataSourceRows(salomon.platform.data.tree.IDataSource)
+	 */
 	public List<Object []> getRestTreeDataSourceRows(IDataSource dataSource) throws PlatformException {
 		if (dataSource == null) return null;
 		List<Object []> returnList = new ArrayList<Object []>();
@@ -199,6 +218,9 @@ public final class TreeManager implements ITreeManager
 	}
 	
 	
+	/* (non-Javadoc)
+	 * @see salomon.platform.data.tree.ITreeManager#getTreeDataSources()
+	 */
 	public IDataSource[] getTreeDataSources() throws PlatformException
 	{
 		List<IDataSource> dataSources = new LinkedList<IDataSource>();
@@ -241,6 +263,9 @@ public final class TreeManager implements ITreeManager
 	}
 	
 	
+	/* (non-Javadoc)
+	 * @see salomon.platform.data.tree.ITreeManager#getTreeDataSource(int)
+	 */
 	public IDataSource getTreeDataSource(int treeDataSourceId)throws PlatformException
 	{
 		SQLSelect select = new SQLSelect();
@@ -284,6 +309,9 @@ public final class TreeManager implements ITreeManager
 	}
 	
 	
+	/* (non-Javadoc)
+	 * @see salomon.platform.data.tree.ITreeManager#removeTreeDataSource(int)
+	 */
 	public void removeTreeDataSource(int dataSourceId) throws PlatformException
 	{
 			IDataSource dataSource = this.getTreeDataSource(dataSourceId);
@@ -299,10 +327,16 @@ public final class TreeManager implements ITreeManager
 			}
 	}
 	
+	/* (non-Javadoc)
+	 * @see salomon.platform.data.tree.ITreeManager#createTree()
+	 */
 	public ITree createTree() throws PlatformException {
 		return new Tree();
 	}
 
+	/* (non-Javadoc)
+	 * @see salomon.platform.data.tree.ITreeManager#createTree(int, java.lang.String, java.lang.String, salomon.platform.data.tree.INode)
+	 */
 	public ITree createTree(int dataSourceId, String info, String name, INode root) throws PlatformException {
 		IDataSource dataSource = getTreeDataSource(dataSourceId);
 		if (dataSource == null) throw new PlatformException("There isn`t tree data source with id: "+dataSourceId+" in database.");
@@ -310,11 +344,17 @@ public final class TreeManager implements ITreeManager
 		return new Tree(dataSource,info,name,root);
 	}	
 	
+	/* (non-Javadoc)
+	 * @see salomon.platform.data.tree.ITreeManager#createNode(salomon.platform.data.tree.INode, java.lang.String, salomon.platform.data.tree.INode.Type, java.lang.String)
+	 */
 	public INode createNode(INode parentNode, String edge, Type type, String value){
 		return new Node(parentNode,edge,type,value);
 	}
 	
 	
+	/* (non-Javadoc)
+	 * @see salomon.platform.data.tree.ITreeManager#addTree(salomon.platform.data.tree.ITree)
+	 */
 	public int addTree(ITree tree) throws PlatformException
 	{
 		int returnCreatedTreeId = 0;
@@ -366,6 +406,9 @@ public final class TreeManager implements ITreeManager
 		return returnId;
 	}
 
+	/* (non-Javadoc)
+	 * @see salomon.platform.data.tree.ITreeManager#getTrees()
+	 */
 	public ITree[] getTrees() throws PlatformException
 	{
 		List<ITree> trees = new LinkedList<ITree>();
@@ -480,6 +523,9 @@ public final class TreeManager implements ITreeManager
 	}
 	
 	
+	/* (non-Javadoc)
+	 * @see salomon.platform.data.tree.ITreeManager#getTree(int)
+	 */
 	public ITree getTree(int treeId) throws PlatformException
 	{
 		ITree returnTree = null;
@@ -527,6 +573,9 @@ public final class TreeManager implements ITreeManager
 
 
 
+	/* (non-Javadoc)
+	 * @see salomon.platform.data.tree.ITreeManager#removeTree(int)
+	 */
 	public void removeTree(int treeId) throws PlatformException
 	{
 			ITree tree = this.getTree(treeId); 
