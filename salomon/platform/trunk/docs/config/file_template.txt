@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004 Salomon Team
+ * Copyright (C) 2006 Salomon Team
  *
  * This file is part of Salomon.
  *
