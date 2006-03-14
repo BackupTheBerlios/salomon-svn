@@ -19,7 +19,7 @@
  * 
  */
 
-package salomon.engine.controller.gui.viewer;
+package salomon.engine.controller.gui.viewer.spread;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -30,7 +30,6 @@ import javax.swing.JTable;
 
 import salomon.engine.database.DBManager;
 import salomon.engine.database.queries.SQLSelect;
-import salomon.util.gui.DBDataTable;
 
 /**
  * @author nico

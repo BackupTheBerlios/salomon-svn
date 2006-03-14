@@ -21,6 +21,7 @@
 
 package salomon.engine.controller.gui.viewer;
 
+import salomon.engine.controller.gui.viewer.spread.AbstractSearchSpread;
 import salomon.engine.database.DBManager;
 import salomon.engine.plugin.PluginInfo;
 

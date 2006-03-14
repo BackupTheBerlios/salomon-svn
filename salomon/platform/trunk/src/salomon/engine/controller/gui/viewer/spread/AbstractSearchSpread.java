@@ -19,7 +19,7 @@
  * 
  */
 
-package salomon.engine.controller.gui.viewer;
+package salomon.engine.controller.gui.viewer.spread;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
