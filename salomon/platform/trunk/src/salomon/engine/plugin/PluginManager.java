@@ -38,7 +38,6 @@ import salomon.platform.exception.PlatformException;
  */
 public final class PluginManager implements IPluginManager
 {
-
 	/**
 	 * 
 	 * @uml.property name="_dbManager"

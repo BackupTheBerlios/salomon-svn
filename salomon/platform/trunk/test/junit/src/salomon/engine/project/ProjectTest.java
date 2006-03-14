@@ -21,24 +21,16 @@
 
 package salomon.engine.project;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
 import junit.framework.TestCase;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
 import salomon.engine.database.DBManager;
-import salomon.engine.database.queries.SQLSelect;
-import salomon.engine.solution.Solution;
-import salomon.engine.solution.SolutionManager;
-
-import salomon.platform.IUniqueId;
-
-import salomon.plugin.DescriptionTest;
-
 import salomon.engine.platform.ManagerEngine;
+import salomon.engine.solution.SolutionManager;
+import salomon.platform.IUniqueId;
+import salomon.plugin.DescriptionTest;
 
 public class ProjectTest extends TestCase
 {

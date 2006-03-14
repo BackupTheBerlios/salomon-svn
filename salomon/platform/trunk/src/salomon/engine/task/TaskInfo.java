@@ -63,6 +63,10 @@ public final class TaskInfo implements IInfo
 
     private int _taskNr;
 
+    private Date _cDate;
+
+    private Date _lmDate;
+
     public TaskInfo(DBManager dbManager)
     {
         _dbManager = dbManager;
@@ -94,8 +98,7 @@ public final class TaskInfo implements IInfo
 
     public Date getCreationDate() throws PlatformException
     {
-        throw new UnsupportedOperationException(
-                "Method getCreationDate() not implemented yet!");
+        return _cDate;
     }
 
     /**
@@ -113,8 +116,7 @@ public final class TaskInfo implements IInfo
 
     public Date getLastModificationDate() throws PlatformException
     {
-        throw new UnsupportedOperationException(
-                "Method getLastModificationDate() not implemented yet!");
+        return _lmDate;
     }
 
     /**
@@ -186,6 +188,8 @@ public final class TaskInfo implements IInfo
             // TODO: support result loading?
             // _result = resultSet.getString("plugin_result");
             _status = resultSet.getString("status");
+            _cDate = resultSet.getDate("c_date");
+            _lmDate = resultSet.getDate("lm_date");
         } catch (SQLException e) {
             LOGGER.fatal("Exception was thrown!", e);
             throw new DBException("Cannot load task info!", e);
@@ -223,11 +227,17 @@ public final class TaskInfo implements IInfo
         } else if (_status == FINISHED || _status == ERROR) {
             update.addValue("stop_time", new Time(System.currentTimeMillis()));
         }
+
+        if (_cDate == null) {
+            _cDate = new Date(System.currentTimeMillis());
+            update.addValue("c_date", _cDate);
+        }
         update.addValue("lm_date", new Date(System.currentTimeMillis()));
         try {
             _taskID = _dbManager.insertOrUpdate(update, "task_id", _taskID,
                     GEN_NAME);
         } catch (SQLException e) {
+            _cDate = null;
             LOGGER.fatal("Exception was thrown!", e);
             throw new DBException("Cannot save task info!", e);
         }

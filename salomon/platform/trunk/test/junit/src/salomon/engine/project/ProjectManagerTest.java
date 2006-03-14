@@ -86,11 +86,6 @@ public class ProjectManagerTest extends TestCase
 		assertTrue(success);
 	}
 
-	public void testSaveProject()
-	{
-		LOGGER.debug("ProjectManagerTest.testSaveProject()");
-	}
-
 	protected void setUp() throws Exception
 	{
 		PropertyConfigurator.configure("log.conf"); //$NON-NLS-1$           

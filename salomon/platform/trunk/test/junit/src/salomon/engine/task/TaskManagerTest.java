@@ -19,7 +19,7 @@
  * 
  */
 
-package salomon.engine.solution;
+package salomon.engine.task;
 
 import java.util.ArrayList;
 import java.util.Collection;

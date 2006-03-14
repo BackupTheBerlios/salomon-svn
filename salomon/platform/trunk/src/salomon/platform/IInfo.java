@@ -21,8 +21,8 @@
 
 package salomon.platform;
 
+import java.sql.Date;
 import java.sql.ResultSet;
-import java.util.Date;
 
 import salomon.platform.exception.DBException;
 import salomon.platform.exception.PlatformException;

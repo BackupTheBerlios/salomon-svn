@@ -109,6 +109,7 @@ public final class SalomonEditingPopupGraphMousePlugin
 						_managerGUI.editTask(taskVertex.getTask());
 					}
 				});
+                popup.addSeparator();
 				popup.add(new AbstractAction("Show Settings") {
 					public void actionPerformed(ActionEvent e)
 					{

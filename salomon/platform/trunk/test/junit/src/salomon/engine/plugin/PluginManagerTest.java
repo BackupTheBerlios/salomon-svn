@@ -29,6 +29,7 @@ import junit.framework.TestCase;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
+import salomon.platform.exception.DBException;
 import salomon.platform.exception.PlatformException;
 
 import salomon.plugin.IPlugin;
@@ -72,42 +73,6 @@ public class PluginManagerTest extends TestCase
 		//assertTrue(pluginManager.removePlugin(plugin));
 	}
 
-	public void testSavePlugin1()
-	{
-		LOGGER.debug("PluginManagerTest.testSavePlugin1()");
-		boolean success = false;
-		// adds new plugin
-		//LocalPlugin plugin = new LocalPlugin();
-		PluginInfo desc = new PluginInfo("new plugin", "added");
-		try {
-			desc.setLocation(new URL("http://www.jakas.lokalizacja.com"));
-			success = true;
-		} catch (MalformedURLException e) {
-			LOGGER.fatal("", e);
-		}
-		//plugin.setInfo(desc);
-		assertTrue(success);
-		//assertTrue(pluginManager.savePlugin(plugin));
-	}
-
-	public void testSavePlugin2()
-	{
-		LOGGER.debug("PluginManagerTest.testSavePlugin2()");
-		boolean success = false;
-		// updates the existing one
-		//LocalPlugin plugin = new LocalPlugin();		
-		PluginInfo desc = new PluginInfo("plugin updated", "updated");
-		desc.setPluginID(20);
-		try {
-			desc.setLocation(new URL("http://www.jakas.lokalizacja.com"));
-			success = true;
-		} catch (MalformedURLException e) {
-			LOGGER.fatal("", e);
-		}
-		//plugin.setInfo(desc);
-		assertTrue(success);
-		//assertTrue(pluginManager.savePlugin(plugin));
-	}
 
 	protected void setUp() throws Exception
 	{

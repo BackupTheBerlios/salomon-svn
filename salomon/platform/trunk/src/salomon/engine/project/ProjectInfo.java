@@ -30,13 +30,20 @@ import org.apache.log4j.Logger;
 import salomon.engine.database.DBManager;
 import salomon.engine.database.queries.SQLDelete;
 import salomon.engine.database.queries.SQLUpdate;
-
 import salomon.platform.IInfo;
 import salomon.platform.exception.DBException;
 import salomon.platform.exception.PlatformException;
 
 public final class ProjectInfo implements IInfo
 {
+
+    public static final String TABLE_NAME = "projects";
+
+    public static final String VIEW_NAME = "projects_view";
+
+    private static final String GEN_NAME = "gen_project_id";
+
+    private static final Logger LOGGER = Logger.getLogger(ProjectInfo.class);
 
     /**
      * 
@@ -54,6 +61,10 @@ public final class ProjectInfo implements IInfo
     private int _projectID = 0;
 
     private int _solutionID = 0;
+
+    private Date _cDate;
+
+    private Date _lmDate;
 
     public ProjectInfo(DBManager dbManager)
     {
@@ -81,8 +92,7 @@ public final class ProjectInfo implements IInfo
 
     public Date getCreationDate() throws PlatformException
     {
-        throw new UnsupportedOperationException(
-                "Method getCreationDate() not implemented yet!");
+        return _cDate;
     }
 
     /**
@@ -112,8 +122,7 @@ public final class ProjectInfo implements IInfo
 
     public Date getLastModificationDate() throws PlatformException
     {
-        throw new UnsupportedOperationException(
-                "Method getLastModificationDate() not implemented yet!");
+        return _lmDate;
     }
 
     /**
@@ -143,6 +152,8 @@ public final class ProjectInfo implements IInfo
             _name = resultSet.getString("project_name");
             _info = resultSet.getString("project_info");
             _environment = resultSet.getString("env");
+            _cDate = resultSet.getDate("c_date");
+            _lmDate = resultSet.getDate("lm_date");
         } catch (SQLException e) {
             LOGGER.fatal("Exception was thrown!", e);
             throw new DBException("Cannot load project info!", e);
@@ -170,11 +181,16 @@ public final class ProjectInfo implements IInfo
         if (_environment != null) {
             update.addValue("env", _environment);
         }
+        if (_cDate == null) {
+            _cDate = new Date(System.currentTimeMillis());
+            update.addValue("c_date", _cDate);
+        }
         update.addValue("lm_date", new Date(System.currentTimeMillis()));
         try {
             _projectID = _dbManager.insertOrUpdate(update, "project_id",
                     _projectID, GEN_NAME);
         } catch (SQLException e) {
+            _cDate = null;
             LOGGER.fatal("Exception was thrown!", e);
             throw new DBException("Cannot save project info!", e);
         }
@@ -224,12 +240,4 @@ public final class ProjectInfo implements IInfo
     {
         return "[" + _projectID + ", " + _name + ", " + _info + "]";
     }
-
-    public static final String TABLE_NAME = "projects";
-    
-    public static final String VIEW_NAME = "projects_view";
-
-    private static final String GEN_NAME = "gen_project_id";
-
-    private static final Logger LOGGER = Logger.getLogger(ProjectInfo.class);
 }

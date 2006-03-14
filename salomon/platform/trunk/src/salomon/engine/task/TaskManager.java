@@ -201,6 +201,8 @@ public final class TaskManager implements ITaskManager
 			select.addColumn("t.status");
 			select.addColumn("t.plugin_settings");
 			select.addColumn("t.plugin_result");
+            select.addColumn("t.c_date");
+            select.addColumn("t.lm_date");
 			select.addColumn("p.plugin_id");
 			select.addColumn("p.plugin_name");
 			select.addColumn("p.plugin_info");
@@ -219,6 +221,8 @@ public final class TaskManager implements ITaskManager
 					// TODO: Plugin info shoul not be instantied from outside of
 					// pluginManger :-/
 					PluginInfo pluginInfo = new PluginInfo(_dbManager);
+                    // FIXME: c_date and lm_date for the plugin will be loaded incorrectly
+                    // it will be taken from the task :-/
 					pluginInfo.load(resultSet);
 					LocalPlugin loadedPlugin = (LocalPlugin) _managerEngine.getPluginManager().getPlugin(
 							pluginInfo);

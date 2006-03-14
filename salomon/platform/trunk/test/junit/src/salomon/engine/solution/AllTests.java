@@ -21,6 +21,8 @@
 
 package salomon.engine.solution;
 
+import salomon.engine.task.TaskManagerTest;
+import salomon.engine.task.TaskInfoTest;
 import junit.framework.TestSuite;
 
 /**
@@ -33,10 +35,8 @@ public class AllTests
 	{
 		TestSuite suite = new TestSuite("Test for salomon.engine.solution");
 		//$JUnit-BEGIN$
-		suite.addTestSuite(TaskManagerTest.class);
-		suite.addTestSuite(SolutionTest.class);
+		suite.addTestSuite(SolutionInfoTest.class);
 		suite.addTestSuite(SolutionManagerTest.class);
-		suite.addTestSuite(TaskTest.class);
 		//$JUnit-END$
 		return suite;
 	}

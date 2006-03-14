@@ -33,7 +33,6 @@ import org.apache.log4j.Logger;
 import salomon.engine.database.DBManager;
 import salomon.engine.database.queries.SQLDelete;
 import salomon.engine.database.queries.SQLUpdate;
-
 import salomon.platform.IInfo;
 import salomon.platform.exception.DBException;
 import salomon.platform.exception.PlatformException;
@@ -43,6 +42,14 @@ import salomon.platform.exception.PlatformException;
  */
 public class PluginInfo implements IInfo, Serializable
 {
+
+    private static final String GEN_NAME = "gen_plugin_id";
+
+    private static final Logger LOGGER = Logger.getLogger(PluginInfo.class);
+
+    public static final String TABLE_NAME = "plugins";
+
+    public static final String VIEW_NAME = "plugins_view";
 
     /**
      * 
@@ -64,6 +71,10 @@ public class PluginInfo implements IInfo, Serializable
     private int _pluginID;
 
     private String _version;
+
+    private Date _cDate;
+
+    private Date _lmDate;
 
     public PluginInfo(DBManager manager)
     {
@@ -97,10 +108,9 @@ public class PluginInfo implements IInfo, Serializable
         }
     }
 
-    public java.util.Date getCreationDate() throws PlatformException
+    public Date getCreationDate() throws PlatformException
     {
-        throw new UnsupportedOperationException(
-                "Method getCreationDate() not implemented yet!");
+        return _cDate;
     }
 
     public int getId()
@@ -124,10 +134,9 @@ public class PluginInfo implements IInfo, Serializable
         return _input;
     }
 
-    public java.util.Date getLastModificationDate() throws PlatformException
+    public Date getLastModificationDate() throws PlatformException
     {
-        throw new UnsupportedOperationException(
-                "Method getLastModificationDate() not implemented yet!");
+        return _lmDate;
     }
 
     /**
@@ -183,6 +192,8 @@ public class PluginInfo implements IInfo, Serializable
             _name = resultSet.getString("plugin_name");
             _location = new URL(resultSet.getString("location"));
             _info = resultSet.getString("plugin_info");
+            _cDate = resultSet.getDate("c_date");
+            _lmDate = resultSet.getDate("lm_date");
         } catch (SQLException e) {
             LOGGER.fatal("Cannot load result!!", e);
             throw new DBException("Cannot load result!", e);
@@ -208,11 +219,16 @@ public class PluginInfo implements IInfo, Serializable
         if (_info != null) {
             update.addValue("plugin_info", _info);
         }
+        if (_cDate == null) {
+            _cDate = new Date(System.currentTimeMillis());
+            update.addValue("c_date", _cDate);
+        }
         update.addValue("lm_date", new Date(System.currentTimeMillis()));
         try {
             _pluginID = _dbManager.insertOrUpdate(update, "plugin_id",
                     _pluginID, GEN_NAME);
         } catch (SQLException e) {
+            _cDate = null;
             LOGGER.fatal("Cannot save! Exception was thrown!", e);
             throw new DBException("Cannot save!", e);
         }
@@ -276,12 +292,4 @@ public class PluginInfo implements IInfo, Serializable
     {
         return "" + _pluginID + "," + _name + "," + _location + "," + _info;
     }
-
-    public static final String TABLE_NAME = "plugins";
-
-    public static final String VIEW_NAME = "plugins_view";
-
-    private static final String GEN_NAME = "gen_plugin_id";
-
-    private static final Logger LOGGER = Logger.getLogger(PluginInfo.class);
 }

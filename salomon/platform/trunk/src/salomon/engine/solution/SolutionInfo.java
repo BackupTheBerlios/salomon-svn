@@ -30,7 +30,6 @@ import org.apache.log4j.Logger;
 import salomon.engine.database.DBManager;
 import salomon.engine.database.queries.SQLDelete;
 import salomon.engine.database.queries.SQLUpdate;
-
 import salomon.platform.IInfo;
 import salomon.platform.exception.DBException;
 import salomon.platform.exception.PlatformException;
@@ -38,238 +37,248 @@ import salomon.platform.exception.PlatformException;
 public final class SolutionInfo implements IInfo
 {
 
-	/**
-	 * 
-	 * @uml.property name="_dbManager"
-	 * @uml.associationEnd multiplicity="(0 1)"
-	 */
-	private DBManager _dbManager;
+    /**
+     * 
+     * @uml.property name="_dbManager"
+     * @uml.associationEnd multiplicity="(0 1)"
+     */
+    private DBManager _dbManager;
 
-	private String _host;
+    private String _host;
 
-	private String _info;
+    private String _info;
 
-	private String _name;
+    private String _name;
 
-	private String _passwd;
+    private String _passwd;
 
-	private String _path;
+    private String _path;
 
-	private int _solutionID = 0;
+    private int _solutionID = 0;
 
-	private String _user;
+    private String _user;
 
-	public SolutionInfo(DBManager manager)
-	{
-		_dbManager = manager;
-	}
+    private Date _cDate;
 
-	public boolean delete() throws DBException
-	{
-		SQLDelete delete = new SQLDelete(TABLE_NAME);
-		delete.addCondition("solution_id =", _solutionID);
-		try {
-			return (_dbManager.delete(delete) > 0);
-		} catch (SQLException e) {
-			LOGGER.fatal("Exception was thrown!", e);
-			throw new DBException("Cannot delete solution info!", e);
-		}
-	}
+    private Date _lmDate;
 
-	public Date getCreationDate() throws PlatformException
-	{
-		throw new UnsupportedOperationException(
-				"Method getCreationDate() not implemented yet!");
-	}
+    public SolutionInfo(DBManager manager)
+    {
+        _dbManager = manager;
+    }
 
-	/**
-	 * @return Returns the host.
-	 */
-	public String getHost()
-	{
-		return _host;
-	}
+    public boolean delete() throws DBException
+    {
+        SQLDelete delete = new SQLDelete(TABLE_NAME);
+        delete.addCondition("solution_id =", _solutionID);
+        try {
+            return (_dbManager.delete(delete) > 0);
+        } catch (SQLException e) {
+            LOGGER.fatal("Exception was thrown!", e);
+            throw new DBException("Cannot delete solution info!", e);
+        }
+    }
 
-	public int getId()
-	{
-		return _solutionID;
-	}
+    public Date getCreationDate() throws PlatformException
+    {
+        return _cDate;
+    }
 
-	/**
-	 * @return Returns the info.
-	 */
-	public String getInfo()
-	{
-		return _info;
-	}
+    /**
+     * @return Returns the host.
+     */
+    public String getHost()
+    {
+        return _host;
+    }
 
-	public Date getLastModificationDate() throws PlatformException
-	{
-		throw new UnsupportedOperationException(
-				"Method getLastModificationDate() not implemented yet!");
-	}
+    public int getId()
+    {
+        return _solutionID;
+    }
 
-	/**
-	 * @return Returns the name.
-	 */
-	public String getName()
-	{
-		return _name;
-	}
+    /**
+     * @return Returns the info.
+     */
+    public String getInfo()
+    {
+        return _info;
+    }
 
-	/**
-	 * @return Returns the pass.
-	 */
-	public String getPasswd()
-	{
-		return _passwd;
-	}
+    public Date getLastModificationDate() throws PlatformException
+    {
+        return _lmDate;
+    }
 
-	/**
-	 * @return Returns the path.
-	 */
-	public String getPath()
-	{
-		return _path;
-	}
+    /**
+     * @return Returns the name.
+     */
+    public String getName()
+    {
+        return _name;
+    }
 
-	/**
-	 * @return Returns the user.
-	 */
-	public String getUser()
-	{
-		return _user;
-	}
+    /**
+     * @return Returns the pass.
+     */
+    public String getPasswd()
+    {
+        return _passwd;
+    }
 
-	/**
-	 * Initializes itself basing on given row from resultSet.
-	 * 
-	 * @param resultSet
-	 * @throws DBException 
-	 */
-	public void load(ResultSet resultSet) throws DBException
-	{
-		try {
-			_solutionID = resultSet.getInt("solution_id");
-			_name = resultSet.getString("solution_name");
-			_info = resultSet.getString("solution_info");
-			_host = resultSet.getString("hostname");
-			_path = resultSet.getString("db_path");
-			_user = resultSet.getString("username");
-			_passwd = resultSet.getString("passwd");
-		} catch (SQLException e) {
-			LOGGER.fatal("Exception was thrown!", e);
-			throw new DBException("Cannot load solution info!", e);
-		}
-	}
+    /**
+     * @return Returns the path.
+     */
+    public String getPath()
+    {
+        return _path;
+    }
 
-	/**
-	 * Saves itself in data base. If already exists in database performs update
-	 * otherwise inserts new record. Returns current id if update was executed
-	 * or new id in case of insert.
-	 * 
-	 * @return unique id
-	 */
-	public int save() throws DBException
-	{
-		SQLUpdate update = new SQLUpdate(TABLE_NAME);
-		if (_name != null) {
-			update.addValue("solution_name", _name);
-		}
-		if (_info != null) {
-			update.addValue("solution_info", _info);
-		}
-		if (_host != null) {
-			update.addValue("hostname", _host);
-		}
-		if (_path != null) {
-			update.addValue("db_path", _path);
-		}
-		if (_user != null) {
-			update.addValue("username", _user);
-		}
-		if (_passwd != null) {
-			update.addValue("passwd", _passwd);
-		}
-		update.addValue("lm_date", new Date(System.currentTimeMillis()));
-		try {
-			_solutionID = _dbManager.insertOrUpdate(update, "solution_id",
-					_solutionID, GEN_NAME);
-		} catch (SQLException e) {
-			LOGGER.fatal("Exception was thrown!", e);
-			throw new DBException("Cannot save solution info!", e);
-		}
-		return _solutionID;
-	}
+    /**
+     * @return Returns the user.
+     */
+    public String getUser()
+    {
+        return _user;
+    }
 
-	/**
-	 * @param host The host to set.
-	 */
-	public void setHost(String host)
-	{
-		_host = host;
-	}
+    /**
+     * Initializes itself basing on given row from resultSet.
+     * 
+     * @param resultSet
+     * @throws DBException 
+     */
+    public void load(ResultSet resultSet) throws DBException
+    {
+        try {
+            _solutionID = resultSet.getInt("solution_id");
+            _name = resultSet.getString("solution_name");
+            _info = resultSet.getString("solution_info");
+            _host = resultSet.getString("hostname");
+            _path = resultSet.getString("db_path");
+            _user = resultSet.getString("username");
+            _passwd = resultSet.getString("passwd");
+            _cDate = resultSet.getDate("c_date");
+            _lmDate = resultSet.getDate("lm_date");
+        } catch (SQLException e) {
+            LOGGER.fatal("Exception was thrown!", e);
+            throw new DBException("Cannot load solution info!", e);
+        }
+    }
 
-	/**
-	 * @param info The info to set.
-	 */
-	public void setInfo(String info)
-	{
-		_info = info;
-	}
+    /**
+     * Saves itself in data base. If already exists in database performs update
+     * otherwise inserts new record. Returns current id if update was executed
+     * or new id in case of insert.
+     * 
+     * @return unique id
+     */
+    public int save() throws DBException
+    {
+        SQLUpdate update = new SQLUpdate(TABLE_NAME);
+        if (_name != null) {
+            update.addValue("solution_name", _name);
+        }
+        if (_info != null) {
+            update.addValue("solution_info", _info);
+        }
+        if (_host != null) {
+            update.addValue("hostname", _host);
+        }
+        if (_path != null) {
+            update.addValue("db_path", _path);
+        }
+        if (_user != null) {
+            update.addValue("username", _user);
+        }
+        if (_passwd != null) {
+            update.addValue("passwd", _passwd);
+        }
+        if (_cDate == null) {
+            _cDate = new Date(System.currentTimeMillis());
+            update.addValue("c_date", _cDate);
+        }
 
-	/**
-	 * @param name The name to set.
-	 */
-	public void setName(String name)
-	{
-		_name = name;
-	}
+        update.addValue("lm_date", new Date(System.currentTimeMillis()));
+        try {
+            _solutionID = _dbManager.insertOrUpdate(update, "solution_id",
+                    _solutionID, GEN_NAME);
+        } catch (SQLException e) {
+            _cDate = null;
+            LOGGER.fatal("Exception was thrown!", e);
+            throw new DBException("Cannot save solution info!", e);
+        }
+        return _solutionID;
+    }
 
-	/**
-	 * @param pass The pass to set.
-	 */
-	public void setPasswd(String pass)
-	{
-		_passwd = pass;
-	}
+    /**
+     * @param host The host to set.
+     */
+    public void setHost(String host)
+    {
+        _host = host;
+    }
 
-	/**
-	 * @param path The path to set.
-	 */
-	public void setPath(String path)
-	{
-		_path = path;
-	}
+    /**
+     * @param info The info to set.
+     */
+    public void setInfo(String info)
+    {
+        _info = info;
+    }
 
-	/**
-	 * @param solutionID The solutionID to set.
-	 */
-	public void setSolutionID(int solutionID)
-	{
-		_solutionID = solutionID;
-	}
+    /**
+     * @param name The name to set.
+     */
+    public void setName(String name)
+    {
+        _name = name;
+    }
 
-	/**
-	 * @param user The user to set.
-	 */
-	public void setUser(String user)
-	{
-		_user = user;
-	}
+    /**
+     * @param pass The pass to set.
+     */
+    public void setPasswd(String pass)
+    {
+        _passwd = pass;
+    }
 
-	public String toString()
-	{
-		return "[" + _solutionID + ", " + _name + ", " + _info + ", " + _host
-				+ ", " + _path + ", " + _user + ", " + _passwd + "]";
-	}
+    /**
+     * @param path The path to set.
+     */
+    public void setPath(String path)
+    {
+        _path = path;
+    }
 
-	public static final String TABLE_NAME = "solutions";
-    
+    /**
+     * @param solutionID The solutionID to set.
+     */
+    public void setSolutionID(int solutionID)
+    {
+        _solutionID = solutionID;
+    }
+
+    /**
+     * @param user The user to set.
+     */
+    public void setUser(String user)
+    {
+        _user = user;
+    }
+
+    public String toString()
+    {
+        return "[" + _solutionID + ", " + _name + ", " + _info + ", " + _host
+                + ", " + _path + ", " + _user + ", " + _passwd + "]";
+    }
+
+    public static final String TABLE_NAME = "solutions";
+
     public static final String VIEW_NAME = "solutions_view";
 
-	private static final String GEN_NAME = "gen_solution_id";
+    private static final String GEN_NAME = "gen_solution_id";
 
-	private static final Logger LOGGER = Logger.getLogger(SolutionInfo.class);
+    private static final Logger LOGGER = Logger.getLogger(SolutionInfo.class);
 
 }
