@@ -27,6 +27,8 @@ import javax.swing.table.DefaultTableModel;
 
 import org.apache.log4j.Logger;
 
+import tablesorter.TableSorter;
+
 public final class DBDataTable extends JTable
 {
 
@@ -51,9 +53,8 @@ public final class DBDataTable extends JTable
     {
         setModel(new DBDataTableModel(data, columnNames));
         setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        // setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-        // setModel(new TableSorter(new DBDataTableModel(data, columnNames),
-        // getTableHeader()));
+        setModel(new TableSorter(new DBDataTableModel(data, columnNames),
+                getTableHeader()));
 
         // hiding the first column with the row ID
         //		getColumnModel().removeColumn(getColumnModel().getColumn(0));
