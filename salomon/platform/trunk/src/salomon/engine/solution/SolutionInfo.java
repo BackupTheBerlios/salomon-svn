@@ -265,6 +265,8 @@ public final class SolutionInfo implements IInfo
 	}
 
 	public static final String TABLE_NAME = "solutions";
+    
+    public static final String VIEW_NAME = "solutions_view";
 
 	private static final String GEN_NAME = "gen_solution_id";
 

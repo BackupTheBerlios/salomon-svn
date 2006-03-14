@@ -44,243 +44,244 @@ import salomon.platform.exception.PlatformException;
 public class PluginInfo implements IInfo, Serializable
 {
 
-	/**
-	 * 
-	 * @uml.property name="_dbManager"
-	 * @uml.associationEnd multiplicity="(0 1)"
-	 */
-	private DBManager _dbManager;
+    /**
+     * 
+     * @uml.property name="_dbManager"
+     * @uml.associationEnd multiplicity="(0 1)"
+     */
+    private DBManager _dbManager;
 
-	private String _info;
+    private String _info;
 
-	private String _input;
+    private String _input;
 
-	private URL _location;
+    private URL _location;
 
-	private String _name;
+    private String _name;
 
-	private String _output;
+    private String _output;
 
-	private int _pluginID;
+    private int _pluginID;
 
-	private String _version;
+    private String _version;
 
-	public PluginInfo(DBManager manager)
-	{
-		_dbManager = manager;
-	}
+    public PluginInfo(DBManager manager)
+    {
+        _dbManager = manager;
+    }
 
-	/**
-	 * @param info
-	 * @param name
-	 */
-	public PluginInfo(String name, String info)
-	{
-		_name = name;
-		_info = info;
-	}
+    /**
+     * @param info
+     * @param name
+     */
+    public PluginInfo(String name, String info)
+    {
+        _name = name;
+        _info = info;
+    }
 
-	/**
-	 * Removes itself from database.
-	 * After successsful finish object should be destroyed.
-	 * @throws DBException 
-	 */
-	public boolean delete() throws DBException
-	{
-		SQLDelete delete = new SQLDelete(TABLE_NAME);
-		delete.addCondition("plugin_id =", _pluginID);
-		try {
-			return (_dbManager.delete(delete) > 0);
-		} catch (SQLException e) {
-			LOGGER.fatal("Exception was thrown!", e);
-			throw new DBException("Cannor delete!", e);
-		}
-	}
+    /**
+     * Removes itself from database.
+     * After successsful finish object should be destroyed.
+     * @throws DBException 
+     */
+    public boolean delete() throws DBException
+    {
+        SQLDelete delete = new SQLDelete(TABLE_NAME);
+        delete.addCondition("plugin_id =", _pluginID);
+        try {
+            return (_dbManager.delete(delete) > 0);
+        } catch (SQLException e) {
+            LOGGER.fatal("Exception was thrown!", e);
+            throw new DBException("Cannor delete!", e);
+        }
+    }
 
-	public java.util.Date getCreationDate() throws PlatformException
-	{
-		throw new UnsupportedOperationException(
-				"Method getCreationDate() not implemented yet!");
-	}
+    public java.util.Date getCreationDate() throws PlatformException
+    {
+        throw new UnsupportedOperationException(
+                "Method getCreationDate() not implemented yet!");
+    }
 
-	public int getId()
-	{
-		return _pluginID;
-	}
+    public int getId()
+    {
+        return _pluginID;
+    }
 
-	/**
-	 * @return Returns the description.
-	 */
-	public String getInfo()
-	{
-		return _info;
-	}
+    /**
+     * @return Returns the description.
+     */
+    public String getInfo()
+    {
+        return _info;
+    }
 
-	/**
-	 * @return Returns the input.
-	 */
-	public String getInput()
-	{
-		return _input;
-	}
+    /**
+     * @return Returns the input.
+     */
+    public String getInput()
+    {
+        return _input;
+    }
 
-	public java.util.Date getLastModificationDate() throws PlatformException
-	{
-		throw new UnsupportedOperationException(
-				"Method getLastModificationDate() not implemented yet!");
-	}
+    public java.util.Date getLastModificationDate() throws PlatformException
+    {
+        throw new UnsupportedOperationException(
+                "Method getLastModificationDate() not implemented yet!");
+    }
 
-	/**
-	 * @return Returns the location.
-	 */
-	public URL getLocation()
-	{
-		return _location;
-	}
+    /**
+     * @return Returns the location.
+     */
+    public URL getLocation()
+    {
+        return _location;
+    }
 
-	/**
-	 * @return Returns the name.
-	 */
-	public String getName()
-	{
-		return _name;
-	}
+    /**
+     * @return Returns the name.
+     */
+    public String getName()
+    {
+        return _name;
+    }
 
-	/**
-	 * @return Returns the output.
-	 */
-	public String getOutput()
-	{
-		return _output;
-	}
+    /**
+     * @return Returns the output.
+     */
+    public String getOutput()
+    {
+        return _output;
+    }
 
-	/**
-	 * @return Returns the pluginID.
-	 */
-	public int getPluginID()
-	{
-		return _pluginID;
-	}
+    /**
+     * @return Returns the pluginID.
+     */
+    public int getPluginID()
+    {
+        return _pluginID;
+    }
 
-	/**
-	 * @return Returns the version.
-	 */
-	public String getVersion()
-	{
-		return _version;
-	}
+    /**
+     * @return Returns the version.
+     */
+    public String getVersion()
+    {
+        return _version;
+    }
 
-	/**
-	 * Initializes itself basing on given row from resultSet.
-	 * 
-	 * @param resultSet
-	 * @throws PlatformException 
-	 */
-	public void load(ResultSet resultSet) throws PlatformException
-	{
-		try {
-			_pluginID = resultSet.getInt("plugin_id");
-			_name = resultSet.getString("plugin_name");
-			_location = new URL(resultSet.getString("location"));
-			_info = resultSet.getString("plugin_info");
-		} catch (SQLException e) {
-			LOGGER.fatal("Cannot load result!!", e);
-			throw new DBException("Cannot load result!", e);
-		} catch (MalformedURLException e) {
-			LOGGER.fatal("Cannot load result!!", e);
-			throw new PlatformException("Cannot load result!", e);
-		}
-	}
+    /**
+     * Initializes itself basing on given row from resultSet.
+     * 
+     * @param resultSet
+     * @throws PlatformException 
+     */
+    public void load(ResultSet resultSet) throws PlatformException
+    {
+        try {
+            _pluginID = resultSet.getInt("plugin_id");
+            _name = resultSet.getString("plugin_name");
+            _location = new URL(resultSet.getString("location"));
+            _info = resultSet.getString("plugin_info");
+        } catch (SQLException e) {
+            LOGGER.fatal("Cannot load result!!", e);
+            throw new DBException("Cannot load result!", e);
+        } catch (MalformedURLException e) {
+            LOGGER.fatal("Cannot load result!!", e);
+            throw new PlatformException("Cannot load result!", e);
+        }
+    }
 
-	/**
-	 * Saves itself in data base. If already exists in database performs update
-	 * otherwise inserts new record. Returns current id if update was executed
-	 * or new id in case of insert.
-	 * 
-	 * @return unique id
-	 * @throws DBException 
-	 */
-	public int save() throws DBException
-	{
-		SQLUpdate update = new SQLUpdate(TABLE_NAME);
-		update.addValue("plugin_name", _name);
-		update.addValue("location", _location.toString());
-		if (_info != null) {
-			update.addValue("plugin_info", _info);
-		}
-		update.addValue("lm_date", new Date(System.currentTimeMillis()));
-		try {
-			_pluginID = _dbManager.insertOrUpdate(update, "plugin_id",
-					_pluginID, GEN_NAME);
-		} catch (SQLException e) {
-			LOGGER.fatal("Cannot save! Exception was thrown!", e);
-			throw new DBException("Cannot save!", e);
-		}
-		return _pluginID;
-	}
+    /**
+     * Saves itself in data base. If already exists in database performs update
+     * otherwise inserts new record. Returns current id if update was executed
+     * or new id in case of insert.
+     * 
+     * @return unique id
+     * @throws DBException 
+     */
+    public int save() throws DBException
+    {
+        SQLUpdate update = new SQLUpdate(TABLE_NAME);
+        update.addValue("plugin_name", _name);
+        update.addValue("location", _location.toString());
+        if (_info != null) {
+            update.addValue("plugin_info", _info);
+        }
+        update.addValue("lm_date", new Date(System.currentTimeMillis()));
+        try {
+            _pluginID = _dbManager.insertOrUpdate(update, "plugin_id",
+                    _pluginID, GEN_NAME);
+        } catch (SQLException e) {
+            LOGGER.fatal("Cannot save! Exception was thrown!", e);
+            throw new DBException("Cannot save!", e);
+        }
+        return _pluginID;
+    }
 
-	public void setInfo(String info) throws PlatformException
-	{
-		_info = info;
-	}
+    public void setInfo(String info) throws PlatformException
+    {
+        _info = info;
+    }
 
-	/**
-	 * @param input The input to set.
-	 */
-	public void setInput(String input)
-	{
-		_input = input;
-	}
+    /**
+     * @param input The input to set.
+     */
+    public void setInput(String input)
+    {
+        _input = input;
+    }
 
-	/**
-	 * @param location The location to set.
-	 */
-	public void setLocation(URL location)
-	{
-		_location = location;
-	}
+    /**
+     * @param location The location to set.
+     */
+    public void setLocation(URL location)
+    {
+        _location = location;
+    }
 
-	/**
-	 * @param name The name to set.
-	 */
-	public void setName(String name)
-	{
-		_name = name;
-	}
+    /**
+     * @param name The name to set.
+     */
+    public void setName(String name)
+    {
+        _name = name;
+    }
 
-	/**
-	 * @param output The output to set.
-	 */
-	public void setOutput(String output)
-	{
-		_output = output;
-	}
+    /**
+     * @param output The output to set.
+     */
+    public void setOutput(String output)
+    {
+        _output = output;
+    }
 
-	/**
-	 * @param pluginID The pluginID to set.
-	 */
-	public void setPluginID(int pluginID)
-	{
-		_pluginID = pluginID;
-	}
+    /**
+     * @param pluginID The pluginID to set.
+     */
+    public void setPluginID(int pluginID)
+    {
+        _pluginID = pluginID;
+    }
 
-	/**
-	 * @param version The version to set.
-	 */
-	public void setVersion(String version)
-	{
-		_version = version;
-	}
+    /**
+     * @param version The version to set.
+     */
+    public void setVersion(String version)
+    {
+        _version = version;
+    }
 
-	public String toString()
-	{
-		return "" + _pluginID + "," + _name + "," + _location + "," + _info;
-	}
+    public String toString()
+    {
+        return "" + _pluginID + "," + _name + "," + _location + "," + _info;
+    }
 
-	public static final String TABLE_NAME = "plugins";
+    public static final String TABLE_NAME = "plugins";
 
-	private static final String GEN_NAME = "gen_plugin_id";
+    public static final String VIEW_NAME = "plugins_view";
 
-	private static final Logger LOGGER = Logger.getLogger(PluginInfo.class);
+    private static final String GEN_NAME = "gen_plugin_id";
 
-} // end PluginInfo
+    private static final Logger LOGGER = Logger.getLogger(PluginInfo.class);
+}

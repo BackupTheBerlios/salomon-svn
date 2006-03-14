@@ -33,19 +33,7 @@ public class TaskViewer extends AbstractSearchSpread {
 
 	@Override
 	public void initColumns() {
-		_select.addTable(TaskInfo.TABLE_NAME);
-		addColumn("ProjectId", "project_id");
-		addColumn("PluginId", "plugin_id");
-		addColumn("TaskId", "task_id");
-		addColumn("TaskNr", "task_nr");
-		addColumn("Name", "task_name");
-		addColumn("Info", "task_info");
-		addColumn("PluginSettings", "plugin_settings");
-		addColumn("PluginResult", "plugin_result");
-		addColumn("StartTime", "start_time");
-		addColumn("StopTime", "stop_time");
-		addColumn("Status", "status");
-		addColumn("LmDate", "lm_date");
+		_select.addTable(TaskInfo.VIEW_NAME);
 	}
 
 	@Override

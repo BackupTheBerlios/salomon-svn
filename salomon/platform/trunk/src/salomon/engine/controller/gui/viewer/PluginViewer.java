@@ -33,12 +33,7 @@ public class PluginViewer extends AbstractSearchSpread {
 
 	@Override
 	public void initColumns() {
-		_select.addTable(PluginInfo.TABLE_NAME);
-		addColumn("Id", "plugin_id");
-		addColumn("Name", "plugin_name");
-		addColumn("Info", "plugin_info");
-		addColumn("Location", "location");
-		addColumn("", "lm_date");
+		_select.addTable(PluginInfo.VIEW_NAME);
 	}
 
 	@Override

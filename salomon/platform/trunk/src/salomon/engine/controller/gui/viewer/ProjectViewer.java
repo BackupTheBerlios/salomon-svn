@@ -35,12 +35,7 @@ public final class ProjectViewer extends AbstractSearchSpread {
 
 	@Override
 	public void initColumns() {
-		_select.addTable(ProjectInfo.TABLE_NAME);
-		addColumn("ProjectId", "project_id");
-		addColumn("SolutionId", "solution_id");
-		addColumn("Name", "project_name");
-		addColumn("Info", "project_info");
-		addColumn("LmDate", "lm_date");
+		_select.addTable(ProjectInfo.VIEW_NAME);
 	}
 
 	@Override

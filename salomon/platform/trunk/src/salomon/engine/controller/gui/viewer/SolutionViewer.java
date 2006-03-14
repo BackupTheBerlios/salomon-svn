@@ -34,15 +34,7 @@ public class SolutionViewer extends AbstractSearchSpread {
 
 	@Override
 	public void initColumns() {
-		_select.addTable(SolutionInfo.TABLE_NAME);
-		addColumn("SolutionId", "SOLUTION_ID");
-		addColumn("Name", "SOLUTION_NAME");
-		addColumn("Info", "SOLUTION_INFO");
-		addColumn("Hostname", "HOSTNAME");
-		addColumn("DbPath", "DB_PATH");
-		addColumn("UserName", "USERNAME");
-		addColumn("Passwd", "PASSWD");
-		addColumn("LmDate", "LM_DATE");
+		_select.addTable(SolutionInfo.VIEW_NAME);
 	}
 
 	@Override
