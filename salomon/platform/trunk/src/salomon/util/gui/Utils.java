@@ -37,6 +37,7 @@ import javax.swing.JTable;
 import org.apache.log4j.Logger;
 
 import salomon.engine.Messages;
+import salomon.engine.platform.data.DBTable;
 
 /**
  * Class supply some useful methods used in GUI. All public methods are static
@@ -115,8 +116,7 @@ public final class Utils
 
 		LOGGER.info("rowCount " + rowCount);
 
-		JTable table = new JTable(data, columnNames);
-		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		DBDataTable table = new DBDataTable(data, columnNames);
 		return table;
 	}
 

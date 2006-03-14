@@ -24,25 +24,25 @@ package salomon.engine.controller.gui.viewer;
 import salomon.engine.database.DBManager;
 import salomon.engine.plugin.PluginInfo;
 
-public class PluginViewer extends ObjectViewer
-{
+public class PluginViewer extends AbstractSearchSpread {
 	private static final long serialVersionUID = 1L;
 
-	public PluginViewer(DBManager dbManager)
-	{
+	public PluginViewer(DBManager dbManager) {
 		super(dbManager);
 	}
 
 	@Override
-	public void initList()
-	{
+	public void initColumns() {
 		_select.addTable(PluginInfo.TABLE_NAME);
 		addColumn("Id", "plugin_id");
 		addColumn("Name", "plugin_name");
 		addColumn("Info", "plugin_info");
 		addColumn("Location", "location");
 		addColumn("", "lm_date");
+	}
 
+	@Override
+	public void initFilters() {
 		addFilteredField("id", "solution_id");
 		addFilteredField("name", "solution_name");
 		addFilteredField("info", "solution_info");

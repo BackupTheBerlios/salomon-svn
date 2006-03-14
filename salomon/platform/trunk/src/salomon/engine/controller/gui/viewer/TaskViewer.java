@@ -24,18 +24,15 @@ package salomon.engine.controller.gui.viewer;
 import salomon.engine.database.DBManager;
 import salomon.engine.task.TaskInfo;
 
-public class TaskViewer extends ObjectViewer
-{
+public class TaskViewer extends AbstractSearchSpread {
 	private static final long serialVersionUID = 1L;
 
-	public TaskViewer(DBManager dbManager)
-	{
+	public TaskViewer(DBManager dbManager) {
 		super(dbManager);
 	}
 
 	@Override
-	public void initList()
-	{
+	public void initColumns() {
 		_select.addTable(TaskInfo.TABLE_NAME);
 		addColumn("ProjectId", "project_id");
 		addColumn("PluginId", "plugin_id");
@@ -49,7 +46,10 @@ public class TaskViewer extends ObjectViewer
 		addColumn("StopTime", "stop_time");
 		addColumn("Status", "status");
 		addColumn("LmDate", "lm_date");
+	}
 
+	@Override
+	public void initFilters() {
 		addFilteredField("Task id", "task_id");
 		addFilteredField("ProjectId", "project_id");
 		addFilteredField("PluginId", "plugin_id");

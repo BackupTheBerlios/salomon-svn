@@ -24,18 +24,16 @@ package salomon.engine.controller.gui.viewer;
 import salomon.engine.database.DBManager;
 import salomon.engine.solution.SolutionInfo;
 
-public class SolutionViewer extends ObjectViewer
-{
+public class SolutionViewer extends AbstractSearchSpread {
+	
 	private static final long serialVersionUID = 1L;
 
-	public SolutionViewer(DBManager dbManager)
-	{
+	public SolutionViewer(DBManager dbManager) {
 		super(dbManager);
 	}
 
 	@Override
-	public void initList()
-	{
+	public void initColumns() {
 		_select.addTable(SolutionInfo.TABLE_NAME);
 		addColumn("SolutionId", "SOLUTION_ID");
 		addColumn("Name", "SOLUTION_NAME");
@@ -45,10 +43,14 @@ public class SolutionViewer extends ObjectViewer
 		addColumn("UserName", "USERNAME");
 		addColumn("Passwd", "PASSWD");
 		addColumn("LmDate", "LM_DATE");
+	}
 
+	@Override
+	public void initFilters() {
 		addFilteredField("Id", "SOLUTION_ID");
 		addFilteredField("Name", "SOLUTION_NAME");
 		addFilteredField("Info", "SOLUTION_INFO");
 		addFilteredField("Date", "LM_DATE");
 	}
+
 }

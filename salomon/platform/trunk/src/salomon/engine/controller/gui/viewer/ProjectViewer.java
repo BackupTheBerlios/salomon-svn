@@ -27,24 +27,24 @@ import salomon.engine.project.ProjectInfo;
 /**
  * 
  */
-public final class ProjectViewer extends ObjectViewer
-{
+public final class ProjectViewer extends AbstractSearchSpread {
 
-	public ProjectViewer(DBManager dbManager)
-	{
+	public ProjectViewer(DBManager dbManager) {
 		super(dbManager);
 	}
 
 	@Override
-	public void initList()
-	{
+	public void initColumns() {
 		_select.addTable(ProjectInfo.TABLE_NAME);
 		addColumn("ProjectId", "project_id");
 		addColumn("SolutionId", "solution_id");
 		addColumn("Name", "project_name");
 		addColumn("Info", "project_info");
 		addColumn("LmDate", "lm_date");
+	}
 
+	@Override
+	public void initFilters() {
 		addFilteredField("Id", "project_id");
 		addFilteredField("Name", "project_name");
 		addFilteredField("Info", "project_info");
