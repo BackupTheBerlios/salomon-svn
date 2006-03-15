@@ -125,8 +125,8 @@ public class DataSetTest extends TestCase
 
 		IDataSet dataSet = mainDataSet.createSubset(condition);
 
-		((DataSetInfo) dataSet.getInfo()).setName(dataSetName);
-		dataSet.getInfo().save();
+		((DataSetInfo) ((DataSet) dataSet).getInfo()).setName(dataSetName);
+		((DataSet) dataSet).getInfo().save();
 
 		_manager.commit();
 	}
@@ -151,7 +151,7 @@ public class DataSetTest extends TestCase
 					new Integer(4));
 
 			IDataSet dataSet = mainDataSet.createSubset(conditions);
-			((DataSetInfo) dataSet.getInfo()).setName("test select");
+			((DataSetInfo) ((DataSet) dataSet).getInfo()).setName("test select");
 			_dataSetManager.add(dataSet);
 		}
 
@@ -305,7 +305,7 @@ public class DataSetTest extends TestCase
 			conditions[1] = _cond2ds1;
 			conditions[2] = _cond3ds1;
 			// column type is not important
-			_dataSet1 = mainDataSet.createSubset(conditions);
+			_dataSet1 = (DataSet) mainDataSet.createSubset(conditions);
 			((DataSetInfo) _dataSet1.getInfo()).setName(dataSetName);
 			_dataSetManager.add(_dataSet1);
 			_manager.commit();
@@ -313,7 +313,7 @@ public class DataSetTest extends TestCase
 			ResultSet resultSet = _manager.select(select);
 			assertTrue(resultSet.next());
 			final int dataSetID = resultSet.getInt("dataset_id");
-			_dataSet1 = _dataSetManager.getDataSet(new IUniqueId() {
+			_dataSet1 = (DataSet) _dataSetManager.getDataSet(new IUniqueId() {
 				public int getId()
 				{
 					return dataSetID;
@@ -336,14 +336,14 @@ public class DataSetTest extends TestCase
 			conditions[1] = _cond2ds2;
 			conditions[2] = _cond3ds2;
 			// column type is not important
-			_dataSet2 = mainDataSet.createSubset(conditions);
+			_dataSet2 = (DataSet) mainDataSet.createSubset(conditions);
 			((DataSetInfo) _dataSet2.getInfo()).setName(dataSetName);
 			_dataSetManager.add(_dataSet2);
 		} else {
 			ResultSet resultSet = _manager.select(select);
 			assertTrue(resultSet.next());
 			final int dataSetID = resultSet.getInt("dataset_id");
-			_dataSet2 = _dataSetManager.getDataSet(new IUniqueId() {
+			_dataSet2 = (DataSet) _dataSetManager.getDataSet(new IUniqueId() {
 				public int getId()
 				{
 					return dataSetID;
@@ -364,9 +364,9 @@ public class DataSetTest extends TestCase
 
 	private static ICondition _cond3ds2;
 
-	private static IDataSet _dataSet1;
+	private static DataSet _dataSet1;
 
-	private static IDataSet _dataSet2;
+	private static DataSet _dataSet2;
 	
 	private static IMetaData _metaData;
 

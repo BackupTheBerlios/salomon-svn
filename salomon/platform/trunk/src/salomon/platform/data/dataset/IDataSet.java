@@ -36,7 +36,7 @@ public interface IDataSet
 	 * 
 	 * @return the data set info
 	 */
-	IInfo getInfo() throws PlatformException;
+//	IInfo getInfo() throws PlatformException;
 
 	String getName() throws PlatformException;
 

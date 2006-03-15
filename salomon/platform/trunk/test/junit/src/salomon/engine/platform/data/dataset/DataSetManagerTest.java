@@ -56,7 +56,7 @@ public class DataSetManagerTest extends TestCase
 		IDataSet[] dataSets;
 		dataSets = _dataSetManager.getAll();
 		for (IDataSet dataSet : dataSets) {
-			LOGGER.info(dataSet.getInfo());
+			LOGGER.info(((DataSet) dataSet).getInfo());
 		}
 	}
 
@@ -78,7 +78,7 @@ public class DataSetManagerTest extends TestCase
 		conditions[2] = _dataSetManager.createEqualsCondition(column,
 				"Jura");
 		IDataSet dataSet = mainDataSet.createSubset(conditions);
-		((DataSetInfo) dataSet.getInfo()).setName("test add" + System.currentTimeMillis());
+		((DataSetInfo) ((DataSet) dataSet).getInfo()).setName("test add" + System.currentTimeMillis());
 		_dataSetManager.add(dataSet);		
 	}
 	
@@ -95,7 +95,7 @@ public class DataSetManagerTest extends TestCase
 		conditions[0] =_dataSetManager.createEqualsCondition(column,
 				new Integer(10));
 		IDataSet dataSet = mainDataSet.createSubset(conditions);
-		((DataSetInfo) dataSet.getInfo()).setName("test remove");
+		((DataSetInfo) ((DataSet) dataSet).getInfo()).setName("test remove");
 		_dataSetManager.add(dataSet);
 		_dataSetManager.remove(dataSet);
 	}
@@ -118,9 +118,9 @@ public class DataSetManagerTest extends TestCase
 		conditions[2] = _dataSetManager.createEqualsCondition(column,
 				"Jura");
 		IDataSet dataSet = mainDataSet.createSubset(conditions);
-		((DataSetInfo) dataSet.getInfo()).setName("second");
+		((DataSetInfo) ((DataSet) dataSet).getInfo()).setName("second");
 		
-		final int dataSetID = dataSet.getInfo().save();		
+		final int dataSetID = ((DataSet) dataSet).getInfo().save();		
 		
 		IDataSet loadedDataSet = _dataSetManager.getDataSet(new IUniqueId() {
 			public int getId()
@@ -130,11 +130,11 @@ public class DataSetManagerTest extends TestCase
 
 		});
 		assertNotNull(loadedDataSet);
-		LOGGER.info(loadedDataSet.getInfo());
+		LOGGER.info(((DataSet) loadedDataSet).getInfo());
 		
 		loadedDataSet = _dataSetManager.getDataSet("second");
 		assertNotNull(loadedDataSet);
-		LOGGER.info(loadedDataSet.getInfo());
+		LOGGER.info(((DataSet) loadedDataSet).getInfo());
 		_dataSetManager.remove(loadedDataSet);		
 	}
 
