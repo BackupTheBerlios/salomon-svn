@@ -30,7 +30,7 @@ import salomon.platform.exception.PlatformException;
 /**
  * 
  */
-public interface IInfo extends IUniqueId
+public interface IInfo
 {
 	int getId();
 

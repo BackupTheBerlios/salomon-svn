@@ -21,7 +21,6 @@
 
 package salomon.engine.solution;
 
-import salomon.platform.IUniqueId;
 import salomon.platform.exception.PlatformException;
 
 /**
@@ -31,46 +30,46 @@ import salomon.platform.exception.PlatformException;
  */
 public interface ISolutionManager
 {
-	/**
-	 * Stores the solution in the database.
-	 * @see #createSolution()
-	 * 
-	 * @param solution The solution
-	 * @throws PlatformException
-	 */
-	void addSolution(ISolution solution) throws PlatformException;
+    /**
+     * Stores the solution in the database.
+     * @see #createSolution()
+     * 
+     * @param solution The solution
+     * @throws PlatformException
+     */
+    void addSolution(ISolution solution) throws PlatformException;
 
-	/**
-	 * Creates an empty solution, but doesn't add it to database.
-	 * Use <code>addSolution</code> method to store this solution in the database. 
-	 * @see #addSolution(ISolution)
-	 * @return The empty solution
-	 * @throws PlatformException
-	 */
-	ISolution createSolution() throws PlatformException;
+    /**
+     * Creates an empty solution, but doesn't add it to database.
+     * Use <code>addSolution</code> method to store this solution in the database. 
+     * @see #addSolution(ISolution)
+     * @return The empty solution
+     * @throws PlatformException
+     */
+    ISolution createSolution() throws PlatformException;
 
-	/**
-	 * Returns current solution.
-	 * 
-	 * @return
-	 * @throws PlatformException
-	 */
-	ISolution getCurrentSolution() throws PlatformException;
+    /**
+     * Returns current solution.
+     * 
+     * @return
+     * @throws PlatformException
+     */
+    ISolution getCurrentSolution() throws PlatformException;
 
-	/**
-	 * Returns solution with given identifier.
-	 * 
-	 * @param id identifier of solution
-	 * @return The solution
-	 * @throws PlatformException
-	 */
-	ISolution getSolution(IUniqueId id) throws PlatformException;
+    /**
+     * Returns solution with given identifier.
+     * 
+     * @param id identifier of solution
+     * @return The solution
+     * @throws PlatformException
+     */
+    ISolution getSolution(int id) throws PlatformException;
 
-	/**
-	 * Returns all solutions.
-	 * 
-	 * @return The array of all solutions
-	 * @throws PlatformException
-	 */
-	ISolution[] getSolutions() throws PlatformException;
+    /**
+     * Returns all solutions.
+     * 
+     * @return The array of all solutions
+     * @throws PlatformException
+     */
+    ISolution[] getSolutions() throws PlatformException;
 }

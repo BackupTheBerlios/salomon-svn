@@ -25,7 +25,6 @@ import salomon.engine.project.IProject;
 import salomon.engine.project.IProjectManager;
 import salomon.engine.solution.ISolution;
 
-import salomon.platform.IUniqueId;
 import salomon.platform.exception.PlatformException;
 
 /**
@@ -35,95 +34,95 @@ import salomon.platform.exception.PlatformException;
 final class ProjectManagerHolder implements IProjectManager
 {
 
-	/**
-	 * 
-	 * @uml.property name="_currentProjectManager"
-	 * @uml.associationEnd multiplicity="(0 1)"
-	 */
-	private IProjectManager _currentProjectManager;
+    /**
+     * 
+     * @uml.property name="_currentProjectManager"
+     * @uml.associationEnd multiplicity="(0 1)"
+     */
+    private IProjectManager _currentProjectManager;
 
-	/**
-	 * 
-	 */
-	ProjectManagerHolder(IProjectManager projectManager)
-	{
-		_currentProjectManager = projectManager;
-	}
+    /**
+     * 
+     */
+    ProjectManagerHolder(IProjectManager projectManager)
+    {
+        _currentProjectManager = projectManager;
+    }
 
-	/**
-	 * @see IProjectManager#addProject(IProject)
-	 */
-	public void addProject(IProject project) throws PlatformException
-	{
-		_currentProjectManager.addProject(project);
-	}
+    /**
+     * @see IProjectManager#addProject(IProject)
+     */
+    public void addProject(IProject project) throws PlatformException
+    {
+        _currentProjectManager.addProject(project);
+    }
 
-	/**
-	 * @see IProjectManager#createProject()
-	 */
-	public IProject createProject() throws PlatformException
-	{
-		return _currentProjectManager.createProject();
-	}
+    /**
+     * @see IProjectManager#createProject()
+     */
+    public IProject createProject() throws PlatformException
+    {
+        return _currentProjectManager.createProject();
+    }
 
-	/**
-	 * @see salomon.engine.project.IProjectManager#getCurrentProject()
-	 */
-	public IProject getCurrentProject() throws PlatformException
-	{
-		return _currentProjectManager.getCurrentProject();
-	}
+    /**
+     * @see salomon.engine.project.IProjectManager#getCurrentProject()
+     */
+    public IProject getCurrentProject() throws PlatformException
+    {
+        return _currentProjectManager.getCurrentProject();
+    }
 
-	/**
-	 * @see IProjectManager#getProject(int)
-	 */
-	public IProject getProject(IUniqueId projectID) throws PlatformException
-	{
-		return _currentProjectManager.getProject(projectID);
-	}
+    /**
+     * @see IProjectManager#getProject(int)
+     */
+    public IProject getProject(int projectID) throws PlatformException
+    {
+        return _currentProjectManager.getProject(projectID);
+    }
 
-	/**
-	 * @see IProjectManager#getProjects()
-	 */
-	public IProject[] getProjects() throws PlatformException
-	{
-		return _currentProjectManager.getProjects();
-	}
+    /**
+     * @see IProjectManager#getProjects()
+     */
+    public IProject[] getProjects() throws PlatformException
+    {
+        return _currentProjectManager.getProjects();
+    }
 
-	/**
-	 * @see IProjectManager#saveProject()
-	 */
-	public void saveProject() throws PlatformException
-	{
-		_currentProjectManager.saveProject();
-	}
+    public ISolution getSolution() throws PlatformException
+    {
+        return _currentProjectManager.getSolution();
+    }
 
-	/**
-	 * @pre currentProjectManager != null
-	 * @post $none
-	 */
-	void setCurrent(IProjectManager currentProjectManager)
-	{
-		_currentProjectManager = currentProjectManager;
-	}
+    public boolean removeAll() throws PlatformException
+    {
+        return _currentProjectManager.removeAll();
+    }
 
-	public ISolution getSolution() throws PlatformException
-	{
-		return _currentProjectManager.getSolution();
-	}
+    /**
+     * @pre currentProjectManager != null
+     * @post $none
+     */
+    public boolean removeProject(IProject project) throws PlatformException
+    {
+        return _currentProjectManager.removeProject(project);
+    }
 
-	/**
-	 * @pre currentProjectManager != null
-	 * @post $none
-	 */
-	public boolean removeProject(IProject project) throws PlatformException
-	{
-		return _currentProjectManager.removeProject(project);
-	}
+    /**
+     * @see IProjectManager#saveProject()
+     */
+    public void saveProject() throws PlatformException
+    {
+        _currentProjectManager.saveProject();
+    }
 
-	public boolean removeAll() throws PlatformException
-	{
-		return _currentProjectManager.removeAll();
-	}
+    /**
+     * @pre currentProjectManager != null
+     * @post $none
+     */
+    void setCurrent(IProjectManager currentProjectManager)
+    {
+        _currentProjectManager = currentProjectManager;
+    }
 
 }

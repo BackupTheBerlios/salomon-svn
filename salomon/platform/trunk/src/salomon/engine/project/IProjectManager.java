@@ -23,7 +23,6 @@ package salomon.engine.project;
 
 import salomon.engine.solution.ISolution;
 
-import salomon.platform.IUniqueId;
 import salomon.platform.exception.PlatformException;
 
 /**
@@ -52,7 +51,7 @@ public interface IProjectManager
 	 * @param projectID
 	 * @throws PlatformException
 	 */
-	IProject getProject(IUniqueId projectID) throws PlatformException;
+	IProject getProject(int projectID) throws PlatformException;
 
 	/**
 	 * Returns collection of available projects.

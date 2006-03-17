@@ -24,7 +24,6 @@ package salomon.engine.holder;
 import salomon.engine.plugin.ILocalPlugin;
 import salomon.engine.plugin.IPluginManager;
 
-import salomon.platform.IUniqueId;
 import salomon.platform.exception.PlatformException;
 
 import salomon.plugin.IPlugin;
@@ -36,83 +35,83 @@ import salomon.plugin.IPlugin;
 final class PluginManagerHolder implements IPluginManager
 {
 
-	/**
-	 * 
-	 * @uml.property name="_currentPluginManager"
-	 * @uml.associationEnd multiplicity="(0 1)"
-	 */
-	private IPluginManager _currentPluginManager;
+    /**
+     * 
+     * @uml.property name="_currentPluginManager"
+     * @uml.associationEnd multiplicity="(0 1)"
+     */
+    private IPluginManager _currentPluginManager;
 
-	PluginManagerHolder(IPluginManager pluginManager)
-	{
-		_currentPluginManager = pluginManager;
-	}
+    PluginManagerHolder(IPluginManager pluginManager)
+    {
+        _currentPluginManager = pluginManager;
+    }
 
-	/**
-	 * @throws PlatformException 
-	 * @see salomon.engine.plugin.IPluginManager#addPlugin(salomon.plugin.IPlugin)
-	 */
-	public void addPlugin(ILocalPlugin plugin) throws PlatformException
-	{
-		_currentPluginManager.addPlugin(plugin);
-	}
+    /**
+     * @throws PlatformException 
+     * @see salomon.engine.plugin.IPluginManager#addPlugin(salomon.plugin.IPlugin)
+     */
+    public void addPlugin(ILocalPlugin plugin) throws PlatformException
+    {
+        _currentPluginManager.addPlugin(plugin);
+    }
 
-	/**
-	 * @throws PlatformException 
-	 * @see salomon.engine.plugin.IPluginManager#createPlugin()
-	 */
-	public ILocalPlugin createPlugin() throws PlatformException
-	{
-		return _currentPluginManager.createPlugin();
-	}
+    public void clearPluginList() throws PlatformException
+    {
+        _currentPluginManager.clearPluginList();
+    }
 
-	/**
-	 * @see IPluginManager#getPlugins()
-	 */
-	public ILocalPlugin[] getPlugins() throws PlatformException
-	{
-		return _currentPluginManager.getPlugins();
-	}
+    /**
+     * @throws PlatformException 
+     * @see salomon.engine.plugin.IPluginManager#createPlugin()
+     */
+    public ILocalPlugin createPlugin() throws PlatformException
+    {
+        return _currentPluginManager.createPlugin();
+    }
 
-	/**
-	 * @see IPluginManager#removePlugin(IPlugin)
-	 */
-	public boolean removePlugin(ILocalPlugin description)
-			throws PlatformException
-	{
-		return _currentPluginManager.removePlugin(description);
-	}
+    public ILocalPlugin getPlugin(int id) throws PlatformException
+    {
+        return _currentPluginManager.getPlugin(id);
+    }
 
-	/**
-	 * @see IPluginManager#savePlugin(IPlugin)
-	 */
-	public boolean savePlugin(ILocalPlugin plugin) throws PlatformException
-	{
-		return _currentPluginManager.savePlugin(plugin);
-	}
+    /**
+     * @see IPluginManager#getPlugins()
+     */
+    public ILocalPlugin[] getPlugins() throws PlatformException
+    {
+        return _currentPluginManager.getPlugins();
+    }
 
-	/**
-	 * @pre pluginManager != null
-	 * @post $none
-	 */
-	void setCurrent(IPluginManager pluginManager)
-	{
-		_currentPluginManager = pluginManager;
-	}
+    public boolean removeAll() throws PlatformException
+    {
+        return _currentPluginManager.removeAll();
+    }
 
-	public ILocalPlugin getPlugin(IUniqueId id) throws PlatformException
-	{
-		return _currentPluginManager.getPlugin(id);
-	}
+    /**
+     * @see IPluginManager#removePlugin(IPlugin)
+     */
+    public boolean removePlugin(ILocalPlugin description)
+            throws PlatformException
+    {
+        return _currentPluginManager.removePlugin(description);
+    }
 
-	public boolean removeAll() throws PlatformException
-	{
-		return _currentPluginManager.removeAll();
-	}
+    /**
+     * @see IPluginManager#savePlugin(IPlugin)
+     */
+    public boolean savePlugin(ILocalPlugin plugin) throws PlatformException
+    {
+        return _currentPluginManager.savePlugin(plugin);
+    }
 
-	public void clearPluginList() throws PlatformException
-	{
-		_currentPluginManager.clearPluginList();
-	}
+    /**
+     * @pre pluginManager != null
+     * @post $none
+     */
+    void setCurrent(IPluginManager pluginManager)
+    {
+        _currentPluginManager = pluginManager;
+    }
 
 }

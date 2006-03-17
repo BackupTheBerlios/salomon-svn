@@ -60,7 +60,6 @@ import salomon.engine.task.TaskManager;
 import salomon.util.gui.Utils;
 
 import salomon.platform.IDataEngine;
-import salomon.platform.IUniqueId;
 import salomon.platform.exception.PlatformException;
 
 import salomon.plugin.IPlugin;
@@ -422,12 +421,7 @@ public final class GraphTaskManagerGUI
                 _cmbPlugins.addItem(plugin);
             }
         } else {
-            localPlugin = (LocalPlugin) _pluginManager.getPlugin(new IUniqueId() {
-                public int getId()
-                {
-                    return pluginId;
-                }
-            });
+            localPlugin = (LocalPlugin) _pluginManager.getPlugin(pluginId);
             _cmbPlugins.addItem(localPlugin);
             _cmbPlugins.setEditable(false);
         }

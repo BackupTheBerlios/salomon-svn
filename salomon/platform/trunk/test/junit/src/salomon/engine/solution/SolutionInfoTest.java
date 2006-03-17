@@ -27,23 +27,14 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
 import salomon.engine.database.DBManager;
+
 import salomon.engine.platform.ManagerEngine;
-import salomon.platform.IUniqueId;
 
 public class SolutionInfoTest extends TestCase
 {
     private DBManager _manager;
 
     private ISolutionManager _solutionManager;
-
-    protected void setUp() throws Exception
-    {
-        PropertyConfigurator.configure("log.conf"); //$NON-NLS-1$   
-
-        ManagerEngine managerEngine = new ManagerEngine();
-        _manager = managerEngine.getDbManager();
-        _solutionManager = managerEngine.getSolutionManager();
-    }
 
     public void testAll() throws Exception
     {
@@ -61,17 +52,21 @@ public class SolutionInfoTest extends TestCase
         final int solutionID = info.save();
 
         // loading created plugin
-        ISolution solution = _solutionManager.getSolution(new IUniqueId() {
-            public int getId()
-            {
-                return solutionID;
-            }
-        });
+        ISolution solution = _solutionManager.getSolution(solutionID);
         assertNotNull(solution);
 
         // deleting 
         assertTrue(solution.getInfo().delete());
         _manager.rollback();
+    }
+
+    protected void setUp() throws Exception
+    {
+        PropertyConfigurator.configure("log.conf"); //$NON-NLS-1$   
+
+        ManagerEngine managerEngine = new ManagerEngine();
+        _manager = managerEngine.getDbManager();
+        _solutionManager = managerEngine.getSolutionManager();
     }
 
     private static Logger LOGGER = Logger.getLogger(SolutionInfoTest.class);

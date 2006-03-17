@@ -21,7 +21,6 @@
 
 package salomon.engine.plugin;
 
-import salomon.platform.IUniqueId;
 import salomon.platform.exception.PlatformException;
 
 /**
@@ -29,42 +28,42 @@ import salomon.platform.exception.PlatformException;
  */
 public interface IPluginManager
 {
-	void addPlugin(ILocalPlugin plugin) throws PlatformException;
+    void addPlugin(ILocalPlugin plugin) throws PlatformException;
 
-	ILocalPlugin createPlugin() throws PlatformException;
+    void clearPluginList() throws PlatformException;
 
-	/**
-	 * Returns plugin basing on given plugin identifier
-	 * 
-	 * @param id plugin identifier
-	 * @return
-	 * @throws PlatformException
-	 */
-	ILocalPlugin getPlugin(IUniqueId id) throws PlatformException;
+    ILocalPlugin createPlugin() throws PlatformException;
 
-	/**
-	 * Returns collection of plugin descriptions
-	 * 
-	 * @return plugin descriptions
-	 */
-	ILocalPlugin[] getPlugins() throws PlatformException;
+    /**
+     * Returns plugin basing on given plugin identifier
+     * 
+     * @param id plugin identifier
+     * @return
+     * @throws PlatformException
+     */
+    ILocalPlugin getPlugin(int id) throws PlatformException;
 
-	boolean removeAll() throws PlatformException;
+    /**
+     * Returns collection of plugin descriptions
+     * 
+     * @return plugin descriptions
+     */
+    ILocalPlugin[] getPlugins() throws PlatformException;
 
-	/**
-	 * Removes plugin corresponding to given plugin description.
-	 * 
-	 * @param description description of plugin to be removed
-	 * @return true if successfully removed, false otherwise
-	 */
-	boolean removePlugin(ILocalPlugin plugin) throws PlatformException;
+    boolean removeAll() throws PlatformException;
 
-	/**
-	 * Saves plugin description.
-	 * 
-	 * @return true if successfully saved, false otherwise
-	 */
-	boolean savePlugin(ILocalPlugin plugin) throws PlatformException;
+    /**
+     * Removes plugin corresponding to given plugin description.
+     * 
+     * @param description description of plugin to be removed
+     * @return true if successfully removed, false otherwise
+     */
+    boolean removePlugin(ILocalPlugin plugin) throws PlatformException;
 
-	void clearPluginList() throws PlatformException;
+    /**
+     * Saves plugin description.
+     * 
+     * @return true if successfully saved, false otherwise
+     */
+    boolean savePlugin(ILocalPlugin plugin) throws PlatformException;
 }

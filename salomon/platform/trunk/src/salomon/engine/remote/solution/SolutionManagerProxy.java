@@ -30,7 +30,6 @@ import org.apache.log4j.Logger;
 import salomon.engine.solution.ISolution;
 import salomon.engine.solution.ISolutionManager;
 
-import salomon.platform.IUniqueId;
 import salomon.platform.exception.PlatformException;
 
 public final class SolutionManagerProxy implements ISolutionManager
@@ -85,6 +84,18 @@ public final class SolutionManagerProxy implements ISolutionManager
 		return solution;
 	}
 
+	public ISolution getCurrentSolution() throws PlatformException
+	{
+		throw new UnsupportedOperationException(
+				"Method salomon.engine.remote.solution::SolutionManagerProxy::getCurrentSolution()not implemented yet!");
+	}
+
+	public ISolution getSolution(int id) throws PlatformException
+	{
+		throw new UnsupportedOperationException(
+				"Method salomon.engine.remote.solution::SolutionManagerProxy::getSolution()not implemented yet!");
+	}
+
 	/**
 	 * @see ISolutionManager#getSolution(java.lang.String)
 	 */
@@ -130,28 +141,11 @@ public final class SolutionManagerProxy implements ISolutionManager
 		} else {
 			solution = new SolutionProxy(remoteSolution);
 			_remotes.put(remoteSolution, solution);
-		}
+        }
 
 		return solution;
 	}
 
 	private static final Logger LOGGER = Logger.getLogger(SolutionManagerProxy.class);
 
-	public ISolution getSolution(int id) throws PlatformException
-	{
-		throw new UnsupportedOperationException(
-				"Method salomon.engine.remote.solution::SolutionManagerProxy::getSolution()not implemented yet!");
-	}
-
-	public ISolution getCurrentSolution() throws PlatformException
-	{
-		throw new UnsupportedOperationException(
-				"Method salomon.engine.remote.solution::SolutionManagerProxy::getCurrentSolution()not implemented yet!");
-	}
-
-	public ISolution getSolution(IUniqueId id) throws PlatformException
-	{
-		throw new UnsupportedOperationException(
-				"Method salomon.engine.remote.solution::SolutionManagerProxy::getSolution()not implemented yet!");
-	}
 }

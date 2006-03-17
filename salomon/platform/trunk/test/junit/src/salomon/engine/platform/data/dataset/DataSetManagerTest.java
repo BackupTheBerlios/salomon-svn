@@ -26,118 +26,108 @@ import junit.framework.TestCase;
 import org.apache.log4j.Logger;
 
 import salomon.TestObjectFactory;
-import salomon.engine.platform.data.DBColumn;
-import salomon.engine.platform.data.DBTable;
+
 import salomon.engine.solution.ISolution;
+
 import salomon.platform.IDataEngine;
-import salomon.platform.IUniqueId;
 import salomon.platform.data.IColumn;
 import salomon.platform.data.dataset.ICondition;
 import salomon.platform.data.dataset.IDataSet;
 import salomon.platform.exception.PlatformException;
 
+import salomon.engine.platform.data.DBColumn;
+import salomon.engine.platform.data.DBTable;
+
 public class DataSetManagerTest extends TestCase
 {
 
-	private DataSetManager _dataSetManager;
-	
-	public DataSetManagerTest() throws PlatformException
-	{
-		ISolution solution = TestObjectFactory.getSolution("Persons");
-		IDataEngine dataEngine = solution.getDataEngine();
-		_dataSetManager = (DataSetManager) dataEngine.getDataSetManager();
-		LOGGER.info("Connected");		
-	}
+    private DataSetManager _dataSetManager;
 
+    public DataSetManagerTest() throws PlatformException
+    {
+        ISolution solution = TestObjectFactory.getSolution("Persons");
+        IDataEngine dataEngine = solution.getDataEngine();
+        _dataSetManager = (DataSetManager) dataEngine.getDataSetManager();
+        LOGGER.info("Connected");
+    }
 
-	public void testGetAll() throws PlatformException
-	{
-		LOGGER.info("DataSetManagerTest.testGetAll()");
-		IDataSet[] dataSets;
-		dataSets = _dataSetManager.getAll();
-		for (IDataSet dataSet : dataSets) {
-			LOGGER.info(((DataSet) dataSet).getInfo());
-		}
-	}
+    public void testAdd() throws PlatformException
+    {
+        LOGGER.info("DataSetManagerTest.testAdd()");
+        DataSet mainDataSet = (DataSet) _dataSetManager.getMainDataSet();
 
-	public void testAdd() throws PlatformException
-	{
-		LOGGER.info("DataSetManagerTest.testAdd()");
-		DataSet mainDataSet = (DataSet) _dataSetManager.getMainDataSet();		
+        DBTable table = new DBTable("persons");
+        // column type is not important
+        IColumn column = new DBColumn(table, "id", "INT");
+        ICondition[] conditions = new ICondition[3];
+        conditions[0] = _dataSetManager.createEqualsCondition(column,
+                new Integer(10));
+        column = new DBColumn(table, "first_name", "VARCHAR");
+        conditions[1] = _dataSetManager.createEqualsCondition(column, "Nikodem");
+        column = new DBColumn(table, "last_name", "VARCHAR");
+        conditions[2] = _dataSetManager.createEqualsCondition(column, "Jura");
+        IDataSet dataSet = mainDataSet.createSubset(conditions);
+        ((DataSetInfo) ((DataSet) dataSet).getInfo()).setName("test add"
+                + System.currentTimeMillis());
+        _dataSetManager.add(dataSet);
+    }
 
-		DBTable table = new DBTable("persons");
-		// column type is not important
-		IColumn column = new DBColumn(table, "id", "INT");
-		ICondition[] conditions = new ICondition[3];
-		conditions[0] = _dataSetManager.createEqualsCondition(column,
-				new Integer(10));
-		column = new DBColumn(table, "first_name", "VARCHAR");
-		conditions[1] = _dataSetManager.createEqualsCondition(column,
-				"Nikodem");
-		column = new DBColumn(table, "last_name", "VARCHAR");
-		conditions[2] = _dataSetManager.createEqualsCondition(column,
-				"Jura");
-		IDataSet dataSet = mainDataSet.createSubset(conditions);
-		((DataSetInfo) ((DataSet) dataSet).getInfo()).setName("test add" + System.currentTimeMillis());
-		_dataSetManager.add(dataSet);		
-	}
-	
-	public void testRemove() throws PlatformException
-	{
-		LOGGER.info("DataSetManagerTest.testRemove()");
-		DataSet mainDataSet = (DataSet) _dataSetManager.getMainDataSet();
-		
+    public void testGetAll() throws PlatformException
+    {
+        LOGGER.info("DataSetManagerTest.testGetAll()");
+        IDataSet[] dataSets;
+        dataSets = _dataSetManager.getAll();
+        for (IDataSet dataSet : dataSets) {
+            LOGGER.info(((DataSet) dataSet).getInfo());
+        }
+    }
 
-		DBTable table = new DBTable("persons");
-		// column type is not important
-		IColumn column = new DBColumn(table, "id", "INT");
-		ICondition[] conditions = new ICondition[1];
-		conditions[0] =_dataSetManager.createEqualsCondition(column,
-				new Integer(10));
-		IDataSet dataSet = mainDataSet.createSubset(conditions);
-		((DataSetInfo) ((DataSet) dataSet).getInfo()).setName("test remove");
-		_dataSetManager.add(dataSet);
-		_dataSetManager.remove(dataSet);
-	}
-	
-	
-	public void testGetDataSet() throws PlatformException
-	{
-		DataSet mainDataSet = (DataSet) _dataSetManager.getMainDataSet();			
-		
-		DBTable table = new DBTable("persons");
-		// column type is not important
-		IColumn column = new DBColumn(table, "id", "INT");
-		ICondition[] conditions = new ICondition[3];
-		conditions[0] = _dataSetManager.createEqualsCondition(column,
-				new Integer(10));
-		column = new DBColumn(table, "first_name", "VARCHAR");
-		conditions[1] = _dataSetManager.createEqualsCondition(column,
-				"Nikodem");
-		column = new DBColumn(table, "last_name", "VARCHAR");
-		conditions[2] = _dataSetManager.createEqualsCondition(column,
-				"Jura");
-		IDataSet dataSet = mainDataSet.createSubset(conditions);
-		((DataSetInfo) ((DataSet) dataSet).getInfo()).setName("second");
-		
-		final int dataSetID = ((DataSet) dataSet).getInfo().save();		
-		
-		IDataSet loadedDataSet = _dataSetManager.getDataSet(new IUniqueId() {
-			public int getId()
-			{
-				return dataSetID;
-			}
+    public void testGetDataSet() throws PlatformException
+    {
+        DataSet mainDataSet = (DataSet) _dataSetManager.getMainDataSet();
 
-		});
-		assertNotNull(loadedDataSet);
-		LOGGER.info(((DataSet) loadedDataSet).getInfo());
-		
-		loadedDataSet = _dataSetManager.getDataSet("second");
-		assertNotNull(loadedDataSet);
-		LOGGER.info(((DataSet) loadedDataSet).getInfo());
-		_dataSetManager.remove(loadedDataSet);		
-	}
+        DBTable table = new DBTable("persons");
+        // column type is not important
+        IColumn column = new DBColumn(table, "id", "INT");
+        ICondition[] conditions = new ICondition[3];
+        conditions[0] = _dataSetManager.createEqualsCondition(column,
+                new Integer(10));
+        column = new DBColumn(table, "first_name", "VARCHAR");
+        conditions[1] = _dataSetManager.createEqualsCondition(column, "Nikodem");
+        column = new DBColumn(table, "last_name", "VARCHAR");
+        conditions[2] = _dataSetManager.createEqualsCondition(column, "Jura");
+        IDataSet dataSet = mainDataSet.createSubset(conditions);
+        ((DataSetInfo) ((DataSet) dataSet).getInfo()).setName("second");
 
-	private static final Logger LOGGER = Logger.getLogger(DataSetManagerTest.class);
+        final int dataSetID = ((DataSet) dataSet).getInfo().save();
+
+        IDataSet loadedDataSet = _dataSetManager.getDataSet(dataSetID);
+        assertNotNull(loadedDataSet);
+        LOGGER.info(((DataSet) loadedDataSet).getInfo());
+
+        loadedDataSet = _dataSetManager.getDataSet("second");
+        assertNotNull(loadedDataSet);
+        LOGGER.info(((DataSet) loadedDataSet).getInfo());
+        _dataSetManager.remove(loadedDataSet);
+    }
+
+    public void testRemove() throws PlatformException
+    {
+        LOGGER.info("DataSetManagerTest.testRemove()");
+        DataSet mainDataSet = (DataSet) _dataSetManager.getMainDataSet();
+
+        DBTable table = new DBTable("persons");
+        // column type is not important
+        IColumn column = new DBColumn(table, "id", "INT");
+        ICondition[] conditions = new ICondition[1];
+        conditions[0] = _dataSetManager.createEqualsCondition(column,
+                new Integer(10));
+        IDataSet dataSet = mainDataSet.createSubset(conditions);
+        ((DataSetInfo) ((DataSet) dataSet).getInfo()).setName("test remove");
+        _dataSetManager.add(dataSet);
+        _dataSetManager.remove(dataSet);
+    }
+
+    private static final Logger LOGGER = Logger.getLogger(DataSetManagerTest.class);
 
 }

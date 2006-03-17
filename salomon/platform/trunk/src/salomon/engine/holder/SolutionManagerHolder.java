@@ -24,61 +24,60 @@ package salomon.engine.holder;
 import salomon.engine.solution.ISolution;
 import salomon.engine.solution.ISolutionManager;
 
-import salomon.platform.IUniqueId;
 import salomon.platform.exception.PlatformException;
 
 public final class SolutionManagerHolder implements ISolutionManager
 {
 
-	/**
-	 * 
-	 * @uml.property name="_currentSolutionManager"
-	 * @uml.associationEnd multiplicity="(0 1)"
-	 */
-	private ISolutionManager _currentSolutionManager;
+    /**
+     * 
+     * @uml.property name="_currentSolutionManager"
+     * @uml.associationEnd multiplicity="(0 1)"
+     */
+    private ISolutionManager _currentSolutionManager;
 
-	SolutionManagerHolder(ISolutionManager currentSolutionManager)
-	{
-		_currentSolutionManager = currentSolutionManager;
-	}
+    SolutionManagerHolder(ISolutionManager currentSolutionManager)
+    {
+        _currentSolutionManager = currentSolutionManager;
+    }
 
-	/**
-	 * @see salomon.engine.solution.ISolutionManager#addSolution(salomon.engine.solution.ISolution)
-	 */
-	public void addSolution(ISolution solution) throws PlatformException
-	{
-		_currentSolutionManager.addSolution(solution);
-	}
+    /**
+     * @see salomon.engine.solution.ISolutionManager#addSolution(salomon.engine.solution.ISolution)
+     */
+    public void addSolution(ISolution solution) throws PlatformException
+    {
+        _currentSolutionManager.addSolution(solution);
+    }
 
-	/**
-	 * @see salomon.engine.solution.ISolutionManager#createSolution()
-	 */
-	public ISolution createSolution() throws PlatformException
-	{
-		return _currentSolutionManager.createSolution();
-	}
+    /**
+     * @see salomon.engine.solution.ISolutionManager#createSolution()
+     */
+    public ISolution createSolution() throws PlatformException
+    {
+        return _currentSolutionManager.createSolution();
+    }
 
-	/**
-	 * @see salomon.engine.solution.ISolutionManager#getSolutions()
-	 */
-	public ISolution[] getSolutions() throws PlatformException
-	{
-		return _currentSolutionManager.getSolutions();
-	}
+    public ISolution getCurrentSolution() throws PlatformException
+    {
+        return _currentSolutionManager.getCurrentSolution();
+    }
 
-	void setCurrent(ISolutionManager currentSolutionManager)
-	{
-		_currentSolutionManager = currentSolutionManager;
-	}
+    public ISolution getSolution(int id) throws PlatformException
+    {
+        return _currentSolutionManager.getSolution(id);
+    }
 
-	public ISolution getSolution(IUniqueId id) throws PlatformException
-	{
-		return _currentSolutionManager.getSolution(id);
-	}
+    /**
+     * @see salomon.engine.solution.ISolutionManager#getSolutions()
+     */
+    public ISolution[] getSolutions() throws PlatformException
+    {
+        return _currentSolutionManager.getSolutions();
+    }
 
-	public ISolution getCurrentSolution() throws PlatformException
-	{
-		return _currentSolutionManager.getCurrentSolution();
-	}
+    void setCurrent(ISolutionManager currentSolutionManager)
+    {
+        _currentSolutionManager = currentSolutionManager;
+    }
 
 }

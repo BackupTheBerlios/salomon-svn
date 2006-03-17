@@ -31,7 +31,6 @@ import salomon.engine.project.IProject;
 import salomon.engine.project.IProjectManager;
 import salomon.engine.solution.ISolution;
 
-import salomon.platform.IUniqueId;
 import salomon.platform.exception.PlatformException;
 
 /**
@@ -44,161 +43,155 @@ import salomon.platform.exception.PlatformException;
 public final class ProjectManagerProxy implements IProjectManager
 {
 
-	private Map<IRemoteProject, IProject> _proxies = new HashMap<IRemoteProject, IProject>();
+    private Map<IRemoteProject, IProject> _proxies = new HashMap<IRemoteProject, IProject>();
 
-	/**
-	 * 
-	 * @uml.property name="_remoteProjectManager"
-	 * @uml.associationEnd multiplicity="(0 1)"
-	 */
-	private IRemoteProjectManager _remoteProjectManager;
+    /**
+     * 
+     * @uml.property name="_remoteProjectManager"
+     * @uml.associationEnd multiplicity="(0 1)"
+     */
+    private IRemoteProjectManager _remoteProjectManager;
 
-	/**
-	 * @pre $none
-	 * @post $none
-	 */
-	public ProjectManagerProxy(IRemoteProjectManager remoteProjectManager)
-	{
-		_remoteProjectManager = remoteProjectManager;
-	}
+    /**
+     * @pre $none
+     * @post $none
+     */
+    public ProjectManagerProxy(IRemoteProjectManager remoteProjectManager)
+    {
+        _remoteProjectManager = remoteProjectManager;
+    }
 
-	/**
-	 * @see salomon.engine.project.IProjectManager#addProject(IProject)
-	 */
-	public void addProject(IProject project) throws PlatformException
-	{
-		try {
-			ProjectProxy projectProxy = (ProjectProxy) project;
-			_remoteProjectManager.addProject(projectProxy.getRemoteProject());
-		} catch (RemoteException e) {
-			LOGGER.fatal("Remote error!", e);
-			throw new PlatformException(e.getLocalizedMessage());
-		}
-		throw new UnsupportedOperationException(
-				"Method addProject() not implemented yet!");
-	}
+    /**
+     * @see salomon.engine.project.IProjectManager#addProject(IProject)
+     */
+    public void addProject(IProject project) throws PlatformException
+    {
+        try {
+            ProjectProxy projectProxy = (ProjectProxy) project;
+            _remoteProjectManager.addProject(projectProxy.getRemoteProject());
+        } catch (RemoteException e) {
+            LOGGER.fatal("Remote error!", e);
+            throw new PlatformException(e.getLocalizedMessage());
+        }
+        throw new UnsupportedOperationException(
+                "Method addProject() not implemented yet!");
+    }
 
-	/**
-	 * @see salomon.engine.project.IProjectManager#createProject()
-	 */
-	public IProject createProject() throws PlatformException
-	{
-		IProject project = null;
-		try {
-			IRemoteProject remoteProject = _remoteProjectManager.createProject();
-			project = getProject(remoteProject);
-		} catch (RemoteException e) {
-			LOGGER.fatal("Remote error!", e);
-			throw new PlatformException(e.getLocalizedMessage());
-		}
+    /**
+     * @see salomon.engine.project.IProjectManager#createProject()
+     */
+    public IProject createProject() throws PlatformException
+    {
+        IProject project = null;
+        try {
+            IRemoteProject remoteProject = _remoteProjectManager.createProject();
+            project = getProject(remoteProject);
+        } catch (RemoteException e) {
+            LOGGER.fatal("Remote error!", e);
+            throw new PlatformException(e.getLocalizedMessage());
+        }
 
-		return project;
-	}
+        return project;
+    }
 
-	/**
-	 * @see salomon.engine.project.IProjectManager#getCurrentProject()
-	 */
-	public IProject getCurrentProject() throws PlatformException
-	{
-		IProject project = null;
-		try {
-			IRemoteProject remoteProject = _remoteProjectManager.getCurrentProject();
-			project = getProject(remoteProject);
-		} catch (RemoteException e) {
-			LOGGER.fatal("Remote error!", e);
-			throw new PlatformException(e.getLocalizedMessage());
-		}
+    /**
+     * @see salomon.engine.project.IProjectManager#getCurrentProject()
+     */
+    public IProject getCurrentProject() throws PlatformException
+    {
+        IProject project = null;
+        try {
+            IRemoteProject remoteProject = _remoteProjectManager.getCurrentProject();
+            project = getProject(remoteProject);
+        } catch (RemoteException e) {
+            LOGGER.fatal("Remote error!", e);
+            throw new PlatformException(e.getLocalizedMessage());
+        }
 
-		return project;
-	}
+        return project;
+    }
 
-	/**
-	 * @see IProjectManager#getProject(int)
-	 */
-	public IProject getProject(int projectID) throws PlatformException
-	{
-		IProject project = null;
-		try {
-			IRemoteProject remoteProject = _remoteProjectManager.getProject(projectID);
-			project = getProject(remoteProject);
-		} catch (RemoteException e) {
-			LOGGER.fatal("Remote error!", e);
-			throw new PlatformException(e.getLocalizedMessage());
-		}
+    /**
+     * @see IProjectManager#getProject(int)
+     */
+    public IProject getProject(int projectID) throws PlatformException
+    {
+        IProject project = null;
+        try {
+            IRemoteProject remoteProject = _remoteProjectManager.getProject(projectID);
+            project = getProject(remoteProject);
+        } catch (RemoteException e) {
+            LOGGER.fatal("Remote error!", e);
+            throw new PlatformException(e.getLocalizedMessage());
+        }
 
-		return project;
-	}
+        return project;
+    }
 
-	/**
-	 * @see IProjectManager#getProjects()
-	 */
-	public IProject[] getProjects() throws PlatformException
-	{
-		IProject[] projects = null;
-		try {
-			IRemoteProject[] remoteProjects = _remoteProjectManager.getProjects();
-			projects = new IProject[remoteProjects.length];
-			for (int i = 0; i < remoteProjects.length; i++) {
-				projects[i] = getProject(remoteProjects[i]);
-			}
-		} catch (RemoteException e) {
-			LOGGER.fatal("Remote error!", e);
-			throw new PlatformException(e.getLocalizedMessage());
-		}
+    /**
+     * @see IProjectManager#getProjects()
+     */
+    public IProject[] getProjects() throws PlatformException
+    {
+        IProject[] projects = null;
+        try {
+            IRemoteProject[] remoteProjects = _remoteProjectManager.getProjects();
+            projects = new IProject[remoteProjects.length];
+            for (int i = 0; i < remoteProjects.length; i++) {
+                projects[i] = getProject(remoteProjects[i]);
+            }
+        } catch (RemoteException e) {
+            LOGGER.fatal("Remote error!", e);
+            throw new PlatformException(e.getLocalizedMessage());
+        }
 
-		return projects;
-	}
+        return projects;
+    }
 
-	/**
-	 * @see IProjectManager#saveProject()
-	 */
-	public void saveProject() throws PlatformException
-	{
-		try {
-			_remoteProjectManager.saveProject();
-		} catch (RemoteException e) {
-			LOGGER.fatal("Remote error", e);
-			throw new PlatformException(e.getLocalizedMessage());
-		}
-	}
+    public ISolution getSolution() throws PlatformException
+    {
+        throw new UnsupportedOperationException(
+                "Method getSolution() not implemented yet!");
+    }
 
-	IProject getProject(IRemoteProject remoteProject)
-	{
-		IProject project = null;
-		if (_proxies.containsKey(remoteProject)) {
-			project = _proxies.get(remoteProject);
-		} else {
-			project = new ProjectProxy(remoteProject);
-			_proxies.put(remoteProject, project);
-		}
+    public boolean removeAll() throws PlatformException
+    {
+        throw new UnsupportedOperationException(
+                "Method  removeAll()  not implemented yet!");
+    }
 
-		return project;
-	}
+    public boolean removeProject(IProject project) throws PlatformException
+    {
+        throw new UnsupportedOperationException(
+                "Method removeProject(IProject project) not implemented yet!");
+    }
 
-	private static final Logger LOGGER = Logger.getLogger(ProjectManagerProxy.class);
+    /**
+     * @see IProjectManager#saveProject()
+     */
+    public void saveProject() throws PlatformException
+    {
+        try {
+            _remoteProjectManager.saveProject();
+        } catch (RemoteException e) {
+            LOGGER.fatal("Remote error", e);
+            throw new PlatformException(e.getLocalizedMessage());
+        }
+    }
 
-	public ISolution getSolution() throws PlatformException
-	{
-		throw new UnsupportedOperationException(
-				"Method getSolution() not implemented yet!");
-	}
+    IProject getProject(IRemoteProject remoteProject)
+    {
+        IProject project = null;
+        if (_proxies.containsKey(remoteProject)) {
+            project = _proxies.get(remoteProject);
+        } else {
+            project = new ProjectProxy(remoteProject);
+            _proxies.put(remoteProject, project);
+        }
 
-	public boolean removeProject(IProject project) throws PlatformException
-	{
-		throw new UnsupportedOperationException(
-				"Method removeProject(IProject project) not implemented yet!");
-	}
+        return project;
+    }
 
-	public boolean removeAll() throws PlatformException
-	{
-		throw new UnsupportedOperationException(
-				"Method  removeAll()  not implemented yet!");
-	}
-
-	public IProject getProject(IUniqueId projectID) throws PlatformException
-	{
-		throw new UnsupportedOperationException(
-				"Method salomon.engine.remote.project::ProjectManagerProxy::getProject()not implemented yet!");
-	}
+    private static final Logger LOGGER = Logger.getLogger(ProjectManagerProxy.class);
 
 }

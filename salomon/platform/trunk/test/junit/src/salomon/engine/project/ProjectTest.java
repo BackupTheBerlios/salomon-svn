@@ -27,100 +27,81 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
 import salomon.engine.database.DBManager;
-import salomon.engine.platform.ManagerEngine;
 import salomon.engine.solution.SolutionManager;
-import salomon.platform.IUniqueId;
+
 import salomon.plugin.DescriptionTest;
+
+import salomon.engine.platform.ManagerEngine;
 
 public class ProjectTest extends TestCase
 {
 
-	/**
-	 * 
-	 * @uml.property name="_manager"
-	 * @uml.associationEnd multiplicity="(0 1)"
-	 */
-	private DBManager _manager;
+    /**
+     * 
+     * @uml.property name="_manager"
+     * @uml.associationEnd multiplicity="(0 1)"
+     */
+    private DBManager _manager;
 
-	private ProjectManager _projectManager;
+    private ProjectManager _projectManager;
 
-	private SolutionManager _solutionManager;
+    private SolutionManager _solutionManager;
 
-	public void testDelete()
-	{
-		LOGGER.debug("ProjectTest.testDelete()");
-		boolean success = false;
-		try {
-			_solutionManager.getSolution(new IUniqueId() {
-				public int getId()
-				{
-					return 1;
-				}
-			});
+    public void testDelete()
+    {
+        LOGGER.debug("ProjectTest.testDelete()");
+        boolean success = false;
+        try {
+            _solutionManager.getSolution(1);
 
-			Project project = (Project) _projectManager.getProject(new IUniqueId() {
-				public int getId()
-				{
-					return 65;
-				}
-			});
+            Project project = (Project) _projectManager.getProject(65);
 
-			// constraint - FIXME - add cascade delete for projects
-			//project.getInfo().delete();
-			success = true;
-			// to keep DB anaffected
-			_manager.rollback();
-		} catch (Exception e) {
-			LOGGER.fatal("", e);
-			_manager.rollback();
-		}
-		assertTrue(success);
-	}
+            // constraint - FIXME - add cascade delete for projects
+            //project.getInfo().delete();
+            success = true;
+            // to keep DB anaffected
+            _manager.rollback();
+        } catch (Exception e) {
+            LOGGER.fatal("", e);
+            _manager.rollback();
+        }
+        assertTrue(success);
+    }
 
-	public void testSave()
-	{
-		LOGGER.debug("ProjectTest.testSave()");
-		boolean success = false;
-		try {
-			_solutionManager.getSolution(new IUniqueId() {
-				public int getId()
-				{
-					return 1;
-				}
-			});			
-			
-			Project project = (Project) _projectManager.getProject(new IUniqueId() {
-				public int getId()
-				{
-					return 65;
-				}
-			});
-			project.getInfo().setEnvironment("test env");
-			project.getInfo().save();
-			success = true;
-			// to keep DB anaffected
-			_manager.rollback();
-		} catch (Exception e) {
-			LOGGER.fatal("", e);
-			_manager.rollback();
-		}
-		assertTrue(success);
-	}
+    public void testSave()
+    {
+        LOGGER.debug("ProjectTest.testSave()");
+        boolean success = false;
+        try {
+            _solutionManager.getSolution(1);
 
-	protected void setUp() throws Exception
-	{
-		PropertyConfigurator.configure("log.conf"); //$NON-NLS-1$   
+            Project project = (Project) _projectManager.getProject(65);
+            project.getInfo().setEnvironment("test env");
+            project.getInfo().save();
+            success = true;
+            // to keep DB anaffected
+            _manager.rollback();
+        } catch (Exception e) {
+            LOGGER.fatal("", e);
+            _manager.rollback();
+        }
+        assertTrue(success);
+    }
 
-		ManagerEngine managerEngine = new ManagerEngine();
-		_solutionManager = (SolutionManager) managerEngine.getSolutionManager();
-		_projectManager = (ProjectManager) managerEngine.getProjectManager();
-		// to force plugin loading - FIXME - fix loading tasks without loaded plugins
-		// to see this error - comment out the line below
-		managerEngine.getPluginManager().getPlugins();
-		_manager = managerEngine.getDbManager();
+    protected void setUp() throws Exception
+    {
+        PropertyConfigurator.configure("log.conf"); //$NON-NLS-1$   
 
-	}
+        ManagerEngine managerEngine = new ManagerEngine();
+        _solutionManager = (SolutionManager) managerEngine.getSolutionManager();
+        _projectManager = (ProjectManager) managerEngine.getProjectManager();
+        // to force plugin loading - FIXME - fix loading tasks without loaded plugins
+        // to see this error - comment out the line below
+        managerEngine.getPluginManager().getPlugins();
+        _manager = managerEngine.getDbManager();
 
-	private static Logger LOGGER = Logger.getLogger(DescriptionTest.class);
+    }
+
+    private static Logger LOGGER = Logger.getLogger(DescriptionTest.class);
 
 }

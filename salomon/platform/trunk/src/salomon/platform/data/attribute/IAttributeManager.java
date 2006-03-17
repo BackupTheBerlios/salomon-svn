@@ -21,7 +21,6 @@
 
 package salomon.platform.data.attribute;
 
-import salomon.platform.IUniqueId;
 import salomon.platform.data.attribute.description.IAttributeDescription;
 import salomon.platform.data.attribute.description.IDateAttributeDescription;
 import salomon.platform.data.attribute.description.IEnumAttributeDescription;
@@ -35,94 +34,94 @@ import salomon.platform.exception.PlatformException;
  */
 public interface IAttributeManager
 {
-	/**
-	 * Adds the attribute set to the storage.
-	 * 
-	 * @param attributeSet the attribute set to add
-	 * 
-	 */
-	void add(IAttributeSet attributeSet) throws PlatformException;
+    /**
+     * Adds the attribute set to the storage.
+     * 
+     * @param attributeSet the attribute set to add
+     * 
+     */
+    void add(IAttributeSet attributeSet) throws PlatformException;
 
-	/**
-	 * Creates a new empty attribute set.
-	 * @return the new attribute set
-	 */
-	IAttributeSet createAttributeSet(IAttributeDescription[] descriptions);
+    /**
+     * Creates a new empty attribute set.
+     * @return the new attribute set
+     */
+    IAttributeSet createAttributeSet(IAttributeDescription[] descriptions);
 
-	/**
-	 * Creates a new date attribute description
-	 * 
-	 * @param name the name
-	 * @return a new date arribute description
-	 */
-	IDateAttributeDescription createDateAttributeDescription(String name);
+    /**
+     * Creates a new date attribute description
+     * 
+     * @param name the name
+     * @return a new date arribute description
+     */
+    IDateAttributeDescription createDateAttributeDescription(String name);
 
-	/**
-	 * Creates a new enum attribute description.
-	 * 
-	 * @param name the name
-	 * @param possibleValues the possible values
-	 * @return a new enum attribute description
-	 */
-	IEnumAttributeDescription createEnumAttributeDescription(String name,
-			Object[] possibleValues);
+    /**
+     * Creates a new enum attribute description.
+     * 
+     * @param name the name
+     * @param possibleValues the possible values
+     * @return a new enum attribute description
+     */
+    IEnumAttributeDescription createEnumAttributeDescription(String name,
+            Object[] possibleValues);
 
-	/**
-	 * Creates a new integer attribute description
-	 * 
-	 * @param name the name
-	 * @return a new integer arribute description
-	 */
-	IIntegerAttributeDescription createIntegerAttributeDescription(String name);
+    /**
+     * Creates a new integer attribute description
+     * 
+     * @param name the name
+     * @return a new integer arribute description
+     */
+    IIntegerAttributeDescription createIntegerAttributeDescription(String name);
 
-	/**
-	 * Creates a new real attribute description
-	 * 
-	 * @param name the name
-	 * @return a new real arribute description
-	 */
-	IRealAttributeDescription createRealAttributeDescription(String name);
+    /**
+     * Creates a new real attribute description
+     * 
+     * @param name the name
+     * @return a new real arribute description
+     */
+    IRealAttributeDescription createRealAttributeDescription(String name);
 
-	/**
-	 * Creates a new string attribute description
-	 * 
-	 * @param name the name
-	 * @return a new string arribute description
-	 */
-	IStringAttributeDescription createStringAttributeDescription(String name);
+    /**
+     * Creates a new string attribute description
+     * 
+     * @param name the name
+     * @return a new string arribute description
+     */
+    IStringAttributeDescription createStringAttributeDescription(String name);
 
-	/**
-	 * Gets all attribute sets.
-	 * 
-	 * @return the all attribute sets
-	 */
-	IAttributeSet[] getAll() throws PlatformException;
+    /**
+     * Gets all attribute sets.
+     * 
+     * @return the all attribute sets
+     */
+    IAttributeSet[] getAll() throws PlatformException;
 
-	/**
-	 * Gets a attribute set with the given id.
-	 * 
-	 * @param id data set id
-	 * @return wanted attribute set
-	 */
-	IAttributeSet getAttributeSet(IUniqueId id) throws PlatformException;
+    /**
+     * Gets a attribute set with the given id.
+     * 
+     * @param id data set id
+     * @return wanted attribute set
+     */
+    IAttributeSet getAttributeSet(int id) throws PlatformException;
 
-	/**
-	 * Removes the given attribute set from the storage.
-	 * 
-	 * @param attributeSet the attribute set to remove
-	 * @throws PlatformException
-	 */
-	void remove(IAttributeSet attributeSet) throws PlatformException;
-	
-	/**
-	 * Sets restrictive type checking (slower)
-	 * @param restrictiveTypeCheck
-	 */
-	void setRestrictiveTypeCheck(boolean restrictiveTypeCheck);
-	
-	/**
-	 * @return restrictive type checking switch
-	 */
-	boolean getRestrictiveTypeCheck();
+    /**
+     * @return restrictive type checking switch
+     */
+    boolean getRestrictiveTypeCheck();
+
+    /**
+     * Removes the given attribute set from the storage.
+     * 
+     * @param attributeSet the attribute set to remove
+     * @throws PlatformException
+     */
+    void remove(IAttributeSet attributeSet) throws PlatformException;
+
+    /**
+     * Sets restrictive type checking (slower)
+     * @param restrictiveTypeCheck
+     */
+    void setRestrictiveTypeCheck(boolean restrictiveTypeCheck);
 
 }

@@ -28,14 +28,35 @@ import junit.framework.TestCase;
 import org.apache.log4j.PropertyConfigurator;
 
 import salomon.engine.database.DBManager;
+
 import salomon.engine.platform.ManagerEngine;
-import salomon.platform.IUniqueId;
 
 public class PluginInfoTest extends TestCase
 {
     private DBManager _manager;
 
     private PluginManager _pluginManager;
+
+    public void testAll() throws Exception
+    {
+        PluginInfo info = new PluginInfo(_manager);
+        info.setName("test plugin");
+        info.setInfo("info");
+        info.setLocation(new URL("http://location.com"));
+
+        // starting transaction
+        _manager.rollback();
+        // saving plugin
+        final int pluginID = info.save();
+
+        // loading created plugin
+        LocalPlugin plugin = (LocalPlugin) _pluginManager.getPlugin(pluginID);
+        assertNotNull(plugin);
+
+        // deleting 
+        assertTrue(plugin.getInfo().delete());
+        _manager.rollback();
+    }
 
     protected void setUp() throws Exception
     {
@@ -44,31 +65,5 @@ public class PluginInfoTest extends TestCase
         ManagerEngine managerEngine = new ManagerEngine();
         _manager = managerEngine.getDbManager();
         _pluginManager = (PluginManager) managerEngine.getPluginManager();
-    }
-
-    public void testAll() throws Exception
-    {
-        PluginInfo info = new PluginInfo(_manager);
-        info.setName("test plugin");
-        info.setInfo("info");
-        info.setLocation(new URL("http://location.com"));
-        
-        // starting transaction
-        _manager.rollback();
-        // saving plugin
-        final int pluginID = info.save();
-        
-        // loading created plugin
-        LocalPlugin plugin = (LocalPlugin) _pluginManager.getPlugin(new IUniqueId() {
-            public int getId()
-            {
-                return pluginID;
-            }
-        });
-        assertNotNull(plugin);
-        
-        // deleting 
-        assertTrue(plugin.getInfo().delete());
-        _manager.rollback();
     }
 }
