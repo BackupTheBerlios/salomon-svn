@@ -48,9 +48,6 @@ import javax.swing.JTextField;
 
 import org.apache.log4j.Logger;
 
-import com.jgoodies.forms.builder.DefaultFormBuilder;
-import com.jgoodies.forms.layout.FormLayout;
-
 import salomon.engine.Messages;
 import salomon.engine.Starter;
 import salomon.engine.controller.gui.action.ActionManager;
@@ -62,10 +59,11 @@ import salomon.engine.solution.ISolution;
 import salomon.engine.solution.ISolutionManager;
 import salomon.engine.solution.Solution;
 import salomon.engine.solution.SolutionManager;
-
+import salomon.platform.exception.PlatformException;
 import salomon.util.gui.Utils;
 
-import salomon.platform.exception.PlatformException;
+import com.jgoodies.forms.builder.DefaultFormBuilder;
+import com.jgoodies.forms.layout.FormLayout;
 
 /**
  * Class used to manage with solutions editing.
@@ -313,7 +311,7 @@ public final class SolutionManagerGUI
      * @param solution
      * @throws PlatformException
      */
-    public boolean setSolutionProperties(ISolution iSolution)
+    private boolean setSolutionProperties(ISolution iSolution)
             throws PlatformException
     {
         boolean approved = false;
@@ -335,7 +333,6 @@ public final class SolutionManagerGUI
         _txtUsername.setText(user == null ? "" : user);
         _txtPasswd.setText(pass == null ? "" : pass);
 
-        // TODO:
         int result = JOptionPane.showConfirmDialog(_parent,
                 _pnlSolutionProperties, "Enter solution properties",
                 JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
