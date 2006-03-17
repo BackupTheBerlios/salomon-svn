@@ -30,6 +30,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
+import java.text.DateFormat;
+import java.util.Date;
 
 import javax.swing.Action;
 import javax.swing.BorderFactory;
@@ -119,6 +121,10 @@ public final class SolutionManagerGUI
     private JTextField _txtSolutionName;
 
     private JTextField _txtUsername;
+
+    private JTextField _txtSolutionCrDate;
+
+    private JTextField _txtSolutionLastMod;
 
     /**
      */
@@ -326,12 +332,26 @@ public final class SolutionManagerGUI
         String path = solution.getInfo().getPath();
         String user = solution.getInfo().getUser();
         String pass = solution.getInfo().getPasswd();
+        Date dcdate = solution.getInfo().getCreationDate();
+        Date dmdate = solution.getInfo().getLastModificationDate();
+
+        String cdate = dcdate == null
+                ? ""
+                : DateFormat.getDateInstance().format(dcdate) + " "
+                        + DateFormat.getTimeInstance().format(dcdate);
+        String mdate = dmdate == null
+                ? ""
+                : DateFormat.getDateInstance().format(dmdate) + " "
+                        + DateFormat.getTimeInstance().format(dmdate);
+
         _txtSolutionName.setText(name == null ? "" : name);
         _txtSolutionInfo.setText(info == null ? "" : info);
         _txtHostname.setText(host == null ? "" : host);
         _txtDBPath.setText(path == null ? "" : path);
         _txtUsername.setText(user == null ? "" : user);
         _txtPasswd.setText(pass == null ? "" : pass);
+        _txtSolutionCrDate.setText(cdate == null ? "" : cdate);
+        _txtSolutionLastMod.setText(mdate == null ? "" : mdate);
 
         int result = JOptionPane.showConfirmDialog(_parent,
                 _pnlSolutionProperties, "Enter solution properties",
@@ -443,6 +463,14 @@ public final class SolutionManagerGUI
         _txtDBPath = new JTextField(size);
         _txtUsername = new JTextField(size);
         _txtPasswd = new JPasswordField(size);
+        _txtSolutionCrDate = new JTextField();
+        _txtSolutionCrDate.setEnabled(false);
+        //        _txtSolutionCrDate.setPreferredSize(size);
+
+        _txtSolutionLastMod = new JTextField();
+        _txtSolutionLastMod.setEnabled(false);
+        //        _txtSolutionLastMod.setPreferredSize(size);
+
         _txtSolutionInfo = new JTextArea(3, 10);
         JButton btnChooseDB = new JButton(Messages.getString("BTN_BROWSE"));
         btnChooseDB.addActionListener(new ActionListener() {
@@ -467,7 +495,8 @@ public final class SolutionManagerGUI
         builder.append(_txtDBPath, btnChooseDB);
         builder.append("Username", _txtUsername, 3);
         builder.append("Password", _txtPasswd, 3);
-
+        builder.append("Creation date", _txtSolutionCrDate, 3);
+        builder.append("Last mod. date", _txtSolutionLastMod, 3);
         builder.appendSeparator("Test connection");
         builder.append("", btnTestConnect, 2);
 
