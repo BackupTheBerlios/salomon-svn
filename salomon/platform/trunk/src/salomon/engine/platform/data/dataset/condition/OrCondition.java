@@ -24,15 +24,16 @@ package salomon.engine.platform.data.dataset.condition;
 public final class OrCondition extends AbstractLogicalCondition
 {
 
-	public OrCondition(AbstractCondition codition, AbstractCondition[] conditions)
-	{
-		super(codition, conditions);
-	}
+    public OrCondition(AbstractCondition codition,
+            AbstractCondition[] conditions)
+    {
+        super(codition, conditions);
+    }
 
-	@Override
-	protected String getOperator()
-	{
-		return "OR";
-	}
+    @Override
+    protected String getOperator()
+    {
+        return "OR";
+    }
 
 }

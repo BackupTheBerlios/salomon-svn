@@ -27,45 +27,42 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
 import salomon.engine.database.DBManager;
-import salomon.engine.solution.ISolution;
-
-import salomon.platform.IDataEngine;
-import salomon.platform.data.IColumn;
-
 import salomon.engine.platform.ManagerEngine;
 import salomon.engine.platform.data.DBColumn;
 import salomon.engine.platform.data.DBTable;
 import salomon.engine.platform.data.dataset.DataSetManager;
+import salomon.engine.solution.ISolution;
+import salomon.platform.IDataEngine;
+import salomon.platform.data.IColumn;
 
 abstract class AbstractConditionTest extends TestCase
 {
-	private AbstractCondition _condition;
+    private AbstractCondition _condition;
 
-	protected abstract AbstractCondition createCondition(IColumn column,
-			Object value);
+    protected abstract AbstractCondition createCondition(IColumn column,
+            Object value);
 
-	protected AbstractCondition getCondition()
-	{
-		return _condition;
-	}
+    protected AbstractCondition getCondition()
+    {
+        return _condition;
+    }
 
-	@Override
-	protected void setUp() throws Exception
-	{
-		PropertyConfigurator.configure("log.conf"); //$NON-NLS-1$
-		ManagerEngine engine = new ManagerEngine();
-		ISolution solution = engine.getSolutionManager().getSolutions()[0];
-		IDataEngine dataEngine = solution.getDataEngine();
-		DataSetManager _dataSetManager = (DataSetManager) dataEngine.getDataSetManager();
-		DBManager manager = engine.getDbManager();
+    @Override
+    protected void setUp() throws Exception
+    {
+        PropertyConfigurator.configure("log.conf"); //$NON-NLS-1$
+        ManagerEngine engine = new ManagerEngine();
+        ISolution solution = engine.getSolutionManager().getSolutions()[0];
+        IDataEngine dataEngine = solution.getDataEngine();
+        DBManager manager = engine.getDbManager();
 
-		DBTable table = new DBTable("persons");
+        DBTable table = new DBTable("persons");
 
-		IColumn column = new DBColumn(table, "person_id", "INT");
-		_condition = createCondition(column, 10);
+        IColumn column = new DBColumn(table, "person_id", "INT");
+        _condition = createCondition(column, 10);
 
-		LOGGER.info("Connected");
-	}
+        LOGGER.info("Connected");
+    }
 
-	private static final Logger LOGGER = Logger.getLogger(AbstractConditionTest.class);
+    private static final Logger LOGGER = Logger.getLogger(AbstractConditionTest.class);
 }

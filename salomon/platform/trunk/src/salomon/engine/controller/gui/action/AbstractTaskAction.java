@@ -31,17 +31,17 @@ import salomon.engine.controller.gui.graph.GraphTaskManagerGUI;
 abstract class AbstractTaskAction extends AbstractAction
 {
 
-	/**
-	 * an object which method are called in implementation of actionPerformed()
-	 * method
-	 * 
-	 * @uml.property name="_taskManagerGUI"
-	 * @uml.associationEnd multiplicity="(0 1)"
-	 */
-	protected GraphTaskManagerGUI _taskManagerGUI = null;
+    /**
+     * an object which method are called in implementation of actionPerformed()
+     * method
+     * 
+     * @uml.property name="_taskManagerGUI"
+     * @uml.associationEnd multiplicity="(0 1)"
+     */
+    protected GraphTaskManagerGUI _taskManagerGUI = null;
 
-	protected AbstractTaskAction(GraphTaskManagerGUI taskManagerGUI)
-	{
-		_taskManagerGUI = taskManagerGUI;
-	}
+    protected AbstractTaskAction(GraphTaskManagerGUI taskManagerGUI)
+    {
+        _taskManagerGUI = taskManagerGUI;
+    }
 }

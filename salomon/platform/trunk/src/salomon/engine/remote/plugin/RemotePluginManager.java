@@ -26,9 +26,7 @@ import java.rmi.server.UnicastRemoteObject;
 
 import salomon.engine.plugin.ILocalPlugin;
 import salomon.engine.plugin.IPluginManager;
-
 import salomon.platform.exception.PlatformException;
-
 import salomon.plugin.IPlugin;
 
 /**
@@ -36,51 +34,51 @@ import salomon.plugin.IPlugin;
  * @see salomon.engine.plugin.IPluginManager
  */
 public final class RemotePluginManager extends UnicastRemoteObject
-		implements IRemotePluginManager
+        implements IRemotePluginManager
 {
 
-	/**
-	 * 
-	 * @uml.property name="_pluginManager"
-	 * @uml.associationEnd multiplicity="(0 1)"
-	 */
-	private IPluginManager _pluginManager;
+    /**
+     * 
+     * @uml.property name="_pluginManager"
+     * @uml.associationEnd multiplicity="(0 1)"
+     */
+    private IPluginManager _pluginManager;
 
-	/**
-	 * @pre pluginManager != null
-	 * @post $none
-	 */
-	public RemotePluginManager(IPluginManager pluginManager)
-			throws RemoteException
-	{
-		_pluginManager = pluginManager;
-	}
+    /**
+     * @pre pluginManager != null
+     * @post $none
+     */
+    public RemotePluginManager(IPluginManager pluginManager)
+            throws RemoteException
+    {
+        _pluginManager = pluginManager;
+    }
 
-	/**
-	 * @see IRemotePluginManager#getPlugins()
-	 */
-	public IPlugin[] getPlugins() throws RemoteException, PlatformException
-	{
-		return _pluginManager.getPlugins();
-	}
+    /**
+     * @see IRemotePluginManager#getPlugins()
+     */
+    public IPlugin[] getPlugins() throws RemoteException, PlatformException
+    {
+        return _pluginManager.getPlugins();
+    }
 
-	/**
-	 * @see IRemotePluginManager#removePlugin(IPlugin)
-	 */
-	public boolean removePlugin(IPlugin plugin) throws RemoteException,
-			PlatformException
-	{
-		return _pluginManager.removePlugin((ILocalPlugin) plugin);
-	}
+    /**
+     * @see IRemotePluginManager#removePlugin(IPlugin)
+     */
+    public boolean removePlugin(IPlugin plugin) throws RemoteException,
+            PlatformException
+    {
+        return _pluginManager.removePlugin((ILocalPlugin) plugin);
+    }
 
-	/**
-	 * @throws PlatformException
-	 * @see IRemotePluginManager#savePlugin(IPlugin)
-	 */
-	public boolean savePlugin(IPlugin plugin) throws RemoteException,
-			PlatformException
-	{
-		return _pluginManager.savePlugin((ILocalPlugin) plugin);
-	}
+    /**
+     * @throws PlatformException
+     * @see IRemotePluginManager#savePlugin(IPlugin)
+     */
+    public boolean savePlugin(IPlugin plugin) throws RemoteException,
+            PlatformException
+    {
+        return _pluginManager.savePlugin((ILocalPlugin) plugin);
+    }
 
 }

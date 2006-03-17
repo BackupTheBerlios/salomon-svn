@@ -28,69 +28,69 @@ import salomon.platform.data.IColumn;
  */
 public final class DBColumn implements IColumn
 {
-	private String _name;
+    private String _name;
 
-	private DBTable _table;
+    private DBTable _table;
 
-	private String _type;
+    private String _type;
 
-	/**
-	 * @param name
-	 * @param type
-	 */
-	public DBColumn(DBTable table, String name, String type)
-	{
-		_table = table;
-		_name = name;
-		_type = type;
-	}
+    /**
+     * @param name
+     * @param type
+     */
+    public DBColumn(DBTable table, String name, String type)
+    {
+        _table = table;
+        _name = name;
+        _type = type;
+    }
 
-	@Override
-	public boolean equals(Object obj)
-	{
-		boolean result = false;
-		if (obj instanceof DBColumn) {
-			DBColumn column = (DBColumn) obj;
-			result = _name.equalsIgnoreCase(column._name)
-					&& _type.equalsIgnoreCase(column._type)
-					&& _table.equals(column._table);
-		}
+    @Override
+    public boolean equals(Object obj)
+    {
+        boolean result = false;
+        if (obj instanceof DBColumn) {
+            DBColumn column = (DBColumn) obj;
+            result = _name.equalsIgnoreCase(column._name)
+                    && _type.equalsIgnoreCase(column._type)
+                    && _table.equals(column._table);
+        }
 
-		return result;
-	}
+        return result;
+    }
 
-	/**
-	 * Returns the name.
-	 * @return The name
-	 */
-	public String getName()
-	{
-		return _name;
-	}
+    /**
+     * Returns the name.
+     * @return The name
+     */
+    public String getName()
+    {
+        return _name;
+    }
 
-	public DBTable getTable()
-	{
-		return _table;
-	}
+    public DBTable getTable()
+    {
+        return _table;
+    }
 
-	/**
-	 * Returns the type.
-	 * @return The type
-	 */
-	public String getType()
-	{
-		return _type;
-	}
+    /**
+     * Returns the type.
+     * @return The type
+     */
+    public String getType()
+    {
+        return _type;
+    }
 
-	@Override
-	public int hashCode()
-	{
-		return _name.hashCode() ^ _type.hashCode() ^ _table.hashCode();
-	}
+    @Override
+    public int hashCode()
+    {
+        return _name.hashCode() ^ _type.hashCode() ^ _table.hashCode();
+    }
 
-	@Override
-	public String toString()
-	{
-		return _name + " (" + _type + ")";
-	}
+    @Override
+    public String toString()
+    {
+        return _name + " (" + _type + ")";
+    }
 }

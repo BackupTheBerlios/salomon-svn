@@ -31,26 +31,26 @@ import salomon.platform.IDataEngine;
  */
 public interface ISettingComponent
 {
-	/**
-	 * Returns settings object. It is set basing on user selections in setting
-	 * panel
-	 * 
-	 * @return plugin settings
-	 */
-	ISettings getSettings();
+    /**
+     * Returns settings object. It is set basing on user selections in setting
+     * panel
+     * 
+     * @return plugin settings
+     */
+    ISettings getSettings();
 
-	/**
-	 * Method create default settings for plugin.
-	 * 
-	 * @return default settings for plugin
-	 */
-	ISettings getDefaultSettings();
+    /**
+     * Method create default settings for plugin.
+     * 
+     * @return default settings for plugin
+     */
+    ISettings getDefaultSettings();
 
-	/**
-	 * Fills settings component basing on given settings.
-	 * 
-	 * @param settings settings object
-	 * @return component showing given settings
-	 */
-	Component getComponent(ISettings settings, IDataEngine dataEngine);
+    /**
+     * Fills settings component basing on given settings.
+     * 
+     * @param settings settings object
+     * @return component showing given settings
+     */
+    Component getComponent(ISettings settings, IDataEngine dataEngine);
 }

@@ -32,18 +32,18 @@ import salomon.platform.IDataEngine;
  */
 public interface IResultComponent
 {
-	/**
-	 * Method creates component representing result of plugin execution. 
-	 * 
-	 * @param result of plugin execution
-	 * @return component showing given result
-	 */
-	Component getComponent(IResult result, IDataEngine dataEngine);
+    /**
+     * Method creates component representing result of plugin execution. 
+     * 
+     * @param result of plugin execution
+     * @return component showing given result
+     */
+    Component getComponent(IResult result, IDataEngine dataEngine);
 
-	/**
-	 * Method returns default result of plugin execution. 
-	 * 
-	 * @return default result of plugin execution.
-	 */
-	IResult getDefaultResult();
+    /**
+     * Method returns default result of plugin execution. 
+     * 
+     * @return default result of plugin execution.
+     */
+    IResult getDefaultResult();
 }

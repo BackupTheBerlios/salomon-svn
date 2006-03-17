@@ -25,7 +25,6 @@ import org.apache.log4j.Logger;
 
 import salomon.engine.task.ITask;
 import salomon.engine.task.Task;
-
 import salomon.platform.exception.PlatformException;
 
 /**
@@ -34,49 +33,50 @@ import salomon.platform.exception.PlatformException;
  */
 public final class TaskGUI
 {
-	/**
-	 * 
-	 * @uml.property name="_task"
-	 * @uml.associationEnd multiplicity="(0 1)"
-	 */
-	private Task _task;
+    /**
+     * 
+     * @uml.property name="_task"
+     * @uml.associationEnd multiplicity="(0 1)"
+     */
+    private Task _task;
 
-	public TaskGUI(ITask task)
-	{
-		_task = (Task) task;
-	}
+    public TaskGUI(ITask task)
+    {
+        _task = (Task) task;
+    }
 
-	/**
-	 * Returns the task.
-	 * @return The task
-	 */
-	public Task getTask()
-	{
-		return _task;
-	}
+    /**
+     * Returns the task.
+     * @return The task
+     */
+    public Task getTask()
+    {
+        return _task;
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
-	 */
-	public String toString()
-	{
-		String name = "";
-		try {
-			name = _task.getInfo().getName();
-		} catch (PlatformException e) {
-			LOGGER.fatal("", e);
-		}
-		// plugin cannot be NULL!
-		String plugin = "ERROR";
-		try {
-			plugin = _task.getPlugin().toString();
-		} catch (PlatformException e) {
-			LOGGER.fatal("", e);
-		}
-		return (name != null ? name : "") + " [" + plugin + "]";
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString()
+    {
+        String name = "";
+        try {
+            name = _task.getInfo().getName();
+        } catch (PlatformException e) {
+            LOGGER.fatal("", e);
+        }
+        // plugin cannot be NULL!
+        String plugin = "ERROR";
+        try {
+            plugin = _task.getPlugin().toString();
+        } catch (PlatformException e) {
+            LOGGER.fatal("", e);
+        }
+        return (name != null ? name : "") + " [" + plugin + "]";
+    }
 
-	private static final Logger LOGGER = Logger.getLogger(TaskGUI.class);
+    private static final Logger LOGGER = Logger.getLogger(TaskGUI.class);
 }

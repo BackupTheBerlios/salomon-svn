@@ -29,7 +29,6 @@ import salomon.engine.project.IProject;
 import salomon.engine.project.IProjectManager;
 import salomon.engine.remote.task.TaskManagerProxy;
 import salomon.engine.task.ITaskManager;
-
 import salomon.platform.IInfo;
 import salomon.platform.exception.PlatformException;
 
@@ -43,146 +42,146 @@ import salomon.platform.exception.PlatformException;
 public final class ProjectProxy implements IProject
 {
 
-	/**
-	 * 
-	 * @uml.property name="_remoteProject"
-	 * @uml.associationEnd multiplicity="(0 1)"
-	 */
-	private IRemoteProject _remoteProject;
+    /**
+     * 
+     * @uml.property name="_remoteProject"
+     * @uml.associationEnd multiplicity="(0 1)"
+     */
+    private IRemoteProject _remoteProject;
 
-	/**
-	 * 
-	 * @uml.property name="_taskManagerProxy"
-	 * @uml.associationEnd multiplicity="(0 1)"
-	 */
-	private ITaskManager _taskManagerProxy;
+    /**
+     * 
+     * @uml.property name="_taskManagerProxy"
+     * @uml.associationEnd multiplicity="(0 1)"
+     */
+    private ITaskManager _taskManagerProxy;
 
-	/**
-	 * @pre $none
-	 * @post $none
-	 */
-	public ProjectProxy(IRemoteProject remoteProject)
-	{
-		_remoteProject = remoteProject;
-	}
+    /**
+     * @pre $none
+     * @post $none
+     */
+    public ProjectProxy(IRemoteProject remoteProject)
+    {
+        _remoteProject = remoteProject;
+    }
 
-	/**
-	 * @see IProject#getInfo()
-	 */
-	public IInfo getInfo() throws PlatformException
-	{
-		IInfo info = null;
-		try {
-			info = _remoteProject.getInfo();
-		} catch (RemoteException e) {
-			LOGGER.fatal("Remote error!", e);
-			throw new PlatformException(e.getLocalizedMessage());
-		}
+    /**
+     * @see IProject#getInfo()
+     */
+    public IInfo getInfo() throws PlatformException
+    {
+        IInfo info = null;
+        try {
+            info = _remoteProject.getInfo();
+        } catch (RemoteException e) {
+            LOGGER.fatal("Remote error!", e);
+            throw new PlatformException(e.getLocalizedMessage());
+        }
 
-		return info;
-	}
+        return info;
+    }
 
-	/**
-	 * @see IProject#getName()
-	 */
-	public String getName() throws PlatformException
-	{
-		String name = null;
-		try {
-			name = _remoteProject.getName();
-		} catch (RemoteException e) {
-			LOGGER.fatal("Remote error!", e);
-			throw new PlatformException(e.getLocalizedMessage());
-		}
+    /**
+     * @see IProject#getName()
+     */
+    public String getName() throws PlatformException
+    {
+        String name = null;
+        try {
+            name = _remoteProject.getName();
+        } catch (RemoteException e) {
+            LOGGER.fatal("Remote error!", e);
+            throw new PlatformException(e.getLocalizedMessage());
+        }
 
-		return name;
-	}
+        return name;
+    }
 
-	/**
-	 * @see IProject#getProjectID()
-	 */
-	public int getProjectID() throws PlatformException
-	{
-		int id = -1;
-		try {
-			id = _remoteProject.getProjectID();
-		} catch (RemoteException e) {
-			LOGGER.fatal("Remote error!", e);
-			throw new PlatformException(e.getLocalizedMessage());
-		}
+    /**
+     * @see IProject#getProjectID()
+     */
+    public int getProjectID() throws PlatformException
+    {
+        int id = -1;
+        try {
+            id = _remoteProject.getProjectID();
+        } catch (RemoteException e) {
+            LOGGER.fatal("Remote error!", e);
+            throw new PlatformException(e.getLocalizedMessage());
+        }
 
-		return id;
-	}
+        return id;
+    }
 
-	/**
-	 * @see salomon.engine.project.IProject#getTaskManager()
-	 */
-	public ITaskManager getTaskManager() throws PlatformException
-	{
-		if (_taskManagerProxy == null) {
-			try {
-				_taskManagerProxy = new TaskManagerProxy(
-						_remoteProject.getTaskManager());
-			} catch (RemoteException e) {
-				LOGGER.error("Remote error!");
-				throw new PlatformException(e.getLocalizedMessage());
-			}
-		}
+    /**
+     * @see salomon.engine.project.IProject#getTaskManager()
+     */
+    public ITaskManager getTaskManager() throws PlatformException
+    {
+        if (_taskManagerProxy == null) {
+            try {
+                _taskManagerProxy = new TaskManagerProxy(
+                        _remoteProject.getTaskManager());
+            } catch (RemoteException e) {
+                LOGGER.error("Remote error!");
+                throw new PlatformException(e.getLocalizedMessage());
+            }
+        }
 
-		return _taskManagerProxy;
-	}
+        return _taskManagerProxy;
+    }
 
-	/**
-	 * @see IProject#setInfo(java.lang.String)
-	 */
-	public void setInfo(String info) throws PlatformException
-	{
-		try {
-			_remoteProject.setInfo(info);
-		} catch (RemoteException e) {
-			LOGGER.fatal("Remote error!", e);
-			throw new PlatformException(e.getLocalizedMessage());
-		}
-	}
+    /**
+     * @see IProject#setInfo(java.lang.String)
+     */
+    public void setInfo(String info) throws PlatformException
+    {
+        try {
+            _remoteProject.setInfo(info);
+        } catch (RemoteException e) {
+            LOGGER.fatal("Remote error!", e);
+            throw new PlatformException(e.getLocalizedMessage());
+        }
+    }
 
-	/**
-	 * @see IProject#setName(java.lang.String)
-	 */
-	public void setName(String name) throws PlatformException
-	{
-		try {
-			_remoteProject.setName(name);
-		} catch (RemoteException e) {
-			LOGGER.fatal("Remote error!", e);
-			throw new PlatformException(e.getLocalizedMessage());
-		}
-	}
+    /**
+     * @see IProject#setName(java.lang.String)
+     */
+    public void setName(String name) throws PlatformException
+    {
+        try {
+            _remoteProject.setName(name);
+        } catch (RemoteException e) {
+            LOGGER.fatal("Remote error!", e);
+            throw new PlatformException(e.getLocalizedMessage());
+        }
+    }
 
-	/**
-	 * @see IProject#setProjectID(int)
-	 */
-	public void setProjectID(int projectId) throws PlatformException
-	{
-		try {
-			_remoteProject.setProjectID(projectId);
-		} catch (RemoteException e) {
-			LOGGER.fatal("Remote error!", e);
-			throw new PlatformException(e.getLocalizedMessage());
-		}
+    /**
+     * @see IProject#setProjectID(int)
+     */
+    public void setProjectID(int projectId) throws PlatformException
+    {
+        try {
+            _remoteProject.setProjectID(projectId);
+        } catch (RemoteException e) {
+            LOGGER.fatal("Remote error!", e);
+            throw new PlatformException(e.getLocalizedMessage());
+        }
 
-	}
+    }
 
-	IRemoteProject getRemoteProject()
-	{
-		return _remoteProject;
-	}
+    IRemoteProject getRemoteProject()
+    {
+        return _remoteProject;
+    }
 
-	private static final Logger LOGGER = Logger.getLogger(ProjectProxy.class);
+    private static final Logger LOGGER = Logger.getLogger(ProjectProxy.class);
 
-	public IProjectManager getProjectManager() throws PlatformException
-	{
-		throw new UnsupportedOperationException(
-				"Method getProjectManager() not implemented yet!");
-	}
+    public IProjectManager getProjectManager() throws PlatformException
+    {
+        throw new UnsupportedOperationException(
+                "Method getProjectManager() not implemented yet!");
+    }
 
 }

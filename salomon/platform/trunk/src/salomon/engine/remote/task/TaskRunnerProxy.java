@@ -26,7 +26,6 @@ import java.rmi.RemoteException;
 import org.apache.log4j.Logger;
 
 import salomon.engine.task.ITaskRunner;
-
 import salomon.platform.exception.PlatformException;
 
 /**
@@ -35,73 +34,73 @@ import salomon.platform.exception.PlatformException;
 public final class TaskRunnerProxy implements ITaskRunner
 {
 
-	/**
-	 * 
-	 * @uml.property name="_remoteTaskRunner"
-	 * @uml.associationEnd multiplicity="(0 1)"
-	 */
-	private IRemoteTaskRunner _remoteTaskRunner;
+    /**
+     * 
+     * @uml.property name="_remoteTaskRunner"
+     * @uml.associationEnd multiplicity="(0 1)"
+     */
+    private IRemoteTaskRunner _remoteTaskRunner;
 
-	/**
-	 * 
-	 */
-	public TaskRunnerProxy(IRemoteTaskRunner remoteTaskRunner)
-	{
-		_remoteTaskRunner = remoteTaskRunner;
-	}
+    /**
+     * 
+     */
+    public TaskRunnerProxy(IRemoteTaskRunner remoteTaskRunner)
+    {
+        _remoteTaskRunner = remoteTaskRunner;
+    }
 
-	/**
-	 * @see salomon.engine.task.ITaskRunner#pause()
-	 */
-	public void pause() throws PlatformException
-	{
-		try {
-			_remoteTaskRunner.pause();
-		} catch (RemoteException e) {
-			LOGGER.error("Remote error!", e);
-			throw new PlatformException(e.getLocalizedMessage());
-		}
-	}
+    /**
+     * @see salomon.engine.task.ITaskRunner#pause()
+     */
+    public void pause() throws PlatformException
+    {
+        try {
+            _remoteTaskRunner.pause();
+        } catch (RemoteException e) {
+            LOGGER.error("Remote error!", e);
+            throw new PlatformException(e.getLocalizedMessage());
+        }
+    }
 
-	/**
-	 * @see salomon.engine.task.ITaskRunner#resume()
-	 */
-	public void resume() throws PlatformException
-	{
-		try {
-			_remoteTaskRunner.resume();
-		} catch (RemoteException e) {
-			LOGGER.error("Remote error!", e);
-			throw new PlatformException(e.getLocalizedMessage());
-		}
-	}
+    /**
+     * @see salomon.engine.task.ITaskRunner#resume()
+     */
+    public void resume() throws PlatformException
+    {
+        try {
+            _remoteTaskRunner.resume();
+        } catch (RemoteException e) {
+            LOGGER.error("Remote error!", e);
+            throw new PlatformException(e.getLocalizedMessage());
+        }
+    }
 
-	/**
-	 * @see salomon.engine.task.ITaskRunner#start()
-	 */
-	public void start() throws PlatformException
-	{
-		try {
-			_remoteTaskRunner.start();
-		} catch (RemoteException e) {
-			LOGGER.error("Remote error!", e);
-			throw new PlatformException(e.getLocalizedMessage());
-		}
-	}
+    /**
+     * @see salomon.engine.task.ITaskRunner#start()
+     */
+    public void start() throws PlatformException
+    {
+        try {
+            _remoteTaskRunner.start();
+        } catch (RemoteException e) {
+            LOGGER.error("Remote error!", e);
+            throw new PlatformException(e.getLocalizedMessage());
+        }
+    }
 
-	/**
-	 * @see salomon.engine.task.ITaskRunner#stop()
-	 */
-	public void stop() throws PlatformException
-	{
-		try {
-			_remoteTaskRunner.stop();
-		} catch (RemoteException e) {
-			LOGGER.error("Remote error!", e);
-			throw new PlatformException(e.getLocalizedMessage());
-		}
-	}
+    /**
+     * @see salomon.engine.task.ITaskRunner#stop()
+     */
+    public void stop() throws PlatformException
+    {
+        try {
+            _remoteTaskRunner.stop();
+        } catch (RemoteException e) {
+            LOGGER.error("Remote error!", e);
+            throw new PlatformException(e.getLocalizedMessage());
+        }
+    }
 
-	private static final Logger LOGGER = Logger.getLogger(TaskRunnerProxy.class);
+    private static final Logger LOGGER = Logger.getLogger(TaskRunnerProxy.class);
 
 }

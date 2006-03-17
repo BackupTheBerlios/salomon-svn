@@ -28,21 +28,20 @@ import salomon.engine.controller.gui.PluginManagerGUI;
 public final class ChoosePluginFileAction extends AbstractPluginAction
 {
 
+    /**
+     * @param editionManager
+     */
+    protected ChoosePluginFileAction(PluginManagerGUI editionManager)
+    {
+        super(editionManager);
+    }
 
-	/**
-	 * @param editionManager
-	 */
-	protected ChoosePluginFileAction(PluginManagerGUI editionManager)
-	{
-		super(editionManager);
-	}
-
-	/**
-	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-	 */
-	public void actionPerformed(ActionEvent e)
-	{
-		_pluginMangerGUI.choosePluginFile();
-	}
+    /**
+     * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+     */
+    public void actionPerformed(ActionEvent e)
+    {
+        _pluginMangerGUI.choosePluginFile();
+    }
 
 }

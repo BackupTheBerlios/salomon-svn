@@ -21,11 +21,10 @@
 
 package salomon.platform.data.dataset;
 
-
 /**
  * 
  */
 public interface ICondition
 {
-	// empty body
+    // empty body
 }

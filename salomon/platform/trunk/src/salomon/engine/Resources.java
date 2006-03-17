@@ -33,40 +33,40 @@ import org.apache.log4j.Logger;
 public final class Resources
 {
 
-	/**
-	 * 
-	 */
-	private Resources()
-	{
-		// prevent creating an instance
-	}
+    /**
+     * 
+     */
+    private Resources()
+    {
+        // prevent creating an instance
+    }
 
-	/**
-	 * @param key
-	 * @return String matching given key
-	 */
-	public static String getString(String key)
-	{
-		try {
-			return RESOURCE_BUNDLE.getString(key);
-		} catch (MissingResourceException e) {
-			LOGGER.fatal("", e);
-			return '!' + key + '!';
-		}
-	}
+    /**
+     * @param key
+     * @return String matching given key
+     */
+    public static String getString(String key)
+    {
+        try {
+            return RESOURCE_BUNDLE.getString(key);
+        } catch (MissingResourceException e) {
+            LOGGER.fatal("", e);
+            return '!' + key + '!';
+        }
+    }
 
-	private static final String BUNDLE_NAME = "resources";//$NON-NLS-1$
+    private static final String BUNDLE_NAME = "resources";//$NON-NLS-1$
 
-	private static final Logger LOGGER = Logger.getLogger(Resources.class);
+    private static final Logger LOGGER = Logger.getLogger(Resources.class);
 
-	private static ResourceBundle RESOURCE_BUNDLE = null;
+    private static ResourceBundle RESOURCE_BUNDLE = null;
 
-	static {
-		try {
-			RESOURCE_BUNDLE = ResourceBundle.getBundle(BUNDLE_NAME);
-		} catch (Exception e) {
-			LOGGER.fatal("", e);
-		}
-	}
+    static {
+        try {
+            RESOURCE_BUNDLE = ResourceBundle.getBundle(BUNDLE_NAME);
+        } catch (Exception e) {
+            LOGGER.fatal("", e);
+        }
+    }
 
 }

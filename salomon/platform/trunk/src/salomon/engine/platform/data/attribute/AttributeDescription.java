@@ -21,40 +21,44 @@
 
 package salomon.engine.platform.data.attribute;
 
-
-import salomon.platform.data.attribute.*;
-import salomon.platform.data.attribute.description.*;
+import salomon.platform.data.attribute.IAttribute;
+import salomon.platform.data.attribute.description.IIntegerAttributeDescription;
 import salomon.platform.exception.PlatformException;
 
-public abstract class AttributeDescription implements
-		IIntegerAttributeDescription{
+public abstract class AttributeDescription
+        implements IIntegerAttributeDescription
+{
 
-	private String _name;
+    private String _name;
 
-	protected AttributeDescription(String name) {
-		_name = name;
-	}
+    protected AttributeDescription(String name)
+    {
+        _name = name;
+    }
 
-	/* (non-Javadoc)
-	 * @see salomon.platform.data.attribute.description.IAttributeDescription#getName()
-	 */
-	public String getName() {
-		return _name;
-	}
+    /* (non-Javadoc)
+     * @see salomon.platform.data.attribute.description.IAttributeDescription#getName()
+     */
+    public String getName()
+    {
+        return _name;
+    }
 
-	/* (non-Javadoc)
-	 * @see salomon.platform.data.attribute.description.IAttributeDescription#createAttribute(java.lang.Object)
-	 */
-	public IAttribute createAttribute(Object value) throws PlatformException {
-		return new Attribute(this, value);
-	}
+    /* (non-Javadoc)
+     * @see salomon.platform.data.attribute.description.IAttributeDescription#createAttribute(java.lang.Object)
+     */
+    public IAttribute createAttribute(Object value) throws PlatformException
+    {
+        return new Attribute(this, value);
+    }
 
-	/**
-	 * Compares two instances of AttributeDescription 
-	 * @param a
-	 * @return
-	 */
-	public boolean equals(AttributeDescription a) {
-		return (_name.equals(a.getName()));
-	}
+    /**
+     * Compares two instances of AttributeDescription 
+     * @param a
+     * @return
+     */
+    public boolean equals(AttributeDescription a)
+    {
+        return (_name.equals(a.getName()));
+    }
 }

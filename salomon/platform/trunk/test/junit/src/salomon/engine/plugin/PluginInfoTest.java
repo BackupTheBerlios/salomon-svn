@@ -28,7 +28,6 @@ import junit.framework.TestCase;
 import org.apache.log4j.PropertyConfigurator;
 
 import salomon.engine.database.DBManager;
-
 import salomon.engine.platform.ManagerEngine;
 
 public class PluginInfoTest extends TestCase
@@ -58,6 +57,7 @@ public class PluginInfoTest extends TestCase
         _manager.rollback();
     }
 
+    @Override
     protected void setUp() throws Exception
     {
         PropertyConfigurator.configure("log.conf"); //$NON-NLS-1$   

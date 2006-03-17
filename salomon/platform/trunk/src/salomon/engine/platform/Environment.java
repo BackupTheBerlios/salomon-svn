@@ -33,31 +33,31 @@ import salomon.platform.exception.PlatformException;
  */
 public final class Environment implements IEnvironment
 {
-	private Map<String, IVariable> _variables = new HashMap<String, IVariable>();
+    private Map<String, IVariable> _variables = new HashMap<String, IVariable>();
 
-	public void add(IVariable variable) throws PlatformException
-	{
-		_variables.put(variable.getName(), variable);
-	}
+    public void add(IVariable variable) throws PlatformException
+    {
+        _variables.put(variable.getName(), variable);
+    }
 
-	public IVariable createEmpty(String name) throws PlatformException
-	{
-		return new Variable(name);
-	}
+    public IVariable createEmpty(String name) throws PlatformException
+    {
+        return new Variable(name);
+    }
 
-	public IVariable[] getAll() throws PlatformException
-	{
-		return _variables.values().toArray(new IVariable[_variables.size()]);
-	}
+    public IVariable[] getAll() throws PlatformException
+    {
+        return _variables.values().toArray(new IVariable[_variables.size()]);
+    }
 
-	public IVariable getVariable(String name) throws PlatformException
-	{
-		return _variables.get(name);
-	}
+    public IVariable getVariable(String name) throws PlatformException
+    {
+        return _variables.get(name);
+    }
 
-	public void remove(IVariable variable) throws PlatformException
-	{
-		_variables.remove(variable.getName());
-	}
+    public void remove(IVariable variable) throws PlatformException
+    {
+        _variables.remove(variable.getName());
+    }
 
 } // class Environment

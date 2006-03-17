@@ -32,5 +32,5 @@ import salomon.platform.serialization.IStruct;
  */
 public interface ISettings extends Serializable, IStruct
 {
-	void init(IObject o);
+    void init(IObject o);
 }

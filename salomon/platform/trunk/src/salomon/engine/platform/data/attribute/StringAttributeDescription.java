@@ -25,17 +25,21 @@ import salomon.platform.data.attribute.IAttribute;
 import salomon.platform.data.attribute.description.IStringAttributeDescription;
 import salomon.platform.exception.PlatformException;
 
-public class StringAttributeDescription extends AttributeDescription implements
-		IStringAttributeDescription {
+public class StringAttributeDescription extends AttributeDescription
+        implements IStringAttributeDescription
+{
 
-	protected StringAttributeDescription(String name) {
-		super(name);
-	}
+    protected StringAttributeDescription(String name)
+    {
+        super(name);
+    }
 
-	/* (non-Javadoc)
-	 * @see salomon.platform.data.attribute.description.IAttributeDescription#createAttribute(java.lang.Object)
-	 */
-	public IAttribute createAttribute(Object value) throws PlatformException {
-		return new Attribute(this, value);
-	}
+    /* (non-Javadoc)
+     * @see salomon.platform.data.attribute.description.IAttributeDescription#createAttribute(java.lang.Object)
+     */
+    @Override
+    public IAttribute createAttribute(Object value) throws PlatformException
+    {
+        return new Attribute(this, value);
+    }
 }

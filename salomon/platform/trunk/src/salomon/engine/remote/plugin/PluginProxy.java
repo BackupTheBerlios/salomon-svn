@@ -22,10 +22,8 @@
 package salomon.engine.remote.plugin;
 
 import salomon.engine.plugin.PluginInfo;
-
 import salomon.platform.IDataEngine;
 import salomon.platform.IEnvironment;
-
 import salomon.plugin.IPlugin;
 import salomon.plugin.IResult;
 import salomon.plugin.IResultComponent;
@@ -42,59 +40,45 @@ import salomon.plugin.ISettings;
 public final class PluginProxy implements IPlugin
 {
 
-	/**
-	 * 
-	 * @uml.property name="_localPlugin"
-	 * @uml.associationEnd multiplicity="(0 1)"
-	 */
-	private IPlugin _localPlugin;
+    /**
+     * @see salomon.plugin.IDataPlugin#doJob(IDataEngine, IEnvironment, ISettings)
+     */
+    public IResult doJob(IDataEngine engine, IEnvironment environment,
+            ISettings settings)
+    {
+        //FIXME		
+        throw new UnsupportedOperationException(
+                "Method getResultComponent() not implemented yet!");
+    }
 
-	/**
-	 * 
-	 * @uml.property name="_remotePlugin"
-	 * @uml.associationEnd multiplicity="(0 1)"
-	 */
-	private IRemotePlugin _remotePlugin;
+    /**
+     * @see salomon.plugin.IPlugin#getInfo()
+     */
+    public PluginInfo getDescription()
+    {
 
-	/**
-	 * @see salomon.plugin.IDataPlugin#doJob(IDataEngine, IEnvironment, ISettings)
-	 */
-	public IResult doJob(IDataEngine engine, IEnvironment environment,
-			ISettings settings)
-	{
-		//FIXME		
-		throw new UnsupportedOperationException(
-				"Method getResultComponent() not implemented yet!");
-	}
+        //FIXME
+        throw new UnsupportedOperationException(
+                "Method getResultComponent() not implemented yet!");
+    }
 
-	/**
-	 * @see salomon.plugin.IPlugin#getInfo()
-	 */
-	public PluginInfo getDescription()
-	{
+    /**
+     * @see salomon.plugin.IGraphicPlugin#getResultComponent()
+     */
+    public IResultComponent getResultComponent()
+    {
+        //FIXME
+        throw new UnsupportedOperationException(
+                "Method getResultComponent() not implemented yet!");
+    }
 
-		//FIXME
-		throw new UnsupportedOperationException(
-				"Method getResultComponent() not implemented yet!");
-	}
-
-	/**
-	 * @see salomon.plugin.IGraphicPlugin#getResultComponent()
-	 */
-	public IResultComponent getResultComponent()
-	{
-		//FIXME
-		throw new UnsupportedOperationException(
-				"Method getResultComponent() not implemented yet!");
-	}
-
-	/**
-	 * @see salomon.plugin.IGraphicPlugin#getSettingComponent()
-	 */
-	public ISettingComponent getSettingComponent()
-	{
-		//FIXME
-		throw new UnsupportedOperationException(
-				"Method getResultComponent() not implemented yet!");
-	}
+    /**
+     * @see salomon.plugin.IGraphicPlugin#getSettingComponent()
+     */
+    public ISettingComponent getSettingComponent()
+    {
+        //FIXME
+        throw new UnsupportedOperationException(
+                "Method getResultComponent() not implemented yet!");
+    }
 }

@@ -22,7 +22,6 @@
 package salomon.engine.project;
 
 import salomon.engine.task.ITaskManager;
-
 import salomon.platform.IInfo;
 import salomon.platform.exception.PlatformException;
 
@@ -31,26 +30,26 @@ import salomon.platform.exception.PlatformException;
  */
 public interface IProject
 {
-	/**
-	 * @return Returns the info.
-	 */
-	IInfo getInfo() throws PlatformException;
+    /**
+     * @return Returns the info.
+     */
+    IInfo getInfo() throws PlatformException;
 
-	/**
-	 * Returns the TaskManager.
-	 * @return The TaskManager
-	 * @throws PlatformException
-	 * 
-	 * @pre $none
-	 * @post $result != null
-	 */
-	ITaskManager getTaskManager() throws PlatformException;
+    /**
+     * Returns the TaskManager.
+     * @return The TaskManager
+     * @throws PlatformException
+     * 
+     * @pre $none
+     * @post $result != null
+     */
+    ITaskManager getTaskManager() throws PlatformException;
 
-	/**
-	 * Returns ProjectManager managing this project.
-	 * 
-	 * @return
-	 * @throws PlatformException
-	 */
-	IProjectManager getProjectManager() throws PlatformException;
+    /**
+     * Returns ProjectManager managing this project.
+     * 
+     * @return
+     * @throws PlatformException
+     */
+    IProjectManager getProjectManager() throws PlatformException;
 }

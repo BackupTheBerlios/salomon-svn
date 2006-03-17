@@ -31,17 +31,17 @@ import salomon.engine.controller.gui.SolutionManagerGUI;
 abstract class AbstractSolutionAction extends AbstractAction
 {
 
-	/**
-	 * an object which method are called in implementation of actionPerformed()
-	 * method
-	 * 
-	 * @uml.property name="_solutionEditionManager"
-	 * @uml.associationEnd multiplicity="(0 1)"
-	 */
-	protected SolutionManagerGUI _solutionEditionManager;
+    /**
+     * an object which method are called in implementation of actionPerformed()
+     * method
+     * 
+     * @uml.property name="_solutionEditionManager"
+     * @uml.associationEnd multiplicity="(0 1)"
+     */
+    protected SolutionManagerGUI _solutionEditionManager;
 
-	protected AbstractSolutionAction(SolutionManagerGUI solutionEditionManager)
-	{
-		_solutionEditionManager = solutionEditionManager;
-	}
+    protected AbstractSolutionAction(SolutionManagerGUI solutionEditionManager)
+    {
+        _solutionEditionManager = solutionEditionManager;
+    }
 }

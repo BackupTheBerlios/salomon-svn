@@ -32,20 +32,20 @@ import salomon.engine.controller.gui.PluginManagerGUI;
 public final class RemovePluginAction extends AbstractPluginAction
 {
 
-	/**
-	 * @param editionManager
-	 */
-	public RemovePluginAction(PluginManagerGUI editionManager)
-	{
-		super(editionManager);
-	}
+    /**
+     * @param editionManager
+     */
+    public RemovePluginAction(PluginManagerGUI editionManager)
+    {
+        super(editionManager);
+    }
 
-	/**
-	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-	 */
-	public void actionPerformed(ActionEvent e)
-	{
-		_pluginMangerGUI.removePlugin();
-	}
+    /**
+     * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+     */
+    public void actionPerformed(ActionEvent e)
+    {
+        _pluginMangerGUI.removePlugin();
+    }
 
 }

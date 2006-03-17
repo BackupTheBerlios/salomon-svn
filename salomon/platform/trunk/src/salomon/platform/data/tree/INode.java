@@ -28,37 +28,44 @@ package salomon.platform.data.tree;
  */
 public interface INode
 {
-	enum Type {
-		COLUMN, VALUE,
-	};
+    enum Type {
+        COLUMN, VALUE,
+    };
 
-	int getId();
-	void setId(int id);
-	
-	
-	Type getType();
-	
-	void setType(Type type);
-	
-	String getValue();
-	void setValue(String value);
-	
-	String getParentEdge();
-	void setParentEdge(String parentEdge);
-	
-	
-	boolean isRoot();
-	INode getRoot();
-	INode getParent();
-	void setParent(INode parent);
-	
+    int getId();
 
-	INode[] getChildren();
-	void setChildren(INode[] children);
-	void addChild(INode child);
-	void addChildren(INode[] child);
-	INode[] getLeafs();
-	boolean isLeaf();
-	
+    void setId(int id);
+
+    Type getType();
+
+    void setType(Type type);
+
+    String getValue();
+
+    void setValue(String value);
+
+    String getParentEdge();
+
+    void setParentEdge(String parentEdge);
+
+    boolean isRoot();
+
+    INode getRoot();
+
+    INode getParent();
+
+    void setParent(INode parent);
+
+    INode[] getChildren();
+
+    void setChildren(INode[] children);
+
+    void addChild(INode child);
+
+    void addChildren(INode[] child);
+
+    INode[] getLeafs();
+
+    boolean isLeaf();
 
 }

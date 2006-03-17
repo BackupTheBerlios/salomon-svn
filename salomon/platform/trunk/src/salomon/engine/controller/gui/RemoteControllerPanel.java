@@ -47,140 +47,142 @@ import salomon.engine.holder.ManagerEngineHolder;
 public final class RemoteControllerPanel
 {
 
-	private JList _controllerList;
+    private JList _controllerList;
 
-	private DefaultListModel _controllerListModel;
+    private DefaultListModel _controllerListModel;
 
-	private JPopupMenu _controllerPopup;
+    private JPopupMenu _controllerPopup;
 
-	/**
-	 * 
-	 * @uml.property name="_engineHolder"
-	 * @uml.associationEnd multiplicity="(0 1)"
-	 */
-	private ManagerEngineHolder _engineHolder;
+    /**
+     * 
+     * @uml.property name="_engineHolder"
+     * @uml.associationEnd multiplicity="(0 1)"
+     */
+    private ManagerEngineHolder _engineHolder;
 
-	/**
-	 * 
-	 * @uml.property name="_parent"
-	 * @uml.associationEnd multiplicity="(0 1)"
-	 */
-	private ControllerFrame _parent;
+    /**
+     * 
+     * @uml.property name="_parent"
+     * @uml.associationEnd multiplicity="(0 1)"
+     */
+    private ControllerFrame _parent;
 
-	private int _selectedItem;
+    private int _selectedItem;
 
-	public RemoteControllerPanel(ManagerEngineHolder engineHolder)
-	{
-		_engineHolder = engineHolder;
-		_controllerListModel = new DefaultListModel();
-		_controllerList = new JList(_controllerListModel);
-		_controllerList.addMouseListener(new PopupListener());
-		_controllerList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		_controllerList.addListSelectionListener(new RemoteControllerSelectionListener());
-	}
+    public RemoteControllerPanel(ManagerEngineHolder engineHolder)
+    {
+        _engineHolder = engineHolder;
+        _controllerListModel = new DefaultListModel();
+        _controllerList = new JList(_controllerListModel);
+        _controllerList.addMouseListener(new PopupListener());
+        _controllerList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        _controllerList.addListSelectionListener(new RemoteControllerSelectionListener());
+    }
 
-	public void addController(RemoteControllerGUI controller)
-	{
-		_controllerListModel.addElement(controller);
-		LOGGER.debug("controller added.");
-	}
+    public void addController(RemoteControllerGUI controller)
+    {
+        _controllerListModel.addElement(controller);
+        LOGGER.debug("controller added.");
+    }
 
-	/**
-	 * @return Returns the hostList.
-	 */
-	public JComponent getControllerPanel()
-	{
-		return new JScrollPane(_controllerList);
-	}
+    /**
+     * @return Returns the hostList.
+     */
+    public JComponent getControllerPanel()
+    {
+        return new JScrollPane(_controllerList);
+    }
 
-	public void removeAllControllers()
-	{
-		LOGGER.debug("Removing controllers: " + _controllerListModel.getSize());
-		// slow but simple ;-)
-		Object[] controllers = _controllerListModel.toArray();
-		for (int i = 0; i < controllers.length; i++) {
-			removeController((RemoteControllerGUI) controllers[i]);
-		}
-	}
+    public void removeAllControllers()
+    {
+        LOGGER.debug("Removing controllers: " + _controllerListModel.getSize());
+        // slow but simple ;-)
+        Object[] controllers = _controllerListModel.toArray();
+        for (int i = 0; i < controllers.length; i++) {
+            removeController((RemoteControllerGUI) controllers[i]);
+        }
+    }
 
-	public void removeController(RemoteControllerGUI controller)
-	{
-		LOGGER.debug("RemoteControllerPanel.removeController()");
-		controller.exit();
-		_controllerListModel.removeElement(controller);
-		LOGGER.debug("controller removed.");
-	}
+    public void removeController(RemoteControllerGUI controller)
+    {
+        LOGGER.debug("RemoteControllerPanel.removeController()");
+        controller.exit();
+        _controllerListModel.removeElement(controller);
+        LOGGER.debug("controller removed.");
+    }
 
-	/**
-	 * @param parent The parent to set.
-	 */
-	public void setParent(ControllerFrame parent)
-	{
-		_parent = parent;
-	}
+    /**
+     * @param parent The parent to set.
+     */
+    public void setParent(ControllerFrame parent)
+    {
+        _parent = parent;
+    }
 
-	private JPopupMenu getControllerPopup()
-	{
-		if (_controllerPopup == null) {
-			_controllerPopup = new JPopupMenu();
-			JMenuItem itmRemoveController = new JMenuItem(
-					Messages.getString("MNU_REMOVE_CONTROLLER")); //$NON-NLS-1$
-			itmRemoveController.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e)
-				{
-					removeController();
-				}
-			});
-			_controllerPopup.add(itmRemoveController);
-		}
-		return _controllerPopup;
-	}
+    private JPopupMenu getControllerPopup()
+    {
+        if (_controllerPopup == null) {
+            _controllerPopup = new JPopupMenu();
+            JMenuItem itmRemoveController = new JMenuItem(
+                    Messages.getString("MNU_REMOVE_CONTROLLER")); //$NON-NLS-1$
+            itmRemoveController.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e)
+                {
+                    removeController();
+                }
+            });
+            _controllerPopup.add(itmRemoveController);
+        }
+        return _controllerPopup;
+    }
 
-	private void removeController()
-	{
-		RemoteControllerGUI controllerGUI = (RemoteControllerGUI) _controllerListModel.get(_selectedItem);
-		removeController(controllerGUI);
-	}
+    private void removeController()
+    {
+        RemoteControllerGUI controllerGUI = (RemoteControllerGUI) _controllerListModel.get(_selectedItem);
+        removeController(controllerGUI);
+    }
 
-	private class PopupListener extends MouseAdapter
-	{
-		public void mousePressed(MouseEvent e)
-		{
-			maybeShowPopup(e);
-		}
+    private class PopupListener extends MouseAdapter
+    {
+        @Override
+        public void mousePressed(MouseEvent e)
+        {
+            maybeShowPopup(e);
+        }
 
-		public void mouseReleased(MouseEvent e)
-		{
-			maybeShowPopup(e);
-		}
+        @Override
+        public void mouseReleased(MouseEvent e)
+        {
+            maybeShowPopup(e);
+        }
 
-		private void maybeShowPopup(MouseEvent e)
-		{
-			if (e.isPopupTrigger()) {
-				// zapamietanie ktory komponent z listy wywoluje menu
-				JList list = (JList) e.getSource();
-				_selectedItem = list.locationToIndex(e.getPoint());
-				if (_selectedItem >= 0) {
-					getControllerPopup().show(e.getComponent(), e.getX(),
-							e.getY());
-				}
-			}
-		}
-	}
+        private void maybeShowPopup(MouseEvent e)
+        {
+            if (e.isPopupTrigger()) {
+                // zapamietanie ktory komponent z listy wywoluje menu
+                JList list = (JList) e.getSource();
+                _selectedItem = list.locationToIndex(e.getPoint());
+                if (_selectedItem >= 0) {
+                    getControllerPopup().show(e.getComponent(), e.getX(),
+                            e.getY());
+                }
+            }
+        }
+    }
 
-	private final class RemoteControllerSelectionListener
-			implements ListSelectionListener
-	{
-		public void valueChanged(ListSelectionEvent e)
-		{
-			RemoteControllerGUI controllerGUI = (RemoteControllerGUI) ((JList) e.getSource()).getSelectedValue();
-			if (controllerGUI != null) {
-				_engineHolder.setCurrentManager(controllerGUI.getManagerEngine());
-				_parent.refreshGui();
-			}
-		}
+    private final class RemoteControllerSelectionListener
+            implements ListSelectionListener
+    {
+        public void valueChanged(ListSelectionEvent e)
+        {
+            RemoteControllerGUI controllerGUI = (RemoteControllerGUI) ((JList) e.getSource()).getSelectedValue();
+            if (controllerGUI != null) {
+                _engineHolder.setCurrentManager(controllerGUI.getManagerEngine());
+                _parent.refreshGui();
+            }
+        }
 
-	}
+    }
 
-	private static Logger LOGGER = Logger.getLogger(RemoteControllerPanel.class);
+    private static Logger LOGGER = Logger.getLogger(RemoteControllerPanel.class);
 }

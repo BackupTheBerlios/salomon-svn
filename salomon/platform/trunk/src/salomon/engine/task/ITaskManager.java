@@ -22,7 +22,6 @@
 package salomon.engine.task;
 
 import salomon.engine.project.IProject;
-
 import salomon.platform.exception.PlatformException;
 
 /**
@@ -30,76 +29,76 @@ import salomon.platform.exception.PlatformException;
  */
 public interface ITaskManager
 {
-	void addTask(ITask task) throws PlatformException;
+    void addTask(ITask task) throws PlatformException;
 
-	/**
-	 * Clear list of created tasks.
-	 * It is used to refresh GUI after change of current project. 
-	 */	
-	void clearTasks() throws PlatformException;
+    /**
+     * Clear list of created tasks.
+     * It is used to refresh GUI after change of current project. 
+     */
+    void clearTasks() throws PlatformException;
 
-	/**
-	 * Creates new task.
-	 * 
-	 * @return new task
-	 */
-	ITask createTask() throws PlatformException;
+    /**
+     * Creates new task.
+     * 
+     * @return new task
+     */
+    ITask createTask() throws PlatformException;
 
-	/**
-	 * Returns current task.
-	 * 
-	 * @return current task
-	 */
-	ITask getCurrentTask() throws PlatformException;
+    /**
+     * Returns current task.
+     * 
+     * @return current task
+     */
+    ITask getCurrentTask() throws PlatformException;
 
-	/**
-	 * 
-	 */
-	ITaskRunner getRunner() throws PlatformException;
+    /**
+     * 
+     */
+    ITaskRunner getRunner() throws PlatformException;
 
-	/**
-	 * Returns all tasks.
-	 * 
-	 * @return collection of tasks
-	 */
-	ITask[] getTasks() throws PlatformException;
+    /**
+     * Returns all tasks.
+     * 
+     * @return collection of tasks
+     */
+    ITask[] getTasks() throws PlatformException;
 
-	/**
-	 * Removes task from the task list.
-	 * 
-	 * @param task to be removed
-	 * @return
-	 * @throws PlatformException
-	 */
-	boolean removeTask(ITask task) throws PlatformException;
-	
-	/**
-	 * Removes all tasks.
-	 * 
-	 * @return
-	 * @throws PlatformException
-	 */
-	boolean removeAll() throws PlatformException;
-	
-	/**
-	 * Saves tasks list in data base.
-	 * 
-	 * @throws PlatformException
-	 */
-	void saveTasks() throws PlatformException;
-	
-	/**
-	 * Returns project holding TaskManager instance.
-	 * 
-	 * @return
-	 * @throws PlatformException
-	 */
-	IProject getProject() throws PlatformException; 
-	
-	/**
-	 * Starts tasks execution.
-	 * @see ITaskRunner
-	 * @deprecated Use ITaskRunner
-	 */
-	void start() throws PlatformException;
+    /**
+     * Removes task from the task list.
+     * 
+     * @param task to be removed
+     * @return
+     * @throws PlatformException
+     */
+    boolean removeTask(ITask task) throws PlatformException;
+
+    /**
+     * Removes all tasks.
+     * 
+     * @return
+     * @throws PlatformException
+     */
+    boolean removeAll() throws PlatformException;
+
+    /**
+     * Saves tasks list in data base.
+     * 
+     * @throws PlatformException
+     */
+    void saveTasks() throws PlatformException;
+
+    /**
+     * Returns project holding TaskManager instance.
+     * 
+     * @return
+     * @throws PlatformException
+     */
+    IProject getProject() throws PlatformException;
+
+    /**
+     * Starts tasks execution.
+     * @see ITaskRunner
+     * @deprecated Use ITaskRunner
+     */
+    @Deprecated void start() throws PlatformException;
 }

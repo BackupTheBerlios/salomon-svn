@@ -28,7 +28,6 @@ import org.apache.log4j.Logger;
 import salomon.engine.project.IProjectManager;
 import salomon.engine.remote.project.ProjectManagerProxy;
 import salomon.engine.solution.ISolution;
-
 import salomon.platform.IDataEngine;
 import salomon.platform.IInfo;
 import salomon.platform.exception.PlatformException;
@@ -36,66 +35,66 @@ import salomon.platform.exception.PlatformException;
 public final class SolutionProxy implements ISolution
 {
 
-	/**
-	 * 
-	 * @uml.property name="_projectManager"
-	 * @uml.associationEnd multiplicity="(0 1)"
-	 */
-	private IProjectManager _projectManager;
+    /**
+     * 
+     * @uml.property name="_projectManager"
+     * @uml.associationEnd multiplicity="(0 1)"
+     */
+    private IProjectManager _projectManager;
 
-	/**
-	 * 
-	 * @uml.property name="_remoteSolution"
-	 * @uml.associationEnd multiplicity="(0 1)"
-	 */
-	private IRemoteSolution _remoteSolution;
+    /**
+     * 
+     * @uml.property name="_remoteSolution"
+     * @uml.associationEnd multiplicity="(0 1)"
+     */
+    private IRemoteSolution _remoteSolution;
 
-	/**
-	 * 
-	 */
-	public SolutionProxy(IRemoteSolution remoteSolution)
-	{
-		_remoteSolution = remoteSolution;
-	}
+    /**
+     * 
+     */
+    public SolutionProxy(IRemoteSolution remoteSolution)
+    {
+        _remoteSolution = remoteSolution;
+    }
 
-	/**
-	 * @see salomon.engine.solution.ISolution#getDataEngine()
-	 */
-	public IDataEngine getDataEngine() throws PlatformException
-	{
-		throw new UnsupportedOperationException(
-				"Method getManagerEngine() not implemented yet!");
-	}
+    /**
+     * @see salomon.engine.solution.ISolution#getDataEngine()
+     */
+    public IDataEngine getDataEngine() throws PlatformException
+    {
+        throw new UnsupportedOperationException(
+                "Method getManagerEngine() not implemented yet!");
+    }
 
-	/**
-	 * @see ISolution#getProjectManager()
-	 */
-	public IProjectManager getProjectManager() throws PlatformException
-	{
-		try {
-			if (_projectManager == null) {
-				_projectManager = new ProjectManagerProxy(
-						_remoteSolution.getProjectManager());
-			}
-		} catch (RemoteException e) {
-			LOGGER.error("Remote error!", e);
-			throw new PlatformException(e.getLocalizedMessage());
-		}
+    /**
+     * @see ISolution#getProjectManager()
+     */
+    public IProjectManager getProjectManager() throws PlatformException
+    {
+        try {
+            if (_projectManager == null) {
+                _projectManager = new ProjectManagerProxy(
+                        _remoteSolution.getProjectManager());
+            }
+        } catch (RemoteException e) {
+            LOGGER.error("Remote error!", e);
+            throw new PlatformException(e.getLocalizedMessage());
+        }
 
-		return _projectManager;
-	}
+        return _projectManager;
+    }
 
-	IRemoteSolution getRemoteSolution()
-	{
-		return _remoteSolution;
-	}
+    IRemoteSolution getRemoteSolution()
+    {
+        return _remoteSolution;
+    }
 
-	private static final Logger LOGGER = Logger.getLogger(SolutionProxy.class);
+    private static final Logger LOGGER = Logger.getLogger(SolutionProxy.class);
 
-	public IInfo getInfo() throws PlatformException
-	{
-		throw new UnsupportedOperationException(
-				"Method salomon.engine.remote.solution::SolutionProxy::getInfo()not implemented yet!");
-	}
+    public IInfo getInfo() throws PlatformException
+    {
+        throw new UnsupportedOperationException(
+                "Method salomon.engine.remote.solution::SolutionProxy::getInfo()not implemented yet!");
+    }
 
 }

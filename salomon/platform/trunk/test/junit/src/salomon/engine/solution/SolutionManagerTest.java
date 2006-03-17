@@ -26,11 +26,10 @@ import junit.framework.TestCase;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
+import salomon.engine.platform.ManagerEngine;
 import salomon.platform.IDataEngine;
 import salomon.platform.data.dataset.IDataSet;
 import salomon.platform.exception.PlatformException;
-
-import salomon.engine.platform.ManagerEngine;
 
 public class SolutionManagerTest extends TestCase
 {
@@ -140,6 +139,7 @@ public class SolutionManagerTest extends TestCase
     /*
      * @see TestCase#setUp()
      */
+    @Override
     protected void setUp() throws Exception
     {
         super.setUp();

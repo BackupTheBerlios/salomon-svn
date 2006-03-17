@@ -25,7 +25,6 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 
 import salomon.engine.solution.ISolution;
-
 import salomon.platform.exception.PlatformException;
 
 /**
@@ -33,25 +32,25 @@ import salomon.platform.exception.PlatformException;
  */
 public interface IRemoteSolutionManager extends Remote
 {
-	/**
-	 * @see salomon.engine.solution.ISolutionManager#addSolution(ISolution)
-	 */
-	void addSolution(IRemoteSolution solution) throws PlatformException,
-			RemoteException;
+    /**
+     * @see salomon.engine.solution.ISolutionManager#addSolution(ISolution)
+     */
+    void addSolution(IRemoteSolution solution) throws PlatformException,
+            RemoteException;
 
-	/**
-	 * @see salomon.engine.solution.ISolutionManager#createSolution()
-	 */
-	IRemoteSolution createSolution() throws PlatformException, RemoteException;
+    /**
+     * @see salomon.engine.solution.ISolutionManager#createSolution()
+     */
+    IRemoteSolution createSolution() throws PlatformException, RemoteException;
 
-	/**
-	 * @see salomon.engine.solution.ISolutionManager#getSolution(String)
-	 */
-	IRemoteSolution getSolution(String name) throws PlatformException,
-			RemoteException;
+    /**
+     * @see salomon.engine.solution.ISolutionManager#getSolution(String)
+     */
+    IRemoteSolution getSolution(String name) throws PlatformException,
+            RemoteException;
 
-	/**
-	 * @see salomon.engine.solution.ISolutionManager#getSolutions()
-	 */
-	IRemoteSolution[] getSolutions() throws PlatformException, RemoteException;
+    /**
+     * @see salomon.engine.solution.ISolutionManager#getSolutions()
+     */
+    IRemoteSolution[] getSolutions() throws PlatformException, RemoteException;
 }

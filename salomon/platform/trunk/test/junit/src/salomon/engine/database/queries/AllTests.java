@@ -29,16 +29,16 @@ import junit.framework.TestSuite;
 public class AllTests
 {
 
-	public static TestSuite suite()
-	{
-		TestSuite suite = new TestSuite(
-				"Test for salomon.engine.database.queries");
-		//$JUnit-BEGIN$
-		suite.addTestSuite(SQLDeleteTest.class);
-		suite.addTestSuite(SQLUpdateTest.class);
-		suite.addTestSuite(SQLSelectTest.class);
-		suite.addTestSuite(SQLInsertTest.class);
-		//$JUnit-END$
-		return suite;
-	}
+    public static TestSuite suite()
+    {
+        TestSuite suite = new TestSuite(
+                "Test for salomon.engine.database.queries");
+        //$JUnit-BEGIN$
+        suite.addTestSuite(SQLDeleteTest.class);
+        suite.addTestSuite(SQLUpdateTest.class);
+        suite.addTestSuite(SQLSelectTest.class);
+        suite.addTestSuite(SQLInsertTest.class);
+        //$JUnit-END$
+        return suite;
+    }
 }

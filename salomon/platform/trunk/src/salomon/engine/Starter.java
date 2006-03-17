@@ -31,11 +31,9 @@ import salomon.engine.controller.LibraryController;
 import salomon.engine.controller.LocalController;
 import salomon.engine.controller.MasterController;
 import salomon.engine.controller.ServantController;
-
-import salomon.util.gui.Utils;
-
 import salomon.engine.platform.IManagerEngine;
 import salomon.engine.platform.ManagerEngine;
+import salomon.util.gui.Utils;
 
 /**
  * Class starts application execution.
@@ -43,174 +41,174 @@ import salomon.engine.platform.ManagerEngine;
 public final class Starter
 {
 
-	/**
-	 * 
-	 * @uml.property name="_contoroller"
-	 * @uml.associationEnd multiplicity="(0 1)"
-	 */
-	private IController _contoroller;
+    /**
+     * 
+     * @uml.property name="_contoroller"
+     * @uml.associationEnd multiplicity="(0 1)"
+     */
+    private IController _contoroller;
 
-	/**
-	 * 
-	 * @uml.property name="_managerEngine"
-	 * @uml.associationEnd multiplicity="(0 1)"
-	 */
-	private IManagerEngine _managerEngine;
+    /**
+     * 
+     * @uml.property name="_managerEngine"
+     * @uml.associationEnd multiplicity="(0 1)"
+     */
+    private IManagerEngine _managerEngine;
 
-	// private ProjectManager _projectManager = null;
+    // private ProjectManager _projectManager = null;
 
-	private Starter()
-	{
-		PropertyConfigurator.configure("log.conf");
-		LOGGER.info("###  Application started  ###");
+    private Starter()
+    {
+        PropertyConfigurator.configure("log.conf");
+        LOGGER.info("###  Application started  ###");
 
-	}
+    }
 
-	private void exitImpl()
-	{
-		LOGGER.debug("controller: " + _contoroller.getClass());
-		_contoroller.exit();
-		LOGGER.info("###  Application exited  ###");
-		System.exit(0);
-	}
+    private void exitImpl()
+    {
+        LOGGER.debug("controller: " + _contoroller.getClass());
+        _contoroller.exit();
+        LOGGER.info("###  Application exited  ###");
+        System.exit(0);
+    }
 
-	private void initManagers()
-	{
-		try {
-			_managerEngine = new ManagerEngine();
-		} catch (Exception e) {
-			LOGGER.fatal("", e);
-			Utils.showErrorMessage(Messages.getString("ERR_CONNECTION_ERROR"));
-		}
-	}
+    private void initManagers()
+    {
+        try {
+            _managerEngine = new ManagerEngine();
+        } catch (Exception e) {
+            LOGGER.fatal("", e);
+            Utils.showErrorMessage(Messages.getString("ERR_CONNECTION_ERROR"));
+        }
+    }
 
-	private void start()
-	{
-		initManagers();
-		_contoroller.start(_managerEngine);
-	}
+    private void start()
+    {
+        initManagers();
+        _contoroller.start(_managerEngine);
+    }
 
-	private void startClientImpl()
-	{
-		LOGGER.debug("starting ServantController");
-		_contoroller = new ServantController();
-		start();
-	}
+    private void startClientImpl()
+    {
+        LOGGER.debug("starting ServantController");
+        _contoroller = new ServantController();
+        start();
+    }
 
-	private LibraryController startLibraryImpl()
-	{
-		LOGGER.debug("starting MasterController");
-		_contoroller = new LibraryController();
-		start();
+    private LibraryController startLibraryImpl()
+    {
+        LOGGER.debug("starting MasterController");
+        _contoroller = new LibraryController();
+        start();
 
-		return (LibraryController) _contoroller;
-	}
+        return (LibraryController) _contoroller;
+    }
 
-	private void startLocalImpl()
-	{
-		LOGGER.debug("starting LocalController");
-		_contoroller = new LocalController();
-		start();
-	}
+    private void startLocalImpl()
+    {
+        LOGGER.debug("starting LocalController");
+        _contoroller = new LocalController();
+        start();
+    }
 
-	private void startServerImpl()
-	{
-		LOGGER.debug("starting MasterController");
-		_contoroller = new MasterController();
-		start();
-	}
+    private void startServerImpl()
+    {
+        LOGGER.debug("starting MasterController");
+        _contoroller = new MasterController();
+        start();
+    }
 
-	/**
-	 * creates library controller
-	 * 
-	 * @return the created LibraryController
-	 */
-	public static LibraryController createLibraryController()
-	{
-		return Starter.startLibrary();
-	}
+    /**
+     * creates library controller
+     * 
+     * @return the created LibraryController
+     */
+    public static LibraryController createLibraryController()
+    {
+        return Starter.startLibrary();
+    }
 
-	/**
-	 * performs clean-up and exits
-	 */
-	public static void exit()
-	{
-		getInstance().exitImpl();
-	}
+    /**
+     * performs clean-up and exits
+     */
+    public static void exit()
+    {
+        getInstance().exitImpl();
+    }
 
-	/**
-	 * main method for starting Salomon
-	 * 
-	 * @param args parameters from the command line
-	 */
-	public static void main(String[] args)
-	{
-		if (args.length > 0) {
-			if ("--local".equals(args[0])) {
-				Starter.startLocal();
-			} else if ("--server".equals(args[0])) {
-				Starter.startServer();
-			} else if ("--client".equals(args[0])) {
-				Starter.startClient();
-			}
-		} else {
-			String mode = null;
-			try {
-				mode = Config.getString("MODE");
-				if ("local".equals(mode)) {
-					Starter.startLocal();
-				} else if ("server".equals(mode)) {
-					Starter.startServer();
-				} else if ("client".equals(mode)) {
-					Starter.startClient();
-				} else {
-					LOGGER.error("Wrong argument");
-					Starter.startLocal();
-				}
+    /**
+     * main method for starting Salomon
+     * 
+     * @param args parameters from the command line
+     */
+    public static void main(String[] args)
+    {
+        if (args.length > 0) {
+            if ("--local".equals(args[0])) {
+                Starter.startLocal();
+            } else if ("--server".equals(args[0])) {
+                Starter.startServer();
+            } else if ("--client".equals(args[0])) {
+                Starter.startClient();
+            }
+        } else {
+            String mode = null;
+            try {
+                mode = Config.getString("MODE");
+                if ("local".equals(mode)) {
+                    Starter.startLocal();
+                } else if ("server".equals(mode)) {
+                    Starter.startServer();
+                } else if ("client".equals(mode)) {
+                    Starter.startClient();
+                } else {
+                    LOGGER.error("Wrong argument");
+                    Starter.startLocal();
+                }
 
-			} catch (MissingResourceException e) {
-				LOGGER.fatal("", e);
-				LOGGER.warn("No argument choosen");
-				Starter.startLocal();
-			}
-		}
-	}
+            } catch (MissingResourceException e) {
+                LOGGER.fatal("", e);
+                LOGGER.warn("No argument choosen");
+                Starter.startLocal();
+            }
+        }
+    }
 
-	private static Starter getInstance()
-	{
-		if (_instance == null) {
-			_instance = new Starter();
-		}
+    private static Starter getInstance()
+    {
+        if (_instance == null) {
+            _instance = new Starter();
+        }
 
-		return _instance;
-	}
+        return _instance;
+    }
 
-	private static void startClient()
-	{
-		getInstance().startClientImpl();
-	}
+    private static void startClient()
+    {
+        getInstance().startClientImpl();
+    }
 
-	private static LibraryController startLibrary()
-	{
-		return getInstance().startLibraryImpl();
-	}
+    private static LibraryController startLibrary()
+    {
+        return getInstance().startLibraryImpl();
+    }
 
-	private static void startLocal()
-	{
-		getInstance().startLocalImpl();
-	}
+    private static void startLocal()
+    {
+        getInstance().startLocalImpl();
+    }
 
-	private static void startServer()
-	{
-		getInstance().startServerImpl();
-	}
+    private static void startServer()
+    {
+        getInstance().startServerImpl();
+    }
 
-	/**
-	 * 
-	 * @uml.property name="_instance"
-	 * @uml.associationEnd multiplicity="(0 1)"
-	 */
-	private static Starter _instance;
+    /**
+     * 
+     * @uml.property name="_instance"
+     * @uml.associationEnd multiplicity="(0 1)"
+     */
+    private static Starter _instance;
 
-	private static final Logger LOGGER = Logger.getLogger(Starter.class);
+    private static final Logger LOGGER = Logger.getLogger(Starter.class);
 }

@@ -27,21 +27,21 @@ package salomon.platform.exception;
 public class PlatformException extends Exception
 {
 
-	/**
-	 * @param message
-	 */
-	public PlatformException(String message)
-	{
-		super(message);
-	}
+    /**
+     * @param message
+     */
+    public PlatformException(String message)
+    {
+        super(message);
+    }
 
-	public PlatformException(String message, Throwable t)
-	{
-		super(message, t);
-	}
+    public PlatformException(String message, Throwable t)
+    {
+        super(message, t);
+    }
 
-	public PlatformException(Throwable t)
-	{
-		super(t);
-	}
+    public PlatformException(Throwable t)
+    {
+        super(t);
+    }
 }

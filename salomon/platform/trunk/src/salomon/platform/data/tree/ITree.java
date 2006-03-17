@@ -31,16 +31,27 @@ import java.util.Date;
  */
 public interface ITree
 {
-	int getId();
-	void setId(int id);
-	String getName();
-	void setName(String name);
-	String getInfo();
-	void setInfo(String info);
-	Date getCreateDate();
-	void setCreateDate(Date createDate);
-	IDataSource getDataSource();
-	void setDataSource(IDataSource dataSource);
-	INode getRoot();
-	void setRoot(INode root);
+    int getId();
+
+    void setId(int id);
+
+    String getName();
+
+    void setName(String name);
+
+    String getInfo();
+
+    void setInfo(String info);
+
+    Date getCreateDate();
+
+    void setCreateDate(Date createDate);
+
+    IDataSource getDataSource();
+
+    void setDataSource(IDataSource dataSource);
+
+    INode getRoot();
+
+    void setRoot(INode root);
 }

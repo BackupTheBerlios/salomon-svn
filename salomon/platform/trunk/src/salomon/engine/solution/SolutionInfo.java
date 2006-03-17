@@ -267,6 +267,7 @@ public final class SolutionInfo implements IInfo
         _user = user;
     }
 
+    @Override
     public String toString()
     {
         return "[" + _solutionID + ", " + _name + ", " + _info + ", " + _host

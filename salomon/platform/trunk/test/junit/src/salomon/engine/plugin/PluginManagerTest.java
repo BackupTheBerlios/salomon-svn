@@ -21,66 +21,60 @@
 
 package salomon.engine.plugin;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-
 import junit.framework.TestCase;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
-import salomon.platform.exception.DBException;
-import salomon.platform.exception.PlatformException;
-
-import salomon.plugin.IPlugin;
-
 import salomon.engine.platform.ManagerEngine;
+import salomon.platform.exception.PlatformException;
+import salomon.plugin.IPlugin;
 
 public class PluginManagerTest extends TestCase
 {
 
-	/**
-	 * 
-	 * @uml.property name="pluginManager"
-	 * @uml.associationEnd multiplicity="(0 1)"
-	 */
-	private PluginManager pluginManager;
+    /**
+     * 
+     * @uml.property name="pluginManager"
+     * @uml.associationEnd multiplicity="(0 1)"
+     */
+    private PluginManager pluginManager;
 
-	public void testGetPlugins()
-	{
-		LOGGER.info("PluginManagerTest.testGetPlugins()");
+    public void testGetPlugins()
+    {
+        LOGGER.info("PluginManagerTest.testGetPlugins()");
 
-		IPlugin[] plugins = null;
-		try {
-			plugins = pluginManager.getPlugins();
-			assertFalse(plugins.length == 0);
-			//for (int i = 0; i < plugins.length; i++) {
-			//	LOGGER.debug(plugins[i].getInfo());
-			//}
-		} catch (PlatformException e) {
-			LOGGER.fatal("", e);
-		}
-		assertFalse(plugins == null);
-	}
+        IPlugin[] plugins = null;
+        try {
+            plugins = pluginManager.getPlugins();
+            assertFalse(plugins.length == 0);
+            //for (int i = 0; i < plugins.length; i++) {
+            //	LOGGER.debug(plugins[i].getInfo());
+            //}
+        } catch (PlatformException e) {
+            LOGGER.fatal("", e);
+        }
+        assertFalse(plugins == null);
+    }
 
-	public void testRemovePlugin()
-	{
-		LOGGER.debug("PluginManagerTest.testRemovePlugin()");
-		//LocalPlugin plugin = new LocalPlugin();
-		//PluginInfo desc = new PluginInfo();
-		//desc.setPluginID(35);
-		//plugin.setInfo(desc);
-		//assertTrue(pluginManager.removePlugin(plugin));
-	}
+    public void testRemovePlugin()
+    {
+        LOGGER.debug("PluginManagerTest.testRemovePlugin()");
+        //LocalPlugin plugin = new LocalPlugin();
+        //PluginInfo desc = new PluginInfo();
+        //desc.setPluginID(35);
+        //plugin.setInfo(desc);
+        //assertTrue(pluginManager.removePlugin(plugin));
+    }
 
+    @Override
+    protected void setUp() throws Exception
+    {
+        PropertyConfigurator.configure("log.conf"); //$NON-NLS-1$
+        ManagerEngine engine = new ManagerEngine();
+        pluginManager = (PluginManager) engine.getPluginManager();
+    }
 
-	protected void setUp() throws Exception
-	{
-		PropertyConfigurator.configure("log.conf"); //$NON-NLS-1$
-		ManagerEngine engine = new ManagerEngine();
-		pluginManager = (PluginManager) engine.getPluginManager();
-	}
-
-	private static Logger LOGGER = Logger.getLogger(PluginManagerTest.class);
+    private static Logger LOGGER = Logger.getLogger(PluginManagerTest.class);
 
 }

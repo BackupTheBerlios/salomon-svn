@@ -35,66 +35,70 @@ import salomon.platform.exception.PlatformException;
  */
 public final class ConditionParser
 {
-	private static final Pattern PATTERN = Pattern.compile("^(\\w+)\\.(\\w+)\\s([=><])\\s(.+)$");
-	
-	public static ICondition parse(IMetaData metaData, String sql) throws PlatformException
-	{
-		if (metaData == null) {
-			throw new PlatformException("Meta data cannot be null!");
-		}
-		if (sql == null) {
-			throw new PlatformException("Sql cannot be null!");
-		}
-		
-		Matcher matcher = PATTERN.matcher(sql);
-		if (!matcher.matches()) {
-			throw new PlatformException("Cannot parse sql! Invalid format! " + sql);			
-		}
-		int groupCount = matcher.groupCount();
-		if (groupCount != 4) {
-			throw new PlatformException("Cannot parse sql! Invalid format! " + sql);
-		}
-		String tableName = matcher.group(1);
-		String columnName = matcher.group(2);
-		String operator = matcher.group(3);
-		String valueString = matcher.group(4);
-		Object value = getValue(valueString);
-		
-		ITable table = metaData.getTable(tableName);
-		IColumn column = table.getColumn(columnName);
-		ICondition result = null;
-		
-		if (">".equals(operator)) {
-			result = new GreaterCondition(column, value);
-		} else if ("<".equals(operator)) {
-			result = new LowerCondition(column, value);
-		} else if ("=".equals(operator)) {
-			result = new EqualsCondition(column, value);
-		} else {
-			throw new PlatformException("Invalid operator! \'" + operator + "\'");
-		}
-		
-		return result;
-	}
-	
-	public static Object getValue(String valueString) throws PlatformException
-	{
-		Object result = null;
-		if (valueString.startsWith("\'")) {
-			if (valueString.endsWith("\'")) {
-				// string value
-				result = valueString.substring(1, valueString.length() - 1);
-			} else {
-				throw new PlatformException("Invalid value: " + valueString);
-			}
-		} else {
-			if (!valueString.endsWith("\'")) {
-				result = Integer.parseInt(valueString);
-			} else {
-				throw new PlatformException("Invalid value: " + valueString);
-			}
-		}
-		
-		return result;
-	}
+    private static final Pattern PATTERN = Pattern.compile("^(\\w+)\\.(\\w+)\\s([=><])\\s(.+)$");
+
+    public static ICondition parse(IMetaData metaData, String sql)
+            throws PlatformException
+    {
+        if (metaData == null) {
+            throw new PlatformException("Meta data cannot be null!");
+        }
+        if (sql == null) {
+            throw new PlatformException("Sql cannot be null!");
+        }
+
+        Matcher matcher = PATTERN.matcher(sql);
+        if (!matcher.matches()) {
+            throw new PlatformException("Cannot parse sql! Invalid format! "
+                    + sql);
+        }
+        int groupCount = matcher.groupCount();
+        if (groupCount != 4) {
+            throw new PlatformException("Cannot parse sql! Invalid format! "
+                    + sql);
+        }
+        String tableName = matcher.group(1);
+        String columnName = matcher.group(2);
+        String operator = matcher.group(3);
+        String valueString = matcher.group(4);
+        Object value = getValue(valueString);
+
+        ITable table = metaData.getTable(tableName);
+        IColumn column = table.getColumn(columnName);
+        ICondition result = null;
+
+        if (">".equals(operator)) {
+            result = new GreaterCondition(column, value);
+        } else if ("<".equals(operator)) {
+            result = new LowerCondition(column, value);
+        } else if ("=".equals(operator)) {
+            result = new EqualsCondition(column, value);
+        } else {
+            throw new PlatformException("Invalid operator! \'" + operator
+                    + "\'");
+        }
+
+        return result;
+    }
+
+    public static Object getValue(String valueString) throws PlatformException
+    {
+        Object result = null;
+        if (valueString.startsWith("\'")) {
+            if (valueString.endsWith("\'")) {
+                // string value
+                result = valueString.substring(1, valueString.length() - 1);
+            } else {
+                throw new PlatformException("Invalid value: " + valueString);
+            }
+        } else {
+            if (!valueString.endsWith("\'")) {
+                result = Integer.parseInt(valueString);
+            } else {
+                throw new PlatformException("Invalid value: " + valueString);
+            }
+        }
+
+        return result;
+    }
 }

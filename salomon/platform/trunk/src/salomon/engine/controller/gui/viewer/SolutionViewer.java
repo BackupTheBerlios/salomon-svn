@@ -25,25 +25,29 @@ import salomon.engine.controller.gui.viewer.spread.AbstractSearchSpread;
 import salomon.engine.database.DBManager;
 import salomon.engine.solution.SolutionInfo;
 
-public class SolutionViewer extends AbstractSearchSpread {
-	
-	private static final long serialVersionUID = 1L;
+public class SolutionViewer extends AbstractSearchSpread
+{
 
-	public SolutionViewer(DBManager dbManager) {
-		super(dbManager);
-	}
+    private static final long serialVersionUID = 1L;
 
-	@Override
-	public void initColumns() {
-		_select.addTable(SolutionInfo.VIEW_NAME);
-	}
+    public SolutionViewer(DBManager dbManager)
+    {
+        super(dbManager);
+    }
 
-	@Override
-	public void initFilters() {
-		addFilteredField("Id", "SOLUTION_ID");
-		addFilteredField("Name", "SOLUTION_NAME");
-		addFilteredField("Info", "SOLUTION_INFO");
-		addFilteredField("Date", "LM_DATE");
-	}
+    @Override
+    public void initColumns()
+    {
+        _select.addTable(SolutionInfo.VIEW_NAME);
+    }
+
+    @Override
+    public void initFilters()
+    {
+        addFilteredField("Id", "SOLUTION_ID");
+        addFilteredField("Name", "SOLUTION_NAME");
+        addFilteredField("Info", "SOLUTION_INFO");
+        addFilteredField("Date", "LM_DATE");
+    }
 
 }

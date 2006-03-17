@@ -30,13 +30,11 @@ import java.rmi.registry.Registry;
 import org.apache.log4j.Logger;
 
 import salomon.engine.Config;
+import salomon.engine.platform.IManagerEngine;
 import salomon.engine.remote.ICentralController;
 import salomon.engine.remote.IRemoteController;
 import salomon.engine.remote.RemoteController;
-
 import salomon.platform.exception.PlatformException;
-
-import salomon.engine.platform.IManagerEngine;
 
 /**
  * Class is a client implementation of IController interface.
@@ -44,86 +42,86 @@ import salomon.engine.platform.IManagerEngine;
 public final class ServantController implements IController
 {
 
-	/**
-	 * 
-	 * @uml.property name="_managerEngine"
-	 * @uml.associationEnd multiplicity="(0 1)"
-	 */
-	private IManagerEngine _managerEngine;
+    /**
+     * 
+     * @uml.property name="_managerEngine"
+     * @uml.associationEnd multiplicity="(0 1)"
+     */
+    private IManagerEngine _managerEngine;
 
-	/**
-	 * 
-	 * @uml.property name="_masterController"
-	 * @uml.associationEnd multiplicity="(0 1)"
-	 */
-	private ICentralController _masterController;
+    /**
+     * 
+     * @uml.property name="_masterController"
+     * @uml.associationEnd multiplicity="(0 1)"
+     */
+    private ICentralController _masterController;
 
-	/**
-	 * 
-	 * @uml.property name="_remoteController"
-	 * @uml.associationEnd multiplicity="(0 1)"
-	 */
-	private IRemoteController _remoteController;
+    /**
+     * 
+     * @uml.property name="_remoteController"
+     * @uml.associationEnd multiplicity="(0 1)"
+     */
+    private IRemoteController _remoteController;
 
-	private String _serverHost;
+    private String _serverHost;
 
-	private int _serverPort;
+    private int _serverPort;
 
-	/**
-	 * @see salomon.engine.controller.IController#exit()
-	 */
-	public void exit()
-	{
-		LOGGER.info("Exiting client...");
-		try {
-			_masterController.unregister(_remoteController);
-		} catch (RemoteException e) {
-			LOGGER.fatal("", e);
-		}
-	}
+    /**
+     * @see salomon.engine.controller.IController#exit()
+     */
+    public void exit()
+    {
+        LOGGER.info("Exiting client...");
+        try {
+            _masterController.unregister(_remoteController);
+        } catch (RemoteException e) {
+            LOGGER.fatal("", e);
+        }
+    }
 
-	/**
-	 * @see salomon.engine.controller.IController#start(salomon.engine.platform.IManagerEngine)
-	 */
-	public void start(IManagerEngine managerEngine)
-	{
-		_managerEngine = managerEngine;
-		_serverHost = Config.getString("SERVER_HOST");
-		_serverPort = Integer.parseInt(Config.getString("SERVER_PORT"));
-		initRMI();
-	}
+    /**
+     * @see salomon.engine.controller.IController#start(salomon.engine.platform.IManagerEngine)
+     */
+    public void start(IManagerEngine managerEngine)
+    {
+        _managerEngine = managerEngine;
+        _serverHost = Config.getString("SERVER_HOST");
+        _serverPort = Integer.parseInt(Config.getString("SERVER_PORT"));
+        initRMI();
+    }
 
-	private void initRMI()
-	{
-		// throw new UnsupportedOperationException(
-		// "Method initRMI() not implemented yet!");
-		try {
-			System.setSecurityManager(new RMISecurityManager());
-			_remoteController = new RemoteController(_managerEngine,
-					_serverHost);
-			// new project is created at the beggining
-			// FIXME
-			_remoteController.getManagerEngine().getProjectManager().createProject();
-			Registry registry = LocateRegistry.getRegistry(_serverHost,
-					_serverPort);
-			LOGGER.debug("Registry at: " + _serverHost + ", on port: "
-					+ _serverPort);
-			try {
-				_masterController = (ICentralController) registry.lookup("CentralController");
-				_masterController.register(_remoteController);
-			} catch (NotBoundException e) {
-				LOGGER.fatal("", e);
-			}
+    private void initRMI()
+    {
+        // throw new UnsupportedOperationException(
+        // "Method initRMI() not implemented yet!");
+        try {
+            System.setSecurityManager(new RMISecurityManager());
+            _remoteController = new RemoteController(_managerEngine,
+                    _serverHost);
+            // new project is created at the beggining
+            // FIXME
+            _remoteController.getManagerEngine().getProjectManager().createProject();
+            Registry registry = LocateRegistry.getRegistry(_serverHost,
+                    _serverPort);
+            LOGGER.debug("Registry at: " + _serverHost + ", on port: "
+                    + _serverPort);
+            try {
+                _masterController = (ICentralController) registry.lookup("CentralController");
+                _masterController.register(_remoteController);
+            } catch (NotBoundException e) {
+                LOGGER.fatal("", e);
+            }
 
-		} catch (RemoteException e) {
-			LOGGER.fatal("Fatal error while initializing RMI."
-					+ " Application will be terminated", e);
-			System.exit(1);
-		} catch (PlatformException e) {
-			LOGGER.fatal("PlatformException while creating project!", e);
-		}
-	}
+        } catch (RemoteException e) {
+            LOGGER.fatal("Fatal error while initializing RMI."
+                    + " Application will be terminated", e);
+            System.exit(1);
+        } catch (PlatformException e) {
+            LOGGER.fatal("PlatformException while creating project!", e);
+        }
+    }
 
-	private static final Logger LOGGER = Logger.getLogger(ServantController.class);
+    private static final Logger LOGGER = Logger.getLogger(ServantController.class);
 
 } // end ClientManager

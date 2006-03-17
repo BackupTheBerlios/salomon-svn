@@ -28,44 +28,44 @@ import salomon.engine.platform.IManagerEngine;
 public final class LibraryController implements IController
 {
 
-	/**
-	 * 
-	 * @uml.property name="_managerEngine"
-	 * @uml.associationEnd multiplicity="(0 1)"
-	 */
-	private IManagerEngine _managerEngine;
+    /**
+     * 
+     * @uml.property name="_managerEngine"
+     * @uml.associationEnd multiplicity="(0 1)"
+     */
+    private IManagerEngine _managerEngine;
 
-	public LibraryController()
-	{
-		initManagers();
-	}
+    public LibraryController()
+    {
+        initManagers();
+    }
 
-	/**
-	 * @see salomon.engine.controller.IController#exit()
-	 */
-	public void exit()
-	{
-		// empty body
-	}
+    /**
+     * @see salomon.engine.controller.IController#exit()
+     */
+    public void exit()
+    {
+        // empty body
+    }
 
-	public IManagerEngine getManagerEngine()
-	{
-		return _managerEngine;
-	}
+    public IManagerEngine getManagerEngine()
+    {
+        return _managerEngine;
+    }
 
-	/**
-	 * @see salomon.engine.controller.IController#start(salomon.engine.platform.IManagerEngine)
-	 */
-	public void start(IManagerEngine managerEngine)
-	{
-		_managerEngine = managerEngine;
-	}
+    /**
+     * @see salomon.engine.controller.IController#start(salomon.engine.platform.IManagerEngine)
+     */
+    public void start(IManagerEngine managerEngine)
+    {
+        _managerEngine = managerEngine;
+    }
 
-	private void initManagers()
-	{
-		// FIXME: Create
-		//_managerEngine = new ManagerEngine();
-	}
+    private void initManagers()
+    {
+        // FIXME: Create
+        //_managerEngine = new ManagerEngine();
+    }
 
-	private static final Logger LOGGER = Logger.getLogger(LibraryController.class);
+    private static final Logger LOGGER = Logger.getLogger(LibraryController.class);
 }

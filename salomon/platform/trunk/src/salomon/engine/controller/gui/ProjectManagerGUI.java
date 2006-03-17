@@ -218,7 +218,7 @@ public final class ProjectManagerGUI
                 return;
             }
             _statusBar.setItem(SB_CUR_PROJECT,
-                    ((Project) project).getInfo().getName());
+                    project.getInfo().getName());
             _parent.refreshGui();
         }
     }

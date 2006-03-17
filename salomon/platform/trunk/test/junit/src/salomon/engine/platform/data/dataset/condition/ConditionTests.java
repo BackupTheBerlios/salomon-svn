@@ -27,17 +27,17 @@ import junit.framework.TestSuite;
 public class ConditionTests
 {
 
-	public static Test suite()
-	{
-		TestSuite suite = new TestSuite(
-				"Test for salomon.engine.platform.data.dataset.condition");
-		//$JUnit-BEGIN$
-		suite.addTestSuite(EqualsConditionTest.class);
-		suite.addTestSuite(GreaterConditionTest.class);
-		suite.addTestSuite(LowerConditionTest.class);
-		suite.addTestSuite(ConditionParserTest.class);
-		//$JUnit-END$
-		return suite;
-	}
+    public static Test suite()
+    {
+        TestSuite suite = new TestSuite(
+                "Test for salomon.engine.platform.data.dataset.condition");
+        //$JUnit-BEGIN$
+        suite.addTestSuite(EqualsConditionTest.class);
+        suite.addTestSuite(GreaterConditionTest.class);
+        suite.addTestSuite(LowerConditionTest.class);
+        suite.addTestSuite(ConditionParserTest.class);
+        //$JUnit-END$
+        return suite;
+    }
 
 }

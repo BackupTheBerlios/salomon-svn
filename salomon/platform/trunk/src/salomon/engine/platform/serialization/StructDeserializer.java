@@ -26,12 +26,11 @@ import java.util.LinkedList;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import salomon.platform.serialization.IObject;
 import salomon.util.serialization.SimpleArray;
 import salomon.util.serialization.SimpleInteger;
 import salomon.util.serialization.SimpleString;
 import salomon.util.serialization.SimpleStruct;
-
-import salomon.platform.serialization.IObject;
 
 /**
  * 
@@ -43,90 +42,90 @@ import salomon.platform.serialization.IObject;
 final class StructDeserializer implements INodeNames
 {
 
-	/**
-	 * creates and IObjest out of the given node
-	 * 
-	 * @param node
-	 * @return IObject
-	 */
-	public static SimpleStruct deserialize(Node node)
-	{
-		SimpleStruct result = new SimpleStruct();
-		NodeList nodeList = node.getChildNodes();
-		for (int i = 0; i < nodeList.getLength(); i++) {
-			Node childNode = nodeList.item(i);
-			if (Node.ELEMENT_NODE == childNode.getNodeType()) {
-				String nodeName = getNodeName(childNode);
-				IObject fieldObject = deserializeObject(childNode);
-				result.setField(nodeName, fieldObject);
-			}
-		}
-		return result;
-	}
+    /**
+     * creates and IObjest out of the given node
+     * 
+     * @param node
+     * @return IObject
+     */
+    public static SimpleStruct deserialize(Node node)
+    {
+        SimpleStruct result = new SimpleStruct();
+        NodeList nodeList = node.getChildNodes();
+        for (int i = 0; i < nodeList.getLength(); i++) {
+            Node childNode = nodeList.item(i);
+            if (Node.ELEMENT_NODE == childNode.getNodeType()) {
+                String nodeName = getNodeName(childNode);
+                IObject fieldObject = deserializeObject(childNode);
+                result.setField(nodeName, fieldObject);
+            }
+        }
+        return result;
+    }
 
-	/**
-	 * TODO: add comment.
-	 * @param childNode
-	 * @return
-	 */
-	private static IObject deserializeObject(Node childNode)
-	{
-		String nodeType = childNode.getNodeName();
-		IObject fieldObject = null;
-		if (NODE_INT.equals(nodeType)) {
-			SimpleInteger integerObject = new SimpleInteger();
-			integerObject.setValue(getIntValue(childNode));
-			fieldObject = integerObject;
-		} else if (NODE_STRING.equals(nodeType)) {
-			SimpleString stringObject = new SimpleString();
-			stringObject.setValue(getStringValue(childNode));
-			fieldObject = stringObject;
-		} else if (NODE_STRUCT.equals(nodeType)) {
-			fieldObject = StructDeserializer.deserialize(childNode);
-		} else if (NODE_ARRAY.equals(nodeType)) {
-			fieldObject = StructDeserializer.deserializeSimpleArray(childNode);
-		}
+    /**
+     * TODO: add comment.
+     * @param childNode
+     * @return
+     */
+    private static IObject deserializeObject(Node childNode)
+    {
+        String nodeType = childNode.getNodeName();
+        IObject fieldObject = null;
+        if (NODE_INT.equals(nodeType)) {
+            SimpleInteger integerObject = new SimpleInteger();
+            integerObject.setValue(getIntValue(childNode));
+            fieldObject = integerObject;
+        } else if (NODE_STRING.equals(nodeType)) {
+            SimpleString stringObject = new SimpleString();
+            stringObject.setValue(getStringValue(childNode));
+            fieldObject = stringObject;
+        } else if (NODE_STRUCT.equals(nodeType)) {
+            fieldObject = StructDeserializer.deserialize(childNode);
+        } else if (NODE_ARRAY.equals(nodeType)) {
+            fieldObject = StructDeserializer.deserializeSimpleArray(childNode);
+        }
 
-		return fieldObject;
-	}
+        return fieldObject;
+    }
 
-	private static SimpleArray deserializeSimpleArray(Node arrayNode)
-	{
-		LinkedList<IObject> items = new LinkedList<IObject>();
-		NodeList childNodeList = arrayNode.getChildNodes();
-		for (int i = 0; i < childNodeList.getLength(); ++i) {
-			Node childNode = childNodeList.item(i);
-			if (childNode.getNodeType() == Node.ELEMENT_NODE) {
-				IObject item = deserializeObject(childNode);
-				items.add(item);
-			}
-		}
+    private static SimpleArray deserializeSimpleArray(Node arrayNode)
+    {
+        LinkedList<IObject> items = new LinkedList<IObject>();
+        NodeList childNodeList = arrayNode.getChildNodes();
+        for (int i = 0; i < childNodeList.getLength(); ++i) {
+            Node childNode = childNodeList.item(i);
+            if (childNode.getNodeType() == Node.ELEMENT_NODE) {
+                IObject item = deserializeObject(childNode);
+                items.add(item);
+            }
+        }
 
-		return new SimpleArray(items.toArray(new IObject[items.size()]));
-	}
+        return new SimpleArray(items.toArray(new IObject[items.size()]));
+    }
 
-	private static int getIntValue(Node node)
-	{
-		String value = node.getAttributes().getNamedItem(ATTR_VALUE).getNodeValue();
-		int result = 0;
-		try {
-			result = Integer.parseInt(value);
-		} catch (NumberFormatException e) {
-			LOGGER.error("couldn't parse " + value, e);
-		}
-		return result;
-	}
+    private static int getIntValue(Node node)
+    {
+        String value = node.getAttributes().getNamedItem(ATTR_VALUE).getNodeValue();
+        int result = 0;
+        try {
+            result = Integer.parseInt(value);
+        } catch (NumberFormatException e) {
+            LOGGER.error("couldn't parse " + value, e);
+        }
+        return result;
+    }
 
-	private static String getNodeName(Node node)
-	{
-		String result = node.getAttributes().getNamedItem(ATTR_NAME).getNodeValue();
-		return result;
-	}
+    private static String getNodeName(Node node)
+    {
+        String result = node.getAttributes().getNamedItem(ATTR_NAME).getNodeValue();
+        return result;
+    }
 
-	private static String getStringValue(Node node)
-	{
-		String result = node.getAttributes().getNamedItem(ATTR_VALUE).getNodeValue();
-		return result;
-	}
+    private static String getStringValue(Node node)
+    {
+        String result = node.getAttributes().getNamedItem(ATTR_VALUE).getNodeValue();
+        return result;
+    }
 
 }

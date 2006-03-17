@@ -34,125 +34,128 @@ import salomon.platform.exception.PlatformException;
  */
 public interface ITreeManager
 {
-	
-	/**
-	 * Metoda zwraca ilosc wierszy tabeli,ktorej nazwa jest podana jako parametr
-	 * 
-	 * @param tableName
-	 * @return
-	 * @throws PlatformException
-	 */
-	int getTableSize(String tableName)throws PlatformException;
-	/**
-	 * Metoda zwraca liste wierszy bedacych wynikiem pobrania danych z zewnetrznej bazy
-	 * na podstawie IDataSource.
-	 * 
-	 * @param dataSource
-	 * @return
-	 */
-	List<Object []> getTreeDataSourceData(IDataSource dataSource) throws PlatformException;
-	/**
-	 * Metoda zwraca liste pozostalych wierszy nie wskazywanych przez IDataSource
-	 * 
-	 * @param dataSource
-	 * @return
-	 */	
-	List<Object []> getRestTreeDataSourceRows(IDataSource dataSource) throws PlatformException;
-	/**
-	 * Tworzy instancje IDataSource
-	 * @return
-	 * @throws PlatformException
-	 */
-	IDataSource createTreeDataSource() throws PlatformException;
-	
-	/**
-	 * Dodaje IDataSource do bazy danych 
-	 * @param dataSource
-	 * @return id stworzonego data sourca 
-	 * @throws PlatformException
-	 */
-	int addTreeDataSource(IDataSource dataSource) throws PlatformException;;
-	
-	/**
-	 * Zwraca liste poprawnych DataSourcow dla aktualnego solutiona
-	 * @return
-	 * @throws PlatformException
-	 */
-	IDataSource[] getTreeDataSources() throws PlatformException;
 
-	/**
-	 * Zwraca IDataSource o podanym id pod warunkiem ze nalezy do obecnego solutiona
-	 * @param treeDataSourceId
-	 * @return
-	 * @throws PlatformException
-	 */
-	IDataSource getTreeDataSource(int treeDataSourceId)	throws PlatformException;;
+    /**
+     * Metoda zwraca ilosc wierszy tabeli,ktorej nazwa jest podana jako parametr
+     * 
+     * @param tableName
+     * @return
+     * @throws PlatformException
+     */
+    int getTableSize(String tableName) throws PlatformException;
 
-	
-	/**
-	 * Usuwa z bazy danych  zrodlo danych o danym id 
-	 * @param dataSourceId
-	 * @throws PlatformException
-	 */
-	void removeTreeDataSource(int dataSourceId) throws PlatformException;
-	
-	/**
-	 * Tworzy puste drzewo. Przed zapisem do bazy nalezy je zainicjowac korzeniem 
-	 * oraz zrodlem danych z ktorego powstalo.
-	 * @return
-	 * @throws PlatformException
-	 */
-	public ITree createTree() throws PlatformException;
+    /**
+     * Metoda zwraca liste wierszy bedacych wynikiem pobrania danych z zewnetrznej bazy
+     * na podstawie IDataSource.
+     * 
+     * @param dataSource
+     * @return
+     */
+    List<Object[]> getTreeDataSourceData(IDataSource dataSource)
+            throws PlatformException;
 
-	/**
-	 * Tworzy puste drzewo
-	 * @param dataSourceId -id data sourca, jesli nie istnieje rzuca wyjatek
-	 * @param info - info
-	 * @param name - nazwa drzewka
-	 * @param root - korzen drzewa, nie moze byc nullem
-	 * @return
-	 * @throws PlatformException
-	 */
-	public ITree createTree(int dataSourceId, String info, String name, INode root) throws PlatformException;
-	
-	/**
-	 * Tworzy node dla drzewa. Nalezy dodawac dzieci metoda addChild(ren), setChildren na nodach
-	 * @param parentNode - null oznacza ze jest pusty
-	 * @param edge - w przypadku korzenia ignorowane
-	 * @param type - jesli docelowo bedzie to node bedacy lisciem to nalezy ustawic typ V
-	 * @param value
-	 * @return
-	 */
-	public INode createNode(INode parentNode, String edge, Type type, String value);
-	
+    /**
+     * Metoda zwraca liste pozostalych wierszy nie wskazywanych przez IDataSource
+     * 
+     * @param dataSource
+     * @return
+     */
+    List<Object[]> getRestTreeDataSourceRows(IDataSource dataSource)
+            throws PlatformException;
 
-	/**
-	 * Dodaje drzewo do bazy danych
-	 */
-	int addTree(ITree tree) throws PlatformException;
+    /**
+     * Tworzy instancje IDataSource
+     * @return
+     * @throws PlatformException
+     */
+    IDataSource createTreeDataSource() throws PlatformException;
 
-	
-	
-	/**
-	 * Zwraca drzewa zwiazane z danym solutionem
-	 * @return
-	 * @throws PlatformException
-	 */
-	ITree[] getTrees() throws PlatformException;
+    /**
+     * Dodaje IDataSource do bazy danych 
+     * @param dataSource
+     * @return id stworzonego data sourca 
+     * @throws PlatformException
+     */
+    int addTreeDataSource(IDataSource dataSource) throws PlatformException;;
 
-	/**
-	 * Zwraca drzewo zwiazane z obecnym solutionem i posiadajace podane id. W przeciwnym razie rzuca PlatformException
-	 * @param treeId
-	 * @return
-	 * @throws PlatformException
-	 */
-	ITree getTree(int treeId) throws PlatformException;
+    /**
+     * Zwraca liste poprawnych DataSourcow dla aktualnego solutiona
+     * @return
+     * @throws PlatformException
+     */
+    IDataSource[] getTreeDataSources() throws PlatformException;
 
+    /**
+     * Zwraca IDataSource o podanym id pod warunkiem ze nalezy do obecnego solutiona
+     * @param treeDataSourceId
+     * @return
+     * @throws PlatformException
+     */
+    IDataSource getTreeDataSource(int treeDataSourceId)
+            throws PlatformException;;
 
-	/**
-	 * Usuwa drzewo o podanym id z bazy danych.
-	 * @param treeId
-	 * @throws PlatformException
-	 */
-	void removeTree(int treeId) throws PlatformException;
+    /**
+     * Usuwa z bazy danych  zrodlo danych o danym id 
+     * @param dataSourceId
+     * @throws PlatformException
+     */
+    void removeTreeDataSource(int dataSourceId) throws PlatformException;
+
+    /**
+     * Tworzy puste drzewo. Przed zapisem do bazy nalezy je zainicjowac korzeniem 
+     * oraz zrodlem danych z ktorego powstalo.
+     * @return
+     * @throws PlatformException
+     */
+    public ITree createTree() throws PlatformException;
+
+    /**
+     * Tworzy puste drzewo
+     * @param dataSourceId -id data sourca, jesli nie istnieje rzuca wyjatek
+     * @param info - info
+     * @param name - nazwa drzewka
+     * @param root - korzen drzewa, nie moze byc nullem
+     * @return
+     * @throws PlatformException
+     */
+    public ITree createTree(int dataSourceId, String info, String name,
+            INode root) throws PlatformException;
+
+    /**
+     * Tworzy node dla drzewa. Nalezy dodawac dzieci metoda addChild(ren), setChildren na nodach
+     * @param parentNode - null oznacza ze jest pusty
+     * @param edge - w przypadku korzenia ignorowane
+     * @param type - jesli docelowo bedzie to node bedacy lisciem to nalezy ustawic typ V
+     * @param value
+     * @return
+     */
+    public INode createNode(INode parentNode, String edge, Type type,
+            String value);
+
+    /**
+     * Dodaje drzewo do bazy danych
+     */
+    int addTree(ITree tree) throws PlatformException;
+
+    /**
+     * Zwraca drzewa zwiazane z danym solutionem
+     * @return
+     * @throws PlatformException
+     */
+    ITree[] getTrees() throws PlatformException;
+
+    /**
+     * Zwraca drzewo zwiazane z obecnym solutionem i posiadajace podane id. W przeciwnym razie rzuca PlatformException
+     * @param treeId
+     * @return
+     * @throws PlatformException
+     */
+    ITree getTree(int treeId) throws PlatformException;
+
+    /**
+     * Usuwa drzewo o podanym id z bazy danych.
+     * @param treeId
+     * @throws PlatformException
+     */
+    void removeTree(int treeId) throws PlatformException;
 }

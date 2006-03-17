@@ -22,7 +22,6 @@
 package salomon.engine.project;
 
 import salomon.engine.solution.ISolution;
-
 import salomon.platform.exception.PlatformException;
 
 /**
@@ -30,50 +29,50 @@ import salomon.platform.exception.PlatformException;
  */
 public interface IProjectManager
 {
-	/**
-	 * Adds the project to the Solution. 
-	 * @param project The project which should be added
-	 * @throws PlatformException
-	 */
-	void addProject(IProject project) throws PlatformException;
+    /**
+     * Adds the project to the Solution. 
+     * @param project The project which should be added
+     * @throws PlatformException
+     */
+    void addProject(IProject project) throws PlatformException;
 
-	/**
-	 * Creates new, empty project
-	 */
-	IProject createProject() throws PlatformException;
+    /**
+     * Creates new, empty project
+     */
+    IProject createProject() throws PlatformException;
 
-	//TODO: it should not be used 
-	IProject getCurrentProject() throws PlatformException;
+    //TODO: it should not be used 
+    IProject getCurrentProject() throws PlatformException;
 
-	/**
-	 * Method loads project from data base.
-	 * 
-	 * @param projectID
-	 * @throws PlatformException
-	 */
-	IProject getProject(int projectID) throws PlatformException;
+    /**
+     * Method loads project from data base.
+     * 
+     * @param projectID
+     * @throws PlatformException
+     */
+    IProject getProject(int projectID) throws PlatformException;
 
-	/**
-	 * Returns collection of available projects.
-	 * 
-	 * TODO: change it Returns collection od arrays of object 1 row is an array
-	 * of column names next are data. If there is no data, only column names are
-	 * returned
-	 * 
-	 * @return The array of all projects
-	 * @throws PlatformException
-	 */
-	IProject[] getProjects() throws PlatformException;
+    /**
+     * Returns collection of available projects.
+     * 
+     * TODO: change it Returns collection od arrays of object 1 row is an array
+     * of column names next are data. If there is no data, only column names are
+     * returned
+     * 
+     * @return The array of all projects
+     * @throws PlatformException
+     */
+    IProject[] getProjects() throws PlatformException;
 
-	ISolution getSolution() throws PlatformException;
+    ISolution getSolution() throws PlatformException;
 
-	boolean removeAll() throws PlatformException;
+    boolean removeAll() throws PlatformException;
 
-	boolean removeProject(IProject project) throws PlatformException;
+    boolean removeProject(IProject project) throws PlatformException;
 
-	/**
-	 * Method saves project in data base - project header, plugins and tasks are
-	 * saved.
-	 */
-	void saveProject() throws PlatformException;
+    /**
+     * Method saves project in data base - project header, plugins and tasks are
+     * saved.
+     */
+    void saveProject() throws PlatformException;
 }

@@ -34,40 +34,41 @@ import edu.uci.ics.jung.visualization.control.TranslatingGraphMousePlugin;
 
 public final class SalomonEditingModalGraphMouse extends EditingModalGraphMouse
 {
-	private GraphTaskManagerGUI _graphTaskManagerGUI;
+    private GraphTaskManagerGUI _graphTaskManagerGUI;
 
-	public SalomonEditingModalGraphMouse(GraphTaskManagerGUI graphTaskManagerGUI)
-	{
-		_graphTaskManagerGUI = graphTaskManagerGUI;
-	}
+    public SalomonEditingModalGraphMouse(GraphTaskManagerGUI graphTaskManagerGUI)
+    {
+        _graphTaskManagerGUI = graphTaskManagerGUI;
+    }
 
-	public void setVertexLocations(
-			SettableVertexLocationFunction vertexLocations)
-	{
-		loadPluginsImpl();
-		((SalomonEditingGraphMousePlugin) editingPlugin).setVertexLocations(vertexLocations);
-	}
+    @Override
+    public void setVertexLocations(
+            SettableVertexLocationFunction vertexLocations)
+    {
+        loadPluginsImpl();
+        ((SalomonEditingGraphMousePlugin) editingPlugin).setVertexLocations(vertexLocations);
+    }
 
-	//	@Override
-	protected void loadPluginsImpl()
-	{
-		pickingPlugin = new PickingGraphMousePlugin();
-		animatedPickingPlugin = new AnimatedPickingGraphMousePlugin();
-		translatingPlugin = new TranslatingGraphMousePlugin(
-				InputEvent.BUTTON1_MASK);
-		scalingPlugin = new CrossoverScalingGraphMousePlugin(in, out);
-		rotatingPlugin = new RotatingGraphMousePlugin();
-		shearingPlugin = new ShearingGraphMousePlugin();
-		editingPlugin = new SalomonEditingGraphMousePlugin(_graphTaskManagerGUI);
+    //	@Override
+    protected void loadPluginsImpl()
+    {
+        pickingPlugin = new PickingGraphMousePlugin();
+        animatedPickingPlugin = new AnimatedPickingGraphMousePlugin();
+        translatingPlugin = new TranslatingGraphMousePlugin(
+                InputEvent.BUTTON1_MASK);
+        scalingPlugin = new CrossoverScalingGraphMousePlugin(in, out);
+        rotatingPlugin = new RotatingGraphMousePlugin();
+        shearingPlugin = new ShearingGraphMousePlugin();
+        editingPlugin = new SalomonEditingGraphMousePlugin(_graphTaskManagerGUI);
 
-		add(scalingPlugin);
-		setMode(Mode.EDITING);
-	}
+        add(scalingPlugin);
+        setMode(Mode.EDITING);
+    }
 
-	@Override
-	protected void loadPlugins()
-	{
-		// do nothing
-	}
+    @Override
+    protected void loadPlugins()
+    {
+        // do nothing
+    }
 
 }

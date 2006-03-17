@@ -7,17 +7,17 @@ import salomon.engine.controller.gui.SolutionManagerGUI;
 
 public class ViewSolutionAction extends AbstractSolutionAction
 {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	protected ViewSolutionAction(SolutionManagerGUI solutionManagerGUI)
-	{
-		super(solutionManagerGUI);
-	}
+    protected ViewSolutionAction(SolutionManagerGUI solutionManagerGUI)
+    {
+        super(solutionManagerGUI);
+    }
 
-	public void actionPerformed(ActionEvent arg0)
-	{
-		System.out.println("action preformator");
-		_solutionEditionManager.viewSolutions();
-	}
+    public void actionPerformed(ActionEvent arg0)
+    {
+        System.out.println("action preformator");
+        _solutionEditionManager.viewSolutions();
+    }
 
 }

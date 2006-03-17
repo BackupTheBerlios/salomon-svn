@@ -25,23 +25,27 @@ import salomon.engine.controller.gui.viewer.spread.AbstractSearchSpread;
 import salomon.engine.database.DBManager;
 import salomon.engine.plugin.PluginInfo;
 
-public class PluginViewer extends AbstractSearchSpread {
-	private static final long serialVersionUID = 1L;
+public class PluginViewer extends AbstractSearchSpread
+{
+    private static final long serialVersionUID = 1L;
 
-	public PluginViewer(DBManager dbManager) {
-		super(dbManager);
-	}
+    public PluginViewer(DBManager dbManager)
+    {
+        super(dbManager);
+    }
 
-	@Override
-	public void initColumns() {
-		_select.addTable(PluginInfo.VIEW_NAME);
-	}
+    @Override
+    public void initColumns()
+    {
+        _select.addTable(PluginInfo.VIEW_NAME);
+    }
 
-	@Override
-	public void initFilters() {
-		addFilteredField("id", "solution_id");
-		addFilteredField("name", "solution_name");
-		addFilteredField("info", "solution_info");
-		addFilteredField("location", "location");
-	}
+    @Override
+    public void initFilters()
+    {
+        addFilteredField("id", "solution_id");
+        addFilteredField("name", "solution_name");
+        addFilteredField("info", "solution_info");
+        addFilteredField("location", "location");
+    }
 }

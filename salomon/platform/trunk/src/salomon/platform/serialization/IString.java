@@ -24,16 +24,16 @@ package salomon.platform.serialization;
 public interface IString extends IObject
 {
 
-	/**
-	 * 
-	 * @uml.property name="value"
-	 */
-	void setValue(String value);
+    /**
+     * 
+     * @uml.property name="value"
+     */
+    void setValue(String value);
 
-	/**
-	 * 
-	 * @uml.property name="value"
-	 */
-	String getValue();
+    /**
+     * 
+     * @uml.property name="value"
+     */
+    String getValue();
 
 }

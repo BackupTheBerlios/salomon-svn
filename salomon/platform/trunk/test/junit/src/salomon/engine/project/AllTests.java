@@ -30,13 +30,13 @@ import junit.framework.TestSuite;
 public class AllTests
 {
 
-	public static Test suite()
-	{
-		TestSuite suite = new TestSuite("Test for salomon.engine.project");
-		//$JUnit-BEGIN$
-		suite.addTestSuite(ProjectManagerTest.class);
-		suite.addTestSuite(ProjectTest.class);
-		//$JUnit-END$
-		return suite;
-	}
+    public static Test suite()
+    {
+        TestSuite suite = new TestSuite("Test for salomon.engine.project");
+        //$JUnit-BEGIN$
+        suite.addTestSuite(ProjectManagerTest.class);
+        suite.addTestSuite(ProjectTest.class);
+        //$JUnit-END$
+        return suite;
+    }
 }

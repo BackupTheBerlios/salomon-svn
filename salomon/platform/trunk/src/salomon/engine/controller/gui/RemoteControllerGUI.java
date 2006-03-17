@@ -25,10 +25,9 @@ import java.rmi.RemoteException;
 
 import org.apache.log4j.Logger;
 
+import salomon.engine.platform.IManagerEngine;
 import salomon.engine.remote.IRemoteController;
 import salomon.engine.remote.ManagerEngineProxy;
-
-import salomon.engine.platform.IManagerEngine;
 
 /**
  * Class is graphic representation of client controllers connected to server.
@@ -37,123 +36,126 @@ import salomon.engine.platform.IManagerEngine;
 public final class RemoteControllerGUI
 {
 
-	/**
-	 * 
-	 * @uml.property name="_managerEngine"
-	 * @uml.associationEnd multiplicity="(0 1)"
-	 */
-	private IManagerEngine _managerEngine;
+    /**
+     * 
+     * @uml.property name="_managerEngine"
+     * @uml.associationEnd multiplicity="(0 1)"
+     */
+    private IManagerEngine _managerEngine;
 
-	/**
-	 * 
-	 * @uml.property name="_remoteController"
-	 * @uml.associationEnd multiplicity="(0 1)"
-	 */
-	private IRemoteController _remoteController;
+    /**
+     * 
+     * @uml.property name="_remoteController"
+     * @uml.associationEnd multiplicity="(0 1)"
+     */
+    private IRemoteController _remoteController;
 
-	/**
-	 *  
-	 */
-	public RemoteControllerGUI(IRemoteController remoteController)
-	{
-		_remoteController = remoteController;
-		try {
-			_managerEngine = new ManagerEngineProxy(
-					_remoteController.getManagerEngine());
-		} catch (RemoteException e) {
-			LOGGER.fatal("", e);
-		}
-	}
+    /**
+     *  
+     */
+    public RemoteControllerGUI(IRemoteController remoteController)
+    {
+        _remoteController = remoteController;
+        try {
+            _managerEngine = new ManagerEngineProxy(
+                    _remoteController.getManagerEngine());
+        } catch (RemoteException e) {
+            LOGGER.fatal("", e);
+        }
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
-	public boolean equals(Object object)
-	{
-		boolean areEqual = false;
-		if (object instanceof RemoteControllerGUI) {
-			RemoteControllerGUI controllerGUI = (RemoteControllerGUI) object;
-			areEqual = _remoteController.equals(controllerGUI._remoteController);
-		} else {
-			areEqual = false;
-		}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(Object object)
+    {
+        boolean areEqual = false;
+        if (object instanceof RemoteControllerGUI) {
+            RemoteControllerGUI controllerGUI = (RemoteControllerGUI) object;
+            areEqual = _remoteController.equals(controllerGUI._remoteController);
+        } else {
+            areEqual = false;
+        }
 
-		return areEqual;
-	}
+        return areEqual;
+    }
 
-	/**
-	 * @return Returns the controller.
-	 */
-	public IRemoteController getController()
-	{
-		return _remoteController;
-	}
+    /**
+     * @return Returns the controller.
+     */
+    public IRemoteController getController()
+    {
+        return _remoteController;
+    }
 
-	public String getDescription()
-	{
-		String description = null;
+    public String getDescription()
+    {
+        String description = null;
 
-		try {
-			description = _remoteController.getDescription();
-		} catch (RemoteException e) {
-			LOGGER.fatal("", e);
-			description = e.getLocalizedMessage();
-		}
+        try {
+            description = _remoteController.getDescription();
+        } catch (RemoteException e) {
+            LOGGER.fatal("", e);
+            description = e.getLocalizedMessage();
+        }
 
-		return description;
-	}
+        return description;
+    }
 
-	public IManagerEngine getManagerEngine()
-	{
-		return _managerEngine;
-	}
+    public IManagerEngine getManagerEngine()
+    {
+        return _managerEngine;
+    }
 
-	public String getName()
-	{
-		String name = null;
-		try {
-			name = _remoteController.getName();
-		} catch (RemoteException e) {
-			LOGGER.fatal("", e);
-			name = e.getLocalizedMessage();
-		}
+    public String getName()
+    {
+        String name = null;
+        try {
+            name = _remoteController.getName();
+        } catch (RemoteException e) {
+            LOGGER.fatal("", e);
+            name = e.getLocalizedMessage();
+        }
 
-		return name;
-	}
+        return name;
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#hashCode()
-	 */
-	public int hashCode()
-	{
-		return _remoteController.hashCode();
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode()
+    {
+        return _remoteController.hashCode();
+    }
 
-	public String toString()
-	{
-		String name;
-		try {
-			name = _remoteController.getName();
-		} catch (RemoteException e) {
-			LOGGER.fatal("", e);
-			name = e.getLocalizedMessage();
-		}
-		return name;
-	}
+    @Override
+    public String toString()
+    {
+        String name;
+        try {
+            name = _remoteController.getName();
+        } catch (RemoteException e) {
+            LOGGER.fatal("", e);
+            name = e.getLocalizedMessage();
+        }
+        return name;
+    }
 
-	public void exit()
-	{
-		LOGGER.debug("RemoteController.exit()");
-		try {
-			_remoteController.exit();
-		} catch (RemoteException e) {
-			LOGGER.debug(e.getLocalizedMessage());
-		}
-	}
+    public void exit()
+    {
+        LOGGER.debug("RemoteController.exit()");
+        try {
+            _remoteController.exit();
+        } catch (RemoteException e) {
+            LOGGER.debug(e.getLocalizedMessage());
+        }
+    }
 
-	private static final Logger LOGGER = Logger.getLogger(RemoteControllerGUI.class);
+    private static final Logger LOGGER = Logger.getLogger(RemoteControllerGUI.class);
 }

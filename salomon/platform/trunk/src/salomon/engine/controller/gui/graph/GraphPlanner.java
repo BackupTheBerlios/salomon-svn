@@ -28,56 +28,55 @@ import java.util.Set;
 
 import org.apache.log4j.Logger;
 
+import salomon.engine.task.ITask;
 import edu.uci.ics.jung.graph.Edge;
 import edu.uci.ics.jung.graph.Graph;
 import edu.uci.ics.jung.graph.Vertex;
 
-import salomon.engine.task.ITask;
-
 public final class GraphPlanner
 {
-	public static List<ITask> makePlan(Graph graph)
-	{
-		Set vertices = graph.getVertices();
-		Set<Vertex> notPlannedVertices = new HashSet<Vertex>(vertices);
-		List<ITask> result = new ArrayList<ITask>(vertices.size());
-		while (notPlannedVertices.size() > 0) {
-			Vertex nextVertex = getNextVertex(notPlannedVertices);
-			if (nextVertex == null) {
-				LOGGER.debug("Cannot create plan!");
-				return null;
-			}
+    public static List<ITask> makePlan(Graph graph)
+    {
+        Set vertices = graph.getVertices();
+        Set<Vertex> notPlannedVertices = new HashSet<Vertex>(vertices);
+        List<ITask> result = new ArrayList<ITask>(vertices.size());
+        while (notPlannedVertices.size() > 0) {
+            Vertex nextVertex = getNextVertex(notPlannedVertices);
+            if (nextVertex == null) {
+                LOGGER.debug("Cannot create plan!");
+                return null;
+            }
 
-			notPlannedVertices.remove(nextVertex);
-			LOGGER.debug("Adding vertex to plan: " + nextVertex.toString());
-			result.add(((TaskVertex) nextVertex).getTask());
-		}
+            notPlannedVertices.remove(nextVertex);
+            LOGGER.debug("Adding vertex to plan: " + nextVertex.toString());
+            result.add(((TaskVertex) nextVertex).getTask());
+        }
 
-		return result;
-	}
+        return result;
+    }
 
-	/**
-	 * Finds a next vertex
-	 * @param notPlannedVertices
-	 * @return the new vertex
-	 */
-	private static Vertex getNextVertex(Set<Vertex> notPlannedVertices)
-	{
-		Vertex result = null;
+    /**
+     * Finds a next vertex
+     * @param notPlannedVertices
+     * @return the new vertex
+     */
+    private static Vertex getNextVertex(Set<Vertex> notPlannedVertices)
+    {
+        Vertex result = null;
 
-		vertex_loop : for (Vertex vertex : notPlannedVertices) {
-			Set<Edge> inEdges = vertex.getInEdges();
-			for (Edge edge : inEdges) {
-				Vertex previousVertex = (Vertex) edge.getEndpoints().getFirst();
-				if (notPlannedVertices.contains(previousVertex)) {
-					continue vertex_loop;
-				}
-			}
-			return vertex;
-		}
+        vertex_loop : for (Vertex vertex : notPlannedVertices) {
+            Set<Edge> inEdges = vertex.getInEdges();
+            for (Edge edge : inEdges) {
+                Vertex previousVertex = (Vertex) edge.getEndpoints().getFirst();
+                if (notPlannedVertices.contains(previousVertex)) {
+                    continue vertex_loop;
+                }
+            }
+            return vertex;
+        }
 
-		return result;
-	}
+        return result;
+    }
 
-	private static final Logger LOGGER = Logger.getLogger(GraphPlanner.class);
+    private static final Logger LOGGER = Logger.getLogger(GraphPlanner.class);
 }

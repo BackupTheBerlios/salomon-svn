@@ -21,83 +21,83 @@
 
 package salomon.engine.platform.data.dataset.condition;
 
-import salomon.platform.data.IColumn;
-
 import salomon.engine.platform.data.DBColumn;
 import salomon.engine.platform.data.DBTable;
+import salomon.platform.data.IColumn;
 
 abstract class AbstractOperatorCondition extends AbstractCondition
 {
 
-	private Object _value;
+    private Object _value;
 
-	protected AbstractOperatorCondition(IColumn column, Object value)
-	{
-		super(column);
-		_value = value;
-	}
+    protected AbstractOperatorCondition(IColumn column, Object value)
+    {
+        super(column);
+        _value = value;
+    }
 
-	@Override
-	public boolean equals(Object obj)
-	{
-		boolean result = false;
-		if (obj instanceof AbstractOperatorCondition) {
-			AbstractOperatorCondition condition = (AbstractOperatorCondition) obj;
-			result = _value.equals(condition._value)
-					&& getColumn().equals(condition.getColumn())
-					&& getOperator().equals(condition.getOperator());
-		}
+    @Override
+    public boolean equals(Object obj)
+    {
+        boolean result = false;
+        if (obj instanceof AbstractOperatorCondition) {
+            AbstractOperatorCondition condition = (AbstractOperatorCondition) obj;
+            result = _value.equals(condition._value)
+                    && getColumn().equals(condition.getColumn())
+                    && getOperator().equals(condition.getOperator());
+        }
 
-		return result;
-	}
+        return result;
+    }
 
-	@Override
-	public int hashCode()
-	{
-		return getColumn().hashCode() ^ _value.hashCode()
-				^ getOperator().hashCode();
-	}
+    @Override
+    public int hashCode()
+    {
+        return getColumn().hashCode() ^ _value.hashCode()
+                ^ getOperator().hashCode();
+    }
 
-	/**
-	 * @see salomon.engine.platform.data.dataset.condition.AbstractCondition#toSQL()
-	 */
-	@Override
-	public String toSQL()
-	{
-		DBColumn column = (DBColumn) getColumn();
-		String columnName = column.getName();
-		DBTable table = column.getTable();
-		String tableName = table.getName();
-		String value = getValueString();
-		StringBuilder result = new StringBuilder();
-		String operator = getOperator();
-		result.append(tableName).append('.').append(columnName);
-		result.append(" ").append(operator).append(" ").append(value);
+    /**
+     * @see salomon.engine.platform.data.dataset.condition.AbstractCondition#toSQL()
+     */
+    @Override
+    public String toSQL()
+    {
+        DBColumn column = (DBColumn) getColumn();
+        String columnName = column.getName();
+        DBTable table = column.getTable();
+        String tableName = table.getName();
+        String value = getValueString();
+        StringBuilder result = new StringBuilder();
+        String operator = getOperator();
+        result.append(tableName).append('.').append(columnName);
+        result.append(" ").append(operator).append(" ").append(value);
 
-		return result.toString();
-	}
+        return result.toString();
+    }
 
-	/**
-	 * Returns the value.
-	 * @return The value
-	 */
-	final Object getValue()
-	{
-		return _value;
-	}
+    /**
+     * Returns the value.
+     * @return The value
+     */
+    final Object getValue()
+    {
+        return _value;
+    }
 
-	protected abstract String getOperator();
+    @Override
+    protected abstract String getOperator();
 
-	protected final String getValueString()
-	{
-		//TODO:
-		String result = null;
-		if (_value instanceof String) {
-			result = '\'' + (String) _value + '\'';
-		} else {
-			result = _value.toString();
-		}
+    protected final String getValueString()
+    {
+        //TODO:
+        String result = null;
+        if (_value instanceof String) {
+            result = '\'' + (String) _value + '\'';
+        } else {
+            result = _value.toString();
+        }
 
-		return result;
-	}
+        return result;
+    }
 }

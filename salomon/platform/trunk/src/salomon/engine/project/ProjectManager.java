@@ -29,16 +29,12 @@ import org.apache.log4j.Logger;
 
 import salomon.engine.database.DBManager;
 import salomon.engine.database.queries.SQLSelect;
+import salomon.engine.platform.IManagerEngine;
 import salomon.engine.solution.ISolution;
 import salomon.engine.solution.Solution;
-import salomon.engine.task.ITask;
-
-import salomon.util.gui.Utils;
-
 import salomon.platform.exception.DBException;
 import salomon.platform.exception.PlatformException;
-
-import salomon.engine.platform.IManagerEngine;
+import salomon.util.gui.Utils;
 
 /**
  * An implemetation of IProjectManager interface. Class manages with projects
@@ -71,13 +67,6 @@ public final class ProjectManager implements IProjectManager
      * @uml.associationEnd multiplicity="(0 1)"
      */
     private DBManager _dbManager;
-
-    /**
-     * 
-     * @uml.property name="_solution"
-     * @uml.associationEnd multiplicity="(0 1)"
-     */
-    private ISolution _solution;
 
     public ProjectManager(IManagerEngine managerEngine, DBManager manager)
     {
@@ -151,7 +140,6 @@ public final class ProjectManager implements IProjectManager
         SQLSelect select = new SQLSelect();
         select.addTable(ProjectInfo.TABLE_NAME);
         select.addCondition("project_id =", projectID);
-        Collection<ITask> tasks = null;
         ResultSet resultSet = null;
         try {
             resultSet = _dbManager.select(select);
@@ -257,7 +245,6 @@ public final class ProjectManager implements IProjectManager
 
     public void setSolution(ISolution solution)
     {
-        _solution = solution;
     }
 
     /**

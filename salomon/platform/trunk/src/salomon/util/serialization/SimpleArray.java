@@ -27,87 +27,87 @@ import salomon.platform.serialization.IObject;
 public class SimpleArray implements IArray
 {
 
-	/**
-	 * 
-	 * @uml.property name="_value"
-	 * @uml.associationEnd multiplicity="(0 -1)"
-	 */
-	private IObject[] _value;
+    /**
+     * 
+     * @uml.property name="_value"
+     * @uml.associationEnd multiplicity="(0 -1)"
+     */
+    private IObject[] _value;
 
-	/**
-	 * 
-	 */
-	public SimpleArray()
-	{
-		_value = new IObject[0];
-	}
+    /**
+     * 
+     */
+    public SimpleArray()
+    {
+        _value = new IObject[0];
+    }
 
-	/**
-	 * @param value
-	 */
-	public SimpleArray(IObject[] value)
-	{
-		_value = value;
-	}
+    /**
+     * @param value
+     */
+    public SimpleArray(IObject[] value)
+    {
+        _value = value;
+    }
 
-	/**
-	 * @see salomon.platform.serialization.IArray#getValue()
-	 */
-	public IObject[] getValue()
-	{
-		return _value;
-	}
+    /**
+     * @see salomon.platform.serialization.IArray#getValue()
+     */
+    public IObject[] getValue()
+    {
+        return _value;
+    }
 
-	/**
-	 * @see salomon.platform.serialization.IArray#setValue(salomon.platform.serialization.IObject[])
-	 */
-	public void setValue(IObject[] value)
-	{
-		_value = value;
-	}
+    /**
+     * @see salomon.platform.serialization.IArray#setValue(salomon.platform.serialization.IObject[])
+     */
+    public void setValue(IObject[] value)
+    {
+        _value = value;
+    }
 
-	/**
-	 * @see salomon.platform.serialization.IObject#getType()
-	 */
-	public IObject.Types getType()
-	{
-		return IObject.Types.ARRAY;
-	}
+    /**
+     * @see salomon.platform.serialization.IObject#getType()
+     */
+    public IObject.Types getType()
+    {
+        return IObject.Types.ARRAY;
+    }
 
-	/**
-	 * @see salomon.platform.serialization.IObject#equals(salomon.platform.serialization.IObject)
-	 */
-	public boolean equals(IObject object)
-	{
-		if (!(object instanceof SimpleArray)) {
-			return false;
-		}
-		
-		SimpleArray otherArray = (SimpleArray) object;
-		if (_value.length != otherArray._value.length) {
-			return false;
-		}
-		
-		for (int i = 0; i < _value.length; ++i) {
-			IObject item = _value[i];
-			IObject otherItem = otherArray._value[i];
-			if (item == null) {
-				if (otherItem != null) {
-					return false;
-				}
-			} else {
-				if (!item.equals(otherItem)) {
-					return false;
-				}
-			}
-		}
+    /**
+     * @see salomon.platform.serialization.IObject#equals(salomon.platform.serialization.IObject)
+     */
+    public boolean equals(IObject object)
+    {
+        if (!(object instanceof SimpleArray)) {
+            return false;
+        }
 
-		return true;
-	}
+        SimpleArray otherArray = (SimpleArray) object;
+        if (_value.length != otherArray._value.length) {
+            return false;
+        }
 
-	public int size()
-	{
-		return (_value == null ? 0 : _value.length);
-	}
+        for (int i = 0; i < _value.length; ++i) {
+            IObject item = _value[i];
+            IObject otherItem = otherArray._value[i];
+            if (item == null) {
+                if (otherItem != null) {
+                    return false;
+                }
+            } else {
+                if (!item.equals(otherItem)) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    public int size()
+    {
+        return (_value == null ? 0 : _value.length);
+    }
 
 }

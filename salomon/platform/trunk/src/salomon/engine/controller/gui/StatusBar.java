@@ -39,51 +39,51 @@ import salomon.engine.Messages;
  */
 public class StatusBar
 {
-	private Map<String, JTextField> _items;
+    private Map<String, JTextField> _items;
 
-	private JPanel _statusPanel;
+    private JPanel _statusPanel;
 
-	public StatusBar()
-	{
-		_statusPanel = new JPanel();
-		_statusPanel.setLayout(new BoxLayout(_statusPanel, BoxLayout.X_AXIS));
-		_items = new HashMap<String, JTextField>();
-	}
+    public StatusBar()
+    {
+        _statusPanel = new JPanel();
+        _statusPanel.setLayout(new BoxLayout(_statusPanel, BoxLayout.X_AXIS));
+        _items = new HashMap<String, JTextField>();
+    }
 
-	public void addItem(String name)
-	{
-		JTextField txtItem = new JTextField();
-		txtItem.setEditable(false);
-		txtItem.setBorder(BorderFactory.createLoweredBevelBorder());
-		txtItem.setToolTipText(Messages.getString(name));
+    public void addItem(String name)
+    {
+        JTextField txtItem = new JTextField();
+        txtItem.setEditable(false);
+        txtItem.setBorder(BorderFactory.createLoweredBevelBorder());
+        txtItem.setToolTipText(Messages.getString(name));
 
-		Dimension dim = new Dimension(100, 20);
-		txtItem.setMinimumSize(dim);
-		txtItem.setMaximumSize(dim);
-		txtItem.setPreferredSize(dim);
-		
-		_items.put(name, txtItem);
-		_statusPanel.add(txtItem);
-	}
+        Dimension dim = new Dimension(100, 20);
+        txtItem.setMinimumSize(dim);
+        txtItem.setMaximumSize(dim);
+        txtItem.setPreferredSize(dim);
 
-	/**
-	 * Returns the statusPanel.
-	 * @return The statusPanel
-	 */
-	public JPanel getStatusPanel()
-	{
-		return _statusPanel;
-	}
+        _items.put(name, txtItem);
+        _statusPanel.add(txtItem);
+    }
 
-	public void setItem(String name, String value)
-	{
-		JTextField txtField = _items.get(name);
-		if (txtField != null) {
-			txtField.setText(value);
-		} else {
-			LOGGER.error("Invalid object key in status bar: " + name);
-		}
-	}
+    /**
+     * Returns the statusPanel.
+     * @return The statusPanel
+     */
+    public JPanel getStatusPanel()
+    {
+        return _statusPanel;
+    }
 
-	private static final Logger LOGGER = Logger.getLogger(StatusBar.class);
+    public void setItem(String name, String value)
+    {
+        JTextField txtField = _items.get(name);
+        if (txtField != null) {
+            txtField.setText(value);
+        } else {
+            LOGGER.error("Invalid object key in status bar: " + name);
+        }
+    }
+
+    private static final Logger LOGGER = Logger.getLogger(StatusBar.class);
 }

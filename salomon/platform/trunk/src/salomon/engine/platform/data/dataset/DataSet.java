@@ -31,7 +31,7 @@ import org.apache.log4j.Logger;
 import salomon.engine.database.DBManager;
 import salomon.engine.database.ExternalDBManager;
 import salomon.engine.database.queries.SQLSelect;
-
+import salomon.engine.platform.data.dataset.condition.AbstractCondition;
 import salomon.platform.IInfo;
 import salomon.platform.data.IColumn;
 import salomon.platform.data.dataset.ICondition;
@@ -39,8 +39,6 @@ import salomon.platform.data.dataset.IData;
 import salomon.platform.data.dataset.IDataSet;
 import salomon.platform.exception.DBException;
 import salomon.platform.exception.PlatformException;
-
-import salomon.engine.platform.data.dataset.condition.AbstractCondition;
 
 /**
  * Class represents data set. Data set is a subset of data stored in tables, its
@@ -55,8 +53,6 @@ public class DataSet implements IDataSet
     private ExternalDBManager _externalDBManager;
 
     private DataSetInfo _info;
-
-    private String name;
 
     /**
      * Creates data set. This constructor can be used only from DataSetManager.
@@ -183,6 +179,7 @@ public class DataSet implements IDataSet
      * 
      * @see java.lang.Object#toString()
      */
+    @Override
     public String toString()
     {
         return _info.toString();

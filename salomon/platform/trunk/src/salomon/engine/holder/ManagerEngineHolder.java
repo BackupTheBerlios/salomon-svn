@@ -23,14 +23,12 @@ package salomon.engine.holder;
 
 import org.apache.log4j.Logger;
 
+import salomon.engine.platform.IManagerEngine;
 import salomon.engine.plugin.IPluginManager;
 import salomon.engine.project.IProjectManager;
 import salomon.engine.solution.ISolutionManager;
 import salomon.engine.task.ITaskManager;
-
 import salomon.platform.exception.PlatformException;
-
-import salomon.engine.platform.IManagerEngine;
 
 /**
  * Holds all other holders.
@@ -39,109 +37,109 @@ import salomon.engine.platform.IManagerEngine;
 public final class ManagerEngineHolder implements IManagerEngine
 {
 
-	/**
-	 * 
-	 * @uml.property name="_currentManagerEngine"
-	 * @uml.associationEnd multiplicity="(0 1)"
-	 */
-	private IManagerEngine _currentManagerEngine;
+    /**
+     * 
+     * @uml.property name="_currentManagerEngine"
+     * @uml.associationEnd multiplicity="(0 1)"
+     */
+    private IManagerEngine _currentManagerEngine;
 
-	/**
-	 * 
-	 * @uml.property name="_pluginManagerHolder"
-	 * @uml.associationEnd multiplicity="(0 1)"
-	 */
-	private PluginManagerHolder _pluginManagerHolder;
+    /**
+     * 
+     * @uml.property name="_pluginManagerHolder"
+     * @uml.associationEnd multiplicity="(0 1)"
+     */
+    private PluginManagerHolder _pluginManagerHolder;
 
-	/**
-	 * 
-	 * @uml.property name="_projectManagerHolder"
-	 * @uml.associationEnd multiplicity="(0 1)"
-	 */
-	private ProjectManagerHolder _projectManagerHolder;
+    /**
+     * 
+     * @uml.property name="_projectManagerHolder"
+     * @uml.associationEnd multiplicity="(0 1)"
+     */
+    private ProjectManagerHolder _projectManagerHolder;
 
-	/**
-	 * 
-	 * @uml.property name="_solutionManagerHolder"
-	 * @uml.associationEnd multiplicity="(0 1)"
-	 */
-	private SolutionManagerHolder _solutionManagerHolder;
+    /**
+     * 
+     * @uml.property name="_solutionManagerHolder"
+     * @uml.associationEnd multiplicity="(0 1)"
+     */
+    private SolutionManagerHolder _solutionManagerHolder;
 
-	/**
-	 * 
-	 * @uml.property name="_taskManagerHolder"
-	 * @uml.associationEnd multiplicity="(0 1)"
-	 */
-	private TaskManagerHolder _taskManagerHolder;
+    /**
+     * 
+     * @uml.property name="_taskManagerHolder"
+     * @uml.associationEnd multiplicity="(0 1)"
+     */
+    private TaskManagerHolder _taskManagerHolder;
 
-	/**
-	 * 
-	 */
-	public ManagerEngineHolder(IManagerEngine managerEngine)
-	{
-		_currentManagerEngine = managerEngine;
-		try {
-			_pluginManagerHolder = new PluginManagerHolder(
-					_currentManagerEngine.getPluginManager());
-			_projectManagerHolder = new ProjectManagerHolder(
-					_currentManagerEngine.getProjectManager());
-			_taskManagerHolder = new TaskManagerHolder(
-					_currentManagerEngine.getTasksManager());
-			_solutionManagerHolder = new SolutionManagerHolder(
-					_currentManagerEngine.getSolutionManager());
-		} catch (PlatformException e) {
-			LOGGER.fatal("", e);
-		}
-	}
+    /**
+     * 
+     */
+    public ManagerEngineHolder(IManagerEngine managerEngine)
+    {
+        _currentManagerEngine = managerEngine;
+        try {
+            _pluginManagerHolder = new PluginManagerHolder(
+                    _currentManagerEngine.getPluginManager());
+            _projectManagerHolder = new ProjectManagerHolder(
+                    _currentManagerEngine.getProjectManager());
+            _taskManagerHolder = new TaskManagerHolder(
+                    _currentManagerEngine.getTasksManager());
+            _solutionManagerHolder = new SolutionManagerHolder(
+                    _currentManagerEngine.getSolutionManager());
+        } catch (PlatformException e) {
+            LOGGER.fatal("", e);
+        }
+    }
 
-	/**
-	 * @see salomon.engine.platform.IManagerEngine#getPluginManager()
-	 */
-	public IPluginManager getPluginManager()
-	{
-		return _pluginManagerHolder;
-	}
+    /**
+     * @see salomon.engine.platform.IManagerEngine#getPluginManager()
+     */
+    public IPluginManager getPluginManager()
+    {
+        return _pluginManagerHolder;
+    }
 
-	/**
-	 * @see salomon.engine.platform.IManagerEngine#getProjectManager()
-	 */
-	public IProjectManager getProjectManager()
-	{
-		return _projectManagerHolder;
-	}
+    /**
+     * @see salomon.engine.platform.IManagerEngine#getProjectManager()
+     */
+    public IProjectManager getProjectManager()
+    {
+        return _projectManagerHolder;
+    }
 
-	/**
-	 * @see salomon.engine.platform.IManagerEngine#getSolutionManager()
-	 */
-	public ISolutionManager getSolutionManager()
-	{
-		return _solutionManagerHolder;
-	}
+    /**
+     * @see salomon.engine.platform.IManagerEngine#getSolutionManager()
+     */
+    public ISolutionManager getSolutionManager()
+    {
+        return _solutionManagerHolder;
+    }
 
-	/**
-	 * @see salomon.engine.platform.IManagerEngine#getTasksManager()
-	 */
-	public ITaskManager getTasksManager()
-	{
-		return _taskManagerHolder;
-	}
+    /**
+     * @see salomon.engine.platform.IManagerEngine#getTasksManager()
+     */
+    public ITaskManager getTasksManager()
+    {
+        return _taskManagerHolder;
+    }
 
-	/**
-	 * 
-	 * TODO: add comment.
-	 * @param managerEngine
-	 */
-	public void setCurrentManager(IManagerEngine managerEngine)
-	{
-		_currentManagerEngine = managerEngine;
-		try {
-			_pluginManagerHolder.setCurrent(_currentManagerEngine.getPluginManager());
-			_projectManagerHolder.setCurrent(_currentManagerEngine.getProjectManager());
-			_taskManagerHolder.setCurrent(_currentManagerEngine.getTasksManager());
-		} catch (PlatformException e) {
-			LOGGER.fatal("", e);
-		}
-	}
+    /**
+     * 
+     * TODO: add comment.
+     * @param managerEngine
+     */
+    public void setCurrentManager(IManagerEngine managerEngine)
+    {
+        _currentManagerEngine = managerEngine;
+        try {
+            _pluginManagerHolder.setCurrent(_currentManagerEngine.getPluginManager());
+            _projectManagerHolder.setCurrent(_currentManagerEngine.getProjectManager());
+            _taskManagerHolder.setCurrent(_currentManagerEngine.getTasksManager());
+        } catch (PlatformException e) {
+            LOGGER.fatal("", e);
+        }
+    }
 
-	private static final Logger LOGGER = Logger.getLogger(ManagerEngineHolder.class);
+    private static final Logger LOGGER = Logger.getLogger(ManagerEngineHolder.class);
 }

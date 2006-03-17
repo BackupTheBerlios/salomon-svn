@@ -38,79 +38,79 @@ import salomon.platform.exception.PlatformException;
  */
 public class Data implements IData
 {
-	private int _columnCount;
+    private int _columnCount;
 
-	private String[] _header;
+    private String[] _header;
 
-	private ResultSet _resultSet;
+    private ResultSet _resultSet;
 
-	public Data(ResultSet resultSet) throws PlatformException
-	{
-		_resultSet = resultSet;
-		ResultSetMetaData metaData;
-		try {
-			metaData = _resultSet.getMetaData();
-			_columnCount = metaData.getColumnCount();
-			_header = new String[_columnCount];
-			for (int i = 0; i < _columnCount; ++i) {
-				_header[i] = metaData.getColumnName(i + 1);
-			}
-		} catch (SQLException e) {
-			LOGGER.fatal("", e);
-			throw new DBException(e);
-		}
-	}
+    public Data(ResultSet resultSet) throws PlatformException
+    {
+        _resultSet = resultSet;
+        ResultSetMetaData metaData;
+        try {
+            metaData = _resultSet.getMetaData();
+            _columnCount = metaData.getColumnCount();
+            _header = new String[_columnCount];
+            for (int i = 0; i < _columnCount; ++i) {
+                _header[i] = metaData.getColumnName(i + 1);
+            }
+        } catch (SQLException e) {
+            LOGGER.fatal("", e);
+            throw new DBException(e);
+        }
+    }
 
-	public void close() throws PlatformException
-	{
-		try {
-			_resultSet.close();
-		} catch (SQLException e) {
-			LOGGER.fatal("", e);
-			throw new PlatformException(e);
-		}
-	}
+    public void close() throws PlatformException
+    {
+        try {
+            _resultSet.close();
+        } catch (SQLException e) {
+            LOGGER.fatal("", e);
+            throw new PlatformException(e);
+        }
+    }
 
-	public Object[] getData() throws PlatformException
-	{
-		Object[] data = new Object[_columnCount];
-		try {
-			for (int i = 0; i < data.length; ++i) {
-				data[i] = _resultSet.getObject(i + 1);
-			}
-		} catch (SQLException e) {
-			LOGGER.fatal("", e);
-			throw new DBException(e);
-		}
-		return data;
-	}
+    public Object[] getData() throws PlatformException
+    {
+        Object[] data = new Object[_columnCount];
+        try {
+            for (int i = 0; i < data.length; ++i) {
+                data[i] = _resultSet.getObject(i + 1);
+            }
+        } catch (SQLException e) {
+            LOGGER.fatal("", e);
+            throw new DBException(e);
+        }
+        return data;
+    }
 
-	public Object getData(IColumn column) throws PlatformException
-	{
-		try {
-			return _resultSet.getObject(column.getName());
-		} catch (SQLException e) {
-			LOGGER.fatal("", e);
-			throw new PlatformException(e);
-		}
-	}
+    public Object getData(IColumn column) throws PlatformException
+    {
+        try {
+            return _resultSet.getObject(column.getName());
+        } catch (SQLException e) {
+            LOGGER.fatal("", e);
+            throw new PlatformException(e);
+        }
+    }
 
-	/**
-	 * @return the header
-	 */
-	public String[] getHeader()
-	{
-		return _header;
-	}
+    /**
+     * @return the header
+     */
+    public String[] getHeader()
+    {
+        return _header;
+    }
 
-	public boolean next() throws PlatformException
-	{
-		try {
-			return _resultSet.next();
-		} catch (SQLException e) {
-			throw new DBException(e);
-		}
-	}
+    public boolean next() throws PlatformException
+    {
+        try {
+            return _resultSet.next();
+        } catch (SQLException e) {
+            throw new DBException(e);
+        }
+    }
 
-	private static final Logger LOGGER = Logger.getLogger(Data.class);
+    private static final Logger LOGGER = Logger.getLogger(Data.class);
 }

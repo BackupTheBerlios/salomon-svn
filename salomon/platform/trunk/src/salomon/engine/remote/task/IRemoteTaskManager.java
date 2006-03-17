@@ -26,7 +26,6 @@ import java.rmi.RemoteException;
 
 import salomon.engine.remote.project.IRemoteProject;
 import salomon.engine.task.ITask;
-
 import salomon.platform.exception.PlatformException;
 
 /**
@@ -38,68 +37,68 @@ import salomon.platform.exception.PlatformException;
  */
 public interface IRemoteTaskManager extends Remote
 {
-	/**
-	 * @see salomon.engine.task.ITaskManager#addTask(ITask)
-	 * 
-	 * @param task
-	 * @throws PlatformException
-	 */
-	void addTask(IRemoteTask task) throws RemoteException, PlatformException;
+    /**
+     * @see salomon.engine.task.ITaskManager#addTask(ITask)
+     * 
+     * @param task
+     * @throws PlatformException
+     */
+    void addTask(IRemoteTask task) throws RemoteException, PlatformException;
 
-	/**
-	 * TODO: add comment.
-	 * 
-	 * @param remoteTask
-	 * @param pluginUrl
-	 * @param settings
-	 */
-	void addTask(IRemoteTask remoteTask, String pluginUrl, String settings)
-			throws RemoteException, PlatformException;
+    /**
+     * TODO: add comment.
+     * 
+     * @param remoteTask
+     * @param pluginUrl
+     * @param settings
+     */
+    void addTask(IRemoteTask remoteTask, String pluginUrl, String settings)
+            throws RemoteException, PlatformException;
 
-	/**
-	 * @see salomon.engine.task.ITaskManager#clearTasks()
-	 * 
-	 * @throws RemoteException
-	 * @throws PlatformException
-	 */
-	void clearTasks() throws RemoteException, PlatformException;
+    /**
+     * @see salomon.engine.task.ITaskManager#clearTasks()
+     * 
+     * @throws RemoteException
+     * @throws PlatformException
+     */
+    void clearTasks() throws RemoteException, PlatformException;
 
-	/**
-	 * @see salomon.engine.task.ITaskManager#createTask()
-	 */
-	IRemoteTask createTask() throws RemoteException, PlatformException;
+    /**
+     * @see salomon.engine.task.ITaskManager#createTask()
+     */
+    IRemoteTask createTask() throws RemoteException, PlatformException;
 
-	/**
-	 * @see salomon.engine.task.ITaskManager#getCurrentTask()
-	 */
-	IRemoteTask getCurrentTask() throws RemoteException, PlatformException;
+    /**
+     * @see salomon.engine.task.ITaskManager#getCurrentTask()
+     */
+    IRemoteTask getCurrentTask() throws RemoteException, PlatformException;
 
-	/**
-	 * @see salomon.engine.task.ITaskManager#getProject()
-	 */
-	IRemoteProject getProject() throws RemoteException, PlatformException;
+    /**
+     * @see salomon.engine.task.ITaskManager#getProject()
+     */
+    IRemoteProject getProject() throws RemoteException, PlatformException;
 
-	/**
-	 * @see salomon.engine.task.ITaskManager#getRunner()
-	 */
-	IRemoteTaskRunner getRunner() throws RemoteException, PlatformException;
+    /**
+     * @see salomon.engine.task.ITaskManager#getRunner()
+     */
+    IRemoteTaskRunner getRunner() throws RemoteException, PlatformException;
 
-	/**
-	 * @see salomon.engine.task.ITaskManager#getTasks()
-	 */
-	IRemoteTask[] getTasks() throws RemoteException, PlatformException;
+    /**
+     * @see salomon.engine.task.ITaskManager#getTasks()
+     */
+    IRemoteTask[] getTasks() throws RemoteException, PlatformException;
 
-	/**
-	 * @see salomon.engine.task.ITaskManager#saveTasks()
-	 * 
-	 * @throws RemoteException
-	 * @throws PlatformException
-	 */
-	void saveTasks() throws RemoteException, PlatformException;
+    /**
+     * @see salomon.engine.task.ITaskManager#saveTasks()
+     * 
+     * @throws RemoteException
+     * @throws PlatformException
+     */
+    void saveTasks() throws RemoteException, PlatformException;
 
-	/**
-	 * @see salomon.engine.task.ITaskManager#start()
-	 */
-	void start() throws RemoteException, PlatformException;
+    /**
+     * @see salomon.engine.task.ITaskManager#start()
+     */
+    void start() throws RemoteException, PlatformException;
 
 }

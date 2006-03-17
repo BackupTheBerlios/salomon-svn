@@ -29,15 +29,15 @@ import salomon.platform.exception.PlatformException;
  */
 public interface IAttributeDescription
 {
-	/**
-	 * Returns the name of the attribute.
-	 * @return the name
-	 */
-	String getName();
-	
-	/**
-	 * Creates new attribute with given value.
-	 * @return the new attribute
-	 */
-	IAttribute createAttribute(Object value) throws PlatformException;
+    /**
+     * Returns the name of the attribute.
+     * @return the name
+     */
+    String getName();
+
+    /**
+     * Creates new attribute with given value.
+     * @return the new attribute
+     */
+    IAttribute createAttribute(Object value) throws PlatformException;
 }

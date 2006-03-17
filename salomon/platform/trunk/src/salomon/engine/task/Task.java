@@ -26,16 +26,12 @@ import java.io.ByteArrayOutputStream;
 import org.apache.log4j.Logger;
 
 import salomon.engine.database.DBManager;
+import salomon.engine.platform.serialization.XMLSerializer;
 import salomon.engine.plugin.ILocalPlugin;
-
-import salomon.util.serialization.SimpleStruct;
-
 import salomon.platform.exception.PlatformException;
-
 import salomon.plugin.IResult;
 import salomon.plugin.ISettings;
-
-import salomon.engine.platform.serialization.XMLSerializer;
+import salomon.util.serialization.SimpleStruct;
 
 /**
  * Represents task which may be executed. It is an implementation of ITask
@@ -44,125 +40,118 @@ import salomon.engine.platform.serialization.XMLSerializer;
 public final class Task implements ITask
 {
 
-	/**
-	 * 
-	 * @uml.property name="_dbManager"
-	 * @uml.associationEnd multiplicity="(0 1)"
-	 */
-	private DBManager _dbManager;
+    /**
+     * 
+     * @uml.property name="_plugin"
+     * @uml.associationEnd multiplicity="(0 1)"
+     */
+    private ILocalPlugin _plugin;
 
-	/**
-	 * 
-	 * @uml.property name="_plugin"
-	 * @uml.associationEnd multiplicity="(0 1)"
-	 */
-	private ILocalPlugin _plugin;
+    /**
+     * 
+     * @uml.property name="_result"
+     * @uml.associationEnd multiplicity="(0 1)"
+     */
+    private IResult _result;
 
-	/**
-	 * 
-	 * @uml.property name="_result"
-	 * @uml.associationEnd multiplicity="(0 1)"
-	 */
-	private IResult _result;
+    /**
+     * 
+     * @uml.property name="_settings"
+     * @uml.associationEnd multiplicity="(0 1)"
+     */
+    private ISettings _settings;
 
-	/**
-	 * 
-	 * @uml.property name="_settings"
-	 * @uml.associationEnd multiplicity="(0 1)"
-	 */
-	private ISettings _settings;
+    /**
+     * 
+     * @uml.property name="_taskInfo"
+     * @uml.associationEnd multiplicity="(0 1)"
+     */
+    private TaskInfo _taskInfo;
 
-	/**
-	 * 
-	 * @uml.property name="_taskInfo"
-	 * @uml.associationEnd multiplicity="(0 1)"
-	 */
-	private TaskInfo _taskInfo;
+    protected Task(DBManager manager)
+    {
+        _taskInfo = new TaskInfo(manager);
+        _taskInfo.setStatus(TaskInfo.ACTIVE);
+    }
 
-	protected Task(DBManager manager)
-	{
-		_dbManager = manager;
-		_taskInfo = new TaskInfo(manager);
-		_taskInfo.setStatus(TaskInfo.ACTIVE);
-	}
+    public TaskInfo getInfo() throws PlatformException
+    {
+        return _taskInfo;
+    }
 
-	public TaskInfo getInfo() throws PlatformException
-	{
-		return _taskInfo;
-	}
+    /**
+     * @return Returns the _plugin.
+     */
+    public ILocalPlugin getPlugin() throws PlatformException
+    {
+        return _plugin;
+    }
 
-	/**
-	 * @return Returns the _plugin.
-	 */
-	public ILocalPlugin getPlugin() throws PlatformException
-	{
-		return _plugin;
-	}
+    /**
+     * @return Returns the _result.
+     */
+    public IResult getResult() throws PlatformException
+    {
+        IResult result = _result;
+        if (_result == null) {
+            result = _plugin.getResultComponent().getDefaultResult();
+        }
+        return result;
+    }
 
-	/**
-	 * @return Returns the _result.
-	 */
-	public IResult getResult() throws PlatformException
-	{
-		IResult result = _result;
-		if (_result == null) {
-			result = _plugin.getResultComponent().getDefaultResult();
-		}
-		return result;
-	}
+    /**
+     * @return Returns the _settings.
+     */
+    public ISettings getSettings() throws PlatformException
+    {
+        return _settings;
+    }
 
-	/**
-	 * @return Returns the _settings.
-	 */
-	public ISettings getSettings() throws PlatformException
-	{
-		return _settings;
-	}
+    /**
+     * @param plugin The plugin to set.
+     */
+    public void setPlugin(ILocalPlugin plugin) throws PlatformException
+    {
+        _plugin = plugin;
+        _taskInfo.setPluginID(plugin.getInfo().getId());
+    }
 
-	/**
-	 * @param plugin The plugin to set.
-	 */
-	public void setPlugin(ILocalPlugin plugin) throws PlatformException
-	{
-		_plugin = plugin;
-		_taskInfo.setPluginID(plugin.getInfo().getId());
-	}
+    /**
+     * @param result The result to set.
+     * @pre result != null
+     */
+    public void setResult(IResult result) throws PlatformException
+    {
+        _result = result;
+        _taskInfo.setResult(_result.resultToString());
+        if (_result.isSuccessful()) {
+            _taskInfo.setStatus(TaskInfo.FINISHED);
+        } else {
+            _taskInfo.setStatus(TaskInfo.ERROR);
+        }
+    }
 
-	/**
-	 * @param result The result to set.
-	 * @pre result != null
-	 */
-	public void setResult(IResult result) throws PlatformException
-	{
-		_result = result;
-		_taskInfo.setResult(_result.resultToString());
-		if (_result.isSuccessful()) {
-			_taskInfo.setStatus(TaskInfo.FINISHED);
-		} else {
-			_taskInfo.setStatus(TaskInfo.ERROR);
-		}
-	}
+    /**
+     * @param settings The settings to set.
+     * @pre settings != null
+     */
+    public void setSettings(ISettings settings) throws PlatformException
+    {
+        _settings = settings;
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        XMLSerializer.serialize((SimpleStruct) _settings, bos);
+        _taskInfo.setSettings(bos.toString());
+    }
 
-	/**
-	 * @param settings The settings to set.
-	 * @pre settings != null
-	 */
-	public void setSettings(ISettings settings) throws PlatformException
-	{
-		_settings = settings;
-		ByteArrayOutputStream bos = new ByteArrayOutputStream();
-		XMLSerializer.serialize((SimpleStruct) _settings, bos);
-		_taskInfo.setSettings(bos.toString());
-	}
+    /**
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString()
+    {
+        return _taskInfo.getName() + " [" + _plugin + "," + _settings + ","
+                + _result + "]";
+    }
 
-	/**
-	 * @see java.lang.Object#toString()
-	 */
-	public String toString()
-	{
-		return _taskInfo.getName() + " [" + _plugin + "," + _settings + ","
-				+ _result + "]";
-	}
-
-	private static final Logger LOGGER = Logger.getLogger(Task.class);
+    private static final Logger LOGGER = Logger.getLogger(Task.class);
 } // end Task

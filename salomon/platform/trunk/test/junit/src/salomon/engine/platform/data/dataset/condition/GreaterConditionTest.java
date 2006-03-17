@@ -26,32 +26,32 @@ import salomon.platform.data.IColumn;
 public class GreaterConditionTest extends AbstractConditionTest
 {
 
-	/*
-	 * Test method for 'salomon.engine.platform.data.dataset.condition.GreaterCondition.getOperator()'
-	 */
-	public void testGetOperator()
-	{
-		AbstractCondition condition = getCondition();
-		String operator = condition.getOperator();
+    /*
+     * Test method for 'salomon.engine.platform.data.dataset.condition.GreaterCondition.getOperator()'
+     */
+    public void testGetOperator()
+    {
+        AbstractCondition condition = getCondition();
+        String operator = condition.getOperator();
 
-		assertEquals(">", operator);
-	}
+        assertEquals(">", operator);
+    }
 
-	/*
-	 * Test method for 'salomon.engine.platform.data.dataset.condition.AbstractOperatorCondition.toSQL()'
-	 */
-	public void testToSQL()
-	{
-		AbstractCondition condition = getCondition();
-		String sqlString = condition.toSQL();
+    /*
+     * Test method for 'salomon.engine.platform.data.dataset.condition.AbstractOperatorCondition.toSQL()'
+     */
+    public void testToSQL()
+    {
+        AbstractCondition condition = getCondition();
+        String sqlString = condition.toSQL();
 
-		assertEquals("persons.person_id > 10", sqlString);
-	}
+        assertEquals("persons.person_id > 10", sqlString);
+    }
 
-	@Override
-	protected AbstractCondition createCondition(IColumn column, Object value)
-	{
-		return new GreaterCondition(column, value);
-	}
+    @Override
+    protected AbstractCondition createCondition(IColumn column, Object value)
+    {
+        return new GreaterCondition(column, value);
+    }
 
 }

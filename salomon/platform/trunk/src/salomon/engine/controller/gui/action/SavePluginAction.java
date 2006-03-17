@@ -30,20 +30,20 @@ import salomon.engine.controller.gui.PluginManagerGUI;
  */
 public final class SavePluginAction extends AbstractPluginAction
 {
-	/**
-	 * @param editionManager
-	 */
-	public SavePluginAction(PluginManagerGUI pluginMangerGUI)
-	{
-		super(pluginMangerGUI);
-	}
+    /**
+     * @param editionManager
+     */
+    public SavePluginAction(PluginManagerGUI pluginMangerGUI)
+    {
+        super(pluginMangerGUI);
+    }
 
-	/**
-	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-	 */
-	public void actionPerformed(ActionEvent arg0)
-	{
-		_pluginMangerGUI.savePlugin();
-	}
+    /**
+     * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+     */
+    public void actionPerformed(ActionEvent arg0)
+    {
+        _pluginMangerGUI.savePlugin();
+    }
 
 }

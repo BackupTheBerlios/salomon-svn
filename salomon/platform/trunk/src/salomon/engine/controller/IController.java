@@ -29,15 +29,15 @@ import salomon.engine.platform.IManagerEngine;
 public interface IController
 {
 
-	/**
-	 * starts the controller
-	 * @param managerEngine
-	 */
-	void start(IManagerEngine managerEngine);
+    /**
+     * starts the controller
+     * @param managerEngine
+     */
+    void start(IManagerEngine managerEngine);
 
-	/**
-	 * ends controller
-	 */
-	void exit();
+    /**
+     * ends controller
+     */
+    void exit();
 } // end IManager
 

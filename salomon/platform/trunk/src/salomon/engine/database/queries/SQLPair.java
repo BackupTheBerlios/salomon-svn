@@ -27,29 +27,29 @@ package salomon.engine.database.queries;
  */
 final class SQLPair
 {
-	private String _columnName;
+    private String _columnName;
 
-	private String _value;
+    private String _value;
 
-	SQLPair(String columnName, String value)
-	{
-		_columnName = columnName;
-		_value = value;
-	}
+    SQLPair(String columnName, String value)
+    {
+        _columnName = columnName;
+        _value = value;
+    }
 
-	/**
-	 * @return Returns the columnName.
-	 */
-	String getColumnName()
-	{
-		return _columnName;
-	}
+    /**
+     * @return Returns the columnName.
+     */
+    String getColumnName()
+    {
+        return _columnName;
+    }
 
-	/**
-	 * @return Returns the value.
-	 */
-	String getValue()
-	{
-		return _value;
-	}
+    /**
+     * @return Returns the value.
+     */
+    String getValue()
+    {
+        return _value;
+    }
 }

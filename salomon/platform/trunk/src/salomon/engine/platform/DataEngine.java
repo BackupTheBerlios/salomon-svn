@@ -25,96 +25,97 @@ import java.sql.SQLException;
 
 import salomon.engine.database.DBManager;
 import salomon.engine.database.ExternalDBManager;
-import salomon.engine.solution.ShortSolutionInfo;
-
-import salomon.platform.IDataEngine;
-import salomon.platform.data.IMetaData;
-import salomon.platform.data.tree.ITreeManager;
-
 import salomon.engine.platform.data.DBMetaData;
 import salomon.engine.platform.data.attribute.AttributeManager;
 import salomon.engine.platform.data.dataset.DataSetManager;
 import salomon.engine.platform.data.rule.RuleSetManager;
 import salomon.engine.platform.data.tree.TreeManager;
+import salomon.engine.solution.ShortSolutionInfo;
+import salomon.platform.IDataEngine;
+import salomon.platform.data.IMetaData;
+import salomon.platform.data.tree.ITreeManager;
 
 /**
  * Class holds  TreeManager, DataSetManager, RuleSetManager and AttributeManager instances.
  */
 public final class DataEngine implements IDataEngine
 {
-	/**
-	 * 
-	 * @uml.property name="_attributeManager"
-	 * @uml.associationEnd multiplicity="(0 1)"
-	 */
-	private AttributeManager _attributeManager;
+    /**
+     * 
+     * @uml.property name="_attributeManager"
+     * @uml.associationEnd multiplicity="(0 1)"
+     */
+    private AttributeManager _attributeManager;
 
-	/**
-	 * 
-	 * @uml.property name="_dataSetManager"
-	 * @uml.associationEnd multiplicity="(0 1)"
-	 */
-	private DataSetManager _dataSetManager;
+    /**
+     * 
+     * @uml.property name="_dataSetManager"
+     * @uml.associationEnd multiplicity="(0 1)"
+     */
+    private DataSetManager _dataSetManager;
 
-	/**
-	 * 
-	 * @uml.property name="_ruleSetManager"
-	 * @uml.associationEnd multiplicity="(0 1)"
-	 */
-	private RuleSetManager _ruleSetManager;
+    /**
+     * 
+     * @uml.property name="_ruleSetManager"
+     * @uml.associationEnd multiplicity="(0 1)"
+     */
+    private RuleSetManager _ruleSetManager;
 
-	/**
-	 * 
-	 * @uml.property name="_treeManager"
-	 * @uml.associationEnd multiplicity="(0 1)"
-	 */
-	private TreeManager _treeManager;
-	
-	private DBMetaData _metaData;
+    /**
+     * 
+     * @uml.property name="_treeManager"
+     * @uml.associationEnd multiplicity="(0 1)"
+     */
+    private TreeManager _treeManager;
 
-	public DataEngine(DBManager dbManager, ExternalDBManager externalDBManager, ShortSolutionInfo solutionInfo) throws SQLException
-	{
-		_attributeManager = new AttributeManager(dbManager, solutionInfo);
-		_dataSetManager = new DataSetManager(dbManager, solutionInfo, externalDBManager);
-		_ruleSetManager = new RuleSetManager(dbManager, solutionInfo);
-		_treeManager = new TreeManager(dbManager, solutionInfo, externalDBManager);
-		_metaData = externalDBManager.getMetaData();
-	}
+    private DBMetaData _metaData;
 
-	/**
-	 * 
-	 */
-	public AttributeManager getAttributeManager()
-	{
-		return _attributeManager;
-	}
+    public DataEngine(DBManager dbManager, ExternalDBManager externalDBManager,
+            ShortSolutionInfo solutionInfo) throws SQLException
+    {
+        _attributeManager = new AttributeManager(dbManager, solutionInfo);
+        _dataSetManager = new DataSetManager(dbManager, solutionInfo,
+                externalDBManager);
+        _ruleSetManager = new RuleSetManager(dbManager, solutionInfo);
+        _treeManager = new TreeManager(dbManager, solutionInfo,
+                externalDBManager);
+        _metaData = externalDBManager.getMetaData();
+    }
 
-	/**
-	 * 
-	 */
-	public DataSetManager getDataSetManager()
-	{
-		return _dataSetManager;
-	}
+    /**
+     * 
+     */
+    public AttributeManager getAttributeManager()
+    {
+        return _attributeManager;
+    }
 
-	/**
-	 * 
-	 */
-	public RuleSetManager getRuleSetManager()
-	{
-		return _ruleSetManager;
-	}
+    /**
+     * 
+     */
+    public DataSetManager getDataSetManager()
+    {
+        return _dataSetManager;
+    }
 
-	/**
-	 * @see salomon.platform.IDataEngine#getTreeManager()
-	 */
-	public ITreeManager getTreeManager()
-	{
-		return _treeManager;
-	}
+    /**
+     * 
+     */
+    public RuleSetManager getRuleSetManager()
+    {
+        return _ruleSetManager;
+    }
 
-	public IMetaData getMetaData()
-	{
-		return _metaData;
-	}
+    /**
+     * @see salomon.platform.IDataEngine#getTreeManager()
+     */
+    public ITreeManager getTreeManager()
+    {
+        return _treeManager;
+    }
+
+    public IMetaData getMetaData()
+    {
+        return _metaData;
+    }
 }

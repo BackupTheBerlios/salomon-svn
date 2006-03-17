@@ -288,6 +288,7 @@ public class PluginInfo implements IInfo, Serializable
         _version = version;
     }
 
+    @Override
     public String toString()
     {
         return "" + _pluginID + "," + _name + "," + _location + "," + _info;

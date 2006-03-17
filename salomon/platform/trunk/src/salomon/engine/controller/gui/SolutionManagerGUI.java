@@ -408,6 +408,7 @@ public final class SolutionManagerGUI
         _solutionChooserFrame.pack();
 
         _solutionChooserFrame.addWindowListener(new WindowAdapter() {
+            @Override
             public void windowClosing(WindowEvent e)
             {
                 Starter.exit();

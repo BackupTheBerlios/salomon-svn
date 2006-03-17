@@ -28,15 +28,15 @@ import salomon.platform.data.IColumn;
  */
 public final class EqualsCondition extends AbstractOperatorCondition
 {
-	public EqualsCondition(IColumn column, Object value)
-	{
-		super(column, value);
-	}
+    public EqualsCondition(IColumn column, Object value)
+    {
+        super(column, value);
+    }
 
-	@Override
-	protected String getOperator()
-	{
-		return "=";
-	}
+    @Override
+    protected String getOperator()
+    {
+        return "=";
+    }
 
 }

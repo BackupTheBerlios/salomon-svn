@@ -34,142 +34,142 @@ import java.util.List;
  */
 public final class SQLInsert
 {
-	private String _tableName;
+    private String _tableName;
 
-	private List<SQLPair> _values;
+    private List<SQLPair> _values;
 
-	public SQLInsert()
-	{
-		_values = new LinkedList<SQLPair>();
-	}
+    public SQLInsert()
+    {
+        _values = new LinkedList<SQLPair>();
+    }
 
-	/**
-	 * 
-	 * @param tableName table name
-	 */
-	public SQLInsert(String tableName)
-	{
-		_tableName = tableName;
-		_values = new LinkedList<SQLPair>();
-	}
+    /**
+     * 
+     * @param tableName table name
+     */
+    public SQLInsert(String tableName)
+    {
+        _tableName = tableName;
+        _values = new LinkedList<SQLPair>();
+    }
 
-	/**
-	 * Adds value to be inserted.
-	 * 
-	 * @param columnName column name
-	 * @param value value of element correspodning to given column name
-	 */
-	public void addValue(String columnName, Date value)
-	{
-		SQLHelper.addValue(_values, columnName, value);
-	}
+    /**
+     * Adds value to be inserted.
+     * 
+     * @param columnName column name
+     * @param value value of element correspodning to given column name
+     */
+    public void addValue(String columnName, Date value)
+    {
+        SQLHelper.addValue(_values, columnName, value);
+    }
 
-	/**
-	 * Adds value to be inserted.
-	 * 
-	 * @param columnName column name
-	 * @param value value of element correspodning to given column name
-	 */
-	public void addValue(String columnName, double value)
-	{
-		SQLHelper.addValue(_values, columnName, value);
-	}
+    /**
+     * Adds value to be inserted.
+     * 
+     * @param columnName column name
+     * @param value value of element correspodning to given column name
+     */
+    public void addValue(String columnName, double value)
+    {
+        SQLHelper.addValue(_values, columnName, value);
+    }
 
-	/**
-	 * Adds value to be inserted.
-	 * 
-	 * @param columnName column name
-	 * @param value value of element correspodning to given column name
-	 */
-	public void addValue(String columnName, int value)
-	{
-		SQLHelper.addValue(_values, columnName, value);
-	}
+    /**
+     * Adds value to be inserted.
+     * 
+     * @param columnName column name
+     * @param value value of element correspodning to given column name
+     */
+    public void addValue(String columnName, int value)
+    {
+        SQLHelper.addValue(_values, columnName, value);
+    }
 
-	/**
-	 * Adds value to be inserted.
-	 * 
-	 * @param columnName column name
-	 * @param value value of element correspodning to given column name
-	 */
-	public void addValue(String columnName, String value)
-	{
-		SQLHelper.addValue(_values, columnName, value);
-	}
+    /**
+     * Adds value to be inserted.
+     * 
+     * @param columnName column name
+     * @param value value of element correspodning to given column name
+     */
+    public void addValue(String columnName, String value)
+    {
+        SQLHelper.addValue(_values, columnName, value);
+    }
 
-	/**
-	 * Adds value to be inserted.
-	 * 
-	 * @param columnName column name
-	 * @param value value of element correspodning to given column name
-	 */
-	public void addValue(String columnName, Time value)
-	{
-		SQLHelper.addValue(_values, columnName, value);
-	}
+    /**
+     * Adds value to be inserted.
+     * 
+     * @param columnName column name
+     * @param value value of element correspodning to given column name
+     */
+    public void addValue(String columnName, Time value)
+    {
+        SQLHelper.addValue(_values, columnName, value);
+    }
 
-	/**
-	 * Adds value to be inserted.
-	 * 
-	 * @param columnName column name
-	 * @param value value of element correspodning to given column name
-	 */
-	public void addValue(String columnName, Timestamp value)
-	{
-		SQLHelper.addValue(_values, columnName, value);
-	}
+    /**
+     * Adds value to be inserted.
+     * 
+     * @param columnName column name
+     * @param value value of element correspodning to given column name
+     */
+    public void addValue(String columnName, Timestamp value)
+    {
+        SQLHelper.addValue(_values, columnName, value);
+    }
 
-	/**
-	 * Method returns INSERT query.
-	 * 
-	 * @return INSERT query
-	 */
-	public String getQuery()
-	{
-		String query = "INSERT INTO " + _tableName;
-		StringBuilder colNames = new StringBuilder(" (");
-		StringBuilder colValues = new StringBuilder(" VALUES (");
+    /**
+     * Method returns INSERT query.
+     * 
+     * @return INSERT query
+     */
+    public String getQuery()
+    {
+        String query = "INSERT INTO " + _tableName;
+        StringBuilder colNames = new StringBuilder(" (");
+        StringBuilder colValues = new StringBuilder(" VALUES (");
 
-		Iterator<SQLPair> colIter = _values.iterator();
-		// first column is added without comma
-		SQLPair pair = colIter.next();
-		colNames.append(pair.getColumnName());
-		colValues.append(pair.getValue());
+        Iterator<SQLPair> colIter = _values.iterator();
+        // first column is added without comma
+        SQLPair pair = colIter.next();
+        colNames.append(pair.getColumnName());
+        colValues.append(pair.getValue());
 
-		// rest of column - with comma
-		while (colIter.hasNext()) {
-			pair = colIter.next();
-			colNames.append(", ").append(pair.getColumnName());
-			colValues.append(", ").append(pair.getValue());
-		}
-		colNames.append(")");
-		colValues.append(")");
+        // rest of column - with comma
+        while (colIter.hasNext()) {
+            pair = colIter.next();
+            colNames.append(", ").append(pair.getColumnName());
+            colValues.append(", ").append(pair.getValue());
+        }
+        colNames.append(")");
+        colValues.append(")");
 
-		return query + colNames.toString() + colValues.toString();
-	}
+        return query + colNames.toString() + colValues.toString();
+    }
 
-	/**
-	 * Returns table name.
-	 * 
-	 * @return Returns the tableName.
-	 */
-	public String getTableName()
-	{
-		return _tableName;
-	}
+    /**
+     * Returns table name.
+     * 
+     * @return Returns the tableName.
+     */
+    public String getTableName()
+    {
+        return _tableName;
+    }
 
-	/**
-	 * Sets table which values will be inserted to
-	 * 
-	 * @param tableName table name
-	 */
-	public void setTable(String tableName)
-	{
-		_tableName = tableName;
-	}
+    /**
+     * Sets table which values will be inserted to
+     * 
+     * @param tableName table name
+     */
+    public void setTable(String tableName)
+    {
+        _tableName = tableName;
+    }
 
-	protected void addAllValues(Collection<SQLPair> values)
-	{
-		_values.addAll(values);
-	}
+    protected void addAllValues(Collection<SQLPair> values)
+    {
+        _values.addAll(values);
+    }
 }

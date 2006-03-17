@@ -23,15 +23,16 @@ package salomon.engine.platform.data.dataset.condition;
 
 public final class AndCondition extends AbstractLogicalCondition
 {
-	public AndCondition(AbstractCondition codition, AbstractCondition... conditions)
-	{
-		super(codition, conditions);
-	}
+    public AndCondition(AbstractCondition codition,
+            AbstractCondition... conditions)
+    {
+        super(codition, conditions);
+    }
 
-	@Override
-	protected String getOperator()
-	{
-		return "AND";
-	}
+    @Override
+    protected String getOperator()
+    {
+        return "AND";
+    }
 
 }

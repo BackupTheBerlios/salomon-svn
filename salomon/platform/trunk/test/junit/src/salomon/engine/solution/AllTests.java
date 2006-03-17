@@ -21,8 +21,6 @@
 
 package salomon.engine.solution;
 
-import salomon.engine.task.TaskManagerTest;
-import salomon.engine.task.TaskInfoTest;
 import junit.framework.TestSuite;
 
 /**
@@ -31,13 +29,13 @@ import junit.framework.TestSuite;
 public class AllTests
 {
 
-	public static TestSuite suite()
-	{
-		TestSuite suite = new TestSuite("Test for salomon.engine.solution");
-		//$JUnit-BEGIN$
-		suite.addTestSuite(SolutionInfoTest.class);
-		suite.addTestSuite(SolutionManagerTest.class);
-		//$JUnit-END$
-		return suite;
-	}
+    public static TestSuite suite()
+    {
+        TestSuite suite = new TestSuite("Test for salomon.engine.solution");
+        //$JUnit-BEGIN$
+        suite.addTestSuite(SolutionInfoTest.class);
+        suite.addTestSuite(SolutionManagerTest.class);
+        //$JUnit-END$
+        return suite;
+    }
 }

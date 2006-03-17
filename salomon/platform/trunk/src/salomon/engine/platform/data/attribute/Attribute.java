@@ -29,26 +29,30 @@ import salomon.platform.data.attribute.description.IAttributeDescription;
  */
 public class Attribute implements IAttribute
 {
-	private IAttributeDescription _description;
-	private Object _value;
-	
-	protected Attribute(IAttributeDescription description, Object value){
-		_description=description;
-		_value=value;
-	}
-	
-	/* (non-Javadoc)
-	 * @see salomon.platform.data.attribute.IAttribute#getDescription()
-	 */
-	public IAttributeDescription getDescription() {
-		return _description;
-	}
+    private IAttributeDescription _description;
 
-	/* (non-Javadoc)
-	 * @see salomon.platform.data.attribute.IAttribute#getValue()
-	 */
-	public Object getValue() {
-		return _value;
-	}
+    private Object _value;
+
+    protected Attribute(IAttributeDescription description, Object value)
+    {
+        _description = description;
+        _value = value;
+    }
+
+    /* (non-Javadoc)
+     * @see salomon.platform.data.attribute.IAttribute#getDescription()
+     */
+    public IAttributeDescription getDescription()
+    {
+        return _description;
+    }
+
+    /* (non-Javadoc)
+     * @see salomon.platform.data.attribute.IAttribute#getValue()
+     */
+    public Object getValue()
+    {
+        return _value;
+    }
 
 } // end Attribute

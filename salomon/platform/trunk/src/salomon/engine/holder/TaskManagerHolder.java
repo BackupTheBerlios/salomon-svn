@@ -25,7 +25,6 @@ import salomon.engine.project.IProject;
 import salomon.engine.task.ITask;
 import salomon.engine.task.ITaskManager;
 import salomon.engine.task.ITaskRunner;
-
 import salomon.platform.exception.PlatformException;
 
 /**
@@ -35,101 +34,101 @@ import salomon.platform.exception.PlatformException;
 final class TaskManagerHolder implements ITaskManager
 {
 
-	/**
-	 * 
-	 * @uml.property name="_currentTaskManager"
-	 * @uml.associationEnd multiplicity="(0 1)"
-	 */
-	private ITaskManager _currentTaskManager;
+    /**
+     * 
+     * @uml.property name="_currentTaskManager"
+     * @uml.associationEnd multiplicity="(0 1)"
+     */
+    private ITaskManager _currentTaskManager;
 
-	/**
-	 *  
-	 */
-	TaskManagerHolder(ITaskManager taskManager)
-	{
-		_currentTaskManager = taskManager;
-	}
+    /**
+     *  
+     */
+    TaskManagerHolder(ITaskManager taskManager)
+    {
+        _currentTaskManager = taskManager;
+    }
 
-	/**
-	 * @see ITaskManager#addTask(ITask)
-	 */
-	public void addTask(ITask task) throws PlatformException
-	{
-		_currentTaskManager.addTask(task);
-	}
+    /**
+     * @see ITaskManager#addTask(ITask)
+     */
+    public void addTask(ITask task) throws PlatformException
+    {
+        _currentTaskManager.addTask(task);
+    }
 
-	/**
-	 * @see ITaskManager#clearTasks()
-	 */
-	public void clearTasks() throws PlatformException
-	{
-		_currentTaskManager.clearTasks();
-	}
+    /**
+     * @see ITaskManager#clearTasks()
+     */
+    public void clearTasks() throws PlatformException
+    {
+        _currentTaskManager.clearTasks();
+    }
 
-	/**
-	 * @see ITaskManager#createTask()
-	 */
-	public ITask createTask() throws PlatformException
-	{
-		return _currentTaskManager.createTask();
-	}
+    /**
+     * @see ITaskManager#createTask()
+     */
+    public ITask createTask() throws PlatformException
+    {
+        return _currentTaskManager.createTask();
+    }
 
-	/**
-	 * @see ITaskManager#getCurrentTask()
-	 */
-	public ITask getCurrentTask() throws PlatformException
-	{
-		return _currentTaskManager.getCurrentTask();
-	}
+    /**
+     * @see ITaskManager#getCurrentTask()
+     */
+    public ITask getCurrentTask() throws PlatformException
+    {
+        return _currentTaskManager.getCurrentTask();
+    }
 
-	public IProject getProject() throws PlatformException
-	{
-		return _currentTaskManager.getProject();
-	}
+    public IProject getProject() throws PlatformException
+    {
+        return _currentTaskManager.getProject();
+    }
 
-	/**
-	 * @see salomon.engine.task.ITaskManager#getRunner()
-	 */
-	public ITaskRunner getRunner() throws PlatformException
-	{
-		return _currentTaskManager.getRunner();
-	}
+    /**
+     * @see salomon.engine.task.ITaskManager#getRunner()
+     */
+    public ITaskRunner getRunner() throws PlatformException
+    {
+        return _currentTaskManager.getRunner();
+    }
 
-	/**
-	 * @see ITaskManager#getTasks()
-	 */
-	public ITask[] getTasks() throws PlatformException
-	{
-		return _currentTaskManager.getTasks();
-	}
+    /**
+     * @see ITaskManager#getTasks()
+     */
+    public ITask[] getTasks() throws PlatformException
+    {
+        return _currentTaskManager.getTasks();
+    }
 
-	public boolean removeAll() throws PlatformException
-	{
-		throw new UnsupportedOperationException(
-				"Method removeAll() not implemented yet!");
-	}
+    public boolean removeAll() throws PlatformException
+    {
+        throw new UnsupportedOperationException(
+                "Method removeAll() not implemented yet!");
+    }
 
-	public boolean removeTask(ITask task) throws PlatformException
-	{
-		throw new UnsupportedOperationException(
-				"Method removeTask() not implemented yet!");
-	}
+    public boolean removeTask(ITask task) throws PlatformException
+    {
+        throw new UnsupportedOperationException(
+                "Method removeTask() not implemented yet!");
+    }
 
-	public void saveTasks() throws PlatformException
-	{
-		_currentTaskManager.saveTasks();
-	}
+    public void saveTasks() throws PlatformException
+    {
+        _currentTaskManager.saveTasks();
+    }
 
-	/**
-	 * @see ITaskManager#start()
-	 */
-	public void start() throws PlatformException
-	{
-		_currentTaskManager.start();
-	}
+    /**
+     * @see ITaskManager#start()
+     */
+    public void start() throws PlatformException
+    {
+        _currentTaskManager.start();
+    }
 
-	void setCurrent(ITaskManager taskManager)
-	{
-		_currentTaskManager = taskManager;
-	}
+    void setCurrent(ITaskManager taskManager)
+    {
+        _currentTaskManager = taskManager;
+    }
 }

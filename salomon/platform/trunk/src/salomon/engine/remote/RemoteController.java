@@ -27,7 +27,6 @@ import java.rmi.server.UnicastRemoteObject;
 import org.apache.log4j.Logger;
 
 import salomon.engine.Starter;
-
 import salomon.engine.platform.IManagerEngine;
 
 /**
@@ -37,64 +36,64 @@ import salomon.engine.platform.IManagerEngine;
  * @see salomon.engine.controller.IController
  */
 public final class RemoteController extends UnicastRemoteObject
-		implements IRemoteController
+        implements IRemoteController
 {
-	private String _description;
+    private String _description;
 
-	private String _name;
+    private String _name;
 
-	/**
-	 * 
-	 * @uml.property name="_remoteManagerEngine"
-	 * @uml.associationEnd multiplicity="(0 1)"
-	 */
-	private IRemoteManagerEngine _remoteManagerEngine;
+    /**
+     * 
+     * @uml.property name="_remoteManagerEngine"
+     * @uml.associationEnd multiplicity="(0 1)"
+     */
+    private IRemoteManagerEngine _remoteManagerEngine;
 
-	/**
-	 * @throws RemoteException
-	 * @pre $none
-	 * @post $none
-	 */
-	public RemoteController(IManagerEngine managerEngine, String name)
-			throws RemoteException
-	{
-		_remoteManagerEngine = new RemoteManagerEngine(managerEngine);
-		_name = name;
-	}
+    /**
+     * @throws RemoteException
+     * @pre $none
+     * @post $none
+     */
+    public RemoteController(IManagerEngine managerEngine, String name)
+            throws RemoteException
+    {
+        _remoteManagerEngine = new RemoteManagerEngine(managerEngine);
+        _name = name;
+    }
 
-	/**
-	 * @see IRemoteController#exit()
-	 */
-	public void exit() throws RemoteException
-	{
-		LOGGER.debug("RemoteController.exit()");
-		Starter.exit();
-	}
+    /**
+     * @see IRemoteController#exit()
+     */
+    public void exit() throws RemoteException
+    {
+        LOGGER.debug("RemoteController.exit()");
+        Starter.exit();
+    }
 
-	/**
-	 * @see IRemoteController#getDescription()
-	 */
-	public String getDescription() throws RemoteException
-	{
+    /**
+     * @see IRemoteController#getDescription()
+     */
+    public String getDescription() throws RemoteException
+    {
 
-		return _description;
-	}
+        return _description;
+    }
 
-	/**
-	 * @see IRemoteController#getManagerEngine()
-	 */
-	public IRemoteManagerEngine getManagerEngine() throws RemoteException
-	{
-		return _remoteManagerEngine;
-	}
+    /**
+     * @see IRemoteController#getManagerEngine()
+     */
+    public IRemoteManagerEngine getManagerEngine() throws RemoteException
+    {
+        return _remoteManagerEngine;
+    }
 
-	/**
-	 * @see IRemoteController#getName()
-	 */
-	public String getName() throws RemoteException
-	{
-		return _name;
-	}
+    /**
+     * @see IRemoteController#getName()
+     */
+    public String getName() throws RemoteException
+    {
+        return _name;
+    }
 
-	private static final Logger LOGGER = Logger.getLogger(RemoteController.class);
+    private static final Logger LOGGER = Logger.getLogger(RemoteController.class);
 }

@@ -36,46 +36,46 @@ import salomon.platform.data.dataset.IData;
 public class DataTest extends TestCase
 {
 
-	private DBManager _manager;
+    private DBManager _manager;
 
-	public DataTest() throws Exception
-	{
-		_manager = TestObjectFactory.getDbManager();
-	}
+    public DataTest() throws Exception
+    {
+        _manager = TestObjectFactory.getDbManager();
+    }
 
-	/*
-	 * Test method for 'salomon.engine.platform.data.dataset.Data.getData()'
-	 */
-	public void testGetData() throws Exception
-	{
-		LOGGER.info("DataTest.testGetData()");
-		SQLSelect select = new SQLSelect();
-		select.addTable(SolutionInfo.TABLE_NAME);
-		
-		ResultSet resultSet = _manager.select(select);
-		
-		IData data = new Data(resultSet);
-		
-		while (data.next()) {
-			Object[] dataArray = data.getData();
-			StringBuilder dataString = new StringBuilder();
-			for (Object d : dataArray) {
-				dataString.append("|");
-				dataString.append(d);				
-			}
-			LOGGER.debug(dataString);
-		}
-		data.close();
-	}
+    /*
+     * Test method for 'salomon.engine.platform.data.dataset.Data.getData()'
+     */
+    public void testGetData() throws Exception
+    {
+        LOGGER.info("DataTest.testGetData()");
+        SQLSelect select = new SQLSelect();
+        select.addTable(SolutionInfo.TABLE_NAME);
 
-	/*
-	 * Test method for 'salomon.engine.platform.data.dataset.Data.getData(IColumn)'
-	 */
-	public void testGetDataIColumn()
-	{
+        ResultSet resultSet = _manager.select(select);
 
-	}
+        IData data = new Data(resultSet);
 
-	private static final Logger LOGGER = Logger.getLogger(DataTest.class);
+        while (data.next()) {
+            Object[] dataArray = data.getData();
+            StringBuilder dataString = new StringBuilder();
+            for (Object d : dataArray) {
+                dataString.append("|");
+                dataString.append(d);
+            }
+            LOGGER.debug(dataString);
+        }
+        data.close();
+    }
+
+    /*
+     * Test method for 'salomon.engine.platform.data.dataset.Data.getData(IColumn)'
+     */
+    public void testGetDataIColumn()
+    {
+
+    }
+
+    private static final Logger LOGGER = Logger.getLogger(DataTest.class);
 
 }

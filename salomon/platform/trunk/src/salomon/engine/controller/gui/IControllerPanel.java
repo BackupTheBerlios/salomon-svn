@@ -23,12 +23,10 @@ package salomon.engine.controller.gui;
 
 import javax.swing.JComponent;
 
-import salomon.engine.controller.gui.graph.GraphTaskManagerGUI;
-
 public interface IControllerPanel
 {
-	void refresh();
+    void refresh();
 
-	JComponent getComponent();
+    JComponent getComponent();
 
 }

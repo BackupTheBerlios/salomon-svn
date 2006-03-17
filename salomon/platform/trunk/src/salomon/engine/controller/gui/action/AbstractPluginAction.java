@@ -31,17 +31,17 @@ import salomon.engine.controller.gui.PluginManagerGUI;
 public abstract class AbstractPluginAction extends AbstractAction
 {
 
-	/**
-	 * an object which method are called in implementation of actionPerformed()
-	 * method
-	 * 
-	 * @uml.property name="_pluginMangerGUI"
-	 * @uml.associationEnd multiplicity="(0 1)"
-	 */
-	protected PluginManagerGUI _pluginMangerGUI;
+    /**
+     * an object which method are called in implementation of actionPerformed()
+     * method
+     * 
+     * @uml.property name="_pluginMangerGUI"
+     * @uml.associationEnd multiplicity="(0 1)"
+     */
+    protected PluginManagerGUI _pluginMangerGUI;
 
-	public AbstractPluginAction(PluginManagerGUI editionManager)
-	{
-		_pluginMangerGUI = editionManager;
-	}
+    public AbstractPluginAction(PluginManagerGUI editionManager)
+    {
+        _pluginMangerGUI = editionManager;
+    }
 }

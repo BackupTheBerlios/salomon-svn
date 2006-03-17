@@ -24,90 +24,91 @@ package salomon.platform.data.attribute;
 import salomon.platform.data.attribute.description.IAttributeDescription;
 import salomon.platform.exception.PlatformException;
 
-public interface IAttributeSet {
-	/**
-	 * Closes the IAttributeSet
-	 * 
-	 * @throws PlatformException
-	 */
-	void close() throws PlatformException;
+public interface IAttributeSet
+{
+    /**
+     * Closes the IAttributeSet
+     * 
+     * @throws PlatformException
+     */
+    void close() throws PlatformException;
 
-	/**
-	 * Returns all attributes in current "line" od IAttributeSet
-	 * 
-	 * @return attributes
-	 * @throws PlatformException
-	 */
-	IAttribute[] getAttributes() throws PlatformException;
+    /**
+     * Returns all attributes in current "line" od IAttributeSet
+     * 
+     * @return attributes
+     * @throws PlatformException
+     */
+    IAttribute[] getAttributes() throws PlatformException;
 
-	/**
-	 * Returns specified attribute in current "line" od IAttributeSet
-	 * 
-	 * @param attributeDescription
-	 * @return
-	 * @throws PlatformException
-	 */
-	IAttribute getAttribute(IAttributeDescription attributeDescription)
-			throws PlatformException;
+    /**
+     * Returns specified attribute in current "line" od IAttributeSet
+     * 
+     * @param attributeDescription
+     * @return
+     * @throws PlatformException
+     */
+    IAttribute getAttribute(IAttributeDescription attributeDescription)
+            throws PlatformException;
 
-	/**
-	 * Returns all the IAttributeDescriptions associated with this IAttributeSet
-	 * 
-	 * @return
-	 * @throws PlatformException
-	 */
-	IAttributeDescription[] getDesciptions() throws PlatformException;
+    /**
+     * Returns all the IAttributeDescriptions associated with this IAttributeSet
+     * 
+     * @return
+     * @throws PlatformException
+     */
+    IAttributeDescription[] getDesciptions() throws PlatformException;
 
-	/**
-	 * Iterates through IAttributeSet till it's possible to iterate (there are
-	 * any more items)
-	 * 
-	 * @return value indicating if there the "row" was changed
-	 * @throws PlatformException
-	 */
-	boolean next() throws PlatformException;
+    /**
+     * Iterates through IAttributeSet till it's possible to iterate (there are
+     * any more items)
+     * 
+     * @return value indicating if there the "row" was changed
+     * @throws PlatformException
+     */
+    boolean next() throws PlatformException;
 
-	/**
-	 * Adds "row" to the IAttributeSet
-	 * 
-	 * @param attributes
-	 * @throws PlatformException
-	 */
-	void add(IAttribute[] attributes) throws PlatformException;
+    /**
+     * Adds "row" to the IAttributeSet
+     * 
+     * @param attributes
+     * @throws PlatformException
+     */
+    void add(IAttribute[] attributes) throws PlatformException;
 
-	/**
-	 * Gets the IAttributeSet name
-	 * 
-	 * @return name
-	 */
-	String getName();
+    /**
+     * Gets the IAttributeSet name
+     * 
+     * @return name
+     */
+    String getName();
 
-	/**
-	 * Sets the IAttributeSet name
-	 * 
-	 * @param name
-	 */
-	void setName(String name);
+    /**
+     * Sets the IAttributeSet name
+     * 
+     * @param name
+     */
+    void setName(String name);
 
-	/**
-	 * Gets the IAttributeSet info.
-	 * 
-	 * @return info
-	 */
-	String getInfo();
+    /**
+     * Gets the IAttributeSet info.
+     * 
+     * @return info
+     */
+    String getInfo();
 
-	/**
-	 * Sets the IAttributeSet info
-	 * 
-	 * @param info
-	 */
-	void setInfo(String info);
+    /**
+     * Sets the IAttributeSet info
+     * 
+     * @param info
+     */
+    void setInfo(String info);
 
-	/**
-	 * Gets the IAttributeSet id
-	 * 
-	 * @return id
-	 */
-	public int getAttributeSetId();
+    /**
+     * Gets the IAttributeSet id
+     * 
+     * @return id
+     */
+    public int getAttributeSetId();
 
 }

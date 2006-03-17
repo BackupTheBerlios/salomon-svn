@@ -29,31 +29,23 @@ import salomon.engine.plugin.LocalPlugin;
 public final class AddTaskAction extends AbstractTaskAction
 {
 
-	/**
-	 * 
-	 * @uml.property name="_plugin"
-	 * @uml.associationEnd multiplicity="(0 1)"
-	 */
-	private LocalPlugin _plugin;
+    /**
+     * @param editionManager
+     */
+    protected AddTaskAction(GraphTaskManagerGUI editionManager)
+    {
+        super(editionManager);
+    }
 
-	/**
-	 * @param editionManager
-	 */
-	protected AddTaskAction(GraphTaskManagerGUI editionManager)
-	{
-		super(editionManager);
-	}
+    /**
+     * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+     */
+    public void actionPerformed(ActionEvent e)
+    {
+        //FIXME		_taskManagerGUI.addTask();
+    }
 
-	/**
-	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-	 */
-	public void actionPerformed(ActionEvent e)
-	{
-//FIXME		_taskManagerGUI.addTask();
-	}
-
-	public void setPlugin(LocalPlugin plugin)
-	{
-		_plugin = plugin;
-	}
+    public void setPlugin(LocalPlugin plugin)
+    {
+    }
 }

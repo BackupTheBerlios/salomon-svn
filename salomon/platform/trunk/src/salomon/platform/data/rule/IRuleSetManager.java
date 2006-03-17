@@ -28,9 +28,9 @@ import salomon.platform.exception.PlatformException;
  */
 public interface IRuleSetManager
 {
-	void addRuleSet() throws PlatformException;
+    void addRuleSet() throws PlatformException;
 
-	IRuleSet createRuleSet() throws PlatformException;
+    IRuleSet createRuleSet() throws PlatformException;
 
-	IRuleSet[] getRuleSets() throws PlatformException;
+    IRuleSet[] getRuleSets() throws PlatformException;
 }

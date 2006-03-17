@@ -23,48 +23,46 @@ package salomon.engine.controller.gui.graph;
 
 import org.apache.log4j.Logger;
 
-import edu.uci.ics.jung.graph.impl.SparseVertex;
-
 import salomon.engine.task.ITask;
 import salomon.engine.task.Task;
-
 import salomon.platform.exception.PlatformException;
+import edu.uci.ics.jung.graph.impl.SparseVertex;
 
 public final class TaskVertex extends SparseVertex
 {
-	private ITask _task;
+    private ITask _task;
 
-	/**
-	 * @param task
-	 */
-	public TaskVertex(ITask task)
-	{
-		_task = task;
-	}
+    /**
+     * @param task
+     */
+    public TaskVertex(ITask task)
+    {
+        _task = task;
+    }
 
-	public ITask getTask()
-	{
-		return _task;
-	}
-	
-	@Override
-	public String toString()
-	{
-		String name = "";
-		try {
-			name = ((Task)_task).getInfo().getName();
-		} catch (PlatformException e) {
-			LOGGER.fatal("", e);
-		}
-		// plugin cannot be NULL!
-		String plugin = "ERROR";
-		try {
-			plugin = _task.getPlugin().toString();
-		} catch (PlatformException e) {
-			LOGGER.fatal("", e);
-		}
-		return (name != null ? name : "") + " [" + plugin + "]";
-	}
+    public ITask getTask()
+    {
+        return _task;
+    }
 
-	private static final Logger LOGGER = Logger.getLogger(TaskVertex.class);
+    @Override
+    public String toString()
+    {
+        String name = "";
+        try {
+            name = ((Task) _task).getInfo().getName();
+        } catch (PlatformException e) {
+            LOGGER.fatal("", e);
+        }
+        // plugin cannot be NULL!
+        String plugin = "ERROR";
+        try {
+            plugin = _task.getPlugin().toString();
+        } catch (PlatformException e) {
+            LOGGER.fatal("", e);
+        }
+        return (name != null ? name : "") + " [" + plugin + "]";
+    }
+
+    private static final Logger LOGGER = Logger.getLogger(TaskVertex.class);
 }

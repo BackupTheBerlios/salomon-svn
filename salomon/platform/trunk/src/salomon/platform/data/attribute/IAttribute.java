@@ -28,15 +28,15 @@ import salomon.platform.data.attribute.description.IAttributeDescription;
  */
 public interface IAttribute
 {
-	/**
-	 * Returns the description of the attribute.
-	 * @return the description
-	 */
-	IAttributeDescription getDescription();
+    /**
+     * Returns the description of the attribute.
+     * @return the description
+     */
+    IAttributeDescription getDescription();
 
-	/**
-	 * Returns the value of the attribute
-	 * @return the value of attribute
-	 */
-	Object getValue();
+    /**
+     * Returns the value of the attribute
+     * @return the value of attribute
+     */
+    Object getValue();
 }

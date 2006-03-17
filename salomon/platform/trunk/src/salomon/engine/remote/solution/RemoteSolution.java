@@ -27,55 +27,54 @@ import java.rmi.server.UnicastRemoteObject;
 import salomon.engine.remote.project.IRemoteProjectManager;
 import salomon.engine.remote.project.RemoteProjectManager;
 import salomon.engine.solution.ISolution;
-
 import salomon.platform.exception.PlatformException;
 
 /**
  * @see salomon.engine.solution.ISolution
  */
 public final class RemoteSolution extends UnicastRemoteObject
-		implements IRemoteSolution
+        implements IRemoteSolution
 {
 
-	/**
-	 * 
-	 * @uml.property name="_remoteProjectManager"
-	 * @uml.associationEnd multiplicity="(0 1)"
-	 */
-	private IRemoteProjectManager _remoteProjectManager;
+    /**
+     * 
+     * @uml.property name="_remoteProjectManager"
+     * @uml.associationEnd multiplicity="(0 1)"
+     */
+    private IRemoteProjectManager _remoteProjectManager;
 
-	/**
-	 * 
-	 * @uml.property name="_solution"
-	 * @uml.associationEnd multiplicity="(0 1)"
-	 */
-	private ISolution _solution;
+    /**
+     * 
+     * @uml.property name="_solution"
+     * @uml.associationEnd multiplicity="(0 1)"
+     */
+    private ISolution _solution;
 
-	/**
-	 * @throws RemoteException
-	 */
-	RemoteSolution(ISolution solution) throws RemoteException
-	{
-		_solution = solution;
-	}
+    /**
+     * @throws RemoteException
+     */
+    RemoteSolution(ISolution solution) throws RemoteException
+    {
+        _solution = solution;
+    }
 
-	/**
-	 * @see IRemoteSolution#getProjectManager()
-	 */
-	public IRemoteProjectManager getProjectManager() throws PlatformException,
-			RemoteException
-	{
-		if (_remoteProjectManager == null) {
-			_remoteProjectManager = new RemoteProjectManager(
-					_solution.getProjectManager());
-		}
+    /**
+     * @see IRemoteSolution#getProjectManager()
+     */
+    public IRemoteProjectManager getProjectManager() throws PlatformException,
+            RemoteException
+    {
+        if (_remoteProjectManager == null) {
+            _remoteProjectManager = new RemoteProjectManager(
+                    _solution.getProjectManager());
+        }
 
-		return _remoteProjectManager;
-	}
+        return _remoteProjectManager;
+    }
 
-	ISolution getSolution()
-	{
-		return _solution;
-	}
+    ISolution getSolution()
+    {
+        return _solution;
+    }
 
 }

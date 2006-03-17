@@ -26,5 +26,5 @@ package salomon.plugin;
  */
 public interface IPlugin extends IDataPlugin, IGraphicPlugin
 {
-	// no new methods, interface just merges methods from IDataPlugin, IGraphicPlugin
+    // no new methods, interface just merges methods from IDataPlugin, IGraphicPlugin
 }

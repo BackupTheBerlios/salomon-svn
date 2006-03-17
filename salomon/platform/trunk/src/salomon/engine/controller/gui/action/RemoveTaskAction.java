@@ -31,21 +31,21 @@ import salomon.engine.controller.gui.graph.GraphTaskManagerGUI;
 public final class RemoveTaskAction extends AbstractTaskAction
 {
 
-	/**
-	 * @param editionManager
-	 */
-	protected RemoveTaskAction(GraphTaskManagerGUI editionManager)
-	{
-		super(editionManager);
-		// TODO Auto-generated constructor stub
-	}
+    /**
+     * @param editionManager
+     */
+    protected RemoveTaskAction(GraphTaskManagerGUI editionManager)
+    {
+        super(editionManager);
+        // TODO Auto-generated constructor stub
+    }
 
-	/**
-	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-	 */
-	public void actionPerformed(ActionEvent e)
-	{
-		_taskManagerGUI.removeTask();
-	}
+    /**
+     * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+     */
+    public void actionPerformed(ActionEvent e)
+    {
+        _taskManagerGUI.removeTask();
+    }
 
 }

@@ -22,8 +22,6 @@
 package salomon.engine.controller.gui;
 
 import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.Action;
 import javax.swing.ImageIcon;
@@ -41,186 +39,186 @@ import salomon.engine.controller.gui.graph.GraphTaskManagerGUI;
  */
 public final class GUIButtons
 {
-	private JButton _btnAdd = null;
+    private JButton _btnAdd = null;
 
-	private JButton _btnDown = null;
+    private JButton _btnDown = null;
 
-	private JButton _btnFirst = null;
+    private JButton _btnFirst = null;
 
-	private JButton _btnLast = null;
+    private JButton _btnLast = null;
 
-	private JButton _btnRemove = null;
+    private JButton _btnRemove = null;
 
-	private JButton _btnRemoveAll = null;
+    private JButton _btnRemoveAll = null;
 
-	private JButton _btnRun;
+    private JButton _btnRun;
 
-	private JButton _btnUp = null;
+    private JButton _btnUp = null;
 
+    private String _resourcesDir = null;
 
-	private String _resourcesDir = null;
+    /**
+     * 
+     * @uml.property name="_taskManagerGUI"
+     * @uml.associationEnd multiplicity="(0 1)"
+     */
+    private GraphTaskManagerGUI _taskManagerGUI = null;
 
-	/**
-	 * 
-	 * @uml.property name="_taskManagerGUI"
-	 * @uml.associationEnd multiplicity="(0 1)"
-	 */
-	private GraphTaskManagerGUI _taskManagerGUI = null;
+    public GUIButtons(GraphTaskManagerGUI taskManagerGUI)
+    {
+        _taskManagerGUI = taskManagerGUI;
+        _resourcesDir = Config.getString("RESOURCES_DIR");
+    }
 
-	public GUIButtons(GraphTaskManagerGUI taskManagerGUI)
-	{
-		_taskManagerGUI = taskManagerGUI;
-		_resourcesDir = Config.getString("RESOURCES_DIR");
-	}
+    /**
+     * This method initializes _btnAdd
+     * 
+     * @return JButton
+     */
+    JButton getBtnAdd()
+    {
+        if (_btnAdd == null) {
+            _btnAdd = createManipulationButton(
+                    Resources.getString("ICO_TASK_ADD"), Messages.getString("TASK_ADD"), _taskManagerGUI.getActionManager().getAddTaskAction()); //$NON-NLS-1$
+        }
+        return _btnAdd;
+    }
 
-	/**
-	 * This method initializes _btnAdd
-	 * 
-	 * @return JButton
-	 */
-	JButton getBtnAdd()
-	{
-		if (_btnAdd == null) {
-			_btnAdd = createManipulationButton(
-					Resources.getString("ICO_TASK_ADD"), Messages.getString("TASK_ADD"), _taskManagerGUI.getActionManager().getAddTaskAction()); //$NON-NLS-1$
-		}
-		return _btnAdd;
-	}
+    /**
+     * This method initializes _btnDown
+     * 
+     * @return JButton
+     */
+    JButton getBtnDown()
+    {
+        if (_btnDown == null) {
+            _btnDown = createManipulationButton(
+                    Resources.getString("ICO_TASK_DOWN"), Messages.getString("TASK_DOWN"), null); //$NON-NLS-1$
+        }
+        return _btnDown;
+    }
 
-	/**
-	 * This method initializes _btnDown
-	 * 
-	 * @return JButton
-	 */
-	JButton getBtnDown()
-	{
-		if (_btnDown == null) {
-			_btnDown = createManipulationButton(
-					Resources.getString("ICO_TASK_DOWN"), Messages.getString("TASK_DOWN"), null); //$NON-NLS-1$
-		}
-		return _btnDown;
-	}
+    /**
+     * This method initializes _btnFirst
+     * 
+     * @return JButton
+     */
+    JButton getBtnFirst()
+    {
+        if (_btnFirst == null) {
+            _btnFirst = createManipulationButton(
+                    Resources.getString("ICO_TASK_FIRST"), Messages.getString("TASK_FIRST"), null); //$NON-NLS-1$
+        }
+        return _btnFirst;
+    }
 
-	/**
-	 * This method initializes _btnFirst
-	 * 
-	 * @return JButton
-	 */
-	JButton getBtnFirst()
-	{
-		if (_btnFirst == null) {
-			_btnFirst = createManipulationButton(
-					Resources.getString("ICO_TASK_FIRST"), Messages.getString("TASK_FIRST"), null); //$NON-NLS-1$
-		}
-		return _btnFirst;
-	}
+    /**
+     * This method initializes _btnLast
+     * 
+     * @return JButton
+     */
+    JButton getBtnLast()
+    {
+        if (_btnLast == null) {
+            _btnLast = createManipulationButton(
+                    Resources.getString("ICO_TASK_LAST"), Messages.getString("TASK_LAST"), null); //$NON-NLS-1$
+        }
+        return _btnLast;
+    }
 
-	/**
-	 * This method initializes _btnLast
-	 * 
-	 * @return JButton
-	 */
-	JButton getBtnLast()
-	{
-		if (_btnLast == null) {
-			_btnLast = createManipulationButton(
-					Resources.getString("ICO_TASK_LAST"), Messages.getString("TASK_LAST"), null); //$NON-NLS-1$
-		}
-		return _btnLast;
-	}
+    /**
+     * This method initializes _btnRemove
+     * 
+     * @return JButton
+     */
+    JButton getBtnRemove()
+    {
+        if (_btnRemove == null) {
+            _btnRemove = createManipulationButton(
+                    Resources.getString("ICO_TASK_REMOVE"), Messages.getString("TASK_REMOVE"), _taskManagerGUI.getActionManager().getRemoveTaskAction()); //$NON-NLS-1$
+        }
+        return _btnRemove;
+    }
 
-	/**
-	 * This method initializes _btnRemove
-	 * 
-	 * @return JButton
-	 */
-	JButton getBtnRemove()
-	{
-		if (_btnRemove == null) {
-			_btnRemove = createManipulationButton(
-					Resources.getString("ICO_TASK_REMOVE"), Messages.getString("TASK_REMOVE"), _taskManagerGUI.getActionManager().getRemoveTaskAction()); //$NON-NLS-1$
-		}
-		return _btnRemove;
-	}
+    /**
+     * This method initializes _btnRemoveAll
+     * 
+     * @return JButton
+     */
+    JButton getBtnRemoveAll()
+    {
+        if (_btnRemoveAll == null) {
+            _btnRemoveAll = createManipulationButton(
+                    Resources.getString("ICO_TASK_REMOVEALL"), Messages.getString("TASK_REMOVE_ALL"), _taskManagerGUI.getActionManager().getRemoveAllTasksAction()); //$NON-NLS-1$
+        }
+        return _btnRemoveAll;
+    }
 
-	/**
-	 * This method initializes _btnRemoveAll
-	 * 
-	 * @return JButton
-	 */
-	JButton getBtnRemoveAll()
-	{
-		if (_btnRemoveAll == null) {
-			_btnRemoveAll = createManipulationButton(
-					Resources.getString("ICO_TASK_REMOVEALL"), Messages.getString("TASK_REMOVE_ALL"), _taskManagerGUI.getActionManager().getRemoveAllTasksAction()); //$NON-NLS-1$
-		}
-		return _btnRemoveAll;
-	}
+    /**
+     * This method initializes _btnRun
+     * 
+     * @return JButton
+     */
+    JButton getBtnRun()
+    {
+        if (_btnRun == null) {
+            _btnRun = new JButton(
+                    _taskManagerGUI.getActionManager().getRunTaskAction());
+            _btnRun.setIcon(new ImageIcon(_resourcesDir + Config.FILE_SEPARATOR
+                    + Resources.getString("ICO_TASK_RUN")));
+            _btnRun.setToolTipText(Messages.getString("BTN_RUN"));
+            setButtonDimension(_btnRun);
 
-	/**
-	 * This method initializes _btnRun
-	 * 
-	 * @return JButton
-	 */
-	JButton getBtnRun()
-	{
-		if (_btnRun == null) {
-			_btnRun = new JButton(
-					_taskManagerGUI.getActionManager().getRunTaskAction());
-			_btnRun.setIcon(new ImageIcon(_resourcesDir + Config.FILE_SEPARATOR
-					+ Resources.getString("ICO_TASK_RUN")));
-			_btnRun.setToolTipText(Messages.getString("BTN_RUN"));
-			setButtonDimension(_btnRun);
+        }
 
-		}
+        return _btnRun;
+    }
 
-		return _btnRun;
-	}
+    /**
+     * This method initializes _btnUp
+     * 
+     * @return JButton
+     */
+    JButton getBtnUp()
+    {
+        if (_btnUp == null) {
+            _btnUp = createManipulationButton(
+                    Resources.getString("ICO_TASK_UP"), Messages.getString("TASK_UP"), null); //$NON-NLS-1$
+        }
+        return _btnUp;
+    }
 
-	/**
-	 * This method initializes _btnUp
-	 * 
-	 * @return JButton
-	 */
-	JButton getBtnUp()
-	{
-		if (_btnUp == null) {
-			_btnUp = createManipulationButton(
-					Resources.getString("ICO_TASK_UP"), Messages.getString("TASK_UP"), null); //$NON-NLS-1$
-		}
-		return _btnUp;
-	}
+    /**
+     * Creates button with given text and standard settings
+     * 
+     * @param text
+     * @return
+     */
+    private JButton createManipulationButton(String text, String tooltip,
+            Action action)
+    {
+        JButton button;
+        if (action == null) {
+            button = new JButton();
+        } else {
+            button = new JButton(action);
+        }
 
-	/**
-	 * Creates button with given text and standard settings
-	 * 
-	 * @param text
-	 * @return
-	 */
-	private JButton createManipulationButton(String text, String tooltip, Action action)
-	{
-		JButton button;
-		if (action == null) {
-			button = new JButton();
-		} else {
-			button = new JButton(action);
-		}
+        button.setIcon(new ImageIcon(_resourcesDir + Config.FILE_SEPARATOR
+                + text));
+        button.setToolTipText(tooltip);
+        setButtonDimension(button);
 
-		button.setIcon(new ImageIcon(_resourcesDir + Config.FILE_SEPARATOR
-				+ text));
-		button.setToolTipText(tooltip);
-		setButtonDimension(button);
+        return button;
+    }
 
-		return button;
-	}
+    private static void setButtonDimension(JButton button)
+    {
+        Dimension dim = new Dimension(30, 30);
+        button.setPreferredSize(dim);
+        button.setMinimumSize(dim);
+        button.setMaximumSize(dim);
+    }
 
-	private static void setButtonDimension(JButton button)
-	{
-		Dimension dim = new Dimension(30, 30);
-		button.setPreferredSize(dim);
-		button.setMinimumSize(dim);
-		button.setMaximumSize(dim);
-	}
-
-	private static final Logger LOGGER = Logger.getLogger(GUIButtons.class);
+    private static final Logger LOGGER = Logger.getLogger(GUIButtons.class);
 }

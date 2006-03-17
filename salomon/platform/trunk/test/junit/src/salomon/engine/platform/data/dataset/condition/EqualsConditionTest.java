@@ -26,79 +26,80 @@ import salomon.platform.data.IColumn;
 public class EqualsConditionTest extends AbstractConditionTest
 {
 
-	/*
-	 * Test method for 'salomon.engine.platform.data.dataset.condition.EqualsCondition.getOperator()'
-	 */
-	public void testGetOperator()
-	{
-		AbstractCondition condition = getCondition();
-		String operator = condition.getOperator();
+    /*
+     * Test method for 'salomon.engine.platform.data.dataset.condition.EqualsCondition.getOperator()'
+     */
+    public void testGetOperator()
+    {
+        AbstractCondition condition = getCondition();
+        String operator = condition.getOperator();
 
-		assertEquals("=", operator);
-	}
+        assertEquals("=", operator);
+    }
 
-	/*
-	 * Test method for 'salomon.engine.platform.data.dataset.condition.AbstractCondition.getValueString()'
-	 */
-	public void testGetValueString()
-	{
-		AbstractOperatorCondition condition = (AbstractOperatorCondition) getCondition();
-		String valueString = condition.getValueString();
+    /*
+     * Test method for 'salomon.engine.platform.data.dataset.condition.AbstractCondition.getValueString()'
+     */
+    public void testGetValueString()
+    {
+        AbstractOperatorCondition condition = (AbstractOperatorCondition) getCondition();
+        String valueString = condition.getValueString();
 
-		assertEquals("10", valueString);
-	}
+        assertEquals("10", valueString);
+    }
 
-	/*
-	 * Test method for 'salomon.engine.platform.data.dataset.condition.AbstractOperatorCondition.toSQL()'
-	 */
-	public void testToSQL()
-	{
-		AbstractCondition condition = getCondition();
-		String sqlString = condition.toSQL();
+    /*
+     * Test method for 'salomon.engine.platform.data.dataset.condition.AbstractOperatorCondition.toSQL()'
+     */
+    public void testToSQL()
+    {
+        AbstractCondition condition = getCondition();
+        String sqlString = condition.toSQL();
 
-		assertEquals("persons.person_id = 10", sqlString);
-	}
-	
-	/*
-	 * Test method for 'salomon.engine.platform.data.dataset.condition.EqualsCondition.equals()'
-	 */
-	public void testEquals()
-	{
-		AbstractCondition condition = getCondition();
-		IColumn column = condition.getColumn();
-		EqualsCondition equalsCondition = new EqualsCondition(column, 10);
-		
-		assertEquals(condition, equalsCondition);
-	}
+        assertEquals("persons.person_id = 10", sqlString);
+    }
 
-	/*
-	 * Test method for 'salomon.engine.platform.data.dataset.condition.EqualsCondition.equals()'
-	 */
-	public void testEquals2()
-	{
-		AbstractCondition condition = getCondition();
-		IColumn column = condition.getColumn();
-		EqualsCondition equalsCondition = new EqualsCondition(column, 11);
-	
-		assertTrue("Euals should return false!", !condition.equals(equalsCondition));
-	}
+    /*
+     * Test method for 'salomon.engine.platform.data.dataset.condition.EqualsCondition.equals()'
+     */
+    public void testEquals()
+    {
+        AbstractCondition condition = getCondition();
+        IColumn column = condition.getColumn();
+        EqualsCondition equalsCondition = new EqualsCondition(column, 10);
 
-	/*
-	 * Test method for 'salomon.engine.platform.data.dataset.condition.EqualsCondition.equals()'
-	 */
-	public void testEquals3()
-	{
-		AbstractCondition condition = getCondition();
-		IColumn column = condition.getColumn();
-		GreaterCondition greaterCondition = new GreaterCondition(column, 10);
-	
-		assertTrue("Euals should return false!", !condition.equals(greaterCondition));
-	}
+        assertEquals(condition, equalsCondition);
+    }
 
+    /*
+     * Test method for 'salomon.engine.platform.data.dataset.condition.EqualsCondition.equals()'
+     */
+    public void testEquals2()
+    {
+        AbstractCondition condition = getCondition();
+        IColumn column = condition.getColumn();
+        EqualsCondition equalsCondition = new EqualsCondition(column, 11);
 
-	@Override
-	protected AbstractCondition createCondition(IColumn column, Object value)
-	{
-		return new EqualsCondition(column, value);
-	}
+        assertTrue("Euals should return false!",
+                !condition.equals(equalsCondition));
+    }
+
+    /*
+     * Test method for 'salomon.engine.platform.data.dataset.condition.EqualsCondition.equals()'
+     */
+    public void testEquals3()
+    {
+        AbstractCondition condition = getCondition();
+        IColumn column = condition.getColumn();
+        GreaterCondition greaterCondition = new GreaterCondition(column, 10);
+
+        assertTrue("Euals should return false!",
+                !condition.equals(greaterCondition));
+    }
+
+    @Override
+    protected AbstractCondition createCondition(IColumn column, Object value)
+    {
+        return new EqualsCondition(column, value);
+    }
 }

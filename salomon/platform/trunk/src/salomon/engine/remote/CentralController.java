@@ -36,71 +36,61 @@ import salomon.engine.remote.event.RemoteControllerEvent;
  * establishing connection and disconnecting of remote clients.
  */
 public final class CentralController extends UnicastRemoteObject
-		implements ICentralController
+        implements ICentralController
 {
-	private List<IMasterControllerListener> _listeners = new CopyOnWriteArrayList<IMasterControllerListener>();
+    private List<IMasterControllerListener> _listeners = new CopyOnWriteArrayList<IMasterControllerListener>();
 
-	private Set<IRemoteController> _remoteControllers = new HashSet<IRemoteController>();
+    private Set<IRemoteController> _remoteControllers = new HashSet<IRemoteController>();
 
-	/**
-	 * @throws RemoteException
-	 * @pre $none
-	 * @post $none
-	 */
-	public CentralController() throws RemoteException
-	{
-		// empty body
-	}
+    /**
+     * @throws RemoteException
+     * @pre $none
+     * @post $none
+     */
+    public CentralController() throws RemoteException
+    {
+        // empty body
+    }
 
-	public void addMasterControllerListener(IMasterControllerListener listener)
-	{
-		_listeners.add(listener);
-	}
+    public void addMasterControllerListener(IMasterControllerListener listener)
+    {
+        _listeners.add(listener);
+    }
 
-	/**
-	 * @see ICentralController#register(IRemoteController)
-	 */
-	public void register(IRemoteController remoteController)
-			throws RemoteException
-	{
-		_remoteControllers.add(remoteController);
-		fireControllerAdded(remoteController);
-	}
+    /**
+     * @see ICentralController#register(IRemoteController)
+     */
+    public void register(IRemoteController remoteController)
+            throws RemoteException
+    {
+        _remoteControllers.add(remoteController);
+        fireControllerAdded(remoteController);
+    }
 
-	public void removeMasterControllerListener(
-			IMasterControllerListener listener)
-	{
-		_listeners.remove(listener);
-	}
+    public void removeMasterControllerListener(
+            IMasterControllerListener listener)
+    {
+        _listeners.remove(listener);
+    }
 
-	/**
-	 * @see ICentralController#unregister(IRemoteController)
-	 */
-	public void unregister(IRemoteController remoteController)
-			throws RemoteException
-	{
-		_remoteControllers.remove(remoteController);
-		// commented to avoid loop while finishing client application
-		// fireControllerRemoved(remoteController);
-	}
+    /**
+     * @see ICentralController#unregister(IRemoteController)
+     */
+    public void unregister(IRemoteController remoteController)
+            throws RemoteException
+    {
+        _remoteControllers.remove(remoteController);
+        // commented to avoid loop while finishing client application
+        // fireControllerRemoved(remoteController);
+    }
 
-	private void fireControllerAdded(IRemoteController controller)
-	{
-		RemoteControllerEvent event = new RemoteControllerEvent(this,
-				controller);
+    private void fireControllerAdded(IRemoteController controller)
+    {
+        RemoteControllerEvent event = new RemoteControllerEvent(this,
+                controller);
 
-		for (IMasterControllerListener listener : _listeners) {
-			listener.controllerAdded(event);
-		}
-	}
-
-	private void fireControllerRemoved(IRemoteController controller)
-	{
-		RemoteControllerEvent event = new RemoteControllerEvent(this,
-				controller);
-
-		for (IMasterControllerListener listener : _listeners) {
-			listener.controllerRemoved(event);
-		}
-	}
+        for (IMasterControllerListener listener : _listeners) {
+            listener.controllerAdded(event);
+        }
+    }
 }

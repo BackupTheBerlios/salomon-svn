@@ -34,45 +34,49 @@ import salomon.engine.database.queries.SQLSelect;
 /**
  * @author nico
  */
-public abstract class AbstractSpread extends JPanel {
-	/**
-	 * 
-	 * @uml.property name="_dbManager"
-	 * @uml.associationEnd multiplicity="(0 1)"
-	 */
-	protected DBManager _dbManager;
+public abstract class AbstractSpread extends JPanel
+{
+    /**
+     * 
+     * @uml.property name="_dbManager"
+     * @uml.associationEnd multiplicity="(0 1)"
+     */
+    protected DBManager _dbManager;
 
-	protected JScrollPane _scrTablePane;
+    protected JScrollPane _scrTablePane;
 
-	protected SQLSelect _select;
+    protected SQLSelect _select;
 
-	protected JTable _table;
+    protected JTable _table;
 
-	public AbstractSpread(DBManager dbManager) {
-		_dbManager = dbManager;
-		_select = new SQLSelect();
+    public AbstractSpread(DBManager dbManager)
+    {
+        _dbManager = dbManager;
+        _select = new SQLSelect();
 
-		this.setLayout(new BorderLayout());
-		_scrTablePane = new JScrollPane();
-		this.add(_scrTablePane, BorderLayout.CENTER);
+        this.setLayout(new BorderLayout());
+        _scrTablePane = new JScrollPane();
+        this.add(_scrTablePane, BorderLayout.CENTER);
 
-		this.initColumns();
-		this.setPreferredSize(new Dimension(640, 480));
-	}
+        this.initColumns();
+        this.setPreferredSize(new Dimension(640, 480));
+    }
 
-	protected void addColumn(String title, String columnName) {
-		_select.addColumn(columnName + " " + title);
-	}
+    protected void addColumn(String title, String columnName)
+    {
+        _select.addColumn(columnName + " " + title);
+    }
 
-	/**
-	 * In this method select object should be filled and apropriate column and
-	 * filters should be added.
-	 * 
-	 */
-	public abstract void initColumns();
+    /**
+     * In this method select object should be filled and apropriate column and
+     * filters should be added.
+     * 
+     */
+    public abstract void initColumns();
 
-	@Override
-	public final String toString() {
-		return getName();
-	}
+    @Override
+    public final String toString()
+    {
+        return getName();
+    }
 }

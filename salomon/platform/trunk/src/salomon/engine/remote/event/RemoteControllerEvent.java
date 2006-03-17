@@ -33,27 +33,27 @@ import salomon.engine.remote.IRemoteController;
 public final class RemoteControllerEvent extends EventObject
 {
 
-	/**
-	 * 
-	 * @uml.property name="_controller"
-	 * @uml.associationEnd multiplicity="(0 1)"
-	 */
-	private IRemoteController _controller;
+    /**
+     * 
+     * @uml.property name="_controller"
+     * @uml.associationEnd multiplicity="(0 1)"
+     */
+    private IRemoteController _controller;
 
-	/**
-	 * @pre $none
-	 * @post $none
-	 */
-	public RemoteControllerEvent(CentralController source,
-			IRemoteController controller)
-	{
-		super(source);
-		_controller = controller;
+    /**
+     * @pre $none
+     * @post $none
+     */
+    public RemoteControllerEvent(CentralController source,
+            IRemoteController controller)
+    {
+        super(source);
+        _controller = controller;
 
-	}
+    }
 
-	public IRemoteController getController()
-	{
-		return _controller;
-	}
+    public IRemoteController getController()
+    {
+        return _controller;
+    }
 }

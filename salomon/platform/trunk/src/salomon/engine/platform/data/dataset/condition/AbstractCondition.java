@@ -29,29 +29,29 @@ import salomon.platform.data.dataset.ICondition;
  */
 public abstract class AbstractCondition implements ICondition
 {
-	private IColumn _column;
+    private IColumn _column;
 
-	AbstractCondition(IColumn column)
-	{
-		_column = column;
-	}
+    AbstractCondition(IColumn column)
+    {
+        _column = column;
+    }
 
-	/**
-	 * Returns the column.
-	 * @return The column
-	 */
-	public final IColumn getColumn()
-	{
-		return _column;
-	}
+    /**
+     * Returns the column.
+     * @return The column
+     */
+    public final IColumn getColumn()
+    {
+        return _column;
+    }
 
-	public abstract String toSQL();
+    public abstract String toSQL();
 
-	protected abstract String getOperator();
-	
-	@Override
-	public String toString()
-	{		
-		return toSQL();
-	}
+    protected abstract String getOperator();
+
+    @Override
+    public String toString()
+    {
+        return toSQL();
+    }
 }

@@ -32,23 +32,23 @@ import salomon.engine.controller.gui.SolutionManagerGUI;
 public final class SaveSolutionAction extends AbstractSolutionAction
 {
 
-	/**
-	 * Sets an object which method is called in implementation of actionPerformed()
-	 * of method
-	 * 
-	 * @param solutionEditionManager an instance of SolutionManagerGUI
-	 */
-	protected SaveSolutionAction(SolutionManagerGUI solutionEditionManager)
-	{
-		super(solutionEditionManager);
-	}
+    /**
+     * Sets an object which method is called in implementation of actionPerformed()
+     * of method
+     * 
+     * @param solutionEditionManager an instance of SolutionManagerGUI
+     */
+    protected SaveSolutionAction(SolutionManagerGUI solutionEditionManager)
+    {
+        super(solutionEditionManager);
+    }
 
-	/**
-	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-	 */
-	public void actionPerformed(ActionEvent e)
-	{
-		_solutionEditionManager.saveSolution();
-	}
+    /**
+     * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+     */
+    public void actionPerformed(ActionEvent e)
+    {
+        _solutionEditionManager.saveSolution();
+    }
 
 }

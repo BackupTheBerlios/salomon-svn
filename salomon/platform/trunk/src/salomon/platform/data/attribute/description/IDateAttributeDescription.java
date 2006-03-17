@@ -21,8 +21,7 @@
 
 package salomon.platform.data.attribute.description;
 
-
 public interface IDateAttributeDescription extends IAttributeDescription
 {
-	// empty body
+    // empty body
 }

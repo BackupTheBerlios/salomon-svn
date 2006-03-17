@@ -31,20 +31,20 @@ import salomon.engine.controller.gui.PluginManagerGUI;
  */
 public final class AddPluginFileAction extends AbstractPluginAction
 {
-	/**
-	 * Sets an object which method is called in implementation of
-	 * actionPerformed() method
-	 * 
-	 * @param pluginManager an instance of TaskManagerGUI
-	 */
-	public AddPluginFileAction(PluginManagerGUI pluginManager)
-	{
-		super(pluginManager);
-	}
+    /**
+     * Sets an object which method is called in implementation of
+     * actionPerformed() method
+     * 
+     * @param pluginManager an instance of TaskManagerGUI
+     */
+    public AddPluginFileAction(PluginManagerGUI pluginManager)
+    {
+        super(pluginManager);
+    }
 
-	public void actionPerformed(ActionEvent e)
-	{
-//		_pluginMangerGUI.addPlugin();
-	}
+    public void actionPerformed(ActionEvent e)
+    {
+        //		_pluginMangerGUI.addPlugin();
+    }
 
 }

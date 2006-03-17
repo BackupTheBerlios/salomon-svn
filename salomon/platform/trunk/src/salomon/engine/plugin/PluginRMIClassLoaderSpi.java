@@ -32,64 +32,68 @@ import org.apache.log4j.Logger;
  */
 public final class PluginRMIClassLoaderSpi extends RMIClassLoaderSpi
 {
-	/**
-	 * 
-	 *
-	 */
-	public PluginRMIClassLoaderSpi()
-	{
-		LOGGER.debug("Creating PluginRMIClassLoaderSpi");
-	}
+    /**
+     * 
+     *
+     */
+    public PluginRMIClassLoaderSpi()
+    {
+        LOGGER.debug("Creating PluginRMIClassLoaderSpi");
+    }
 
-	/**
-	 * @see java.rmi.server.RMIClassLoaderSpi#getClassAnnotation(java.lang.Class)
-	 */
-	public String getClassAnnotation(Class cl)
-	{
-		return null;
-	}
+    /**
+     * @see java.rmi.server.RMIClassLoaderSpi#getClassAnnotation(java.lang.Class)
+     */
+    @Override
+    public String getClassAnnotation(Class cl)
+    {
+        return null;
+    }
 
-	/**
-	 * @see java.rmi.server.RMIClassLoaderSpi#getClassLoader(java.lang.String)
-	 */
-	public ClassLoader getClassLoader(String codebase)
-			throws MalformedURLException
-	{
-		LOGGER.error("Not implemented!!!");
+    /**
+     * @see java.rmi.server.RMIClassLoaderSpi#getClassLoader(java.lang.String)
+     */
+    @Override
+    public ClassLoader getClassLoader(String codebase)
+            throws MalformedURLException
+    {
+        LOGGER.error("Not implemented!!!");
 
-		return null;
-	}
+        return null;
+    }
 
-	/**
-	 * @see java.rmi.server.RMIClassLoaderSpi#loadClass(java.lang.String,
-	 *      java.lang.String, java.lang.ClassLoader)
-	 */
-	public Class loadClass(String codebase, String name,
-			ClassLoader defaultLoader) throws MalformedURLException,
-			ClassNotFoundException
-	{
-		return PluginClassLoader.getInstance().loadClass(name);
-	}
+    /**
+     * @see java.rmi.server.RMIClassLoaderSpi#loadClass(java.lang.String,
+     *      java.lang.String, java.lang.ClassLoader)
+     */
+    @Override
+    public Class loadClass(String codebase, String name,
+            ClassLoader defaultLoader) throws MalformedURLException,
+            ClassNotFoundException
+    {
+        return PluginClassLoader.getInstance().loadClass(name);
+    }
 
-	/**
-	 * @see java.rmi.server.RMIClassLoaderSpi#loadProxyClass(java.lang.String,
-	 *      java.lang.String[], java.lang.ClassLoader)
-	 */
-	public Class loadProxyClass(String codebase, String[] interfaces,
-			ClassLoader defaultLoader) throws MalformedURLException,
-			ClassNotFoundException
-	{
-		PluginClassLoader classLoader = PluginClassLoader.getInstance();
-		Class[] interfaceClasses = new Class[interfaces.length];
-		for (int i = 0; i < interfaces.length; ++i) {
-			interfaceClasses[i] = classLoader.loadClass(interfaces[i]);
-		}
+    /**
+     * @see java.rmi.server.RMIClassLoaderSpi#loadProxyClass(java.lang.String,
+     *      java.lang.String[], java.lang.ClassLoader)
+     */
+    @Override
+    public Class loadProxyClass(String codebase, String[] interfaces,
+            ClassLoader defaultLoader) throws MalformedURLException,
+            ClassNotFoundException
+    {
+        PluginClassLoader classLoader = PluginClassLoader.getInstance();
+        Class[] interfaceClasses = new Class[interfaces.length];
+        for (int i = 0; i < interfaces.length; ++i) {
+            interfaceClasses[i] = classLoader.loadClass(interfaces[i]);
+        }
 
-		Class proxyClass = Proxy.getProxyClass(PluginClassLoader.getInstance(),
-				interfaceClasses);
+        Class proxyClass = Proxy.getProxyClass(PluginClassLoader.getInstance(),
+                interfaceClasses);
 
-		return proxyClass;
-	}
+        return proxyClass;
+    }
 
-	private static Logger LOGGER = Logger.getLogger(PluginRMIClassLoaderSpi.class);
+    private static Logger LOGGER = Logger.getLogger(PluginRMIClassLoaderSpi.class);
 }

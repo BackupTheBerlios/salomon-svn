@@ -31,20 +31,20 @@ import salomon.engine.controller.gui.PluginManagerGUI;
  */
 public final class SwitchPluginLocationTypeAction extends AbstractPluginAction
 {
-	/**
-	 * Sets an object which method is called in implementation of
-	 * actionPerformed() method
-	 * 
-	 * @param pluginManager an instance of PluginManagerGUI
-	 */
-	public SwitchPluginLocationTypeAction(PluginManagerGUI pluginManager)
-	{
-		super(pluginManager);
-	}
+    /**
+     * Sets an object which method is called in implementation of
+     * actionPerformed() method
+     * 
+     * @param pluginManager an instance of PluginManagerGUI
+     */
+    public SwitchPluginLocationTypeAction(PluginManagerGUI pluginManager)
+    {
+        super(pluginManager);
+    }
 
-	public void actionPerformed(ActionEvent e)
-	{
-		_pluginMangerGUI.switchPluginLocationType();
-	}
+    public void actionPerformed(ActionEvent e)
+    {
+        _pluginMangerGUI.switchPluginLocationType();
+    }
 
 }

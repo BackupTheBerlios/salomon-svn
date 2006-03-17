@@ -33,56 +33,57 @@ import salomon.engine.database.DBManager;
 public class SQLDeleteTest extends TestCase
 {
 
-	/**
-	 * 
-	 * @uml.property name="_manager"
-	 * @uml.associationEnd multiplicity="(0 1)"
-	 */
-	private DBManager _manager;
+    /**
+     * 
+     * @uml.property name="_manager"
+     * @uml.associationEnd multiplicity="(0 1)"
+     */
+    private DBManager _manager;
 
-	public void testGetQuery1()
-	{
-		_logger.debug("SQLDeleteTest.testGetQuery1()");
-		SQLDelete delete = new SQLDelete("plugins");
-		delete.addCondition("plugin_id =", 5);
-		boolean success = false;
-		try {
-			_manager.rollback();
-			_manager.delete(delete);
-			success = true;
-			_manager.commit();
-		} catch (SQLException e) {
-			success = false;
-			e.printStackTrace();
-			_manager.rollback();
-		}
-		assertTrue(success);
-	}
+    public void testGetQuery1()
+    {
+        _logger.debug("SQLDeleteTest.testGetQuery1()");
+        SQLDelete delete = new SQLDelete("plugins");
+        delete.addCondition("plugin_id =", 5);
+        boolean success = false;
+        try {
+            _manager.rollback();
+            _manager.delete(delete);
+            success = true;
+            _manager.commit();
+        } catch (SQLException e) {
+            success = false;
+            e.printStackTrace();
+            _manager.rollback();
+        }
+        assertTrue(success);
+    }
 
-	public void testGetQuery2()
-	{
-		_logger.debug("SQLDeleteTest.testGetQuery2()");
-		SQLDelete delete = new SQLDelete("plugins");
-		delete.addCondition("plugin_id in (8, 10)");
-		boolean success = false;
-		try {
-			_manager.delete(delete);
-			success = true;
-			_manager.commit();
-		} catch (SQLException e) {
-			success = false;
-			e.printStackTrace();
-			_manager.rollback();
-		}
-		assertTrue(success);
-	}
+    public void testGetQuery2()
+    {
+        _logger.debug("SQLDeleteTest.testGetQuery2()");
+        SQLDelete delete = new SQLDelete("plugins");
+        delete.addCondition("plugin_id in (8, 10)");
+        boolean success = false;
+        try {
+            _manager.delete(delete);
+            success = true;
+            _manager.commit();
+        } catch (SQLException e) {
+            success = false;
+            e.printStackTrace();
+            _manager.rollback();
+        }
+        assertTrue(success);
+    }
 
-	protected void setUp() throws Exception
-	{
-		PropertyConfigurator.configure("log.conf"); //$NON-NLS-1$        
-		_manager = new DBManager();
-		_manager.connect();
-	}
+    @Override
+    protected void setUp() throws Exception
+    {
+        PropertyConfigurator.configure("log.conf"); //$NON-NLS-1$        
+        _manager = new DBManager();
+        _manager.connect();
+    }
 
-	private static Logger _logger = Logger.getLogger(SQLDeleteTest.class);
+    private static Logger _logger = Logger.getLogger(SQLDeleteTest.class);
 }

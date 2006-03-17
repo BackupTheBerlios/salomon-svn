@@ -25,7 +25,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import salomon.engine.database.queries.SQLSelect;
-
 import salomon.engine.platform.data.DBMetaData;
 
 /**
@@ -33,39 +32,39 @@ import salomon.engine.platform.data.DBMetaData;
  */
 public final class ExternalDBManager
 {
-	private DBManager _externalManager;
+    private DBManager _externalManager;
 
-	public ExternalDBManager()
-	{
-		_externalManager = new DBManager();
-	}
+    public ExternalDBManager()
+    {
+        _externalManager = new DBManager();
+    }
 
-	public void connect(String host, String dataBasePath, String user,
-			String passwd) throws SQLException, ClassNotFoundException
-	{
-		_externalManager.connect(host, dataBasePath, user, passwd);
-	}
+    public void connect(String host, String dataBasePath, String user,
+            String passwd) throws SQLException, ClassNotFoundException
+    {
+        _externalManager.connect(host, dataBasePath, user, passwd);
+    }
 
-	public void disconnect() throws SQLException
-	{
-		_externalManager.disconnect();
-	}
+    public void disconnect() throws SQLException
+    {
+        _externalManager.disconnect();
+    }
 
-	public DBMetaData getMetaData() throws SQLException
-	{
-		return _externalManager.getMetaData();
-	}
+    public DBMetaData getMetaData() throws SQLException
+    {
+        return _externalManager.getMetaData();
+    }
 
-	/**
-	 * Method selects data from data base getting query from given SQLInsert
-	 * object.
-	 * 
-	 * @param selectObject object holgind SELECT query
-	 * @return selected result set
-	 * @throws SQLException
-	 */
-	public ResultSet select(SQLSelect selectObject) throws SQLException
-	{
-		return _externalManager.select(selectObject);
-	}
+    /**
+     * Method selects data from data base getting query from given SQLInsert
+     * object.
+     * 
+     * @param selectObject object holgind SELECT query
+     * @return selected result set
+     * @throws SQLException
+     */
+    public ResultSet select(SQLSelect selectObject) throws SQLException
+    {
+        return _externalManager.select(selectObject);
+    }
 }

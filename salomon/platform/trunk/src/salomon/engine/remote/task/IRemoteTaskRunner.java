@@ -32,23 +32,23 @@ import salomon.platform.exception.PlatformException;
 public interface IRemoteTaskRunner extends Remote
 {
 
-	/**
-	 * @see salomon.engine.task.ITaskRunner#pause()
-	 */
-	void pause() throws PlatformException, RemoteException;
+    /**
+     * @see salomon.engine.task.ITaskRunner#pause()
+     */
+    void pause() throws PlatformException, RemoteException;
 
-	/**
-	 * @see salomon.engine.task.ITaskRunner#resume() 
-	 */
-	void resume() throws PlatformException, RemoteException;
+    /**
+     * @see salomon.engine.task.ITaskRunner#resume() 
+     */
+    void resume() throws PlatformException, RemoteException;
 
-	/**
-	 * @see salomon.engine.task.ITaskRunner#start() 
-	 */
-	void start() throws PlatformException, RemoteException;
+    /**
+     * @see salomon.engine.task.ITaskRunner#start() 
+     */
+    void start() throws PlatformException, RemoteException;
 
-	/**
-	 * @see salomon.engine.task.ITaskRunner#stop()
-	 */
-	void stop() throws PlatformException, RemoteException;
+    /**
+     * @see salomon.engine.task.ITaskRunner#stop()
+     */
+    void stop() throws PlatformException, RemoteException;
 }

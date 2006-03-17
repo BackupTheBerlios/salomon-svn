@@ -27,70 +27,70 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import com.jgoodies.forms.builder.DefaultFormBuilder;
-import com.jgoodies.forms.layout.FormLayout;
-
 import salomon.engine.Config;
 import salomon.engine.Messages;
 import salomon.engine.Version;
 
+import com.jgoodies.forms.builder.DefaultFormBuilder;
+import com.jgoodies.forms.layout.FormLayout;
+
 public class AboutPanel
 {
-	private JPanel _aboutPanel;
+    private JPanel _aboutPanel;
 
-	public JPanel getPanel()
-	{
-		if (_aboutPanel == null) {
-			_aboutPanel = buildForm().getPanel();
-		}
-		return _aboutPanel;
-	}
+    public JPanel getPanel()
+    {
+        if (_aboutPanel == null) {
+            _aboutPanel = buildForm().getPanel();
+        }
+        return _aboutPanel;
+    }
 
-	private DefaultFormBuilder buildForm()
-	{
-		FormLayout layout = new FormLayout(
-				"left:max(40dlu;pref), 3dlu, max(70dlu;pref)", "");
-		DefaultFormBuilder builder = new DefaultFormBuilder(layout);
-		builder.setDefaultDialogBorder();
+    private DefaultFormBuilder buildForm()
+    {
+        FormLayout layout = new FormLayout(
+                "left:max(40dlu;pref), 3dlu, max(70dlu;pref)", "");
+        DefaultFormBuilder builder = new DefaultFormBuilder(layout);
+        builder.setDefaultDialogBorder();
 
-		// application name
-		JLabel lblAppName = new JLabel(new ImageIcon(
-				Config.getString("RESOURCES_DIR") + Config.FILE_SEPARATOR
-						+ "logo.jpg")); //$NON-NLS-1$
+        // application name
+        JLabel lblAppName = new JLabel(new ImageIcon(
+                Config.getString("RESOURCES_DIR") + Config.FILE_SEPARATOR
+                        + "logo.jpg")); //$NON-NLS-1$
 
-		builder.append(lblAppName, 3);
+        builder.append(lblAppName, 3);
 
-		// authors
-		builder.appendSeparator(Messages.getString("TIT_AUTHORS"));
+        // authors
+        builder.appendSeparator(Messages.getString("TIT_AUTHORS"));
 
-		JLabel author = new JLabel("Nikodem Jura");
-		JLabel email = new JLabel("nico@ernie.icslab.agh.edu.pl");
-		email.setForeground(Color.BLUE);
-		builder.append(author, email);
+        JLabel author = new JLabel("Nikodem Jura");
+        JLabel email = new JLabel("nico@ernie.icslab.agh.edu.pl");
+        email.setForeground(Color.BLUE);
+        builder.append(author, email);
 
-		author = new JLabel("Krzysztof Rajda");
-		email = new JLabel("krzysztof@rajda.name");
-		email.setForeground(Color.BLUE);
-		builder.append(author, email);
+        author = new JLabel("Krzysztof Rajda");
+        email = new JLabel("krzysztof@rajda.name");
+        email.setForeground(Color.BLUE);
+        builder.append(author, email);
 
-		author = new JLabel("Leszek Grzanka");
-		email = new JLabel("grzanka@student.uci.agh.edu.pl");
-		email.setForeground(Color.BLUE);
-		builder.append(author, email);
+        author = new JLabel("Leszek Grzanka");
+        email = new JLabel("grzanka@student.uci.agh.edu.pl");
+        email.setForeground(Color.BLUE);
+        builder.append(author, email);
 
-		author = new JLabel("Jakub Galkowski");
-		email = new JLabel("avi@student.uci.agh.edu.pl");
-		email.setForeground(Color.BLUE);
-		builder.append(author, email);
+        author = new JLabel("Jakub Galkowski");
+        email = new JLabel("avi@student.uci.agh.edu.pl");
+        email.setForeground(Color.BLUE);
+        builder.append(author, email);
 
-		// versions
-		builder.appendSeparator(Messages.getString("TIT_VERSION"));
-		JLabel version = new JLabel(Messages.getString("VERSION"));
-		version.setForeground(Color.RED);
-		builder.append(new JLabel(Messages.getString("TIT_VERSION")), version);
-		builder.append(new JLabel(Messages.getString("BUILD")), new JLabel(
-				Version.getString("REVISION_VERSION")));
+        // versions
+        builder.appendSeparator(Messages.getString("TIT_VERSION"));
+        JLabel version = new JLabel(Messages.getString("VERSION"));
+        version.setForeground(Color.RED);
+        builder.append(new JLabel(Messages.getString("TIT_VERSION")), version);
+        builder.append(new JLabel(Messages.getString("BUILD")), new JLabel(
+                Version.getString("REVISION_VERSION")));
 
-		return builder;
-	}
+        return builder;
+    }
 }

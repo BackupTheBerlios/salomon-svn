@@ -28,7 +28,6 @@ import salomon.engine.remote.plugin.IRemotePluginManager;
 import salomon.engine.remote.project.IRemoteProjectManager;
 import salomon.engine.remote.solution.IRemoteSolutionManager;
 import salomon.engine.remote.task.IRemoteTaskManager;
-
 import salomon.platform.exception.PlatformException;
 
 /**
@@ -40,38 +39,38 @@ import salomon.platform.exception.PlatformException;
  */
 public interface IRemoteManagerEngine extends Remote
 {
-	/**
-	 * @see salomon.engine.platform.IManagerEngine#getPluginManager()
-	 * 
-	 * @return Returns the pluginManager.
-	 * @pre $none
-	 * @post $result != null
-	 */
-	IRemotePluginManager getPluginManager() throws RemoteException,
-			PlatformException;
+    /**
+     * @see salomon.engine.platform.IManagerEngine#getPluginManager()
+     * 
+     * @return Returns the pluginManager.
+     * @pre $none
+     * @post $result != null
+     */
+    IRemotePluginManager getPluginManager() throws RemoteException,
+            PlatformException;
 
-	/**
-	 * 
-	 * @deprecated Use (@link salomon.engine.platform.remote.solution.IRemoteSolution#getProjectManager()}
-	 * @see salomon.engine.platform.IManagerEngine#getProjectManager()
-	 * 
-	 * @return Returns the projectManager.
-	 * @pre $none
-	 * @post $result != null
-	 */
-	IRemoteProjectManager getProjectManager() throws RemoteException,
-			PlatformException;
+    /**
+     * 
+     * @deprecated Use (@link salomon.engine.platform.remote.solution.IRemoteSolution#getProjectManager()}
+     * @see salomon.engine.platform.IManagerEngine#getProjectManager()
+     * 
+     * @return Returns the projectManager.
+     * @pre $none
+     * @post $result != null
+     */
+    @Deprecated IRemoteProjectManager getProjectManager() throws RemoteException,
+            PlatformException;
 
-	/**
-	 * @deprecated Use {@link salomon.engine.remote.project.IRemoteProject#getTaskManager()}
-	 * @see salomon.engine.platform.IManagerEngine#getTasksManager()
-	 */
-	IRemoteTaskManager getTasksManager() throws RemoteException,
-			PlatformException;
+    /**
+     * @deprecated Use {@link salomon.engine.remote.project.IRemoteProject#getTaskManager()}
+     * @see salomon.engine.platform.IManagerEngine#getTasksManager()
+     */
+    @Deprecated IRemoteTaskManager getTasksManager() throws RemoteException,
+            PlatformException;
 
-	/**
-	 * @see salomon.engine.platform.IManagerEngine#getSolutionManager()
-	 */
-	IRemoteSolutionManager getSolutionManager() throws RemoteException,
-			PlatformException;
+    /**
+     * @see salomon.engine.platform.IManagerEngine#getSolutionManager()
+     */
+    IRemoteSolutionManager getSolutionManager() throws RemoteException,
+            PlatformException;
 }

@@ -31,6 +31,7 @@ import javax.swing.AbstractAction;
 import javax.swing.JMenu;
 import javax.swing.JPopupMenu;
 
+import salomon.engine.task.ITask;
 import edu.uci.ics.jung.graph.Edge;
 import edu.uci.ics.jung.graph.Graph;
 import edu.uci.ics.jung.graph.Vertex;
@@ -42,116 +43,115 @@ import edu.uci.ics.jung.visualization.SettableVertexLocationFunction;
 import edu.uci.ics.jung.visualization.VisualizationViewer;
 import edu.uci.ics.jung.visualization.control.AbstractPopupGraphMousePlugin;
 
-import salomon.engine.task.ITask;
-
 public final class SalomonEditingPopupGraphMousePlugin
-		extends
-			AbstractPopupGraphMousePlugin
+        extends
+            AbstractPopupGraphMousePlugin
 {
-	private SettableVertexLocationFunction _vertexLocations;
+    private SettableVertexLocationFunction _vertexLocations;
 
-	private GraphTaskManagerGUI _managerGUI;
+    private GraphTaskManagerGUI _managerGUI;
 
-	public SalomonEditingPopupGraphMousePlugin(
-			SettableVertexLocationFunction vertexLocations,
-			GraphTaskManagerGUI managerGUI)
-	{
-		_vertexLocations = vertexLocations;
-		_managerGUI = managerGUI;
-	}
+    public SalomonEditingPopupGraphMousePlugin(
+            SettableVertexLocationFunction vertexLocations,
+            GraphTaskManagerGUI managerGUI)
+    {
+        _vertexLocations = vertexLocations;
+        _managerGUI = managerGUI;
+    }
 
-	protected void handlePopup(MouseEvent e)
-	{
-		final VisualizationViewer vv = (VisualizationViewer) e.getSource();
-		final Layout layout = vv.getGraphLayout();
-		final Graph graph = layout.getGraph();
-		final Point2D p = e.getPoint();
-		final Point2D ivp = vv.inverseViewTransform(e.getPoint());
-		PickSupport pickSupport = vv.getPickSupport();
-		if (pickSupport != null) {
+    @Override
+    protected void handlePopup(MouseEvent e)
+    {
+        final VisualizationViewer vv = (VisualizationViewer) e.getSource();
+        final Layout layout = vv.getGraphLayout();
+        final Graph graph = layout.getGraph();
+        final Point2D p = e.getPoint();
+        final Point2D ivp = vv.inverseViewTransform(e.getPoint());
+        PickSupport pickSupport = vv.getPickSupport();
+        if (pickSupport != null) {
 
-			final Vertex vertex = pickSupport.getVertex(ivp.getX(), ivp.getY());
-			final Edge edge = pickSupport.getEdge(ivp.getX(), ivp.getY());
-			final PickedState pickedState = vv.getPickedState();
-			JPopupMenu popup = new JPopupMenu();
+            final Vertex vertex = pickSupport.getVertex(ivp.getX(), ivp.getY());
+            final Edge edge = pickSupport.getEdge(ivp.getX(), ivp.getY());
+            final PickedState pickedState = vv.getPickedState();
+            JPopupMenu popup = new JPopupMenu();
 
-			if (vertex != null) {
-				Set picked = pickedState.getPickedVertices();
-				if (picked.size() > 0) {
-					JMenu directedMenu = new JMenu("Create Edge");
-					popup.add(directedMenu);
-					for (Iterator iterator = picked.iterator(); iterator.hasNext();) {
-						final Vertex other = (Vertex) iterator.next();
-						directedMenu.add(new AbstractAction("[" + other + ","
-								+ vertex + "]") {
-							public void actionPerformed(ActionEvent e)
-							{
-								Edge newEdge = new DirectedSparseEdge(other,
-										vertex);
-								graph.addEdge(newEdge);
-								vv.repaint();
-							}
-						});
-					}
-				}
-				popup.add(new AbstractAction("Delete Task") {
-					public void actionPerformed(ActionEvent e)
-					{
-						pickedState.pick(vertex, false);
-						graph.removeVertex(vertex);
-						vv.repaint();
-					}
-				});
-				popup.add(new AbstractAction("Edit") {
-					public void actionPerformed(ActionEvent e)
-					{
-						TaskVertex taskVertex = (TaskVertex) vertex;
-						_managerGUI.editTask(taskVertex.getTask());
-					}
-				});
+            if (vertex != null) {
+                Set picked = pickedState.getPickedVertices();
+                if (picked.size() > 0) {
+                    JMenu directedMenu = new JMenu("Create Edge");
+                    popup.add(directedMenu);
+                    for (Iterator iterator = picked.iterator(); iterator.hasNext();) {
+                        final Vertex other = (Vertex) iterator.next();
+                        directedMenu.add(new AbstractAction("[" + other + ","
+                                + vertex + "]") {
+                            public void actionPerformed(ActionEvent e)
+                            {
+                                Edge newEdge = new DirectedSparseEdge(other,
+                                        vertex);
+                                graph.addEdge(newEdge);
+                                vv.repaint();
+                            }
+                        });
+                    }
+                }
+                popup.add(new AbstractAction("Delete Task") {
+                    public void actionPerformed(ActionEvent e)
+                    {
+                        pickedState.pick(vertex, false);
+                        graph.removeVertex(vertex);
+                        vv.repaint();
+                    }
+                });
+                popup.add(new AbstractAction("Edit") {
+                    public void actionPerformed(ActionEvent e)
+                    {
+                        TaskVertex taskVertex = (TaskVertex) vertex;
+                        _managerGUI.editTask(taskVertex.getTask());
+                    }
+                });
                 popup.addSeparator();
-				popup.add(new AbstractAction("Show Settings") {
-					public void actionPerformed(ActionEvent e)
-					{
-						TaskVertex taskVertex = (TaskVertex) vertex;
-						_managerGUI.showSettingsPanel(taskVertex.getTask());
-					}
-				});
-				popup.add(new AbstractAction("Show Results") {
-					public void actionPerformed(ActionEvent e)
-					{
-						TaskVertex taskVertex = (TaskVertex) vertex;
-						_managerGUI.showResultPanel(taskVertex.getTask());
-					}
-				});
-			} else if (edge != null) {
-				popup.add(new AbstractAction("Delete Edge") {
-					public void actionPerformed(ActionEvent e)
-					{
-						pickedState.pick(edge, false);
-						graph.removeEdge(edge);
-						vv.repaint();
-					}
-				});
-			} else {
-				popup.add(new AbstractAction("Create Task") {
-					public void actionPerformed(ActionEvent e)
-					{
-						ITask task = _managerGUI.createTask();
-						if (task != null) {
-							Vertex newVertex = new TaskVertex(task);
-							_vertexLocations.setLocation(newVertex,
-									vv.inverseTransform(p));
-							graph.addVertex(newVertex);
-							layout.restart();
-							vv.repaint();
-						}
-					}
-				});
-			}
-			if (popup.getComponentCount() > 0) {
-				popup.show(vv, e.getX(), e.getY());
-			}
-		}
-	}
+                popup.add(new AbstractAction("Show Settings") {
+                    public void actionPerformed(ActionEvent e)
+                    {
+                        TaskVertex taskVertex = (TaskVertex) vertex;
+                        _managerGUI.showSettingsPanel(taskVertex.getTask());
+                    }
+                });
+                popup.add(new AbstractAction("Show Results") {
+                    public void actionPerformed(ActionEvent e)
+                    {
+                        TaskVertex taskVertex = (TaskVertex) vertex;
+                        _managerGUI.showResultPanel(taskVertex.getTask());
+                    }
+                });
+            } else if (edge != null) {
+                popup.add(new AbstractAction("Delete Edge") {
+                    public void actionPerformed(ActionEvent e)
+                    {
+                        pickedState.pick(edge, false);
+                        graph.removeEdge(edge);
+                        vv.repaint();
+                    }
+                });
+            } else {
+                popup.add(new AbstractAction("Create Task") {
+                    public void actionPerformed(ActionEvent e)
+                    {
+                        ITask task = _managerGUI.createTask();
+                        if (task != null) {
+                            Vertex newVertex = new TaskVertex(task);
+                            _vertexLocations.setLocation(newVertex,
+                                    vv.inverseTransform(p));
+                            graph.addVertex(newVertex);
+                            layout.restart();
+                            vv.repaint();
+                        }
+                    }
+                });
+            }
+            if (popup.getComponentCount() > 0) {
+                popup.show(vv, e.getX(), e.getY());
+            }
+        }
+    }
 }

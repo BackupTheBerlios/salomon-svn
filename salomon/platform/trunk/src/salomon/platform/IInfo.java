@@ -32,38 +32,38 @@ import salomon.platform.exception.PlatformException;
  */
 public interface IInfo
 {
-	int getId();
+    int getId();
 
-	Date getCreationDate() throws PlatformException;
+    Date getCreationDate() throws PlatformException;
 
-	Date getLastModificationDate() throws PlatformException;
+    Date getLastModificationDate() throws PlatformException;
 
-	/**
-	 * Removes itself from database. After successsful finish object should be
-	 * destroyed.
-	 * 
-	 * @throws PlatformException
-	 * @throws DBException
-	 */
-	boolean delete() throws PlatformException, DBException;
+    /**
+     * Removes itself from database. After successsful finish object should be
+     * destroyed.
+     * 
+     * @throws PlatformException
+     * @throws DBException
+     */
+    boolean delete() throws PlatformException, DBException;
 
-	/**
-	 * Initializes itself basing on given row from resultSet.
-	 * 
-	 * @param resultSet
-	 * @throws PlatformException
-	 * @throws DBException
-	 */
-	void load(ResultSet resultSet) throws PlatformException, DBException;
+    /**
+     * Initializes itself basing on given row from resultSet.
+     * 
+     * @param resultSet
+     * @throws PlatformException
+     * @throws DBException
+     */
+    void load(ResultSet resultSet) throws PlatformException, DBException;
 
-	/**
-	 * Saves itself in data base. If already exists in database performs update
-	 * otherwise inserts new record. Returns current id if update was executed
-	 * or new id in case of insert.
-	 * 
-	 * @return unique id
-	 * @throws PlatformException
-	 * @throws DBException
-	 */
-	int save() throws PlatformException, DBException;
+    /**
+     * Saves itself in data base. If already exists in database performs update
+     * otherwise inserts new record. Returns current id if update was executed
+     * or new id in case of insert.
+     * 
+     * @return unique id
+     * @throws PlatformException
+     * @throws DBException
+     */
+    int save() throws PlatformException, DBException;
 }

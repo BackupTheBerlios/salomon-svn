@@ -30,42 +30,42 @@ import salomon.platform.serialization.IObject;
  */
 final class Variable implements IVariable
 {
-	private String _name;
+    private String _name;
 
-	private IObject _value;
+    private IObject _value;
 
-	public Variable(String name)
-	{
-		_name = name;
-	}
+    public Variable(String name)
+    {
+        _name = name;
+    }
 
-	/**
-	 * Returns the name of this variable.
-	 * 
-	 * @return the name
-	 */
-	public String getName()
-	{
-		return _name;
-	}
+    /**
+     * Returns the name of this variable.
+     * 
+     * @return the name
+     */
+    public String getName()
+    {
+        return _name;
+    }
 
-	/**
-	 * Returns current value of this variable.
-	 *
-	 * @return the value
-	 */
-	public IObject getValue()
-	{
-		return _value;
-	}
+    /**
+     * Returns current value of this variable.
+     *
+     * @return the value
+     */
+    public IObject getValue()
+    {
+        return _value;
+    }
 
-	/**
-	 * Sets the value of this variable.
-	 * 
-	 * @param value the value to set
-	 */
-	public void setValue(IObject value)
-	{
-		_value = value;
-	}
+    /**
+     * Sets the value of this variable.
+     * 
+     * @param value the value to set
+     */
+    public void setValue(IObject value)
+    {
+        _value = value;
+    }
 }

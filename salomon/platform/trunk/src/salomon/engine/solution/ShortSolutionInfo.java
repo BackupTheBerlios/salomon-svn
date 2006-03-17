@@ -23,15 +23,15 @@ package salomon.engine.solution;
 
 public final class ShortSolutionInfo
 {
-	private int _id;
+    private int _id;
 
-	ShortSolutionInfo(int id)
-	{
-		_id = id;
-	}
+    ShortSolutionInfo(int id)
+    {
+        _id = id;
+    }
 
-	public int getId()
-	{
-		return _id;
-	}
+    public int getId()
+    {
+        return _id;
+    }
 }

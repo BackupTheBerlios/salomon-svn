@@ -29,57 +29,57 @@ import salomon.platform.serialization.IObject;
  */
 public class SimpleInteger implements IInteger
 {
-	private int _value;
+    private int _value;
 
-	/**
-	 * 
-	 */
-	public SimpleInteger()
-	{
-		// empty body
-	}
+    /**
+     * 
+     */
+    public SimpleInteger()
+    {
+        // empty body
+    }
 
-	/**
-	 * @param value
-	 */
-	public SimpleInteger(int value)
-	{
-		_value = value;
-	}
+    /**
+     * @param value
+     */
+    public SimpleInteger(int value)
+    {
+        _value = value;
+    }
 
-	/**
-	 * @see salomon.platform.serialization.IInteger#getValue()
-	 */
-	public int getValue()
-	{
-		return _value;
-	}
+    /**
+     * @see salomon.platform.serialization.IInteger#getValue()
+     */
+    public int getValue()
+    {
+        return _value;
+    }
 
-	/**
-	 * @see salomon.platform.serialization.IInteger#setValue(int)
-	 */
-	public void setValue(int value)
-	{
-		_value = value;
-	}
+    /**
+     * @see salomon.platform.serialization.IInteger#setValue(int)
+     */
+    public void setValue(int value)
+    {
+        _value = value;
+    }
 
-	/**
-	 * @see salomon.platform.serialization.IObject#getType()
-	 */
-	public IObject.Types getType()
-	{
-		return IObject.Types.INT;
-	}
+    /**
+     * @see salomon.platform.serialization.IObject#getType()
+     */
+    public IObject.Types getType()
+    {
+        return IObject.Types.INT;
+    }
 
-	/**
-	 * @see salomon.platform.serialization.IObject#equals(salomon.platform.serialization.IObject)
-	 */
-	public boolean equals(IObject object)
-	{
-		boolean result = false;
-		if (object.getType() == getType()) {
-			result = (_value == ((SimpleInteger) object).getValue());
-		}
-		return result;
-	}
+    /**
+     * @see salomon.platform.serialization.IObject#equals(salomon.platform.serialization.IObject)
+     */
+    public boolean equals(IObject object)
+    {
+        boolean result = false;
+        if (object.getType() == getType()) {
+            result = (_value == ((SimpleInteger) object).getValue());
+        }
+        return result;
+    }
 }

@@ -43,91 +43,92 @@ import salomon.engine.Starter;
 public final class ControllerFrame extends JFrame
 {
 
-	/**
-	 * 
-	 * @uml.property name="_controllerPanel"
-	 * @uml.associationEnd multiplicity="(0 1)"
-	 */
-	private IControllerPanel _controllerPanel;
+    /**
+     * 
+     * @uml.property name="_controllerPanel"
+     * @uml.associationEnd multiplicity="(0 1)"
+     */
+    private IControllerPanel _controllerPanel;
 
-	//	private String _resourcesDir;
+    //	private String _resourcesDir;
 
-	/**
-	 * creates new ControllerFrame
-	 */
-	public ControllerFrame()
-	{
-		super();
-		//		_resourcesDir = Config.getString("RESOURCES_DIR");
-		initialize();
-	}
+    /**
+     * creates new ControllerFrame
+     */
+    public ControllerFrame()
+    {
+        super();
+        //		_resourcesDir = Config.getString("RESOURCES_DIR");
+        initialize();
+    }
 
-	/**
-	 * Called after project save/load/creation
-	 * 
-	 */
-	public void refreshGui()
-	{
-		LOGGER.debug("refreshing GUI");
-		_controllerPanel.refresh();
-	}
+    /**
+     * Called after project save/load/creation
+     * 
+     */
+    public void refreshGui()
+    {
+        LOGGER.debug("refreshing GUI");
+        _controllerPanel.refresh();
+    }
 
-	/**
-	 * TODO: add comment.
-	 * @param controllerPanel
-	 */
-	public void setControllerPanel(IControllerPanel controllerPanel)
-	{
-		_controllerPanel = controllerPanel;
-	}
+    /**
+     * TODO: add comment.
+     * @param controllerPanel
+     */
+    public void setControllerPanel(IControllerPanel controllerPanel)
+    {
+        _controllerPanel = controllerPanel;
+    }
 
-	/**
-	 * TODO: add comment.
-	 * @param toolBar
-	 */
-	public void setJToolBar(JToolBar toolBar)
-	{
-		getContentPane().add(toolBar, BorderLayout.NORTH);
-	}
+    /**
+     * TODO: add comment.
+     * @param toolBar
+     */
+    public void setJToolBar(JToolBar toolBar)
+    {
+        getContentPane().add(toolBar, BorderLayout.NORTH);
+    }
 
-	/**
-	 * TODO: add comment.
-	 * @param panel
-	 */
-	public void setMainPanel(JComponent panel)
-	{
-		//TODO: getContentPane().remove();
-		getContentPane().add(panel, BorderLayout.CENTER);
-	}
+    /**
+     * TODO: add comment.
+     * @param panel
+     */
+    public void setMainPanel(JComponent panel)
+    {
+        //TODO: getContentPane().remove();
+        getContentPane().add(panel, BorderLayout.CENTER);
+    }
 
-	private void exit()
-	{
-		Starter.exit();
-	}
+    private void exit()
+    {
+        Starter.exit();
+    }
 
-	/**
-	 * This method initializes this
-	 */
-	private void initialize()
-	{
-		getContentPane().setLayout(new BorderLayout());
-		this.setSize(600, 500);
-		//
-		// center frame
-		//
-		Point location = new Point();
-		location.x = (Toolkit.getDefaultToolkit().getScreenSize().width - getWidth()) / 2;
-		location.y = (Toolkit.getDefaultToolkit().getScreenSize().height - getHeight()) / 2;
-		this.setLocation(location);
-		this.setTitle(Messages.getString("APP_NAME")); //$NON-NLS-1$        
-		this.addWindowListener(new WindowAdapter() {
-			public void windowClosing(WindowEvent e)
-			{
-				exit();
-			}
-		});
-		LOGGER.debug("initialize end");
-	}	
-	
-	private static final Logger LOGGER = Logger.getLogger(ControllerFrame.class);
+    /**
+     * This method initializes this
+     */
+    private void initialize()
+    {
+        getContentPane().setLayout(new BorderLayout());
+        this.setSize(600, 500);
+        //
+        // center frame
+        //
+        Point location = new Point();
+        location.x = (Toolkit.getDefaultToolkit().getScreenSize().width - getWidth()) / 2;
+        location.y = (Toolkit.getDefaultToolkit().getScreenSize().height - getHeight()) / 2;
+        this.setLocation(location);
+        this.setTitle(Messages.getString("APP_NAME")); //$NON-NLS-1$        
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e)
+            {
+                exit();
+            }
+        });
+        LOGGER.debug("initialize end");
+    }
+
+    private static final Logger LOGGER = Logger.getLogger(ControllerFrame.class);
 }

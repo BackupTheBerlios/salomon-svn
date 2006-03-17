@@ -27,10 +27,10 @@ package salomon.platform.data;
 public interface ITable
 {
 
-	public IColumn getColumn(String name);
+    public IColumn getColumn(String name);
 
-	public IColumn[] getColumns();
+    public IColumn[] getColumns();
 
-	public String getName();
+    public String getName();
 
 }

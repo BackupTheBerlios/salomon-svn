@@ -30,9 +30,7 @@ import org.apache.log4j.Logger;
 import salomon.engine.plugin.ILocalPlugin;
 import salomon.engine.plugin.PluginLoader;
 import salomon.engine.task.ITask;
-
 import salomon.platform.exception.PlatformException;
-
 import salomon.plugin.IResult;
 import salomon.plugin.ISettings;
 
@@ -41,148 +39,148 @@ import salomon.plugin.ISettings;
  * @see salomon.engine.task.ITask
  */
 public final class RemoteTask extends UnicastRemoteObject
-		implements IRemoteTask
+        implements IRemoteTask
 {
 
-	/**
-	 * 
-	 * @uml.property name="_task"
-	 * @uml.associationEnd multiplicity="(0 1)"
-	 */
-	private ITask _task;
+    /**
+     * 
+     * @uml.property name="_task"
+     * @uml.associationEnd multiplicity="(0 1)"
+     */
+    private ITask _task;
 
-	/**
-	 * @pre task != null
-	 * @post $none
-	 */
-	public RemoteTask(ITask task) throws RemoteException, PlatformException
-	{
-		_task = task;
-	}
+    /**
+     * @pre task != null
+     * @post $none
+     */
+    public RemoteTask(ITask task) throws RemoteException, PlatformException
+    {
+        _task = task;
+    }
 
-	/**
-	 * @see IRemoteTask#getName()
-	 */
-	public String getName() throws RemoteException, PlatformException
-	{
-		//return _task.getName();
-		throw new UnsupportedOperationException(
-				"Method salomon.engine.remote.task::RemoteTask::getName()not implemented yet!");
-	}
+    /**
+     * @see IRemoteTask#getName()
+     */
+    public String getName() throws RemoteException, PlatformException
+    {
+        //return _task.getName();
+        throw new UnsupportedOperationException(
+                "Method salomon.engine.remote.task::RemoteTask::getName()not implemented yet!");
+    }
 
-	/**
-	 * @see IRemoteTask#getPlugin()
-	 */
-	public URL getPlugin() throws RemoteException, PlatformException
-	{
-		return PluginLoader.getPluginLocation(_task.getPlugin());
-	}
+    /**
+     * @see IRemoteTask#getPlugin()
+     */
+    public URL getPlugin() throws RemoteException, PlatformException
+    {
+        return PluginLoader.getPluginLocation(_task.getPlugin());
+    }
 
-	/**
-	 * @see IRemoteTask#getResult()
-	 */
-	public IResult getResult() throws RemoteException, PlatformException
-	{
-		return _task.getResult();
-	}
+    /**
+     * @see IRemoteTask#getResult()
+     */
+    public IResult getResult() throws RemoteException, PlatformException
+    {
+        return _task.getResult();
+    }
 
-	/**
-	 * @see IRemoteTask#getSettings()
-	 */
-	public ISettings getSettings() throws RemoteException, PlatformException
-	{
-		return _task.getSettings();
-	}
+    /**
+     * @see IRemoteTask#getSettings()
+     */
+    public ISettings getSettings() throws RemoteException, PlatformException
+    {
+        return _task.getSettings();
+    }
 
-	/**
-	 * @see IRemoteTask#getStatus()
-	 */
-	public String getStatus() throws RemoteException, PlatformException
-	{
-		//return _task.getStatus();
-		throw new UnsupportedOperationException(
-				"Method salomon.engine.remote.task::RemoteTask::getStatus()not implemented yet!");
-	}
+    /**
+     * @see IRemoteTask#getStatus()
+     */
+    public String getStatus() throws RemoteException, PlatformException
+    {
+        //return _task.getStatus();
+        throw new UnsupportedOperationException(
+                "Method salomon.engine.remote.task::RemoteTask::getStatus()not implemented yet!");
+    }
 
-	/**
-	 * @see IRemoteTask#getTaskId()
-	 */
-	public int getTaskId() throws RemoteException, PlatformException
-	{
-		///return _task.getTaskId();
-		throw new UnsupportedOperationException(
-				"Method salomon.engine.remote.task::RemoteTask::getTaskId()not implemented yet!");
-	}
+    /**
+     * @see IRemoteTask#getTaskId()
+     */
+    public int getTaskId() throws RemoteException, PlatformException
+    {
+        ///return _task.getTaskId();
+        throw new UnsupportedOperationException(
+                "Method salomon.engine.remote.task::RemoteTask::getTaskId()not implemented yet!");
+    }
 
-	/**
-	 * @see IRemoteTask#setName(java.lang.String)
-	 */
-	public void setName(String name) throws RemoteException, PlatformException
-	{
-		//_task.setName(name);
-		throw new UnsupportedOperationException(
-				"Method salomon.engine.remote.task::RemoteTask::enclosing_method()not implemented yet!");
-	}
+    /**
+     * @see IRemoteTask#setName(java.lang.String)
+     */
+    public void setName(String name) throws RemoteException, PlatformException
+    {
+        //_task.setName(name);
+        throw new UnsupportedOperationException(
+                "Method salomon.engine.remote.task::RemoteTask::enclosing_method()not implemented yet!");
+    }
 
-	/**
-	 * @see IRemoteTask#setPlugin(salomon.plugin.IPlugin)
-	 */
-	public void setPlugin(URL plugin) throws RemoteException, PlatformException
-	{
-		try {
-			_task.setPlugin((ILocalPlugin) PluginLoader.loadPlugin(plugin));
-		} catch (Exception e) {
-			LOGGER.fatal("", e);
-			throw new PlatformException(e.getLocalizedMessage());
-		}
-	}
+    /**
+     * @see IRemoteTask#setPlugin(salomon.plugin.IPlugin)
+     */
+    public void setPlugin(URL plugin) throws RemoteException, PlatformException
+    {
+        try {
+            _task.setPlugin((ILocalPlugin) PluginLoader.loadPlugin(plugin));
+        } catch (Exception e) {
+            LOGGER.fatal("", e);
+            throw new PlatformException(e.getLocalizedMessage());
+        }
+    }
 
-	/**
-	 * @see salomon.engine.remote.task.IRemoteTask#setResult(salomon.plugin.IResult)
-	 * 
-	 * @see IRemoteTask#setResult(IResult)
-	 */
-	public void setResult(IResult result) throws RemoteException,
-			PlatformException
-	{
-		_task.setResult(result);
-	}
+    /**
+     * @see salomon.engine.remote.task.IRemoteTask#setResult(salomon.plugin.IResult)
+     * 
+     * @see IRemoteTask#setResult(IResult)
+     */
+    public void setResult(IResult result) throws RemoteException,
+            PlatformException
+    {
+        _task.setResult(result);
+    }
 
-	/**
-	 * @see IRemoteTask#setSettings(salomon.plugin.ISettings)
-	 */
-	public void setSettings(ISettings settings) throws RemoteException,
-			PlatformException
-	{
-		_task.setSettings(settings);
-	}
+    /**
+     * @see IRemoteTask#setSettings(salomon.plugin.ISettings)
+     */
+    public void setSettings(ISettings settings) throws RemoteException,
+            PlatformException
+    {
+        _task.setSettings(settings);
+    }
 
-	/**
-	 * @see IRemoteTask#setStatus(java.lang.String)
-	 */
-	public void setStatus(String status) throws RemoteException,
-			PlatformException
-	{
-		//_task.setStatus(status);
-		throw new UnsupportedOperationException(
-				"Method salomon.engine.remote.task::RemoteTask::setStatus() not implemented yet!");
-	}
+    /**
+     * @see IRemoteTask#setStatus(java.lang.String)
+     */
+    public void setStatus(String status) throws RemoteException,
+            PlatformException
+    {
+        //_task.setStatus(status);
+        throw new UnsupportedOperationException(
+                "Method salomon.engine.remote.task::RemoteTask::setStatus() not implemented yet!");
+    }
 
-	/**
-	 * @see IRemoteTask#setTaskId(int)
-	 */
-	public void setTaskId(int taskId) throws RemoteException, PlatformException
-	{
-		//_task.setTaskId(taskId);
-		throw new UnsupportedOperationException(
-				"Method salomon.engine.remote.task::RemoteTask::setTaskId()not implemented yet!");
-	}
+    /**
+     * @see IRemoteTask#setTaskId(int)
+     */
+    public void setTaskId(int taskId) throws RemoteException, PlatformException
+    {
+        //_task.setTaskId(taskId);
+        throw new UnsupportedOperationException(
+                "Method salomon.engine.remote.task::RemoteTask::setTaskId()not implemented yet!");
+    }
 
-	ITask getTask()
-	{
-		return _task;
-	}
+    ITask getTask()
+    {
+        return _task;
+    }
 
-	private static final Logger LOGGER = Logger.getLogger(RemoteTask.class);
+    private static final Logger LOGGER = Logger.getLogger(RemoteTask.class);
 
 }

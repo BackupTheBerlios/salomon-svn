@@ -30,13 +30,13 @@ import junit.framework.TestSuite;
 public class AllTests
 {
 
-	public static Test suite()
-	{
-		TestSuite suite = new TestSuite("Test for salomon.engine.serialization");
-		//$JUnit-BEGIN$
-		suite.addTestSuite(SerializerTest.class);
-		suite.addTestSuite(IObjectComparatorTest.class);
-		//$JUnit-END$
-		return suite;
-	}
+    public static Test suite()
+    {
+        TestSuite suite = new TestSuite("Test for salomon.engine.serialization");
+        //$JUnit-BEGIN$
+        suite.addTestSuite(SerializerTest.class);
+        suite.addTestSuite(IObjectComparatorTest.class);
+        //$JUnit-END$
+        return suite;
+    }
 }

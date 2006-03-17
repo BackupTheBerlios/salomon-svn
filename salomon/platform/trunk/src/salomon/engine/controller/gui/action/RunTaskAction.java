@@ -30,24 +30,24 @@ import salomon.engine.controller.gui.graph.GraphTaskManagerGUI;
  */
 public final class RunTaskAction extends AbstractTaskAction
 {
-	/**
-	 * Sets an object which method is called in implementation of
-	 * actionPerformed() method
-	 * 
-	 * @param editionManager an instance of TaskManagerGUI
-	 */
-	public RunTaskAction(GraphTaskManagerGUI taskEditionManager)
-	{
-		super(taskEditionManager);
-	}
+    /**
+     * Sets an object which method is called in implementation of
+     * actionPerformed() method
+     * 
+     * @param editionManager an instance of TaskManagerGUI
+     */
+    public RunTaskAction(GraphTaskManagerGUI taskEditionManager)
+    {
+        super(taskEditionManager);
+    }
 
-	/**
-	 * (non-Javadoc)
-	 * 
-	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-	 */
-	public void actionPerformed(ActionEvent event)
-	{
-		_taskManagerGUI.runTasks();
-	}
+    /**
+     * (non-Javadoc)
+     * 
+     * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+     */
+    public void actionPerformed(ActionEvent event)
+    {
+        _taskManagerGUI.runTasks();
+    }
 }

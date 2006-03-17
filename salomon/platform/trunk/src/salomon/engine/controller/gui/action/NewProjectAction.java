@@ -31,19 +31,19 @@ import salomon.engine.controller.gui.ProjectManagerGUI;
  */
 public final class NewProjectAction extends AbstractProjectAction
 {
-	/**
-	 * Sets an object which method is called in implementation of
-	 * actionPerformed() method
-	 * 
-	 * @param projectEditionManager an instance of ProjectManagerGUI
-	 */
-	public NewProjectAction(ProjectManagerGUI projectManagerGUI)
-	{
-		super(projectManagerGUI);
-	}
+    /**
+     * Sets an object which method is called in implementation of
+     * actionPerformed() method
+     * 
+     * @param projectEditionManager an instance of ProjectManagerGUI
+     */
+    public NewProjectAction(ProjectManagerGUI projectManagerGUI)
+    {
+        super(projectManagerGUI);
+    }
 
-	public void actionPerformed(ActionEvent event)
-	{
-		_projectEditionManager.newProject();
-	}
+    public void actionPerformed(ActionEvent event)
+    {
+        _projectEditionManager.newProject();
+    }
 }

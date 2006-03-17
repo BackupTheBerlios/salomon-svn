@@ -26,7 +26,6 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 
 import salomon.platform.exception.PlatformException;
-
 import salomon.plugin.IResult;
 import salomon.plugin.ISettings;
 
@@ -39,132 +38,132 @@ import salomon.plugin.ISettings;
 public interface IRemoteTask extends Remote
 {
 
-	/**
-	 * @see salomon.engine.task.ITask#getName()
-	 * 
-	 * @return Returns the name.
-	 * @pre $none
-	 * @post $none
-	 * 
-	 * @uml.property name="name"
-	 */
-	String getName() throws RemoteException, PlatformException;
+    /**
+     * @see salomon.engine.task.ITask#getName()
+     * 
+     * @return Returns the name.
+     * @pre $none
+     * @post $none
+     * 
+     * @uml.property name="name"
+     */
+    String getName() throws RemoteException, PlatformException;
 
-	/**
-	 * @see salomon.engine.task.ITask#getPlugin()
-	 * 
-	 * @return Returns the _plugin.
-	 * @pre $none
-	 * @post $none
-	 * 
-	 * @uml.property name="plugin"
-	 */
-	URL getPlugin() throws RemoteException, PlatformException;
+    /**
+     * @see salomon.engine.task.ITask#getPlugin()
+     * 
+     * @return Returns the _plugin.
+     * @pre $none
+     * @post $none
+     * 
+     * @uml.property name="plugin"
+     */
+    URL getPlugin() throws RemoteException, PlatformException;
 
-	/**
-	 * @see salomon.engine.task.ITask#getResult()
-	 * 
-	 * @return Returns the _result.
-	 * @pre $none
-	 * @post $none
-	 * 
-	 * @uml.property name="result"
-	 * @uml.associationEnd multiplicity="(0 1)"
-	 */
-	IResult getResult() throws RemoteException, PlatformException;
+    /**
+     * @see salomon.engine.task.ITask#getResult()
+     * 
+     * @return Returns the _result.
+     * @pre $none
+     * @post $none
+     * 
+     * @uml.property name="result"
+     * @uml.associationEnd multiplicity="(0 1)"
+     */
+    IResult getResult() throws RemoteException, PlatformException;
 
-	/**
-	 * @see salomon.engine.task.ITask#getSettings()
-	 * 
-	 * @return Returns the _settings.
-	 * @pre $none
-	 * @post $none
-	 * 
-	 * @uml.property name="settings"
-	 * @uml.associationEnd multiplicity="(0 1)"
-	 */
-	ISettings getSettings() throws RemoteException, PlatformException;
+    /**
+     * @see salomon.engine.task.ITask#getSettings()
+     * 
+     * @return Returns the _settings.
+     * @pre $none
+     * @post $none
+     * 
+     * @uml.property name="settings"
+     * @uml.associationEnd multiplicity="(0 1)"
+     */
+    ISettings getSettings() throws RemoteException, PlatformException;
 
-	/**
-	 * @see salomon.engine.task.ITask#getStatus()
-	 * 
-	 * @return Returns the status.
-	 * @pre $none
-	 * @post $none
-	 * 
-	 * @uml.property name="status"
-	 */
-	String getStatus() throws RemoteException, PlatformException;
+    /**
+     * @see salomon.engine.task.ITask#getStatus()
+     * 
+     * @return Returns the status.
+     * @pre $none
+     * @post $none
+     * 
+     * @uml.property name="status"
+     */
+    String getStatus() throws RemoteException, PlatformException;
 
-	/**
-	 * @return Returns the taksId.
-	 * @pre $none
-	 * @post $none
-	 * 
-	 * @uml.property name="taskId"
-	 */
-	int getTaskId() throws RemoteException, PlatformException;
+    /**
+     * @return Returns the taksId.
+     * @pre $none
+     * @post $none
+     * 
+     * @uml.property name="taskId"
+     */
+    int getTaskId() throws RemoteException, PlatformException;
 
-	/**
-	 * @see salomon.engine.task.ITask#setName(String)
-	 * 
-	 * @param name The name to set.
-	 * @pre $none
-	 * @post $none
-	 * 
-	 * @uml.property name="name"
-	 */
-	void setName(String name) throws RemoteException, PlatformException;
+    /**
+     * @see salomon.engine.task.ITask#setName(String)
+     * 
+     * @param name The name to set.
+     * @pre $none
+     * @post $none
+     * 
+     * @uml.property name="name"
+     */
+    void setName(String name) throws RemoteException, PlatformException;
 
-	/**
-	 * @pre $none
-	 * @post $none
-	 * 
-	 * @uml.property name="plugin"
-	 */
-	void setPlugin(URL url) throws RemoteException, PlatformException;
+    /**
+     * @pre $none
+     * @post $none
+     * 
+     * @uml.property name="plugin"
+     */
+    void setPlugin(URL url) throws RemoteException, PlatformException;
 
-	/**
-	 * @see salomon.engine.task.ITask#setResult(IResult)
-	 * 
-	 * @pre $none
-	 * @post $none
-	 * 
-	 * @uml.property name="result"
-	 */
-	void setResult(IResult result) throws RemoteException, PlatformException;
+    /**
+     * @see salomon.engine.task.ITask#setResult(IResult)
+     * 
+     * @pre $none
+     * @post $none
+     * 
+     * @uml.property name="result"
+     */
+    void setResult(IResult result) throws RemoteException, PlatformException;
 
-	/**
-	 * @see salomon.engine.task.ITask#setSettings(ISettings)
-	 * 
-	 * @pre $none
-	 * @post $none
-	 * 
-	 * @uml.property name="settings"
-	 */
-	void setSettings(ISettings settings) throws RemoteException,
-			PlatformException;
+    /**
+     * @see salomon.engine.task.ITask#setSettings(ISettings)
+     * 
+     * @pre $none
+     * @post $none
+     * 
+     * @uml.property name="settings"
+     */
+    void setSettings(ISettings settings) throws RemoteException,
+            PlatformException;
 
-	/**
-	 * @see salomon.engine.task.ITask#setStatus(String)
-	 * 
-	 * @param status The status to set.
-	 * @pre $none
-	 * @post $none
-	 * 
-	 * @uml.property name="status"
-	 */
-	void setStatus(String status) throws RemoteException, PlatformException;
+    /**
+     * @see salomon.engine.task.ITask#setStatus(String)
+     * 
+     * @param status The status to set.
+     * @pre $none
+     * @post $none
+     * 
+     * @uml.property name="status"
+     */
+    void setStatus(String status) throws RemoteException, PlatformException;
 
-	/**
-	 * @see salomon.engine.task.ITask#setTaskId(int)
-	 * 
-	 * @param taksId The taksId to set.
-	 * @pre $none
-	 * @post $none
-	 * 
-	 * @uml.property name="taskId"
-	 */
-	void setTaskId(int taksId) throws RemoteException, PlatformException;
+    /**
+     * @see salomon.engine.task.ITask#setTaskId(int)
+     * 
+     * @param taksId The taksId to set.
+     * @pre $none
+     * @post $none
+     * 
+     * @uml.property name="taskId"
+     */
+    void setTaskId(int taksId) throws RemoteException, PlatformException;
 
 }

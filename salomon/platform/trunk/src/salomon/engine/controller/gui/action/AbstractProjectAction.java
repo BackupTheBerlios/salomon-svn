@@ -31,17 +31,17 @@ import salomon.engine.controller.gui.ProjectManagerGUI;
 abstract class AbstractProjectAction extends AbstractAction
 {
 
-	/**
-	 * an object which method are called in implementation of actionPerformed()
-	 * method
-	 * 
-	 * @uml.property name="_projectEditionManager"
-	 * @uml.associationEnd multiplicity="(0 1)"
-	 */
-	protected ProjectManagerGUI _projectEditionManager;
+    /**
+     * an object which method are called in implementation of actionPerformed()
+     * method
+     * 
+     * @uml.property name="_projectEditionManager"
+     * @uml.associationEnd multiplicity="(0 1)"
+     */
+    protected ProjectManagerGUI _projectEditionManager;
 
-	protected AbstractProjectAction(ProjectManagerGUI projectEditionManager)
-	{
-		_projectEditionManager = projectEditionManager;
-	}
+    protected AbstractProjectAction(ProjectManagerGUI projectEditionManager)
+    {
+        _projectEditionManager = projectEditionManager;
+    }
 }

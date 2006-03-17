@@ -28,12 +28,10 @@ import org.apache.log4j.Logger;
 
 import salomon.engine.database.DBManager;
 import salomon.engine.database.queries.SQLSelect;
-
-import salomon.platform.exception.DBException;
-import salomon.platform.exception.PlatformException;
-
 import salomon.engine.platform.IManagerEngine;
 import salomon.engine.platform.ManagerEngine;
+import salomon.platform.exception.DBException;
+import salomon.platform.exception.PlatformException;
 
 public final class SolutionManager implements ISolutionManager
 {

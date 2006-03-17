@@ -29,113 +29,110 @@ import junit.framework.TestCase;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
-import salomon.engine.task.ITask;
-import salomon.engine.task.TaskManager;
-
-import salomon.platform.exception.PlatformException;
-
 import salomon.engine.platform.ManagerEngine;
+import salomon.platform.exception.PlatformException;
 
 public class TaskManagerTest extends TestCase
 {
 
-	/**
-	 * 
-	 * @uml.property name="_taskManager"
-	 * @uml.associationEnd multiplicity="(0 1)"
-	 */
-	private TaskManager _taskManager;
+    /**
+     * 
+     * @uml.property name="_taskManager"
+     * @uml.associationEnd multiplicity="(0 1)"
+     */
+    private TaskManager _taskManager;
 
-	public static void main(String[] args)
-	{
-		junit.textui.TestRunner.run(TaskManagerTest.class);
-	}
+    public static void main(String[] args)
+    {
+        junit.textui.TestRunner.run(TaskManagerTest.class);
+    }
 
-	/*
-	 * @see TestCase#setUp()
-	 */
-	protected void setUp() throws Exception
-	{
-		super.setUp();
-		PropertyConfigurator.configure("log.conf");
-		ManagerEngine engine = new ManagerEngine();
-		_taskManager = (TaskManager) engine.getTasksManager();
-	}
+    /*
+     * @see TestCase#setUp()
+     */
+    @Override
+    protected void setUp() throws Exception
+    {
+        super.setUp();
+        PropertyConfigurator.configure("log.conf");
+        ManagerEngine engine = new ManagerEngine();
+        _taskManager = (TaskManager) engine.getTasksManager();
+    }
 
-	public void testCreateTask()
-	{
-		ITask task;
-		try {
+    public void testCreateTask()
+    {
+        ITask task;
+        try {
 
-			task = _taskManager.createTask();
-			assertNotNull(task);
+            task = _taskManager.createTask();
+            assertNotNull(task);
 
-		} catch (PlatformException e) {
-			LOGGER.error(e, e);
-			assertFalse(true);
-			e.printStackTrace();
-		}
-	}
+        } catch (PlatformException e) {
+            LOGGER.error(e, e);
+            assertFalse(true);
+            e.printStackTrace();
+        }
+    }
 
-	public void testAddTask()
-	{
-		ITask task;
-		try {
-			task = _taskManager.createTask();
-			assertNotNull(task);
+    public void testAddTask()
+    {
+        ITask task;
+        try {
+            task = _taskManager.createTask();
+            assertNotNull(task);
 
-			_taskManager.addTask(task);
+            _taskManager.addTask(task);
 
-			//TODO i think addAllTask should take collection<ITask> not Collection<Task>, this cast here could be possibly wrong
-			Collection<ITask> tasklist = new ArrayList<ITask>();
-			tasklist.add(_taskManager.createTask());
-			tasklist.add(_taskManager.createTask());
-			tasklist.add(_taskManager.createTask());
+            //TODO i think addAllTask should take collection<ITask> not Collection<Task>, this cast here could be possibly wrong
+            Collection<ITask> tasklist = new ArrayList<ITask>();
+            tasklist.add(_taskManager.createTask());
+            tasklist.add(_taskManager.createTask());
+            tasklist.add(_taskManager.createTask());
 
-			_taskManager.addAllTasks(tasklist);
+            _taskManager.addAllTasks(tasklist);
 
-			ITask tasks[] = _taskManager.getTasks();
-			assertNotNull(tasks);
+            ITask tasks[] = _taskManager.getTasks();
+            assertNotNull(tasks);
 
-		} catch (PlatformException e) {
-			e.printStackTrace();
-			LOGGER.error(e, e);
-			assertFalse(true);
-		}
+        } catch (PlatformException e) {
+            e.printStackTrace();
+            LOGGER.error(e, e);
+            assertFalse(true);
+        }
 
-	}
+    }
 
-	public void testClearTasks()
-	{
-		_taskManager.clearTasks();
-	}
+    public void testClearTasks()
+    {
+        _taskManager.clearTasks();
+    }
 
-	public void testGetCurrentTask()
-	{
-		ITask task = _taskManager.getCurrentTask();
-	}
+    public void testGetCurrentTask()
+    {
+        ITask task = _taskManager.getCurrentTask();
+    }
 
-	public void testGetRunner()
-	{
+    public void testGetRunner()
+    {
 
-		try {
-			_taskManager.getRunner();
-		} catch (PlatformException e) {
-			e.printStackTrace();
-			LOGGER.error("PlatformError", e);
-			assertFalse(true);
-		}
-	}
+        try {
+            _taskManager.getRunner();
+        } catch (PlatformException e) {
+            e.printStackTrace();
+            LOGGER.error("PlatformError", e);
+            assertFalse(true);
+        }
+    }
 
-	public void testEverything()
-	{
-		//TODO to be implemented
-		try {
-			_taskManager.start();
-		} catch (PlatformException e) {
-			LOGGER.fatal("", e);
-		}
-	}
+    public void testEverything()
+    {
+        //TODO to be implemented
+        try {
+            _taskManager.start();
+        } catch (PlatformException e) {
+            LOGGER.fatal("", e);
+        }
+    }
 
-	private static Logger LOGGER = Logger.getLogger(TaskManagerTest.class);
+    private static Logger LOGGER = Logger.getLogger(TaskManagerTest.class);
 }

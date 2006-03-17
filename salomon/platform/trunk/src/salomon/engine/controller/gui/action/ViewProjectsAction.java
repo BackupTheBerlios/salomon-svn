@@ -31,14 +31,14 @@ import salomon.engine.controller.gui.ProjectManagerGUI;
 public final class ViewProjectsAction extends AbstractProjectAction
 {
 
-	protected ViewProjectsAction(ProjectManagerGUI projectManagerGUI)
-	{
-		super(projectManagerGUI);
-	}
+    protected ViewProjectsAction(ProjectManagerGUI projectManagerGUI)
+    {
+        super(projectManagerGUI);
+    }
 
-	public void actionPerformed(ActionEvent e)
-	{
-		_projectEditionManager.viewProjects();
-	}
+    public void actionPerformed(ActionEvent e)
+    {
+        _projectEditionManager.viewProjects();
+    }
 
 }

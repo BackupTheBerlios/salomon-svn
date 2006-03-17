@@ -25,7 +25,6 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 
 import salomon.engine.remote.task.IRemoteTaskManager;
-
 import salomon.platform.IInfo;
 import salomon.platform.exception.PlatformException;
 
@@ -39,76 +38,76 @@ import salomon.platform.exception.PlatformException;
 public interface IRemoteProject extends Remote
 {
 
-	/**
-	 * @see salomon.engine.project.IProject#getInfo()
-	 * 
-	 * @return Returns the info.
-	 * @pre $none
-	 * @post $result != null
-	 * 
-	 * @uml.property name="info"
-	 */
-	IInfo getInfo() throws RemoteException, PlatformException;
+    /**
+     * @see salomon.engine.project.IProject#getInfo()
+     * 
+     * @return Returns the info.
+     * @pre $none
+     * @post $result != null
+     * 
+     * @uml.property name="info"
+     */
+    IInfo getInfo() throws RemoteException, PlatformException;
 
-	/**
-	 * @see salomon.engine.project.IProject#getName()
-	 * 
-	 * @return Returns the name.
-	 * @pre $none
-	 * @post $result != null
-	 * 
-	 * @uml.property name="name"
-	 */
-	String getName() throws RemoteException, PlatformException;
+    /**
+     * @see salomon.engine.project.IProject#getName()
+     * 
+     * @return Returns the name.
+     * @pre $none
+     * @post $result != null
+     * 
+     * @uml.property name="name"
+     */
+    String getName() throws RemoteException, PlatformException;
 
-	/**
-	 * @see salomon.engine.project.IProject#getProjectID()
-	 * 
-	 * @return Returns the projectID.
-	 * @pre $none
-	 * @post $none
-	 * 
-	 * @uml.property name="projectID"
-	 */
-	int getProjectID() throws RemoteException, PlatformException;
+    /**
+     * @see salomon.engine.project.IProject#getProjectID()
+     * 
+     * @return Returns the projectID.
+     * @pre $none
+     * @post $none
+     * 
+     * @uml.property name="projectID"
+     */
+    int getProjectID() throws RemoteException, PlatformException;
 
-	/**
-	 * @see salomon.engine.project.IProject#getTaskManager()
-	 */
-	IRemoteTaskManager getTaskManager() throws RemoteException,
-			PlatformException;
+    /**
+     * @see salomon.engine.project.IProject#getTaskManager()
+     */
+    IRemoteTaskManager getTaskManager() throws RemoteException,
+            PlatformException;
 
-	/**
-	 * @see salomon.engine.project.IProject#setInfo(String)
-	 * 
-	 * @param info The info to set.
-	 * @pre info != null
-	 * @post $none
-	 * 
-	 * @uml.property name="info"
-	 */
-	void setInfo(String info) throws RemoteException, PlatformException;
+    /**
+     * @see salomon.engine.project.IProject#setInfo(String)
+     * 
+     * @param info The info to set.
+     * @pre info != null
+     * @post $none
+     * 
+     * @uml.property name="info"
+     */
+    void setInfo(String info) throws RemoteException, PlatformException;
 
-	/**
-	 * @see salomon.engine.project.IProject#setName(String)
-	 * 
-	 * @param name The name to set.
-	 * @pre name != null
-	 * @post $none
-	 * 
-	 * @uml.property name="name"
-	 */
-	void setName(String name) throws RemoteException, PlatformException;
+    /**
+     * @see salomon.engine.project.IProject#setName(String)
+     * 
+     * @param name The name to set.
+     * @pre name != null
+     * @post $none
+     * 
+     * @uml.property name="name"
+     */
+    void setName(String name) throws RemoteException, PlatformException;
 
-	/**
-	 * @see salomon.engine.project.IProject#setProjectID(int)
-	 * 
-	 * @param projectId The projectID to set.
-	 * @pre $none
-	 * @post $none
-	 * 
-	 * @uml.property name="projectID"
-	 */
-	void setProjectID(int projectId) throws RemoteException, PlatformException;
+    /**
+     * @see salomon.engine.project.IProject#setProjectID(int)
+     * 
+     * @param projectId The projectID to set.
+     * @pre $none
+     * @post $none
+     * 
+     * @uml.property name="projectID"
+     */
+    void setProjectID(int projectId) throws RemoteException, PlatformException;
 
 }

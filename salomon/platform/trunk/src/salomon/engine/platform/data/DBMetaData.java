@@ -34,78 +34,79 @@ import salomon.platform.data.ITable;
  */
 public final class DBMetaData implements IMetaData
 {
-	private DBManager _manager;
+    private DBManager _manager;
 
-	private DBTable[] _tables;
+    private DBTable[] _tables;
 
-	public DBMetaData(DBManager manager)
-	{
-		_manager = manager;
-	}
+    public DBMetaData(DBManager manager)
+    {
+        _manager = manager;
+    }
 
-	/**
-	 * Returns the tables.
-	 * @return The tables
-	 */
-	public DBTable[] getTables()
-	{
-		return _tables;
-	}
+    /**
+     * Returns the tables.
+     * @return The tables
+     */
+    public DBTable[] getTables()
+    {
+        return _tables;
+    }
 
-	public void init() throws SQLException
-	{
-		// getting table names		
-		String[] types = {"TABLE"};
-		ResultSet resultSet = null;
-		resultSet = _manager.getDatabaseMetaData().getTables(null, null, null,
-				types);
-		LinkedList<String> tables = new LinkedList<String>();
-		while (resultSet.next()) {
-			tables.add(resultSet.getString("table_name"));
-		}
-		resultSet.close();
+    public void init() throws SQLException
+    {
+        // getting table names		
+        String[] types = {"TABLE"};
+        ResultSet resultSet = null;
+        resultSet = _manager.getDatabaseMetaData().getTables(null, null, null,
+                types);
+        LinkedList<String> tables = new LinkedList<String>();
+        while (resultSet.next()) {
+            tables.add(resultSet.getString("table_name"));
+        }
+        resultSet.close();
 
-		_tables = new DBTable[tables.size()];
+        _tables = new DBTable[tables.size()];
 
-		// getting column for tables
-		int i = 0;
-		LinkedList<DBColumn> columns = new LinkedList<DBColumn>();
-		for (String tableName : tables) {
-			_tables[i] = new DBTable(tableName);
-			columns.clear();
-			resultSet = _manager.getDatabaseMetaData().getColumns(null, null,
-					tableName, null);
-			while (resultSet.next()) {
-				String colName = resultSet.getString("column_name");
-				String colType = resultSet.getString("type_name");
-				DBColumn column = new DBColumn(_tables[i], colName, colType);
-				columns.add(column);
-			}
-			resultSet.close();
+        // getting column for tables
+        int i = 0;
+        LinkedList<DBColumn> columns = new LinkedList<DBColumn>();
+        for (String tableName : tables) {
+            _tables[i] = new DBTable(tableName);
+            columns.clear();
+            resultSet = _manager.getDatabaseMetaData().getColumns(null, null,
+                    tableName, null);
+            while (resultSet.next()) {
+                String colName = resultSet.getString("column_name");
+                String colType = resultSet.getString("type_name");
+                DBColumn column = new DBColumn(_tables[i], colName, colType);
+                columns.add(column);
+            }
+            resultSet.close();
 
-			DBColumn[] colArray = new DBColumn[columns.size()];
-			colArray = columns.toArray(colArray);
-			_tables[i].setColumns(colArray);
-			++i;
-		}
-	}
-	/**
-	 * Returns table basing on given name.
-	 * Method is case insensitive.
-	 *
-	 * @name table name
-	 * @return table object
-	 */
-	public ITable getTable(String name)
-	{
-		ITable table = null;
-		for (ITable t : _tables) {
-			if (t.getName().equalsIgnoreCase(name)) {
-				table = t;
-				break;
-			}
-		}
-		return table;
-	}
+            DBColumn[] colArray = new DBColumn[columns.size()];
+            colArray = columns.toArray(colArray);
+            _tables[i].setColumns(colArray);
+            ++i;
+        }
+    }
+
+    /**
+     * Returns table basing on given name.
+     * Method is case insensitive.
+     *
+     * @name table name
+     * @return table object
+     */
+    public ITable getTable(String name)
+    {
+        ITable table = null;
+        for (ITable t : _tables) {
+            if (t.getName().equalsIgnoreCase(name)) {
+                table = t;
+                break;
+            }
+        }
+        return table;
+    }
 
 }

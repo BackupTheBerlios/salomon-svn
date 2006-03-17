@@ -27,11 +27,9 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
 import salomon.engine.database.DBManager;
-import salomon.engine.solution.SolutionManager;
-
-import salomon.plugin.DescriptionTest;
-
 import salomon.engine.platform.ManagerEngine;
+import salomon.engine.solution.SolutionManager;
+import salomon.plugin.DescriptionTest;
 
 public class ProjectTest extends TestCase
 {
@@ -88,6 +86,7 @@ public class ProjectTest extends TestCase
         assertTrue(success);
     }
 
+    @Override
     protected void setUp() throws Exception
     {
         PropertyConfigurator.configure("log.conf"); //$NON-NLS-1$   

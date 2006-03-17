@@ -35,84 +35,85 @@ import salomon.engine.database.DBManager;
 public class SQLUpdateTest extends TestCase
 {
 
-	/**
-	 * 
-	 * @uml.property name="_manager"
-	 * @uml.associationEnd multiplicity="(0 1)"
-	 */
-	private DBManager _manager;
+    /**
+     * 
+     * @uml.property name="_manager"
+     * @uml.associationEnd multiplicity="(0 1)"
+     */
+    private DBManager _manager;
 
-	public void testGetQuery1()
-	{
-		_logger.debug("SQLUpdateTest.testGetQuery1()");
-		SQLUpdate update = new SQLUpdate("plugins");
-		update.addValue("plugin_name", "Jakis plugin - updated");
-		update.addValue("lm_date", new Date(System.currentTimeMillis()));
-		update.addCondition("plugin_id =", 5);
-		boolean success = false;
-		try {
-			_manager.update(update);
-			success = true;
-			_manager.commit();
-		} catch (SQLException e) {
-			success = false;
-			e.printStackTrace();
-			_manager.rollback();
-		}
-		assertTrue(success);
-	}
+    public void testGetQuery1()
+    {
+        _logger.debug("SQLUpdateTest.testGetQuery1()");
+        SQLUpdate update = new SQLUpdate("plugins");
+        update.addValue("plugin_name", "Jakis plugin - updated");
+        update.addValue("lm_date", new Date(System.currentTimeMillis()));
+        update.addCondition("plugin_id =", 5);
+        boolean success = false;
+        try {
+            _manager.update(update);
+            success = true;
+            _manager.commit();
+        } catch (SQLException e) {
+            success = false;
+            e.printStackTrace();
+            _manager.rollback();
+        }
+        assertTrue(success);
+    }
 
-	public void testGetQuery2()
-	{
-		_logger.debug("SQLUpdateTest.testGetQuery2()");
-		SQLUpdate update = new SQLUpdate("plugins");
-		update.addValue("plugin_name", "Jakis plugin - updated 2");
-		update.addValue("lm_date", new Date(System.currentTimeMillis()));
-		update.addCondition("plugin_id in (8, 12)");
-		boolean success = false;
-		try {
-			_manager.update(update);
-			success = true;
-			_manager.commit();
-		} catch (SQLException e) {
-			success = false;
-			e.printStackTrace();
-			_manager.rollback();
-		}
-		assertTrue(success);
-	}
+    public void testGetQuery2()
+    {
+        _logger.debug("SQLUpdateTest.testGetQuery2()");
+        SQLUpdate update = new SQLUpdate("plugins");
+        update.addValue("plugin_name", "Jakis plugin - updated 2");
+        update.addValue("lm_date", new Date(System.currentTimeMillis()));
+        update.addCondition("plugin_id in (8, 12)");
+        boolean success = false;
+        try {
+            _manager.update(update);
+            success = true;
+            _manager.commit();
+        } catch (SQLException e) {
+            success = false;
+            e.printStackTrace();
+            _manager.rollback();
+        }
+        assertTrue(success);
+    }
 
-	public void testGetQuery3()
-	{
-		_logger.debug("SQLUpdateTest.testGetQuery3()");
-		SQLUpdate update = new SQLUpdate("tasks");
-		update.addValue("task_name", "Jakis task - updated 2");
-		update.addValue("lm_date", new Date(System.currentTimeMillis()));
-		update.addValue("stop_time", new Time(System.currentTimeMillis()));
-		update.addCondition("task_id = ", 3);
-		boolean success = false;
-		try {
-			_manager.update(update);
-			success = true;
-			_manager.commit();
-		} catch (SQLException e) {
-			success = false;
-			e.printStackTrace();
-			_manager.rollback();
-		}
-		assertTrue(success);
-	}
+    public void testGetQuery3()
+    {
+        _logger.debug("SQLUpdateTest.testGetQuery3()");
+        SQLUpdate update = new SQLUpdate("tasks");
+        update.addValue("task_name", "Jakis task - updated 2");
+        update.addValue("lm_date", new Date(System.currentTimeMillis()));
+        update.addValue("stop_time", new Time(System.currentTimeMillis()));
+        update.addCondition("task_id = ", 3);
+        boolean success = false;
+        try {
+            _manager.update(update);
+            success = true;
+            _manager.commit();
+        } catch (SQLException e) {
+            success = false;
+            e.printStackTrace();
+            _manager.rollback();
+        }
+        assertTrue(success);
+    }
 
-	/*
-	 * @see TestCase#setUp()
-	 */
-	protected void setUp() throws Exception
-	{
-		PropertyConfigurator.configure("log.conf"); //$NON-NLS-1$        
-		_manager = new DBManager();
-		_manager.connect();
-	}
+    /*
+     * @see TestCase#setUp()
+     */
+    @Override
+    protected void setUp() throws Exception
+    {
+        PropertyConfigurator.configure("log.conf"); //$NON-NLS-1$        
+        _manager = new DBManager();
+        _manager.connect();
+    }
 
-	private static Logger _logger = Logger.getLogger(SQLUpdateTest.class);
+    private static Logger _logger = Logger.getLogger(SQLUpdateTest.class);
 
 }

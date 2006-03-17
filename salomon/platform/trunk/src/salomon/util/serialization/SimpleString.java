@@ -29,64 +29,64 @@ import salomon.platform.serialization.IString;
  */
 public class SimpleString implements IString
 {
-	private String _value;
+    private String _value;
 
-	/**
-	 * 
-	 */
-	public SimpleString()
-	{
-		// empty body
-	}
+    /**
+     * 
+     */
+    public SimpleString()
+    {
+        // empty body
+    }
 
-	/**
-	 * @param value
-	 */
-	public SimpleString(String value)
-	{
-		_value = value;
-	}
+    /**
+     * @param value
+     */
+    public SimpleString(String value)
+    {
+        _value = value;
+    }
 
-	/**
-	 * @see salomon.platform.serialization.IString#getValue()
-	 */
-	public String getValue()
-	{
-		return _value;
-	}
+    /**
+     * @see salomon.platform.serialization.IString#getValue()
+     */
+    public String getValue()
+    {
+        return _value;
+    }
 
-	/**
-	 * @see salomon.platform.serialization.IString#setValue(java.lang.String)
-	 */
-	public void setValue(String value)
-	{
-		_value = value;
-	}
+    /**
+     * @see salomon.platform.serialization.IString#setValue(java.lang.String)
+     */
+    public void setValue(String value)
+    {
+        _value = value;
+    }
 
-	/**
-	 * @see salomon.platform.serialization.IObject#getType()
-	 */
-	public IObject.Types getType()
-	{
-		// TODO Auto-generated method stub
-		return IObject.Types.STRING;
-	}
+    /**
+     * @see salomon.platform.serialization.IObject#getType()
+     */
+    public IObject.Types getType()
+    {
+        // TODO Auto-generated method stub
+        return IObject.Types.STRING;
+    }
 
-	/**
-	 * @see salomon.platform.serialization.IObject#equals(salomon.platform.serialization.IObject)
-	 */
-	public boolean equals(IObject object)
-	{
-		boolean result = false;
-		if (object.getType() == getType()) {
-			String toCompare = ((SimpleString) object).getValue();
-			if (_value == null) {
-				result = (toCompare == null);
-			} else {
-				result = (_value.equals(toCompare));
-			}
-		}
-		return result;
-	}
+    /**
+     * @see salomon.platform.serialization.IObject#equals(salomon.platform.serialization.IObject)
+     */
+    public boolean equals(IObject object)
+    {
+        boolean result = false;
+        if (object.getType() == getType()) {
+            String toCompare = ((SimpleString) object).getValue();
+            if (_value == null) {
+                result = (toCompare == null);
+            } else {
+                result = (_value.equals(toCompare));
+            }
+        }
+        return result;
+    }
 
 }

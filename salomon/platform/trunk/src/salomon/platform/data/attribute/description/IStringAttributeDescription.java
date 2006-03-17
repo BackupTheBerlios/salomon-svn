@@ -23,5 +23,5 @@ package salomon.platform.data.attribute.description;
 
 public interface IStringAttributeDescription extends IAttributeDescription
 {
-	// empty body
+    // empty body
 }

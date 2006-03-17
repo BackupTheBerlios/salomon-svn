@@ -29,7 +29,7 @@ import java.rmi.RemoteException;
  */
 public interface ICentralController extends Remote
 {
-	void register(IRemoteController remoteController) throws RemoteException;
+    void register(IRemoteController remoteController) throws RemoteException;
 
-	void unregister(IRemoteController remoteController) throws RemoteException;
+    void unregister(IRemoteController remoteController) throws RemoteException;
 }

@@ -30,24 +30,24 @@ import salomon.platform.serialization.IObject;
  */
 public interface IVariable
 {
-	/**
-	 * Returns the name of this variable.
-	 * 
-	 * @return the name
-	 */
-	String getName();
+    /**
+     * Returns the name of this variable.
+     * 
+     * @return the name
+     */
+    String getName();
 
-	/**
-	 * Returns current value of this variable.
-	 *
-	 * @return the value
-	 */
-	IObject getValue();
+    /**
+     * Returns current value of this variable.
+     *
+     * @return the value
+     */
+    IObject getValue();
 
-	/**
-	 * Sets the value of this variable.
-	 * 
-	 * @param value the value to set
-	 */
-	void setValue(IObject value);
+    /**
+     * Sets the value of this variable.
+     * 
+     * @param value the value to set
+     */
+    void setValue(IObject value);
 }

@@ -29,9 +29,9 @@ import salomon.platform.IEnvironment;
  */
 public interface IDataPlugin
 {
-	/**
-	 * Does plugin job. 
-	 */
-	IResult doJob(IDataEngine engine, IEnvironment environment,
-			ISettings settings);
+    /**
+     * Does plugin job. 
+     */
+    IResult doJob(IDataEngine engine, IEnvironment environment,
+            ISettings settings);
 }

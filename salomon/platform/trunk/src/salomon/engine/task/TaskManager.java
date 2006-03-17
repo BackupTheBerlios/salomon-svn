@@ -32,24 +32,20 @@ import org.apache.log4j.Logger;
 import salomon.engine.database.DBManager;
 import salomon.engine.database.queries.SQLDelete;
 import salomon.engine.database.queries.SQLSelect;
+import salomon.engine.platform.Environment;
+import salomon.engine.platform.IManagerEngine;
+import salomon.engine.platform.serialization.XMLSerializer;
 import salomon.engine.plugin.ILocalPlugin;
 import salomon.engine.plugin.LocalPlugin;
 import salomon.engine.plugin.PluginInfo;
 import salomon.engine.project.IProject;
-
-import salomon.util.serialization.SimpleString;
-
 import salomon.platform.IDataEngine;
 import salomon.platform.IVariable;
 import salomon.platform.exception.PlatformException;
 import salomon.platform.serialization.IObject;
-
 import salomon.plugin.IResult;
 import salomon.plugin.ISettings;
-
-import salomon.engine.platform.Environment;
-import salomon.engine.platform.IManagerEngine;
-import salomon.engine.platform.serialization.XMLSerializer;
+import salomon.util.serialization.SimpleString;
 
 /**
  * An implemetation of ITaskManager interface. Class manages with tasks editing
@@ -361,6 +357,7 @@ public final class TaskManager implements ITaskManager
 
     private final class TaskEngine extends Thread
     {
+        @Override
         public void run()
         {
             LOGGER.info("Running tasks");
@@ -408,29 +405,6 @@ public final class TaskManager implements ITaskManager
                     _dbManager.commit();
                 }
             }
-        }
-
-        private ITask getTask()
-        {
-            ITask currentTask = null;
-            while (true) {
-                synchronized (_tasks) {
-                    if (_tasks.size() > 0) {
-                        currentTask = _tasks.getFirst();
-                    }
-                }
-                _tasks.notifyAll();
-                if (currentTask != null) {
-                    break;
-                }
-                try {
-                    _tasks.wait();
-                } catch (InterruptedException e) {
-                    LOGGER.fatal("", e);
-                }
-            } // while (currentTask != null);
-
-            return currentTask;
         }
     }
 

@@ -25,61 +25,60 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
 import salomon.engine.task.ITaskRunner;
-
 import salomon.platform.exception.PlatformException;
 
 /**
  * @see salomon.engine.task.ITaskRunner
  */
 public final class RemoteTaskRunner extends UnicastRemoteObject
-		implements IRemoteTaskRunner
+        implements IRemoteTaskRunner
 {
 
-	/**
-	 * 
-	 * @uml.property name="_taskRunner"
-	 * @uml.associationEnd multiplicity="(0 1)"
-	 */
-	private ITaskRunner _taskRunner;
+    /**
+     * 
+     * @uml.property name="_taskRunner"
+     * @uml.associationEnd multiplicity="(0 1)"
+     */
+    private ITaskRunner _taskRunner;
 
-	/**
-	 * 
-	 */
-	public RemoteTaskRunner(ITaskRunner taskRunner) throws RemoteException
-	{
-		_taskRunner = taskRunner;
-	}
+    /**
+     * 
+     */
+    public RemoteTaskRunner(ITaskRunner taskRunner) throws RemoteException
+    {
+        _taskRunner = taskRunner;
+    }
 
-	/**
-	 * @see salomon.engine.remote.task.IRemoteTaskRunner#pause()
-	 */
-	public void pause() throws PlatformException, RemoteException
-	{
-		_taskRunner.pause();
-	}
+    /**
+     * @see salomon.engine.remote.task.IRemoteTaskRunner#pause()
+     */
+    public void pause() throws PlatformException, RemoteException
+    {
+        _taskRunner.pause();
+    }
 
-	/**
-	 * @see salomon.engine.remote.task.IRemoteTaskRunner#resume()
-	 */
-	public void resume() throws PlatformException, RemoteException
-	{
-		_taskRunner.resume();
-	}
+    /**
+     * @see salomon.engine.remote.task.IRemoteTaskRunner#resume()
+     */
+    public void resume() throws PlatformException, RemoteException
+    {
+        _taskRunner.resume();
+    }
 
-	/**
-	 * @see salomon.engine.remote.task.IRemoteTaskRunner#start()
-	 */
-	public void start() throws PlatformException, RemoteException
-	{
-		_taskRunner.start();
-	}
+    /**
+     * @see salomon.engine.remote.task.IRemoteTaskRunner#start()
+     */
+    public void start() throws PlatformException, RemoteException
+    {
+        _taskRunner.start();
+    }
 
-	/**
-	 * @see salomon.engine.remote.task.IRemoteTaskRunner#stop()
-	 */
-	public void stop() throws PlatformException, RemoteException
-	{
-		_taskRunner.stop();
-	}
+    /**
+     * @see salomon.engine.remote.task.IRemoteTaskRunner#stop()
+     */
+    public void stop() throws PlatformException, RemoteException
+    {
+        _taskRunner.stop();
+    }
 
 }

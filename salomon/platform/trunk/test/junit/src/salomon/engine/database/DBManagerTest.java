@@ -23,7 +23,6 @@ package salomon.engine.database;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 import junit.framework.TestCase;
 
@@ -39,86 +38,87 @@ import salomon.util.gui.Utils;
 public class DBManagerTest extends TestCase
 {
 
-	private DBManager manager;
+    private DBManager manager;
 
-	private DBManager personManager;
+    private DBManager personManager;
 
-	protected void setUp() throws Exception
-	{
-		PropertyConfigurator.configure("log.conf"); //$NON-NLS-1$
-		manager = new DBManager();
-		personManager = new DBManager();
-	}
+    @Override
+    protected void setUp() throws Exception
+    {
+        PropertyConfigurator.configure("log.conf"); //$NON-NLS-1$
+        manager = new DBManager();
+        personManager = new DBManager();
+    }
 
-	public void testConnect()
-	{
-		LOGGER.info("DBManagerTest.testConnect()");
-		try {
-			manager.connect("", "\\db\\salomon.gdb", "sysdba", "masterkey");
-			LOGGER.info("CONNECTED");
-			
-			SQLSelect select = new SQLSelect();
-			select.addTable("projects");			
-			ResultSet resultSet = manager.select(select);
-			Utils.getDataFromResultSet(resultSet);			
-			resultSet.close();			
-			
-			personManager.connect("", "\\db\\persons.gdb", "sysdba",
-					"masterkey");
-			LOGGER.info("CONNECTED to PERSONS");
-			select = new SQLSelect();
-			select.addTable("persons");
-			//resultSet = personManager.select(select);
-			resultSet = personManager.select(select);
-			Utils.getDataFromResultSet(resultSet);
-		} catch (SQLException e) {
-			LOGGER.fatal("", e);
-		} catch (ClassNotFoundException e) {
-			LOGGER.fatal("", e);
-		} finally {
-			try {
-				manager.disconnect();
-			} catch (SQLException e) {
-				LOGGER.fatal("", e);
-			}
-			try {
-				personManager.disconnect();
-			} catch (SQLException e) {
-				LOGGER.fatal("", e);
-			}
-		}
-	}
-	
-	public void testGetMetaData()
-	{
-		LOGGER.info("DBManagerTest.testGetMetaData()");
-		try {
-			manager.connect("", "\\db\\salomon.gdb", "sysdba", "masterkey");
-			LOGGER.info("CONNECTED");
-			
-			IMetaData metaData = manager.getMetaData();
-			
-			ITable[] tables = metaData.getTables();
-			for (ITable table : tables) {
-				LOGGER.debug("table: " + table);
-				IColumn[] columns = table.getColumns();
-				for (int i = 0; i < columns.length; ++i) {
-					LOGGER.debug(columns[i]);
-				}
-			}
-			
-		} catch (SQLException e) {
-			LOGGER.fatal("", e);
-		} catch (ClassNotFoundException e) {
-			LOGGER.fatal("", e);
-		} finally {
-			try {
-				manager.disconnect();
-			} catch (SQLException e) {
-				LOGGER.fatal("", e);
-			}
-		}
-	}
+    public void testConnect()
+    {
+        LOGGER.info("DBManagerTest.testConnect()");
+        try {
+            manager.connect("", "\\db\\salomon.gdb", "sysdba", "masterkey");
+            LOGGER.info("CONNECTED");
 
-	private static final Logger LOGGER = Logger.getLogger(DBManagerTest.class);
+            SQLSelect select = new SQLSelect();
+            select.addTable("projects");
+            ResultSet resultSet = manager.select(select);
+            Utils.getDataFromResultSet(resultSet);
+            resultSet.close();
+
+            personManager.connect("", "\\db\\persons.gdb", "sysdba",
+                    "masterkey");
+            LOGGER.info("CONNECTED to PERSONS");
+            select = new SQLSelect();
+            select.addTable("persons");
+            //resultSet = personManager.select(select);
+            resultSet = personManager.select(select);
+            Utils.getDataFromResultSet(resultSet);
+        } catch (SQLException e) {
+            LOGGER.fatal("", e);
+        } catch (ClassNotFoundException e) {
+            LOGGER.fatal("", e);
+        } finally {
+            try {
+                manager.disconnect();
+            } catch (SQLException e) {
+                LOGGER.fatal("", e);
+            }
+            try {
+                personManager.disconnect();
+            } catch (SQLException e) {
+                LOGGER.fatal("", e);
+            }
+        }
+    }
+
+    public void testGetMetaData()
+    {
+        LOGGER.info("DBManagerTest.testGetMetaData()");
+        try {
+            manager.connect("", "\\db\\salomon.gdb", "sysdba", "masterkey");
+            LOGGER.info("CONNECTED");
+
+            IMetaData metaData = manager.getMetaData();
+
+            ITable[] tables = metaData.getTables();
+            for (ITable table : tables) {
+                LOGGER.debug("table: " + table);
+                IColumn[] columns = table.getColumns();
+                for (int i = 0; i < columns.length; ++i) {
+                    LOGGER.debug(columns[i]);
+                }
+            }
+
+        } catch (SQLException e) {
+            LOGGER.fatal("", e);
+        } catch (ClassNotFoundException e) {
+            LOGGER.fatal("", e);
+        } finally {
+            try {
+                manager.disconnect();
+            } catch (SQLException e) {
+                LOGGER.fatal("", e);
+            }
+        }
+    }
+
+    private static final Logger LOGGER = Logger.getLogger(DBManagerTest.class);
 }

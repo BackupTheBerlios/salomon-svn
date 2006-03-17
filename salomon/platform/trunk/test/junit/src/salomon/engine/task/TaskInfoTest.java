@@ -39,6 +39,7 @@ public class TaskInfoTest extends TestCase
     /*
      * @see TestCase#setUp()
      */
+    @Override
     protected void setUp() throws Exception
     {
         PropertyConfigurator.configure("log.conf"); //$NON-NLS-1$   
@@ -46,7 +47,7 @@ public class TaskInfoTest extends TestCase
         ManagerEngine managerEngine = new ManagerEngine();
         _manager = managerEngine.getDbManager();
         _taskManager = managerEngine.getTasksManager();
-    }    
+    }
 
     private static Logger LOGGER = Logger.getLogger(TaskInfoTest.class);
 }

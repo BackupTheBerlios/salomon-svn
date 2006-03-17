@@ -25,24 +25,28 @@ import salomon.engine.controller.gui.viewer.spread.AbstractSearchSpread;
 import salomon.engine.database.DBManager;
 import salomon.engine.task.TaskInfo;
 
-public class TaskViewer extends AbstractSearchSpread {
-	private static final long serialVersionUID = 1L;
+public class TaskViewer extends AbstractSearchSpread
+{
+    private static final long serialVersionUID = 1L;
 
-	public TaskViewer(DBManager dbManager) {
-		super(dbManager);
-	}
+    public TaskViewer(DBManager dbManager)
+    {
+        super(dbManager);
+    }
 
-	@Override
-	public void initColumns() {
-		_select.addTable(TaskInfo.VIEW_NAME);
-	}
+    @Override
+    public void initColumns()
+    {
+        _select.addTable(TaskInfo.VIEW_NAME);
+    }
 
-	@Override
-	public void initFilters() {
-		addFilteredField("Task id", "task_id");
-		addFilteredField("ProjectId", "project_id");
-		addFilteredField("PluginId", "plugin_id");
-		addFilteredField("Name", "task_name");
-		addFilteredField("Status", "status");
-	}
+    @Override
+    public void initFilters()
+    {
+        addFilteredField("Task id", "task_id");
+        addFilteredField("ProjectId", "project_id");
+        addFilteredField("PluginId", "plugin_id");
+        addFilteredField("Name", "task_name");
+        addFilteredField("Status", "status");
+    }
 }

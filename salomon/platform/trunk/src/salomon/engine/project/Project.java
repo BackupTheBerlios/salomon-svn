@@ -22,71 +22,61 @@
 package salomon.engine.project;
 
 import salomon.engine.database.DBManager;
-import salomon.engine.task.ITaskManager;
-
-import salomon.platform.exception.PlatformException;
-
 import salomon.engine.platform.IManagerEngine;
+import salomon.engine.task.ITaskManager;
+import salomon.platform.exception.PlatformException;
 
 /**
  * Represents a project, it is an implementation of IProject interface.
  */
 public final class Project implements IProject
 {
-	/**
-	 * 
-	 * @uml.property name="_dbManager"
-	 * @uml.associationEnd multiplicity="(0 1)"
-	 */
-	private DBManager _dbManager;
+    /**
+     * 
+     * @uml.property name="_projectInfo"
+     * @uml.associationEnd multiplicity="(0 1)"
+     */
+    private ProjectInfo _projectInfo;
 
-	/**
-	 * 
-	 * @uml.property name="_projectInfo"
-	 * @uml.associationEnd multiplicity="(0 1)"
-	 */
-	private ProjectInfo _projectInfo;
+    /**
+     * 
+     * @uml.property name="_taskManager"
+     * @uml.associationEnd multiplicity="(0 1)"
+     */
+    private ITaskManager _taskManager;
 
-	/**
-	 * 
-	 * @uml.property name="_taskManager"
-	 * @uml.associationEnd multiplicity="(0 1)"
-	 */
-	private ITaskManager _taskManager;
+    private IProjectManager _projectManager;
 
-	private IProjectManager _projectManager;
+    protected Project(IManagerEngine managerEngine, DBManager manager)
+            throws PlatformException
+    {
+        _taskManager = managerEngine.getTasksManager();
+        _projectManager = managerEngine.getProjectManager();
+        _projectInfo = new ProjectInfo(manager);
+    }
 
-	protected Project(IManagerEngine managerEngine, DBManager manager)
-			throws PlatformException
-	{
-		_taskManager = managerEngine.getTasksManager();
-		_projectManager = managerEngine.getProjectManager();
-		_dbManager = manager;
-		_projectInfo = new ProjectInfo(manager);
-	}
+    public ProjectInfo getInfo()
+    {
+        return _projectInfo;
+    }
 
-	public ProjectInfo getInfo()
-	{
-		return _projectInfo;
-	}
+    public IProjectManager getProjectManager() throws PlatformException
+    {
+        //FIXME: change it after implementing cascade model
+        return _projectManager;
+    }
 
-	public IProjectManager getProjectManager() throws PlatformException
-	{
-		//FIXME: change it after implementing cascade model
-		return _projectManager;
-	}
+    /**
+     * @see salomon.engine.project.IProject#getTaskManager()
+     */
+    public ITaskManager getTaskManager() throws PlatformException
+    {
+        return _taskManager;
+    }
 
-	/**
-	 * @see salomon.engine.project.IProject#getTaskManager()
-	 */
-	public ITaskManager getTaskManager() throws PlatformException
-	{
-		return _taskManager;
-	}
-
-	@Override
-	public String toString()
-	{
-		return _projectInfo.toString();
-	}
+    @Override
+    public String toString()
+    {
+        return _projectInfo.toString();
+    }
 }

@@ -33,44 +33,44 @@ import org.apache.log4j.Logger;
 public final class Config
 {
 
-	/**
-	 * reads specified property
-	 * @param key
-	 * @return String matching the given key
-	 */
-	public static String getString(String key)
-	{
-		try {
-			return RESOURCE_BUNDLE.getString(key);
-		} catch (MissingResourceException e) {
-			LOGGER.fatal("", e);
-			return '!' + key + '!';
-		}
-	}
+    /**
+     * reads specified property
+     * @param key
+     * @return String matching the given key
+     */
+    public static String getString(String key)
+    {
+        try {
+            return RESOURCE_BUNDLE.getString(key);
+        } catch (MissingResourceException e) {
+            LOGGER.fatal("", e);
+            return '!' + key + '!';
+        }
+    }
 
-	/**
-	 * current working directory
-	 */
-	public static String CURR_DIR = null;
+    /**
+     * current working directory
+     */
+    public static String CURR_DIR = null;
 
-	/**
-	 * system defined file separator
-	 */
-	public static String FILE_SEPARATOR = null;
+    /**
+     * system defined file separator
+     */
+    public static String FILE_SEPARATOR = null;
 
-	private static final String BUNDLE_NAME = "config";//$NON-NLS-1$
+    private static final String BUNDLE_NAME = "config";//$NON-NLS-1$
 
-	private static final Logger LOGGER = Logger.getLogger(Config.class);
+    private static final Logger LOGGER = Logger.getLogger(Config.class);
 
-	private static ResourceBundle RESOURCE_BUNDLE = null;
+    private static ResourceBundle RESOURCE_BUNDLE = null;
 
-	static {
-		try {
-			RESOURCE_BUNDLE = ResourceBundle.getBundle(BUNDLE_NAME);
-			FILE_SEPARATOR = System.getProperty("file.separator");
-			CURR_DIR = System.getProperty("user.dir");
-		} catch (Exception e) {
-			LOGGER.fatal("", e);
-		}
-	}
+    static {
+        try {
+            RESOURCE_BUNDLE = ResourceBundle.getBundle(BUNDLE_NAME);
+            FILE_SEPARATOR = System.getProperty("file.separator");
+            CURR_DIR = System.getProperty("user.dir");
+        } catch (Exception e) {
+            LOGGER.fatal("", e);
+        }
+    }
 }

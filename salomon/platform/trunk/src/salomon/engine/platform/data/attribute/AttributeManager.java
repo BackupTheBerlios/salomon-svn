@@ -35,7 +35,6 @@ import salomon.engine.database.queries.SQLDelete;
 import salomon.engine.database.queries.SQLInsert;
 import salomon.engine.database.queries.SQLSelect;
 import salomon.engine.solution.ShortSolutionInfo;
-
 import salomon.platform.data.attribute.IAttributeManager;
 import salomon.platform.data.attribute.IAttributeSet;
 import salomon.platform.data.attribute.description.IAttributeDescription;

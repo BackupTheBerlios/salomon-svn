@@ -28,49 +28,51 @@ import javax.swing.filechooser.FileFilter;
 public class SearchFileFilter extends FileFilter
 {
 
-	String _description;
+    String _description;
 
-	private String _extension;
+    private String _extension;
 
-	public SearchFileFilter(String extension, String description)
-	{
-		_extension = extension;
-		_description = description;
-	}
+    public SearchFileFilter(String extension, String description)
+    {
+        _extension = extension;
+        _description = description;
+    }
 
-	public boolean accept(File file)
-	{
-		if (file != null) {
-			if (file.isDirectory()) {
-				return true;
-			}
-			String ext = getExtension(file);
-			if (ext != null) {
-				return _extension.equalsIgnoreCase(ext);
-			}
-		}
-		return false;
-	}
+    @Override
+    public boolean accept(File file)
+    {
+        if (file != null) {
+            if (file.isDirectory()) {
+                return true;
+            }
+            String ext = getExtension(file);
+            if (ext != null) {
+                return _extension.equalsIgnoreCase(ext);
+            }
+        }
+        return false;
+    }
 
-	public String getDescription()
-	{
-		return _description + " (*." + _extension + ")";
-	}
+    @Override
+    public String getDescription()
+    {
+        return _description + " (*." + _extension + ")";
+    }
 
-	public void setDescription(String description)
-	{
-		_description = description;
-	}
+    public void setDescription(String description)
+    {
+        _description = description;
+    }
 
-	private String getExtension(File f)
-	{
-		if (f != null) {
-			String filename = f.getName();
-			int i = filename.lastIndexOf('.');
-			if (i > 0 && i < filename.length() - 1) {
-				return filename.substring(i + 1).toLowerCase();
-			}
-		}
-		return null;
-	}
+    private String getExtension(File f)
+    {
+        if (f != null) {
+            String filename = f.getName();
+            int i = filename.lastIndexOf('.');
+            if (i > 0 && i < filename.length() - 1) {
+                return filename.substring(i + 1).toLowerCase();
+            }
+        }
+        return null;
+    }
 }

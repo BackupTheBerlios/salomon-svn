@@ -28,20 +28,20 @@ import salomon.engine.controller.gui.graph.GraphTaskManagerGUI;
 public class RemoveAllTasksAction extends AbstractTaskAction
 {
 
-	/**
-	 * @param editionManager
-	 */
-	protected RemoveAllTasksAction(GraphTaskManagerGUI taskManagerGUI)
-	{
-		super(taskManagerGUI);
-		// TODO Auto-generated constructor stub
-	}
+    /**
+     * @param editionManager
+     */
+    protected RemoveAllTasksAction(GraphTaskManagerGUI taskManagerGUI)
+    {
+        super(taskManagerGUI);
+        // TODO Auto-generated constructor stub
+    }
 
-	/**
-	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-	 */
-	public void actionPerformed(ActionEvent e)
-	{
-		_taskManagerGUI.removeAllTasks();
-	}
+    /**
+     * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+     */
+    public void actionPerformed(ActionEvent e)
+    {
+        _taskManagerGUI.removeAllTasks();
+    }
 }

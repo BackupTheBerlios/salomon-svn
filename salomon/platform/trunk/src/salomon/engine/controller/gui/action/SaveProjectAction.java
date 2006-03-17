@@ -32,23 +32,23 @@ import salomon.engine.controller.gui.ProjectManagerGUI;
 public final class SaveProjectAction extends AbstractProjectAction
 {
 
-	/**
-	 * Sets an object which method is called in implementation of actionPerformed()
-	 * of method
-	 * 
-	 * @param projectEditionManager an instance of ProjectManagerGUI
-	 */
-	protected SaveProjectAction(ProjectManagerGUI projectEditionManager)
-	{
-		super(projectEditionManager);
-	}
+    /**
+     * Sets an object which method is called in implementation of actionPerformed()
+     * of method
+     * 
+     * @param projectEditionManager an instance of ProjectManagerGUI
+     */
+    protected SaveProjectAction(ProjectManagerGUI projectEditionManager)
+    {
+        super(projectEditionManager);
+    }
 
-	/**
-	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-	 */
-	public void actionPerformed(ActionEvent e)
-	{
-		_projectEditionManager.saveProject();
-	}
+    /**
+     * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+     */
+    public void actionPerformed(ActionEvent e)
+    {
+        _projectEditionManager.saveProject();
+    }
 
 }

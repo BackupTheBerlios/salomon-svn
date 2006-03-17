@@ -19,7 +19,6 @@
  * 
  */
 
-
 package salomon.engine.platform.serialization;
 
 import org.xml.sax.SAXException;
@@ -35,11 +34,12 @@ import org.xml.sax.helpers.DefaultHandler;
  */
 public class SalomonErrorHandler extends DefaultHandler
 {
-	/**
-	 * @see org.xml.sax.helpers.DefaultHandler#error(org.xml.sax.SAXParseException)
-	 */
-	public void error(SAXParseException e) throws SAXException
-	{
-		throw e;
-	}
+    /**
+     * @see org.xml.sax.helpers.DefaultHandler#error(org.xml.sax.SAXParseException)
+     */
+    @Override
+    public void error(SAXParseException e) throws SAXException
+    {
+        throw e;
+    }
 }

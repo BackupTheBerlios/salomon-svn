@@ -38,53 +38,53 @@ import org.apache.log4j.Logger;
  */
 final class PluginClassLoader extends URLClassLoader
 {
-	PluginClassLoader() throws MalformedURLException
-	{
-		super(new URL[0]);
-	}
+    PluginClassLoader() throws MalformedURLException
+    {
+        super(new URL[0]);
+    }
 
-	// work around
-	public Class findMainClass(File file) throws ClassNotFoundException,
-			IOException, URISyntaxException
-	{
-		Class foundClass = null;
-		LOGGER.debug("file: " + file);
-		JarFile jarFile = new JarFile(file);
-		LOGGER.debug("jarFile: " + jarFile);
-		// reading manifest to find main class
-		String className = jarFile.getManifest().getMainAttributes().getValue(
-				"Main-Class");
-		LOGGER.info("Looking for class: " + className);
-		foundClass = super.loadClass(className);
-		LOGGER.info("Found class: " + foundClass);
+    // work around
+    public Class findMainClass(File file) throws ClassNotFoundException,
+            IOException, URISyntaxException
+    {
+        Class foundClass = null;
+        LOGGER.debug("file: " + file);
+        JarFile jarFile = new JarFile(file);
+        LOGGER.debug("jarFile: " + jarFile);
+        // reading manifest to find main class
+        String className = jarFile.getManifest().getMainAttributes().getValue(
+                "Main-Class");
+        LOGGER.info("Looking for class: " + className);
+        foundClass = super.loadClass(className);
+        LOGGER.info("Found class: " + foundClass);
 
-		return foundClass;
-	}
+        return foundClass;
+    }
 
-	void addUrl(URL url)
-	{
-		super.addURL(url);
-	}
+    void addUrl(URL url)
+    {
+        super.addURL(url);
+    }
 
-	static PluginClassLoader getInstance()
-	{
-		if (_instance == null) {
-			try {
-				_instance = new PluginClassLoader();
-			} catch (MalformedURLException e) {
-				LOGGER.fatal("", e);
-			}
-		}
+    static PluginClassLoader getInstance()
+    {
+        if (_instance == null) {
+            try {
+                _instance = new PluginClassLoader();
+            } catch (MalformedURLException e) {
+                LOGGER.fatal("", e);
+            }
+        }
 
-		return _instance;
-	}
+        return _instance;
+    }
 
-	/**
-	 * 
-	 * @uml.property name="_instance"
-	 * @uml.associationEnd multiplicity="(0 1)"
-	 */
-	private static PluginClassLoader _instance;
+    /**
+     * 
+     * @uml.property name="_instance"
+     * @uml.associationEnd multiplicity="(0 1)"
+     */
+    private static PluginClassLoader _instance;
 
-	private static final Logger LOGGER = Logger.getLogger(PluginClassLoader.class);
+    private static final Logger LOGGER = Logger.getLogger(PluginClassLoader.class);
 }

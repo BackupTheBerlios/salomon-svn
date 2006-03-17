@@ -23,7 +23,6 @@ package salomon.engine.plugin;
 
 import salomon.platform.IInfo;
 import salomon.platform.exception.PlatformException;
-
 import salomon.plugin.IPlugin;
 
 /**
@@ -31,5 +30,5 @@ import salomon.plugin.IPlugin;
  */
 public interface ILocalPlugin extends IPlugin
 {
-	IInfo getInfo() throws PlatformException;
+    IInfo getInfo() throws PlatformException;
 }

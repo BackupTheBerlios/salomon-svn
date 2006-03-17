@@ -34,64 +34,64 @@ import salomon.platform.serialization.IStruct;
 public class SimpleStruct implements IStruct
 {
 
-	private final Map<String, IObject> _fields = new HashMap<String, IObject>();
+    private final Map<String, IObject> _fields = new HashMap<String, IObject>();
 
-	/**
-	 * @see salomon.platform.serialization.IObject#equals(salomon.platform.serialization.IObject)
-	 */
-	public boolean equals(IObject object)
-	{
-		boolean result = false;
-		if (object.getType() == getType()) {
-			SimpleStruct other = (SimpleStruct) object;
-			String[] otherNames = other.getFieldNames();
-			if (otherNames.length == _fields.size()) {
-				result = true;
-				for (String name : otherNames) {
-					IObject toCompare = other.getField(name);
-					IObject base = getField(name);
-					if ((base == null) || !(base.equals(toCompare))) {
-						result = false;
-						break;
-					}
-				}
-			}
-		}
-		return result;
-	}
+    /**
+     * @see salomon.platform.serialization.IObject#equals(salomon.platform.serialization.IObject)
+     */
+    public boolean equals(IObject object)
+    {
+        boolean result = false;
+        if (object.getType() == getType()) {
+            SimpleStruct other = (SimpleStruct) object;
+            String[] otherNames = other.getFieldNames();
+            if (otherNames.length == _fields.size()) {
+                result = true;
+                for (String name : otherNames) {
+                    IObject toCompare = other.getField(name);
+                    IObject base = getField(name);
+                    if ((base == null) || !(base.equals(toCompare))) {
+                        result = false;
+                        break;
+                    }
+                }
+            }
+        }
+        return result;
+    }
 
-	/**
-	 * @see salomon.platform.serialization.IStruct#getField(java.lang.String)
-	 */
-	public IObject getField(String name)
-	{
-		return _fields.get(name);
-	}
+    /**
+     * @see salomon.platform.serialization.IStruct#getField(java.lang.String)
+     */
+    public IObject getField(String name)
+    {
+        return _fields.get(name);
+    }
 
-	/**
-	 * @see salomon.platform.serialization.IStruct#getFieldNames()
-	 */
-	public String[] getFieldNames()
-	{
-		Set<String> keys = _fields.keySet();
+    /**
+     * @see salomon.platform.serialization.IStruct#getFieldNames()
+     */
+    public String[] getFieldNames()
+    {
+        Set<String> keys = _fields.keySet();
 
-		return keys.toArray(new String[keys.size()]);
-	}
+        return keys.toArray(new String[keys.size()]);
+    }
 
-	/**
-	 * @see salomon.platform.serialization.IObject#getType()
-	 */
-	public IObject.Types getType()
-	{
-		return IObject.Types.STRUCT;
-	}
+    /**
+     * @see salomon.platform.serialization.IObject#getType()
+     */
+    public IObject.Types getType()
+    {
+        return IObject.Types.STRUCT;
+    }
 
-	/**
-	 * @see salomon.platform.serialization.IStruct#setField(java.lang.String,
-	 *      salomon.platform.serialization.IObject)
-	 */
-	public void setField(String name, IObject value)
-	{
-		_fields.put(name, value);
-	}
+    /**
+     * @see salomon.platform.serialization.IStruct#setField(java.lang.String,
+     *      salomon.platform.serialization.IObject)
+     */
+    public void setField(String name, IObject value)
+    {
+        _fields.put(name, value);
+    }
 }

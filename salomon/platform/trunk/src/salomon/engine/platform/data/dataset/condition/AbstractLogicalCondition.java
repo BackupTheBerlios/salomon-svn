@@ -23,31 +23,31 @@ package salomon.engine.platform.data.dataset.condition;
 
 public abstract class AbstractLogicalCondition extends AbstractCondition
 {
-	private AbstractCondition[] _conditions;
+    private AbstractCondition[] _conditions;
 
-	private AbstractCondition _firstCondition;
+    private AbstractCondition _firstCondition;
 
-	AbstractLogicalCondition(AbstractCondition codition,
-			AbstractCondition... conditions)
-	{
-		super(null);
+    AbstractLogicalCondition(AbstractCondition codition,
+            AbstractCondition... conditions)
+    {
+        super(null);
 
-		_firstCondition = codition;
-		_conditions = conditions;
-	}
+        _firstCondition = codition;
+        _conditions = conditions;
+    }
 
-	@Override
-	public String toSQL()
-	{
-		StringBuilder result = new StringBuilder();
-		String operator = getOperator();
-		result.append('(').append(_firstCondition).append(')');
-		for (AbstractCondition currentCondition : _conditions) {
-			result.append(' ').append(operator).append(' ');
-			result.append('(').append(currentCondition.toSQL()).append(')');
-		}
+    @Override
+    public String toSQL()
+    {
+        StringBuilder result = new StringBuilder();
+        String operator = getOperator();
+        result.append('(').append(_firstCondition).append(')');
+        for (AbstractCondition currentCondition : _conditions) {
+            result.append(' ').append(operator).append(' ');
+            result.append('(').append(currentCondition.toSQL()).append(')');
+        }
 
-		return result.toString();
-	}
+        return result.toString();
+    }
 
 }

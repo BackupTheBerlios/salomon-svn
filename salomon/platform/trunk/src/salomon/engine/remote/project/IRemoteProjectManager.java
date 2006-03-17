@@ -25,7 +25,6 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 
 import salomon.engine.project.IProject;
-
 import salomon.platform.exception.PlatformException;
 
 /**
@@ -38,43 +37,43 @@ import salomon.platform.exception.PlatformException;
 public interface IRemoteProjectManager extends Remote
 {
 
-	/**
-	 * @see salomon.engine.project.IProjectManager#addProject(IProject)
-	 */
-	void addProject(IRemoteProject project) throws PlatformException,
-			RemoteException;
+    /**
+     * @see salomon.engine.project.IProjectManager#addProject(IProject)
+     */
+    void addProject(IRemoteProject project) throws PlatformException,
+            RemoteException;
 
-	/**
-	 * @see salomon.engine.project.IProjectManager#createProject()
-	 * 
-	 * @throws PlatformException
-	 * @throws RemoteException
-	 */
-	IRemoteProject createProject() throws PlatformException, RemoteException;
+    /**
+     * @see salomon.engine.project.IProjectManager#createProject()
+     * 
+     * @throws PlatformException
+     * @throws RemoteException
+     */
+    IRemoteProject createProject() throws PlatformException, RemoteException;
 
-	/**
-	 * Method loads project from data base.
-	 * @pre $none
-	 * @post $none
-	 */
-	IRemoteProject getProject(int projectID) throws PlatformException,
-			RemoteException;
+    /**
+     * Method loads project from data base.
+     * @pre $none
+     * @post $none
+     */
+    IRemoteProject getProject(int projectID) throws PlatformException,
+            RemoteException;
 
-	/**
-	 * @see salomon.engine.project.IProjectManager#getProjects()
-	 */
-	IRemoteProject[] getProjects() throws RemoteException, PlatformException;
+    /**
+     * @see salomon.engine.project.IProjectManager#getProjects()
+     */
+    IRemoteProject[] getProjects() throws RemoteException, PlatformException;
 
-	/**
-	 * Method saves project in data base - project header, plugins and tasks are
-	 * saved.
-	 * 
-	 * @throws PlatformException
-	 * @pre $none
-	 * @post $none
-	 */
-	void saveProject() throws PlatformException, RemoteException;
+    /**
+     * Method saves project in data base - project header, plugins and tasks are
+     * saved.
+     * 
+     * @throws PlatformException
+     * @pre $none
+     * @post $none
+     */
+    void saveProject() throws PlatformException, RemoteException;
 
-	IRemoteProject getCurrentProject() throws PlatformException,
-			RemoteException;
+    IRemoteProject getCurrentProject() throws PlatformException,
+            RemoteException;
 }

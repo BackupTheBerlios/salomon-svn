@@ -23,7 +23,6 @@ package salomon.engine.platform.data.rule;
 
 import salomon.engine.database.DBManager;
 import salomon.engine.solution.ShortSolutionInfo;
-
 import salomon.platform.data.rule.IRuleSet;
 import salomon.platform.data.rule.IRuleSetManager;
 import salomon.platform.exception.PlatformException;
@@ -33,41 +32,35 @@ import salomon.platform.exception.PlatformException;
  */
 public final class RuleSetManager implements IRuleSetManager
 {
-	private DBManager _dbManager;
-	
-	private ShortSolutionInfo _solutioInfo;
+    public RuleSetManager(DBManager dbManager, ShortSolutionInfo solutionInfo)
+    {
+    }
 
-	public RuleSetManager(DBManager dbManager, ShortSolutionInfo solutionInfo)
-	{
-		_dbManager = dbManager;
-		_solutioInfo = solutionInfo;
-	}
+    /**
+     * @see salomon.platform.data.rule.IRuleSetManager#addRuleSet()
+     */
+    public void addRuleSet() throws PlatformException
+    {
+        throw new UnsupportedOperationException(
+                "Method addRuleSet() not implemented yet!");
+    }
 
-	/**
-	 * @see salomon.platform.data.rule.IRuleSetManager#addRuleSet()
-	 */
-	public void addRuleSet() throws PlatformException
-	{
-		throw new UnsupportedOperationException(
-				"Method addRuleSet() not implemented yet!");
-	}
+    /**
+     * @see salomon.platform.data.rule.IRuleSetManager#createRuleSet()
+     */
+    public IRuleSet createRuleSet() throws PlatformException
+    {
+        throw new UnsupportedOperationException(
+                "Method createRuleSet() not implemented yet!");
+    }
 
-	/**
-	 * @see salomon.platform.data.rule.IRuleSetManager#createRuleSet()
-	 */
-	public IRuleSet createRuleSet() throws PlatformException
-	{
-		throw new UnsupportedOperationException(
-				"Method createRuleSet() not implemented yet!");
-	}
-
-	/**
-	 * @see salomon.platform.data.rule.IRuleSetManager#getRuleSets()
-	 */
-	public IRuleSet[] getRuleSets() throws PlatformException
-	{
-		throw new UnsupportedOperationException(
-				"Method getRuleSets() not implemented yet!");
-	}
+    /**
+     * @see salomon.platform.data.rule.IRuleSetManager#getRuleSets()
+     */
+    public IRuleSet[] getRuleSets() throws PlatformException
+    {
+        throw new UnsupportedOperationException(
+                "Method getRuleSets() not implemented yet!");
+    }
 
 } // end RuleSetManager

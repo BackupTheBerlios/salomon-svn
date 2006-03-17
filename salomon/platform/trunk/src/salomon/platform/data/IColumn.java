@@ -23,9 +23,9 @@ package salomon.platform.data;
 
 public interface IColumn
 {
-	String getName();
+    String getName();
 
-	String getType();
-	
-	ITable getTable();
+    String getType();
+
+    ITable getTable();
 }

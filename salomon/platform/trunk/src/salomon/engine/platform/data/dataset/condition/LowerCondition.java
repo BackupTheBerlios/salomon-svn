@@ -26,16 +26,16 @@ import salomon.platform.data.IColumn;
 public final class LowerCondition extends AbstractOperatorCondition
 {
 
-	public LowerCondition(IColumn column, Object value)
-	{
-		super(column, value);
-		// TODO Auto-generated constructor stub
-	}
+    public LowerCondition(IColumn column, Object value)
+    {
+        super(column, value);
+        // TODO Auto-generated constructor stub
+    }
 
-	@Override
-	protected String getOperator()
-	{
-		return "<";
-	}
+    @Override
+    protected String getOperator()
+    {
+        return "<";
+    }
 
 }

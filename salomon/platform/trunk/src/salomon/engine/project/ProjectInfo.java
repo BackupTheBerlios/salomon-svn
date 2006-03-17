@@ -236,6 +236,7 @@ public final class ProjectInfo implements IInfo
         _solutionID = solutionID;
     }
 
+    @Override
     public String toString()
     {
         return "[" + _projectID + ", " + _name + ", " + _info + "]";

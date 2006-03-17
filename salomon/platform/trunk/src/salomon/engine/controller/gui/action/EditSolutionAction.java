@@ -31,19 +31,19 @@ import salomon.engine.controller.gui.SolutionManagerGUI;
  */
 public final class EditSolutionAction extends AbstractSolutionAction
 {
-	/**
-	 * Sets an object which method is called in implementation of
-	 * actionPerformed() method
-	 * 
-	 * @param solutionEditionManager an instance of SolutionManagerGUI
-	 */
-	EditSolutionAction(SolutionManagerGUI solutionEditionManager)
-	{
-		super(solutionEditionManager);
-	}
+    /**
+     * Sets an object which method is called in implementation of
+     * actionPerformed() method
+     * 
+     * @param solutionEditionManager an instance of SolutionManagerGUI
+     */
+    EditSolutionAction(SolutionManagerGUI solutionEditionManager)
+    {
+        super(solutionEditionManager);
+    }
 
-	public void actionPerformed(ActionEvent event)
-	{
-		_solutionEditionManager.editSolution();
-	}
+    public void actionPerformed(ActionEvent event)
+    {
+        _solutionEditionManager.editSolution();
+    }
 }

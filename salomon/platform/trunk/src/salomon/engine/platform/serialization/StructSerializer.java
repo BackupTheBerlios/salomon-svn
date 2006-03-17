@@ -25,12 +25,11 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
+import salomon.platform.serialization.IObject;
 import salomon.util.serialization.SimpleArray;
 import salomon.util.serialization.SimpleInteger;
 import salomon.util.serialization.SimpleString;
 import salomon.util.serialization.SimpleStruct;
-
-import salomon.platform.serialization.IObject;
 
 /**
  * 
@@ -42,101 +41,100 @@ import salomon.platform.serialization.IObject;
 final class StructSerializer implements INodeNames
 {
 
-	/**
-	 * Creates xml representation of the node
-	 * 
-	 * @param document
-	 * @param struct
-	 * @param structName
-	 * @return created node
-	 */
-	public static Element serialize(Document document, SimpleStruct struct)
-	{
-		Element result = document.createElement(NODE_STRUCT);
-		String[] names = struct.getFieldNames();
-		for (String name : names) {
-			IObject field = struct.getField(name);
+    /**
+     * Creates xml representation of the node
+     * 
+     * @param document
+     * @param struct
+     * @param structName
+     * @return created node
+     */
+    public static Element serialize(Document document, SimpleStruct struct)
+    {
+        Element result = document.createElement(NODE_STRUCT);
+        String[] names = struct.getFieldNames();
+        for (String name : names) {
+            IObject field = struct.getField(name);
 
-			Element childNode = serializeSimpleType(document, field);
-			childNode.setAttribute(ATTR_NAME, name);
-			result.appendChild(childNode);
-			
-		}
+            Element childNode = serializeSimpleType(document, field);
+            childNode.setAttribute(ATTR_NAME, name);
+            result.appendChild(childNode);
 
-		return result;
-	}
+        }
 
-	/**
-	 * TODO: add comment.
-	 * @param document
-	 * @param name
-	 * @param field
-	 */
-	private static Element serializeSimpleType(Document document, IObject field)
-	{
-		Element childNode = null;
-		if (field.getType() == IObject.Types.INT) {
-			childNode = getIntNode((SimpleInteger) field, document);
-		} else if (field.getType() == IObject.Types.STRING) {
-			childNode = getStringNode((SimpleString) field,
-					document);
-		} else if (field.getType() == IObject.Types.STRUCT) {
-			childNode = serialize(document, (SimpleStruct) field);
-		} else if (field.getType() == IObject.Types.ARRAY) {
-			childNode = getArrayNode((SimpleArray) field, document);
-		}
-		
-		return childNode;
-	}
+        return result;
+    }
 
-	/**
-	 * creates int node
-	 * 
-	 * @param object
-	 * @param document
-	 * @param name
-	 * @return xml node
-	 */
-	private static Element getIntNode(SimpleInteger object, Document document)
-	{
-		Element result = document.createElement(NODE_INT);
-		result.setAttribute(ATTR_VALUE, String.valueOf(object.getValue()));
-		return result;
-	}
+    /**
+     * TODO: add comment.
+     * @param document
+     * @param name
+     * @param field
+     */
+    private static Element serializeSimpleType(Document document, IObject field)
+    {
+        Element childNode = null;
+        if (field.getType() == IObject.Types.INT) {
+            childNode = getIntNode((SimpleInteger) field, document);
+        } else if (field.getType() == IObject.Types.STRING) {
+            childNode = getStringNode((SimpleString) field, document);
+        } else if (field.getType() == IObject.Types.STRUCT) {
+            childNode = serialize(document, (SimpleStruct) field);
+        } else if (field.getType() == IObject.Types.ARRAY) {
+            childNode = getArrayNode((SimpleArray) field, document);
+        }
 
-	/**
-	 * creates string node
-	 * 
-	 * @param object
-	 * @param document
-	 * @param name
-	 * @return xml node
-	 */
-	private static Element getStringNode(SimpleString object, Document document)
-	{
-		Element result = document.createElement(NODE_STRING);
-		result.setAttribute(ATTR_VALUE, object.getValue());
+        return childNode;
+    }
 
-		return result;
-	}
+    /**
+     * creates int node
+     * 
+     * @param object
+     * @param document
+     * @param name
+     * @return xml node
+     */
+    private static Element getIntNode(SimpleInteger object, Document document)
+    {
+        Element result = document.createElement(NODE_INT);
+        result.setAttribute(ATTR_VALUE, String.valueOf(object.getValue()));
+        return result;
+    }
 
-	/**
-	 * Creates array node.
-	 * 
-	 * @param arrayObject
-	 * @param document
-	 * @return xml node
-	 */
-	private static Element getArrayNode(SimpleArray arrayObject, Document document)
-	{
-		Element result = document.createElement(NODE_ARRAY);
-		for (IObject item : arrayObject.getValue()) {
-			Node childNode = serializeSimpleType(document, item);
-			result.appendChild(childNode);
-		}
+    /**
+     * creates string node
+     * 
+     * @param object
+     * @param document
+     * @param name
+     * @return xml node
+     */
+    private static Element getStringNode(SimpleString object, Document document)
+    {
+        Element result = document.createElement(NODE_STRING);
+        result.setAttribute(ATTR_VALUE, object.getValue());
 
-		return result;
-	}
+        return result;
+    }
 
-	
+    /**
+     * Creates array node.
+     * 
+     * @param arrayObject
+     * @param document
+     * @return xml node
+     */
+    private static Element getArrayNode(SimpleArray arrayObject,
+            Document document)
+    {
+        Element result = document.createElement(NODE_ARRAY);
+        for (IObject item : arrayObject.getValue()) {
+            Node childNode = serializeSimpleType(document, item);
+            result.appendChild(childNode);
+        }
+
+        return result;
+    }
+
 }

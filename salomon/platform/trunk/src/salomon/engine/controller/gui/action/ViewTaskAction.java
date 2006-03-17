@@ -8,14 +8,14 @@ import salomon.engine.controller.gui.graph.GraphTaskManagerGUI;
 public class ViewTaskAction extends AbstractTaskAction
 {
 
-	protected ViewTaskAction(GraphTaskManagerGUI taskManagerGUI)
-	{
-		super(taskManagerGUI);
-	}
+    protected ViewTaskAction(GraphTaskManagerGUI taskManagerGUI)
+    {
+        super(taskManagerGUI);
+    }
 
-	public void actionPerformed(ActionEvent arg0)
-	{
-		_taskManagerGUI.viewTasks();
-	}
+    public void actionPerformed(ActionEvent arg0)
+    {
+        _taskManagerGUI.viewTasks();
+    }
 
 }

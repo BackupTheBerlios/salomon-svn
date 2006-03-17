@@ -26,17 +26,14 @@ import junit.framework.TestCase;
 import org.apache.log4j.Logger;
 
 import salomon.TestObjectFactory;
-
+import salomon.engine.platform.data.DBColumn;
+import salomon.engine.platform.data.DBTable;
 import salomon.engine.solution.ISolution;
-
 import salomon.platform.IDataEngine;
 import salomon.platform.data.IColumn;
 import salomon.platform.data.dataset.ICondition;
 import salomon.platform.data.dataset.IDataSet;
 import salomon.platform.exception.PlatformException;
-
-import salomon.engine.platform.data.DBColumn;
-import salomon.engine.platform.data.DBTable;
 
 public class DataSetManagerTest extends TestCase
 {

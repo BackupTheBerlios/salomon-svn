@@ -25,7 +25,6 @@ import salomon.engine.plugin.IPluginManager;
 import salomon.engine.project.IProjectManager;
 import salomon.engine.solution.ISolutionManager;
 import salomon.engine.task.ITaskManager;
-
 import salomon.platform.exception.PlatformException;
 
 /**
@@ -33,43 +32,43 @@ import salomon.platform.exception.PlatformException;
  */
 public interface IManagerEngine
 {
-	/**
-	 * Returns the PluginManager.
-	 * @return The PluginManager.
-	 * 
-	 * @pre $none
-	 * @post $result != null
-	 */
-	IPluginManager getPluginManager() throws PlatformException;
+    /**
+     * Returns the PluginManager.
+     * @return The PluginManager.
+     * 
+     * @pre $none
+     * @post $result != null
+     */
+    IPluginManager getPluginManager() throws PlatformException;
 
-	/**
-	 * @deprecated Use {@link salomon.engine.solution.ISolution#getProjectManager()}
-	 * 
-	 * Returns the ProjectManager.
-	 * @return The ProjectManager.
-	 * 
-	 * @pre $none
-	 * @post $result != null
-	 */
-	IProjectManager getProjectManager() throws PlatformException;
+    /**
+     * @deprecated Use {@link salomon.engine.solution.ISolution#getProjectManager()}
+     * 
+     * Returns the ProjectManager.
+     * @return The ProjectManager.
+     * 
+     * @pre $none
+     * @post $result != null
+     */
+    @Deprecated IProjectManager getProjectManager() throws PlatformException;
 
-	/**
-	 * Returns the SolutionManager.
-	 * @return The SolutionManager
-	 * 
-	 * @pre $none
-	 * @post $result != null
-	 */
-	ISolutionManager getSolutionManager() throws PlatformException;
+    /**
+     * Returns the SolutionManager.
+     * @return The SolutionManager
+     * 
+     * @pre $none
+     * @post $result != null
+     */
+    ISolutionManager getSolutionManager() throws PlatformException;
 
-	/**
-	 * @deprecated Use {@link salomon.engine.project.IProject#getTaskManager()}
-	 * 
-	 * Returns the TaskManager.
-	 * @return The TaskManager
-	 * 
-	 * @pre $none
-	 * @post $result != null
-	 */
-	ITaskManager getTasksManager() throws PlatformException;
+    /**
+     * @deprecated Use {@link salomon.engine.project.IProject#getTaskManager()}
+     * 
+     * Returns the TaskManager.
+     * @return The TaskManager
+     * 
+     * @pre $none
+     * @post $result != null
+     */
+    @Deprecated ITaskManager getTasksManager() throws PlatformException;
 }

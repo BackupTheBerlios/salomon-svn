@@ -39,11 +39,6 @@ import javax.swing.JTextField;
 
 import org.apache.log4j.Logger;
 
-import com.jgoodies.forms.builder.DefaultFormBuilder;
-import com.jgoodies.forms.layout.FormLayout;
-
-import edu.uci.ics.jung.graph.Graph;
-
 import salomon.engine.Messages;
 import salomon.engine.controller.gui.ControllerFrame;
 import salomon.engine.controller.gui.StatusBar;
@@ -56,17 +51,19 @@ import salomon.engine.task.ITaskManager;
 import salomon.engine.task.Task;
 import salomon.engine.task.TaskInfo;
 import salomon.engine.task.TaskManager;
-
-import salomon.util.gui.Utils;
-
 import salomon.platform.IDataEngine;
 import salomon.platform.exception.PlatformException;
-
 import salomon.plugin.IPlugin;
 import salomon.plugin.IResult;
 import salomon.plugin.IResultComponent;
 import salomon.plugin.ISettingComponent;
 import salomon.plugin.ISettings;
+import salomon.util.gui.Utils;
+
+import com.jgoodies.forms.builder.DefaultFormBuilder;
+import com.jgoodies.forms.layout.FormLayout;
+
+import edu.uci.ics.jung.graph.Graph;
 
 public final class GraphTaskManagerGUI
 {
@@ -84,8 +81,6 @@ public final class GraphTaskManagerGUI
     private JPanel _pnlTaskProperties;
 
     private JComponent _positionComponent;
-
-    private StatusBar _statusBar;
 
     private TaskGraphEditor _taskGraphEditor;
 
@@ -248,7 +243,6 @@ public final class GraphTaskManagerGUI
      */
     public void setStatusBar(StatusBar statusBar)
     {
-        _statusBar = statusBar;
     }
 
     public void showResultPanel(ITask task)
