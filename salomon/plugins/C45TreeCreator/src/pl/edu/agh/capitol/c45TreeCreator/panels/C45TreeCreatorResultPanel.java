@@ -4,6 +4,13 @@ import javax.swing.JPanel;
 
 import salomon.plugin.IResult;
 
+/**
+ * 
+ * Panel rezultatów (pusty)
+ * 
+ * @author Lukasz
+ * 
+ */
 public class C45TreeCreatorResultPanel extends JPanel {
 
 	IResult result = null;

@@ -10,7 +10,6 @@ import salomon.platform.IDataEngine;
 import salomon.platform.IEnvironment;
 import salomon.platform.IVariable;
 import salomon.platform.data.tree.IDataSource;
-import salomon.platform.data.tree.ITree;
 import salomon.platform.exception.PlatformException;
 import salomon.platform.serialization.IObject;
 import salomon.plugin.IPlugin;
@@ -22,13 +21,13 @@ import salomon.util.serialization.SimpleInteger;
 import salomon.util.serialization.SimpleString;
 
 /**
- * @author Lukasz <br>
- *         <br>
- *         Plugin tworz¹cy drzewa decyzyjne na podstawie danych. Drzewa s¹
+ * 
+ * Plugin tworz¹cy drzewa decyzyjne na podstawie danych. Drzewa s¹
  *         tworzone na bazie struktury <code>IDataSource</code> a zapisywane
  *         do <code>ITree</code>. Zaimplementowany algorytm tworzenia drzew
- *         to ID3
- * 
+ *         to C4.5
+ *         
+ * @author Lukasz
  */
 public class C45TreeCreatorPlugin implements IPlugin {
 
@@ -59,7 +58,6 @@ public class C45TreeCreatorPlugin implements IPlugin {
 			env.add(iv);
 		} catch (PlatformException e) {
 			LOGGER.error("PlatformException occured ", e);
-
 			return getDefaultErrorResult("PlatformException occured "
 					+ e.getLocalizedMessage());
 		}
@@ -87,7 +85,7 @@ public class C45TreeCreatorPlugin implements IPlugin {
 	 * @param ds
 	 *            DataSource na podstawie którego tworzymy drzewa
 	 * @param eng
-	 *            IDataEngine - coby mo¿naby³o pobraæ dane z DataSource'a
+	 *            IDataEngine - aby mo¿naby³o pobraæ dane z DataSource'a
 	 * @return stworzone drzewko (i tak zapisane do bazy)
 	 * @throws PlatformException -
 	 *             w wypadku problemów ze stworzeniem drzewa
@@ -102,6 +100,7 @@ public class C45TreeCreatorPlugin implements IPlugin {
 			System.out.println("Error parameter confidenceLevel: "
 					+ settings.getField("confidenceLevel"));
 		}
+		//do przerobienia jakby byly attr'sety
 		tc.loadFromDataSource(ds, eng.getTreeManager()
 				.getTreeDataSourceData(ds));
 		tc.createTree();
@@ -134,12 +133,11 @@ public class C45TreeCreatorPlugin implements IPlugin {
 	public IDataSource getIDataSourceFromEnv(IDataEngine eng, IEnvironment env)
 			throws PlatformException {
 		try {
+			//to przerobiæ jakby mia³y byæ attr'sety
 			int id = ((SimpleInteger) env.getVariable("DATA_SOURCE_ID")
 					.getValue()).getValue();
 
 			return eng.getTreeManager().getTreeDataSource(id);
-			// zaslepka :/
-			/* return eng.getTreeManager().getTreeDataSource(18); */
 		} catch (NullPointerException e) {
 			LOGGER.error("Variable DATA_SOURCE_ID not set in env", e);
 			throw new PlatformException(

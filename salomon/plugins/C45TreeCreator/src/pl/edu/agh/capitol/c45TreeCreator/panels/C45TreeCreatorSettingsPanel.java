@@ -10,6 +10,13 @@ import salomon.platform.IDataEngine;
 import salomon.plugin.ISettings;
 import salomon.util.serialization.SimpleString;
 
+/**
+ * 
+ * Settingsy (poziom ufnoœci algorytmu)
+ * 
+ * @author Lukasz
+ *
+ */
 public class C45TreeCreatorSettingsPanel extends JPanel {
 
 	/**
@@ -27,7 +34,6 @@ public class C45TreeCreatorSettingsPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 
 	public ISettings getSettings() {
-		// TODO umiescic z pol settingsy dla doJob()
 		settings.setField("confidenceLevel", new SimpleString(
 				jTextFieldConfidenceLevel.getText()));
 		return settings;

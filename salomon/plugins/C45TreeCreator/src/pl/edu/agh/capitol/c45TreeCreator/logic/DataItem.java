@@ -8,9 +8,11 @@ import java.util.Vector;
 import org.apache.log4j.Logger;
 
 /**
- * @author Lukasz Ostatek
  * Klasa bêd¹ca abstrakcj¹ elementu danych u¿ywanych do tworzenia drzewa 
  * - na wewnêtrzne potrzeby algorytmu ID3
+ * 
+ * @author Lukasz Ostatek
+ * 
  */
 public class DataItem {
 

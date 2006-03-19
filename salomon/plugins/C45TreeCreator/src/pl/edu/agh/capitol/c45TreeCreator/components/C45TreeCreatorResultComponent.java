@@ -10,6 +10,13 @@ import pl.edu.agh.capitol.c45TreeCreator.util.C45TreeCreatorResult;
 import salomon.plugin.IResult;
 import salomon.plugin.IResultComponent;
 
+/**
+ * 
+ * Komponent rezultatu (nieu¿ywane)
+ * 
+ * @author Lukasz
+ * 
+ */
 public class C45TreeCreatorResultComponent implements IResultComponent {
 
 	public Component getComponent(IResult result, IDataEngine dataEngine) {

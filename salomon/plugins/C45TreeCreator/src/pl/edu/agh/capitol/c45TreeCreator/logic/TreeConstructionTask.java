@@ -21,8 +21,11 @@ import salomon.platform.data.tree.ITreeManager;
 import salomon.platform.exception.PlatformException;
 
 /**
- * @author Lukasz Ostatek Klasa bêd¹ca abstrakcj¹ zadania tworzenia drzewa
- *         decyzyjnego.
+ * 
+ * Klasa bêd¹ca abstrakcj¹ zadania tworzenia drzewa decyzyjnego.
+ * 
+ * @author Lukasz Ostatek 
+ * 
  */
 public class TreeConstructionTask {
 
@@ -55,6 +58,10 @@ public class TreeConstructionTask {
 
 	private static final Logger LOGGER = Logger
 			.getLogger(TreeConstructionTask.class);
+	/**
+	 * Konstruktor klasy
+	 *
+	 */
 
 	public TreeConstructionTask() {
 
@@ -91,6 +98,7 @@ public class TreeConstructionTask {
 	 * @return obiekt implementuj¹cy intefejs <code>ITree</code>
 	 * @throws PlatformException
 	 */
+	@SuppressWarnings("unchecked")
 	public int returnResult(ITreeManager iTreeManager, IDataSource ds)
 			throws PlatformException {
 		ITree gefco = iTreeManager.createTree();
@@ -287,7 +295,7 @@ public class TreeConstructionTask {
 	 *            wektor elementów drzewa decyzyjnego
 	 * @param attribute -
 	 *            indeks atrybutu wzgledem którego rozwijamy drzewo
-	 * @param enge
+	 * @param edge
 	 *            granica podzia³u
 	 * @return wektor elementów nowego drzewa
 	 */
@@ -432,8 +440,6 @@ public class TreeConstructionTask {
 	 * 
 	 * @param vt
 	 *            wektor elementów drzewa
-	 * @param attribute
-	 *            indeks atrybutu do obliczeñ
 	 * @return wartoœæ <0,1>
 	 */
 	double calculateInfo(Vector<TreeItem> vt) {
@@ -459,8 +465,6 @@ public class TreeConstructionTask {
 	 * 
 	 * @param vt
 	 *            wektor elementów drzewa
-	 * @param attribute
-	 *            indeks atrybutu do obliczeñ
 	 * @return wartoœæ <0,1>
 	 */
 	double calculateSplitInfo(Vector<TreeItem> vt) {
@@ -489,7 +493,8 @@ public class TreeConstructionTask {
 	 *            wektor elementów drzewa
 	 * @param attribute
 	 *            indeks atrybutu do obliczeñ
-	 * @return
+	 * @return GainRatio
+	 * 
 	 */
 	double calculateGain(Vector<TreeItem> vt, int attribute) {
 		return calculateAverageEntropy(vt, attribute) / calculateInfo(vt);
@@ -502,7 +507,7 @@ public class TreeConstructionTask {
 	 *            wektor elementów drzewa
 	 * @param attribute
 	 *            indeks atrybutu do obliczeñ
-	 * @return
+	 * @return GainRatio dla atrybutów ci¹g³ych
 	 */
 	double calculateGainForContignous(Vector<TreeItem> vt, int attribute,
 			double edge) {

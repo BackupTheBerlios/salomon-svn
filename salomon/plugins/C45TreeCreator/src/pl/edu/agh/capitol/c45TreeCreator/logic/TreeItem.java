@@ -9,6 +9,7 @@ import java.util.Vector;
 import pl.edu.agh.capitol.c45TreeCreator.logic.DataItem;
 
 /**
+ * 
  * Klasa reprezentuj¹ca wêze³ drzewa decyzyjnego
  * 
  * @author Lukasz Ostatek
@@ -139,7 +140,7 @@ public class TreeItem {
 	 * 
 	 * @param attribute
 	 *            atrybut
-	 * @param value
+	 * @param val
 	 *            wartoœæ
 	 * @return element <code>TreeItem</code>
 	 */
@@ -157,7 +158,7 @@ public class TreeItem {
 	 * 
 	 * @param attribute
 	 *            atrybut
-	 * @param value
+	 * @param val
 	 *            wartoœæ
 	 * @return element <code>TreeItem</code>
 	 */
@@ -190,7 +191,7 @@ public class TreeItem {
 	}
 
 	/**
-	 * @deprecated Wypisuje wêze³
+	 * Wypisuje wêze³
 	 * 
 	 */
 	public void print() {

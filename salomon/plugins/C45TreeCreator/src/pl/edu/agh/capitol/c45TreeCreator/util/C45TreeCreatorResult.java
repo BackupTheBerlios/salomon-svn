@@ -2,6 +2,13 @@ package pl.edu.agh.capitol.c45TreeCreator.util;
 
 import salomon.plugin.IResult;
 
+/**
+ * 
+ * Rezultat dzia³ania pluginu (default)
+ * 
+ * @author Lukasz
+ *  
+ */
 public class C45TreeCreatorResult implements IResult{
 	private String result = "";
 	private boolean successful = false;

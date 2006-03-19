@@ -9,6 +9,13 @@ import salomon.platform.IDataEngine;
 import salomon.plugin.ISettingComponent;
 import salomon.plugin.ISettings;
 
+/**
+ * 
+ * Komponent settingsów
+ * 
+ * @author Lukasz
+ * 
+ */
 public class C45TreeCreatorSettingsComponent implements ISettingComponent {
 	
 	private C45TreeCreatorSettingsPanel panel;
