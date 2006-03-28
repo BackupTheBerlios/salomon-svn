@@ -259,8 +259,9 @@ public final class PluginManagerGUI
 
         // initialize components
 
-        _btnPluginFileLoad = new JButton(Messages.getString("BTN_BROWSE"));
+        _btnPluginFileLoad = new JButton();
         _btnPluginFileLoad.setAction(_actionManager.getChoosePluginFileAction());
+        _btnPluginFileLoad.setText(Messages.getString("BTN_BROWSE"));
         
         _fileChooserPlugin = new JFileChooser(".");
         _fileChooserPlugin.setFileFilter(new SearchFileFilter(PLUGIN_EXT,
