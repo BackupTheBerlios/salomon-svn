@@ -12,7 +12,7 @@
 	<classpathentry kind="lib" path="lib/forms-1.0.5.jar"/>
 	<classpathentry kind="lib" path="lib/colt.jar"/>
 	<classpathentry kind="lib" path="lib/commons-collections-3.1.jar"/>
-	<classpathentry sourcepath="lib/src/jung-1.7.2-src.jar" kind="lib" path="lib/jung-1.7.2.jar"/>
 	<classpathentry kind="lib" path="lib/tablesorter.jar"/>
+	<classpathentry kind="lib" path="lib/jung-1.7.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

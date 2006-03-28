@@ -90,14 +90,6 @@ public final class ManagerEngine implements IManagerEngine
         _pluginManager = new PluginManager(_dbManager);
     }
 
-    public ManagerEngine(ITaskManager taskManager,
-            IProjectManager projectManager, IPluginManager pluginManager)
-    {
-        _taskManager = taskManager;
-        _projectManager = projectManager;
-        _pluginManager = pluginManager;
-    }
-
     /**
      * Method used only to support SQLConsole 
      * 

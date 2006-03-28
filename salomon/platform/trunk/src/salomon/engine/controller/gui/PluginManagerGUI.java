@@ -35,13 +35,14 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -60,11 +61,57 @@ import salomon.engine.plugin.PluginManager;
 import salomon.platform.exception.PlatformException;
 import salomon.util.gui.Utils;
 
-import com.jgoodies.forms.layout.CellConstraints;
+import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.layout.FormLayout;
 
 public final class PluginManagerGUI
 {
+
+    private final class PluginSelectionListener
+            implements ListSelectionListener
+    {
+        public void valueChanged(ListSelectionEvent e)
+        {
+            _actionManager.getAddTaskAction().setPlugin(
+                    (LocalPlugin) ((JList) e.getSource()).getSelectedValue());
+        }
+    }
+
+    private final class PopupListener extends MouseAdapter
+    {
+        private void maybeShowPopup(MouseEvent e)
+        {
+            if (e.isPopupTrigger()) {
+                JList list = (JList) e.getSource();
+                _selectedItem = list.locationToIndex(e.getPoint());
+                if (_selectedItem >= 0) {
+                    getPluginPopup().show(e.getComponent(), e.getX(), e.getY());
+                } else {
+                    getPluginPopupAdd().show(e.getComponent(), e.getX(),
+                            e.getY());
+                }
+
+            }
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e)
+        {
+            maybeShowPopup(e);
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e)
+        {
+            maybeShowPopup(e);
+        }
+    }
+
+    private static final Logger LOGGER = Logger.getLogger(PluginManagerGUI.class);
+
+    private static final String PLUGIN_DESC = "Plugins";
+
+    private static final String PLUGIN_EXT = "jar";
 
     /**
      * 
@@ -72,6 +119,8 @@ public final class PluginManagerGUI
      * @uml.associationEnd multiplicity="(0 1)"
      */
     private ActionManager _actionManager;
+
+    private JButton _btnPluginFileLoad;
 
     private JComponent _editPluginPanel;
 
@@ -103,23 +152,17 @@ public final class PluginManagerGUI
 
     private MouseListener _popupListener;
 
+    private JRadioButton _radioLocationFile;
+
+    private JRadioButton _radioLocationUrl;
+
     private int _selectedItem;
 
-    private JTextField _txtPluginDescription;
+    private JTextArea _txtPluginInfo;
 
     private JTextField _txtPluginLocation;
 
     private JTextField _txtPluginName;
-
-    private JRadioButton _radioLocationUrl;
-
-    private JRadioButton _radioLocationFile;
-
-    private ButtonGroup _buttonGroupLocation;
-
-    private JButton _btnPluginFileLoad;
-
-    private FormLayout _layout;
 
     /**
      * 
@@ -133,7 +176,6 @@ public final class PluginManagerGUI
         // adding listener
         _popupListener = new PopupListener();
         _pluginList.addMouseListener(_popupListener);
-        // TODO:
         _pluginList.addListSelectionListener(new PluginSelectionListener());
     }
 
@@ -146,7 +188,7 @@ public final class PluginManagerGUI
         getEditPluginPanel();
         _txtPluginName.setText("");
         _txtPluginLocation.setText("");
-        _txtPluginDescription.setText("");
+        _txtPluginInfo.setText("");
         int retVal = JOptionPane.showConfirmDialog(_parent,
                 getEditPluginPanel(), Messages.getString("MNU_ADD_PLUGIN"),
                 JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
@@ -172,7 +214,7 @@ public final class PluginManagerGUI
                 PluginInfo desc = plugin.getInfo();
                 desc.setName(_txtPluginName.getText());
                 desc.setLocation(url);
-                desc.setInfo(_txtPluginDescription.getText());
+                desc.setInfo(_txtPluginInfo.getText());
 
                 wasOk = _pluginManager.savePlugin(plugin);
             } catch (PlatformException e) {
@@ -207,24 +249,103 @@ public final class PluginManagerGUI
 
     }
 
-    /**
-     * Switch between FILE and URL type of plugin location
-     */
-    public void switchPluginLocationType()
+    private JPanel createPluginPanel()
     {
-        if (_radioLocationFile.isSelected()) {
-            _btnPluginFileLoad.setEnabled(true);
-            _txtPluginLocation.setText("file://");
+        FormLayout layout = new FormLayout(
+                "left:pref, 3dlu, right:100dlu, 3dlu, right:20dlu", "");
+        DefaultFormBuilder builder = new DefaultFormBuilder(layout);
+        builder.setDefaultDialogBorder();
+        builder.appendSeparator("Plugin data");
+
+        // initialize components
+
+        _btnPluginFileLoad = new JButton(Messages.getString("BTN_BROWSE"));
+        _btnPluginFileLoad.setAction(_actionManager.getChoosePluginFileAction());
+        
+        _fileChooserPlugin = new JFileChooser(".");
+        _fileChooserPlugin.setFileFilter(new SearchFileFilter(PLUGIN_EXT,
+                PLUGIN_DESC));
+
+        int size = 100;
+        _txtPluginName = new JTextField(size);
+        _txtPluginLocation = new JTextField(size);
+        _txtPluginInfo = new JTextArea(3, 10);
+        _radioLocationUrl = new JRadioButton();
+        _radioLocationFile = new JRadioButton();
+        _txtPluginLocation.setText("file://");        
+
+        _radioLocationUrl.setAction(_actionManager.getSwitchPluginLocationTypeAction());
+        _radioLocationFile.setAction(_actionManager.getSwitchPluginLocationTypeAction());
+        
+
+        ButtonGroup buttonGroupLocation = new ButtonGroup();
+        buttonGroupLocation.add(_radioLocationFile);
+        buttonGroupLocation.add(_radioLocationUrl);
+        _radioLocationFile.setSelected(true);
+
+        // putting components
+        builder.append("Plugin name", _txtPluginName, 3);
+        builder.append("Plugin location");
+        builder.append(_txtPluginLocation, _btnPluginFileLoad);
+        builder.append(Messages.getString("PLUGIN_FILE"), _radioLocationFile, 3);
+        builder.append(Messages.getString("PLUGIN_URL"), _radioLocationUrl, 3);
+
+        builder.appendSeparator("Plugin info");
+        builder.append(new JScrollPane(_txtPluginInfo), 5);
+
+        return builder.getPanel();
+    }
+
+    /**
+     * @return JComponent Panel responsible for edition of plugin parameters
+     */
+    private JComponent getEditPluginPanel()
+    {
+        if (_editPluginPanel == null) {
+            _editPluginPanel = createPluginPanel();
         }
-        if (_radioLocationUrl.isSelected()) {
-            _btnPluginFileLoad.setEnabled(false);
-            _txtPluginLocation.setText("http://");
-        }
+        return _editPluginPanel;
     }
 
     public JList getPluginList()
     {
         return _pluginList;
+    }
+
+    private JPopupMenu getPluginPopup()
+    {
+        if (_pluginPopup == null) {
+            _pluginPopup = new JPopupMenu();
+
+            JMenuItem itmAdd = new JMenuItem(
+                    _actionManager.getAddPluginAction());
+            itmAdd.setText(Messages.getString("MNU_ADD_PLUGIN")); //$NON-NLS-1$
+
+            JMenuItem itmEdit = new JMenuItem(
+                    _actionManager.getSavePluginAction());
+            itmEdit.setText(Messages.getString("MNU_EDIT_PLUGIN"));
+            JMenuItem itmRemove = new JMenuItem(
+                    _actionManager.getRemovePluginAction());
+            itmRemove.setText(Messages.getString("MNU_REMOVE_PLUGIN"));
+            _pluginPopup.add(itmAdd);
+            _pluginPopup.add(itmEdit);
+            _pluginPopup.add(itmRemove);
+        }
+        return _pluginPopup;
+    }
+
+    private JPopupMenu getPluginPopupAdd()
+    {
+        if (_pluginPopupAdd == null) {
+            _pluginPopupAdd = new JPopupMenu();
+
+            JMenuItem itmAdd = new JMenuItem(
+                    _actionManager.getAddPluginAction());
+            itmAdd.setText(Messages.getString("MNU_ADD_PLUGIN")); //$NON-NLS-1$
+
+            _pluginPopupAdd.add(itmAdd);
+        }
+        return _pluginPopupAdd;
     }
 
     /**
@@ -295,7 +416,7 @@ public final class PluginManagerGUI
         getEditPluginPanel();
         _txtPluginName.setText(pluginInfo.getName());
         _txtPluginLocation.setText(pluginInfo.getLocation().toString());
-        _txtPluginDescription.setText(pluginInfo.getInfo());
+        _txtPluginInfo.setText(pluginInfo.getInfo());
         int retVal = JOptionPane.showConfirmDialog(_parent,
                 getEditPluginPanel(), Messages.getString("MNU_EDIT_PLUGIN"),
                 JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
@@ -312,7 +433,7 @@ public final class PluginManagerGUI
             try {
                 pluginInfo.setName(_txtPluginName.getText());
                 pluginInfo.setLocation(url);
-                pluginInfo.setInfo(_txtPluginDescription.getText());
+                pluginInfo.setInfo(_txtPluginInfo.getText());
 
                 wasOk = _pluginManager.savePlugin(plugin);
             } catch (PlatformException e) {
@@ -353,6 +474,21 @@ public final class PluginManagerGUI
     {
     }
 
+    /**
+     * Switch between FILE and URL type of plugin location
+     */
+    public void switchPluginLocationType()
+    {
+        if (_radioLocationFile.isSelected()) {
+            _btnPluginFileLoad.setEnabled(true);
+            _txtPluginLocation.setText("file://");
+        }
+        if (_radioLocationUrl.isSelected()) {
+            _btnPluginFileLoad.setEnabled(false);
+            _txtPluginLocation.setText("http://");
+        }
+    }
+
     public void viewPlugins()
     {
         if (_pluginsViewerFrame == null) {
@@ -365,159 +501,4 @@ public final class PluginManagerGUI
         _pluginsViewerFrame.setLocation(Utils.getCenterLocation(_pluginsViewerFrame));
         _pluginsViewerFrame.setVisible(true);
     }
-
-    /**
-     * @return JComponent Panel responsible for edition of plugin parameters
-     */
-    private JComponent getEditPluginPanel()
-    {
-        if (_editPluginPanel == null) {
-            _editPluginPanel = new PluginEditPanel();
-        }
-        return _editPluginPanel;
-    }
-
-    private JPopupMenu getPluginPopup()
-    {
-        if (_pluginPopup == null) {
-            _pluginPopup = new JPopupMenu();
-
-            JMenuItem itmAdd = new JMenuItem(
-                    _actionManager.getAddPluginAction());
-            itmAdd.setText(Messages.getString("MNU_ADD_PLUGIN")); //$NON-NLS-1$
-
-            JMenuItem itmEdit = new JMenuItem(
-                    _actionManager.getSavePluginAction()); 
-            itmEdit.setText(Messages.getString("MNU_EDIT_PLUGIN"));
-            JMenuItem itmRemove = new JMenuItem(
-                    _actionManager.getRemovePluginAction()); 
-            itmRemove.setText(Messages.getString("MNU_REMOVE_PLUGIN"));
-            _pluginPopup.add(itmAdd);
-            _pluginPopup.add(itmEdit);
-            _pluginPopup.add(itmRemove);
-        }
-        return _pluginPopup;
-    }
-
-    private JPopupMenu getPluginPopupAdd()
-    {
-        if (_pluginPopupAdd == null) {
-            _pluginPopupAdd = new JPopupMenu();
-
-            JMenuItem itmAdd = new JMenuItem(
-                    _actionManager.getAddPluginAction());
-            itmAdd.setText(Messages.getString("MNU_ADD_PLUGIN")); //$NON-NLS-1$
-
-            _pluginPopupAdd.add(itmAdd);
-        }
-        return _pluginPopupAdd;
-    }
-
-    private final class PluginEditPanel extends JPanel
-    {
-        public PluginEditPanel()
-        {
-
-            CellConstraints cc = new CellConstraints();
-
-            _fileChooserPlugin = new JFileChooser(".");
-            _fileChooserPlugin.setFileFilter(new SearchFileFilter(PLUGIN_EXT,
-                    PLUGIN_DESC));
-
-            _txtPluginName = new JTextField();
-            _txtPluginLocation = new JTextField();
-            _txtPluginDescription = new JTextField();
-            _radioLocationUrl = new JRadioButton(
-                    Messages.getString("PLUGIN_URL"), false);
-            _radioLocationFile = new JRadioButton(
-                    Messages.getString("PLUGIN_FILE"), true);
-            _buttonGroupLocation = new ButtonGroup();
-            _btnPluginFileLoad = new JButton();
-
-            _layout = new FormLayout(
-                    "pref, 4dlu, 120dlu, 4dlu, pref, 4dlu, pref",
-                    "pref, 2dlu, pref, 2dlu, pref , 2dlu , pref, 2dlu, pref");
-
-            _buttonGroupLocation.add(_radioLocationFile);
-            _buttonGroupLocation.add(_radioLocationUrl);
-
-            _radioLocationUrl.setAction(_actionManager.getSwitchPluginLocationTypeAction());
-            _radioLocationFile.setAction(_actionManager.getSwitchPluginLocationTypeAction());
-            _btnPluginFileLoad.setAction(_actionManager.getChoosePluginFileAction());
-
-            _btnPluginFileLoad.setText(Messages.getString("BTN_BROWSE"));
-
-            _layout.setRowGroups(new int[][]{{1, 3, 5, 7, 9}});
-
-            this.setLayout(_layout);
-
-            this.add(new JLabel(Messages.getString("TXT_PLUGIN_NAME")), cc.xy(
-                    1, 1));
-            this.add(_txtPluginName, cc.xyw(3, 1, 5));
-
-            this.add(new JLabel(Messages.getString("TXT_PLUGIN_LOCATION")),
-                    cc.xy(1, 3));
-            this.add(_txtPluginLocation, cc.xyw(3, 3, 3));
-            this.add(_btnPluginFileLoad, cc.xy(7, 3));
-
-            this.add(new JLabel(Messages.getString("TXT_PLUGIN_INFO")), cc.xy(
-                    1, 5));
-            this.add(_txtPluginDescription, cc.xyw(3, 5, 5));
-
-            this.add(new JLabel(Messages.getString("PLUGIN_FILE")), cc.xy(1, 7));
-            this.add(_radioLocationFile, cc.xy(3, 7));
-            this.add(new JLabel(Messages.getString("PLUGIN_URL")), cc.xy(1, 9));
-            this.add(_radioLocationUrl, cc.xy(3, 9));
-
-            _btnPluginFileLoad.setEnabled(true);
-            _txtPluginLocation.setText("file://");
-
-        }
-    }
-
-    private final class PluginSelectionListener
-            implements ListSelectionListener
-    {
-        public void valueChanged(ListSelectionEvent e)
-        {
-            _actionManager.getAddTaskAction().setPlugin(
-                    (LocalPlugin) ((JList) e.getSource()).getSelectedValue());
-        }
-    }
-
-    private final class PopupListener extends MouseAdapter
-    {
-        @Override
-        public void mousePressed(MouseEvent e)
-        {
-            maybeShowPopup(e);
-        }
-
-        @Override
-        public void mouseReleased(MouseEvent e)
-        {
-            maybeShowPopup(e);
-        }
-
-        private void maybeShowPopup(MouseEvent e)
-        {
-            if (e.isPopupTrigger()) {
-                JList list = (JList) e.getSource();
-                _selectedItem = list.locationToIndex(e.getPoint());
-                if (_selectedItem >= 0) {
-                    getPluginPopup().show(e.getComponent(), e.getX(), e.getY());
-                } else {
-                    getPluginPopupAdd().show(e.getComponent(), e.getX(),
-                            e.getY());
-                }
-
-            }
-        }
-    }
-
-    private static final Logger LOGGER = Logger.getLogger(PluginManagerGUI.class);
-
-    private static final String PLUGIN_EXT = "jar";
-
-    private static final String PLUGIN_DESC = "Plugins";
 }
