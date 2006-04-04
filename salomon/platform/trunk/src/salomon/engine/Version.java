@@ -43,12 +43,15 @@ public class Version
      */
     public static String getString(String key)
     {
+        String value = '!' + key + '!';
         try {
-            return RESOURCE_BUNDLE.getString(key);
+            if (RESOURCE_BUNDLE != null) {
+                value = RESOURCE_BUNDLE.getString(key);;  
+            } 
         } catch (MissingResourceException e) {
-            LOGGER.fatal("", e);
-            return '!' + key + '!';
+            LOGGER.fatal("", e);            
         }
+        return value;
     }
 
     private static final String BUNDLE_NAME = "version";//$NON-NLS-1$
