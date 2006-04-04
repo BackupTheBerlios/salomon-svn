@@ -38,6 +38,8 @@
     <property name="release_dir" value="_release" />
     <property name="controller" value="local" />
     <property name="plugin_src_dir" value="${basedir}/../../plugins" />
+	<property name="salomon_file" value="salomon.jar"/>
+	<property name="salomon_install_file" value="install.jar"/>
 
 
     <property file="config/hosts/${build.host}/build.properties" />
@@ -71,7 +73,7 @@
         </copy>
         <copy file="all.policy" todir="${bin_dir}" />
         <copy file="log.conf" todir="${bin_dir}" />
-        <jar destfile="salomon.jar"
+        <jar destfile="${salomon_file}"
              basedir="${bin_dir}"
              includes="salomon/** *.properties log.conf all.policy">
             <manifest>
@@ -143,7 +145,7 @@
 
     <target name="copy_salomon" depends="build_salomon_jar">
         <mkdir dir="${release_dir}" />
-        <copy file="salomon.jar" todir="${release_dir}" />
+        <copy file="${salomon_file}" todir="${release_dir}" />
     </target>
 
     <target name="create_new_database">
@@ -170,12 +172,15 @@
     <target name="clean">
         <delete dir="${bin_dir}" />
         <delete dir="${release_dir}" />
+    	<delete dir="${plugin_dev_dir}"/>
+    	<delete file="${salomon_file}"/>
+    	<delete file="${salomon_install_file}"/>
     </target>
 
     <!-- creating installtor file -->
     <target name="installator" depends="deploy">
         <izpack input="${basedir}/install/install.xml"
-                output="${basedir}/install.jar"
+                output="${basedir}/${salomon_install_file}"
                 installerType="standard"
                 basedir="${basedir}/install"
                 izPackDir="${izpack_dir}/" />
@@ -194,7 +199,7 @@
               fork="true"
               classname="salomon.engine.Starter"
               classpathref="project.class.path">
-            <classpath path="${release_dir}/salomon.jar" />
+            <classpath path="${release_dir}/${salomon_file}" />
             <jvmarg value="-Djava.rmi.server.RMIClassLoaderSpi=salomon.core.plugin.PluginRMIClassLoaderSpi" />
             <jvmarg value="-Djava.security.policy=all.policy" />
             <arg value="-${controller}" />
