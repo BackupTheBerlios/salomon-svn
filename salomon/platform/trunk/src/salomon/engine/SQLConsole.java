@@ -40,13 +40,16 @@ import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
-import javax.swing.JTextPane;
 import javax.swing.JToolBar;
+import javax.swing.text.PlainDocument;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
+import org.syntax.jedit.JEditTextArea;
+import org.syntax.jedit.tokenmarker.PLSQLTokenMarker;
 
 import salomon.engine.database.DBManager;
+
 import salomon.util.gui.Utils;
 
 /**
@@ -76,7 +79,8 @@ public final class SQLConsole extends JFrame
 
     // private JPanel _contentPane = null;
 
-    private JTextPane _edtSQLQuery = null;
+//    private JTextPane _edtSQLQuery = null;
+    private JEditTextArea _edtSQLQuery = null;
 
     /**
      * 
@@ -269,11 +273,14 @@ public final class SQLConsole extends JFrame
      * 
      * @return JTextPane
      */
-    private JTextPane getEdtSQLQuery()
+    private JEditTextArea getEdtSQLQuery()
     {
         if (_edtSQLQuery == null) {
-            _edtSQLQuery = new JTextPane();
+            _edtSQLQuery = new JEditTextArea();
+            _edtSQLQuery.setTokenMarker(new PLSQLTokenMarker());
+            _edtSQLQuery.getDocument().getDocumentProperties().put(PlainDocument.tabSizeAttribute, 4);
         }
+        
         return _edtSQLQuery;
     }
 
@@ -397,6 +404,7 @@ public final class SQLConsole extends JFrame
         });
         this.setLocation(Utils.getCenterLocation(this));
         this.setVisible(true);
+        _edtSQLQuery.requestFocus();
     }
 
     /**

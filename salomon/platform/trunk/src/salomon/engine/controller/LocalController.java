@@ -59,6 +59,7 @@ import salomon.engine.platform.IManagerEngine;
 import salomon.engine.platform.ManagerEngine;
 import salomon.platform.exception.PlatformException;
 import salomon.util.gui.Utils;
+import salomon.util.gui.editor.JavaEditorFrame;
 
 import com.jgoodies.looks.plastic.PlasticLookAndFeel;
 import com.jgoodies.looks.plastic.PlasticXPLookAndFeel;
@@ -187,6 +188,7 @@ public final class LocalController implements IController
             tools.add(_guiMenu.getItmViewTasks());
             tools.addSeparator();
             tools.add(_guiMenu.getItmSQLConsole());
+            tools.add(_guiMenu.getItmJavaEditor());
 
             JMenu help = new JMenu(Messages.getString("MNU_HELP")); //$NON-NLS-1$
             help.setMnemonic('h');
@@ -224,7 +226,7 @@ public final class LocalController implements IController
         SplashScreen.show();
         try {
             PlasticLookAndFeel.setTabStyle(PlasticLookAndFeel.TAB_STYLE_METAL_VALUE);
-            PlasticLookAndFeel.setMyCurrentTheme(new ExperienceBlue());
+            PlasticLookAndFeel.setPlasticTheme(new ExperienceBlue());
             UIManager.setLookAndFeel(new PlasticXPLookAndFeel());
         } catch (Exception e) {
             LOGGER.warn("Cannot set look&feel!", e); //$NON-NLS-1$
@@ -308,6 +310,8 @@ public final class LocalController implements IController
         private JMenuItem _itmSaveSolution;
 
         private JMenuItem _itmSQLConsole;
+
+        private JMenuItem _itmJavaEditor;
 
         private JMenuItem _itmViewPlugins;
 
@@ -550,6 +554,22 @@ public final class LocalController implements IController
             }
             return _itmSQLConsole;
         }
+        
+        JMenuItem getItmJavaEditor()
+        {
+            if (_itmJavaEditor == null) {
+                _itmJavaEditor = new JMenuItem();
+                _itmJavaEditor.setText(Messages.getString("MNU_JAVA_EDITOR")); //$NON-NLS-1$
+                _itmJavaEditor.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e)
+                    {
+                        showJavaEditor();
+                    }
+                });
+            }
+            
+            return _itmJavaEditor;
+        }
 
         JMenuItem getItmViewPlugins()
         {
@@ -605,11 +625,19 @@ public final class LocalController implements IController
         }
 
         /**
-         * Method show SQLConsole.
+         * Method shows SQLConsole.
          */
         void showSQLConsole()
         {
             new SQLConsole(((ManagerEngine) _managerEngine).getDbManager());
+        }
+        
+        /**
+         * Shows Java Editor
+         */
+        void showJavaEditor()
+        {
+            new JavaEditorFrame(_managerEngine);
         }
 
         /** Method shows about dialog. */
