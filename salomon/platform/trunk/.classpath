@@ -12,7 +12,9 @@
 	<classpathentry kind="lib" path="lib/commons-collections-3.1.jar"/>
 	<classpathentry kind="lib" path="lib/tablesorter.jar"/>
 	<classpathentry kind="lib" path="lib/jung.jar"/>
-	<classpathentry kind="lib" path="lib/looks.jar"/>
-	<classpathentry kind="lib" path="lib/forms.jar"/>
+	<classpathentry sourcepath="D:/home/iju/dv/salomon/platform/trunk/junk/looks-2.0.1/src" kind="lib" path="lib/looks.jar"/>
+	<classpathentry sourcepath="D:/home/iju/dv/salomon/platform/trunk/junk/forms-1.0.6/forms-1.0.6-src.zip" kind="lib" path="lib/forms.jar"/>
+	<classpathentry sourcepath="D:/home/iju/dv/salomon/jEdit/src" kind="lib" path="lib/jedit.jar"/>
+	<classpathentry kind="lib" path="lib/dynamicjava.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
