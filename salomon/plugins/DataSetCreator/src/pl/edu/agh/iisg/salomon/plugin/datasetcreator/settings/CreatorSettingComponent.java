@@ -53,11 +53,8 @@ import salomon.platform.data.ITable;
 import salomon.platform.data.dataset.ICondition;
 import salomon.platform.data.dataset.IDataSetManager;
 import salomon.platform.exception.PlatformException;
-import salomon.platform.serialization.IObject;
 import salomon.plugin.ISettingComponent;
 import salomon.plugin.ISettings;
-import salomon.util.serialization.SimpleString;
-import salomon.util.serialization.SimpleStruct;
 
 /**
  * @author nico
@@ -65,339 +62,288 @@ import salomon.util.serialization.SimpleStruct;
 public class CreatorSettingComponent implements ISettingComponent
 {
 
-	private JPanel _addConditionPanel;
+    private JPanel _addConditionPanel;
 
-	private DefaultListModel _columnListModel;
+    private DefaultListModel _columnListModel;
 
-	private DefaultListModel _conditionListModel;
+    private DefaultListModel _conditionListModel;
 
-	private JComboBox _operations;
+    private JComboBox _operations;
 
-	private IColumn _selectedColumn;
+    private IColumn _selectedColumn;
 
-	private JComponent _settingComponent;
+    private JComponent _settingComponent;
 
-	private DefaultListModel _tableListModel;
+    private DefaultListModel _tableListModel;
 
-	private JTextField _txtColumnName;
+    private JTextField _txtColumnName;
 
-	private JTextField _txtColumnValue;
+    private JTextField _txtColumnValue;
 
-	private JTextField _txtDataSetName;
+    private JTextField _txtDataSetName;
 
-	private IDataEngine _dataEngine;
+    private IDataEngine _dataEngine;
 
-	private ICondition _selectedCondition;
+    private ICondition _selectedCondition;
 
-	public CreatorSettingComponent()
-	{
-		_tableListModel = new DefaultListModel();
-		_columnListModel = new DefaultListModel();
-		_conditionListModel = new DefaultListModel();
-		_operations = new JComboBox(new String[]{"=", "<", ">"});
-	}
+    public CreatorSettingComponent()
+    {
+        _tableListModel = new DefaultListModel();
+        _columnListModel = new DefaultListModel();
+        _conditionListModel = new DefaultListModel();
+        _operations = new JComboBox(new String[]{"=", "<", ">"});
+    }
 
-	/**
-	 * 
-	 */
-	public Component getComponent(ISettings settings, IDataEngine dataEngine)
-	{
-		if (_settingComponent == null) {
-			_dataEngine = dataEngine;
-			init(dataEngine.getMetaData());
-			_addConditionPanel = getAddConditionPanel();
-			_settingComponent = createSettingComponent();
-		}
-		try {
-			initSettingComponent(settings, dataEngine.getMetaData());
-		} catch (PlatformException e) {
-			LOGGER.fatal("", e);
-			// FIXME: where this error should be handled?
-			// handle it by adding throws declaration to interface methods
-		}
-		return _settingComponent;
-	}
+    /**
+     * 
+     */
+    public Component getComponent(ISettings settings, IDataEngine dataEngine)
+    {
+        if (_settingComponent == null) {
+            _dataEngine = dataEngine;
+            init(dataEngine.getMetaData());
+            _addConditionPanel = getAddConditionPanel();
+            _settingComponent = createSettingComponent();
+        }
+        try {
+            initSettingComponent(settings, dataEngine.getMetaData());
+        } catch (PlatformException e) {
+            LOGGER.fatal("", e);
+            // FIXME: where this error should be handled?
+            // handle it by adding throws declaration to interface methods
+        }
+        return _settingComponent;
+    }
 
-	private void initSettingComponent(ISettings settings, IMetaData metaData)
-			throws PlatformException
-	{
-		LOGGER.info("CreatorSettingComponent.initSettingComponent()");
-		CreatorSettings cSettings = (CreatorSettings) settings;
-		SimpleString dataSetName = (SimpleString) cSettings.getField(CreatorSettings.DATA_SET_NAME);
-		LOGGER.debug("dataSetName:"
-				+ ((dataSetName == null) ? "null" : dataSetName.getValue()));
+    private void initSettingComponent(ISettings settings, IMetaData metaData)
+            throws PlatformException
+    {
+        CreatorSettings cSettings = (CreatorSettings) settings;
 
-		// FIXME:
-		// SimpleArray condArray = (SimpleArray)
-		// cSettings.getField(CreatorSettings.CONDITIONS);
+        // creating conditions
+        String[] strConds = cSettings.getConditions();
+        ICondition[] conditions = new ICondition[strConds.length];
+        int i = 0;
+        if (strConds != null) {
+            for (String cond : strConds) {
+                conditions[i] = _dataEngine.getDataSetManager().createCondition(
+                        cond);
+                ++i;
+            }
+        }
 
-		SimpleStruct condStruct = (SimpleStruct) cSettings.getField(CreatorSettings.CONDITIONS);
+        // setting gui values
+        _txtDataSetName.setText(cSettings.getDataSetName());
+        _conditionListModel.clear();
+        for (ICondition condition : conditions) {
+            if (condition != null) {
+                _conditionListModel.addElement(condition);
+            }
+        }
+    }
 
-		SimpleString elem1 = (SimpleString) condStruct.getField(CreatorSettings.ELEM1);
-		SimpleString elem2 = (SimpleString) condStruct.getField(CreatorSettings.ELEM2);
-		SimpleString elem3 = (SimpleString) condStruct.getField(CreatorSettings.ELEM3);
-		SimpleString elem4 = (SimpleString) condStruct.getField(CreatorSettings.ELEM4);
-		SimpleString elem5 = (SimpleString) condStruct.getField(CreatorSettings.ELEM5);
+    /**
+     * 
+     */
+    public ISettings getDefaultSettings()
+    {
+        ISettings defaultSettings = new CreatorSettings("");
+        return defaultSettings;
+    }
 
-		// creating conditions
-		// FIXME: workaround, SimpleArray is not implemented yet!!!
-		// ICondition[] conditions = new ICondition[condArray.size()];
-		// int i = 0;
-		// IObject[] values = condArray.getValue();
-		// if (values != null) {
-		// for (IObject object : values) {
-		// String value = ((SimpleString) object).getValue();
-		// LOGGER.debug("value = " + value);
-		// conditions[i] = _dataEngine.getDataSetManager().createCondition(
-		// value);
-		// ++i;
-		// }
-		// }
+    /**
+     * 
+     */
+    public ISettings getSettings()
+    {
+        CreatorSettings settings = new CreatorSettings(_txtDataSetName.getText());
 
-		// FIXME:
-		ICondition[] conditions = new ICondition[5];
-		int i = 0;
-		IObject[] values = new IObject[]{elem1, elem2, elem3, elem4, elem5};
-		for (IObject object : values) {
-			if (object != null) {
-				String value = ((SimpleString) object).getValue();
-				LOGGER.debug("value = " + value);
+        // setting conditions
+        int size = _conditionListModel.getSize();
+                
+        String[] condArray = new String[size];
+        for (int i = 0; i < size; ++i) {
+            condArray[i] = _conditionListModel.get(i).toString();
+            LOGGER.debug("cond: " + condArray[i]);
+        }
 
-				conditions[i] = _dataEngine.getDataSetManager().createCondition(
-						value);
-				++i;
-			}
-		}
+        settings.setConditions(condArray);        
+        return settings;
+    }
 
-		// setting gui values
-		_txtDataSetName.setText(dataSetName.getValue());
-		_conditionListModel.clear();
-		for (ICondition condition : conditions) {
-			if (condition != null) {
-				_conditionListModel.addElement(condition);
-			}
-		}
-	}
+    private void addCondition()
+    {
+        LOGGER.info("CreatorSettingComponent.addCondition()");
+        if (_selectedColumn != null) {
+            StringBuilder colName = new StringBuilder();
+            colName.append(_selectedColumn.getTable().getName());
+            colName.append(".");
+            colName.append(_selectedColumn.getName());
+            _txtColumnName.setText(colName.toString());
+            _txtColumnValue.setText("");
+            _operations.setSelectedIndex(0);
 
-	/**
-	 * 
-	 */
-	public ISettings getDefaultSettings()
-	{
+            int result = JOptionPane.showConfirmDialog(_settingComponent,
+                    getAddConditionPanel(), "Choose condition",
+                    JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+            if (result == JOptionPane.OK_OPTION) {
+                String value = _txtColumnValue.getText();
+                if (!"".equals(value)) {
+                    try {
+                        IDataSetManager dataSetManager = _dataEngine.getDataSetManager();
+                        String operation = (String) _operations.getSelectedItem();
+                        ICondition condition = null;
+                        if (operation.equals("=")) {
+                            condition = dataSetManager.createEqualsCondition(
+                                    _selectedColumn, value);
+                        } else if (operation.equals("<")) {
+                            condition = dataSetManager.createLowerCondition(
+                                    _selectedColumn, value);
+                        } else if (operation.equals(">")) {
+                            condition = dataSetManager.createGreaterCondition(
+                                    _selectedColumn, value);
+                        }
 
-		ISettings defaultSettings = new CreatorSettings();
-		defaultSettings.setField(CreatorSettings.DATA_SET_NAME,
-				new SimpleString(""));
-		defaultSettings.setField(CreatorSettings.CONDITIONS, new SimpleStruct());
+                        // adding condition to the list
+                        LOGGER.debug("adding condition: " + condition);
+                        _conditionListModel.addElement(condition);
+                    } catch (PlatformException e) {
+                        LOGGER.fatal("", e);
+                    }
+                }
+            }
+        }
+    }
 
-		return defaultSettings;
-	}
+    private JComponent createListComponent(JComponent list, String title)
+    {
+        JScrollPane panel = new JScrollPane(list);
+        list.setBorder(BorderFactory.createLoweredBevelBorder());
+        panel.setBorder(BorderFactory.createTitledBorder(title));
+        panel.setPreferredSize(new Dimension(150, 300));
+        return panel;
+    }
 
-	/**
-	 * 
-	 */
-	public ISettings getSettings()
-	{
-		ISettings settings = new CreatorSettings();
-		// setting data seta name
-		SimpleString dataSetName = new SimpleString(_txtDataSetName.getText());
+    private JComponent createSettingComponent()
+    {
+        JPanel mainPanel = new JPanel(new BorderLayout());
 
-		// setting conditions
-		int size = _conditionListModel.getSize();
-		SimpleStruct condStruct = new SimpleStruct();
-		// FIXME:
-		for (int i = 0; i < size && i < 5; ++i) {
-			String name = "elem" + (i + 1);
-			SimpleString elem = new SimpleString(
-					_conditionListModel.get(i).toString());
-			condStruct.setField(name, elem);
-		}
-		// FIXME:
-		// SimpleArray array = new SimpleArray(conditions);
+        JList tableList = new JList(_tableListModel);
+        tableList.addListSelectionListener(new TableSelectionListener());
 
-		settings.setField(CreatorSettings.DATA_SET_NAME, dataSetName);
-		// FIXME:
-		// settings.setField(CreatorSettings.CONDITIONS, array);
-		settings.setField(CreatorSettings.CONDITIONS, condStruct);
+        JList columnList = new JList(_columnListModel);
+        columnList.addListSelectionListener(new ColumnSelectionListener());
 
-		return settings;
-	}
+        JList conditionList = new JList(_conditionListModel);
+        conditionList.addListSelectionListener(new ConditionSelectionListener());        
 
-	private void addCondition()
-	{
-		LOGGER.info("CreatorSettingComponent.addCondition()");
-		if (_selectedColumn != null) {
-			StringBuilder colName = new StringBuilder();
-			colName.append(_selectedColumn.getTable().getName());
-			colName.append(".");
-			colName.append(_selectedColumn.getName());
-			_txtColumnName.setText(colName.toString());
-			_txtColumnValue.setText("");
-			_operations.setSelectedIndex(0);
+        JPanel buttonsPanel = new JPanel();
+        JButton addConditionButton = new JButton("Add");
+        addConditionButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e)
+            {
+                addCondition();
+            }
+        });
 
-			int result = JOptionPane.showConfirmDialog(_settingComponent,
-					getAddConditionPanel(), "Choose condition",
-					JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
-			if (result == JOptionPane.OK_OPTION) {
-				String value = _txtColumnValue.getText();
-				if (!"".equals(value)) {
-					try {
-						IDataSetManager dataSetManager = _dataEngine.getDataSetManager();
-						String operation = (String) _operations.getSelectedItem();
-						ICondition condition = null;
-						if (operation.equals("=")) {
-							condition = dataSetManager.createEqualsCondition(
-									_selectedColumn, value);
-						} else if (operation.equals("<")) {
-							condition = dataSetManager.createLowerCondition(
-									_selectedColumn, value);
-						} else if (operation.equals(">")) {
-							condition = dataSetManager.createGreaterCondition(
-									_selectedColumn, value);
-						}
+        JButton removeConditionButton = new JButton("Remove");
+        removeConditionButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e)
+            {
+                removeCondition();
+            }
+        });
 
-						// adding condition to the list
-						LOGGER.debug("adding condition: " + condition);
-						_conditionListModel.addElement(condition);
+        buttonsPanel.add(addConditionButton);
+        buttonsPanel.add(removeConditionButton);
+        
 
-						// _conditionListModel.addElement(colName + "=" +
-						// value);
-					} catch (PlatformException e) {
-						LOGGER.fatal("", e);
-					}
-				}
-			}
-		}
-	}
+        JPanel listPanel = new JPanel(new GridLayout(1, 3));
+        listPanel.add(createListComponent(tableList, "Tables"));
+        listPanel.add(createListComponent(columnList, "Columns"));
 
-	private JComponent createListComponent(JComponent list, String title)
-	{
-		JScrollPane panel = new JScrollPane(list);
-		list.setBorder(BorderFactory.createLoweredBevelBorder());
-		panel.setBorder(BorderFactory.createTitledBorder(title));
-		panel.setPreferredSize(new Dimension(150, 300));
-		return panel;
-	}
+        JPanel conditionsPanel = new JPanel();
+        conditionsPanel.setLayout(new BorderLayout());        
+        
+        conditionsPanel.add(createListComponent(conditionList, "Conditions"), BorderLayout.CENTER);
+        conditionsPanel.add(buttonsPanel, BorderLayout.SOUTH);
+        listPanel.add(conditionsPanel);
+        
+        Box box = Box.createHorizontalBox();
+        box.add(Box.createHorizontalStrut(20));
+        box.add(new JLabel("Dataset name"));
+        box.add(_txtDataSetName);
+        box.add(Box.createHorizontalStrut(20));
 
-	private JComponent createSettingComponent()
-	{
-		JPanel mainPanel = new JPanel(new BorderLayout());
+        mainPanel.add(listPanel, BorderLayout.CENTER);
+        mainPanel.add(box, BorderLayout.SOUTH);
 
-		JList tableList = new JList(_tableListModel);
-		tableList.addListSelectionListener(new TableSelectionListener());
+        return mainPanel;
+    }
 
-		JList columnList = new JList(_columnListModel);
-		columnList.addListSelectionListener(new ColumnSelectionListener());
+    private JPanel getAddConditionPanel()
+    {
+        if (_addConditionPanel == null) {
+            _addConditionPanel = new JPanel();
+            _addConditionPanel.setLayout(new BoxLayout(_addConditionPanel,
+                    BoxLayout.LINE_AXIS));
+            _txtColumnName = new JTextField();
+            _txtColumnValue = new JTextField();
+            _txtDataSetName = new JTextField();
 
-		JList conditionList = new JList(_conditionListModel);
-		conditionList.addListSelectionListener(new ConditionSelectionListener());
+            _txtColumnName.setEditable(false);
 
-		JPanel conditionsPanel = new JPanel();
-		conditionsPanel.setLayout(new BorderLayout());
+            _addConditionPanel.add(_txtColumnName);
+            _addConditionPanel.add(_operations);
+            _addConditionPanel.add(_txtColumnValue);
+        }
+        return _addConditionPanel;
+    }
 
-		JPanel buttonsPanel = new JPanel();
-		JButton addConditionButton = new JButton("Add");
-		addConditionButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e)
-			{
-				addCondition();
-			}
-		});
+    private void removeCondition()
+    {
+        if (_selectedCondition != null) {
+            _conditionListModel.removeElement(_selectedCondition);
+            _selectedCondition = null;
+        }
+    }
 
-		JButton removeConditionButton = new JButton("Remove");
-		removeConditionButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e)
-			{
-				removeCondition();
-			}
-		});
+    private void init(IMetaData metaData)
+    {
+        _tableListModel.clear();
+        for (ITable table : metaData.getTables()) {
+            _tableListModel.addElement(table);
+        }
+    }
 
-		buttonsPanel.add(addConditionButton);
-		buttonsPanel.add(removeConditionButton);
+    private class ColumnSelectionListener implements ListSelectionListener
+    {
+        public void valueChanged(ListSelectionEvent e)
+        {
+            _selectedColumn = (IColumn) ((JList) e.getSource()).getSelectedValue();
+        }
+    }
 
-		conditionsPanel.add(new JScrollPane(conditionList), BorderLayout.CENTER);
-		conditionsPanel.add(buttonsPanel, BorderLayout.SOUTH);
+    private class TableSelectionListener implements ListSelectionListener
+    {
 
-		JPanel listPanel = new JPanel(new GridLayout(1, 3));
-		listPanel.add(createListComponent(tableList, "Tables"));
-		listPanel.add(createListComponent(columnList, "Columns"));
-		listPanel.add(createListComponent(conditionsPanel, "Conditions"));
+        public void valueChanged(ListSelectionEvent e)
+        {
+            ITable table = (ITable) ((JList) e.getSource()).getSelectedValue();
+            _columnListModel.clear();
+            for (IColumn column : table.getColumns()) {
+                _columnListModel.addElement(column);
+            }
+        }
+    }
 
-		Box box = Box.createHorizontalBox();
-		box.add(Box.createHorizontalStrut(20));
-		box.add(new JLabel("Dataset name"));
-		box.add(_txtDataSetName);
-		box.add(Box.createHorizontalStrut(20));
+    private class ConditionSelectionListener implements ListSelectionListener
+    {
+        public void valueChanged(ListSelectionEvent e)
+        {
+            _selectedCondition = (ICondition) ((JList) e.getSource()).getSelectedValue();
+        }
+    }
 
-		mainPanel.add(listPanel, BorderLayout.CENTER);
-		mainPanel.add(box, BorderLayout.SOUTH);
-
-		return mainPanel;
-	}
-
-	private JPanel getAddConditionPanel()
-	{
-		if (_addConditionPanel == null) {
-			_addConditionPanel = new JPanel();
-			_addConditionPanel.setLayout(new BoxLayout(_addConditionPanel,
-					BoxLayout.LINE_AXIS));
-			_txtColumnName = new JTextField();
-			_txtColumnValue = new JTextField();
-			_txtDataSetName = new JTextField();
-
-			_txtColumnName.setEditable(false);
-
-			_addConditionPanel.add(_txtColumnName);
-			_addConditionPanel.add(_operations);
-			_addConditionPanel.add(_txtColumnValue);
-		}
-		return _addConditionPanel;
-	}
-
-	private void removeCondition()
-	{
-		if (_selectedCondition != null) {
-			_conditionListModel.removeElement(_selectedCondition);
-			_selectedCondition = null;
-		}
-	}
-
-	private void init(IMetaData metaData)
-	{
-		_tableListModel.clear();
-		for (ITable table : metaData.getTables()) {
-			_tableListModel.addElement(table);
-		}
-	}
-
-	private class ColumnSelectionListener implements ListSelectionListener
-	{
-		public void valueChanged(ListSelectionEvent e)
-		{
-			_selectedColumn = (IColumn) ((JList) e.getSource()).getSelectedValue();
-		}
-	}
-
-	private class TableSelectionListener implements ListSelectionListener
-	{
-
-		public void valueChanged(ListSelectionEvent e)
-		{
-			ITable table = (ITable) ((JList) e.getSource()).getSelectedValue();
-			_columnListModel.clear();
-			for (IColumn column : table.getColumns()) {
-				_columnListModel.addElement(column);
-			}
-		}
-	}
-
-	private class ConditionSelectionListener implements ListSelectionListener
-	{
-		public void valueChanged(ListSelectionEvent e)
-		{
-			_selectedCondition = (ICondition) ((JList) e.getSource()).getSelectedValue();
-		}
-	}
-
-	private static final Logger LOGGER = Logger.getLogger(CreatorSettingComponent.class);
+    private static final Logger LOGGER = Logger.getLogger(CreatorSettingComponent.class);
 }

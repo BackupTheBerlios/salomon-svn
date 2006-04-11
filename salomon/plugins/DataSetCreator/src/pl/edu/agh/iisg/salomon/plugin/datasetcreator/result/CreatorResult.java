@@ -23,6 +23,7 @@ package pl.edu.agh.iisg.salomon.plugin.datasetcreator.result;
 
 import salomon.platform.serialization.IObject;
 import salomon.plugin.IResult;
+import salomon.util.serialization.SimpleString;
 import salomon.util.serialization.SimpleStruct;
 
 /**
@@ -30,33 +31,47 @@ import salomon.util.serialization.SimpleStruct;
  */
 public final class CreatorResult extends SimpleStruct implements IResult
 {
+    public static final String DATA_SET_NAME = "dataSetName";
 
-	public static final String DATA_SET_NAME = "dataSetName";
-	
-	private boolean _isSuccessful = false;
+    private String _dataSetName;
 
-	public void parseResult(String arg0)
-	{
-		// TODO Auto-generated method stub		
-	}
+    private boolean _isSuccessful = false;
 
-	public String resultToString()
-	{
-		IObject result = getField(DATA_SET_NAME); 
-		return (result == null ? "" : result.toString());
-	}
+    public String getDataSetName()
+    {
+        return _dataSetName;
+    }
 
-	public boolean isSuccessful()
-	{
-		return _isSuccessful;
-	}
+    public boolean isSuccessful()
+    {
+        return _isSuccessful;
+    }
 
-	/**
-	 * @param isSuccessful the isSuccessful to set
-	 */
-	public void setSuccessful(boolean isSuccessful)
-	{
-		_isSuccessful = isSuccessful;
-	}
-	
+    // FIXME: remove this method
+    public void parseResult(String arg0)
+    {
+        // TODO Auto-generated method stub		
+    }
+
+    // FIXME: remove this method
+    public String resultToString()
+    {
+        IObject result = getField(DATA_SET_NAME);
+        return (result == null ? "" : result.toString());
+    }
+
+    public void setDataSetName(String dataSetName)
+    {
+        _dataSetName = dataSetName;
+        setField(DATA_SET_NAME, new SimpleString(dataSetName));
+    }
+
+    /**
+     * @param isSuccessful the isSuccessful to set
+     */
+    public void setSuccessful(boolean isSuccessful)
+    {
+        _isSuccessful = isSuccessful;
+    }
+
 }

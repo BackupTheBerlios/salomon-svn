@@ -33,14 +33,11 @@ import salomon.platform.data.dataset.ICondition;
 import salomon.platform.data.dataset.IDataSet;
 import salomon.platform.data.dataset.IDataSetManager;
 import salomon.platform.exception.PlatformException;
-import salomon.platform.serialization.IObject;
 import salomon.plugin.IPlugin;
 import salomon.plugin.IResult;
 import salomon.plugin.IResultComponent;
 import salomon.plugin.ISettingComponent;
 import salomon.plugin.ISettings;
-import salomon.util.serialization.SimpleString;
-import salomon.util.serialization.SimpleStruct;
 
 /**
  * @author nico
@@ -48,92 +45,76 @@ import salomon.util.serialization.SimpleStruct;
 public final class DataSetCreatorPlugin implements IPlugin
 {
 
-	private ISettingComponent _settingComponent;
+    private ISettingComponent _settingComponent;
 
-	private IResultComponent _resultComponent;
+    private IResultComponent _resultComponent;
 
-	/**
-	 * 
-	 */
-	public IResult doJob(IDataEngine dataEngine, IEnvironment env,
-			ISettings settings)
-	{
-		CreatorSettings cSettings = (CreatorSettings) settings;
+    /**
+     * 
+     */
+    public IResult doJob(IDataEngine dataEngine, IEnvironment env,
+            ISettings settings)
+    {
+        CreatorSettings cSettings = (CreatorSettings) settings;
+        String dataSetName = cSettings.getDataSetName();
+        IDataSetManager dataSetManager = dataEngine.getDataSetManager();
 
-		SimpleString dataSetName = (SimpleString) cSettings.getField(CreatorSettings.DATA_SET_NAME);
-		// FIXME:
-		// SimpleArray condArray = (SimpleArray)
-		// cSettings.getField(CreatorSettings.CONDITIONS);
+        boolean isSuccessfull = false;
 
-		SimpleStruct condStruct = (SimpleStruct) cSettings.getField(CreatorSettings.CONDITIONS);
+        try {
+            String[] strConds = cSettings.getConditions();
+            ICondition[] conditions = new ICondition[strConds.length];
+            int i = 0;
+            for (String cond : strConds) {
+                if (cond != null) {
+                    conditions[i] = dataSetManager.createCondition(cond);
+                    ++i;
+                }
+            }
 
-		SimpleString elem1 = (SimpleString) condStruct.getField(CreatorSettings.ELEM1);
-		SimpleString elem2 = (SimpleString) condStruct.getField(CreatorSettings.ELEM2);
-		SimpleString elem3 = (SimpleString) condStruct.getField(CreatorSettings.ELEM3);
-		SimpleString elem4 = (SimpleString) condStruct.getField(CreatorSettings.ELEM4);
-		SimpleString elem5 = (SimpleString) condStruct.getField(CreatorSettings.ELEM5);
+            IDataSet mainDataSet = dataSetManager.getMainDataSet();
+            IDataSet subSet = mainDataSet.createSubset(conditions);
+            subSet.setName(dataSetName);
+            dataSetManager.add(subSet);
 
-		IDataSetManager dataSetManager = dataEngine.getDataSetManager();
+            isSuccessfull = true;
+        } catch (PlatformException e) {
+            LOGGER.fatal("", e);
+        }
 
-		boolean isSuccessfull = false;
+        CreatorResult result = new CreatorResult();
+        result.setSuccessful(isSuccessfull);
+        String resultDataSetName = null;
+        if (isSuccessfull) {
+            resultDataSetName = dataSetName;
+        } else {
+            resultDataSetName = "ERROR";
+        }
+        result.setDataSetName(dataSetName);
+        return result;
+    }
 
-		try {
-			ICondition[] conditions = new ICondition[5];
-			int i = 0;
-			IObject[] values = new IObject[]{elem1, elem2, elem3, elem4, elem5};
-			for (IObject object : values) {
-				if (object != null) {
-					String value = ((SimpleString) object).getValue();
+    /**
+     * 
+     */
+    public ISettingComponent getSettingComponent()
+    {
+        if (_settingComponent == null) {
+            _settingComponent = new CreatorSettingComponent();
+        }
+        return _settingComponent;
+    }
 
-					conditions[i] = dataSetManager.createCondition(value);
+    /**
+     * 
+     */
+    public IResultComponent getResultComponent()
+    {
+        if (_resultComponent == null) {
+            _resultComponent = new CreatorResultComponent();
+        }
+        return _resultComponent;
+    }
 
-					++i;
-				}
-			}
-
-			IDataSet mainDataSet = dataSetManager.getMainDataSet();
-			IDataSet subSet = mainDataSet.createSubset(conditions);
-			subSet.setName(dataSetName.getValue());
-			dataSetManager.add(subSet);
-			
-			isSuccessfull = true;
-		} catch (PlatformException e) {
-			LOGGER.fatal("", e);
-		}
-
-		CreatorResult result = new CreatorResult();
-		result.setSuccessful(isSuccessfull);
-		String resultDataSetName = null;
-		if (isSuccessfull) {
-			resultDataSetName = dataSetName.getValue();
-		} else {
-			resultDataSetName = "ERROR";
-		}
-		result.setField(CreatorResult.DATA_SET_NAME, new SimpleString(resultDataSetName));
-		return result;
-	}
-
-	/**
-	 * 
-	 */
-	public ISettingComponent getSettingComponent()
-	{
-		if (_settingComponent == null) {
-			_settingComponent = new CreatorSettingComponent();
-		}
-		return _settingComponent;
-	}
-
-	/**
-	 * 
-	 */
-	public IResultComponent getResultComponent()
-	{
-		if (_resultComponent == null) {
-			_resultComponent = new CreatorResultComponent();
-		}
-		return _resultComponent;
-	}
-
-	private static final Logger LOGGER = Logger.getLogger(DataSetCreatorPlugin.class);
+    private static final Logger LOGGER = Logger.getLogger(DataSetCreatorPlugin.class);
 }

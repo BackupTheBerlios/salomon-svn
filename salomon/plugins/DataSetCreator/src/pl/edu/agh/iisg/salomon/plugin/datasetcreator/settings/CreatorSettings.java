@@ -22,8 +22,9 @@
 package pl.edu.agh.iisg.salomon.plugin.datasetcreator.settings;
 
 import salomon.platform.serialization.IObject;
-import salomon.platform.serialization.IStruct;
 import salomon.plugin.ISettings;
+import salomon.util.serialization.SimpleArray;
+import salomon.util.serialization.SimpleString;
 import salomon.util.serialization.SimpleStruct;
 
 /**
@@ -32,27 +33,58 @@ import salomon.util.serialization.SimpleStruct;
 public final class CreatorSettings extends SimpleStruct implements ISettings
 {
 
-	public static final String DATA_SET_NAME = "dataSetName";
+    private static final String DATA_SET_NAME = "dataSetName";
 
-	public static final String CONDITIONS = "conditions";
+    private static final String CONDITIONS = "conditions";
 
-	// work around
+    private String _dataSetName;
 
-	public static final String ELEM1 = "elem1";
+    private String[] _conditions;
 
-	public static final String ELEM2 = "elem2";
+    public CreatorSettings(String dataSetName)
+    {
+        setDataSetName(dataSetName);
+        setConditions(new String[0]);
+    }
 
-	public static final String ELEM3 = "elem3";
+    public String[] getConditions()
+    {
+        return _conditions;
+    }
 
-	public static final String ELEM4 = "elem4";
+    public String getDataSetName()
+    {
+        return _dataSetName;
+    }
 
-	public static final String ELEM5 = "elem5";
+    public void setConditions(String[] conditions)
+    {
+        _conditions = conditions;
+        SimpleArray array = SimpleArray.createArray(conditions);
+        setField(CONDITIONS, array);
+    }
 
-	public void init(IObject o)
-	{
-		IStruct struct = (IStruct) o;
-		for (String field : struct.getFieldNames()) {
-			this.setField(field, struct.getField(field));
-		}
-	}
+    public void setDataSetName(String dataSetName)
+    {
+        _dataSetName = dataSetName;
+        setField(DATA_SET_NAME, new SimpleString(dataSetName));
+    }
+
+    public void init(IObject o)
+    {
+        SimpleStruct struct = (SimpleStruct) o;
+
+        // setting struct fields
+        SimpleString dataSetName = (SimpleString) struct.getField(DATA_SET_NAME);
+        SimpleArray condArray = (SimpleArray) struct.getField(CONDITIONS);
+        setField(DATA_SET_NAME, dataSetName);
+        setField(CONDITIONS, condArray);
+
+        _dataSetName = dataSetName.getValue();        
+        IObject[] objects = condArray.getValue();
+        _conditions = new String[objects.length];
+        for (int i = 0; i < objects.length; ++i) {
+            _conditions[i] = ((SimpleString) objects[i]).getValue();
+        }
+    }
 }
