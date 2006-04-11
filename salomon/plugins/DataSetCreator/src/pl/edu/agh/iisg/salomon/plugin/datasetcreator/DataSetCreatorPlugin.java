@@ -84,11 +84,8 @@ public final class DataSetCreatorPlugin implements IPlugin
 
         CreatorResult result = new CreatorResult();
         result.setSuccessful(isSuccessfull);
-        String resultDataSetName = null;
-        if (isSuccessfull) {
-            resultDataSetName = dataSetName;
-        } else {
-            resultDataSetName = "ERROR";
+        if (!isSuccessfull) {
+            dataSetName = "ERROR";
         }
         result.setDataSetName(dataSetName);
         return result;
