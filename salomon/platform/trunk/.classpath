@@ -6,15 +6,15 @@
 	<classpathentry kind="lib" path="lib/mini-j2ee.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="lib/log4j-1.2.8.jar"/>
-	<classpathentry sourcepath="ECLIPSE_HOME/plugins/org.eclipse.jdt.source_3.0.0/src/org.junit_3.8.1/junitsrc.zip" kind="var" path="JUNIT_HOME/junit.jar"/>
 	<classpathentry output="test/grinder/bin" kind="src" path="test/grinder/src"/>
 	<classpathentry kind="lib" path="lib/colt.jar"/>
 	<classpathentry kind="lib" path="lib/commons-collections-3.1.jar"/>
 	<classpathentry kind="lib" path="lib/tablesorter.jar"/>
 	<classpathentry kind="lib" path="lib/jung.jar"/>
-	<classpathentry sourcepath="D:/home/iju/dv/salomon/platform/trunk/junk/looks-2.0.1/src" kind="lib" path="lib/looks.jar"/>
-	<classpathentry sourcepath="D:/home/iju/dv/salomon/platform/trunk/junk/forms-1.0.6/forms-1.0.6-src.zip" kind="lib" path="lib/forms.jar"/>
-	<classpathentry sourcepath="D:/home/iju/dv/salomon/jEdit/src" kind="lib" path="lib/jedit.jar"/>
 	<classpathentry kind="lib" path="lib/dynamicjava.jar"/>
+	<classpathentry kind="lib" path="lib/forms.jar"/>
+	<classpathentry kind="lib" path="lib/jedit.jar"/>
+	<classpathentry kind="lib" path="lib/junit.jar"/>
+	<classpathentry kind="lib" path="lib/looks.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

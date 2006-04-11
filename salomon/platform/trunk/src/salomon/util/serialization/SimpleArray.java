@@ -27,12 +27,33 @@ import salomon.platform.serialization.IObject;
 public class SimpleArray implements IArray
 {
 
+    public static SimpleArray createArray(int[] values)
+    {
+        SimpleInteger[] intValues = new SimpleInteger[values.length];
+        for (int i = 0; i < values.length; ++i) {
+            intValues[i] = new SimpleInteger(values[i]);
+        }
+        SimpleArray array = new SimpleArray(intValues);
+        return array;
+    }
+
+    public static SimpleArray createArray(String[] values)
+    {
+        SimpleString[] strValues = new SimpleString[values.length];
+
+        for (int i = 0; i < values.length; ++i) {
+            strValues[i] = new SimpleString(values[i]);
+        }
+        SimpleArray array = new SimpleArray(strValues);
+        return array;
+    }
+
     /**
      * 
      * @uml.property name="_value"
      * @uml.associationEnd multiplicity="(0 -1)"
      */
-    private IObject[] _value;
+    protected IObject[] _value;
 
     /**
      * 
@@ -48,30 +69,6 @@ public class SimpleArray implements IArray
     public SimpleArray(IObject[] value)
     {
         _value = value;
-    }
-
-    /**
-     * @see salomon.platform.serialization.IArray#getValue()
-     */
-    public IObject[] getValue()
-    {
-        return _value;
-    }
-
-    /**
-     * @see salomon.platform.serialization.IArray#setValue(salomon.platform.serialization.IObject[])
-     */
-    public void setValue(IObject[] value)
-    {
-        _value = value;
-    }
-
-    /**
-     * @see salomon.platform.serialization.IObject#getType()
-     */
-    public IObject.Types getType()
-    {
-        return IObject.Types.ARRAY;
     }
 
     /**
@@ -105,7 +102,31 @@ public class SimpleArray implements IArray
         return true;
     }
 
-    public int size()
+    /**
+     * @see salomon.platform.serialization.IObject#getType()
+     */
+    public final IObject.Types getType()
+    {
+        return IObject.Types.ARRAY;
+    }
+
+    /**
+     * @see salomon.platform.serialization.IArray#getValue()
+     */
+    public IObject[] getValue()
+    {
+        return _value;
+    }
+
+    /**
+     * @see salomon.platform.serialization.IArray#setValue(salomon.platform.serialization.IObject[])
+     */
+    public void setValue(IObject[] value)
+    {
+        _value = value;
+    }
+
+    public final int size()
     {
         return (_value == null ? 0 : _value.length);
     }

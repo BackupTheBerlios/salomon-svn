@@ -34,12 +34,11 @@ import salomon.plugin.ISettings;
 import salomon.util.serialization.SimpleStruct;
 
 /**
- * Represents task which may be executed. It is an implementation of ITask
+ * Represents task that may be executed. It is an implementation of ITask
  * interface.
  */
 public final class Task implements ITask
 {
-
     /**
      * 
      * @uml.property name="_plugin"

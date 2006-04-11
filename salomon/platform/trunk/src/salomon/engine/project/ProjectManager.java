@@ -173,11 +173,7 @@ public final class ProjectManager implements IProjectManager
     {
         Collection projects = null;
         SQLSelect select = new SQLSelect();
-        select.addTable(ProjectInfo.TABLE_NAME);
-        //select.addCondition("SOLUTION_ID");
-        LOGGER.info("Zly _currentProject = " + _currentProject);
-        LOGGER.info("Zly _currentProject name = "
-                + ((ProjectInfo) _currentProject.getInfo()).getName());
+        select.addTable(ProjectInfo.TABLE_NAME);        
         select.addCondition("solution_id =",
                 ((Project) _currentProject).getInfo().getSolutionID());
         // executing query
