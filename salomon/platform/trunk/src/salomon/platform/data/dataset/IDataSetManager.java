@@ -66,9 +66,10 @@ public interface IDataSetManager
 
     /**
      * Gets a data set with the given id.
+     * If dataset doesn't exist, null is returned.
      * 
      * @param id data set id
-     * @return wanted data set
+     * @return wanted data set or null, if dataSet doesn't exist
      */
     IDataSet getDataSet(int id) throws PlatformException;
 

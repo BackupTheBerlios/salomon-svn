@@ -16,5 +16,7 @@
 	<classpathentry kind="lib" path="lib/jedit.jar"/>
 	<classpathentry kind="lib" path="lib/junit.jar"/>
 	<classpathentry kind="lib" path="lib/looks.jar"/>
+	<classpathentry kind="lib" path="lib/binding.jar"/>
+	<classpathentry kind="lib" path="lib/validation.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
