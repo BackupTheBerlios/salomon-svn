@@ -5,7 +5,7 @@
              classpath="${basedir}/ext/compiler.jar"
              classname="com.izforge.izpack.ant.IzPackTask" />
     <taskdef name="svn"
-             classpath="${basedir}/ext/svn/svnant.jar;${basedir}/ext/svn/svnClientAdapter.jar;${basedir}/ext/svn/svnjavahl.jar"
+             classpath="${basedir}/ext/svn/svnant.jar;${basedir}/ext/svn/svnClientAdapter.jar;${basedir}/ext/svn/javasvn.jar;${basedir}/ext/svn/javasvn-javahl.jar;${basedir}/ext/svn/commons-lang.jar; ${basedir}/ext/svn/jakarta-regexp.jar"
              classname="org.tigris.subversion.svnant.SvnTask" />
     <taskdef name="SetBuildProperties"
              classpath="config/"
@@ -38,8 +38,8 @@
     <property name="release_dir" value="_release" />
     <property name="controller" value="local" />
     <property name="plugin_src_dir" value="${basedir}/../../plugins" />
-	<property name="salomon_file" value="salomon.jar"/>
-	<property name="salomon_install_file" value="install.jar"/>
+    <property name="salomon_file" value="salomon.jar" />
+    <property name="salomon_install_file" value="install.jar" />
 
 
     <property file="config/hosts/${build.host}/build.properties" />
@@ -172,9 +172,9 @@
     <target name="clean">
         <delete dir="${bin_dir}" />
         <delete dir="${release_dir}" />
-    	<delete dir="${plugin_dev_dir}"/>
-    	<delete file="${salomon_file}"/>
-    	<delete file="${salomon_install_file}"/>
+        <delete dir="${plugin_dev_dir}" />
+        <delete file="${salomon_file}" />
+        <delete file="${salomon_install_file}" />
     </target>
 
     <!-- creating installtor file -->
