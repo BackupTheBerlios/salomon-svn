@@ -33,7 +33,7 @@ public interface IGraphicPlugin
      * 
      * @return object showing plugin settings
      */
-    ISettingComponent getSettingComponent();
+    ISettingComponent getSettingComponent(IPlatformUtil platformUtil);
 
     /**
      * Method returns object which is responsible for showing result of plugin
@@ -42,4 +42,5 @@ public interface IGraphicPlugin
      * @return object showing of plugin execution
      */
     IResultComponent getResultComponent();
+   
 }

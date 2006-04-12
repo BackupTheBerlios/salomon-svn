@@ -2,15 +2,20 @@ package pl.capitol.tree.plugins.treeConclude.util;
 
 import java.util.Collection;
 
+import salomon.util.serialization.SimpleStruct;
+
+import salomon.platform.serialization.IObject;
+
 import salomon.plugin.IResult;
 
 /**
  * Rezultat wnioskowania
  * 
  * @author Mateusz Nowakowski
+ * FIXME
  *
  */
-public class Results implements IResult {
+public class Results extends SimpleStruct implements IResult {
 
 	private boolean success = false;
 	private String errorMessage = "Nale¿y najpierw uruchomiæ plugin, by otrzymaæ rezultat.";
@@ -75,6 +80,11 @@ public class Results implements IResult {
 	public void setInvalidRows(Collection<Object[]> invalidRows) {
 		this.invalidRows = invalidRows;
 	}
+
+    public void init(IObject object)
+    {
+        throw new UnsupportedOperationException("Method Results.init() not implemented yet!");
+    }
 	
 
 }

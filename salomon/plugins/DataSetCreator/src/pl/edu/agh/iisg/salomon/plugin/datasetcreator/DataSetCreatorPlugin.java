@@ -27,12 +27,15 @@ import pl.edu.agh.iisg.salomon.plugin.datasetcreator.result.CreatorResult;
 import pl.edu.agh.iisg.salomon.plugin.datasetcreator.result.CreatorResultComponent;
 import pl.edu.agh.iisg.salomon.plugin.datasetcreator.settings.CreatorSettingComponent;
 import pl.edu.agh.iisg.salomon.plugin.datasetcreator.settings.CreatorSettings;
+
 import salomon.platform.IDataEngine;
 import salomon.platform.IEnvironment;
 import salomon.platform.data.dataset.ICondition;
 import salomon.platform.data.dataset.IDataSet;
 import salomon.platform.data.dataset.IDataSetManager;
 import salomon.platform.exception.PlatformException;
+
+import salomon.plugin.IPlatformUtil;
 import salomon.plugin.IPlugin;
 import salomon.plugin.IResult;
 import salomon.plugin.IResultComponent;
@@ -45,9 +48,9 @@ import salomon.plugin.ISettings;
 public final class DataSetCreatorPlugin implements IPlugin
 {
 
-    private ISettingComponent _settingComponent;
-
     private IResultComponent _resultComponent;
+
+    private ISettingComponent _settingComponent;
 
     /**
      * 
@@ -94,23 +97,23 @@ public final class DataSetCreatorPlugin implements IPlugin
     /**
      * 
      */
-    public ISettingComponent getSettingComponent()
-    {
-        if (_settingComponent == null) {
-            _settingComponent = new CreatorSettingComponent();
-        }
-        return _settingComponent;
-    }
-
-    /**
-     * 
-     */
     public IResultComponent getResultComponent()
     {
         if (_resultComponent == null) {
             _resultComponent = new CreatorResultComponent();
         }
         return _resultComponent;
+    }
+
+    /**
+     * 
+     */
+    public ISettingComponent getSettingComponent(IPlatformUtil platformUtil)
+    {
+        if (_settingComponent == null) {
+            _settingComponent = new CreatorSettingComponent();
+        }
+        return _settingComponent;
     }
 
     private static final Logger LOGGER = Logger.getLogger(DataSetCreatorPlugin.class);

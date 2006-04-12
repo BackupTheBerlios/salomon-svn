@@ -122,7 +122,9 @@ public final class Task implements ITask
     public void setResult(IResult result) throws PlatformException
     {
         _result = result;
-        _taskInfo.setResult(_result.resultToString());
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        XMLSerializer.serialize((SimpleStruct) _result, bos);
+        _taskInfo.setResult(bos.toString());
         if (_result.isSuccessful()) {
             _taskInfo.setStatus(TaskInfo.FINISHED);
         } else {

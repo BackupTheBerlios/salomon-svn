@@ -18,6 +18,8 @@ import salomon.platform.data.tree.INode;
 import salomon.platform.data.tree.ITree;
 import salomon.platform.serialization.IInteger;
 import salomon.platform.serialization.IString;
+
+import salomon.plugin.IPlatformUtil;
 import salomon.plugin.IPlugin;
 import salomon.plugin.IResult;
 import salomon.plugin.IResultComponent;
@@ -30,7 +32,7 @@ import salomon.plugin.ISettings;
  * @author Mateusz Nowakowski
  *
  */
-public class Plugin implements IPlugin {
+public final class Plugin implements IPlugin {
 
 	private static final Logger LOGGER = Logger.getLogger(Plugin.class);
 	
@@ -192,7 +194,7 @@ public class Plugin implements IPlugin {
 	/**
 	 * Zwraca komponent definicyjny
 	 */
-	public ISettingComponent getSettingComponent() {
+	public ISettingComponent getSettingComponent(IPlatformUtil platformUtil) {
 		return new SettingComponent();
 	}
 

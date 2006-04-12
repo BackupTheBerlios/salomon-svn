@@ -29,23 +29,28 @@ import java.util.LinkedList;
 
 import org.apache.log4j.Logger;
 
+import salomon.engine.controller.gui.PlatformUtil;
 import salomon.engine.database.DBManager;
 import salomon.engine.database.queries.SQLDelete;
 import salomon.engine.database.queries.SQLSelect;
-import salomon.engine.platform.Environment;
-import salomon.engine.platform.IManagerEngine;
-import salomon.engine.platform.serialization.XMLSerializer;
 import salomon.engine.plugin.ILocalPlugin;
 import salomon.engine.plugin.LocalPlugin;
 import salomon.engine.plugin.PluginInfo;
 import salomon.engine.project.IProject;
+
+import salomon.util.serialization.SimpleString;
+
 import salomon.platform.IDataEngine;
 import salomon.platform.IVariable;
 import salomon.platform.exception.PlatformException;
 import salomon.platform.serialization.IObject;
+
 import salomon.plugin.IResult;
 import salomon.plugin.ISettings;
-import salomon.util.serialization.SimpleString;
+
+import salomon.engine.platform.Environment;
+import salomon.engine.platform.IManagerEngine;
+import salomon.engine.platform.serialization.XMLSerializer;
 
 /**
  * An implemetation of ITaskManager interface. Class manages with tasks editing
@@ -82,6 +87,8 @@ public final class TaskManager implements ITaskManager
     // private IProject _project;
     private IManagerEngine _managerEngine;
 
+    private PlatformUtil _platformUtil;
+
     /**
      * 
      * @uml.property name="_taskEngine"
@@ -109,6 +116,8 @@ public final class TaskManager implements ITaskManager
         } catch (PlatformException e) {
             LOGGER.fatal("Exception was thrown!", e);
         }
+
+        _platformUtil = new PlatformUtil();
     }
 
     @Deprecated
@@ -156,6 +165,15 @@ public final class TaskManager implements ITaskManager
     public DBManager getDBManager()
     {
         return _dbManager;
+    }
+
+    /**
+     * Returns the platformUtil.
+     * @return The platformUtil
+     */
+    public PlatformUtil getPlatformUtil()
+    {
+        return _platformUtil;
     }
 
     public IProject getProject() throws PlatformException
@@ -234,7 +252,8 @@ public final class TaskManager implements ITaskManager
                     // creating default settings
                     // it will be used to parse string representation of
                     // settings
-                    ISettings pluginSettings = localPlugin.getSettingComponent().getDefaultSettings();
+                    ISettings pluginSettings = localPlugin.getSettingComponent(
+                            _platformUtil).getDefaultSettings();
 
                     Task task = (Task) this.createTask();
                     // loading task

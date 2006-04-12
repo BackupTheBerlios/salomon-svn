@@ -35,6 +35,7 @@ import salomon.util.scripting.JavaRunner;
 import salomon.platform.IDataEngine;
 import salomon.platform.IEnvironment;
 
+import salomon.plugin.IPlatformUtil;
 import salomon.plugin.IPlugin;
 import salomon.plugin.IResult;
 import salomon.plugin.IResultComponent;
@@ -67,7 +68,7 @@ public final class PluginDebuggerPlugin implements IPlugin
         return new DebuggerResultComponent();
     }
 
-    public ISettingComponent getSettingComponent()
+    public ISettingComponent getSettingComponent(IPlatformUtil platformUtil)
     {
         return new DebuggerSettingsComponent();
     }

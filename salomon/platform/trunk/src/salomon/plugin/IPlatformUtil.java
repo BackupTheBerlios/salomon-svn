@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004 Salomon Team
+ * Copyright (C) 2006 Salomon Team
  *
  * This file is part of Salomon.
  *
@@ -21,26 +21,9 @@
 
 package salomon.plugin;
 
-import java.io.Serializable;
+import com.jgoodies.validation.ValidationResultModel;
 
-import salomon.platform.serialization.IObject;
-import salomon.platform.serialization.IStruct;
-
-/**
- * Represents result of plugin execution.
- *
- */
-public interface IResult  extends Serializable, IStruct
+public interface IPlatformUtil
 {
-    /**
-     * 
-     * @return true if plugin successfully finished, false otherwise
-     */
-    boolean isSuccessful();
-
-    /**
-     * Initilizes the result object.
-     * @param object
-     */
-    void init(IObject object);
+    void setValidationModel(ValidationResultModel validationResultModel);
 }

@@ -28,6 +28,7 @@ import salomon.util.serialization.SimpleStruct;
 
 /**
  * @author nico
+ * FIXME
  */
 public final class CreatorResult extends SimpleStruct implements IResult
 {
@@ -72,6 +73,11 @@ public final class CreatorResult extends SimpleStruct implements IResult
     public void setSuccessful(boolean isSuccessful)
     {
         _isSuccessful = isSuccessful;
+    }
+
+    public void init(IObject object)
+    {
+        throw new UnsupportedOperationException("Method CreatorResult.init() not implemented yet!");
     }
 
 }

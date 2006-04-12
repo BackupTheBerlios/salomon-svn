@@ -9,6 +9,8 @@ import salomon.engine.database.DBManager;
 import salomon.platform.IDataEngine;
 import salomon.platform.IEnvironment;
 import salomon.platform.exception.PlatformException;
+
+import salomon.plugin.IPlatformUtil;
 import salomon.plugin.IPlugin;
 import salomon.plugin.IResult;
 import salomon.plugin.IResultComponent;
@@ -75,12 +77,12 @@ public final class LocalPlugin implements ILocalPlugin, Serializable, Cloneable
     /**
      * @see salomon.plugin.IGraphicPlugin#getSettingComponent()
      */
-    public ISettingComponent getSettingComponent()
+    public ISettingComponent getSettingComponent(IPlatformUtil platformUtil)
     {
         if (_plugin == null) {
             throw new Error("Plugin not loaded");
         }
-        return _plugin.getSettingComponent();
+        return _plugin.getSettingComponent(platformUtil);
     }
 
     /**

@@ -38,7 +38,7 @@ public final class DebuggerResultComponent implements IResultComponent
         SyntaxEditTextArea syntaxEditTextArea = new SyntaxEditTextArea();
         syntaxEditTextArea.setEditable(false);
         
-        syntaxEditTextArea.setText(result.resultToString());
+        syntaxEditTextArea.setText(((DebuggerResult) result).getOutput());
         
         return syntaxEditTextArea;
     }

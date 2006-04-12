@@ -24,10 +24,14 @@ package pl.edu.agh.iisg.salomon.plugin.plugindebugger.result;
 import salomon.util.serialization.SimpleString;
 import salomon.util.serialization.SimpleStruct;
 
+import salomon.platform.serialization.IObject;
 import salomon.platform.serialization.IString;
 
 import salomon.plugin.IResult;
-
+/**
+ * FIXME
+ *
+ */
 public final class DebuggerResult extends SimpleStruct implements IResult
 {
     public static final String OUTPUT_FIELD = "output";
@@ -44,17 +48,6 @@ public final class DebuggerResult extends SimpleStruct implements IResult
         setField(OUTPUT_FIELD, new SimpleString(ouput));
     }
     
-    public void parseResult(String arg0)
-    {
-        // TODO Auto-generated method stub      
-    }
-
-    public String resultToString()
-    {
-        IString result = (IString) getField(OUTPUT_FIELD);
-        
-        return (result == null ? "" : result.getValue());
-    }
 
     public boolean isSuccessful()
     {
@@ -67,5 +60,17 @@ public final class DebuggerResult extends SimpleStruct implements IResult
     public void setSuccessful(boolean isSuccessful)
     {
         _isSuccessful = isSuccessful;
+    }
+
+    public void init(IObject object)
+    {
+        throw new UnsupportedOperationException("Method DebuggerResult.init() not implemented yet!");
+    }
+    
+    public String getOutput()
+    {
+        IString result = (IString) getField(OUTPUT_FIELD);
+        
+        return (result == null ? "" : result.getValue());
     }
 }

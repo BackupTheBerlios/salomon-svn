@@ -39,31 +39,36 @@ import javax.swing.JTextField;
 
 import org.apache.log4j.Logger;
 
+import com.jgoodies.forms.builder.DefaultFormBuilder;
+import com.jgoodies.forms.layout.FormLayout;
+
+import edu.uci.ics.jung.graph.Graph;
+
 import salomon.engine.Messages;
 import salomon.engine.controller.gui.ControllerFrame;
+import salomon.engine.controller.gui.PlatformUtil;
 import salomon.engine.controller.gui.StatusBar;
 import salomon.engine.controller.gui.action.ActionManager;
 import salomon.engine.controller.gui.viewer.TaskViewer;
 import salomon.engine.plugin.IPluginManager;
 import salomon.engine.plugin.LocalPlugin;
+import salomon.engine.plugin.PluginManager;
 import salomon.engine.task.ITask;
 import salomon.engine.task.ITaskManager;
 import salomon.engine.task.Task;
 import salomon.engine.task.TaskInfo;
 import salomon.engine.task.TaskManager;
+
+import salomon.util.gui.Utils;
+
 import salomon.platform.IDataEngine;
 import salomon.platform.exception.PlatformException;
+
 import salomon.plugin.IPlugin;
 import salomon.plugin.IResult;
 import salomon.plugin.IResultComponent;
 import salomon.plugin.ISettingComponent;
 import salomon.plugin.ISettings;
-import salomon.util.gui.Utils;
-
-import com.jgoodies.forms.builder.DefaultFormBuilder;
-import com.jgoodies.forms.layout.FormLayout;
-
-import edu.uci.ics.jung.graph.Graph;
 
 public final class GraphTaskManagerGUI
 {
@@ -76,7 +81,7 @@ public final class GraphTaskManagerGUI
 
     private ControllerFrame _parent;
 
-    private IPluginManager _pluginManager;
+    private PluginManager _pluginManager;
 
     private JPanel _pnlTaskProperties;
 
@@ -84,7 +89,7 @@ public final class GraphTaskManagerGUI
 
     private TaskGraphEditor _taskGraphEditor;
 
-    private ITaskManager _taskManager;
+    private TaskManager _taskManager;
 
     private JFrame _tasksViewerFrame;
 
@@ -97,12 +102,15 @@ public final class GraphTaskManagerGUI
     private JTextField _txtTaskName;
 
     private JTextField _txtTaskStatus;
+    
+    private PlatformUtil _platformUtil;
 
     public GraphTaskManagerGUI(ITaskManager tasksManager,
             IPluginManager pluginManager)
     {
-        _taskManager = tasksManager;
-        _pluginManager = pluginManager;
+        _taskManager = (TaskManager) tasksManager;
+        _pluginManager = (PluginManager) pluginManager;
+        _platformUtil = _taskManager.getPlatformUtil();
     }
 
     public ITask createTask()
@@ -288,7 +296,7 @@ public final class GraphTaskManagerGUI
         ISettings inputSettings = null;
         try {
             plugin = task.getPlugin();
-            settingComponent = plugin.getSettingComponent();
+            settingComponent = plugin.getSettingComponent(_platformUtil);
             inputSettings = task.getSettings();
         } catch (PlatformException e1) {
             LOGGER.fatal("", e1);
@@ -296,7 +304,7 @@ public final class GraphTaskManagerGUI
             return;
         }
         if (inputSettings == null) {
-            inputSettings = plugin.getSettingComponent().getDefaultSettings();
+            inputSettings = plugin.getSettingComponent(_platformUtil).getDefaultSettings();
         }
         // FIXME needed by DataSet
         IDataEngine dataEngine = null;

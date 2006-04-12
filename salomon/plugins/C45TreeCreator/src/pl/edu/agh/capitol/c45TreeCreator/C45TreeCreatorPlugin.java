@@ -12,6 +12,8 @@ import salomon.platform.IVariable;
 import salomon.platform.data.tree.IDataSource;
 import salomon.platform.exception.PlatformException;
 import salomon.platform.serialization.IObject;
+
+import salomon.plugin.IPlatformUtil;
 import salomon.plugin.IPlugin;
 import salomon.plugin.IResult;
 import salomon.plugin.IResultComponent;
@@ -68,7 +70,7 @@ public class C45TreeCreatorPlugin implements IPlugin {
 	/**
 	 * Zwraca komponent Settingsów (pusty)
 	 */
-	public ISettingComponent getSettingComponent() {
+	public ISettingComponent getSettingComponent(IPlatformUtil platformUtil) {
 		return new C45TreeCreatorSettingsComponent();
 	}
 

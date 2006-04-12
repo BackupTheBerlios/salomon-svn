@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004 Salomon Team
+ * Copyright (C) 2006 Salomon Team
  *
  * This file is part of Salomon.
  *
@@ -19,28 +19,32 @@
  * 
  */
 
-package salomon.plugin;
+package salomon.engine.controller.gui;
 
-import java.io.Serializable;
+import javax.swing.JComponent;
 
-import salomon.platform.serialization.IObject;
-import salomon.platform.serialization.IStruct;
+import com.jgoodies.validation.ValidationResultModel;
+import com.jgoodies.validation.view.ValidationResultViewFactory;
+
+import salomon.plugin.IPlatformUtil;
 
 /**
- * Represents result of plugin execution.
- *
+ * 
  */
-public interface IResult  extends Serializable, IStruct
+public final class PlatformUtil implements IPlatformUtil
 {
-    /**
-     * 
-     * @return true if plugin successfully finished, false otherwise
-     */
-    boolean isSuccessful();
 
+    private ValidationResultModel _validationResultModel;
     /**
-     * Initilizes the result object.
-     * @param object
+     * @see salomon.plugin.IPlatformUtil#setValidationModel(com.jgoodies.validation.ValidationResultModel)
      */
-    void init(IObject object);
+    public void setValidationModel(ValidationResultModel validationResultModel)
+    {
+        _validationResultModel = validationResultModel;
+    }
+
+    public JComponent getValidationComponent()
+    {
+        return ValidationResultViewFactory.createReportIconAndTextPane(_validationResultModel);
+    }
 }

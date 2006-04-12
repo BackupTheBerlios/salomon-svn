@@ -21,21 +21,31 @@
 
 package pl.edu.agh.iisg.salomon.plugin.datasetunion.result;
 
-import salomon.plugin.IResult;
 import salomon.util.serialization.SimpleString;
 import salomon.util.serialization.SimpleStruct;
 
+import salomon.platform.serialization.IObject;
+
+import salomon.plugin.IResult;
+
 /**
- * 
+ * FIXME
  */
 public final class UResult extends SimpleStruct implements IResult
 {
 
-    public static final String DATA_SET_NAME = "dataSetName";
-
-    public static final String ERROR_MESSAGE = "errorMessage";
-    
     private boolean _isSuccessful = false;
+
+    public void init(IObject object)
+    {
+        throw new UnsupportedOperationException(
+                "Method UResult.init() not implemented yet!");
+    }
+
+    public boolean isSuccessful()
+    {
+        return _isSuccessful;
+    }
 
     public void parseResult(String arg0)
     {
@@ -44,13 +54,8 @@ public final class UResult extends SimpleStruct implements IResult
 
     public String resultToString()
     {
-        SimpleString result = (SimpleString)getField(DATA_SET_NAME); 
+        SimpleString result = (SimpleString) getField(DATA_SET_NAME);
         return (result == null ? "" : result.getValue());
-    }
-
-    public boolean isSuccessful()
-    {
-        return _isSuccessful;
     }
 
     /**
@@ -60,4 +65,8 @@ public final class UResult extends SimpleStruct implements IResult
     {
         _isSuccessful = isSuccessful;
     }
+
+    public static final String DATA_SET_NAME = "dataSetName";
+
+    public static final String ERROR_MESSAGE = "errorMessage";
 }

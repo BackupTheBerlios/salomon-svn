@@ -5,6 +5,8 @@ import pl.capitol.tree.plugins.test.components.TestSettingComponent;
 import pl.capitol.tree.plugins.util.TreeResults;
 import salomon.platform.IDataEngine;
 import salomon.platform.IEnvironment;
+
+import salomon.plugin.IPlatformUtil;
 import salomon.plugin.IPlugin;
 import salomon.plugin.IResult;
 import salomon.plugin.IResultComponent;
@@ -18,7 +20,7 @@ public class TestPlugin implements IPlugin {
 		return new TreeResults();
 	}
 
-	public ISettingComponent getSettingComponent() {
+	public ISettingComponent getSettingComponent(IPlatformUtil platformUtil) {
 		return new TestSettingComponent();
 	}
 
