@@ -23,19 +23,14 @@ package pl.edu.agh.iisg.salomon.plugin.datasetcreator.settings;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
-import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -55,6 +50,14 @@ import salomon.platform.data.dataset.IDataSetManager;
 import salomon.platform.exception.PlatformException;
 import salomon.plugin.ISettingComponent;
 import salomon.plugin.ISettings;
+import salomon.util.gui.validation.dataset.DataSet;
+import salomon.util.gui.validation.dataset.DataSetModel;
+
+import com.jgoodies.binding.adapter.BasicComponentFactory;
+import com.jgoodies.forms.builder.DefaultFormBuilder;
+import com.jgoodies.forms.factories.ButtonBarFactory;
+import com.jgoodies.forms.layout.FormLayout;
+import com.jgoodies.validation.view.ValidationResultViewFactory;
 
 /**
  * @author nico
@@ -62,15 +65,23 @@ import salomon.plugin.ISettings;
 public class CreatorSettingComponent implements ISettingComponent
 {
 
+    private static final Logger LOGGER = Logger.getLogger(CreatorSettingComponent.class);
+
     private JPanel _addConditionPanel;
 
     private DefaultListModel _columnListModel;
 
     private DefaultListModel _conditionListModel;
 
+    private IDataEngine _dataEngine;
+
+    private DataSet _dataSet;
+
     private JComboBox _operations;
 
     private IColumn _selectedColumn;
+
+    private ICondition _selectedCondition;
 
     private JComponent _settingComponent;
 
@@ -82,17 +93,7 @@ public class CreatorSettingComponent implements ISettingComponent
 
     private JTextField _txtDataSetName;
 
-    private IDataEngine _dataEngine;
-
-    private ICondition _selectedCondition;
-
-    public CreatorSettingComponent()
-    {
-        _tableListModel = new DefaultListModel();
-        _columnListModel = new DefaultListModel();
-        _conditionListModel = new DefaultListModel();
-        _operations = new JComboBox(new String[]{"=", "<", ">"});
-    }
+    private JComponent _validationResult;
 
     /**
      * 
@@ -101,45 +102,19 @@ public class CreatorSettingComponent implements ISettingComponent
     {
         if (_settingComponent == null) {
             _dataEngine = dataEngine;
+            initComponents();
             init(dataEngine.getMetaData());
             _addConditionPanel = getAddConditionPanel();
             _settingComponent = createSettingComponent();
         }
         try {
-            initSettingComponent(settings, dataEngine.getMetaData());
+            initSettingComponent(settings);
         } catch (PlatformException e) {
             LOGGER.fatal("", e);
             // FIXME: where this error should be handled?
             // handle it by adding throws declaration to interface methods
         }
         return _settingComponent;
-    }
-
-    private void initSettingComponent(ISettings settings, IMetaData metaData)
-            throws PlatformException
-    {
-        CreatorSettings cSettings = (CreatorSettings) settings;
-
-        // creating conditions
-        String[] strConds = cSettings.getConditions();
-        ICondition[] conditions = new ICondition[strConds.length];
-        int i = 0;
-        if (strConds != null) {
-            for (String cond : strConds) {
-                conditions[i] = _dataEngine.getDataSetManager().createCondition(
-                        cond);
-                ++i;
-            }
-        }
-
-        // setting gui values
-        _txtDataSetName.setText(cSettings.getDataSetName());
-        _conditionListModel.clear();
-        for (ICondition condition : conditions) {
-            if (condition != null) {
-                _conditionListModel.addElement(condition);
-            }
-        }
     }
 
     /**
@@ -156,18 +131,19 @@ public class CreatorSettingComponent implements ISettingComponent
      */
     public ISettings getSettings()
     {
-        CreatorSettings settings = new CreatorSettings(_txtDataSetName.getText());
+        CreatorSettings settings = new CreatorSettings(
+                _dataSet.getDataSetName());
 
         // setting conditions
         int size = _conditionListModel.getSize();
-                
+
         String[] condArray = new String[size];
         for (int i = 0; i < size; ++i) {
             condArray[i] = _conditionListModel.get(i).toString();
             LOGGER.debug("cond: " + condArray[i]);
         }
 
-        settings.setConditions(condArray);        
+        settings.setConditions(condArray);
         return settings;
     }
 
@@ -220,7 +196,6 @@ public class CreatorSettingComponent implements ISettingComponent
         JScrollPane panel = new JScrollPane(list);
         list.setBorder(BorderFactory.createLoweredBevelBorder());
         panel.setBorder(BorderFactory.createTitledBorder(title));
-        panel.setPreferredSize(new Dimension(150, 300));
         return panel;
     }
 
@@ -235,9 +210,8 @@ public class CreatorSettingComponent implements ISettingComponent
         columnList.addListSelectionListener(new ColumnSelectionListener());
 
         JList conditionList = new JList(_conditionListModel);
-        conditionList.addListSelectionListener(new ConditionSelectionListener());        
+        conditionList.addListSelectionListener(new ConditionSelectionListener());
 
-        JPanel buttonsPanel = new JPanel();
         JButton addConditionButton = new JButton("Add");
         addConditionButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e)
@@ -254,29 +228,39 @@ public class CreatorSettingComponent implements ISettingComponent
             }
         });
 
-        buttonsPanel.add(addConditionButton);
-        buttonsPanel.add(removeConditionButton);
-        
-
-        JPanel listPanel = new JPanel(new GridLayout(1, 3));
-        listPanel.add(createListComponent(tableList, "Tables"));
-        listPanel.add(createListComponent(columnList, "Columns"));
+        // building buttons panel
+        JPanel buttonsPanel = ButtonBarFactory.buildAddRemoveBar(
+                addConditionButton, removeConditionButton);
 
         JPanel conditionsPanel = new JPanel();
-        conditionsPanel.setLayout(new BorderLayout());        
-        
-        conditionsPanel.add(createListComponent(conditionList, "Conditions"), BorderLayout.CENTER);
+        conditionsPanel.setLayout(new BorderLayout());
+        conditionsPanel.add(createListComponent(conditionList, "Conditions"),
+                BorderLayout.CENTER);
         conditionsPanel.add(buttonsPanel, BorderLayout.SOUTH);
-        listPanel.add(conditionsPanel);
-        
-        Box box = Box.createHorizontalBox();
-        box.add(Box.createHorizontalStrut(20));
-        box.add(new JLabel("Dataset name"));
-        box.add(_txtDataSetName);
-        box.add(Box.createHorizontalStrut(20));
+
+        // building list form
+        FormLayout layout = new FormLayout(
+                "fill:100dlu:grow, 3dlu, fill:100dlu:grow, 3dlu, fill:min:grow",
+                "fill:200dlu:grow");
+        DefaultFormBuilder builder = new DefaultFormBuilder(layout);
+        builder.setDefaultDialogBorder();
+
+        builder.append(createListComponent(tableList, "Tables"));
+        builder.append(createListComponent(columnList, "Columns"));
+        builder.append(conditionsPanel);
+
+        JPanel listPanel = builder.getPanel();
+
+        // building dataset form
+        layout = new FormLayout("left:pref, 3dlu, fill:100dlu:grow", "");
+        builder = new DefaultFormBuilder(layout);
+        builder.setDefaultDialogBorder();
+
+        builder.append("Dataset name", _txtDataSetName);
+        builder.append(_validationResult, 3);
 
         mainPanel.add(listPanel, BorderLayout.CENTER);
-        mainPanel.add(box, BorderLayout.SOUTH);
+        mainPanel.add(builder.getPanel(), BorderLayout.SOUTH);
 
         return mainPanel;
     }
@@ -284,28 +268,20 @@ public class CreatorSettingComponent implements ISettingComponent
     private JPanel getAddConditionPanel()
     {
         if (_addConditionPanel == null) {
-            _addConditionPanel = new JPanel();
-            _addConditionPanel.setLayout(new BoxLayout(_addConditionPanel,
-                    BoxLayout.LINE_AXIS));
-            _txtColumnName = new JTextField();
-            _txtColumnValue = new JTextField();
-            _txtDataSetName = new JTextField();
+            FormLayout layout = new FormLayout(
+                    "fill:100dlu:grow, 3dlu, fill:default:grow, 3dlu, fill:100dlu:grow",
+                    "");
+            DefaultFormBuilder builder = new DefaultFormBuilder(layout);
 
             _txtColumnName.setEditable(false);
 
-            _addConditionPanel.add(_txtColumnName);
-            _addConditionPanel.add(_operations);
-            _addConditionPanel.add(_txtColumnValue);
+            builder.append(_txtColumnName);
+            builder.append(_operations);
+            builder.append(_txtColumnValue);
+
+            _addConditionPanel = builder.getPanel();
         }
         return _addConditionPanel;
-    }
-
-    private void removeCondition()
-    {
-        if (_selectedCondition != null) {
-            _conditionListModel.removeElement(_selectedCondition);
-            _selectedCondition = null;
-        }
     }
 
     private void init(IMetaData metaData)
@@ -316,11 +292,69 @@ public class CreatorSettingComponent implements ISettingComponent
         }
     }
 
+    private void initComponents()
+    {
+        _tableListModel = new DefaultListModel();
+        _columnListModel = new DefaultListModel();
+        _conditionListModel = new DefaultListModel();
+        _operations = new JComboBox(new String[]{"=", "<", ">"});
+        _txtColumnName = new JTextField();
+        _txtColumnValue = new JTextField();
+
+        _dataSet = new DataSet();
+        DataSetModel dataSetModel = new DataSetModel(_dataSet, _dataEngine);
+        _txtDataSetName = BasicComponentFactory.createTextField(dataSetModel.getModel(DataSet.PROPERTYNAME_DATASET_NAME));
+        _validationResult = ValidationResultViewFactory.createReportIconAndTextPane(dataSetModel.getValidationResultModel());
+    }
+
+    private void initSettingComponent(ISettings settings)
+            throws PlatformException
+    {
+        CreatorSettings cSettings = (CreatorSettings) settings;
+
+        // creating conditions
+        String[] strConds = cSettings.getConditions();
+        ICondition[] conditions = new ICondition[strConds.length];
+        int i = 0;
+        if (strConds != null) {
+            for (String cond : strConds) {
+                conditions[i] = _dataEngine.getDataSetManager().createCondition(
+                        cond);
+                ++i;
+            }
+        }
+
+        // setting gui values
+        _dataSet.setDataSetName(cSettings.getDataSetName());
+        _conditionListModel.clear();
+        for (ICondition condition : conditions) {
+            if (condition != null) {
+                _conditionListModel.addElement(condition);
+            }
+        }
+    }
+
+    private void removeCondition()
+    {
+        if (_selectedCondition != null) {
+            _conditionListModel.removeElement(_selectedCondition);
+            _selectedCondition = null;
+        }
+    }
+
     private class ColumnSelectionListener implements ListSelectionListener
     {
         public void valueChanged(ListSelectionEvent e)
         {
             _selectedColumn = (IColumn) ((JList) e.getSource()).getSelectedValue();
+        }
+    }
+
+    private class ConditionSelectionListener implements ListSelectionListener
+    {
+        public void valueChanged(ListSelectionEvent e)
+        {
+            _selectedCondition = (ICondition) ((JList) e.getSource()).getSelectedValue();
         }
     }
 
@@ -336,14 +370,4 @@ public class CreatorSettingComponent implements ISettingComponent
             }
         }
     }
-
-    private class ConditionSelectionListener implements ListSelectionListener
-    {
-        public void valueChanged(ListSelectionEvent e)
-        {
-            _selectedCondition = (ICondition) ((JList) e.getSource()).getSelectedValue();
-        }
-    }
-
-    private static final Logger LOGGER = Logger.getLogger(CreatorSettingComponent.class);
 }

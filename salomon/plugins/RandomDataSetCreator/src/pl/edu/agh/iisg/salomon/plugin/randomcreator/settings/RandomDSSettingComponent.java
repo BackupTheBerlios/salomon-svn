@@ -24,17 +24,13 @@ package pl.edu.agh.iisg.salomon.plugin.randomcreator.settings;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComponent;
-import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -51,6 +47,14 @@ import salomon.platform.data.ITable;
 import salomon.platform.exception.PlatformException;
 import salomon.plugin.ISettingComponent;
 import salomon.plugin.ISettings;
+import salomon.util.gui.validation.dataset.DataSet;
+import salomon.util.gui.validation.dataset.DataSetModel;
+
+import com.jgoodies.binding.adapter.BasicComponentFactory;
+import com.jgoodies.forms.builder.DefaultFormBuilder;
+import com.jgoodies.forms.factories.ButtonBarFactory;
+import com.jgoodies.forms.layout.FormLayout;
+import com.jgoodies.validation.view.ValidationResultViewFactory;
 
 /**
  * @author nico
@@ -58,29 +62,31 @@ import salomon.plugin.ISettings;
 public class RandomDSSettingComponent implements ISettingComponent
 {
 
+    private static final Logger LOGGER = Logger.getLogger(RandomDSSettingComponent.class);
+
     private JPanel _addDescriptionPanel;
 
+    private IDataEngine _dataEngine;
+
+    private DataSet _dataSet;
+
     private DefaultListModel _descriptionListModel;
+
+    private TableDescription _selectedDescription;
+
+    private ITable _selectedTable;
 
     private JComponent _settingComponent;
 
     private DefaultListModel _tableListModel;
 
-    private JTextField _txtTableName;
+    private JTextField _txtDataSetName;
 
     private JTextField _txtRowCount;
 
-    private JTextField _txtDataSetName;
+    private JTextField _txtTableName;
 
-    private ITable _selectedTable;
-
-    private TableDescription _selectedDescription;
-
-    public RandomDSSettingComponent()
-    {
-        _tableListModel = new DefaultListModel();
-        _descriptionListModel = new DefaultListModel();
-    }
+    private JComponent _validationResult;
 
     /**
      * 
@@ -88,36 +94,20 @@ public class RandomDSSettingComponent implements ISettingComponent
     public Component getComponent(ISettings settings, IDataEngine dataEngine)
     {
         if (_settingComponent == null) {
+            _dataEngine = dataEngine;
+            initComponents();
             init(dataEngine.getMetaData());
             _addDescriptionPanel = getDescriptionPanel();
             _settingComponent = createSettingComponent();
         }
         try {
-            initSettingComponent(settings, dataEngine.getMetaData());
+            initSettingComponent(settings);
         } catch (PlatformException e) {
             LOGGER.fatal("", e);
             // FIXME: where this error should be handled?
             // handle it by adding throws declaration to interface methods
         }
         return _settingComponent;
-    }
-
-    private void initSettingComponent(ISettings settings, IMetaData metaData)
-            throws PlatformException
-    {
-        RandomDSSettings rSettings = (RandomDSSettings) settings;
-        String dataSetName = rSettings.getDataSetName();
-
-        TableDescription[] descriptions = rSettings.getTableDesctiptions();
-
-        // setting gui values
-        _txtDataSetName.setText(dataSetName);
-        _descriptionListModel.clear();
-        for (TableDescription description : descriptions) {
-            if (description != null) {
-                _descriptionListModel.addElement(description);
-            }
-        }
     }
 
     /**
@@ -135,7 +125,7 @@ public class RandomDSSettingComponent implements ISettingComponent
     public ISettings getSettings()
     {
         RandomDSSettings settings = new RandomDSSettings(
-                _txtDataSetName.getText());
+                _dataSet.getDataSetName());
 
         // setting table descriptions
         int size = _descriptionListModel.getSize();
@@ -189,13 +179,9 @@ public class RandomDSSettingComponent implements ISettingComponent
         JList tableList = new JList(_tableListModel);
         tableList.addListSelectionListener(new TableSelectionListener());
 
-        JList conditionList = new JList(_descriptionListModel);
-        conditionList.addListSelectionListener(new ConditionSelectionListener());
+        JList descriptionList = new JList(_descriptionListModel);
+        descriptionList.addListSelectionListener(new ConditionSelectionListener());
 
-        JPanel rowsPanel = new JPanel();
-        rowsPanel.setLayout(new BorderLayout());
-
-        JPanel buttonsPanel = new JPanel();
         JButton addConditionButton = new JButton("Add");
         addConditionButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e)
@@ -212,25 +198,37 @@ public class RandomDSSettingComponent implements ISettingComponent
             }
         });
 
-        buttonsPanel.add(addConditionButton);
-        buttonsPanel.add(removeConditionButton);
+        // building buttons panel
+        JPanel buttonsPanel = ButtonBarFactory.buildAddRemoveBar(
+                addConditionButton, removeConditionButton);
 
-        rowsPanel.add(new JScrollPane(conditionList), BorderLayout.CENTER);
+        JPanel rowsPanel = new JPanel();
+        rowsPanel.setLayout(new BorderLayout());
+        rowsPanel.add(createListComponent(descriptionList, "Random rows"),
+                BorderLayout.CENTER);
         rowsPanel.add(buttonsPanel, BorderLayout.SOUTH);
 
-        JPanel listPanel = new JPanel(new GridLayout(1, 3));
-        listPanel.add(createListComponent(tableList, "Tables"));
-        listPanel.add(createListComponent(rowsPanel, "Randomized rows"));
+        // building list form
+        FormLayout layout = new FormLayout(
+                "fill:100dlu:grow, 3dlu, fill:min:grow", "fill:200dlu:grow");
+        DefaultFormBuilder builder = new DefaultFormBuilder(layout);
+        builder.setDefaultDialogBorder();
 
-        _txtDataSetName = new JTextField();
-        Box box = Box.createHorizontalBox();
-        box.add(Box.createHorizontalStrut(20));
-        box.add(new JLabel("Dataset name"));
-        box.add(_txtDataSetName);
-        box.add(Box.createHorizontalStrut(20));
+        builder.append(createListComponent(tableList, "Tables"));
+        builder.append(rowsPanel);
+
+        JPanel listPanel = builder.getPanel();
+
+        // building dataset form
+        layout = new FormLayout("left:pref, 3dlu, fill:100dlu:grow", "");
+        builder = new DefaultFormBuilder(layout);
+        builder.setDefaultDialogBorder();
+
+        builder.append("Dataset name", _txtDataSetName);
+        builder.append(_validationResult, 3);
 
         mainPanel.add(listPanel, BorderLayout.CENTER);
-        mainPanel.add(box, BorderLayout.SOUTH);
+        mainPanel.add(builder.getPanel(), BorderLayout.SOUTH);
 
         return mainPanel;
     }
@@ -238,17 +236,57 @@ public class RandomDSSettingComponent implements ISettingComponent
     private JPanel getDescriptionPanel()
     {
         if (_addDescriptionPanel == null) {
-            _addDescriptionPanel = new JPanel();
-            _addDescriptionPanel.setLayout(new BoxLayout(_addDescriptionPanel,
-                    BoxLayout.LINE_AXIS));
-            _txtTableName = new JTextField();
-            _txtRowCount = new JTextField();            
-            _txtTableName.setEditable(false);
+            FormLayout layout = new FormLayout(
+                    "fill:100dlu:grow, 3dlu, fill:default:grow", "");
+            DefaultFormBuilder builder = new DefaultFormBuilder(layout);
 
-            _addDescriptionPanel.add(_txtTableName);
-            _addDescriptionPanel.add(_txtRowCount);
+            _txtTableName.setEnabled(false);
+            builder.append(_txtTableName);
+            builder.append(_txtRowCount);
+
+            _addDescriptionPanel = builder.getPanel();
         }
         return _addDescriptionPanel;
+    }
+
+    private void init(IMetaData metaData)
+    {
+        _tableListModel.clear();
+        for (ITable table : metaData.getTables()) {
+            _tableListModel.addElement(table);
+        }
+    }
+
+    private void initComponents()
+    {
+        _tableListModel = new DefaultListModel();
+        _descriptionListModel = new DefaultListModel();
+        _txtTableName = new JTextField();
+        _txtRowCount = new JTextField();
+
+        _dataSet = new DataSet();
+        DataSetModel dataSetModel = new DataSetModel(_dataSet, _dataEngine);
+        _txtDataSetName = BasicComponentFactory.createTextField(dataSetModel.getModel(DataSet.PROPERTYNAME_DATASET_NAME));
+        _validationResult = ValidationResultViewFactory.createReportIconAndTextPane(dataSetModel.getValidationResultModel());
+
+    }
+
+    private void initSettingComponent(ISettings settings)
+            throws PlatformException
+    {
+        RandomDSSettings rSettings = (RandomDSSettings) settings;
+        String dataSetName = rSettings.getDataSetName();
+
+        TableDescription[] descriptions = rSettings.getTableDesctiptions();
+
+        // setting gui values
+        _dataSet.setDataSetName(dataSetName);
+        _descriptionListModel.clear();
+        for (TableDescription description : descriptions) {
+            if (description != null) {
+                _descriptionListModel.addElement(description);
+            }
+        }
     }
 
     private void removeTableDescription()
@@ -259,11 +297,11 @@ public class RandomDSSettingComponent implements ISettingComponent
         }
     }
 
-    private void init(IMetaData metaData)
+    private class ConditionSelectionListener implements ListSelectionListener
     {
-        _tableListModel.clear();
-        for (ITable table : metaData.getTables()) {
-            _tableListModel.addElement(table);
+        public void valueChanged(ListSelectionEvent e)
+        {
+            _selectedDescription = (TableDescription) ((JList) e.getSource()).getSelectedValue();
         }
     }
 
@@ -276,14 +314,4 @@ public class RandomDSSettingComponent implements ISettingComponent
 
         }
     }
-
-    private class ConditionSelectionListener implements ListSelectionListener
-    {
-        public void valueChanged(ListSelectionEvent e)
-        {
-            _selectedDescription = (TableDescription) ((JList) e.getSource()).getSelectedValue();
-        }
-    }
-
-    private static final Logger LOGGER = Logger.getLogger(RandomDSSettingComponent.class);
 }

@@ -7,5 +7,8 @@
 	<classpathentry kind="lib" path="/Salomon/dev/platform.jar"/>
 	<classpathentry kind="lib" path="/Salomon/dev/plugin.jar"/>
 	<classpathentry kind="lib" path="/Salomon/dev/util.jar"/>
+	<classpathentry kind="lib" path="/Salomon/lib/forms.jar"/>
+	<classpathentry kind="lib" path="/Salomon/lib/binding.jar"/>
+	<classpathentry kind="lib" path="/Salomon/lib/validation.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -50,7 +50,7 @@ public final class RandomDSSettings extends SimpleStruct implements ISettings
         setDataSetName(dataSetName);
         setTableDesctiptions(new TableDescription[0]);
     }
-    
+
     /**
      * Returns the dataSetName.
      * @return The dataSetName
@@ -86,8 +86,8 @@ public final class RandomDSSettings extends SimpleStruct implements ISettings
             SimpleStruct tableDef = ((SimpleStruct) objects[i]);
             SimpleString tableName = (SimpleString) tableDef.getField(TABLE_NAME);
             SimpleInteger rowCount = (SimpleInteger) tableDef.getField(ROW_COUNT);
-            _tableDesctiptions[i] = new TableDescription(
-                    tableName.getValue(), rowCount.getValue());
+            _tableDesctiptions[i] = new TableDescription(tableName.getValue(),
+                    rowCount.getValue());
         }
     }
 
