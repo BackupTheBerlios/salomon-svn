@@ -138,11 +138,6 @@
         </copy>
     </target>
 
-    <target name="copy_run_files">
-        <copy file="${install_dir}/${run_script}" todir="${release_dir}" />
-        <!-- goes to jar: copy file="all.policy" todir="${release_dir}" /-->
-    </target>
-
     <target name="copy_salomon" depends="build_salomon_jar">
         <mkdir dir="${release_dir}" />
         <copy file="${salomon_file}" todir="${release_dir}" />
@@ -163,7 +158,7 @@
     <target name="deploy"
             depends="copy_salomon, copy_plugins, 
 		copy_libs, copy_drivers, copy_data_base,
-		copy_res, copy_config, copy_run_files, get_version" />
+		copy_res, copy_config, get_version" />
 
     <target name="compress" depends="deploy">
         <zip destfile="salomon.zip" basedir="${release_dir}" />
