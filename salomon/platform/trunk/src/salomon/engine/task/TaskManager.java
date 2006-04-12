@@ -29,12 +29,12 @@ import java.util.LinkedList;
 
 import org.apache.log4j.Logger;
 
-import salomon.engine.controller.gui.PlatformUtil;
 import salomon.engine.database.DBManager;
 import salomon.engine.database.queries.SQLDelete;
 import salomon.engine.database.queries.SQLSelect;
 import salomon.engine.plugin.ILocalPlugin;
 import salomon.engine.plugin.LocalPlugin;
+import salomon.engine.plugin.PlatformUtil;
 import salomon.engine.plugin.PluginInfo;
 import salomon.engine.project.IProject;
 

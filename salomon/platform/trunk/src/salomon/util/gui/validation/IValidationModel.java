@@ -19,32 +19,12 @@
  * 
  */
 
-package salomon.engine.controller.gui;
-
-import javax.swing.JComponent;
-
-import com.jgoodies.validation.ValidationResultModel;
-import com.jgoodies.validation.view.ValidationResultViewFactory;
-
-import salomon.plugin.IPlatformUtil;
+package salomon.util.gui.validation;
 
 /**
  * 
  */
-public final class PlatformUtil implements IPlatformUtil
+public interface IValidationModel
 {
-
-    private ValidationResultModel _validationResultModel;
-    /**
-     * @see salomon.plugin.IPlatformUtil#setValidationModel(com.jgoodies.validation.ValidationResultModel)
-     */
-    public void setValidationModel(ValidationResultModel validationResultModel)
-    {
-        _validationResultModel = validationResultModel;
-    }
-
-    public JComponent getValidationComponent()
-    {
-        return ValidationResultViewFactory.createReportIconAndTextPane(_validationResultModel);
-    }
+    IComponentFactory getComponentFactory();
 }

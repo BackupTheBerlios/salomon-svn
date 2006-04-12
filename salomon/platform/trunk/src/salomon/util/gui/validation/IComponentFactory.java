@@ -19,11 +19,12 @@
  * 
  */
 
-package salomon.plugin;
+package salomon.util.gui.validation;
 
-import salomon.util.gui.validation.IValidationModel;
-
-public interface IPlatformUtil
+/**
+ * 
+ */
+public interface IComponentFactory
 {
-    IValidationModel getValidationModel(Object object);
+    
 }

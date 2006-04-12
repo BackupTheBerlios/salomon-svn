@@ -19,11 +19,15 @@
  * 
  */
 
-package salomon.plugin;
+package salomon.util.gui.validation;
 
-import salomon.util.gui.validation.IValidationModel;
+import com.jgoodies.binding.beans.Model;
+import com.jgoodies.validation.Validator;
 
-public interface IPlatformUtil
+/**
+ * 
+ */
+public interface IValidator extends Validator
 {
-    IValidationModel getValidationModel(Object object);
+    Model getModel();
 }

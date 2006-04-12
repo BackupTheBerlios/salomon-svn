@@ -41,17 +41,18 @@ import org.apache.log4j.Logger;
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.layout.FormLayout;
+import com.jgoodies.validation.view.ValidationResultViewFactory;
 
 import edu.uci.ics.jung.graph.Graph;
 
 import salomon.engine.Messages;
 import salomon.engine.controller.gui.ControllerFrame;
-import salomon.engine.controller.gui.PlatformUtil;
 import salomon.engine.controller.gui.StatusBar;
 import salomon.engine.controller.gui.action.ActionManager;
 import salomon.engine.controller.gui.viewer.TaskViewer;
 import salomon.engine.plugin.IPluginManager;
 import salomon.engine.plugin.LocalPlugin;
+import salomon.engine.plugin.PlatformUtil;
 import salomon.engine.plugin.PluginManager;
 import salomon.engine.task.ITask;
 import salomon.engine.task.ITaskManager;
@@ -315,10 +316,10 @@ public final class GraphTaskManagerGUI
             Utils.showErrorMessage("ERR_CANNOT_SHOW_TASK_SETTINGS");
             return;
         }
-        Component taskSettings = settingComponent.getComponent(inputSettings,
+        Component taskSettingsComponent = settingComponent.getComponent(inputSettings,
                 dataEngine);
         int result = JOptionPane.showConfirmDialog(_positionComponent,
-                taskSettings, Messages.getString("TIT_PLUGIN_SETTINGS"), //$NON-NLS-1$
+                taskSettingsComponent, Messages.getString("TIT_PLUGIN_SETTINGS"), //$NON-NLS-1$
                 JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
         if (result == JOptionPane.OK_OPTION) {
             ISettings settings = settingComponent.getSettings();
@@ -332,7 +333,7 @@ public final class GraphTaskManagerGUI
             }
         }
     }
-
+    
     public void viewTasks()
     {
         if (_tasksViewerFrame == null) {

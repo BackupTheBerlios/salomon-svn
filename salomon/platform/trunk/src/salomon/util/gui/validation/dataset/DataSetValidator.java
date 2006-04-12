@@ -26,16 +26,17 @@ import org.apache.log4j.Logger;
 import salomon.platform.IDataEngine;
 import salomon.platform.data.dataset.IDataSet;
 import salomon.platform.exception.PlatformException;
+import salomon.util.gui.validation.IValidator;
 
+import com.jgoodies.binding.beans.Model;
 import com.jgoodies.validation.ValidationResult;
-import com.jgoodies.validation.Validator;
 import com.jgoodies.validation.util.PropertyValidationSupport;
 import com.jgoodies.validation.util.ValidationUtils;
 
 /**
  * 
  */
-public class DataSetValidator implements Validator
+public class DataSetValidator implements IValidator
 {
 
     private static final Logger LOGGER = Logger.getLogger(DataSetValidator.class);
@@ -90,5 +91,10 @@ public class DataSetValidator implements Validator
         IDataSet iDataSet = _dataEngine.getDataSetManager().getDataSet(
                 dataSet.getDataSetName());
         return (iDataSet != null);
+    }
+
+    public Model getModel()
+    {
+        return _dataSet;
     }
 }

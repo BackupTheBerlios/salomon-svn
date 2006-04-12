@@ -19,11 +19,14 @@
  * 
  */
 
-package salomon.plugin;
+package salomon.engine.util.validation;
 
-import salomon.util.gui.validation.IValidationModel;
+import salomon.util.gui.validation.IComponentFactory;
 
-public interface IPlatformUtil
+/**
+ * 
+ */
+public final class ComponentFactory implements IComponentFactory
 {
-    IValidationModel getValidationModel(Object object);
+
 }
