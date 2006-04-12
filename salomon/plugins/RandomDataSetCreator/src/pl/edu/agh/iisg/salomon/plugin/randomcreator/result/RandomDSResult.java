@@ -23,6 +23,7 @@ package pl.edu.agh.iisg.salomon.plugin.randomcreator.result;
 
 import salomon.platform.serialization.IObject;
 import salomon.plugin.IResult;
+import salomon.util.serialization.SimpleString;
 import salomon.util.serialization.SimpleStruct;
 
 /**
@@ -31,32 +32,52 @@ import salomon.util.serialization.SimpleStruct;
 public final class RandomDSResult extends SimpleStruct implements IResult
 {
 
-	public static final String DATA_SET_NAME = "dataSetName";
-	
-	private boolean _isSuccessful = false;
+    public static final String DATA_SET_NAME = "dataSetName";
 
-	public void parseResult(String arg0)
-	{
-		// TODO Auto-generated method stub		
-	}
+    private String _dataSetName;
 
-	public String resultToString()
-	{
-		IObject result = getField(DATA_SET_NAME); 
-		return (result == null ? "" : result.toString());
-	}
+    private boolean _isSuccessful = false;
 
-	public boolean isSuccessful()
-	{
-		return _isSuccessful;
-	}
+    /**
+     * Returns the dataSetName.
+     * @return The dataSetName
+     */
+    public String getDataSetName()
+    {
+        return _dataSetName;
+    }
 
-	/**
-	 * @param isSuccessful the isSuccessful to set
-	 */
-	public void setSuccessful(boolean isSuccessful)
-	{
-		_isSuccessful = isSuccessful;
-	}
-	
+    public void init(IObject o)
+    {
+        SimpleStruct struct = (SimpleStruct) o;
+
+        // setting struct fields
+        SimpleString dataSetName = (SimpleString) struct.getField(DATA_SET_NAME);
+        setField(DATA_SET_NAME, dataSetName);
+        _dataSetName = dataSetName.getValue();
+    }
+
+    public boolean isSuccessful()
+    {
+        return _isSuccessful;
+    }
+
+    /**
+     * Set the value of dataSetName field.
+     * @param dataSetName The dataSetName to set
+     */
+    public void setDataSetName(String dataSetName)
+    {
+        _dataSetName = dataSetName;
+        setField(DATA_SET_NAME, new SimpleString(dataSetName));
+    }
+
+    /**
+     * @param isSuccessful the isSuccessful to set
+     */
+    public void setSuccessful(boolean isSuccessful)
+    {
+        _isSuccessful = isSuccessful;
+    }
+
 }
