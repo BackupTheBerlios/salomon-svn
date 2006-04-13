@@ -248,7 +248,6 @@ public final class TaskManager implements ITaskManager
                     // to avoid object sharing
                     LocalPlugin localPlugin = (LocalPlugin) loadedPlugin.clone();
 
-                    // FIXME: real settings should be loaded
                     // creating default settings
                     // it will be used to parse string representation of
                     // settings
@@ -270,6 +269,20 @@ public final class TaskManager implements ITaskManager
                     }
 
                     task.setSettings(pluginSettings);
+                    
+                    // init last result
+                    LOGGER.debug("loading result...");
+                    String strResult = task.getInfo().getResult();
+                    IResult pluginResult = localPlugin.getResultComponent().getDefaultResult();
+                    if (strResult != null) {
+                        ByteArrayInputStream bis = new ByteArrayInputStream(
+                                strResult.getBytes());
+                        IObject object = XMLSerializer.deserialize(bis);
+                        pluginResult.init(object);
+                        LOGGER.debug("result loaded");
+                    }
+                    
+                    task.setResult(pluginResult);
                     task.setPlugin(localPlugin);
                     tasks.add(task);
                 }

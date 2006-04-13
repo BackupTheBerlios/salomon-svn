@@ -38,6 +38,26 @@ import salomon.platform.exception.PlatformException;
 public final class TaskInfo implements IInfo
 {
 
+    public static final String ACTIVE = "AC";
+
+    public static final String ERROR = "ER";
+
+    public static final String EXCEPTION = "EX";
+
+    public static final String FINISHED = "FI";
+
+    public static final String REALIZATION = "RE";
+
+    public static final String TABLE_NAME = "tasks";
+
+    public static final String VIEW_NAME = "tasks_view";
+
+    private static final String GEN_NAME = "gen_task_id";
+
+    private static final Logger LOGGER = Logger.getLogger(TaskInfo.class);
+
+    private Date _cDate;
+
     /**
      * 
      * @uml.property name="_dbManager"
@@ -46,6 +66,8 @@ public final class TaskInfo implements IInfo
     private DBManager _dbManager;
 
     private String _info;
+
+    private Date _lmDate;
 
     private String _name;
 
@@ -62,10 +84,6 @@ public final class TaskInfo implements IInfo
     private int _taskID;
 
     private int _taskNr;
-
-    private Date _cDate;
-
-    private Date _lmDate;
 
     public TaskInfo(DBManager dbManager)
     {
@@ -141,6 +159,15 @@ public final class TaskInfo implements IInfo
     }
 
     /**
+     * Returns the result.
+     * @return The result
+     */
+    public String getResult()
+    {
+        return _result;
+    }
+
+    /**
      * @return the settings
      */
     public String getSettings()
@@ -185,8 +212,7 @@ public final class TaskInfo implements IInfo
             _info = resultSet.getString("task_info");
             // setting has to be set
             _settings = resultSet.getString("plugin_settings");
-            // TODO: support result loading?
-            // _result = resultSet.getString("plugin_result");
+            _result = resultSet.getString("plugin_result");
             _status = resultSet.getString("status");
             _cDate = resultSet.getDate("c_date");
             _lmDate = resultSet.getDate("lm_date");
@@ -305,22 +331,4 @@ public final class TaskInfo implements IInfo
     {
         _taskNr = taskNr;
     }
-
-    public static final String ACTIVE = "AC";
-
-    public static final String ERROR = "ER";
-
-    public static final String EXCEPTION = "EX";
-
-    public static final String FINISHED = "FI";
-
-    public static final String REALIZATION = "RE";
-
-    public static final String TABLE_NAME = "tasks";
-
-    public static final String VIEW_NAME = "tasks_view";
-
-    private static final String GEN_NAME = "gen_task_id";
-
-    private static final Logger LOGGER = Logger.getLogger(TaskInfo.class);
 }
