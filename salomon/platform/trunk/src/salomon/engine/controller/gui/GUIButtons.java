@@ -75,14 +75,14 @@ public final class GUIButtons
      * 
      * @return JButton
      */
-    JButton getBtnAdd()
-    {
-        if (_btnAdd == null) {
-            _btnAdd = createManipulationButton(
-                    Resources.getString("ICO_TASK_ADD"), Messages.getString("TASK_ADD"), _taskManagerGUI.getActionManager().getAddTaskAction()); //$NON-NLS-1$
-        }
-        return _btnAdd;
-    }
+//    JButton getBtnAdd()
+//    {
+//        if (_btnAdd == null) {
+//            _btnAdd = createManipulationButton(
+//                    Resources.getString("ICO_TASK_ADD"), Messages.getString("TASK_ADD"), _taskManagerGUI.getActionManager().getAddTaskAction()); //$NON-NLS-1$
+//        }
+//        return _btnAdd;
+//    }
 
     /**
      * This method initializes _btnDown

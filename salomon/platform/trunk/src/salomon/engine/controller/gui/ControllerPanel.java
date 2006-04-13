@@ -126,11 +126,6 @@ public final class ControllerPanel extends JPanel implements IControllerPanel
         _taskManagerGUI.refresh();
     }
 
-    public void setTaskEditionManager(GraphTaskManagerGUI taskEditionManager)
-    {
-        // TODO Auto-generated method stub
-
-    }
 
     /**
      * This method initializes _lstPlugins

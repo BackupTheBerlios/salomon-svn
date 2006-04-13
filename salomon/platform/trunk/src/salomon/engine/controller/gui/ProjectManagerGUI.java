@@ -159,7 +159,7 @@ public final class ProjectManagerGUI
 
         } catch (PlatformException e) {
             LOGGER.fatal("", e);
-            Utils.showErrorMessage("ERR_CANNOT_SAVE_PROJECT");
+            Utils.showErrorMessage(Messages.getString("ERR_CANNOT_SAVE_PROJECT"));
         }
     }
 
@@ -173,7 +173,7 @@ public final class ProjectManagerGUI
 
         } catch (PlatformException e) {
             LOGGER.fatal("", e);
-            Utils.showErrorMessage("ERR_CANNOT_CREATE_PROJECT");
+            Utils.showErrorMessage(Messages.getString("ERR_CANNOT_CREATE_PROJECT"));
         }
     }
 
@@ -189,7 +189,7 @@ public final class ProjectManagerGUI
             }
         } catch (Exception e) {
             LOGGER.fatal("", e);
-            Utils.showErrorMessage("Cannot load project.");
+            Utils.showErrorMessage(Messages.getString("ERR_CANNOT_OPEN_PROJECT"));
         }
     }
 
@@ -203,7 +203,7 @@ public final class ProjectManagerGUI
 
         } catch (PlatformException e) {
             LOGGER.fatal("", e);
-            Utils.showErrorMessage("ERR_CANNOT_SAVE_PROJECT");
+            Utils.showErrorMessage(Messages.getString("ERR_CANNOT_SAVE_PROJECT"));
         }
     }
 
@@ -214,7 +214,7 @@ public final class ProjectManagerGUI
                 _projectManager.saveProject();
                 Utils.showInfoMessage("Project saved successfully");
             } else {
-                Utils.showErrorMessage("ERR_CANNOT_SAVE_PROJECT");
+                Utils.showErrorMessage(Messages.getString("ERR_CANNOT_SAVE_PROJECT"));
                 return;
             }
             _statusBar.setItem(SB_CUR_PROJECT,

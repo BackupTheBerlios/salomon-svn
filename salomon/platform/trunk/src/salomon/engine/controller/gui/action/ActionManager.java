@@ -41,16 +41,7 @@ public final class ActionManager
      */
     private AddPluginAction _addPluginAction;
 
-    /**
-     * 
-     * @uml.property name="_addTaskAction"
-     * @uml.associationEnd multiplicity="(0 1)"
-     */
-    private AddTaskAction _addTaskAction;
-
     private ChoosePluginFileAction _choosePluginFileAction;
-
-    private SwitchPluginLocationTypeAction _switchPluginLocationTypeAction;
 
     /**
      * @uml.property name="_editProjectAction"
@@ -172,6 +163,8 @@ public final class ActionManager
      */
     private SolutionManagerGUI _solutionManagerGUI;
 
+    private SwitchPluginLocationTypeAction _switchPluginLocationTypeAction;
+
     /**
      * 
      * @uml.property name="_taskManagerGUI"
@@ -249,14 +242,6 @@ public final class ActionManager
             _addPluginAction = new AddPluginAction(_pluginManagerGUI);
         }
         return _addPluginAction;
-    }
-
-    public AddTaskAction getAddTaskAction()
-    {
-        if (_addTaskAction == null) {
-            _addTaskAction = new AddTaskAction(_taskManagerGUI);
-        }
-        return _addTaskAction;
     }
 
     public ChoosePluginFileAction getChoosePluginFileAction()
