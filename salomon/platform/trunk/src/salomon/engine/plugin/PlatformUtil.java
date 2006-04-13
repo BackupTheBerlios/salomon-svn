@@ -21,13 +21,12 @@
 
 package salomon.engine.plugin;
 
-import javax.swing.JComponent;
-
-import com.jgoodies.validation.ValidationResultModel;
-import com.jgoodies.validation.view.ValidationResultViewFactory;
-
+import salomon.engine.util.validation.ValidationModel;
 import salomon.plugin.IPlatformUtil;
 import salomon.util.gui.validation.IValidationModel;
+import salomon.util.gui.validation.IValidator;
+
+import com.jgoodies.validation.ValidationResultModel;
 
 /**
  * 
@@ -37,25 +36,56 @@ public final class PlatformUtil implements IPlatformUtil
 
     private ValidationResultModel _validationResultModel;
 
+    //    /**
+    //     * @see salomon.plugin.IPlatformUtil#setValidationModel(com.jgoodies.validation.ValidationResultModel)
+    //     */
+    //    public void setValidationModel(ValidationResultModel validationResultModel)
+    //    {
+    //        _validationResultModel = validationResultModel;
+    //    }
+
+//    public JComponent getValidationComponent()
+//    {
+//        JComponent component = null;
+//        if (_validationResultModel != null) {
+//            component = ValidationResultViewFactory.createReportIconAndTextPane(_validationResultModel);
+//        }
+//        return component;
+//    }
+
+    public IValidationModel getValidationModel(IValidator validator)
+    {
+        ValidationModel validationModel = new ValidationModel(validator);
+        _validationResultModel = validationModel.getValidationResultModel();
+//        _validationResultModel.addPropertyChangeListener(new PropertyChangeListener() {
+//            public void propertyChange(PropertyChangeEvent e)
+//            {
+//                if (_validationResultModel.hasErrors()) {
+//                    System.out.println("Dupa");
+//                } else {
+//                    System.out.println("OKS");
+//                }
+//                _settingsPanel.refresh();
+//            }
+//        });
+        return validationModel;
+    }
+
     /**
-     * @see salomon.plugin.IPlatformUtil#setValidationModel(com.jgoodies.validation.ValidationResultModel)
+     * Returns the validationResultModel.
+     * @return The validationResultModel
      */
-    public void setValidationModel(ValidationResultModel validationResultModel)
+    public ValidationResultModel getValidationResultModel()
+    {
+        return _validationResultModel;
+    }
+
+    /**
+     * Set the value of validationResultModel field.
+     * @param validationResultModel The validationResultModel to set
+     */
+    public void setValidationResultModel(ValidationResultModel validationResultModel)
     {
         _validationResultModel = validationResultModel;
-    }
-
-    public JComponent getValidationComponent()
-    {
-        JComponent component = null;
-        if (_validationResultModel != null) {
-            component = ValidationResultViewFactory.createReportIconAndTextPane(_validationResultModel);
-        }
-        return component;
-    }
-
-    public IValidationModel getValidationModel(Object object)
-    {
-        throw new UnsupportedOperationException("Method PlatformUtil.getValidationModel() not implemented yet!");
     }
 }

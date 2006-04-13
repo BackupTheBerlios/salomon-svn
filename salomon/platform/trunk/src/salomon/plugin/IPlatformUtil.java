@@ -21,9 +21,11 @@
 
 package salomon.plugin;
 
+
 import salomon.util.gui.validation.IValidationModel;
+import salomon.util.gui.validation.IValidator;
 
 public interface IPlatformUtil
 {
-    IValidationModel getValidationModel(Object object);
+    IValidationModel getValidationModel(IValidator validator);
 }

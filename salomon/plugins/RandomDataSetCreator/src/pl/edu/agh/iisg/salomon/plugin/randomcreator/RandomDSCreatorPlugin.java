@@ -119,12 +119,10 @@ public final class RandomDSCreatorPlugin implements IPlugin
         return _resultComponent;
     }
 
-
-    // FIXME:
     public ISettingComponent getSettingComponent(IPlatformUtil platformUtil)
     {
         if (_settingComponent == null) {
-            _settingComponent = new RandomDSSettingComponent();
+            _settingComponent = new RandomDSSettingComponent(platformUtil);
         }
         return _settingComponent;
     }

@@ -39,12 +39,6 @@ import javax.swing.JTextField;
 
 import org.apache.log4j.Logger;
 
-import com.jgoodies.forms.builder.DefaultFormBuilder;
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.validation.view.ValidationResultViewFactory;
-
-import edu.uci.ics.jung.graph.Graph;
-
 import salomon.engine.Messages;
 import salomon.engine.controller.gui.ControllerFrame;
 import salomon.engine.controller.gui.StatusBar;
@@ -59,17 +53,20 @@ import salomon.engine.task.ITaskManager;
 import salomon.engine.task.Task;
 import salomon.engine.task.TaskInfo;
 import salomon.engine.task.TaskManager;
-
-import salomon.util.gui.Utils;
-
 import salomon.platform.IDataEngine;
 import salomon.platform.exception.PlatformException;
-
 import salomon.plugin.IPlugin;
 import salomon.plugin.IResult;
 import salomon.plugin.IResultComponent;
 import salomon.plugin.ISettingComponent;
 import salomon.plugin.ISettings;
+import salomon.util.gui.Utils;
+
+import com.jgoodies.forms.builder.DefaultFormBuilder;
+import com.jgoodies.forms.layout.FormLayout;
+import com.jgoodies.validation.ValidationResultModel;
+
+import edu.uci.ics.jung.graph.Graph;
 
 public final class GraphTaskManagerGUI
 {
@@ -86,8 +83,6 @@ public final class GraphTaskManagerGUI
 
     private JPanel _pnlTaskProperties;
 
-    private JComponent _positionComponent;
-
     private TaskGraphEditor _taskGraphEditor;
 
     private TaskManager _taskManager;
@@ -103,7 +98,7 @@ public final class GraphTaskManagerGUI
     private JTextField _txtTaskName;
 
     private JTextField _txtTaskStatus;
-    
+
     private PlatformUtil _platformUtil;
 
     public GraphTaskManagerGUI(ITaskManager tasksManager,
@@ -200,7 +195,7 @@ public final class GraphTaskManagerGUI
     {
         List<ITask> executionPlan = GraphPlanner.makePlan(_taskGraphEditor.getGraph());
         if (executionPlan == null) {
-            JOptionPane.showMessageDialog(_positionComponent,
+            JOptionPane.showMessageDialog(_parent,
                     "Cannot create plan. There is a loop!",
                     "Cannot create plan!", JOptionPane.PLAIN_MESSAGE); //$NON-NLS-1$			
         } else {
@@ -283,7 +278,7 @@ public final class GraphTaskManagerGUI
         }
         comp.setSize(prefDim);
         JOptionPane.showMessageDialog(
-                _positionComponent,
+                _parent,
                 comp,
                 Messages.getString("TIT_PLUGIN_RESULT"), JOptionPane.PLAIN_MESSAGE); //$NON-NLS-1$
     }
@@ -304,6 +299,7 @@ public final class GraphTaskManagerGUI
             Utils.showErrorMessage("ERR_CANNOT_SHOW_TASK_SETTINGS");
             return;
         }
+        // if settings are null, default settings are taken
         if (inputSettings == null) {
             inputSettings = plugin.getSettingComponent(_platformUtil).getDefaultSettings();
         }
@@ -316,12 +312,26 @@ public final class GraphTaskManagerGUI
             Utils.showErrorMessage("ERR_CANNOT_SHOW_TASK_SETTINGS");
             return;
         }
-        Component taskSettingsComponent = settingComponent.getComponent(inputSettings,
-                dataEngine);
-        int result = JOptionPane.showConfirmDialog(_positionComponent,
-                taskSettingsComponent, Messages.getString("TIT_PLUGIN_SETTINGS"), //$NON-NLS-1$
-                JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
-        if (result == JOptionPane.OK_OPTION) {
+        Component taskSettingsComponent = settingComponent.getComponent(
+                inputSettings, dataEngine);
+
+        // showing dialog
+        SettingsDialog settingsDialog = new SettingsDialog(_parent);
+        settingsDialog.setSettingsComponent(taskSettingsComponent);
+        ValidationResultModel resultModel = _platformUtil.getValidationResultModel();
+
+        // if resultModel == null 
+        //it means plugin doesn't use validation
+        if (resultModel != null) {
+            settingsDialog.setValidationModel(resultModel);
+        }
+
+        if (settingsDialog.showSettingsDialog()) {
+
+            //        int result = JOptionPane.showConfirmDialog(_positionComponent,
+            //                taskSettingsComponent, , //$NON-NLS-1$
+            //                JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+            //        if (result == JOptionPane.OK_OPTION) {
             ISettings settings = settingComponent.getSettings();
             LOGGER.info("settings: " + settings); //$NON-NLS-1$
             try {
@@ -333,7 +343,7 @@ public final class GraphTaskManagerGUI
             }
         }
     }
-    
+
     public void viewTasks()
     {
         if (_tasksViewerFrame == null) {

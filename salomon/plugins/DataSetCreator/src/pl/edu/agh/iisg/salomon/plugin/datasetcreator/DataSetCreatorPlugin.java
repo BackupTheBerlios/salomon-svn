@@ -111,7 +111,7 @@ public final class DataSetCreatorPlugin implements IPlugin
     public ISettingComponent getSettingComponent(IPlatformUtil platformUtil)
     {
         if (_settingComponent == null) {
-            _settingComponent = new CreatorSettingComponent();
+            _settingComponent = new CreatorSettingComponent(platformUtil);
         }
         return _settingComponent;
     }

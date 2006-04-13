@@ -27,8 +27,7 @@ import salomon.util.serialization.SimpleString;
 import salomon.util.serialization.SimpleStruct;
 
 /**
- * @author nico
- * FIXME
+ *
  */
 public final class CreatorResult extends SimpleStruct implements IResult
 {
@@ -48,19 +47,6 @@ public final class CreatorResult extends SimpleStruct implements IResult
         return _isSuccessful;
     }
 
-    // FIXME: remove this method
-    public void parseResult(String arg0)
-    {
-        // TODO Auto-generated method stub		
-    }
-
-    // FIXME: remove this method
-    public String resultToString()
-    {
-        IObject result = getField(DATA_SET_NAME);
-        return (result == null ? "" : result.toString());
-    }
-
     public void setDataSetName(String dataSetName)
     {
         _dataSetName = dataSetName;
@@ -77,7 +63,11 @@ public final class CreatorResult extends SimpleStruct implements IResult
 
     public void init(IObject object)
     {
-        throw new UnsupportedOperationException("Method CreatorResult.init() not implemented yet!");
+        SimpleStruct struct = (SimpleStruct) object;
+        // setting struct fields
+        SimpleString dataSetName = (SimpleString) struct.getField(DATA_SET_NAME);
+        setField(DATA_SET_NAME, dataSetName);
+        _dataSetName = dataSetName.getValue();        
     }
 
 }

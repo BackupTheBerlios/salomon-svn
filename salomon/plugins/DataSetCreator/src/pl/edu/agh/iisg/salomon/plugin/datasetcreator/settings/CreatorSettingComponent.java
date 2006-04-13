@@ -48,16 +48,17 @@ import salomon.platform.data.ITable;
 import salomon.platform.data.dataset.ICondition;
 import salomon.platform.data.dataset.IDataSetManager;
 import salomon.platform.exception.PlatformException;
+import salomon.plugin.IPlatformUtil;
 import salomon.plugin.ISettingComponent;
 import salomon.plugin.ISettings;
+import salomon.util.gui.validation.IComponentFactory;
+import salomon.util.gui.validation.IValidationModel;
 import salomon.util.gui.validation.dataset.DataSet;
-import salomon.util.gui.validation.dataset.DataSetModel;
+import salomon.util.gui.validation.dataset.DataSetValidator;
 
-import com.jgoodies.binding.adapter.BasicComponentFactory;
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.factories.ButtonBarFactory;
 import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.validation.view.ValidationResultViewFactory;
 
 /**
  * @author nico
@@ -93,7 +94,12 @@ public class CreatorSettingComponent implements ISettingComponent
 
     private JTextField _txtDataSetName;
 
-    private JComponent _validationResult;
+    private IPlatformUtil _platformUtil;
+
+    public CreatorSettingComponent(IPlatformUtil platformUtil)
+    {
+        _platformUtil = platformUtil;
+    }
 
     /**
      * 
@@ -257,7 +263,6 @@ public class CreatorSettingComponent implements ISettingComponent
         builder.setDefaultDialogBorder();
 
         builder.append("Dataset name", _txtDataSetName);
-        builder.append(_validationResult, 3);
 
         mainPanel.add(listPanel, BorderLayout.CENTER);
         mainPanel.add(builder.getPanel(), BorderLayout.SOUTH);
@@ -300,11 +305,15 @@ public class CreatorSettingComponent implements ISettingComponent
         _operations = new JComboBox(new String[]{"=", "<", ">"});
         _txtColumnName = new JTextField();
         _txtColumnValue = new JTextField();
-
+        
+        
+        // validation
         _dataSet = new DataSet();
-        DataSetModel dataSetModel = new DataSetModel(_dataSet, _dataEngine);
-        _txtDataSetName = BasicComponentFactory.createTextField(dataSetModel.getModel(DataSet.PROPERTYNAME_DATASET_NAME));
-        _validationResult = ValidationResultViewFactory.createReportIconAndTextPane(dataSetModel.getValidationResultModel());
+        DataSetValidator dataSetValidator = new DataSetValidator(_dataSet,
+                _dataEngine);        
+        IValidationModel validationModel = _platformUtil.getValidationModel(dataSetValidator);
+        IComponentFactory componentFactory = validationModel.getComponentFactory();        
+        _txtDataSetName = componentFactory.createTextField(DataSet.PROPERTYNAME_DATASET_NAME, false);
     }
 
     private void initSettingComponent(ISettings settings)

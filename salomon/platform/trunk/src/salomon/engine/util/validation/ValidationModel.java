@@ -24,8 +24,6 @@ package salomon.engine.util.validation;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-import org.apache.log4j.Logger;
-
 import salomon.util.gui.validation.IComponentFactory;
 import salomon.util.gui.validation.IValidationModel;
 import salomon.util.gui.validation.IValidator;
@@ -41,8 +39,7 @@ import com.jgoodies.validation.util.DefaultValidationResultModel;
 public final class ValidationModel extends PresentationModel
         implements IValidationModel
 {
-
-    private static final Logger LOGGER = Logger.getLogger(ValidationModel.class);
+    private IComponentFactory _componentFactory;
 
     private final ValidationResultModel _validationResultModel;
 
@@ -55,12 +52,12 @@ public final class ValidationModel extends PresentationModel
         _validationResultModel = new DefaultValidationResultModel();
         initEventHandling();
         updateValidationResult();
+        _componentFactory = new ComponentFactory(this);
     }
 
     public IComponentFactory getComponentFactory()
     {
-        throw new UnsupportedOperationException(
-                "Method ValidationModel.getComponentFactory() not implemented yet!");
+        return _componentFactory;
     }
 
     public ValidationResultModel getValidationResultModel()
@@ -77,12 +74,6 @@ public final class ValidationModel extends PresentationModel
 
     private void updateValidationResult()
     {
-        // FIXME: check if getBean() == validator.getObject();
-        //        Object object = getBean();
-        if (getBean() != _validator.getModel()) {
-            LOGGER.fatal("getBean() != _validator.getObject()");
-            System.exit(-1);
-        }
         ValidationResult result = _validator.validate();
         _validationResultModel.setResult(result);
     }

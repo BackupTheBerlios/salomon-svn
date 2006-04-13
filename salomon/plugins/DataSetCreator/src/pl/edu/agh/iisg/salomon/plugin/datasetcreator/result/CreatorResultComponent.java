@@ -57,9 +57,7 @@ public class CreatorResultComponent implements IResultComponent
 			_resultComponent = createResultComponent();
 		}
 		CreatorResult cResult = (CreatorResult) result;
-        // FIXME: add init() method to IResult interface
-		SimpleString dataSetName = (SimpleString) cResult.getField(CreatorResult.DATA_SET_NAME);
-		_txtDataSetName.setText(dataSetName == null ? "" : dataSetName.getValue());		
+		_txtDataSetName.setText(cResult.getDataSetName());		
 		return _resultComponent;
 	}
 

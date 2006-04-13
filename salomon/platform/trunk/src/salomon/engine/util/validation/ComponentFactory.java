@@ -21,12 +21,71 @@
 
 package salomon.engine.util.validation;
 
+import javax.swing.JFormattedTextField;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+
 import salomon.util.gui.validation.IComponentFactory;
+
+import com.jgoodies.binding.adapter.BasicComponentFactory;
 
 /**
  * 
  */
 public final class ComponentFactory implements IComponentFactory
 {
+    private ValidationModel _validationModel;
+
+    /**
+     * @param validationModel
+     */
+    public ComponentFactory(ValidationModel validationModel)
+    {
+        _validationModel = validationModel;
+    }
+
+    /**
+     * @see salomon.engine.util.validation.IComponentFactoryEx#createIntegerField(java.lang.String)
+     */
+    public JFormattedTextField createIntegerField(String propertyName)
+    {
+        return BasicComponentFactory.createIntegerField(_validationModel.getModel(propertyName));
+    }
+
+    /**
+     * @see salomon.util.gui.validation.IComponentFactory#createTextArea(java.lang.String)
+     */
+    public JTextArea createTextArea(String propertyName)
+    {
+        return createTextArea(propertyName, true);
+    }
+
+    /**
+     * @see salomon.util.gui.validation.IComponentFactory#createTextArea(java.lang.String, boolean)
+     */
+    public JTextArea createTextArea(String propertyName,
+            boolean commitOnFocusLost)
+    {
+        return BasicComponentFactory.createTextArea(
+                _validationModel.getModel(propertyName), commitOnFocusLost);
+    }
+
+    /**
+     * @see salomon.util.gui.validation.IComponentFactory#createTextField(java.lang.String)
+     */
+    public JTextField createTextField(String propertyName)
+    {
+        return createTextField(propertyName, true);
+    }
+
+    /**
+     * @see salomon.util.gui.validation.IComponentFactory#createTextField(java.lang.String, boolean)
+     */
+    public JTextField createTextField(String propertyName,
+            boolean commitOnFocusLost)
+    {
+        return BasicComponentFactory.createTextField(
+                _validationModel.getModel(propertyName), commitOnFocusLost);
+    }
 
 }

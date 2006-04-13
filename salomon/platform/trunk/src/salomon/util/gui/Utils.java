@@ -23,6 +23,7 @@ package salomon.util.gui;
 
 import java.awt.Component;
 import java.awt.Point;
+import java.awt.Window;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
@@ -46,13 +47,13 @@ public final class Utils
 {
     private Component _parent;
 
-    private Point getCenterLocationImpl(JFrame frame)
+    private Point getCenterLocationImpl(Window window)
     {
         Point location = new Point();
         location.x = _parent.getLocation().x
-                + (_parent.getSize().width - frame.getWidth()) / 2;
+                + (_parent.getSize().width - window.getWidth()) / 2;
         location.y = _parent.getLocation().y
-                + (_parent.getSize().height - frame.getHeight()) / 2;
+                + (_parent.getSize().height - window.getHeight()) / 2;
         return location;
     }
 
@@ -133,9 +134,9 @@ public final class Utils
         return table;
     }
 
-    public static Point getCenterLocation(JFrame frame)
+    public static Point getCenterLocation(Window window)
     {
-        return getInstance().getCenterLocationImpl(frame);
+        return getInstance().getCenterLocationImpl(window);
     }
 
     /**
