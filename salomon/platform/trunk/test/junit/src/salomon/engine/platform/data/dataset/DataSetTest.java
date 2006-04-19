@@ -322,6 +322,21 @@ public class DataSetTest extends TestCase
             _dataSet2 = (DataSet) _dataSetManager.getDataSet(dataSetID);
         }
     }
+    
+    public void testSelectData() throws PlatformException
+    {
+        LOGGER.info("DataSetTest.testSelectData()");
+        DataSet mainDataSet = (DataSet) _dataSetManager.getMainDataSet();
+        ITable table = _metaData.getTable("persons");
+        IColumn[] keys = table.getPrimaryKeys();
+        
+        IData data = mainDataSet.selectData(keys, null);
+        while (data.next()) {
+            Object[] obj = data.getData();
+            LOGGER.debug("obj: " + obj[0]);
+        }
+        data.close();
+    }
 
     private static ICondition _cond1ds1;
 

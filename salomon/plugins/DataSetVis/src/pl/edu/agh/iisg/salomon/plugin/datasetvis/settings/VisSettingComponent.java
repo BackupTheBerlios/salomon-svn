@@ -22,17 +22,16 @@
 package pl.edu.agh.iisg.salomon.plugin.datasetvis.settings;
 
 import java.awt.Component;
-import java.awt.Dimension;
 
 import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import salomon.platform.IDataEngine;
 import salomon.plugin.ISettingComponent;
 import salomon.plugin.ISettings;
-import salomon.util.serialization.SimpleString;
+
+import com.jgoodies.forms.builder.DefaultFormBuilder;
+import com.jgoodies.forms.layout.FormLayout;
 
 /**
  * @author nico
@@ -73,29 +72,28 @@ public final class VisSettingComponent implements ISettingComponent
 	 */
 	public ISettings getSettings()
 	{
-		ISettings settings = new VisSettings();
+		VisSettings settings = new VisSettings();
 		// setting data seta name
-		SimpleString dataSetName = new SimpleString(_txtDataSetName.getText());
-		settings.setField(VisSettings.DATA_SET_NAME, dataSetName);
+		settings.setDataSetName(_txtDataSetName.getText());
 		return settings;
 	}
 
 	private JComponent createSettingComponent()
 	{
-		JComponent panel = new JPanel();
-		panel.add(new JLabel("Data set name"));
-		_txtDataSetName.setPreferredSize(new Dimension(100, 20));
-		panel.add(_txtDataSetName);
-		return panel;
+        FormLayout layout = new FormLayout(
+                "fill:default:grow, 3dlu, fill:100dlu:grow", "");
+        DefaultFormBuilder builder = new DefaultFormBuilder(layout);
+        builder.append("Dataset name", _txtDataSetName);
+		return builder.getPanel();
 	}
 
 	private void initSettingsComponent(ISettings settings)
 	{
 		VisSettings vSettings = (VisSettings) settings;
-		SimpleString dataSetName = (SimpleString) vSettings.getField(VisSettings.DATA_SET_NAME);
+		String dataSetName = vSettings.getDataSetName();
 		_txtDataSetName.setText(dataSetName == null
 				? ""
-				: dataSetName.getValue());
+				: dataSetName);
 	}
 
 }

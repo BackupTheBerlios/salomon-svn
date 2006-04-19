@@ -33,6 +33,8 @@ public final class DBTable implements ITable
 
     private String _name;
 
+    private DBColumn[] _primaryKeys;
+
     public DBTable(String name)
     {
         _name = name;
@@ -88,6 +90,15 @@ public final class DBTable implements ITable
         return _name;
     }
 
+    /**
+     * Returns the primaryKeys.
+     * @return The primaryKeys
+     */
+    public DBColumn[] getPrimaryKeys()
+    {
+        return _primaryKeys;
+    }
+
     @Override
     public int hashCode()
     {
@@ -108,4 +119,14 @@ public final class DBTable implements ITable
     {
         _columns = columns;
     }
+
+    /**
+     * Set the value of primaryKeys field.
+     * @param primaryKeys The primaryKeys to set
+     */
+    void setPrimaryKeys(DBColumn[] primaryKeys)
+    {
+        _primaryKeys = primaryKeys;
+    }
+
 }

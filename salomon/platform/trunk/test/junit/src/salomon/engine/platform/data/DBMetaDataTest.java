@@ -85,6 +85,26 @@ public class DBMetaDataTest extends TestCase
         assertTrue(column1.hashCode() == column2.hashCode());
         assertTrue(table1.hashCode() == table2.hashCode());
     }
+    
+    public void testGetPrimaryKeys() throws Exception
+    {
+        LOGGER.info("DBMetaDataTest.testGetPrimaryKeys()");
+        DBMetaData metaData = TestObjectFactory.getMetaData();
+        // singlecolumn primary key
+        ITable table = metaData.getTable("Projects");
+        IColumn[] columns = table.getPrimaryKeys();
+        for (IColumn column : columns) {
+            LOGGER.debug("column: " + column.getName() + "("
+                    + column.getType() + ")");
+        }
+        // multicolumn primary key
+        table = metaData.getTable("tasks");
+        columns = table.getPrimaryKeys();
+        for (IColumn column : columns) {
+            LOGGER.debug("column: " + column.getName() + "("
+                    + column.getType() + ")");
+        }
+    }
 
     private static final Logger LOGGER = Logger.getLogger(DBMetaDataTest.class);
 }

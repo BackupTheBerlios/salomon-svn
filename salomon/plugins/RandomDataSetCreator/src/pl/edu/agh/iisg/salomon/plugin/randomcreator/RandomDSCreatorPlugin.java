@@ -21,12 +21,30 @@
 
 package pl.edu.agh.iisg.salomon.plugin.randomcreator;
 
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Random;
+
 import org.apache.log4j.Logger;
 
+import pl.edu.agh.iisg.salomon.plugin.randomcreator.result.RandomDSResult;
 import pl.edu.agh.iisg.salomon.plugin.randomcreator.result.RandomDSResultComponent;
 import pl.edu.agh.iisg.salomon.plugin.randomcreator.settings.RandomDSSettingComponent;
+import pl.edu.agh.iisg.salomon.plugin.randomcreator.settings.RandomDSSettings;
+import pl.edu.agh.iisg.salomon.plugin.randomcreator.settings.TableDescription;
 import salomon.platform.IDataEngine;
 import salomon.platform.IEnvironment;
+import salomon.platform.data.IColumn;
+import salomon.platform.data.IMetaData;
+import salomon.platform.data.ITable;
+import salomon.platform.data.dataset.ICondition;
+import salomon.platform.data.dataset.IData;
+import salomon.platform.data.dataset.IDataSet;
+import salomon.platform.data.dataset.IDataSetManager;
+import salomon.platform.exception.PlatformException;
 import salomon.plugin.IPlatformUtil;
 import salomon.plugin.IPlugin;
 import salomon.plugin.IResult;
@@ -52,60 +70,57 @@ public final class RandomDSCreatorPlugin implements IPlugin
     public IResult doJob(IDataEngine dataEngine, IEnvironment env,
             ISettings settings)
     {
-        //		RandomDSSettings cSettings = (RandomDSSettings) settings;
-        //
-        //		SimpleString dataSetName = (SimpleString) cSettings.getField(RandomDSSettings.DATA_SET_NAME);
-        //		// FIXME:
-        //		// SimpleArray condArray = (SimpleArray)
-        //		// cSettings.getField(CreatorSettings.CONDITIONS);
-        //
-        //		SimpleStruct condStruct = (SimpleStruct) cSettings.getField(RandomDSSettings.CONDITIONS);
-        //
-        //		SimpleString elem1 = (SimpleString) condStruct.getField(RandomDSSettings.ELEM1);
-        //		SimpleString elem2 = (SimpleString) condStruct.getField(RandomDSSettings.ELEM2);
-        //		SimpleString elem3 = (SimpleString) condStruct.getField(RandomDSSettings.ELEM3);
-        //		SimpleString elem4 = (SimpleString) condStruct.getField(RandomDSSettings.ELEM4);
-        //		SimpleString elem5 = (SimpleString) condStruct.getField(RandomDSSettings.ELEM5);
-        //
-        //		IDataSetManager dataSetManager = dataEngine.getDataSetManager();
-        //
-        //		boolean isSuccessfull = false;
-        //
-        //		try {
-        //			ICondition[] conditions = new ICondition[5];
-        //			int i = 0;
-        //			IObject[] values = new IObject[]{elem1, elem2, elem3, elem4, elem5};
-        //			for (IObject object : values) {
-        //				if (object != null) {
-        //					String value = ((SimpleString) object).getValue();
-        //
-        //					conditions[i] = dataSetManager.createCondition(value);
-        //
-        //					++i;
-        //				}
-        //			}
-        //
-        //			IDataSet mainDataSet = dataSetManager.getMainDataSet();
-        //			IDataSet subSet = mainDataSet.createSubset(conditions);
-        //			subSet.setName(dataSetName.getValue());
-        //			dataSetManager.add(subSet);
-        //			
-        //			isSuccessfull = true;
-        //		} catch (PlatformException e) {
-        //			LOGGER.fatal("", e);
-        //		}
-        //
-        //		RandomDSResult result = new RandomDSResult();
-        //		result.setSuccessful(isSuccessfull);
-        //		String resultDataSetName = null;
-        //		if (isSuccessfull) {
-        //			resultDataSetName = dataSetName.getValue();
-        //		} else {
-        //			resultDataSetName = "ERROR";
-        //		}
-        //		result.setField(RandomDSResult.DATA_SET_NAME, new SimpleString(resultDataSetName));
-        //		return result;
-        return null;
+        RandomDSSettings rSettings = (RandomDSSettings) settings;
+
+        TableDescription[] descriptions = rSettings.getTableDesctiptions();
+        String dataSetName = rSettings.getDataSetName();
+
+        IDataSetManager dataSetManager = dataEngine.getDataSetManager();
+        IMetaData metaData = dataEngine.getMetaData();
+        boolean isSuccessfull = false;
+
+        try {
+            // getting information about tables
+            // that should be used as conditions
+            List<ICondition> conditions = new LinkedList<ICondition>();
+            LOGGER.info("Creating dataset: " + dataSetName);
+            for (TableDescription description : descriptions) {
+                String tableName = description.getTableName();
+                LOGGER.debug("Table name: " + tableName);
+                ITable table = metaData.getTable(tableName);
+
+                //FIXME: getPrimaryKeys()
+                IColumn[] primaryKeys = table.getPrimaryKeys();
+                conditions.addAll(generateConditionsForTable(dataSetManager,
+                        primaryKeys, description.getRowCount()));
+            }
+
+            // creating data set basing on generated conditions
+            IDataSet mainDataSet = dataSetManager.getMainDataSet();
+            ICondition[] condArray = new ICondition[conditions.size()];
+            condArray = conditions.toArray(condArray);
+
+            IDataSet subSet = mainDataSet.createSubset(condArray);
+            subSet.setName(dataSetName);
+            dataSetManager.add(subSet);
+            LOGGER.info("Dataset created");
+
+            isSuccessfull = true;
+        } catch (PlatformException e) {
+            LOGGER.fatal("", e);
+        }
+
+        //setting result
+        RandomDSResult result = new RandomDSResult();
+        result.setSuccessful(isSuccessfull);
+        String resultDataSetName = null;
+        if (isSuccessfull) {
+            resultDataSetName = dataSetName;
+        } else {
+            resultDataSetName = "ERROR";
+        }
+        result.setDataSetName(resultDataSetName);
+        return result;
     }
 
     /**
@@ -125,5 +140,39 @@ public final class RandomDSCreatorPlugin implements IPlugin
             _settingComponent = new RandomDSSettingComponent(platformUtil);
         }
         return _settingComponent;
+    }
+
+    private Collection<ICondition> generateConditionsForTable(
+            IDataSetManager dataManager, IColumn[] primaryKeys, int rowCount)
+            throws PlatformException
+    {
+        
+        List<ICondition> conditions = new LinkedList<ICondition>();
+
+        // getting all data with from primary key columns
+        IData data = dataManager.getMainDataSet().selectData(primaryKeys, null);
+        List<Object> primaryKeyValues = new LinkedList<Object>();
+        while (data.next()) {
+            // TODO: add support for multicolumn primary keys
+            // supports only tables with singlecolumn primary keys
+            Object[] primaryColumn = data.getData();
+            LOGGER.debug(primaryKeys[0] + " = " + primaryColumn[0]);
+            primaryKeyValues.add(primaryColumn[0]);
+        }
+        data.close();
+        
+        // shuffling result list
+        Collections.shuffle(primaryKeyValues, new Random(System.currentTimeMillis()));        
+
+        // getting first rowCount elements from the list of values
+        // and generating appropriate conditions
+        int i = 0;
+        for (Iterator iterator = primaryKeyValues.iterator(); iterator.hasNext() && i < rowCount; ++i) {
+            ICondition condition = dataManager.createEqualsCondition(primaryKeys[0], iterator.next());
+            LOGGER.debug("Adding condition: " + condition);
+            conditions.add(condition);
+        }
+
+        return conditions;
     }
 }

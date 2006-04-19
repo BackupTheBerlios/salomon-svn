@@ -70,9 +70,13 @@ public final class DBMetaData implements IMetaData
         // getting column for tables
         int i = 0;
         LinkedList<DBColumn> columns = new LinkedList<DBColumn>();
+        LinkedList<DBColumn> primaryKeys = new LinkedList<DBColumn>();
         for (String tableName : tables) {
             _tables[i] = new DBTable(tableName);
             columns.clear();
+            primaryKeys.clear();
+            
+            // setting columns
             resultSet = _manager.getDatabaseMetaData().getColumns(null, null,
                     tableName, null);
             while (resultSet.next()) {
@@ -81,11 +85,28 @@ public final class DBMetaData implements IMetaData
                 DBColumn column = new DBColumn(_tables[i], colName, colType);
                 columns.add(column);
             }
-            resultSet.close();
-
+            resultSet.close();            
+            
             DBColumn[] colArray = new DBColumn[columns.size()];
             colArray = columns.toArray(colArray);
             _tables[i].setColumns(colArray);
+            
+            // setting primary keys
+            resultSet = _manager.getDatabaseMetaData().getPrimaryKeys(null, null, tableName);
+            while (resultSet.next()) {
+                String colName = resultSet.getString("column_name");
+                // searching for appropriate column
+                for (DBColumn column : columns) {
+                    if (column.getName().equals(colName)) {
+                        primaryKeys.add(column);
+                    }                    
+                }                
+            }
+            resultSet.close();  
+            DBColumn[] keysArray = new DBColumn[primaryKeys.size()];
+            keysArray = primaryKeys.toArray(keysArray);
+            _tables[i].setPrimaryKeys(keysArray);
+            
             ++i;
         }
     }

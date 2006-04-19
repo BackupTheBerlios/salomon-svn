@@ -24,7 +24,7 @@ package pl.edu.agh.iisg.salomon.plugin.randomcreator.settings;
 /**
  * 
  */
-final class TableDescription
+public final class TableDescription
 {
     private int _rowCount;
 

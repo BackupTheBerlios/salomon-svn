@@ -135,6 +135,8 @@ public class DataSet implements IDataSet
         if (columns != null) {
             for (IColumn column : columns) {
                 select.addColumn(column.getName());
+                // adding table regarding this column name
+                select.addTable(column.getTable().getName());
             }
         }
 

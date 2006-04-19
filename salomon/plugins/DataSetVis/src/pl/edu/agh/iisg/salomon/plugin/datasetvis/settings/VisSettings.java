@@ -22,8 +22,8 @@
 package pl.edu.agh.iisg.salomon.plugin.datasetvis.settings;
 
 import salomon.platform.serialization.IObject;
-import salomon.platform.serialization.IStruct;
 import salomon.plugin.ISettings;
+import salomon.util.serialization.SimpleString;
 import salomon.util.serialization.SimpleStruct;
 
 /**
@@ -31,17 +31,39 @@ import salomon.util.serialization.SimpleStruct;
  */
 public final class VisSettings extends SimpleStruct implements ISettings
 {
-	public static final String DATA_SET_NAME = "dataSetName";
+    public static final String DATA_SET_NAME = "dataSetName";
 
-	/**
-	 * 
-	 */
-	public void init(IObject o)
-	{
-		IStruct struct = (IStruct) o;
-		for (String field : struct.getFieldNames()) {
-			this.setField(field, struct.getField(field));
-		}
-	}
+    private String _dataSetName;
 
+    /**
+     * Returns the dataSetName.
+     * @return The dataSetName
+     */
+    public String getDataSetName()
+    {
+        return _dataSetName;
+    }
+
+    /**
+     * 
+     */
+    public void init(IObject o)
+    {
+        SimpleStruct struct = (SimpleStruct) o;
+
+        // setting struct fields
+        SimpleString dataSetName = (SimpleString) struct.getField(DATA_SET_NAME);
+        setField(DATA_SET_NAME, dataSetName);
+        _dataSetName = dataSetName.getValue();
+    }
+
+    /**
+     * Set the value of dataSetName field.
+     * @param dataSetName The dataSetName to set
+     */
+    public void setDataSetName(String dataSetName)
+    {
+        _dataSetName = dataSetName;
+        setField(DATA_SET_NAME, new SimpleString(dataSetName));
+    }
 }

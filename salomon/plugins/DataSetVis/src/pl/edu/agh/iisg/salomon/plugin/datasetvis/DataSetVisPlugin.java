@@ -29,6 +29,9 @@ import pl.edu.agh.iisg.salomon.plugin.datasetvis.settings.VisSettingComponent;
 import pl.edu.agh.iisg.salomon.plugin.datasetvis.settings.VisSettings;
 import salomon.platform.IDataEngine;
 import salomon.platform.IEnvironment;
+import salomon.platform.data.dataset.IDataSet;
+import salomon.platform.exception.PlatformException;
+import salomon.plugin.IPlatformUtil;
 import salomon.plugin.IPlugin;
 import salomon.plugin.IResult;
 import salomon.plugin.IResultComponent;
@@ -42,48 +45,55 @@ import salomon.util.serialization.SimpleString;
 public class DataSetVisPlugin implements IPlugin
 {
 
-	private ISettingComponent _settingComponent;
+    private static final Logger LOGGER = Logger.getLogger(DataSetVisPlugin.class);
 
-	private IResultComponent _resultComponent;
+    private IResultComponent _resultComponent;
 
-	/**
-	 * 
-	 */
-	public IResult doJob(IDataEngine engine, IEnvironment env, ISettings settings)
-	{
-		LOGGER.info("DataSetVisPlugin.doJob()");
-		VisResult result = new VisResult();
-		
-		// simply rewrite data set name from settings
-		SimpleString dataSetName = (SimpleString) settings.getField(VisSettings.DATA_SET_NAME);
-		LOGGER.debug("dataSetName: " + ((dataSetName == null) ? "null" : dataSetName.getValue()));
-		result.setField(VisResult.DATA_SET_NAME, dataSetName);
-		
-		result.setSuccessful(true);
-		return result;
-	}
+    private ISettingComponent _settingComponent;
 
-	/**
-	 * 
-	 */
-	public ISettingComponent getSettingComponent()
-	{
-		if (_settingComponent == null) {
-			_settingComponent = new VisSettingComponent();
-		}
-		return _settingComponent;
-	}
+    /**
+     * 
+     */
+    public IResult doJob(IDataEngine engine, IEnvironment env,
+            ISettings settings)
+    {
+        LOGGER.info("DataSetVisPlugin.doJob()");
+        VisResult result = new VisResult();
+        boolean isSuccessful = false;
+        // simply rewrite data set name from settings
+        String dataSetName = ((VisSettings) settings).getDataSetName();
+        LOGGER.debug("dataSetName: " + dataSetName);
+        try {
+            IDataSet dataSet = engine.getDataSetManager().getDataSet(
+                    dataSetName);
+            if (dataSet != null) {
+                result.setDataSetName(dataSetName);
+                isSuccessful = true;
+            }
+        } catch (PlatformException e) {
+            LOGGER.fatal("", e);
+            result.setDataSetName("ERROR");
+        }
+        result.setSuccessful(isSuccessful);
+        return result;
+    }
 
-	/**
-	 * 
-	 */
-	public IResultComponent getResultComponent()
-	{
-		if (_resultComponent == null) {
-			_resultComponent = new VisResultComponent();
-		}
-		return _resultComponent;
-	}
+    /**
+     * 
+     */
+    public IResultComponent getResultComponent()
+    {
+        if (_resultComponent == null) {
+            _resultComponent = new VisResultComponent();
+        }
+        return _resultComponent;
+    }
 
-	private static final Logger LOGGER = Logger.getLogger(DataSetVisPlugin.class);
+    public ISettingComponent getSettingComponent(IPlatformUtil platformUtil)
+    {
+        if (_settingComponent == null) {
+            _settingComponent = new VisSettingComponent();
+        }
+        return _settingComponent;
+    }
 }
