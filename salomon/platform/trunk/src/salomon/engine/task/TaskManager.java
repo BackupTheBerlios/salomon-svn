@@ -32,25 +32,21 @@ import org.apache.log4j.Logger;
 import salomon.engine.database.DBManager;
 import salomon.engine.database.queries.SQLDelete;
 import salomon.engine.database.queries.SQLSelect;
+import salomon.engine.platform.Environment;
+import salomon.engine.platform.IManagerEngine;
+import salomon.engine.platform.serialization.XMLSerializer;
 import salomon.engine.plugin.ILocalPlugin;
 import salomon.engine.plugin.LocalPlugin;
 import salomon.engine.plugin.PlatformUtil;
 import salomon.engine.plugin.PluginInfo;
 import salomon.engine.project.IProject;
-
-import salomon.util.serialization.SimpleString;
-
 import salomon.platform.IDataEngine;
 import salomon.platform.IVariable;
 import salomon.platform.exception.PlatformException;
 import salomon.platform.serialization.IObject;
-
 import salomon.plugin.IResult;
 import salomon.plugin.ISettings;
-
-import salomon.engine.platform.Environment;
-import salomon.engine.platform.IManagerEngine;
-import salomon.engine.platform.serialization.XMLSerializer;
+import salomon.util.serialization.SimpleString;
 
 /**
  * An implemetation of ITaskManager interface. Class manages with tasks editing
@@ -58,6 +54,8 @@ import salomon.engine.platform.serialization.XMLSerializer;
  */
 public final class TaskManager implements ITaskManager
 {
+    private static final Logger LOGGER = Logger.getLogger(TaskManager.class);
+
     /**
      * 
      * @uml.property name="_dataEngine"
@@ -89,12 +87,13 @@ public final class TaskManager implements ITaskManager
 
     private PlatformUtil _platformUtil;
 
+    private ITaskRunner _taskRunner;
+
     /**
      * 
      * @uml.property name="_taskEngine"
      * @uml.associationEnd multiplicity="(0 1)"
      */
-    private TaskEngine _taskEngine;
 
     private LinkedList<ITask> _tasks;
 
@@ -102,8 +101,8 @@ public final class TaskManager implements ITaskManager
     {
         _managerEngine = managerEngine;
         _dbManager = manager;
+        _taskRunner = new TaskRunner();
         _tasks = new LinkedList<ITask>();
-        _taskEngine = new TaskEngine();
         // TODO: where it should be created?
         _environment = new Environment();
         // TODO: temporary
@@ -187,8 +186,7 @@ public final class TaskManager implements ITaskManager
      */
     public ITaskRunner getRunner() throws PlatformException
     {
-        throw new UnsupportedOperationException(
-                "Method getRunner() not implemented yet!");
+        return _taskRunner;
     }
 
     /**
@@ -269,7 +267,7 @@ public final class TaskManager implements ITaskManager
                     }
 
                     task.setSettings(pluginSettings);
-                    
+
                     // init last result
                     LOGGER.debug("loading result...");
                     String strResult = task.getInfo().getResult();
@@ -281,7 +279,7 @@ public final class TaskManager implements ITaskManager
                         pluginResult.init(object);
                         LOGGER.debug("result loaded");
                     }
-                    
+
                     task.setResult(pluginResult);
                     task.setPlugin(localPlugin);
                     tasks.add(task);
@@ -371,11 +369,6 @@ public final class TaskManager implements ITaskManager
         }
     }
 
-    public void start() throws PlatformException
-    {
-        new TaskEngine().start();
-    }
-
     /**
      * Method used only in this package.
      */
@@ -389,45 +382,100 @@ public final class TaskManager implements ITaskManager
 
     private final class TaskEngine extends Thread
     {
+        private boolean _paused = false;
+        
+        private ITask _currentTask = null;
+
+        public void pauseTasks()
+        {
+            _paused = true;
+        }
+
+        public synchronized void resumeTasks()
+        {
+            _paused = false;
+            notify();
+        }
+
         @Override
         public void run()
         {
             LOGGER.info("Running tasks");
-            /*
-             * while (true) { Task task = getTask(); IDataPlugin plugin =
-             * task.getPlugin(); Settings settings = task.getSettings();
-             * plugin.doJob(_dataEngine, _environment, settings);
-             */
-            TaskInfo taskInfo = null;
             for (ITask task : _tasks) {
+                _currentTask = task;
+                // running task
+                startTask(task);
                 try {
-                    taskInfo = ((Task) task).getInfo();
-                    LOGGER.info("task: " + taskInfo.getName());
-                    ISettings settings = task.getSettings();
-                    taskInfo.setStatus(TaskInfo.REALIZATION);
+                    Thread.sleep(2000);
+                } catch (InterruptedException e1) {
+                    LOGGER.fatal("", e1);
+                }
+                synchronized (this) {
+                    while (_paused) {
+                        try {
+                            wait();
+                        } catch (InterruptedException e) {
+                            LOGGER.fatal("", e);
+                        }
+                    }
+                }
+            }
+        }
+
+        private void startTask(ITask task)
+        {
+            TaskInfo taskInfo = null;
+            try {
+                taskInfo = ((Task) task).getInfo();                
+                LOGGER.info("task: " + taskInfo.getName());
+                ISettings settings = task.getSettings();
+                taskInfo.setStatus(TaskInfo.REALIZATION);
+                // changing status
+                taskInfo.save();
+                _dbManager.commit();
+                //
+                // processing task
+                //
+                ILocalPlugin plugin = task.getPlugin();
+                LOGGER.debug("plugin: " + plugin + " id: "
+                        + plugin.getInfo().getId());
+                IResult result = plugin.doJob(getDataEngine(), _environment,
+                        settings);
+                //
+                // saving result of its execution
+                //
+                task.setResult(result);
+                taskInfo.save();
+                _dbManager.commit();
+                //
+                // if task was not processed correctly
+                // exception is caught and shoul be handled here
+                //
+            } catch (Exception e) {
+                LOGGER.fatal("TASK PROCESSING ERROR", e);
+                try {
+                    taskInfo.setStatus(TaskInfo.EXCEPTION);
+                    taskInfo.save();
+                } catch (Exception ex) {
+                    LOGGER.fatal("", ex);
+                }
+                _dbManager.commit();
+            }
+        }
+        
+        private void stopCurrentTask()
+        {
+            if (_currentTask != null) {
+                TaskInfo taskInfo = null;
+                try {
+                    taskInfo = (TaskInfo) _currentTask.getInfo();
+                    LOGGER.debug("Stopping task: " + taskInfo.getName());
+                    taskInfo.setStatus(TaskInfo.INTERRUPTED);
                     // changing status
                     taskInfo.save();
-                    _dbManager.commit();
-                    //
-                    // processing task
-                    //
-                    ILocalPlugin plugin = task.getPlugin();
-                    LOGGER.debug("plugin: " + plugin + " id: "
-                            + plugin.getInfo().getId());
-                    IResult result = plugin.doJob(getDataEngine(),
-                            _environment, settings);
-                    //
-                    // saving result of its execution
-                    //
-                    task.setResult(result);
-                    taskInfo.save();
-                    _dbManager.commit();
-                    //
-                    // if task was not processed correctly
-                    // exception is caught and shoul be handled here
-                    //
+                    _dbManager.commit();                    
                 } catch (Exception e) {
-                    LOGGER.fatal("TASK PROCESSING ERROR", e);
+                    LOGGER.fatal("TASK INTERRUPTING ERROR", e);
                     try {
                         taskInfo.setStatus(TaskInfo.EXCEPTION);
                         taskInfo.save();
@@ -435,10 +483,48 @@ public final class TaskManager implements ITaskManager
                         LOGGER.fatal("", ex);
                     }
                     _dbManager.commit();
-                }
+                }                
             }
         }
     }
 
-    private static final Logger LOGGER = Logger.getLogger(TaskManager.class);
+    private final class TaskRunner implements ITaskRunner
+    {
+        private TaskEngine _taskEngine;
+
+        public void pause() throws PlatformException
+        {
+            LOGGER.info("TaskRunner.pause()");
+            if (_taskEngine != null) {
+                _taskEngine.pauseTasks();
+            }
+        }
+
+        public void resume() throws PlatformException
+        {
+            LOGGER.info("TaskRunner.resume()");
+            if (_taskEngine != null) {
+                _taskEngine.resumeTasks();
+            }
+        }
+
+        public void start() throws PlatformException
+        {
+            LOGGER.info("TaskRunner.start()");
+            // new thread is created before each tasks execution
+            _taskEngine = new TaskEngine();
+            _taskEngine.start();
+        }
+
+        public void stop() throws PlatformException
+        {
+            LOGGER.info("TaskRunner.stop()");
+            if (_taskEngine != null) {
+                _taskEngine.stopCurrentTask();
+                _taskEngine.interrupt();
+            }
+            _taskEngine = null;
+        }
+
+    }
 }

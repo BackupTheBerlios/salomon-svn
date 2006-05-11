@@ -217,7 +217,7 @@ public final class TaskManagerProxy implements ITaskManager
     public void start() throws PlatformException
     {
         try {
-            _remoteTaskManager.start();
+            _remoteTaskManager.getRunner().start();
         } catch (RemoteException e) {
             LOGGER.error("Remote error!", e);
             throw new PlatformException(e.getLocalizedMessage());

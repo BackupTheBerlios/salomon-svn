@@ -128,7 +128,7 @@ public class TaskManagerTest extends TestCase
     {
         //TODO to be implemented
         try {
-            _taskManager.start();
+            _taskManager.getRunner().start();
         } catch (PlatformException e) {
             LOGGER.fatal("", e);
         }

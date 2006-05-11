@@ -95,10 +95,4 @@ public interface ITaskManager
      */
     IProject getProject() throws PlatformException;
 
-    /**
-     * Starts tasks execution.
-     * @see ITaskRunner
-     * @deprecated Use ITaskRunner
-     */
-    @Deprecated void start() throws PlatformException;
 }

@@ -28,7 +28,6 @@ import java.util.Date;
 import java.util.List;
 
 import javax.swing.JComboBox;
-import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -66,16 +65,11 @@ import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.validation.ValidationResultModel;
 
-import edu.uci.ics.jung.graph.Graph;
-
 public final class GraphTaskManagerGUI
 {
-
     private ActionManager _actionManager;
 
     private JComboBox _cmbPlugins;
-
-    private Graph _graph;
 
     private ControllerFrame _parent;
 
@@ -155,10 +149,7 @@ public final class GraphTaskManagerGUI
 
     public JPanel getGraphPanel()
     {
-
         _taskGraphEditor = new TaskGraphEditor(this);
-        _graph = _taskGraphEditor.getGraph();
-
         return _taskGraphEditor;
     }
 
@@ -191,7 +182,7 @@ public final class GraphTaskManagerGUI
                 "Method removeTask() not implemented yet!");
     }
 
-    public void runTasks()
+    public void startTasks()
     {
         List<ITask> executionPlan = GraphPlanner.makePlan(_taskGraphEditor.getGraph());
         if (executionPlan == null) {
@@ -207,10 +198,37 @@ public final class GraphTaskManagerGUI
                     ++i;
                 }
                 _taskManager.saveTasks();
-                _taskManager.start();
+                _taskManager.getRunner().start();
             } catch (PlatformException e) {
-                LOGGER.fatal("Exception was thrown!", e);
+                LOGGER.fatal("", e);
             }
+        }
+    }
+
+    public void pauseTasks()
+    {
+        try {
+            _taskManager.getRunner().pause();
+        } catch (PlatformException e) {
+            LOGGER.fatal("", e);
+        }
+    }
+
+    public void resumeTasks()
+    {
+        try {
+            _taskManager.getRunner().resume();
+        } catch (PlatformException e) {
+            LOGGER.fatal("", e);
+        }
+    }
+
+    public void stopTasks()
+    {
+        try {
+            _taskManager.getRunner().stop();
+        } catch (PlatformException e) {
+            LOGGER.fatal("", e);
         }
     }
 

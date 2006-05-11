@@ -63,7 +63,7 @@ public class LibraryControllerTest extends TestCase
         // this method is not supported now
         //		taskManager.addTask(task, pluginUrl, builder.toString());
         projectManager.saveProject();
-        taskManager.start();
+        taskManager.getRunner().start();
         LOGGER.debug("task result:" + task.getResult());
     }
 

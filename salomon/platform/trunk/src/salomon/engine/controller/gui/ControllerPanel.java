@@ -36,6 +36,7 @@ import org.apache.log4j.Logger;
 
 import salomon.engine.Messages;
 import salomon.engine.controller.gui.graph.GraphTaskManagerGUI;
+import salomon.engine.controller.gui.graph.TaskControlPane;
 
 /**
  * Class represents main panel - list of tasks and available plugins, buttons to
@@ -50,7 +51,7 @@ public final class ControllerPanel extends JPanel implements IControllerPanel
      * @uml.property name="_guiButtons"
      * @uml.associationEnd multiplicity="(0 1)"
      */
-    private GUIButtons _guiButtons;
+    private TaskControlPane _guiButtons;
 
     private JList _lstPlugins;
 
@@ -90,7 +91,7 @@ public final class ControllerPanel extends JPanel implements IControllerPanel
         _projectManagerGUI = projectManagerGUI;
         _taskManagerGUI = taskManagerGUI;
         _pluginMangerGUI = pluginMangerGUI;
-        _guiButtons = new GUIButtons(_taskManagerGUI);
+        _guiButtons = new TaskControlPane(_taskManagerGUI);
         _statusBar = new StatusBar();
 
         _solutionManagerGUI.setStatusBar(_statusBar);
@@ -199,10 +200,7 @@ public final class ControllerPanel extends JPanel implements IControllerPanel
     private JPanel getPnlTaskButtons()
     {
         if (_pnlTaskButtons == null) {
-            _pnlTaskButtons = new JPanel();
-            _pnlTaskButtons.setLayout(new BoxLayout(_pnlTaskButtons,
-                    BoxLayout.Y_AXIS));
-            _pnlTaskButtons.add(_guiButtons.getBtnRun());
+            _pnlTaskButtons = new TaskControlPane(_taskManagerGUI);
         }
         return _pnlTaskButtons;
     }
@@ -217,7 +215,7 @@ public final class ControllerPanel extends JPanel implements IControllerPanel
         if (_pnlTasks == null) {
             _pnlTasks = new JPanel();
             _pnlTasks.setLayout(new BorderLayout());
-            _pnlTasks.add(getPnlTaskButtons(), BorderLayout.EAST);
+            _pnlTasks.add(getPnlTaskButtons(), BorderLayout.NORTH);
             _pnlTasks.add(getLstTasks(), BorderLayout.CENTER);
             _pnlTasks.setBorder(BorderFactory.createTitledBorder(null,
                     Messages.getString("TIT_TASKS"), //$NON-NLS-1$

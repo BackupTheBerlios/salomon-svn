@@ -119,14 +119,6 @@ final class TaskManagerHolder implements ITaskManager
         _currentTaskManager.saveTasks();
     }
 
-    /**
-     * @see ITaskManager#start()
-     */
-    public void start() throws PlatformException
-    {
-        _currentTaskManager.start();
-    }
-
     void setCurrent(ITaskManager taskManager)
     {
         _currentTaskManager = taskManager;

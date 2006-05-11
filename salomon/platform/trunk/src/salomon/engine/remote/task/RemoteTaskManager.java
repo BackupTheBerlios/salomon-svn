@@ -146,14 +146,6 @@ public final class RemoteTaskManager extends UnicastRemoteObject
         _taskManager.saveTasks();
     }
 
-    /**
-     * @see IRemoteTaskManager#start()
-     */
-    public void start() throws RemoteException, PlatformException
-    {
-        _taskManager.start();
-    }
-
     private IRemoteTask getRemoteTask(ITask task) throws RemoteException,
             PlatformException
     {

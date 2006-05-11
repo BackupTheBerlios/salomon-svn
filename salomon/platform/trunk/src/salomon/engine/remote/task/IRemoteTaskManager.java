@@ -96,9 +96,4 @@ public interface IRemoteTaskManager extends Remote
      */
     void saveTasks() throws RemoteException, PlatformException;
 
-    /**
-     * @see salomon.engine.task.ITaskManager#start()
-     */
-    void start() throws RemoteException, PlatformException;
-
 }
