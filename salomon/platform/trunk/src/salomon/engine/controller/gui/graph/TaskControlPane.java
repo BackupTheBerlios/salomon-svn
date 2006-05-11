@@ -56,24 +56,6 @@ public final class TaskControlPane extends JPanel
         this.add(new ControlPane().getPanel());
     }
 
-    //    /**
-    //     * This method initializes _btnRun
-    //     * 
-    //     * @return JButton
-    //     */
-    //    JButton getBtnRun()
-    //    {
-    //        if (_btnRun == null) {
-    //            _btnRun = new JButton(
-    //                    _taskManagerGUI.getActionManager().getRunTaskAction());
-    //            _btnRun.setIcon(new ImageIcon(_resourcesDir + Config.FILE_SEPARATOR
-    //                    + Resources.getString("ICO_TASK_RUN")));
-    //            _btnRun.setToolTipText(Messages.getString("BTN_RUN"));
-    //        }
-    //
-    //        return _btnRun;
-    //    } 
-
     final class ControlPane
     {
         private JButton _btnPause;
@@ -111,7 +93,7 @@ public final class TaskControlPane extends JPanel
                 public void actionPerformed(ActionEvent e)
                 {
                     _taskManagerGUI.startTasks();
-                    setState(ProcessState.STARTED);                   
+                    setState(ProcessState.STARTED);
                 }
             });
             _btnStop = new JButton("Stop");
@@ -129,7 +111,7 @@ public final class TaskControlPane extends JPanel
                 {
                     if (_processState == ProcessState.PAUSED) {
                         _taskManagerGUI.resumeTasks();
-                        _processState = ProcessState.RESUMED;                        
+                        _processState = ProcessState.RESUMED;
                         _btnPause.setText("Pause");
                     } else {
                         _taskManagerGUI.pauseTasks();

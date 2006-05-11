@@ -382,9 +382,9 @@ public final class TaskManager implements ITaskManager
 
     private final class TaskEngine extends Thread
     {
-        private boolean _paused = false;
-        
         private ITask _currentTask = null;
+
+        private boolean _paused = false;
 
         public void pauseTasks()
         {
@@ -426,7 +426,7 @@ public final class TaskManager implements ITaskManager
         {
             TaskInfo taskInfo = null;
             try {
-                taskInfo = ((Task) task).getInfo();                
+                taskInfo = ((Task) task).getInfo();
                 LOGGER.info("task: " + taskInfo.getName());
                 ISettings settings = task.getSettings();
                 taskInfo.setStatus(TaskInfo.REALIZATION);
@@ -462,7 +462,7 @@ public final class TaskManager implements ITaskManager
                 _dbManager.commit();
             }
         }
-        
+
         private void stopCurrentTask()
         {
             if (_currentTask != null) {
@@ -473,7 +473,7 @@ public final class TaskManager implements ITaskManager
                     taskInfo.setStatus(TaskInfo.INTERRUPTED);
                     // changing status
                     taskInfo.save();
-                    _dbManager.commit();                    
+                    _dbManager.commit();
                 } catch (Exception e) {
                     LOGGER.fatal("TASK INTERRUPTING ERROR", e);
                     try {
@@ -483,7 +483,7 @@ public final class TaskManager implements ITaskManager
                         LOGGER.fatal("", ex);
                     }
                     _dbManager.commit();
-                }                
+                }
             }
         }
     }
