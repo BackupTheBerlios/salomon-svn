@@ -29,20 +29,19 @@ CREATE VIEW PROJECTS_VIEW(
     LM_DATE,
     TASK_COUNT)
 AS
-select
+SELECT
 p.project_id,
 p.project_name,
 s.solution_name,
 p.project_info,
 p.env,
 p.lm_date,
-count (*) task_id
-from projects p,
-solutions s,
-tasks t
-where s.solution_id = p.solution_id
-and t.project_id = p.project_id
-group by
+COUNT (t.task_id) task_id
+FROM projects p LEFT OUTER JOIN tasks t
+ON p.project_id = t.project_id,
+solutions s
+WHERE s.solution_id = p.solution_id
+GROUP BY
 p.project_id,
 p.project_name,
 s.solution_name,
@@ -50,6 +49,7 @@ p.project_info,
 p.env,
 p.lm_date
 ;
+
 
 /* View: TASKS_VIEW */
 CREATE VIEW TASKS_VIEW(
