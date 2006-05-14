@@ -26,6 +26,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collection;
 import java.util.LinkedList;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 
@@ -40,6 +41,8 @@ import salomon.engine.plugin.LocalPlugin;
 import salomon.engine.plugin.PlatformUtil;
 import salomon.engine.plugin.PluginInfo;
 import salomon.engine.project.IProject;
+import salomon.engine.task.event.TaskEvent;
+import salomon.engine.task.event.TaskListener;
 import salomon.platform.IDataEngine;
 import salomon.platform.IVariable;
 import salomon.platform.exception.PlatformException;
@@ -87,6 +90,8 @@ public final class TaskManager implements ITaskManager
 
     private PlatformUtil _platformUtil;
 
+    private List<TaskListener> _taskListeners;
+
     private ITaskRunner _taskRunner;
 
     /**
@@ -103,6 +108,7 @@ public final class TaskManager implements ITaskManager
         _dbManager = manager;
         _taskRunner = new TaskRunner();
         _tasks = new LinkedList<ITask>();
+        _taskListeners = new LinkedList<TaskListener>();
         // TODO: where it should be created?
         _environment = new Environment();
         // TODO: temporary
@@ -139,6 +145,11 @@ public final class TaskManager implements ITaskManager
             throw new PlatformException(e.getLocalizedMessage());
         }
         _tasks.add(task);
+    }
+
+    public void addTaskListener(TaskListener listener)
+    {
+        _taskListeners.add(listener);
     }
 
     public void clearTasks()
@@ -355,6 +366,11 @@ public final class TaskManager implements ITaskManager
         return retVal;
     }
 
+    public void removeTaskListener(TaskListener listener)
+    {
+        _taskListeners.remove(listener);
+    }
+
     public void saveTasks() throws PlatformException
     {
         try {
@@ -380,6 +396,55 @@ public final class TaskManager implements ITaskManager
         return _dataEngine;
     }
 
+    private void fireTaskFailed(TaskEvent event)
+    {
+        for (TaskListener listener : _taskListeners) {
+            listener.taskFailed(event);
+        }
+    }
+
+    private void fireTaskPaused(TaskEvent event)
+    {
+        for (TaskListener listener : _taskListeners) {
+            listener.taskPaused(event);
+        }
+    }
+
+    private void fireTaskProcessed(TaskEvent event)
+    {
+        for (TaskListener listener : _taskListeners) {
+            listener.taskProcessed(event);
+        }
+    }
+
+    private void fireTaskResumed(TaskEvent event)
+    {
+        for (TaskListener listener : _taskListeners) {
+            listener.taskResumed(event);
+        }
+    }
+
+    private void fireTasksInitialized(int taskCount)
+    {
+        for (TaskListener listener : _taskListeners) {
+            listener.tasksInitialized(taskCount);
+        }
+    }
+
+    private void fireTaskStarted(TaskEvent event)
+    {
+        for (TaskListener listener : _taskListeners) {
+            listener.taskStarted(event);
+        }
+    }
+
+    private void fireTaskStopped(TaskEvent event)
+    {
+        for (TaskListener listener : _taskListeners) {
+            listener.taskStopped(event);
+        }
+    }
+
     private final class TaskEngine extends Thread
     {
         private ITask _currentTask = null;
@@ -389,12 +454,22 @@ public final class TaskManager implements ITaskManager
         public void pauseTasks()
         {
             _paused = true;
+            try {
+                fireTaskPaused(new TaskEvent((TaskInfo) _currentTask.getInfo()));
+            } catch (PlatformException e) {
+                LOGGER.fatal("", e);
+            }
         }
 
         public synchronized void resumeTasks()
         {
             _paused = false;
             notify();
+            try {
+                fireTaskResumed(new TaskEvent((TaskInfo) _currentTask.getInfo()));
+            } catch (PlatformException e) {
+                LOGGER.fatal("", e);
+            }
         }
 
         @Override
@@ -405,6 +480,7 @@ public final class TaskManager implements ITaskManager
                 _currentTask = task;
                 // running task
                 startTask(task);
+                // FIXME: temporary!
                 try {
                     Thread.sleep(2000);
                 } catch (InterruptedException e1) {
@@ -425,14 +501,20 @@ public final class TaskManager implements ITaskManager
         private void startTask(ITask task)
         {
             TaskInfo taskInfo = null;
+            TaskEvent taskEvent = null;
             try {
                 taskInfo = ((Task) task).getInfo();
+                taskEvent = new TaskEvent(taskInfo);
                 LOGGER.info("task: " + taskInfo.getName());
                 ISettings settings = task.getSettings();
                 taskInfo.setStatus(TaskInfo.REALIZATION);
                 // changing status
                 taskInfo.save();
                 _dbManager.commit();
+
+                // informing listeners about starting task
+                fireTaskStarted(taskEvent);
+
                 //
                 // processing task
                 //
@@ -447,6 +529,13 @@ public final class TaskManager implements ITaskManager
                 task.setResult(result);
                 taskInfo.save();
                 _dbManager.commit();
+
+                // informing listeners about finishing processing
+                if (result.isSuccessful()) {
+                    fireTaskProcessed(taskEvent);
+                } else {
+                    fireTaskFailed(taskEvent);
+                }
                 //
                 // if task was not processed correctly
                 // exception is caught and shoul be handled here
@@ -454,6 +543,7 @@ public final class TaskManager implements ITaskManager
             } catch (Exception e) {
                 LOGGER.fatal("TASK PROCESSING ERROR", e);
                 try {
+                    fireTaskFailed(taskEvent);
                     taskInfo.setStatus(TaskInfo.EXCEPTION);
                     taskInfo.save();
                 } catch (Exception ex) {
@@ -474,6 +564,8 @@ public final class TaskManager implements ITaskManager
                     // changing status
                     taskInfo.save();
                     _dbManager.commit();
+
+                    fireTaskStopped(new TaskEvent(taskInfo));
                 } catch (Exception e) {
                     LOGGER.fatal("TASK INTERRUPTING ERROR", e);
                     try {
@@ -513,6 +605,7 @@ public final class TaskManager implements ITaskManager
             LOGGER.info("TaskRunner.start()");
             // new thread is created before each tasks execution
             _taskEngine = new TaskEngine();
+            fireTasksInitialized(_tasks.size());
             _taskEngine.start();
         }
 

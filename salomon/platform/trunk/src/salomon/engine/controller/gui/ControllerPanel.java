@@ -66,7 +66,7 @@ public final class ControllerPanel extends JPanel implements IControllerPanel
 
     private JPanel _pnlPlugins;
 
-    private JPanel _pnlTaskButtons;
+    private JPanel _taskControlPane;
 
     private JPanel _pnlTasks;
 
@@ -91,7 +91,6 @@ public final class ControllerPanel extends JPanel implements IControllerPanel
         _projectManagerGUI = projectManagerGUI;
         _taskManagerGUI = taskManagerGUI;
         _pluginMangerGUI = pluginMangerGUI;
-        _guiButtons = new TaskControlPane(_taskManagerGUI);
         _statusBar = new StatusBar();
 
         _solutionManagerGUI.setStatusBar(_statusBar);
@@ -193,16 +192,16 @@ public final class ControllerPanel extends JPanel implements IControllerPanel
     }
 
     /**
-     * This method initializes _pnlTaskButtons
+     * This method initializes _taskControlPane
      * 
      * @return JPanel
      */
     private JPanel getPnlTaskButtons()
     {
-        if (_pnlTaskButtons == null) {
-            _pnlTaskButtons = new TaskControlPane(_taskManagerGUI);
+        if (_taskControlPane == null) {
+            _taskControlPane = new TaskControlPane(_taskManagerGUI).getPanel();
         }
-        return _pnlTaskButtons;
+        return _taskControlPane;
     }
 
     /**

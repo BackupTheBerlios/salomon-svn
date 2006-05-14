@@ -55,11 +55,11 @@ final class StructSerializer implements INodeNames
         String[] names = struct.getFieldNames();
         for (String name : names) {
             IObject field = struct.getField(name);
-
-            Element childNode = serializeSimpleType(document, field);
-            childNode.setAttribute(ATTR_NAME, name);
-            result.appendChild(childNode);
-
+            if (field != null) {
+                Element childNode = serializeSimpleType(document, field);
+                childNode.setAttribute(ATTR_NAME, name);
+                result.appendChild(childNode);                
+            }
         }
 
         return result;

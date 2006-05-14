@@ -52,6 +52,8 @@ import salomon.engine.task.ITaskManager;
 import salomon.engine.task.Task;
 import salomon.engine.task.TaskInfo;
 import salomon.engine.task.TaskManager;
+import salomon.engine.task.event.TaskEvent;
+import salomon.engine.task.event.TaskListener;
 import salomon.platform.IDataEngine;
 import salomon.platform.exception.PlatformException;
 import salomon.plugin.IPlugin;
@@ -67,11 +69,15 @@ import com.jgoodies.validation.ValidationResultModel;
 
 public final class GraphTaskManagerGUI
 {
+    private static final Logger LOGGER = Logger.getLogger(GraphTaskManagerGUI.class);
+
     private ActionManager _actionManager;
 
     private JComboBox _cmbPlugins;
 
     private ControllerFrame _parent;
+
+    private PlatformUtil _platformUtil;
 
     private PluginManager _pluginManager;
 
@@ -92,8 +98,6 @@ public final class GraphTaskManagerGUI
     private JTextField _txtTaskName;
 
     private JTextField _txtTaskStatus;
-
-    private PlatformUtil _platformUtil;
 
     public GraphTaskManagerGUI(ITaskManager tasksManager,
             IPluginManager pluginManager)
@@ -153,6 +157,24 @@ public final class GraphTaskManagerGUI
         return _taskGraphEditor;
     }
 
+    /**
+     * Returns the taskManager.
+     * @return The taskManager
+     */
+    public TaskManager getTaskManager()
+    {
+        return _taskManager;
+    }
+
+    public void pauseTasks()
+    {
+        try {
+            _taskManager.getRunner().pause();
+        } catch (PlatformException e) {
+            LOGGER.fatal("", e);
+        }
+    }
+
     public void refresh()
     {
         LOGGER.debug("reloading tasks");
@@ -182,51 +204,10 @@ public final class GraphTaskManagerGUI
                 "Method removeTask() not implemented yet!");
     }
 
-    public void startTasks()
-    {
-        List<ITask> executionPlan = GraphPlanner.makePlan(_taskGraphEditor.getGraph());
-        if (executionPlan == null) {
-            JOptionPane.showMessageDialog(_parent,
-                    "Cannot create plan. There is a loop!",
-                    "Cannot create plan!", JOptionPane.PLAIN_MESSAGE); //$NON-NLS-1$			
-        } else {
-            try {
-                int i = 1;
-                for (ITask task : executionPlan) {
-                    // setting task order
-                    ((TaskInfo) task.getInfo()).setTaskNr(i);
-                    ++i;
-                }
-                _taskManager.saveTasks();
-                _taskManager.getRunner().start();
-            } catch (PlatformException e) {
-                LOGGER.fatal("", e);
-            }
-        }
-    }
-
-    public void pauseTasks()
-    {
-        try {
-            _taskManager.getRunner().pause();
-        } catch (PlatformException e) {
-            LOGGER.fatal("", e);
-        }
-    }
-
     public void resumeTasks()
     {
         try {
             _taskManager.getRunner().resume();
-        } catch (PlatformException e) {
-            LOGGER.fatal("", e);
-        }
-    }
-
-    public void stopTasks()
-    {
-        try {
-            _taskManager.getRunner().stop();
         } catch (PlatformException e) {
             LOGGER.fatal("", e);
         }
@@ -362,6 +343,38 @@ public final class GraphTaskManagerGUI
         }
     }
 
+    public void startTasks()
+    {
+        List<ITask> executionPlan = GraphPlanner.makePlan(_taskGraphEditor.getGraph());
+        if (executionPlan == null) {
+            JOptionPane.showMessageDialog(_parent,
+                    "Cannot create plan. There is a loop!",
+                    "Cannot create plan!", JOptionPane.PLAIN_MESSAGE); //$NON-NLS-1$			
+        } else {
+            try {
+                int i = 1;
+                for (ITask task : executionPlan) {
+                    // setting task order
+                    ((TaskInfo) task.getInfo()).setTaskNr(i);
+                    ++i;
+                }
+                _taskManager.saveTasks();
+                _taskManager.getRunner().start();
+            } catch (PlatformException e) {
+                LOGGER.fatal("", e);
+            }
+        }
+    }
+
+    public void stopTasks()
+    {
+        try {
+            _taskManager.getRunner().stop();
+        } catch (PlatformException e) {
+            LOGGER.fatal("", e);
+        }
+    }
+
     public void viewTasks()
     {
         if (_tasksViewerFrame == null) {
@@ -490,7 +503,5 @@ public final class GraphTaskManagerGUI
         }
         return accepted;
     }
-
-    private static final Logger LOGGER = Logger.getLogger(GraphTaskManagerGUI.class);
 
 }
