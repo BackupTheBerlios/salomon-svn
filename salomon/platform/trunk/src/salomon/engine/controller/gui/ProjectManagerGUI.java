@@ -137,13 +137,13 @@ public final class ProjectManagerGUI
 
         try {
             Project project = (Project) _projectManager.createProject();
-            
+
             // saving project
             this.saveProject(project);
-            
+
             // informing listeners
             fireProjectCreated(new ProjectEvent((ProjectInfo) project.getInfo()));
-            
+
         } catch (PlatformException e) {
             LOGGER.fatal("", e);
             Utils.showErrorMessage(Messages.getString("ERR_CANNOT_CREATE_PROJECT"));
@@ -157,7 +157,8 @@ public final class ProjectManagerGUI
             if (projectId > 0) {
                 IProject project = _projectManager.getProject(projectId);
                 // informing listeners
-                fireProjectOpened(new ProjectEvent((ProjectInfo) project.getInfo()));
+                fireProjectOpened(new ProjectEvent(
+                        (ProjectInfo) project.getInfo()));
                 _parent.refreshGui();
             }
         } catch (Exception e) {
@@ -223,7 +224,7 @@ public final class ProjectManagerGUI
             projectID = showProjectList(projectTable);
         } catch (Exception e) {
             LOGGER.fatal("", e);
-            Utils.showErrorMessage("Cannot load project list.");
+            Utils.showErrorMessage(Messages.getString("ERR_CANNOT_LOAD_PROJECTS"));
         }
 
         return projectID;
@@ -286,12 +287,9 @@ public final class ProjectManagerGUI
         if (setProjectProperties(project)) {
             if (_taskManagerGUI.saveTasks()) {
                 _projectManager.saveProject();
-                Utils.showInfoMessage("Project saved successfully");
-            } else {
-                Utils.showErrorMessage(Messages.getString("ERR_CANNOT_SAVE_PROJECT"));
-                return;
-            }
-            _parent.refreshGui();
+                Utils.showInfoMessage(Messages.getString("TT_PROJECT_SAVED"));
+                _parent.refreshGui();
+            }            
         }
     }
 

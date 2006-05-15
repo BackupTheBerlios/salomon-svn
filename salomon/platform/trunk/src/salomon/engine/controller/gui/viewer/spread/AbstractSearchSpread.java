@@ -41,6 +41,7 @@ import javax.swing.JTextField;
 
 import org.apache.log4j.Logger;
 
+import salomon.engine.Messages;
 import salomon.engine.database.DBManager;
 import salomon.util.gui.Utils;
 
@@ -175,7 +176,7 @@ public abstract class AbstractSearchSpread extends AbstractSpread
             _scrTablePane.setViewportView(_table);
         } catch (SQLException e) {
             LOGGER.fatal("", e);
-            Utils.showErrorMessage("ERR_QUERY_EXEC_ERROR");
+            Utils.showErrorMessage(Messages.getString("ERR_QUERY_EXEC_ERROR"));
         }
     }
 }

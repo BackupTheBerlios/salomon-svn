@@ -163,7 +163,7 @@ public final class SolutionManagerGUI
                     (SolutionInfo) solution.getInfo()));
         } catch (PlatformException e) {
             LOGGER.fatal("", e);
-            Utils.showErrorMessage("ERR_CANNOT_EDIT_SOLUTION");
+            Utils.showErrorMessage(Messages.getString("ERR_CANNOT_EDIT_SOLUTION"));
         }
     }
 
@@ -255,7 +255,7 @@ public final class SolutionManagerGUI
             }
         } catch (PlatformException e) {
             LOGGER.fatal("", e);
-            Utils.showErrorMessage("ERR_CANNOT_CREATE_SOLUTION");
+            Utils.showErrorMessage(Messages.getString("ERR_CANNOT_CREATE_SOLUTION"));
         }
     }
 
@@ -335,7 +335,7 @@ public final class SolutionManagerGUI
 
         } catch (PlatformException e) {
             LOGGER.fatal("", e);
-            Utils.showErrorMessage("ERR_CANNOT_SAVE_SOLUTION");
+            Utils.showErrorMessage(Messages.getString("ERR_CANNOT_SAVE_SOLUTION"));
         }
     }
 
@@ -506,7 +506,7 @@ public final class SolutionManagerGUI
                 _comboSolutionList = new JComboBox(_solutions);
             } catch (Exception e) {
                 LOGGER.fatal("", e);
-                Utils.showErrorMessage("Cannot load solution list.");
+                Utils.showErrorMessage(Messages.getString("ERR_CANNOT_LOAD_SOLUTIONS"));
             }
         }
         return _comboSolutionList;
@@ -597,10 +597,10 @@ public final class SolutionManagerGUI
         try {
             externalDBManager.connect(host, dataBasePath, user, passwd);
             externalDBManager.disconnect();
-            Utils.showInfoMessage("Successfully connected to database.");
+            Utils.showInfoMessage(Messages.getString("TT_SUCCESSFULLY_CONNECTED"));
         } catch (Exception e) {
             LOGGER.fatal("", e);
-            Utils.showErrorMessage("Cannot connect to database");
+            Utils.showErrorMessage(Messages.getString("ERR_CONNECTION_ERROR"));
         }
     }
 }

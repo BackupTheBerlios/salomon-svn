@@ -231,7 +231,7 @@ public final class PluginManagerGUI
                 }
         } catch (PlatformException e) {
             LOGGER.fatal("", e);
-            Utils.showErrorMessage("Cannot load plugin list");
+            Utils.showErrorMessage(Messages.getString("ERR_CANNOT_LOAD_PLUGINS"));
             return;
         }
     }
@@ -256,7 +256,7 @@ public final class PluginManagerGUI
                 _pluginListModel.remove(_selectedItem);
                 _parent.refreshGui();
             } else {
-                Utils.showErrorMessage(Messages.getString("ERR_CANNOT_SAVE_PLUGIN"));
+                Utils.showErrorMessage(Messages.getString("ERR_CANNOT_REMOVE_PLUGIN"));
             }
         }
     }
@@ -403,8 +403,8 @@ public final class PluginManagerGUI
         builder.append("Plugin name", _txtPluginName, 3);
         builder.append("Plugin location");
         builder.append(_txtPluginLocation, _btnPluginFileLoad);
-        builder.append(Messages.getString("PLUGIN_FILE"), _radioLocationFile, 3);
-        builder.append(Messages.getString("PLUGIN_URL"), _radioLocationUrl, 3);
+        builder.append(Messages.getString("TXT_PLUGIN_FILE"), _radioLocationFile, 3);
+        builder.append(Messages.getString("TXT_PLUGIN_URL"), _radioLocationUrl, 3);
 
         builder.appendSeparator("Plugin info");
         builder.append(new JScrollPane(_txtPluginInfo), 5);

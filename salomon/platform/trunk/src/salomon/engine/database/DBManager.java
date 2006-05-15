@@ -31,6 +31,7 @@ import java.sql.Statement;
 import org.apache.log4j.Logger;
 
 import salomon.engine.Config;
+import salomon.engine.Messages;
 import salomon.engine.database.queries.SQLDelete;
 import salomon.engine.database.queries.SQLInsert;
 import salomon.engine.database.queries.SQLSelect;
@@ -66,7 +67,7 @@ public final class DBManager
             _connection.commit();
         } catch (SQLException e) {
             LOGGER.fatal("!!!COMMIT FAILED!!!");
-            Utils.showErrorMessage("ERR_CRITICAL");
+            Utils.showErrorMessage(Messages.getString("ERR_CRITICAL"));
             LOGGER.fatal("", e);
         }
     }
@@ -340,7 +341,7 @@ public final class DBManager
             _connection.rollback();
         } catch (SQLException e) {
             LOGGER.fatal("!!!ROLLBACK FAILED!!!");
-            Utils.showErrorMessage("ERR_CRITICAL");
+            Utils.showErrorMessage(Messages.getString("ERR_CRITICAL"));
             LOGGER.fatal("", e);
         }
     }

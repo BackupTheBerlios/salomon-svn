@@ -180,7 +180,7 @@ public final class GraphTaskManagerGUI
             tasks = _taskManager.getTasks();
         } catch (PlatformException e1) {
             LOGGER.fatal("", e1);
-            Utils.showErrorMessage("Cannot load task list");
+            Utils.showErrorMessage(Messages.getString("ERR_CANNOT_LOAD_TASKS"));
             return;
         }
 
@@ -253,7 +253,7 @@ public final class GraphTaskManagerGUI
             comp = resultComponent.getComponent(result, dataEngine);
         } catch (PlatformException e) {
             LOGGER.fatal("", e);
-            Utils.showErrorMessage("ERR_CANNOT_SHOW_TASK_RESULT");
+            Utils.showErrorMessage(Messages.getString("ERR_CANNOT_SHOW_TASK_RESULT"));
             return;
         }
 
@@ -286,7 +286,7 @@ public final class GraphTaskManagerGUI
             inputSettings = task.getSettings();
         } catch (PlatformException e1) {
             LOGGER.fatal("", e1);
-            Utils.showErrorMessage("ERR_CANNOT_SHOW_TASK_SETTINGS");
+            Utils.showErrorMessage(Messages.getString("ERR_CANNOT_SHOW_TASK_SETTINGS"));
             return;
         }
         // if settings are null, default settings are taken
@@ -299,7 +299,7 @@ public final class GraphTaskManagerGUI
             dataEngine = _taskManager.getProject().getProjectManager().getSolution().getDataEngine();
         } catch (PlatformException e) {
             LOGGER.fatal("", e);
-            Utils.showErrorMessage("ERR_CANNOT_SHOW_TASK_SETTINGS");
+            Utils.showErrorMessage(Messages.getString("ERR_CANNOT_SHOW_TASK_SETTINGS"));
             return;
         }
         Component taskSettingsComponent = settingComponent.getComponent(
@@ -329,7 +329,7 @@ public final class GraphTaskManagerGUI
                 task.getInfo().save();
             } catch (Exception e) {
                 LOGGER.fatal("", e);
-                Utils.showErrorMessage("ERR_CANNOT_SET_TASK_SETTINGS");
+                Utils.showErrorMessage(Messages.getString("ERR_CANNOT_SET_TASK_SETTINGS"));
             }
         }
     }

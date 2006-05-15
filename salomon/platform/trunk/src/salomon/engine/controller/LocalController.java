@@ -244,7 +244,7 @@ public final class LocalController implements IController
                     _managerEngine.getPluginManager());
         } catch (PlatformException e) {
             LOGGER.fatal("", e); //$NON-NLS-1$
-            Utils.showErrorMessage("ERR_CANNOT_SHOW_GUI"); //$NON-NLS-1$
+            Utils.showErrorMessage(Messages.getString("ERR_CANNOT_SHOW_GUI")); //$NON-NLS-1$
             return;
         }
 
