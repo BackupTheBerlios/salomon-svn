@@ -24,6 +24,8 @@ package salomon.engine.controller.gui;
 import java.text.DateFormat;
 import java.util.Collection;
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -41,7 +43,10 @@ import salomon.engine.controller.gui.viewer.ProjectViewer;
 import salomon.engine.project.IProject;
 import salomon.engine.project.IProjectManager;
 import salomon.engine.project.Project;
+import salomon.engine.project.ProjectInfo;
 import salomon.engine.project.ProjectManager;
+import salomon.engine.project.event.ProjectEvent;
+import salomon.engine.project.event.ProjectListener;
 import salomon.platform.exception.PlatformException;
 import salomon.util.gui.Utils;
 
@@ -55,8 +60,6 @@ public final class ProjectManagerGUI
 {
     private static final Logger LOGGER = Logger.getLogger(ProjectManagerGUI.class);
 
-    private static final String SB_CUR_PROJECT = "TT_CURRENT_PROJECT";
-
     /**
      * 
      * @uml.property name="_parent"
@@ -66,16 +69,16 @@ public final class ProjectManagerGUI
 
     private JPanel _pnlProjectProperties;
 
+    private List<ProjectListener> _projectListeners;
+
     /**
      * 
      * @uml.property name="_projectManager"
      * @uml.associationEnd multiplicity="(0 1)"
      */
-    private IProjectManager _projectManager;
+    private ProjectManager _projectManager;
 
     private JFrame _projectViewerFrame;
-
-    private StatusBar _statusBar;
 
     /**
      * 
@@ -84,19 +87,128 @@ public final class ProjectManagerGUI
      */
     private GraphTaskManagerGUI _taskManagerGUI;
 
-    private JTextArea _txtProjectInfo;
-
-    private JTextField _txtProjectName;
-
     private JTextField _txtProjectCrDate;
 
+    private JTextArea _txtProjectInfo;
+
     private JTextField _txtProjectLastMod;
+
+    private JTextField _txtProjectName;
 
     /**
      */
     public ProjectManagerGUI(IProjectManager projectManager)
     {
-        _projectManager = projectManager;
+        _projectManager = (ProjectManager) projectManager;
+        _projectListeners = new LinkedList<ProjectListener>();
+    }
+
+    public void addProjectListener(ProjectListener listener)
+    {
+        _projectListeners.add(listener);
+    }
+
+    public void editProject()
+    {
+
+        try {
+            Project project = (Project) _projectManager.getCurrentProject();
+
+            // saving project
+            this.saveProject(project);
+
+        } catch (PlatformException e) {
+            LOGGER.fatal("", e);
+            Utils.showErrorMessage(Messages.getString("ERR_CANNOT_SAVE_PROJECT"));
+        }
+    }
+
+    /**
+     * Returns the projectManager.
+     * @return The projectManager
+     */
+    public ProjectManager getProjectManager()
+    {
+        return _projectManager;
+    }
+
+    public void newProject()
+    {
+
+        try {
+            Project project = (Project) _projectManager.createProject();
+            
+            // saving project
+            this.saveProject(project);
+            
+            // informing listeners
+            fireProjectCreated(new ProjectEvent((ProjectInfo) project.getInfo()));
+            
+        } catch (PlatformException e) {
+            LOGGER.fatal("", e);
+            Utils.showErrorMessage(Messages.getString("ERR_CANNOT_CREATE_PROJECT"));
+        }
+    }
+
+    public void openProject()
+    {
+        try {
+            final int projectId = chooseProject();
+            if (projectId > 0) {
+                IProject project = _projectManager.getProject(projectId);
+                // informing listeners
+                fireProjectOpened(new ProjectEvent((ProjectInfo) project.getInfo()));
+                _parent.refreshGui();
+            }
+        } catch (Exception e) {
+            LOGGER.fatal("", e);
+            Utils.showErrorMessage(Messages.getString("ERR_CANNOT_OPEN_PROJECT"));
+        }
+    }
+
+    public void removeProjectListener(ProjectListener listener)
+    {
+        _projectListeners.remove(listener);
+    }
+
+    public void saveProject()
+    {
+        try {
+            Project project = (Project) _projectManager.getCurrentProject();
+
+            // saving project
+            this.saveProject(project);
+
+        } catch (PlatformException e) {
+            LOGGER.fatal("", e);
+            Utils.showErrorMessage(Messages.getString("ERR_CANNOT_SAVE_PROJECT"));
+        }
+    }
+
+    /**
+     * @param parent The parent to set.
+     */
+    public void setParent(ControllerFrame parent)
+    {
+        _parent = parent;
+    }
+
+    public void setTaskManagerGUI(GraphTaskManagerGUI taskManagerGUI)
+    {
+        _taskManagerGUI = taskManagerGUI;
+    }
+
+    public void viewProjects()
+    {
+        if (_projectViewerFrame == null) {
+            _projectViewerFrame = new JFrame(Messages.getString("TIT_PROJECTS"));
+            _projectViewerFrame.getContentPane().add(
+                    new ProjectViewer(
+                            ((ProjectManager) _projectManager).getDbManager()));
+            _projectViewerFrame.pack();
+        }
+        _projectViewerFrame.setLocation(Utils.getCenterLocation(_projectViewerFrame));
+        _projectViewerFrame.setVisible(true);
     }
 
     private int chooseProject()
@@ -148,62 +260,24 @@ public final class ProjectManagerGUI
         return builder.getPanel();
     }
 
-    public void editProject()
+    private void fireProjectCreated(ProjectEvent event)
     {
-
-        try {
-            Project project = (Project) _projectManager.getCurrentProject();
-
-            // saving project
-            this.saveProject(project);
-
-        } catch (PlatformException e) {
-            LOGGER.fatal("", e);
-            Utils.showErrorMessage(Messages.getString("ERR_CANNOT_SAVE_PROJECT"));
+        for (ProjectListener listener : _projectListeners) {
+            listener.projectCreated(event);
         }
     }
 
-    public void newProject()
+    private void fireProjectModified(ProjectEvent event)
     {
-
-        try {
-            Project project = (Project) _projectManager.createProject();
-            // saving project
-            this.saveProject(project);
-
-        } catch (PlatformException e) {
-            LOGGER.fatal("", e);
-            Utils.showErrorMessage(Messages.getString("ERR_CANNOT_CREATE_PROJECT"));
+        for (ProjectListener listener : _projectListeners) {
+            listener.projectModified(event);
         }
     }
 
-    public void openProject()
+    private void fireProjectOpened(ProjectEvent event)
     {
-        try {
-            final int projectId = chooseProject();
-            if (projectId > 0) {
-                IProject project = _projectManager.getProject(projectId);
-                _statusBar.setItem(SB_CUR_PROJECT,
-                        ((Project) project).getInfo().getName());
-                _parent.refreshGui();
-            }
-        } catch (Exception e) {
-            LOGGER.fatal("", e);
-            Utils.showErrorMessage(Messages.getString("ERR_CANNOT_OPEN_PROJECT"));
-        }
-    }
-
-    public void saveProject()
-    {
-        try {
-            Project project = (Project) _projectManager.getCurrentProject();
-
-            // saving project
-            this.saveProject(project);
-
-        } catch (PlatformException e) {
-            LOGGER.fatal("", e);
-            Utils.showErrorMessage(Messages.getString("ERR_CANNOT_SAVE_PROJECT"));
+        for (ProjectListener listener : _projectListeners) {
+            listener.projectOpened(event);
         }
     }
 
@@ -217,18 +291,8 @@ public final class ProjectManagerGUI
                 Utils.showErrorMessage(Messages.getString("ERR_CANNOT_SAVE_PROJECT"));
                 return;
             }
-            _statusBar.setItem(SB_CUR_PROJECT,
-                    project.getInfo().getName());
             _parent.refreshGui();
         }
-    }
-
-    /**
-     * @param parent The parent to set.
-     */
-    public void setParent(ControllerFrame parent)
-    {
-        _parent = parent;
     }
 
     /**
@@ -270,26 +334,9 @@ public final class ProjectManagerGUI
         if (retVal == JOptionPane.YES_OPTION) {
             project.getInfo().setName(_txtProjectName.getText());
             project.getInfo().setInfo(_txtProjectInfo.getText());
-            _statusBar.setItem(SB_CUR_PROJECT, _txtProjectName.getText());
             approved = true;
         }
         return approved;
-    }
-
-    /**
-     * Set the value of statusBar field.
-     * 
-     * @param statusBar The statusBar to set
-     */
-    public void setStatusBar(StatusBar statusBar)
-    {
-        _statusBar = statusBar;
-        _statusBar.addItem(SB_CUR_PROJECT);
-    }
-
-    public void setTaskManagerGUI(GraphTaskManagerGUI taskManagerGUI)
-    {
-        _taskManagerGUI = taskManagerGUI;
     }
 
     private int showProjectList(JTable table)
@@ -312,18 +359,5 @@ public final class ProjectManagerGUI
         }
 
         return projectID;
-    }
-
-    public void viewProjects()
-    {
-        if (_projectViewerFrame == null) {
-            _projectViewerFrame = new JFrame(Messages.getString("TIT_PROJECTS"));
-            _projectViewerFrame.getContentPane().add(
-                    new ProjectViewer(
-                            ((ProjectManager) _projectManager).getDbManager()));
-            _projectViewerFrame.pack();
-        }
-        _projectViewerFrame.setLocation(Utils.getCenterLocation(_projectViewerFrame));
-        _projectViewerFrame.setVisible(true);
     }
 }

@@ -36,6 +36,8 @@ import salomon.platform.exception.PlatformException;
 public final class SolutionManager implements ISolutionManager
 {
 
+    private static final Logger LOGGER = Logger.getLogger(SolutionManager.class);
+
     /**
      * 
      * @uml.property name="_currentSolution"
@@ -70,8 +72,12 @@ public final class SolutionManager implements ISolutionManager
     public void addSolution(ISolution solution) throws PlatformException
     {
         try {
-            solution.getInfo().save();
+            SolutionInfo solutionInfo = (SolutionInfo) solution.getInfo();
+
+            // saving solution
+            solutionInfo.save();
             _dbManager.commit();
+
         } catch (Exception e) {
             _dbManager.rollback();
             LOGGER.fatal("", e);
@@ -170,5 +176,4 @@ public final class SolutionManager implements ISolutionManager
         return solutionsArray;
     }
 
-    private static final Logger LOGGER = Logger.getLogger(SolutionManager.class);
 }

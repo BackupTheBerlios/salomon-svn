@@ -32,6 +32,8 @@ import java.awt.event.WindowEvent;
 import java.io.File;
 import java.text.DateFormat;
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 
 import javax.swing.Action;
 import javax.swing.BorderFactory;
@@ -54,13 +56,17 @@ import salomon.engine.Messages;
 import salomon.engine.Starter;
 import salomon.engine.controller.gui.action.ActionManager;
 import salomon.engine.controller.gui.common.SearchFileFilter;
+import salomon.engine.controller.gui.statusbar.StatusBar;
 import salomon.engine.controller.gui.viewer.SolutionViewer;
 import salomon.engine.database.ExternalDBManager;
 import salomon.engine.project.IProject;
 import salomon.engine.solution.ISolution;
 import salomon.engine.solution.ISolutionManager;
 import salomon.engine.solution.Solution;
+import salomon.engine.solution.SolutionInfo;
 import salomon.engine.solution.SolutionManager;
+import salomon.engine.solution.event.SolutionEvent;
+import salomon.engine.solution.event.SolutionListener;
 import salomon.platform.exception.PlatformException;
 import salomon.util.gui.Utils;
 
@@ -72,6 +78,12 @@ import com.jgoodies.forms.layout.FormLayout;
  */
 public final class SolutionManagerGUI
 {
+    private final static String DB_DESC = "Database files";
+
+    private final static String DB_EXT = "gdb";
+
+    private static final Logger LOGGER = Logger.getLogger(SolutionManagerGUI.class);
+
     /**
      * 
      * @uml.property name="_actionManager"
@@ -97,18 +109,18 @@ public final class SolutionManagerGUI
 
     private JFrame _solutionChooserFrame;
 
+    private List<SolutionListener> _solutionListeners;
+
     /**
      * 
      * @uml.property name="_solutionManager"
      * @uml.associationEnd multiplicity="(0 1)"
      */
-    private ISolutionManager _solutionManager;
+    private SolutionManager _solutionManager;
 
     private Solution[] _solutions;
 
     private JFrame _solutionViewerFrame;
-
-    private StatusBar _statusBar;
 
     private JTextField _txtDBPath;
 
@@ -116,21 +128,27 @@ public final class SolutionManagerGUI
 
     private JTextField _txtPasswd;
 
+    private JTextField _txtSolutionCrDate;
+
     private JTextArea _txtSolutionInfo;
+
+    private JTextField _txtSolutionLastMod;
 
     private JTextField _txtSolutionName;
 
     private JTextField _txtUsername;
 
-    private JTextField _txtSolutionCrDate;
-
-    private JTextField _txtSolutionLastMod;
-
     /**
      */
     public SolutionManagerGUI(ISolutionManager solutionManager)
     {
-        _solutionManager = solutionManager;
+        _solutionManager = (SolutionManager) solutionManager;
+        _solutionListeners = new LinkedList<SolutionListener>();
+    }
+
+    public void addSolutionListener(SolutionListener listener)
+    {
+        _solutionListeners.add(listener);
     }
 
     public void editSolution()
@@ -139,6 +157,10 @@ public final class SolutionManagerGUI
         try {
             solution = _solutionManager.getCurrentSolution();
             setSolutionProperties(solution);
+
+            // informing listeners
+            fireSolutionModified(new SolutionEvent(
+                    (SolutionInfo) solution.getInfo()));
         } catch (PlatformException e) {
             LOGGER.fatal("", e);
             Utils.showErrorMessage("ERR_CANNOT_EDIT_SOLUTION");
@@ -197,6 +219,15 @@ public final class SolutionManagerGUI
         return _pnlSolutionController;
     }
 
+    /**
+     * Returns the solutionManager.
+     * @return The solutionManager
+     */
+    public SolutionManager getSolutionManager()
+    {
+        return _solutionManager;
+    }
+
     public JPanel getSolutionsPanel()
     {
         JPanel panel = new JPanel();
@@ -217,6 +248,10 @@ public final class SolutionManagerGUI
                 _comboSolutionList.addItem(solution);
                 _comboSolutionList.setSelectedItem(solution);
                 _comboSolutionList.repaint();
+
+                // informing listeners
+                fireSolutionCreated(new SolutionEvent(
+                        (SolutionInfo) solution.getInfo()));
             }
         } catch (PlatformException e) {
             LOGGER.fatal("", e);
@@ -247,7 +282,7 @@ public final class SolutionManagerGUI
             final int solutionID = _solutions[selectedRow].getInfo().getId();
             LOGGER.info("chosen solution: " + solutionID);
             // FIXME - do it in better way
-            Solution solution;
+            Solution solution = null;
             try {
                 solution = (Solution) _solutionManager.getSolution(solutionID);
                 // forcing connecting to external database
@@ -262,12 +297,13 @@ public final class SolutionManagerGUI
 
                 IProject project = solution.getProjectManager().createProject();
                 solution.getProjectManager().addProject(project);
+
+                fireSolutionOpened(new SolutionEvent(solution.getInfo()));
             } catch (PlatformException e) {
                 LOGGER.fatal("", e);
                 Utils.showErrorMessage(Messages.getString("ERR_CANNOT_CREATE_PROJECT"));
                 return;
             }
-            _statusBar.setItem(SB_CUR_SOLUTION, solution.getInfo().getName());
         }
         // if method is called at start of application (_solutionChooserFrame ==
         // null)
@@ -278,6 +314,11 @@ public final class SolutionManagerGUI
         }
         _parent.refreshGui();
         _parent.setVisible(true);
+    }
+
+    public void removeSolutionListener(SolutionListener listener)
+    {
+        _solutionListeners.remove(listener);
     }
 
     public void saveSolution()
@@ -309,77 +350,6 @@ public final class SolutionManagerGUI
     public void setParent(ControllerFrame startframe)
     {
         _parent = startframe;
-    }
-
-    /**
-     * Shows dialog which enables to initialize solution settings.
-     * 
-     * @param solution
-     * @throws PlatformException
-     */
-    private boolean setSolutionProperties(ISolution iSolution)
-            throws PlatformException
-    {
-        boolean approved = false;
-        Solution solution = (Solution) iSolution;
-        if (_pnlSolutionProperties == null) {
-            _pnlSolutionProperties = createSolutionPanel();
-        }
-
-        String name = solution.getInfo().getName();
-        String info = solution.getInfo().getInfo();
-        String host = solution.getInfo().getHost();
-        String path = solution.getInfo().getPath();
-        String user = solution.getInfo().getUser();
-        String pass = solution.getInfo().getPasswd();
-        Date dcdate = solution.getInfo().getCreationDate();
-        Date dmdate = solution.getInfo().getLastModificationDate();
-
-        String cdate = dcdate == null
-                ? ""
-                : DateFormat.getDateInstance().format(dcdate) + " "
-                        + DateFormat.getTimeInstance().format(dcdate);
-        String mdate = dmdate == null
-                ? ""
-                : DateFormat.getDateInstance().format(dmdate) + " "
-                        + DateFormat.getTimeInstance().format(dmdate);
-
-        _txtSolutionName.setText(name == null ? "" : name);
-        _txtSolutionInfo.setText(info == null ? "" : info);
-        _txtHostname.setText(host == null ? "" : host);
-        _txtDBPath.setText(path == null ? "" : path);
-        _txtUsername.setText(user == null ? "" : user);
-        _txtPasswd.setText(pass == null ? "" : pass);
-        _txtSolutionCrDate.setText(cdate == null ? "" : cdate);
-        _txtSolutionLastMod.setText(mdate == null ? "" : mdate);
-
-        int result = JOptionPane.showConfirmDialog(_parent,
-                _pnlSolutionProperties, "Enter solution properties",
-                JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
-
-        if (result == JOptionPane.OK_OPTION) {
-            solution.getInfo().setName(_txtSolutionName.getText());
-            solution.getInfo().setInfo(_txtSolutionInfo.getText());
-            solution.getInfo().setHost(_txtHostname.getText());
-            solution.getInfo().setPath(_txtDBPath.getText());
-            solution.getInfo().setUser(_txtUsername.getText());
-            solution.getInfo().setPasswd(_txtPasswd.getText());
-            _solutionManager.addSolution(iSolution);
-            _statusBar.setItem(SB_CUR_SOLUTION, solution.getInfo().getName());
-            approved = true;
-        }
-        return approved;
-    }
-
-    /**
-     * Set the value of statusBar field.
-     * 
-     * @param statusBar The statusBar to set
-     */
-    public void setStatusBar(StatusBar statusBar)
-    {
-        _statusBar = statusBar;
-        _statusBar.addItem(SB_CUR_SOLUTION);
     }
 
     public void showSolutionChooser()
@@ -507,6 +477,27 @@ public final class SolutionManagerGUI
         return builder.getPanel();
     }
 
+    private void fireSolutionCreated(SolutionEvent event)
+    {
+        for (SolutionListener listener : _solutionListeners) {
+            listener.solutionCreated(event);
+        }
+    }
+
+    private void fireSolutionModified(SolutionEvent event)
+    {
+        for (SolutionListener listener : _solutionListeners) {
+            listener.solutionModified(event);
+        }
+    }
+
+    private void fireSolutionOpened(SolutionEvent event)
+    {
+        for (SolutionListener listener : _solutionListeners) {
+            listener.solutionOpened(event);
+        }
+    }
+
     private JComboBox getSolutionsCombo()
     {
         if (_comboSolutionList == null) {
@@ -536,6 +527,65 @@ public final class SolutionManagerGUI
         }
     }
 
+    /**
+     * Shows dialog which enables to initialize solution settings.
+     * 
+     * @param solution
+     * @throws PlatformException
+     */
+    private boolean setSolutionProperties(ISolution iSolution)
+            throws PlatformException
+    {
+        boolean approved = false;
+        Solution solution = (Solution) iSolution;
+        if (_pnlSolutionProperties == null) {
+            _pnlSolutionProperties = createSolutionPanel();
+        }
+
+        String name = solution.getInfo().getName();
+        String info = solution.getInfo().getInfo();
+        String host = solution.getInfo().getHost();
+        String path = solution.getInfo().getPath();
+        String user = solution.getInfo().getUser();
+        String pass = solution.getInfo().getPasswd();
+        Date dcdate = solution.getInfo().getCreationDate();
+        Date dmdate = solution.getInfo().getLastModificationDate();
+
+        String cdate = dcdate == null
+                ? ""
+                : DateFormat.getDateInstance().format(dcdate) + " "
+                        + DateFormat.getTimeInstance().format(dcdate);
+        String mdate = dmdate == null
+                ? ""
+                : DateFormat.getDateInstance().format(dmdate) + " "
+                        + DateFormat.getTimeInstance().format(dmdate);
+
+        _txtSolutionName.setText(name == null ? "" : name);
+        _txtSolutionInfo.setText(info == null ? "" : info);
+        _txtHostname.setText(host == null ? "" : host);
+        _txtDBPath.setText(path == null ? "" : path);
+        _txtUsername.setText(user == null ? "" : user);
+        _txtPasswd.setText(pass == null ? "" : pass);
+        _txtSolutionCrDate.setText(cdate == null ? "" : cdate);
+        _txtSolutionLastMod.setText(mdate == null ? "" : mdate);
+
+        int result = JOptionPane.showConfirmDialog(_parent,
+                _pnlSolutionProperties, "Enter solution properties",
+                JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+
+        if (result == JOptionPane.OK_OPTION) {
+            solution.getInfo().setName(_txtSolutionName.getText());
+            solution.getInfo().setInfo(_txtSolutionInfo.getText());
+            solution.getInfo().setHost(_txtHostname.getText());
+            solution.getInfo().setPath(_txtDBPath.getText());
+            solution.getInfo().setUser(_txtUsername.getText());
+            solution.getInfo().setPasswd(_txtPasswd.getText());
+            _solutionManager.addSolution(iSolution);
+            approved = true;
+        }
+        return approved;
+    }
+
     private void testConnect()
     {
         ExternalDBManager externalDBManager = new ExternalDBManager();
@@ -553,12 +603,4 @@ public final class SolutionManagerGUI
             Utils.showErrorMessage("Cannot connect to database");
         }
     }
-
-    private final static String DB_DESC = "Database files";
-
-    private final static String DB_EXT = "gdb";
-
-    private static final Logger LOGGER = Logger.getLogger(SolutionManagerGUI.class);
-
-    private static final String SB_CUR_SOLUTION = "TT_CURRENT_SOLUTION";
 }

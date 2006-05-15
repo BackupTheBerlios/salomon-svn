@@ -19,32 +19,31 @@
  * 
  */
 
-package salomon.engine.task.event;
+package salomon.engine.project.event;
 
-import salomon.engine.task.TaskInfo;
+import salomon.engine.project.ProjectInfo;
 
 /**
  * 
  */
-public final class TaskEvent
+public final class ProjectEvent
 {
-    private TaskInfo _info;
+    private ProjectInfo _info;
 
     /**
-     * @param taskInfo
+     * @param info
      */
-    public TaskEvent(TaskInfo taskInfo)
+    public ProjectEvent(ProjectInfo info)
     {
-        _info = taskInfo;
+        _info = info;
     }
 
     /**
-     * Returns the taskInfo.
-     * @return The taskInfo
+     * Returns the info.
+     * @return The info
      */
-    public TaskInfo getInfo()
+    public ProjectInfo getInfo()
     {
         return _info;
     }
-
 }

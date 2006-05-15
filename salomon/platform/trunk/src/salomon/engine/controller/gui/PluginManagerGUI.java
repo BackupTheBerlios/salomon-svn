@@ -50,6 +50,7 @@ import org.apache.log4j.Logger;
 import salomon.engine.Messages;
 import salomon.engine.controller.gui.action.ActionManager;
 import salomon.engine.controller.gui.common.SearchFileFilter;
+import salomon.engine.controller.gui.statusbar.StatusBar;
 import salomon.engine.controller.gui.viewer.PluginViewer;
 import salomon.engine.plugin.ILocalPlugin;
 import salomon.engine.plugin.IPluginManager;

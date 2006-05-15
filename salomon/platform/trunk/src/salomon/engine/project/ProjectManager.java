@@ -24,12 +24,16 @@ package salomon.engine.project;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 
 import salomon.engine.database.DBManager;
 import salomon.engine.database.queries.SQLSelect;
 import salomon.engine.platform.IManagerEngine;
+import salomon.engine.project.event.ProjectEvent;
+import salomon.engine.project.event.ProjectListener;
 import salomon.engine.solution.ISolution;
 import salomon.engine.solution.Solution;
 import salomon.platform.exception.DBException;
@@ -42,6 +46,8 @@ import salomon.util.gui.Utils;
  */
 public final class ProjectManager implements IProjectManager
 {
+
+    private static final Logger LOGGER = Logger.getLogger(ProjectManager.class);
 
     /**
      * 
@@ -139,13 +145,14 @@ public final class ProjectManager implements IProjectManager
         // building query
         SQLSelect select = new SQLSelect();
         select.addTable(ProjectInfo.TABLE_NAME);
-        select.addCondition("project_id =", projectID);
+        select.addCondition("project_id = ", projectID);
         ResultSet resultSet = null;
         try {
             resultSet = _dbManager.select(select);
             resultSet.next();
             // loading project
-            ((Project) project).getInfo().load(resultSet);
+            ProjectInfo projectInfo = (ProjectInfo) project.getInfo();
+            projectInfo.load(resultSet);
 
             // one row should be found, if found more, the first is got
             if (resultSet.next()) {
@@ -155,6 +162,7 @@ public final class ProjectManager implements IProjectManager
 
             // loading tasks
             _managerEngine.getTasksManager().getTasks();
+
         } catch (Exception e) {
             LOGGER.fatal("", e);
             throw new DBException(e.getLocalizedMessage());
@@ -166,14 +174,11 @@ public final class ProjectManager implements IProjectManager
         return _currentProject;
     }
 
-    // FIXME this method has to be removed but after implementing
-    // component to show table
-
     public Collection getProjectList() throws PlatformException
     {
         Collection projects = null;
         SQLSelect select = new SQLSelect();
-        select.addTable(ProjectInfo.TABLE_NAME);        
+        select.addTable(ProjectInfo.TABLE_NAME);
         select.addCondition("solution_id =",
                 ((Project) _currentProject).getInfo().getSolutionID());
         // executing query
@@ -203,6 +208,9 @@ public final class ProjectManager implements IProjectManager
         return _managerEngine.getSolutionManager().getCurrentSolution();
     }
 
+    // FIXME this method has to be removed but after implementing
+    // component to show table
+
     public boolean removeAll() throws PlatformException
     {
         throw new UnsupportedOperationException(
@@ -229,9 +237,11 @@ public final class ProjectManager implements IProjectManager
         // saving project header
         try {
             // saving tasks
-            ((Project) _currentProject).getInfo().save();
-            saveTasks(_currentProject.getInfo().getId());
+            ProjectInfo projectInfo = (ProjectInfo) _currentProject.getInfo();
+            projectInfo.save();
+            saveTasks(projectInfo.getId());
             _dbManager.commit();
+
         } catch (Exception e) {
             _dbManager.rollback();
             LOGGER.fatal("", e);
@@ -254,7 +264,5 @@ public final class ProjectManager implements IProjectManager
         // saving tasks
         _managerEngine.getTasksManager().saveTasks();
     }
-
-    private static final Logger LOGGER = Logger.getLogger(ProjectManager.class);
 
 }

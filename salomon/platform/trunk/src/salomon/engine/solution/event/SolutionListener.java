@@ -19,32 +19,17 @@
  * 
  */
 
-package salomon.engine.task.event;
+package salomon.engine.solution.event;
 
-import salomon.engine.task.TaskInfo;
 
 /**
  * 
  */
-public final class TaskEvent
+public interface SolutionListener
 {
-    private TaskInfo _info;
+    void solutionCreated(SolutionEvent event);
 
-    /**
-     * @param taskInfo
-     */
-    public TaskEvent(TaskInfo taskInfo)
-    {
-        _info = taskInfo;
-    }
+    void solutionOpened(SolutionEvent event);
 
-    /**
-     * Returns the taskInfo.
-     * @return The taskInfo
-     */
-    public TaskInfo getInfo()
-    {
-        return _info;
-    }
-
+    void solutionModified(SolutionEvent event);
 }

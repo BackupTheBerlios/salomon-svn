@@ -19,7 +19,7 @@
  * 
  */
 
-package salomon.engine.controller.gui;
+package salomon.engine.controller.gui.statusbar;
 
 import java.awt.Dimension;
 import java.util.HashMap;
@@ -37,20 +37,19 @@ import salomon.engine.Messages;
 /**
  * 
  */
-public class StatusBar
+public class StatusBar extends JPanel
 {
+    private static final Logger LOGGER = Logger.getLogger(StatusBar.class);
+
     private Map<String, JTextField> _items;
 
-    private JPanel _statusPanel;
-
-    public StatusBar()
+    StatusBar()
     {
-        _statusPanel = new JPanel();
-        _statusPanel.setLayout(new BoxLayout(_statusPanel, BoxLayout.X_AXIS));
+        this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
         _items = new HashMap<String, JTextField>();
     }
 
-    public void addItem(String name)
+    void addItem(String name)
     {
         JTextField txtItem = new JTextField();
         txtItem.setEditable(false);
@@ -63,19 +62,10 @@ public class StatusBar
         txtItem.setPreferredSize(dim);
 
         _items.put(name, txtItem);
-        _statusPanel.add(txtItem);
+        this.add(txtItem);
     }
 
-    /**
-     * Returns the statusPanel.
-     * @return The statusPanel
-     */
-    public JPanel getStatusPanel()
-    {
-        return _statusPanel;
-    }
-
-    public void setItem(String name, String value)
+    void setItem(String name, String value)
     {
         JTextField txtField = _items.get(name);
         if (txtField != null) {
@@ -84,6 +74,4 @@ public class StatusBar
             LOGGER.error("Invalid object key in status bar: " + name);
         }
     }
-
-    private static final Logger LOGGER = Logger.getLogger(StatusBar.class);
 }

@@ -79,7 +79,7 @@ public final class TaskControlPane
     {
         _taskProcessPane = new TaskProcessPane();
         _taskControlButtons = new TaskControlButtons();
-        _taskManagerGUI.getTaskManager().addTaskListener(_taskProcessPane);
+        _taskManagerGUI.addTaskListener(_taskProcessPane);
     }
 
     private void initGUI()

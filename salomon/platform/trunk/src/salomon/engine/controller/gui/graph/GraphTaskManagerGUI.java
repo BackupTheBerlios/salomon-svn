@@ -40,8 +40,8 @@ import org.apache.log4j.Logger;
 
 import salomon.engine.Messages;
 import salomon.engine.controller.gui.ControllerFrame;
-import salomon.engine.controller.gui.StatusBar;
 import salomon.engine.controller.gui.action.ActionManager;
+import salomon.engine.controller.gui.statusbar.StatusBar;
 import salomon.engine.controller.gui.viewer.TaskViewer;
 import salomon.engine.plugin.IPluginManager;
 import salomon.engine.plugin.LocalPlugin;
@@ -52,7 +52,6 @@ import salomon.engine.task.ITaskManager;
 import salomon.engine.task.Task;
 import salomon.engine.task.TaskInfo;
 import salomon.engine.task.TaskManager;
-import salomon.engine.task.event.TaskEvent;
 import salomon.engine.task.event.TaskListener;
 import salomon.platform.IDataEngine;
 import salomon.platform.exception.PlatformException;
@@ -107,6 +106,11 @@ public final class GraphTaskManagerGUI
         _platformUtil = _taskManager.getPlatformUtil();
     }
 
+    public void addTaskListener(TaskListener listener)
+    {
+        _taskManager.addTaskListener(listener);
+    }
+
     public ITask createTask()
     {
         ITask newTask = null;
@@ -157,15 +161,6 @@ public final class GraphTaskManagerGUI
         return _taskGraphEditor;
     }
 
-    /**
-     * Returns the taskManager.
-     * @return The taskManager
-     */
-    public TaskManager getTaskManager()
-    {
-        return _taskManager;
-    }
-
     public void pauseTasks()
     {
         try {
@@ -204,6 +199,11 @@ public final class GraphTaskManagerGUI
                 "Method removeTask() not implemented yet!");
     }
 
+    public void removeTaskListener(TaskListener listener)
+    {
+        _taskManager.removeTaskListener(listener);
+    }
+
     public void resumeTasks()
     {
         try {
@@ -237,15 +237,6 @@ public final class GraphTaskManagerGUI
     public void setParent(ControllerFrame parent)
     {
         _parent = parent;
-    }
-
-    /**
-     * Set the value of statusBar field.
-     * 
-     * @param statusBar The statusBar to set
-     */
-    public void setStatusBar(StatusBar statusBar)
-    {
     }
 
     public void showResultPanel(ITask task)

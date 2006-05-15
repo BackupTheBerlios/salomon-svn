@@ -431,6 +431,13 @@ public final class TaskManager implements ITaskManager
         }
     }
 
+    private void fireTasksProcessed()
+    {
+        for (TaskListener listener : _taskListeners) {
+            listener.tasksProcessed();
+        }
+    }
+
     private void fireTaskStarted(TaskEvent event)
     {
         for (TaskListener listener : _taskListeners) {
@@ -496,6 +503,8 @@ public final class TaskManager implements ITaskManager
                     }
                 }
             }
+            // informing listeners about finishing task execution
+            fireTasksProcessed();
         }
 
         private void startTask(ITask task)

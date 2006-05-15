@@ -37,6 +37,7 @@ import org.apache.log4j.Logger;
 import salomon.engine.Messages;
 import salomon.engine.controller.gui.graph.GraphTaskManagerGUI;
 import salomon.engine.controller.gui.graph.TaskControlPane;
+import salomon.engine.controller.gui.statusbar.StatusBarManager;
 
 /**
  * Class represents main panel - list of tasks and available plugins, buttons to
@@ -44,6 +45,8 @@ import salomon.engine.controller.gui.graph.TaskControlPane;
  */
 public final class ControllerPanel extends JPanel implements IControllerPanel
 {
+    private static final Logger LOGGER = Logger.getLogger(ControllerFrame.class);
+
     private JPanel _graphPanel;
 
     /**
@@ -55,6 +58,8 @@ public final class ControllerPanel extends JPanel implements IControllerPanel
 
     private JList _lstPlugins;
 
+    private JComponent _mainPanel;
+
     /**
      * 
      * @uml.property name="_pluginMangerGUI"
@@ -62,11 +67,7 @@ public final class ControllerPanel extends JPanel implements IControllerPanel
      */
     private PluginManagerGUI _pluginMangerGUI;
 
-    private JComponent _pnlInit;
-
     private JPanel _pnlPlugins;
-
-    private JPanel _taskControlPane;
 
     private JPanel _pnlTasks;
 
@@ -74,7 +75,9 @@ public final class ControllerPanel extends JPanel implements IControllerPanel
 
     private SolutionManagerGUI _solutionManagerGUI;
 
-    private StatusBar _statusBar;
+    private StatusBarManager _statusBarManager;
+
+    private JPanel _taskControlPane;
 
     /**
      * 
@@ -91,17 +94,16 @@ public final class ControllerPanel extends JPanel implements IControllerPanel
         _projectManagerGUI = projectManagerGUI;
         _taskManagerGUI = taskManagerGUI;
         _pluginMangerGUI = pluginMangerGUI;
-        _statusBar = new StatusBar();
+        _statusBarManager = new StatusBarManager();
 
-        _solutionManagerGUI.setStatusBar(_statusBar);
-        _projectManagerGUI.setStatusBar(_statusBar);
-        _taskManagerGUI.setStatusBar(_statusBar);
-        _pluginMangerGUI.setStatusBar(_statusBar);
+        _solutionManagerGUI.addSolutionListener(_statusBarManager);
+        _projectManagerGUI.addProjectListener(_statusBarManager);
+        _taskManagerGUI.addTaskListener(_statusBarManager);
+        //        _pluginMangerGUI.setStatusBar(_statusBarManager);
 
         this.setLayout(new BorderLayout());
-        //this.add(getPnlManagerButtons(), BorderLayout.SOUTH);
-        this.add(_statusBar.getStatusPanel(), BorderLayout.SOUTH);
-        this.add(getPnlInit(), BorderLayout.CENTER);
+        this.add(_statusBarManager.getStatusBar(), BorderLayout.SOUTH);
+        this.add(getMainPanel(), BorderLayout.CENTER);
     }
 
     public JComponent getComponent()
@@ -125,7 +127,6 @@ public final class ControllerPanel extends JPanel implements IControllerPanel
         _pluginMangerGUI.refresh();
         _taskManagerGUI.refresh();
     }
-
 
     /**
      * This method initializes _lstPlugins
@@ -157,18 +158,15 @@ public final class ControllerPanel extends JPanel implements IControllerPanel
         return _graphPanel;
     }
 
-    private JComponent getPnlInit()
+    private JComponent getMainPanel()
     {
-        if (_pnlInit == null) {
+        if (_mainPanel == null) {
             JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
                     getPnlPlugins(), getPnlTasks());
             splitPane.setOneTouchExpandable(true);
-            _pnlInit = splitPane;
-            //			_pnlInit.setLayout(new GridLayout(1, 2));
-            //			_pnlInit.add(getPnlPlugins());
-            //			_pnlInit.add(getPnlTasks());
+            _mainPanel = splitPane;
         }
-        return _pnlInit;
+        return _mainPanel;
     }
 
     /**
@@ -181,8 +179,6 @@ public final class ControllerPanel extends JPanel implements IControllerPanel
         if (_pnlPlugins == null) {
             _pnlPlugins = new JPanel();
             _pnlPlugins.setLayout(new BorderLayout());
-            // TODO: remove			
-            //			_pnlPlugins.add(getPnlPluginButtons(), BorderLayout.EAST);
             _pnlPlugins.add(getLstPlugins(), BorderLayout.CENTER);
             _pnlPlugins.setBorder(BorderFactory.createTitledBorder(null,
                     Messages.getString("TIT_PLUGINS"), TitledBorder.LEFT, //$NON-NLS-1$
@@ -222,6 +218,4 @@ public final class ControllerPanel extends JPanel implements IControllerPanel
         }
         return _pnlTasks;
     }
-
-    private static final Logger LOGGER = Logger.getLogger(ControllerFrame.class);
 }
