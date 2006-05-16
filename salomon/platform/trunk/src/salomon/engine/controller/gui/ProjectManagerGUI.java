@@ -22,7 +22,6 @@
 package salomon.engine.controller.gui;
 
 import java.text.DateFormat;
-import java.util.Collection;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -48,6 +47,7 @@ import salomon.engine.project.ProjectManager;
 import salomon.engine.project.event.ProjectEvent;
 import salomon.engine.project.event.ProjectListener;
 import salomon.platform.exception.PlatformException;
+import salomon.util.gui.DBDataTable;
 import salomon.util.gui.Utils;
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
@@ -117,6 +117,10 @@ public final class ProjectManagerGUI
             // saving project
             this.saveProject(project);
 
+            // informing listeners
+            fireProjectModified(new ProjectEvent(
+                    (ProjectInfo) project.getInfo()));
+
         } catch (PlatformException e) {
             LOGGER.fatal("", e);
             Utils.showErrorMessage(Messages.getString("ERR_CANNOT_SAVE_PROJECT"));
@@ -134,7 +138,6 @@ public final class ProjectManagerGUI
 
     public void newProject()
     {
-
         try {
             Project project = (Project) _projectManager.createProject();
 
@@ -217,17 +220,36 @@ public final class ProjectManagerGUI
         int projectID = 0;
 
         try {
-            // FIXME ugly but quick
-            Collection projects = ((ProjectManager) _projectManager).getProjectList();
-            JTable projectTable = null;
-            projectTable = Utils.createResultTable(projects);
-            projectID = showProjectList(projectTable);
+            projectID = showProjectList(createProjectsTable());
         } catch (Exception e) {
             LOGGER.fatal("", e);
             Utils.showErrorMessage(Messages.getString("ERR_CANNOT_LOAD_PROJECTS"));
         }
 
         return projectID;
+    }
+
+    private JTable createProjectsTable() throws PlatformException
+    {
+        IProject[] projects = _projectManager.getProjects();
+        String[] columnNames = new String[]{"ID", "Name", "Info", "Cr. date",
+                "Lm. date"};
+        Object[][] data = new Object[projects.length][columnNames.length];
+
+        int i = 0;
+        for (IProject project : projects) {
+            ProjectInfo info = (ProjectInfo) project.getInfo();
+            data[i][0] = info.getId();
+            data[i][1] = info.getName();
+            data[i][2] = info.getInfo();
+            data[i][3] = info.getCreationDate();
+            data[i][4] = info.getLastModificationDate();
+
+            ++i;
+        }
+
+        DBDataTable table = new DBDataTable(data, columnNames);
+        return table;
     }
 
     private JPanel createProjectPanel()
@@ -289,7 +311,7 @@ public final class ProjectManagerGUI
                 _projectManager.saveProject();
                 Utils.showInfoMessage(Messages.getString("TT_PROJECT_SAVED"));
                 _parent.refreshGui();
-            }            
+            }
         }
     }
 
@@ -342,9 +364,6 @@ public final class ProjectManagerGUI
         int projectID = 0;
         JScrollPane panel = new JScrollPane();
         panel.setViewportView(table);
-        // Dimension dim = new Dimension(250, 200);
-        // panel.setMaximumSize(dim);
-        // panel.setPreferredSize(dim);
 
         int result = JOptionPane.showConfirmDialog(_parent, panel,
                 "Choose project", JOptionPane.OK_CANCEL_OPTION,

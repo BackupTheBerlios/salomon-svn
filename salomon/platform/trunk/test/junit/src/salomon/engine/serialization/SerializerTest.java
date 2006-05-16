@@ -178,7 +178,7 @@ public class SerializerTest extends TestCase
         SimpleStruct mainStruct = new SimpleStruct();
 
         IObject[] items = new IObject[3];
-        
+
         SimpleStruct struct = new SimpleStruct();
         SimpleString table = new SimpleString("table1");
         SimpleInteger rowNo = new SimpleInteger(5);
@@ -186,27 +186,27 @@ public class SerializerTest extends TestCase
         struct.setField("rowNr", rowNo);
 
         items[0] = struct;
-        
+
         struct = new SimpleStruct();
         table = new SimpleString("table2");
         rowNo = new SimpleInteger(10);
         struct.setField("table", table);
         struct.setField("rowNr", rowNo);
-        
+
         items[1] = struct;
-        
+
         struct = new SimpleStruct();
         table = new SimpleString("table3");
         rowNo = new SimpleInteger(7);
         struct.setField("table", table);
         struct.setField("rowNr", rowNo);
-        
+
         items[2] = struct;
-        
+
         SimpleArray array = new SimpleArray(items);
 
         mainStruct.setField("tables", array);
-        
+
         FileOutputStream os = null;
         try {
             os = new FileOutputStream(OUTPUT_ARRAY_STRUCTS_FILE_NAME);
@@ -229,8 +229,8 @@ public class SerializerTest extends TestCase
         }
         assertNotNull(outStruct);
         assertTrue(mainStruct.equals(outStruct));
-    }    
-    
+    }
+
     /**
      * test serialization/deserializtion
      */
@@ -246,7 +246,7 @@ public class SerializerTest extends TestCase
     private static final Logger LOGGER = Logger.getLogger(SerializerTest.class);
 
     private static final String OUTPUT_ARRAY_FILE_NAME = "test/junit/res/array_out.xml";
-    
+
     private static final String OUTPUT_ARRAY_STRUCTS_FILE_NAME = "test/junit/res/array_structs_out.xml";
 
     private static final String OUTPUT_FILE_NAME = "test/junit/res/struct_out.xml";

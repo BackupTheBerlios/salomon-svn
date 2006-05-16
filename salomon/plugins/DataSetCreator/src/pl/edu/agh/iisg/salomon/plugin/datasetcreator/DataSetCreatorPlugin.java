@@ -27,14 +27,12 @@ import pl.edu.agh.iisg.salomon.plugin.datasetcreator.result.CreatorResult;
 import pl.edu.agh.iisg.salomon.plugin.datasetcreator.result.CreatorResultComponent;
 import pl.edu.agh.iisg.salomon.plugin.datasetcreator.settings.CreatorSettingComponent;
 import pl.edu.agh.iisg.salomon.plugin.datasetcreator.settings.CreatorSettings;
-
 import salomon.platform.IDataEngine;
 import salomon.platform.IEnvironment;
 import salomon.platform.data.dataset.ICondition;
 import salomon.platform.data.dataset.IDataSet;
 import salomon.platform.data.dataset.IDataSetManager;
 import salomon.platform.exception.PlatformException;
-
 import salomon.plugin.IPlatformUtil;
 import salomon.plugin.IPlugin;
 import salomon.plugin.IResult;

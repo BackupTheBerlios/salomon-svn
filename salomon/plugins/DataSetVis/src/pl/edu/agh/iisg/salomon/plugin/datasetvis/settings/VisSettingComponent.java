@@ -38,62 +38,60 @@ import com.jgoodies.forms.layout.FormLayout;
  */
 public final class VisSettingComponent implements ISettingComponent
 {
-	private JComponent _settingComponent;
+    private JComponent _settingComponent;
 
-	private JTextField _txtDataSetName;
+    private JTextField _txtDataSetName;
 
-	public VisSettingComponent()
-	{
-		_txtDataSetName = new JTextField();
-	}
+    public VisSettingComponent()
+    {
+        _txtDataSetName = new JTextField();
+    }
 
-	/**
-	 * 
-	 */
-	public Component getComponent(ISettings settings, IDataEngine dataEngine)
-	{
-		if (_settingComponent == null) {
-			_settingComponent = createSettingComponent();
-		}
-		initSettingsComponent(settings);
-		return _settingComponent;
-	}
+    /**
+     * 
+     */
+    public Component getComponent(ISettings settings, IDataEngine dataEngine)
+    {
+        if (_settingComponent == null) {
+            _settingComponent = createSettingComponent();
+        }
+        initSettingsComponent(settings);
+        return _settingComponent;
+    }
 
-	/**
-	 * 
-	 */
-	public ISettings getDefaultSettings()
-	{
-		return new VisSettings();
-	}
+    /**
+     * 
+     */
+    public ISettings getDefaultSettings()
+    {
+        return new VisSettings();
+    }
 
-	/**
-	 * 
-	 */
-	public ISettings getSettings()
-	{
-		VisSettings settings = new VisSettings();
-		// setting data seta name
-		settings.setDataSetName(_txtDataSetName.getText());
-		return settings;
-	}
+    /**
+     * 
+     */
+    public ISettings getSettings()
+    {
+        VisSettings settings = new VisSettings();
+        // setting data seta name
+        settings.setDataSetName(_txtDataSetName.getText());
+        return settings;
+    }
 
-	private JComponent createSettingComponent()
-	{
+    private JComponent createSettingComponent()
+    {
         FormLayout layout = new FormLayout(
                 "fill:default:grow, 3dlu, fill:100dlu:grow", "");
         DefaultFormBuilder builder = new DefaultFormBuilder(layout);
         builder.append("Dataset name", _txtDataSetName);
-		return builder.getPanel();
-	}
+        return builder.getPanel();
+    }
 
-	private void initSettingsComponent(ISettings settings)
-	{
-		VisSettings vSettings = (VisSettings) settings;
-		String dataSetName = vSettings.getDataSetName();
-		_txtDataSetName.setText(dataSetName == null
-				? ""
-				: dataSetName);
-	}
+    private void initSettingsComponent(ISettings settings)
+    {
+        VisSettings vSettings = (VisSettings) settings;
+        String dataSetName = vSettings.getDataSetName();
+        _txtDataSetName.setText(dataSetName == null ? "" : dataSetName);
+    }
 
 }

@@ -30,15 +30,14 @@ import javax.swing.JFrame;
 import org.syntax.jedit.JEditTextArea;
 import org.syntax.jedit.TextAreaDefaults;
 
-import com.jgoodies.forms.builder.DefaultFormBuilder;
-import com.jgoodies.forms.layout.FormLayout;
-
 import salomon.engine.Messages;
-
+import salomon.engine.platform.IManagerEngine;
 import salomon.util.gui.Utils;
 import salomon.util.scripting.JavaRunner;
 
-import salomon.engine.platform.IManagerEngine;
+import com.jgoodies.forms.builder.DefaultFormBuilder;
+import com.jgoodies.forms.factories.ButtonBarFactory;
+import com.jgoodies.forms.layout.FormLayout;
 
 public final class JavaEditorFrame extends JFrame
 {
@@ -78,10 +77,10 @@ public final class JavaEditorFrame extends JFrame
         // input
         builder.appendSeparator(Messages.getString("TT_JAVA_EDITOR_INPUT"));
         builder.append(_javaEditorComponent);
-        builder.append(_runButton);
+        builder.append(ButtonBarFactory.buildCenteredBar(_runButton));
         builder.appendSeparator(Messages.getString("TT_JAVA_EDITOR_OUTPUT"));
         builder.append(_outputComponent);
-        builder.append(_clearButton);
+        builder.append(ButtonBarFactory.buildCenteredBar(_clearButton));
 
         return builder.getPanel();
     }

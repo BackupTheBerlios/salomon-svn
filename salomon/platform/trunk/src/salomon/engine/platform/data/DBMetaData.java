@@ -75,7 +75,7 @@ public final class DBMetaData implements IMetaData
             _tables[i] = new DBTable(tableName);
             columns.clear();
             primaryKeys.clear();
-            
+
             // setting columns
             resultSet = _manager.getDatabaseMetaData().getColumns(null, null,
                     tableName, null);
@@ -85,28 +85,29 @@ public final class DBMetaData implements IMetaData
                 DBColumn column = new DBColumn(_tables[i], colName, colType);
                 columns.add(column);
             }
-            resultSet.close();            
-            
+            resultSet.close();
+
             DBColumn[] colArray = new DBColumn[columns.size()];
             colArray = columns.toArray(colArray);
             _tables[i].setColumns(colArray);
-            
+
             // setting primary keys
-            resultSet = _manager.getDatabaseMetaData().getPrimaryKeys(null, null, tableName);
+            resultSet = _manager.getDatabaseMetaData().getPrimaryKeys(null,
+                    null, tableName);
             while (resultSet.next()) {
                 String colName = resultSet.getString("column_name");
                 // searching for appropriate column
                 for (DBColumn column : columns) {
                     if (column.getName().equals(colName)) {
                         primaryKeys.add(column);
-                    }                    
-                }                
+                    }
+                }
             }
-            resultSet.close();  
+            resultSet.close();
             DBColumn[] keysArray = new DBColumn[primaryKeys.size()];
             keysArray = primaryKeys.toArray(keysArray);
             _tables[i].setPrimaryKeys(keysArray);
-            
+
             ++i;
         }
     }

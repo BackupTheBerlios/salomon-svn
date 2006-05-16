@@ -50,7 +50,8 @@ public interface IManagerEngine
      * @pre $none
      * @post $result != null
      */
-    @Deprecated IProjectManager getProjectManager() throws PlatformException;
+    @Deprecated
+    IProjectManager getProjectManager() throws PlatformException;
 
     /**
      * Returns the SolutionManager.
@@ -70,5 +71,6 @@ public interface IManagerEngine
      * @pre $none
      * @post $result != null
      */
-    @Deprecated ITaskManager getTasksManager() throws PlatformException;
+    @Deprecated
+    ITaskManager getTasksManager() throws PlatformException;
 }

@@ -112,7 +112,6 @@ public final class TaskManager implements ITaskManager
         // TODO: where it should be created?
         _environment = new Environment();
         // TODO: temporary
-        // TODO: temporary
         IVariable variable;
         try {
             variable = _environment.createEmpty("CURRENT_DATA_SET");
@@ -487,12 +486,7 @@ public final class TaskManager implements ITaskManager
                 _currentTask = task;
                 // running task
                 startTask(task);
-                // FIXME: temporary!
-                try {
-                    Thread.sleep(2000);
-                } catch (InterruptedException e1) {
-                    LOGGER.fatal("", e1);
-                }
+
                 synchronized (this) {
                     while (_paused) {
                         try {

@@ -42,5 +42,5 @@ public interface IGraphicPlugin
      * @return object showing of plugin execution
      */
     IResultComponent getResultComponent();
-   
+
 }

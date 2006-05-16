@@ -102,9 +102,10 @@ public class CreatorSettingComponent implements ISettingComponent
     }
 
     /**
+     * @throws PlatformException 
      * 
      */
-    public Component getComponent(ISettings settings, IDataEngine dataEngine)
+    public Component getComponent(ISettings settings, IDataEngine dataEngine) throws PlatformException
     {
         if (_settingComponent == null) {
             _dataEngine = dataEngine;
@@ -113,13 +114,7 @@ public class CreatorSettingComponent implements ISettingComponent
             _addConditionPanel = getAddConditionPanel();
             _settingComponent = createSettingComponent();
         }
-        try {
-            initSettingComponent(settings);
-        } catch (PlatformException e) {
-            LOGGER.fatal("", e);
-            // FIXME: where this error should be handled?
-            // handle it by adding throws declaration to interface methods
-        }
+        initSettingComponent(settings);
         return _settingComponent;
     }
 
@@ -305,15 +300,15 @@ public class CreatorSettingComponent implements ISettingComponent
         _operations = new JComboBox(new String[]{"=", "<", ">"});
         _txtColumnName = new JTextField();
         _txtColumnValue = new JTextField();
-        
-        
+
         // validation
         _dataSet = new DataSet();
         DataSetValidator dataSetValidator = new DataSetValidator(_dataSet,
-                _dataEngine);        
+                _dataEngine);
         IValidationModel validationModel = _platformUtil.getValidationModel(dataSetValidator);
-        IComponentFactory componentFactory = validationModel.getComponentFactory();        
-        _txtDataSetName = componentFactory.createTextField(DataSet.PROPERTYNAME_DATASET_NAME, false);
+        IComponentFactory componentFactory = validationModel.getComponentFactory();
+        _txtDataSetName = componentFactory.createTextField(
+                DataSet.PROPERTYNAME_DATASET_NAME, false);
     }
 
     private void initSettingComponent(ISettings settings)

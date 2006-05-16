@@ -22,23 +22,17 @@
 package salomon.engine.project;
 
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.Collection;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
 
 import salomon.engine.database.DBManager;
 import salomon.engine.database.queries.SQLSelect;
 import salomon.engine.platform.IManagerEngine;
-import salomon.engine.project.event.ProjectEvent;
-import salomon.engine.project.event.ProjectListener;
 import salomon.engine.solution.ISolution;
 import salomon.engine.solution.Solution;
 import salomon.platform.exception.DBException;
 import salomon.platform.exception.PlatformException;
-import salomon.util.gui.Utils;
 
 /**
  * An implemetation of IProjectManager interface. Class manages with projects
@@ -146,6 +140,8 @@ public final class ProjectManager implements IProjectManager
         SQLSelect select = new SQLSelect();
         select.addTable(ProjectInfo.TABLE_NAME);
         select.addCondition("project_id = ", projectID);
+        select.addCondition("solution_id =",
+                ((Project) _currentProject).getInfo().getSolutionID());
         ResultSet resultSet = null;
         try {
             resultSet = _dbManager.select(select);
@@ -174,42 +170,62 @@ public final class ProjectManager implements IProjectManager
         return _currentProject;
     }
 
-    public Collection getProjectList() throws PlatformException
-    {
-        Collection projects = null;
-        SQLSelect select = new SQLSelect();
-        select.addTable(ProjectInfo.TABLE_NAME);
-        select.addCondition("solution_id =",
-                ((Project) _currentProject).getInfo().getSolutionID());
-        // executing query
-        ResultSet resultSet = null;
-
-        try {
-            resultSet = _dbManager.select(select);
-            projects = Utils.getDataFromResultSet(resultSet);
-        } catch (SQLException e) {
-            LOGGER.fatal("", e);
-            throw new DBException(e.getLocalizedMessage());
-        }
-        return projects;
-    }
+    //    public Collection getProjectList() throws PlatformException
+    //    {
+    //        Collection projects = null;
+    //        SQLSelect select = new SQLSelect();
+    //        select.addTable(ProjectInfo.TABLE_NAME);
+    //        select.addCondition("solution_id =",
+    //                ((Project) _currentProject).getInfo().getSolutionID());
+    //        // executing query
+    //        ResultSet resultSet = null;
+    //
+    //        try {
+    //            resultSet = _dbManager.select(select);
+    //            projects = Utils.getDataFromResultSet(resultSet);
+    //        } catch (SQLException e) {
+    //            LOGGER.fatal("", e);
+    //            throw new DBException(e.getLocalizedMessage());
+    //        }
+    //        return projects;
+    //    }
 
     /**
      * @see IProjectManager#getProjects()
      */
     public IProject[] getProjects() throws PlatformException
     {
-        // FIXME
-        throw new UnsupportedOperationException("");
+        SQLSelect select = new SQLSelect();
+        select.addTable(ProjectInfo.TABLE_NAME);
+        select.addCondition("solution_id =",
+                ((Project) _currentProject).getInfo().getSolutionID());
+
+        ResultSet resultSet = null;
+
+        ArrayList<IProject> projectArrayList = new ArrayList<IProject>();
+
+        try {
+            resultSet = _dbManager.select(select);
+            while (resultSet.next()) {
+                IProject project = this.createProject();
+                project.getInfo().load(resultSet);
+                projectArrayList.add(project);
+            }
+        } catch (Exception e) {
+            LOGGER.fatal("", e);
+            throw new DBException(e.getLocalizedMessage());
+        }
+
+        Project[] projectArray = new Project[projectArrayList.size()];
+        projectArray = projectArrayList.toArray(projectArray);
+
+        return projectArray;
     }
 
     public ISolution getSolution() throws PlatformException
     {
         return _managerEngine.getSolutionManager().getCurrentSolution();
     }
-
-    // FIXME this method has to be removed but after implementing
-    // component to show table
 
     public boolean removeAll() throws PlatformException
     {
@@ -239,7 +255,7 @@ public final class ProjectManager implements IProjectManager
             // saving tasks
             ProjectInfo projectInfo = (ProjectInfo) _currentProject.getInfo();
             projectInfo.save();
-            saveTasks(projectInfo.getId());
+            _managerEngine.getTasksManager().saveTasks();
             _dbManager.commit();
 
         } catch (Exception e) {
@@ -252,17 +268,4 @@ public final class ProjectManager implements IProjectManager
     public void setSolution(ISolution solution)
     {
     }
-
-    /**
-     * Method saves tasks for given project.
-     * 
-     * @param project
-     * @throws SQLException
-     */
-    private void saveTasks(int projectID) throws Exception
-    {
-        // saving tasks
-        _managerEngine.getTasksManager().saveTasks();
-    }
-
 }

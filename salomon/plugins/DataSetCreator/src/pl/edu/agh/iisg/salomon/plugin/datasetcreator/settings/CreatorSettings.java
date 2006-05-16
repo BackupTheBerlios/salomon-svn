@@ -80,7 +80,7 @@ public final class CreatorSettings extends SimpleStruct implements ISettings
         setField(DATA_SET_NAME, dataSetName);
         setField(CONDITIONS, condArray);
 
-        _dataSetName = dataSetName.getValue();        
+        _dataSetName = dataSetName.getValue();
         IObject[] objects = condArray.getValue();
         _conditions = new String[objects.length];
         for (int i = 0; i < objects.length; ++i) {

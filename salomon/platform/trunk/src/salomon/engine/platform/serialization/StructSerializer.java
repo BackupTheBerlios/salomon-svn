@@ -58,7 +58,7 @@ final class StructSerializer implements INodeNames
             if (field != null) {
                 Element childNode = serializeSimpleType(document, field);
                 childNode.setAttribute(ATTR_NAME, name);
-                result.appendChild(childNode);                
+                result.appendChild(childNode);
             }
         }
 

@@ -25,6 +25,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
+import java.sql.SQLException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -55,6 +56,7 @@ import salomon.engine.controller.gui.SolutionManagerGUI;
 import salomon.engine.controller.gui.SplashScreen;
 import salomon.engine.controller.gui.action.ActionManager;
 import salomon.engine.controller.gui.graph.GraphTaskManagerGUI;
+import salomon.engine.database.DBManager;
 import salomon.engine.platform.IManagerEngine;
 import salomon.engine.platform.ManagerEngine;
 import salomon.platform.exception.PlatformException;
@@ -138,7 +140,14 @@ public final class LocalController implements IController
      */
     public void exit()
     {
-        // nothing to do
+        if (_managerEngine != null) {
+            DBManager dbManager = ((ManagerEngine)_managerEngine).getDbManager();
+            try {
+                dbManager.disconnect();
+            } catch (SQLException e) {
+                LOGGER.fatal("", e);
+            }    
+        }        
     }
 
     /**
@@ -224,13 +233,6 @@ public final class LocalController implements IController
     {
         _managerEngine = managerEngine;
         SplashScreen.show();
-        try {
-            PlasticLookAndFeel.setTabStyle(PlasticLookAndFeel.TAB_STYLE_METAL_VALUE);
-            PlasticLookAndFeel.setPlasticTheme(new ExperienceBlue());
-            UIManager.setLookAndFeel(new PlasticXPLookAndFeel());
-        } catch (Exception e) {
-            LOGGER.warn("Cannot set look&feel!", e); //$NON-NLS-1$
-        }
         // TODO: add cascade model support (?)
         try {
             _solutionManagerGUI = new SolutionManagerGUI(
@@ -554,7 +556,7 @@ public final class LocalController implements IController
             }
             return _itmSQLConsole;
         }
-        
+
         JMenuItem getItmJavaEditor()
         {
             if (_itmJavaEditor == null) {
@@ -567,7 +569,7 @@ public final class LocalController implements IController
                     }
                 });
             }
-            
+
             return _itmJavaEditor;
         }
 
@@ -631,7 +633,7 @@ public final class LocalController implements IController
         {
             new SQLConsole(((ManagerEngine) _managerEngine).getDbManager());
         }
-        
+
         /**
          * Shows Java Editor
          */

@@ -56,7 +56,6 @@ import salomon.engine.Messages;
 import salomon.engine.Starter;
 import salomon.engine.controller.gui.action.ActionManager;
 import salomon.engine.controller.gui.common.SearchFileFilter;
-import salomon.engine.controller.gui.statusbar.StatusBar;
 import salomon.engine.controller.gui.viewer.SolutionViewer;
 import salomon.engine.database.ExternalDBManager;
 import salomon.engine.project.IProject;

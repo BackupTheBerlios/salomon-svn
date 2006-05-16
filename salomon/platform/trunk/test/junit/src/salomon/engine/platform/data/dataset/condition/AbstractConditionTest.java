@@ -30,7 +30,6 @@ import salomon.engine.database.DBManager;
 import salomon.engine.platform.ManagerEngine;
 import salomon.engine.platform.data.DBColumn;
 import salomon.engine.platform.data.DBTable;
-import salomon.engine.platform.data.dataset.DataSetManager;
 import salomon.engine.solution.ISolution;
 import salomon.platform.IDataEngine;
 import salomon.platform.data.IColumn;

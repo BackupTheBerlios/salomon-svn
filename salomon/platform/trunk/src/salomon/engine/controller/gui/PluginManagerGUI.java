@@ -403,8 +403,10 @@ public final class PluginManagerGUI
         builder.append("Plugin name", _txtPluginName, 3);
         builder.append("Plugin location");
         builder.append(_txtPluginLocation, _btnPluginFileLoad);
-        builder.append(Messages.getString("TXT_PLUGIN_FILE"), _radioLocationFile, 3);
-        builder.append(Messages.getString("TXT_PLUGIN_URL"), _radioLocationUrl, 3);
+        builder.append(Messages.getString("TXT_PLUGIN_FILE"),
+                _radioLocationFile, 3);
+        builder.append(Messages.getString("TXT_PLUGIN_URL"), _radioLocationUrl,
+                3);
 
         builder.appendSeparator("Plugin info");
         builder.append(new JScrollPane(_txtPluginInfo), 5);

@@ -63,18 +63,18 @@ public class JavaRunner
     {
         _interpreter.defineVariable(name, instance);
     }
-    
+
     private void defineFunctions()
     {
         String script = "void print(String text) {System.out.print(text);}";
         script += "void println(String text) {System.out.println(text);}";
-        
+
         try {
             _interpreter.interpret(new StringReader(script), "SalomonScript");
         } catch (InterpreterException e) {
             LOGGER.fatal("", e);
         }
     }
-        
+
     private static final Logger LOGGER = Logger.getLogger(JavaRunner.class);
 }

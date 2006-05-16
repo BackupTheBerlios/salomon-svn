@@ -47,7 +47,7 @@ public final class TaskInfo implements IInfo
     public static final String FINISHED = "FI";
 
     public static final String REALIZATION = "RE";
-    
+
     public static final String INTERRUPTED = "IN";
 
     public static final String TABLE_NAME = "tasks";

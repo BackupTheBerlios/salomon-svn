@@ -21,7 +21,6 @@
 
 package salomon.plugin;
 
-
 import salomon.util.gui.validation.IValidationModel;
 import salomon.util.gui.validation.IValidator;
 

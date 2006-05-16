@@ -9,7 +9,6 @@ import salomon.engine.database.DBManager;
 import salomon.platform.IDataEngine;
 import salomon.platform.IEnvironment;
 import salomon.platform.exception.PlatformException;
-
 import salomon.plugin.IPlatformUtil;
 import salomon.plugin.IPlugin;
 import salomon.plugin.IResult;

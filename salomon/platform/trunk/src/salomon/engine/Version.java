@@ -46,10 +46,10 @@ public class Version
         String value = '!' + key + '!';
         try {
             if (RESOURCE_BUNDLE != null) {
-                value = RESOURCE_BUNDLE.getString(key);;  
-            } 
+                value = RESOURCE_BUNDLE.getString(key);;
+            }
         } catch (MissingResourceException e) {
-            LOGGER.fatal("", e);            
+            LOGGER.fatal("", e);
         }
         return value;
     }

@@ -24,7 +24,6 @@ package salomon.engine.remote.plugin;
 import salomon.engine.plugin.PluginInfo;
 import salomon.platform.IDataEngine;
 import salomon.platform.IEnvironment;
-
 import salomon.plugin.IPlatformUtil;
 import salomon.plugin.IPlugin;
 import salomon.plugin.IResult;
@@ -79,6 +78,7 @@ public final class PluginProxy implements IPlugin
      */
     public ISettingComponent getSettingComponent(IPlatformUtil platformUtil)
     {
-        throw new UnsupportedOperationException("Method PluginProxy.getSettingComponent() not implemented yet!");
+        throw new UnsupportedOperationException(
+                "Method PluginProxy.getSettingComponent() not implemented yet!");
     }
 }

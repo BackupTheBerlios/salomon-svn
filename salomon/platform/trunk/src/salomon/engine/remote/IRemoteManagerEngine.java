@@ -58,14 +58,16 @@ public interface IRemoteManagerEngine extends Remote
      * @pre $none
      * @post $result != null
      */
-    @Deprecated IRemoteProjectManager getProjectManager() throws RemoteException,
+    @Deprecated
+    IRemoteProjectManager getProjectManager() throws RemoteException,
             PlatformException;
 
     /**
      * @deprecated Use {@link salomon.engine.remote.project.IRemoteProject#getTaskManager()}
      * @see salomon.engine.platform.IManagerEngine#getTasksManager()
      */
-    @Deprecated IRemoteTaskManager getTasksManager() throws RemoteException,
+    @Deprecated
+    IRemoteTaskManager getTasksManager() throws RemoteException,
             PlatformException;
 
     /**

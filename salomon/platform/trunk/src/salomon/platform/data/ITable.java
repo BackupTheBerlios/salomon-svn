@@ -31,6 +31,6 @@ public interface ITable
     IColumn[] getColumns();
 
     String getName();
-    
+
     IColumn[] getPrimaryKeys();
 }

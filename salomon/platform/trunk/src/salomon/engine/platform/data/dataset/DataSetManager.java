@@ -233,8 +233,8 @@ public final class DataSetManager implements IDataSetManager
 
             resultSet = _dbManager.select(dataSetSelect);
             if (!resultSet.next()) {
-               LOGGER.warn("DataSet doesn't exist");
-               return null;
+                LOGGER.warn("DataSet doesn't exist");
+                return null;
             }
             // loading data set header
             dataSetInfo.load(resultSet);

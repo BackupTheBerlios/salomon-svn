@@ -32,52 +32,51 @@ import javax.swing.JTextField;
 import salomon.platform.IDataEngine;
 import salomon.plugin.IResult;
 import salomon.plugin.IResultComponent;
-import salomon.util.serialization.SimpleString;
 
 /**
  * @author nico
  */
 public class CreatorResultComponent implements IResultComponent
 {
-	private JComponent _resultComponent;
+    private JComponent _resultComponent;
 
-	private JTextField _txtDataSetName;
+    private JTextField _txtDataSetName;
 
-	public CreatorResultComponent()
-	{
-		_txtDataSetName = new JTextField();
-	}
+    public CreatorResultComponent()
+    {
+        _txtDataSetName = new JTextField();
+    }
 
-	/**
-	 * 
-	 */
-	public Component getComponent(IResult result, IDataEngine dataEngine)
-	{
-		if (_resultComponent == null) {
-			_resultComponent = createResultComponent();
-		}
-		CreatorResult cResult = (CreatorResult) result;
-		_txtDataSetName.setText(cResult.getDataSetName());		
-		return _resultComponent;
-	}
+    /**
+     * 
+     */
+    public Component getComponent(IResult result, IDataEngine dataEngine)
+    {
+        if (_resultComponent == null) {
+            _resultComponent = createResultComponent();
+        }
+        CreatorResult cResult = (CreatorResult) result;
+        _txtDataSetName.setText(cResult.getDataSetName());
+        return _resultComponent;
+    }
 
-	private JComponent createResultComponent()
-	{
-		JComponent panel = new JPanel();
-		panel.add(new JLabel("Data set name"));
-		_txtDataSetName.setPreferredSize(new Dimension(100, 20));		
-		_txtDataSetName.setEditable(false);
-		panel.add(_txtDataSetName);
+    private JComponent createResultComponent()
+    {
+        JComponent panel = new JPanel();
+        panel.add(new JLabel("Data set name"));
+        _txtDataSetName.setPreferredSize(new Dimension(100, 20));
+        _txtDataSetName.setEditable(false);
+        panel.add(_txtDataSetName);
 
-		return panel;
-	}
+        return panel;
+    }
 
-	/**
-	 * 
-	 */
-	public IResult getDefaultResult()
-	{
-		return new CreatorResult();
-	}	
+    /**
+     * 
+     */
+    public IResult getDefaultResult()
+    {
+        return new CreatorResult();
+    }
 
 }

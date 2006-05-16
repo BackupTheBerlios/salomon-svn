@@ -44,30 +44,30 @@ public final class PlatformUtil implements IPlatformUtil
     //        _validationResultModel = validationResultModel;
     //    }
 
-//    public JComponent getValidationComponent()
-//    {
-//        JComponent component = null;
-//        if (_validationResultModel != null) {
-//            component = ValidationResultViewFactory.createReportIconAndTextPane(_validationResultModel);
-//        }
-//        return component;
-//    }
+    //    public JComponent getValidationComponent()
+    //    {
+    //        JComponent component = null;
+    //        if (_validationResultModel != null) {
+    //            component = ValidationResultViewFactory.createReportIconAndTextPane(_validationResultModel);
+    //        }
+    //        return component;
+    //    }
 
     public IValidationModel getValidationModel(IValidator validator)
     {
         ValidationModel validationModel = new ValidationModel(validator);
         _validationResultModel = validationModel.getValidationResultModel();
-//        _validationResultModel.addPropertyChangeListener(new PropertyChangeListener() {
-//            public void propertyChange(PropertyChangeEvent e)
-//            {
-//                if (_validationResultModel.hasErrors()) {
-//                    System.out.println("Dupa");
-//                } else {
-//                    System.out.println("OKS");
-//                }
-//                _settingsPanel.refresh();
-//            }
-//        });
+        //        _validationResultModel.addPropertyChangeListener(new PropertyChangeListener() {
+        //            public void propertyChange(PropertyChangeEvent e)
+        //            {
+        //                if (_validationResultModel.hasErrors()) {
+        //                    System.out.println("Dupa");
+        //                } else {
+        //                    System.out.println("OKS");
+        //                }
+        //                _settingsPanel.refresh();
+        //            }
+        //        });
         return validationModel;
     }
 
@@ -84,7 +84,8 @@ public final class PlatformUtil implements IPlatformUtil
      * Set the value of validationResultModel field.
      * @param validationResultModel The validationResultModel to set
      */
-    public void setValidationResultModel(ValidationResultModel validationResultModel)
+    public void setValidationResultModel(
+            ValidationResultModel validationResultModel)
     {
         _validationResultModel = validationResultModel;
     }

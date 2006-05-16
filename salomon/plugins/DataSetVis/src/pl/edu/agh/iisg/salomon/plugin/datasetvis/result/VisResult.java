@@ -53,7 +53,7 @@ public final class VisResult extends SimpleStruct implements IResult
         // setting struct fields
         SimpleString dataSetName = (SimpleString) struct.getField(DATA_SET_NAME);
         setField(DATA_SET_NAME, dataSetName);
-        _dataSetName = dataSetName.getValue();
+        _dataSetName = dataSetName != null ? dataSetName.getValue() : "";
     }
 
     public boolean isSuccessful()

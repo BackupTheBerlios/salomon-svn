@@ -21,7 +21,6 @@
 
 package salomon.engine.solution.event;
 
-
 /**
  * 
  */

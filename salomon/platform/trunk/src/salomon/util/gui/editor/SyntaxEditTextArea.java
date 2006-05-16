@@ -37,26 +37,25 @@ public final class SyntaxEditTextArea extends JPanel
         setLayout(new BorderLayout());
         add(_editTextArea, BorderLayout.CENTER);
     }
-    
+
     public void setText(String text)
     {
         _editTextArea.setText(text);
     }
-    
+
     public String getText()
     {
         return _editTextArea.getText();
     }
-    
+
     public void setEditable(boolean editable)
     {
         _editTextArea.setEditable(editable);
     }
-    
+
     public boolean isEditable()
     {
         return _editTextArea.isEditable();
     }
-    
-    
+
 }

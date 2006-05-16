@@ -135,7 +135,7 @@ public final class SettingsDialog
         _dialog = new JDialog(_parent,
                 Messages.getString("TIT_PLUGIN_SETTINGS"));
         _dialog.setResizable(true);
-        _dialog.setModal(true);        
+        _dialog.setModal(true);
 
         ActionListener listener = new DialogListenter();
         _okButton = new JButton("OK");
@@ -157,7 +157,7 @@ public final class SettingsDialog
     {
         public void propertyChange(PropertyChangeEvent e)
         {
-           refresh();
+            refresh();
         }
     }
 }

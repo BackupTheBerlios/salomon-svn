@@ -40,9 +40,9 @@ public interface IComponentFactory
      *     to the specified valueModel
      * 
      * @throws NullPointerException if the valueModel is <code>null</code>
-     */    
+     */
     JFormattedTextField createIntegerField(String propertyName);
-    
+
     /**
      * Creates and returns a text field linked to given propery in the model.
      * Text changes are commited on focus lost.

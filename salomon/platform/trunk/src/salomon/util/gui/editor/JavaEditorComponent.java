@@ -48,12 +48,12 @@ public final class JavaEditorComponent extends JPanel
         setLayout(new BorderLayout());
         add(_textArea, BorderLayout.CENTER);
     }
-    
+
     public String getText()
     {
         return _textArea.getText();
     }
-    
+
     public void setText(String text)
     {
         _textArea.setText(text);

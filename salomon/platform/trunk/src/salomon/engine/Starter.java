@@ -23,6 +23,8 @@ package salomon.engine;
 
 import java.util.MissingResourceException;
 
+import javax.swing.UIManager;
+
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
@@ -33,13 +35,36 @@ import salomon.engine.controller.MasterController;
 import salomon.engine.controller.ServantController;
 import salomon.engine.platform.IManagerEngine;
 import salomon.engine.platform.ManagerEngine;
+import salomon.platform.exception.PlatformException;
 import salomon.util.gui.Utils;
+
+import com.jgoodies.looks.plastic.PlasticLookAndFeel;
+import com.jgoodies.looks.plastic.PlasticXPLookAndFeel;
+import com.jgoodies.looks.plastic.theme.ExperienceBlue;
 
 /**
  * Class starts application execution.
  */
 public final class Starter
 {
+    /**
+     * 
+     * @uml.property name="_instance"
+     * @uml.associationEnd multiplicity="(0 1)"
+     */
+    private static Starter _instance;
+
+    private static final Logger LOGGER = Logger.getLogger(Starter.class);
+
+    static {
+        try {
+            PlasticLookAndFeel.setTabStyle(PlasticLookAndFeel.TAB_STYLE_METAL_VALUE);
+            PlasticLookAndFeel.setPlasticTheme(new ExperienceBlue());
+            UIManager.setLookAndFeel(new PlasticXPLookAndFeel());
+        } catch (Exception e) {
+            LOGGER.warn("Cannot set look&feel!", e); //$NON-NLS-1$
+        }
+    }
 
     /**
      * 
@@ -55,67 +80,10 @@ public final class Starter
      */
     private IManagerEngine _managerEngine;
 
-    // private ProjectManager _projectManager = null;
-
     private Starter()
     {
         PropertyConfigurator.configure("log.conf");
         LOGGER.info("###  Application started  ###");
-
-    }
-
-    private void exitImpl()
-    {
-        LOGGER.debug("controller: " + _contoroller.getClass());
-        _contoroller.exit();
-        LOGGER.info("###  Application exited  ###");
-        System.exit(0);
-    }
-
-    private void initManagers()
-    {
-        try {
-            _managerEngine = new ManagerEngine();
-        } catch (Exception e) {
-            LOGGER.fatal("", e);
-            Utils.showErrorMessage(Messages.getString("ERR_CONNECTION_ERROR"));
-        }
-    }
-
-    private void start()
-    {
-        initManagers();
-        _contoroller.start(_managerEngine);
-    }
-
-    private void startClientImpl()
-    {
-        LOGGER.debug("starting ServantController");
-        _contoroller = new ServantController();
-        start();
-    }
-
-    private LibraryController startLibraryImpl()
-    {
-        LOGGER.debug("starting MasterController");
-        _contoroller = new LibraryController();
-        start();
-
-        return (LibraryController) _contoroller;
-    }
-
-    private void startLocalImpl()
-    {
-        LOGGER.debug("starting LocalController");
-        _contoroller = new LocalController();
-        start();
-    }
-
-    private void startServerImpl()
-    {
-        LOGGER.debug("starting MasterController");
-        _contoroller = new MasterController();
-        start();
     }
 
     /**
@@ -203,12 +171,58 @@ public final class Starter
         getInstance().startServerImpl();
     }
 
-    /**
-     * 
-     * @uml.property name="_instance"
-     * @uml.associationEnd multiplicity="(0 1)"
-     */
-    private static Starter _instance;
+    private void exitImpl()
+    {
+        LOGGER.debug("controller: " + _contoroller.getClass());
+        _contoroller.exit();
+        LOGGER.info("###  Application exited  ###");
+        System.exit(0);
+    }
 
-    private static final Logger LOGGER = Logger.getLogger(Starter.class);
+    private void initManagers() throws PlatformException
+    {
+        _managerEngine = new ManagerEngine();
+    }
+
+    private void start()
+    {
+        try {
+            initManagers();
+            _contoroller.start(_managerEngine);
+        } catch (Exception e) {
+            LOGGER.fatal("", e);
+            Utils.showErrorMessage(Messages.getString("ERR_MAIN_CONNECTION_ERROR"));
+            Starter.exit();
+        }
+    }
+
+    private void startClientImpl()
+    {
+        LOGGER.debug("starting ServantController");
+        _contoroller = new ServantController();
+        start();
+    }
+
+    private LibraryController startLibraryImpl()
+    {
+        LOGGER.debug("starting MasterController");
+        _contoroller = new LibraryController();
+        start();
+
+        return (LibraryController) _contoroller;
+    }
+
+    private void startLocalImpl()
+    {
+        LOGGER.debug("starting LocalController");
+        _contoroller = new LocalController();
+        start();
+    }
+
+    private void startServerImpl()
+    {
+        LOGGER.debug("starting MasterController");
+        _contoroller = new MasterController();
+        start();
+    }
 }

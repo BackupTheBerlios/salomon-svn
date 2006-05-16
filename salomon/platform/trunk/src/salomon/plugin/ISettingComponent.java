@@ -24,6 +24,7 @@ package salomon.plugin;
 import java.awt.Component;
 
 import salomon.platform.IDataEngine;
+import salomon.platform.exception.PlatformException;
 
 /**
  * Interface represents object, which is responsible for showing plugin
@@ -52,5 +53,5 @@ public interface ISettingComponent
      * @param settings settings object
      * @return component showing given settings
      */
-    Component getComponent(ISettings settings, IDataEngine dataEngine);
+    Component getComponent(ISettings settings, IDataEngine dataEngine) throws PlatformException;
 }

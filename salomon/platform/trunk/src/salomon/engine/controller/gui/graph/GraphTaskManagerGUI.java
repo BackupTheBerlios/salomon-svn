@@ -41,7 +41,6 @@ import org.apache.log4j.Logger;
 import salomon.engine.Messages;
 import salomon.engine.controller.gui.ControllerFrame;
 import salomon.engine.controller.gui.action.ActionManager;
-import salomon.engine.controller.gui.statusbar.StatusBar;
 import salomon.engine.controller.gui.viewer.TaskViewer;
 import salomon.engine.plugin.IPluginManager;
 import salomon.engine.plugin.LocalPlugin;
@@ -295,15 +294,16 @@ public final class GraphTaskManagerGUI
         }
         // FIXME needed by DataSet
         IDataEngine dataEngine = null;
+        Component taskSettingsComponent = null;
         try {
             dataEngine = _taskManager.getProject().getProjectManager().getSolution().getDataEngine();
+            taskSettingsComponent = settingComponent.getComponent(
+                    inputSettings, dataEngine);
         } catch (PlatformException e) {
             LOGGER.fatal("", e);
             Utils.showErrorMessage(Messages.getString("ERR_CANNOT_SHOW_TASK_SETTINGS"));
             return;
         }
-        Component taskSettingsComponent = settingComponent.getComponent(
-                inputSettings, dataEngine);
 
         // showing dialog
         SettingsDialog settingsDialog = new SettingsDialog(_parent);
@@ -318,10 +318,6 @@ public final class GraphTaskManagerGUI
 
         if (settingsDialog.showSettingsDialog()) {
 
-            //        int result = JOptionPane.showConfirmDialog(_positionComponent,
-            //                taskSettingsComponent, , //$NON-NLS-1$
-            //                JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
-            //        if (result == JOptionPane.OK_OPTION) {
             ISettings settings = settingComponent.getSettings();
             LOGGER.info("settings: " + settings); //$NON-NLS-1$
             try {

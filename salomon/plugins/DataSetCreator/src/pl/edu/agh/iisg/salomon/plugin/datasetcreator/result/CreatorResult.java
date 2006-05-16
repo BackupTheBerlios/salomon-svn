@@ -67,7 +67,7 @@ public final class CreatorResult extends SimpleStruct implements IResult
         // setting struct fields
         SimpleString dataSetName = (SimpleString) struct.getField(DATA_SET_NAME);
         setField(DATA_SET_NAME, dataSetName);
-        _dataSetName = dataSetName.getValue();        
+        _dataSetName = dataSetName.getValue();
     }
 
 }

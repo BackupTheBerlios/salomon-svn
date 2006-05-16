@@ -49,7 +49,6 @@ import org.syntax.jedit.JEditTextArea;
 import org.syntax.jedit.tokenmarker.PLSQLTokenMarker;
 
 import salomon.engine.database.DBManager;
-
 import salomon.util.gui.Utils;
 
 /**
@@ -79,7 +78,7 @@ public final class SQLConsole extends JFrame
 
     // private JPanel _contentPane = null;
 
-//    private JTextPane _edtSQLQuery = null;
+    //    private JTextPane _edtSQLQuery = null;
     private JEditTextArea _edtSQLQuery = null;
 
     /**
@@ -278,9 +277,10 @@ public final class SQLConsole extends JFrame
         if (_edtSQLQuery == null) {
             _edtSQLQuery = new JEditTextArea();
             _edtSQLQuery.setTokenMarker(new PLSQLTokenMarker());
-            _edtSQLQuery.getDocument().getDocumentProperties().put(PlainDocument.tabSizeAttribute, 4);
+            _edtSQLQuery.getDocument().getDocumentProperties().put(
+                    PlainDocument.tabSizeAttribute, 4);
         }
-        
+
         return _edtSQLQuery;
     }
 

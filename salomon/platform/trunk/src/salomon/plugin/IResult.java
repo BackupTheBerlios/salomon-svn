@@ -30,7 +30,7 @@ import salomon.platform.serialization.IStruct;
  * Represents result of plugin execution.
  *
  */
-public interface IResult  extends Serializable, IStruct
+public interface IResult extends Serializable, IStruct
 {
     /**
      * 
