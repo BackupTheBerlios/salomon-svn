@@ -22,15 +22,19 @@
 package salomon.engine.project;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
 
 import salomon.engine.database.DBManager;
+import salomon.engine.database.queries.SQLDelete;
 import salomon.engine.database.queries.SQLSelect;
 import salomon.engine.platform.IManagerEngine;
 import salomon.engine.solution.ISolution;
 import salomon.engine.solution.Solution;
+import salomon.engine.task.ITask;
+import salomon.engine.task.TaskInfo;
 import salomon.platform.exception.DBException;
 import salomon.platform.exception.PlatformException;
 
@@ -170,26 +174,6 @@ public final class ProjectManager implements IProjectManager
         return _currentProject;
     }
 
-    //    public Collection getProjectList() throws PlatformException
-    //    {
-    //        Collection projects = null;
-    //        SQLSelect select = new SQLSelect();
-    //        select.addTable(ProjectInfo.TABLE_NAME);
-    //        select.addCondition("solution_id =",
-    //                ((Project) _currentProject).getInfo().getSolutionID());
-    //        // executing query
-    //        ResultSet resultSet = null;
-    //
-    //        try {
-    //            resultSet = _dbManager.select(select);
-    //            projects = Utils.getDataFromResultSet(resultSet);
-    //        } catch (SQLException e) {
-    //            LOGGER.fatal("", e);
-    //            throw new DBException(e.getLocalizedMessage());
-    //        }
-    //        return projects;
-    //    }
-
     /**
      * @see IProjectManager#getProjects()
      */
@@ -229,32 +213,69 @@ public final class ProjectManager implements IProjectManager
 
     public boolean removeAll() throws PlatformException
     {
-        throw new UnsupportedOperationException(
-                "Method removeAll() not implemented yet!");
+        SQLDelete delete = new SQLDelete(ProjectInfo.TABLE_NAME);
+        boolean success = false;
+        try {
+            _dbManager.delete(delete);
+            _dbManager.commit();
+            success = true;
+        } catch (SQLException e) {
+            _dbManager.rollback();
+            LOGGER.fatal("", e);
+            throw new PlatformException(e.getLocalizedMessage());
+        }
+        return success;
     }
 
     public boolean removeProject(IProject project) throws PlatformException
     {
-        throw new UnsupportedOperationException(
-                "Method removeProject() not implemented yet!");
+        SQLDelete delete = new SQLDelete(ProjectInfo.TABLE_NAME);
+        delete.addCondition("project_id =", project.getInfo().getId());
+        boolean success = false;
+        try {
+            _dbManager.delete(delete);
+            _dbManager.commit();
+            success = true;
+        } catch (SQLException e) {
+            _dbManager.rollback();
+            LOGGER.fatal("", e);
+            throw new PlatformException(e.getLocalizedMessage());
+        }
+        return success;
     }
 
     /**
      * Method saves project in data base - project header, plugins and tasks are
      * saved.
      * 
-     * @see IProjectManager#saveProject()
+     * @param forceNew true, if new project must be created
      * 
-     * @throws ClassNotFoundException
-     * @throws Exception
+     * @throws PlatformException
      */
-    public void saveProject() throws PlatformException
+    public void saveProject(boolean forceNew) throws PlatformException
     {
         // saving project header
         try {
             // saving tasks
             ProjectInfo projectInfo = (ProjectInfo) _currentProject.getInfo();
+
+            // forcing setting new id
+            if (forceNew) {
+                projectInfo.setProjectID(-1);
+            }
             projectInfo.save();
+
+            if (forceNew) {
+                int projectId = projectInfo.getId();
+                // changing the project id of tasks
+                ITask[] tasks = _managerEngine.getTasksManager().getTasks();
+                for (ITask task : tasks) {
+                    TaskInfo taskInfo = (TaskInfo) task.getInfo();
+                    // forcing setting new task id
+                    taskInfo.setTaskId(-1);
+                    taskInfo.setProjectID(projectId);
+                }
+            }
             _managerEngine.getTasksManager().saveTasks();
             _dbManager.commit();
 
@@ -265,7 +286,4 @@ public final class ProjectManager implements IProjectManager
         }
     }
 
-    public void setSolution(ISolution solution)
-    {
-    }
 }

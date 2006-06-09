@@ -73,15 +73,6 @@ public class AboutPanel
         email.setForeground(Color.BLUE);
         builder.append(author, email);
 
-        author = new JLabel("Leszek Grzanka");
-        email = new JLabel("grzanka@student.uci.agh.edu.pl");
-        email.setForeground(Color.BLUE);
-        builder.append(author, email);
-
-        author = new JLabel("Jakub Galkowski");
-        email = new JLabel("avi@student.uci.agh.edu.pl");
-        email.setForeground(Color.BLUE);
-        builder.append(author, email);
 
         // versions
         builder.appendSeparator(Messages.getString("TIT_VERSION"));

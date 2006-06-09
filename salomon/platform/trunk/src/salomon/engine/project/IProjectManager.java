@@ -73,6 +73,8 @@ public interface IProjectManager
     /**
      * Method saves project in data base - project header, plugins and tasks are
      * saved.
+     * 
+     * @param forceNew true, if new project must be created
      */
-    void saveProject() throws PlatformException;
+    void saveProject(boolean forceNew) throws PlatformException;
 }

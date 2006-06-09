@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004 Salomon Team
+ * Copyright (C) 2006 Salomon Team
  *
  * This file is part of Salomon.
  *
@@ -29,18 +29,18 @@ import salomon.engine.controller.gui.ProjectManagerGUI;
  * Class represents action fired while saving project.
  *  
  */
-public final class SaveProjectAction extends AbstractProjectAction
+public final class SaveAsProjectAction extends AbstractProjectAction
 {
 
     /**
      * Sets an object which method is called in implementation of actionPerformed()
      * of method
      * 
-     * @param projectEditionManager an instance of ProjectManagerGUI
+     * @param projectManagerGUI an instance of ProjectManagerGUI
      */
-    protected SaveProjectAction(ProjectManagerGUI projectEditionManager)
+    protected SaveAsProjectAction(ProjectManagerGUI projectManagerGUI)
     {
-        super(projectEditionManager);
+        super(projectManagerGUI);
     }
 
     /**
@@ -48,7 +48,7 @@ public final class SaveProjectAction extends AbstractProjectAction
      */
     public void actionPerformed(ActionEvent e)
     {
-        _projectEditionManager.saveProject(false);
+        _projectEditionManager.saveProject(true);
     }
 
 }

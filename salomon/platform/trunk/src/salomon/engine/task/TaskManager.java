@@ -323,13 +323,12 @@ public final class TaskManager implements ITaskManager
         IProject currProject = _managerEngine.getProjectManager().getCurrentProject();
         delete.addCondition("project_id =", currProject.getInfo().getId());
         boolean retVal = false;
-        int deletedRows = 0;
         try {
-            deletedRows = _dbManager.delete(delete);
+            _dbManager.delete(delete);
             _dbManager.commit();
             // removing from list
             _tasks.clear();
-            retVal = (deletedRows > 0);
+            retVal = true;
         } catch (SQLException e) {
             _dbManager.rollback();
             LOGGER.fatal("", e);

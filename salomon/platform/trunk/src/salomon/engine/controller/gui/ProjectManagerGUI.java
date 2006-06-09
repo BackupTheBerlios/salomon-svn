@@ -115,7 +115,7 @@ public final class ProjectManagerGUI
             Project project = (Project) _projectManager.getCurrentProject();
 
             // saving project
-            this.saveProject(project);
+            this.saveProject(project, false);
 
             // informing listeners
             fireProjectModified(new ProjectEvent(
@@ -142,7 +142,7 @@ public final class ProjectManagerGUI
             Project project = (Project) _projectManager.createProject();
 
             // saving project
-            this.saveProject(project);
+            this.saveProject(project, false);
 
             // informing listeners
             fireProjectCreated(new ProjectEvent((ProjectInfo) project.getInfo()));
@@ -175,13 +175,13 @@ public final class ProjectManagerGUI
         _projectListeners.remove(listener);
     }
 
-    public void saveProject()
+    public void saveProject(boolean forceNew)
     {
         try {
             Project project = (Project) _projectManager.getCurrentProject();
 
             // saving project
-            this.saveProject(project);
+            this.saveProject(project, forceNew);
 
         } catch (PlatformException e) {
             LOGGER.fatal("", e);
@@ -304,17 +304,16 @@ public final class ProjectManagerGUI
         }
     }
 
-    private void saveProject(Project project) throws PlatformException
+    private void saveProject(Project project, boolean forceNew) throws PlatformException
     {
         if (setProjectProperties(project)) {
-            if (_taskManagerGUI.saveTasks()) {
-                _projectManager.saveProject();
-                Utils.showInfoMessage(Messages.getString("TT_PROJECT_SAVED"));
-                _parent.refreshGui();
-            }
+            _projectManager.saveProject(forceNew);
+            Utils.showInfoMessage(Messages.getString("TT_PROJECT_SAVED"));
+            _parent.refreshGui();
         }
     }
 
+    
     /**
      * Shows dialog which enables to initialize project settings.
      * 

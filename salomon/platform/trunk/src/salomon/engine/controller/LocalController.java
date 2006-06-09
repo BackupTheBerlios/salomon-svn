@@ -37,7 +37,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
-import javax.swing.UIManager;
 
 import org.apache.log4j.Logger;
 
@@ -63,15 +62,13 @@ import salomon.platform.exception.PlatformException;
 import salomon.util.gui.Utils;
 import salomon.util.gui.editor.JavaEditorFrame;
 
-import com.jgoodies.looks.plastic.PlasticLookAndFeel;
-import com.jgoodies.looks.plastic.PlasticXPLookAndFeel;
-import com.jgoodies.looks.plastic.theme.ExperienceBlue;
-
 /**
  * Local implementation of IController interface.
  */
 public final class LocalController implements IController
 {
+
+    private static final Logger LOGGER = Logger.getLogger(LocalController.class);
 
     /**
      * 
@@ -80,14 +77,14 @@ public final class LocalController implements IController
      */
     private ActionManager _actionManager;
 
+    // private JPanel _contentPane;
+
     /**
      * 
      * @uml.property name="_contentPane"
      * @uml.associationEnd multiplicity="(0 1)"
      */
     private IControllerPanel _contentPane;
-
-    // private JPanel _contentPane;
 
     /**
      * 
@@ -141,13 +138,13 @@ public final class LocalController implements IController
     public void exit()
     {
         if (_managerEngine != null) {
-            DBManager dbManager = ((ManagerEngine)_managerEngine).getDbManager();
+            DBManager dbManager = ((ManagerEngine) _managerEngine).getDbManager();
             try {
                 dbManager.disconnect();
             } catch (SQLException e) {
                 LOGGER.fatal("", e);
-            }    
-        }        
+            }
+        }
     }
 
     /**
@@ -188,6 +185,7 @@ public final class LocalController implements IController
             project.add(_guiMenu.getItmEditProject());
             project.addSeparator();
             project.add(_guiMenu.getItmSaveProject());
+            project.add(_guiMenu.getItmSaveAsProject());
 
             JMenu tools = new JMenu(Messages.getString("MNU_TOOLS")); //$NON-NLS-1$
             tools.setMnemonic('t');
@@ -299,6 +297,8 @@ public final class LocalController implements IController
 
         private JMenuItem _itmExit;
 
+        private JMenuItem _itmJavaEditor;
+
         private JMenuItem _itmNewProject;
 
         private JMenuItem _itmNewSolution;
@@ -307,13 +307,13 @@ public final class LocalController implements IController
 
         private JMenuItem _itmOpenSolution;
 
+        private JMenuItem _itmSaveAsProject;
+
         private JMenuItem _itmSaveProject;
 
         private JMenuItem _itmSaveSolution;
 
         private JMenuItem _itmSQLConsole;
-
-        private JMenuItem _itmJavaEditor;
 
         private JMenuItem _itmViewPlugins;
 
@@ -462,6 +462,22 @@ public final class LocalController implements IController
             return _itmExit;
         }
 
+        JMenuItem getItmJavaEditor()
+        {
+            if (_itmJavaEditor == null) {
+                _itmJavaEditor = new JMenuItem();
+                _itmJavaEditor.setText(Messages.getString("MNU_JAVA_EDITOR")); //$NON-NLS-1$
+                _itmJavaEditor.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e)
+                    {
+                        showJavaEditor();
+                    }
+                });
+            }
+
+            return _itmJavaEditor;
+        }
+
         JMenuItem getItmNewProject()
         {
             if (_itmNewProject == null) {
@@ -509,6 +525,16 @@ public final class LocalController implements IController
             return _itmOpenSolution;
         }
 
+        JMenuItem getItmSaveAsProject()
+        {
+            if (_itmSaveAsProject == null) {
+                _itmSaveAsProject = new JMenuItem();
+                _itmSaveAsProject.setText(Messages.getString("MNU_SAVE_AS")); //$NON-NLS-1$
+                _itmSaveAsProject.addActionListener(_actionManager.getSaveAsProjectAction());
+            }
+            return _itmSaveAsProject;
+        }
+
         JMenuItem getItmSaveProject()
         {
             if (_itmSaveProject == null) {
@@ -533,15 +559,6 @@ public final class LocalController implements IController
             return _itmSaveSolution;
         }
 
-        private ImageIcon getMenuIcon(String iconKey)
-        {
-            String iconFileName = Resources.getString(iconKey);
-            String iconPath = _resourcesDir + Config.FILE_SEPARATOR
-                    + iconFileName;
-
-            return new ImageIcon(iconPath);
-        }
-
         JMenuItem getItmSQLConsole()
         {
             if (_itmSQLConsole == null) {
@@ -555,22 +572,6 @@ public final class LocalController implements IController
                 });
             }
             return _itmSQLConsole;
-        }
-
-        JMenuItem getItmJavaEditor()
-        {
-            if (_itmJavaEditor == null) {
-                _itmJavaEditor = new JMenuItem();
-                _itmJavaEditor.setText(Messages.getString("MNU_JAVA_EDITOR")); //$NON-NLS-1$
-                _itmJavaEditor.addActionListener(new ActionListener() {
-                    public void actionPerformed(ActionEvent e)
-                    {
-                        showJavaEditor();
-                    }
-                });
-            }
-
-            return _itmJavaEditor;
         }
 
         JMenuItem getItmViewPlugins()
@@ -627,6 +628,14 @@ public final class LocalController implements IController
         }
 
         /**
+         * Shows Java Editor
+         */
+        void showJavaEditor()
+        {
+            new JavaEditorFrame(_managerEngine);
+        }
+
+        /**
          * Method shows SQLConsole.
          */
         void showSQLConsole()
@@ -634,12 +643,13 @@ public final class LocalController implements IController
             new SQLConsole(((ManagerEngine) _managerEngine).getDbManager());
         }
 
-        /**
-         * Shows Java Editor
-         */
-        void showJavaEditor()
+        private ImageIcon getMenuIcon(String iconKey)
         {
-            new JavaEditorFrame(_managerEngine);
+            String iconFileName = Resources.getString(iconKey);
+            String iconPath = _resourcesDir + Config.FILE_SEPARATOR
+                    + iconFileName;
+
+            return new ImageIcon(iconPath);
         }
 
         /** Method shows about dialog. */
@@ -650,6 +660,4 @@ public final class LocalController implements IController
         }
 
     }
-
-    private static final Logger LOGGER = Logger.getLogger(LocalController.class);
 }

@@ -181,7 +181,9 @@ public final class ProjectInfo implements IInfo
         if (_environment != null) {
             update.addValue("env", _environment);
         }
-        if (_cDate == null) {
+        // if projectID == -1, the new project should be created
+        // so cDate must be changed
+        if (_cDate == null || _projectID == -1) {
             _cDate = new Date(System.currentTimeMillis());
             update.addValue("c_date", _cDate);
         }

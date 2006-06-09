@@ -200,6 +200,8 @@ public final class ActionManager
      */
     private ViewTaskAction _viewTaskAction;
 
+    private SaveAsProjectAction _saveAsProjectAction;
+
     /**
      * Sets object used to create actions.
      * 
@@ -419,6 +421,19 @@ public final class ActionManager
         return _saveProjectAction;
     }
 
+    /**
+     * Returns an instance of SaveAsProjectAction.
+     * 
+     * @return an instance of SaveAsProjectAction.
+     */
+    public SaveAsProjectAction getSaveAsProjectAction()
+    {
+        if (_saveAsProjectAction == null) {
+            _saveAsProjectAction = new SaveAsProjectAction(_projectManagerGUI);
+        }
+        return _saveAsProjectAction;
+    }    
+    
     /**
      * Returns an instance of SaveSolutionAction.
      * 

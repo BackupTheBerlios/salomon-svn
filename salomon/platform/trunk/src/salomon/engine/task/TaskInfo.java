@@ -248,7 +248,12 @@ public final class TaskInfo implements IInfo
         if (_result != null) {
             update.addValue("plugin_result", _result);
         }
+        // reseting status
+        if (_taskID == -1) {
+            _status = TaskInfo.ACTIVE;
+        }
         update.addValue("status", _status);
+        
         // updating start/stop time depanding on status
         if (_status == REALIZATION) {
             update.addValue("start_time", new Time(System.currentTimeMillis()));
@@ -256,7 +261,7 @@ public final class TaskInfo implements IInfo
             update.addValue("stop_time", new Time(System.currentTimeMillis()));
         }
 
-        if (_cDate == null) {
+        if (_cDate == null || _taskID == -1) {
             _cDate = new Date(System.currentTimeMillis());
             update.addValue("c_date", _cDate);
         }

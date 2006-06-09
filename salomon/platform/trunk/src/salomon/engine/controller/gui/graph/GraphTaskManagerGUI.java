@@ -212,18 +212,18 @@ public final class GraphTaskManagerGUI
         }
     }
 
-    public boolean saveTasks()
-    {
-        boolean success = false;
-        try {
-            _taskManager.saveTasks();
-            success = true;
-        } catch (PlatformException e) {
-            LOGGER.fatal("", e);
-            Utils.showErrorMessage(Messages.getString("ERR_CANNOT_SAVE_TASKS"));
-        }
-        return success;
-    }
+//    public boolean saveTasks()
+//    {
+//        boolean success = false;
+//        try {
+//            _taskManager.saveTasks();
+//            success = true;
+//        } catch (PlatformException e) {
+//            LOGGER.fatal("", e);
+//            Utils.showErrorMessage(Messages.getString("ERR_CANNOT_SAVE_TASKS"));
+//        }
+//        return success;
+//    }
 
     public void setActionManager(ActionManager actionManager)
     {

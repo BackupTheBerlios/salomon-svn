@@ -72,7 +72,7 @@ public interface IRemoteProjectManager extends Remote
      * @pre $none
      * @post $none
      */
-    void saveProject() throws PlatformException, RemoteException;
+    void saveProject(boolean forceNew) throws PlatformException, RemoteException;
 
     IRemoteProject getCurrentProject() throws PlatformException,
             RemoteException;

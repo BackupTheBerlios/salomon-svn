@@ -168,10 +168,10 @@ public final class ProjectManagerProxy implements IProjectManager
     /**
      * @see IProjectManager#saveProject()
      */
-    public void saveProject() throws PlatformException
+    public void saveProject(boolean forceNew) throws PlatformException
     {
         try {
-            _remoteProjectManager.saveProject();
+            _remoteProjectManager.saveProject(forceNew);
         } catch (RemoteException e) {
             LOGGER.fatal("Remote error", e);
             throw new PlatformException(e.getLocalizedMessage());

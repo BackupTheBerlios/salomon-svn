@@ -110,9 +110,9 @@ final class ProjectManagerHolder implements IProjectManager
     /**
      * @see IProjectManager#saveProject()
      */
-    public void saveProject() throws PlatformException
+    public void saveProject(boolean forceNew) throws PlatformException
     {
-        _currentProjectManager.saveProject();
+        _currentProjectManager.saveProject(forceNew);
     }
 
     /**

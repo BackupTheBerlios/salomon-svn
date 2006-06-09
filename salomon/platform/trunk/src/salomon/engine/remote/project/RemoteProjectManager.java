@@ -120,9 +120,9 @@ public final class RemoteProjectManager extends UnicastRemoteObject
     /**
      * @see IRemoteProjectManager#saveProject()
      */
-    public void saveProject() throws PlatformException, RemoteException
+    public void saveProject(boolean forceNew) throws PlatformException, RemoteException
     {
-        _projectManager.saveProject();
+        _projectManager.saveProject(forceNew);
     }
 
     private IRemoteProject getRemoteProject(IProject project)

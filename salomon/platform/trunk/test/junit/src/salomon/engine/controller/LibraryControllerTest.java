@@ -62,7 +62,7 @@ public class LibraryControllerTest extends TestCase
         builder.append("<string name=\"secondDataSet\" value=\"third\"/></struct>");
         // this method is not supported now
         //		taskManager.addTask(task, pluginUrl, builder.toString());
-        projectManager.saveProject();
+        projectManager.saveProject(false);
         taskManager.getRunner().start();
         LOGGER.debug("task result:" + task.getResult());
     }

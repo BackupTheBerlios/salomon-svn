@@ -138,23 +138,26 @@ public class SalomonEditingGraphMousePlugin extends AbstractGraphMousePlugin
                         vv.addPostRenderPaintable(arrowPaintable);
                     }
                 } else { // make a new vertex
-                    ITask task = _graphTaskManagerGUI.createTask();
-                    if (task != null) {
+                    if (e.getButton() == MouseEvent.BUTTON1
+                            && e.getClickCount() == 2) {
+                        ITask task = _graphTaskManagerGUI.createTask();
+                        if (task != null) {
 
-                        Graph graph = vv.getGraphLayout().getGraph();
-                        Vertex newVertex = new TaskVertex(task);
-                        vertexLocations.setLocation(newVertex,
-                                vv.inverseTransform(e.getPoint()));
-                        Layout layout = vv.getGraphLayout();
-                        for (Iterator iterator = graph.getVertices().iterator(); iterator.hasNext();) {
-                            layout.lockVertex((Vertex) iterator.next());
+                            Graph graph = vv.getGraphLayout().getGraph();
+                            Vertex newVertex = new TaskVertex(task);
+                            vertexLocations.setLocation(newVertex,
+                                    vv.inverseTransform(e.getPoint()));
+                            Layout layout = vv.getGraphLayout();
+                            for (Iterator iterator = graph.getVertices().iterator(); iterator.hasNext();) {
+                                layout.lockVertex((Vertex) iterator.next());
+                            }
+                            graph.addVertex(newVertex);
+                            vv.getModel().restart();
+                            for (Iterator iterator = graph.getVertices().iterator(); iterator.hasNext();) {
+                                layout.unlockVertex((Vertex) iterator.next());
+                            }
+                            vv.repaint();
                         }
-                        graph.addVertex(newVertex);
-                        vv.getModel().restart();
-                        for (Iterator iterator = graph.getVertices().iterator(); iterator.hasNext();) {
-                            layout.unlockVertex((Vertex) iterator.next());
-                        }
-                        vv.repaint();
                     }
                 }
             }
