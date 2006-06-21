@@ -1,12 +1,23 @@
-\section{Architektura systemu \emph{Salomon}}
+\section{Architecture of \emph{Salomon}}
 
-System \emph{Salomon} tworzy zbiór uruchomionych instancji platformy,
-dzia³aj¹cych we wspólnym œrodowisku i komunikuj¹cych siê ze sob¹
-w~celu wymiany wiedzy oraz przekazania zada\'n do wykonania. Na obecnym etapie
-system pracuje w modelu klient-serwer, tj.\ jedna instancja platformy
-pe³ni rolê zarz¹dcy, a~pozosta³e wykonuj¹ obliczenia przez ni¹
-zlecone i~zwracaj¹ jej wyniki. Sama instancja zarz¹dzaj¹ca równie¿
-mo¿e wykonywaæ obliczenia.
+System \emph{Salomon} consists of running instances of platform. 
+They work together in a shared environment and communicate with each other
+to exchange gathered knowledge and tasks to be executed.
+Currently system works in client-server architecture, 
+it means one instance of platform acts as a server 
+and the rest of the instances performs the tasks passed from the server
+and return the result of computation.
+Server can also perform computation regardless of the clients.
+
+%\section{Architektura systemu \emph{Salomon}}
+%
+%System \emph{Salomon} tworzy zbiór uruchomionych instancji platformy,
+%dzia³aj¹cych we wspólnym œrodowisku i komunikuj¹cych siê ze sob¹
+%w~celu wymiany wiedzy oraz przekazania zada\'n do wykonania. Na obecnym etapie
+%system pracuje w modelu klient-serwer, tj.\ jedna instancja platformy
+%pe³ni rolê zarz¹dcy, a~pozosta³e wykonuj¹ obliczenia przez ni¹
+%zlecone i~zwracaj¹ jej wyniki. Sama instancja zarz¹dzaj¹ca równie¿
+%mo¿e wykonywaæ obliczenia.
 
 \begin{figure}[!ht]
     \centering
@@ -15,66 +26,122 @@ mo¿e wykonywaæ obliczenia.
     \label{fig:architecture}
 \end{figure}
 
-Rysunek \ref{fig:architecture} przedstawia obecn¹ architekturê
-systemu Salomon. Mo¿na w niej wyró¿niæ nastêpuj¹ce elementy:
+The figure \ref{fig:architecture} demonstrates current architecture of Salomon system.
+The following elements can be distinguished:
 \begin{description}
-\item[J¹dro systemu] to element integruj¹cy pozosta³e modu³y. Zapewnia
- komunikacjê pomiêdzy poszczególnymi elementami systemu.
-\item[Interfejs u¿ytkownika] -- tworzy pakiet modu³\'ow
- odpowiedzialnych za komunikacjê z~u¿ytkownikiem.
-\item[Modu³ zarz¹dzaj¹cy wiedz¹] kt\'orego wyodrêbnienie pozwala
- \emph{Salomonowi} na przechowywanie i operowanie na r\'o\.znych
- rodzajach wiedzy np.\ drzewach decyzyjnych, klastrach, regu³ach itp.
- Dla ka¿dego rodzaju wiedzy definiowana jest osobna implemetacja, która
- odpowiada za udostêpnienie wtyczkom interfejsu do zarz¹dzania danym
- rodzajem wiedzy. U³atwia to operowanie na wiedzy oraz odseparowuje
- wtyczki od szczegó³ów implementacyjnych pozwalaj¹cych np.\ na
- przechowywanie wiedzy w bazie danych.
-\item[Modu³ zarz¹dzaj¹cy danymi] stanowi warstwê abstrakcji dostêpu do
-  danych. Pozwala na uniezale¿nienie reszty systemu od
-  ró¿nych implementacji systemów bazodanowych.
-\item[Modu³ komunikacyjny] umo¿liwiaj¹cy rozproszenie obliczeñ.
-\item[Wtyczki] s¹ odpowiedzialne za dostarczenie algorytmów
- wyszukuj¹cych, przetwarzaj¹cych wiedzê, za prezentacje wyników itp.
- Wykonanie algorytmów przez nich dostarczonych odbywa siê w izolowanym
- œrodowisku.  W~trakcie pracy wtyczki maj¹ dostêp do wiedzy, do danych
- i~do interfejsu u¿ytkownika.
-\item[Dane] z pojedynczego Ÿród³a wykorzystywa\'c mo¿e wiele instancji
- systemu.
-\item[Wiedza] gromadzona i przechowywana jest przez ka¿d¹ instancjê
- wraz danymi potrzebnymi w~trakcie dzia³ania systemu, takimi jak
- informacje o zainstalowanych wtyczkach, zdefiniowane projekty, Ÿród³a
- danych itp
-\item[Kontroler zadañ] jest odpowiedzialny za uruchamianie i
- kontrolowanie wykonywania poszczególnych zadañ.
+	\item[Core] is an integrating element of the system. 
+	It enables communication between the rest parts of the system.
+	\item[User interface] -- the group of modules responsible for interaction with a user.
+	\item[Knowledge manager] enables storing and managing varied types of knowledge 
+	e.g. decision trees, clusters, rules etc.
+	For each kind of knowledge the separate implementation is defined. 
+	It is enables plug-ins the interface to manage specific type of knowledge.
+	It makes using knowledge easier and separates plug-ins from the implementation details 
+	e.g. storing the knowledge in database.
+	\item[Data manager] is an abstraction layer that makes Salomon be independent 
+	from varied implementation of relational database systems.
+	\item[Communication module] enables computation distribution.
+	\item[Plug-ins] provide algorithms that search for knowledge, process it, 
+	present the result of computation etc.
+	Execution of algorithms is performed in isolated environment. 
+	During their work plug-ins have an access to knowledge, data and the user interface.
+	\item[Data] stored in a single location may be used by many instances of the system.
+	\item[Knowledge] is gathered and stored by each instance of the system 
+	along with the data needed by the system such as information about plug-ins installed, 
+	created projects, data sources etc.
+	\item[Task manager] is responsible for executing and managing task execution.
 \end{description}
 
-Poniewa\.z w systemach rozproszonych mog¹ wyst¹piæ problemy z
-utrzymaniem zgodnoœci (ang.\ \emph{interoperability}) nie tylko ze
-wzglêdu na wersje systemu, ale tak¿e na implementacje, st¹d potrzeba
-zdefiniowania jasno okreœlonych warstw i interfejsów pomiêdzy nimi.
-Do najwa¿niejszych warstw, jakie mo¿emy wyró¿niæ w systemie
-\emph{Salomon} nale¿¹:
+%Rysunek \ref{fig:architecture} przedstawia obecn¹ architekturê
+%systemu Salomon. Mo¿na w niej wyró¿niæ nastêpuj¹ce elementy:
+%\begin{description}
+%\item[J¹dro systemu] to element integruj¹cy pozosta³e modu³y. Zapewnia
+% komunikacjê pomiêdzy poszczególnymi elementami systemu.
+%\item[Interfejs u¿ytkownika] -- tworzy pakiet modu³\'ow
+% odpowiedzialnych za komunikacjê z~u¿ytkownikiem.
+%\item[Modu³ zarz¹dzaj¹cy wiedz¹] kt\'orego wyodrêbnienie pozwala
+% \emph{Salomonowi} na przechowywanie i operowanie na r\'o\.znych
+% rodzajach wiedzy np.\ drzewach decyzyjnych, klastrach, regu³ach itp.
+% Dla ka¿dego rodzaju wiedzy definiowana jest osobna implemetacja, która
+% odpowiada za udostêpnienie wtyczkom interfejsu do zarz¹dzania danym
+% rodzajem wiedzy. U³atwia to operowanie na wiedzy oraz odseparowuje
+% wtyczki od szczegó³ów implementacyjnych pozwalaj¹cych np.\ na
+% przechowywanie wiedzy w bazie danych.
+%\item[Modu³ zarz¹dzaj¹cy danymi] stanowi warstwê abstrakcji dostêpu do
+%  danych. Pozwala na uniezale¿nienie reszty systemu od
+%  ró¿nych implementacji systemów bazodanowych.
+%\item[Modu³ komunikacyjny] umo¿liwiaj¹cy rozproszenie obliczeñ.
+%\item[Wtyczki] s¹ odpowiedzialne za dostarczenie algorytmów
+% wyszukuj¹cych, przetwarzaj¹cych wiedzê, za prezentacje wyników itp.
+% Wykonanie algorytmów przez nich dostarczonych odbywa siê w izolowanym
+% œrodowisku.  W~trakcie pracy wtyczki maj¹ dostêp do wiedzy, do danych
+% i~do interfejsu u¿ytkownika.
+%\item[Dane] z pojedynczego Ÿród³a wykorzystywa\'c mo¿e wiele instancji
+% systemu.
+%\item[Wiedza] gromadzona i przechowywana jest przez ka¿d¹ instancjê
+% wraz danymi potrzebnymi w~trakcie dzia³ania systemu, takimi jak
+% informacje o zainstalowanych wtyczkach, zdefiniowane projekty, Ÿród³a
+% danych itp
+%\item[Kontroler zadañ] jest odpowiedzialny za uruchamianie i
+% kontrolowanie wykonywania poszczególnych zadañ.
+%\end{description}
+
+
+In distributed systems there are problems with keeping interoperability
+of individual instances -- the may have not only different version of a system 
+but also the implementation. For this reason there was necessary to define
+clear layers and interfaces between them.
+The most important layers that we can distinguish in \emph{Salomon} are:
+
+%Poniewa\.z w systemach rozproszonych mog¹ wyst¹piæ problemy z
+%utrzymaniem zgodnoœci (ang.\ \emph{interoperability}) nie tylko ze
+%wzglêdu na wersje systemu, ale tak¿e na implementacje, st¹d potrzeba
+%zdefiniowania jasno okreœlonych warstw i interfejsów pomiêdzy nimi.
+%Do najwa¿niejszych warstw, jakie mo¿emy wyró¿niæ w systemie
+%\emph{Salomon} nale¿¹:
+
 
 \begin{enumerate}
-    \item \emph{Komunikacja z zewnêtrznymi Ÿród³ami danych.}
-    Komunikacja odbywa siê przez specjalne komponenty, które ukrywaj¹ ró¿nice pomiêdzy ró¿nymi Ÿród³ami danych.
-    Udostêpniaj¹ one specjalny interfejs, za pomoc¹ którego wtyczki mog¹ pobraæ dane oraz strukturê bazy.
+	\item \emph{Communication with the external data sources.}
+	Communication is realized by specialized components that hide differences between varied data sources.
+	They provide the interface that is used by plug-ins to extract data and its structure.
+	
+	\item \emph{Communication between varied instances of Salomon.}
+	Currently the communication is realized using \emph{RMI} technology. 
+	The system is homogenic, so using \emph{RMI} seems to be the natural choice.
+	In case of appearance of the new implementations it may be necessary 
+	to implement communication based on more universal technologies e.g. \emph{CORBA} as well.
 
-    \item \emph{Komunikacja miêdzy ró¿nymi instancjami Salomona.}
-    W obecnej wersji systemu do komunikacji wykorzystywana  jest technologia \emph{RMI}.
-    Na obecnym etapie system jest homogeniczny, wiêc naturalnym wydaje byæ
-    u¿ycie w³aœnie \emph{RMI}. W przypadku pojawianie siê innych implementacji, konieczne mo¿e byæ zaimplementowanie
-    równie¿ komunikacji w~oparciu o bardziej uniwersalne technologie jak np. \emph{CORBA}.
-
-    \item \emph{Komunikacja z wtyczkami.}
-    Zestaw specjalnych klas odpowiada za dostarczenie wtyczkom danych z zewnêtrznego Ÿród³a danych oraz za umo¿liwienie operacji na wiedzy. Wtyczki s¹ ca³kowicie odseparowane od zewnêtrznego œrodowiska i~warstwa ta stanowi jedyne miejsce wymiany wiedzy pomiêdzy nimi a~œrodowiskiem.
-
-    \item \emph{Interfejs u¿ytkownika.}
-System \emph{Salomon} mo¿e byæ wykorzystywany w~ró¿nych kontekstach, takich jak na przyk³ad praca z~u¿ytkownikiem,
-udostêpnianie us³ug w~rozproszonym œrodowisku sieciowym czy jako biblioteka wykorzystywana w innym programie.
-To wymusza bardzo mocne oddzielenie interfejsu u¿ytkownika od reszty systemu.
-
-%   \item j¹dro systemu
-%   To najwa¿niejsza czêœæ systemu, odpowiedzialna za uruchamianie zadañ, zarz¹dzanie pozosta³y czêœciami.
+	\item \emph{Communication with plug-ins.}
+	The group of specialized classes provide data from external data source for plug-ins 
+	and enable them performing operations on knowledge. Plug-ins are completely separated from
+	the external environment and this layer is the one place when the knowledge exchange 
+	between plug-ins and the environment takes place.
+	
+	\item \emph{User interface.} 
+	System \emph{Salomon} may be used in varied contexts, such as interaction with the user, 
+	providing services in distributed network environment or as a library used by another program.
+	All this forces very strong separation between user interface and the rest of the system.
+	
 \end{enumerate}
+
+%\begin{enumerate}
+%    \item \emph{Komunikacja z zewnêtrznymi Ÿród³ami danych.}
+%    Komunikacja odbywa siê przez specjalne komponenty, które ukrywaj¹ ró¿nice pomiêdzy ró¿nymi Ÿród³ami danych.
+%    Udostêpniaj¹ one specjalny interfejs, za pomoc¹ którego wtyczki mog¹ pobraæ dane oraz strukturê bazy.
+%
+%    \item \emph{Komunikacja miêdzy ró¿nymi instancjami Salomona.}
+%    W obecnej wersji systemu do komunikacji wykorzystywana  jest technologia \emph{RMI}.
+%    Na obecnym etapie system jest homogeniczny, wiêc naturalnym wydaje byæ
+%    u¿ycie w³aœnie \emph{RMI}. W przypadku pojawianie siê innych implementacji, konieczne mo¿e byæ zaimplementowanie
+%    równie¿ komunikacji w~oparciu o bardziej uniwersalne technologie jak np. \emph{CORBA}.
+%
+%    \item \emph{Komunikacja z wtyczkami.}
+%    Zestaw specjalnych klas odpowiada za dostarczenie wtyczkom danych z zewnêtrznego Ÿród³a danych oraz za umo¿liwienie operacji na wiedzy. Wtyczki s¹ ca³kowicie odseparowane od zewnêtrznego œrodowiska i~warstwa ta stanowi jedyne miejsce wymiany wiedzy pomiêdzy nimi a~œrodowiskiem.
+%
+%    \item \emph{Interfejs u¿ytkownika.}
+%System \emph{Salomon} mo¿e byæ wykorzystywany w~ró¿nych kontekstach, takich jak na przyk³ad praca z~u¿ytkownikiem,
+%udostêpnianie us³ug w~rozproszonym œrodowisku sieciowym czy jako biblioteka wykorzystywana w innym programie.
+%To wymusza bardzo mocne oddzielenie interfejsu u¿ytkownika od reszty systemu.
+
+%\end{enumerate}
