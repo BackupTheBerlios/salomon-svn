@@ -1,0 +1,83 @@
+\documentclass[11pt,a4paper,twocolumn]{article}
+\usepackage{msk}
+\usepackage[polish]{babel}
+\usepackage[cp1250]{inputenc}
+\usepackage[OT4]{fontenc}
+\usepackage{graphicx}
+\usepackage{indentfirst}
+\usepackage[urlcolor=black,colorlinks=false,bookmarks=true,bookmarksnumbered=true]{hyperref}
+
+
+\title{\emph{Salomon} -- %komponentowa architektura indukcyjnej bazy
+  %danych jako platformy uczenia maszynowego}
+  component architecture of inductive database as a machine learning platform}
+
+\author{Nikodem Jura, Krzysztof Rajda,
+ Marek Kisiel-Dorohinicki,
+ Bart³omiej Œnie¿yñski}
+
+\institute{Akademia Górniczo-Hutnicza, Katedra Informatyki,
+Kraków\\
+\href{mailto:nico@icslab.agh.edu.pl}{nico@icslab.agh.edu.pl},
+\href{mailto:krzysztof@rajda.name}{krzysztof@rajda.name},
+\href{mailto:doroh@agh.edu.pl}{doroh@agh.edu.pl},
+\href{mailto:sniezyn@agh.edu.pl}{sniezyn@agh.edu.pl}}
+
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+%Nowym kierunkiem ³¹cz¹cym technologie baz danych z nowoczesnymi
+%metodami indukcyjnego generowania wiedzy s¹ indukcyjne bazy
+%danych. 
+The new direction which connects data base technology with modern inductive
+methods of generation knowledge is inductive data bases.
+
+
+
+% Po³¹czenie takie pozwala na jednolity dostêp do wiedzy
+%zawartej w~danych bezpoœrednio i wiedzy wygenerowanej z tych
+%danych za pomoc¹ algorytmów uczenia maszynowego.
+
+Such connection allows accessing to knowledge in data directly in even way
+using algorithms of machine learning. %i widzy wygenerowanych z tych danych
+
+
+% W~niniejszej
+%pracy przedstawiona zosta³a architektura i~wybrane aspekty
+%implementacji platformy \emph{Salomon}, komponentowej realizacji
+%indukcyjnej bazy danych. 
+
+
+The architecture and some aspects of implementation of the \emph{Salomon}
+platform have been introducted is this article.
+
+
+
+%Dziêki budowie modu³owej uda³o siê
+%uzyskaæ du¿o lepsz¹ elastycznoœæ systemu w~stosunku do innych,
+%zbli¿onych rozwi¹zañ.
+Thanks to the modular structure much better system flexibility
+in comparison to other similar systems was achieved.
+
+
+
+
+\end{abstract}
+
+
+\input{introduction}
+\input{others}
+\input{conception}
+\input{architecture}
+\input{sample_use}
+\input{summary}
+\input{bibliography}
+
+%wylaczenie numerowania na I stronie
+\thispagestyle{empty}
+
+
+\end{document}
