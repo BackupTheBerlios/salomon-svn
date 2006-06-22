@@ -1,66 +1,123 @@
 %\section{Koncepcja platformy \emph{Salomon}}
 \section{Conception of the \emph{Salomon} platform}
 
-Proponowana architektura platfromy \emph{Salomon} jest odpowiedzi¹ na
-pewne ograniczenia systemu \emph{VINLEN}. Proces pozyskiwania wiedzy z
-danych jest zwykle bardzo z³o¿ony -- czêœæ algorytmów wymaga du¿ej
-iloœci obliczeñ, kt\'ore przeprowadzane s¹ na sporej iloœci danych.
-St¹d pojawiaj¹ siê problemy wydajnoœciowe i~dlatego te¿ jednym z
-wa¿niejszych aspektów podczas projektowania architektury systemu by³a
-jego skalowalnoœæ. Uda³o siê to osi¹gn¹æ dziêki rozbiciu ca³ego
-procesu obliczeniowego na pojedyncze \emph{zadania}.  To z kolei
-stworzy³o mo¿liwoœæ rozproszenia obliczeñ.
+The proposed architecture of the \emph{Salomon} platform ia a replay
+to some limitation of \emph{VINLEN}.
+The process of gathering the knowledge from data is usually very complex
+-- some algorithms require large amount of computation 
+which are being taken on the considerable amount of given data.
+From here efficiency problems are appearing and therefore 
+while designing the architecture of the system 
+its scalability was also one of more important aspects.
+We managed to attain it thanks to breaking the entire computational process 
+for isolated tasks and it created the possibility of dispersing calculations.
+
+%Proponowana architektura platfromy \emph{Salomon} jest odpowiedzi¹ na
+%pewne ograniczenia systemu \emph{VINLEN}. Proces pozyskiwania wiedzy z
+%danych jest zwykle bardzo z³o¿ony -- czêœæ algorytmów wymaga du¿ej
+%iloœci obliczeñ, kt\'ore przeprowadzane s¹ na sporej iloœci danych.
+%St¹d pojawiaj¹ siê problemy wydajnoœciowe i~dlatego te¿ jednym z
+%wa¿niejszych aspektów podczas projektowania architektury systemu by³a
+%jego skalowalnoœæ. Uda³o siê to osi¹gn¹æ dziêki rozbiciu ca³ego
+%procesu obliczeniowego na pojedyncze \emph{zadania}.  To z kolei
+%stworzy³o mo¿liwoœæ rozproszenia obliczeñ.
 
 \noindent
-G³ówne za³o¿enia platformy to:
+Main assumptions of the platform are:
 
 \begin{description}
-    \item[Budowa komponentowa.]
-    \emph{VINLEN} to gotowy produkt, dostarczany wraz z wbudowanymi ró¿nymi algorytmami.
-    \emph{Salomon} to otwarta platforma, która ma stanowiæ bazê podczas 
-    tworzenia produktów wykorzystuj¹cych ideê \emph{Machine Learning} 
-    w procesie odkrywania wiedzy z danych. St¹d za³o¿enie, ¿e platforma -- 
-    g³ówny modu³ systemu -- jest tak prosta jak to mo¿liwe. Jej zadaniem 
-    jest dostarczenie przyjaznego œrodowiska do realizacji funkcjonalnoœci 
-    zawartej w komponentach maj¹cych postaæ tzw.\ wtyczek.
+    \item[Component-based design.]
+    \emph{VINLEN} is a complete product, delivered together with different algorithms built in.
+    \emph{Salomon} is an open platform which is supposed to make a base for other projects 
+    using the Machine Learning idea in the process of discovering the knowledge in data. 
+    Hence the assumption, that platform -- main module of the system -- 
+    is as simple as possible. Providing the user-friendly environment is setting it for 
+    the realization of the functionality contained in components having the form of so-called plug-ins.
 
-    \item[Otwartoœæ.] U¿ytkownik ma pe³n¹ swobodê
-    w~dodawaniu nowych komponentów (wtyczek) do systemu.
+    \item[Open platform.] The user has the full freedom in adding new components (plug-ins) to the system.
 
-    \item[Niezale¿noœæ od œrodowiska wdro¿enia.]
-    Dziêki wykorzystaniu przenoœnych narzêdzi, przyk³adowo jêzyka \emph{Java},
-    system mo¿e byæ uruchamiany w dowolnym systemie posiadaj¹cym odpowiedni¹ maszynê wirtualn¹.
-
-    \item[Mo¿liwoœæ rozpraszania obliczeñ.]
-    Dziêki budowie komponentowej i odpowiedniemu definiowaniu zadañ, system umo¿liwia pracê w~rozproszonym,
-    heterogenicznym œrodowisku sieciowym.
-    
-    \item[Prostota u¿ytkowania.]
-    £atwoœæ u¿ytkowania to jeden z fundamentów systemu
-    \emph{VINLEN}. \emph{Salomon} stara siê równie¿ pod tym wzglêdem
-    dorównaæ, a nawet przeœcign¹æ swojego protoplastê. Jako jedno z
-    wa¿niejszych u³atwieñ przewidywane jest zast¹pienie jêzyka
-    definiowania ,,skautów'' graficznym interfejsem w~postaci grafu
-    przep³ywu wiedzy.
+    \item[Independence from the runtime environment.]
+		Thanks to using portable tools, for example Java, the system can be started on any system having 
+		the appropriate virtual machine.
+    \item[Possibility of calculations distribution.]
+		Thanks to component-based design and right definition of tasks, 
+		he system is enabling the work in the distributed, heterogeneous network environment.
+    \item[Simplicity of using.]
+    An easiness of using is one of bases of the \emph{VINLEN} system.
+    \emph{Salomon} tries also in this respect to equal and what is more: to outrun his progenitor.
+    One of more important facilitation being expected is replacing the language of defining ,,scouts'' 
+    with graphical interface in the form of the graph of the the knowledge flow.
 \end{description}
 
-\medskip
-System \emph{Salomon} sk³ada siê z dwóch zasadniczych czêœci.
-Pierwsz¹ z nich stanowi platforma. Druga czêœæ to zbiór wtyczek,
-dostarczaj¹cych logikê potrzebn¹ do skonfigurowania, wykonania i
-wyœwietlenia rezultatów zadania.
-Sama platforma sk³ada siê z~dwóch elementów: silnika, którego zadaniem
-jest zarz¹dzanie i~uruchamianie zadañ, oraz magazynu, który s³u¿y
-do przechowywania danych i wiedzy.
 
-Jednym z istotnych atutów systemu jest mo¿liwoœæ elastycznego definiowania
-przebiegu pracy systemu w kategoriach tzw.\ \emph{zada\'n}.
-Ekstrakcja wiedzy to proces, który mo¿e
-byæ podzielony na etapy -- w ka¿dym etapie wiedza jest poddawana
-pewnej obróbce (np. dyskretyzowane s¹ atrybuty, tworzone s¹
-regu³y, wiedza jest testowana). Poniewa¿ ka¿dy etap tworzy odrêbn¹
-ca³oœæ, a~czêœæ etapów jest od siebie niezale¿na, zatem mog¹ byæ
-one wykonywane wspó³bie¿nie.
+%G³ówne za³o¿enia platformy to:
+%
+%\begin{description}
+%    \item[Budowa komponentowa.]
+%    \emph{VINLEN} to gotowy produkt, dostarczany wraz z wbudowanymi ró¿nymi algorytmami.
+%    \emph{Salomon} to otwarta platforma, która ma stanowiæ bazê podczas 
+%    tworzenia produktów wykorzystuj¹cych ideê \emph{Machine Learning} 
+%    w procesie odkrywania wiedzy z danych. St¹d za³o¿enie, ¿e platforma -- 
+%    g³ówny modu³ systemu -- jest tak prosta jak to mo¿liwe. Jej zadaniem 
+%    jest dostarczenie przyjaznego œrodowiska do realizacji funkcjonalnoœci 
+%    zawartej w komponentach maj¹cych postaæ tzw.\ wtyczek.
+%
+%    \item[Otwartoœæ.] U¿ytkownik ma pe³n¹ swobodê
+%    w~dodawaniu nowych komponentów (wtyczek) do systemu.
+%
+%    \item[Niezale¿noœæ od œrodowiska wdro¿enia.]
+%    Dziêki wykorzystaniu przenoœnych narzêdzi, przyk³adowo jêzyka \emph{Java},
+%    system mo¿e byæ uruchamiany w dowolnym systemie posiadaj¹cym odpowiedni¹ maszynê wirtualn¹.
+%
+%    \item[Mo¿liwoœæ rozpraszania obliczeñ.]
+%    Dziêki budowie komponentowej i odpowiedniemu definiowaniu zadañ, system umo¿liwia pracê w~rozproszonym,
+%    heterogenicznym œrodowisku sieciowym.
+%    
+%    \item[Prostota u¿ytkowania.]
+%    £atwoœæ u¿ytkowania to jeden z fundamentów systemu
+%    \emph{VINLEN}. \emph{Salomon} stara siê równie¿ pod tym wzglêdem
+%    dorównaæ, a nawet przeœcign¹æ swojego protoplastê. Jako jedno z
+%    wa¿niejszych u³atwieñ przewidywane jest zast¹pienie jêzyka
+%    definiowania ,,skautów'' graficznym interfejsem w~postaci grafu
+%    przep³ywu wiedzy.
+%\end{description}
+
+\medskip
+System \emph{Salomon} consists of two components. 
+First from them is a platform. The second part is a set of plug-ins, 
+providing logic needed for configuring, executing and showing the results of execution.
+The platform consists of two elements: the engine and the data storage.
+The first of them is responsible for managing and executing tasks 
+and the second is serving for the data and knowledge storage.
+A possibility of elastic defining the course of the processing 
+is one of essential advantages of the system. 
+It is realized in the form of so-called \emph{tasks}.
+
+An extraction of the knowledge is a process which can be divided in stages 
+-- in every stage the knowledge is being subjected to sure processing 
+(e.g. attributes are discretized, the rules are created, the knowledge is tested). 
+Since every stage is creating the separate integrity 
+and the part of stages is independent of oneself, so they can be processed simultaneously.
+
+%\medskip
+%System \emph{Salomon} sk³ada siê z dwóch zasadniczych czêœci.
+%Pierwsz¹ z nich stanowi platforma. Druga czêœæ to zbiór wtyczek,
+%dostarczaj¹cych logikê potrzebn¹ do skonfigurowania, wykonania i
+%wyœwietlenia rezultatów zadania.
+%Sama platforma sk³ada siê z~dwóch elementów: silnika, którego zadaniem
+%jest zarz¹dzanie i~uruchamianie zadañ, oraz magazynu, który s³u¿y
+%do przechowywania danych i wiedzy.
+%
+%Jednym z istotnych atutów systemu jest mo¿liwoœæ elastycznego definiowania
+%przebiegu pracy systemu w kategoriach tzw.\ \emph{zada\'n}.
+%Ekstrakcja wiedzy to proces, który mo¿e
+%byæ podzielony na etapy -- w ka¿dym etapie wiedza jest poddawana
+%pewnej obróbce (np. dyskretyzowane s¹ atrybuty, tworzone s¹
+%regu³y, wiedza jest testowana). Poniewa¿ ka¿dy etap tworzy odrêbn¹
+%ca³oœæ, a~czêœæ etapów jest od siebie niezale¿na, zatem mog¹ byæ
+%one wykonywane wspó³bie¿nie.
+
+
 
 Zadanie to podstawowa jednostka reprezentuj¹ca obliczenia.
 Zdefiniowane jest ono jako: 
