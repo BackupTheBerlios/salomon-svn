@@ -1,23 +1,25 @@
 \section{Architecture of \emph{Salomon}}
 
 System \emph{Salomon} consists of running instances of platform. 
-They work together in a shared environment and communicate with each other
-to exchange gathered knowledge and tasks to be executed.
-Currently system works in client-server architecture, 
-it means one instance of platform acts as a server 
-and the rest of the instances performs the tasks passed from the server
-and return the result of computation.
-Server can also perform computation regardless of the clients.
+These instances work together in a shared environment and communicate
+with each other in order to exchange the gathered
+knowledge and tasks to be executed. Currently the 
+system works in client-server architecture.
+It means, that one instance of platform acts as a server
+and the rest of the instances performs the tasks
+assigned by the server and return the result of
+computation. The server can also perform computations
+simultaneously with the clients.
 
 %\section{Architektura systemu \emph{Salomon}}
-%
-%System \emph{Salomon} tworzy zbiór uruchomionych instancji platformy,
+
+%\textit{System \emph{Salomon} tworzy zbiór uruchomionych instancji platformy,
 %dzia³aj¹cych we wspólnym œrodowisku i komunikuj¹cych siê ze sob¹
 %w~celu wymiany wiedzy oraz przekazania zada\'n do wykonania. Na obecnym etapie
 %system pracuje w modelu klient-serwer, tj.\ jedna instancja platformy
 %pe³ni rolê zarz¹dcy, a~pozosta³e wykonuj¹ obliczenia przez ni¹
 %zlecone i~zwracaj¹ jej wyniki. Sama instancja zarz¹dzaj¹ca równie¿
-%mo¿e wykonywaæ obliczenia.
+%mo¿e wykonywaæ obliczenia.}
 
 \begin{figure}[!ht]
     \centering
@@ -26,29 +28,39 @@ Server can also perform computation regardless of the clients.
     \label{fig:architecture}
 \end{figure}
 
-The figure \ref{fig:architecture} demonstrates current architecture of Salomon system.
-The following elements can be distinguished:
+The figure \ref{fig:architecture} demonstrates current architecture
+of Salomon system. The following elements can be distinguished:
+
 \begin{description}
-	\item[Core] is an integrating element of the system. 
-	It enables communication between the rest parts of the system.
-	\item[User interface] -- the group of modules responsible for interaction with a user.
-	\item[Knowledge manager] enables storing and managing varied types of knowledge 
-	e.g. decision trees, clusters, rules etc.
-	For each kind of knowledge the separate implementation is defined. 
-	It is enables plug-ins the interface to manage specific type of knowledge.
-	It makes using knowledge easier and separates plug-ins from the implementation details 
-	e.g. storing the knowledge in database.
-	\item[Data manager] is an abstraction layer that makes Salomon be independent 
-	from varied implementation of relational database systems.
-	\item[Communication module] enables computation distribution.
-	\item[Plug-ins] provide algorithms that search for knowledge, process it, 
-	present the result of computation etc.
-	Execution of algorithms is performed in isolated environment. 
-	During their work plug-ins have an access to knowledge, data and the user interface.
-	\item[Data] stored in a single location may be used by many instances of the system.
-	\item[Knowledge] is gathered and stored by each instance of the system 
-	along with the data needed by the system such as information about plug-ins installed, 
-	created projects, data sources etc.
+	\item[Core] is an integrating element of the system. It
+	enables communication between the other parts of the system.
+	\item[User interface] --  the group of modules which is responsible
+	for interaction with user.
+	\item[Knowledge manager] enables storing and managing of 
+	varied types of knowledge e.g. decision
+	trees, clusters, rules etc. For each type
+	of knowledge, a separate implementation is 
+	defined. It enables plug-ins interfaces to
+	manage specific type of knowledge. It makes
+	using knowledge easier and separates plug-ins
+	from the implementation details e.g. storing
+	the knowledge in database.
+	\item[Data manager] is an abstraction layer that makes
+	Salomon independent from varied implementation
+	of relational database systems.
+	\item[Communication module] enables distribution of computations.
+	\item[Plug-ins] provide algorithms that search for
+	knowledge, process it, present the result of
+	computation etc. The execution of algorithms is
+	performed in an isolated environment. During
+	their work, plug-ins have an access to knowledge,
+	data and the user interface.
+	\item[Data] stored in a single location may be used by
+	the instances of the system.
+	\item[Knowledge] is gathered and stored by each instance
+	of the system along with the data
+	needed by the system such as information
+	about plug-ins installed, created projects, data sources etc.
 	\item[Task manager] is responsible for executing and managing task execution.
 \end{description}
 
@@ -87,11 +99,13 @@ The following elements can be distinguished:
 %\end{description}
 
 
-In distributed systems there are problems with keeping interoperability
-of individual instances -- the may have not only different version of a system 
-but also the implementation. For this reason there was necessary to define
-clear layers and interfaces between them.
-The most important layers that we can distinguish in \emph{Salomon} are:
+In distributed systems there are problems with
+keeping individual instances interoperable –-
+not only in different version of a system
+but also the implementation. For this reason,
+it was necessary to define clear layers and interfaces
+between them. The most important layers
+that we distinguish in \emph{Salomon} are:
 
 %Poniewa\.z w systemach rozproszonych mog¹ wyst¹piæ problemy z
 %utrzymaniem zgodnoœci (ang.\ \emph{interoperability}) nie tylko ze
@@ -103,26 +117,23 @@ The most important layers that we can distinguish in \emph{Salomon} are:
 
 \begin{enumerate}
 	\item \emph{Communication with the external data sources.}
-	Communication is realized by specialized components that hide differences between varied data sources.
-	They provide the interface that is used by plug-ins to extract data and its structure.
-	
+	Communication is realized by specialized 	components that hide differences between
+	varied data sources. They provide an 	interface that is used by plug-ins to extract
+	data and their structure.	
 	\item \emph{Communication between varied instances of Salomon.}
-	Currently the communication is realized using \emph{RMI} technology. 
-	The system is homogenic, so using \emph{RMI} seems to be the natural choice.
-	In case of appearance of the new implementations it may be necessary 
-	to implement communication based on more universal technologies e.g. \emph{CORBA} as well.
-
+	Currently, the communication is realized with \emph{RMI} technology. 
+	The system is homogenic, so using \emph{RMI} seems to be the natural choice. 
+	For the upcoming new implementations, it may be necessary to redesign
+	communication based on more universal technologies e.g. \emph{CORBA}.
 	\item \emph{Communication with plug-ins.}
-	The group of specialized classes provide data from external data source for plug-ins 
-	and enable them performing operations on knowledge. Plug-ins are completely separated from
-	the external environment and this layer is the one place when the knowledge exchange 
-	between plug-ins and the environment takes place.
-	
+	The group of specialized classes provide data from external
+	data source for plug-ins and enable them to perform operations on knowledge. Plug-ins
+	are completely separated from the external environment and this layer is the one place when
+	the knowledge exchange between plug-ins and the environment takes place.	
 	\item \emph{User interface.} 
-	System \emph{Salomon} may be used in varied contexts, such as interaction with the user, 
-	providing services in distributed network environment or as a library used by another program.
-	All this forces very strong separation between user interface and the rest of the system.
-	
+	System \emph{Salomon} may be used in varied contexts, such as interaction with the
+	user, providing services in distributed network environment or as a library used by another
+	program. All this forces very strong separation between user interface and the rest of the system.
 \end{enumerate}
 
 %\begin{enumerate}
@@ -145,3 +156,4 @@ The most important layers that we can distinguish in \emph{Salomon} are:
 %To wymusza bardzo mocne oddzielenie interfejsu u¿ytkownika od reszty systemu.
 
 %\end{enumerate}
+
