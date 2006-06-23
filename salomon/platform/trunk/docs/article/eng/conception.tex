@@ -119,34 +119,64 @@ and the part of stages is independent of oneself, so they can be processed simul
 
 
 
-Zadanie to podstawowa jednostka reprezentuj¹ca obliczenia.
-Zdefiniowane jest ono jako: 
+A task is a basic individual representing calculations.
+
+It is defined as:
 $$
-z=(a, p, we, wy)
+z=(a, p, in, out)
 $$
 gdzie:
 \begin{itemize}
-    \item $a$ jest algorytmem, dostarczanym do systemu w postaci komponentu --
-    wtyczki,
-    \item $p$ reprezentuje parametry algorytmu,
-    \item $we$ i $wy$ oznaczaj¹ odpowiednio informacje wejœciowe i
-    wyjœciowe algorytmu.
+    \item $a$ is an algorithm, provided to the system in the form of the component -- pluing,
+    \item $p$ represents parameters of the algorithm,
+    \item $in$ and $out$ are the input and output information of the algorithm.
 \end{itemize}
-Wejœcie i wyjœcie mo¿e mieæ postaæ danych (w~przypadku algorytmów,
-które dokonuj¹ np. selekcji danych), wiedzy (np. wygenerowane
-regu³y) lub danych i wiedzy naraz (np.\ regu³y i~wyj¹tki dla
-nich).
 
-Przewiduje siê, ¿e
-wyjœcie jednego zadania mo¿e byæ wejœciem pewnej liczby nastêpnych
-zadañ. Aby zadanie mog³o zostaæ wykonane, wszystkie zadania od
-których zale¿y musz¹ byæ wykonane wczeœniej. Powi¹zane zadania
-mog¹ byæ przedstawione w postaci grafu skierowanego. Taki graf z
-zaznaczonym zadaniem pocz¹tkowym tworzy \emph{program}. Dodatkowo,
-ka¿da krawêdŸ mo¿e mieæ przypisany warunek, który jest wymagany,
-aby sterowanie zosta³o przekazane wzd³u¿ tej krawêdzi. Tak
-zdefiniowany program mo¿e byæ ³atwo prezentowany u¿ytkownikowi w postaci
-graficznej. W~systemie bêdzie mo¿na tak¿e
-definiowaæ agentów, którzy reagowa\'c bêd¹ na zmiany w danych i/lub wiedzy
-(np.\ na dodanie nowego rekordu do danych treningowych, czy
-wygenerowanie wiedzy przez innego agenta).
+Input and output can have the form of data (in the case of algorithms which accomplishes selection of data),
+of knowledge (e.g. generated rules) or of data and the knowledge 
+all at once (e.g. rules and exceptions for them).
+
+%Zadanie to podstawowa jednostka reprezentuj¹ca obliczenia.
+%Zdefiniowane jest ono jako: 
+%$$
+%z=(a, p, we, wy)
+%$$
+%gdzie:
+%\begin{itemize}
+%    \item $a$ jest algorytmem, dostarczanym do systemu w postaci komponentu --
+%    wtyczki,
+%    \item $p$ reprezentuje parametry algorytmu,
+%    \item $we$ i $wy$ oznaczaj¹ odpowiednio informacje wejœciowe i
+%    wyjœciowe algorytmu.
+%\end{itemize}
+%Wejœcie i wyjœcie mo¿e mieæ postaæ danych (w~przypadku algorytmów,
+%które dokonuj¹ np. selekcji danych), wiedzy (np. wygenerowane
+%regu³y) lub danych i wiedzy naraz (np.\ regu³y i~wyj¹tki dla
+%nich).
+
+We expect that the exit of one task can be an access of certain number of next tasks.
+So that the task can be made, all tasks on which it is depending must be made earlier.
+Connected objectives can be introduced in the form of the directed graph.
+Such a graph with the emphasized initial task is creating the \emph{program}.
+Additionally, every edge can have the assigned condition which is required 
+so that steering is handed over in length to this edge. 
+This way the defined program can easily be introduced the user 
+in the graphical form. 
+In the system it will be possible also to define agents 
+which will be reacting to changes in data and/or of the knowledge
+(e.g. to adding the new record to training data 
+or generating the knowledge by the different agent).
+
+%Przewiduje siê, ¿e
+%wyjœcie jednego zadania mo¿e byæ wejœciem pewnej liczby nastêpnych
+%zadañ. Aby zadanie mog³o zostaæ wykonane, wszystkie zadania od
+%których zale¿y musz¹ byæ wykonane wczeœniej. Powi¹zane zadania
+%mog¹ byæ przedstawione w postaci grafu skierowanego. Taki graf z
+%zaznaczonym zadaniem pocz¹tkowym tworzy \emph{program}. Dodatkowo,
+%ka¿da krawêdŸ mo¿e mieæ przypisany warunek, który jest wymagany,
+%aby sterowanie zosta³o przekazane wzd³u¿ tej krawêdzi. Tak
+%zdefiniowany program mo¿e byæ ³atwo prezentowany u¿ytkownikowi w postaci
+%graficznej. W~systemie bêdzie mo¿na tak¿e
+%definiowaæ agentów, którzy reagowa\'c bêd¹ na zmiany w danych i/lub wiedzy
+%(np.\ na dodanie nowego rekordu do danych treningowych, czy
+%wygenerowanie wiedzy przez innego agenta).
