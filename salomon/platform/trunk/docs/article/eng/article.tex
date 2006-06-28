@@ -1,10 +1,18 @@
-\documentclass[11pt,a4paper,twocolumn]{article}
-\usepackage{msk}
-\usepackage[polish]{babel}
+%\documentclass[11pt,a4paper,twocolumn]{article}
+\documentclass{svmult}
+
+\usepackage{makeidx}         % allows index generation
+\usepackage{graphicx}        % standard LaTeX graphics tool
+                             % when including figure files
+\usepackage{multicol}        % used for the two-column index
+\usepackage[bottom]{footmisc}% places footnotes at page bottom
+
+%\usepackage{msk}
+\usepackage[english]{babel}
 \usepackage[cp1250]{inputenc}
 \usepackage[OT4]{fontenc}
-\usepackage{graphicx}
-\usepackage{indentfirst}
+%\usepackage{graphicx}
+%\usepackage{indentfirst}
 \usepackage[urlcolor=black,colorlinks=false,bookmarks=true,bookmarksnumbered=true]{hyperref}
 
 
@@ -15,7 +23,7 @@
 \author{Nikodem Jura, Krzysztof Rajda,
  Marek Kisiel-Dorohinicki,
  Bart³omiej Œnie¿yñski}
-
+ 
 \institute{Akademia Górniczo-Hutnicza, Katedra Informatyki,
 Kraków\\
 \href{mailto:nico@icslab.agh.edu.pl}{nico@icslab.agh.edu.pl},
@@ -34,42 +42,24 @@ Kraków\\
 %danych. 
 The new direction which connects database technology with modern inductive
 methods of generation knowledge is inductive databases.
-
-
-
-
 % Po³¹czenie takie pozwala na jednolity dostêp do wiedzy
 %zawartej w~danych bezpoœrednio i wiedzy wygenerowanej z tych
 %danych za pomoc¹ algorytmów uczenia maszynowego.
-
 This kind of  connection allows direct access to knowledge in data consistently
 using algorithms of machine learning. 
-
-
 % W~niniejszej
 %pracy przedstawiona zosta³a architektura i~wybrane aspekty
 %implementacji platformy \emph{Salomon}, komponentowej realizacji
 %indukcyjnej bazy danych. 
-
-
 The architecture and chosen aspects of implementation of the \emph{Salomon}
 platform have been introduced is this article.
-
-
-
-
 %Dziêki budowie modu³owej uda³o siê
 %uzyskaæ du¿o lepsz¹ elastycznoœæ systemu w~stosunku do innych,
 %zbli¿onych rozwi¹zañ.
 Owing to the modular structure, we gained much better system flexibility
 in comparison to other similar systems.
 
-
-
-
-
 \end{abstract}
-
 
 \input{introduction}
 \input{others}

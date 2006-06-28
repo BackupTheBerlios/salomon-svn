@@ -1,16 +1,19 @@
 %\section{Koncepcja platformy \emph{Salomon}}
 \section{Conception of the \emph{Salomon} platform}
 
-The proposed architecture of the \emph{Salomon} platform ia a replay
-to some limitation of \emph{VINLEN}.
-The process of gathering the knowledge from data is usually very complex
--- some algorithms require large amount of computation 
-which are being taken on the considerable amount of given data.
-From here efficiency problems are appearing and therefore 
-while designing the architecture of the system 
-its scalability was also one of more important aspects.
-We managed to attain it thanks to breaking the entire computational process 
-for isolated tasks and it created the possibility of dispersing calculations.
+The proposed architecture of the Salomon platform
+is a reply to some limitations of \emph{VINLEN}. The
+process of gathering the knowledge from data is
+usually very complex – some algorithms require
+large amount of computations, on considerably
+large amount of given data.
+This is why the efficiency problems appear and
+thus, during the designing  of the architecture of the
+system, its scalability was also one of more important
+aspects. We managed to attain it, thanks
+to breaking the entire computational process into
+isolated \emph{tasks} and it created the possibility of dispersed
+calculations.
 
 %Proponowana architektura platfromy \emph{Salomon} jest odpowiedzi¹ na
 %pewne ograniczenia systemu \emph{VINLEN}. Proces pozyskiwania wiedzy z
@@ -27,26 +30,38 @@ Main assumptions of the platform are:
 
 \begin{description}
     \item[Component-based design.]
-    \emph{VINLEN} is a complete product, delivered together with different algorithms built in.
-    \emph{Salomon} is an open platform which is supposed to make a base for other projects 
-    using the Machine Learning idea in the process of discovering the knowledge in data. 
-    Hence the assumption, that platform -- main module of the system -- 
-    is as simple as possible. Providing the user-friendly environment is setting it for 
-    the realization of the functionality contained in components having the form of so-called plug-ins.
+    \emph{VINLEN} is a complete product, delivered together with different 
+    built-in algorithms. 
 
-    \item[Open platform.] The user has the full freedom in adding new components (plug-ins) to the system.
+    \emph{Salomon} is an open
+platform which is supposed to provide a basis
+for other projects employing the Machine Learning
+idea in the process of discovering the knowledge
+in data. Hence, the assumption, that platform
+– main module of the system – is as
+simple as possible. Providing the user-friendly
+environment was brought down to setting it for the realization
+of the functionality contained in components
+having the form of so-called plug-ins.
+
+    \item[Open platform.] The user has full freedom
+in adding new components (plug-ins) to the
+system.
 
     \item[Independence from the runtime environment.]
-		Thanks to using portable tools, for example Java, the system can be started on any system having 
-		the appropriate virtual machine.
+		Thanks to using portable tools, for example \emph{Java}, the system can be
+		started in any environment having the appropriate virtual machine.
+
     \item[Possibility of calculations distribution.]
-		Thanks to component-based design and right definition of tasks, 
-		he system is enabling the work in the distributed, heterogeneous network environment.
+		Thanks to component-based design and right definition of tasks, the system is
+		enables work in the distributed, heterogeneous network environment.
+
     \item[Simplicity of using.]
-    An easiness of using is one of bases of the \emph{VINLEN} system.
-    \emph{Salomon} tries also in this respect to equal and what is more: to outrun his progenitor.
-    One of more important facilitation being expected is replacing the language of defining ,,scouts'' 
-    with graphical interface in the form of the graph of the the knowledge flow.
+    An easiness of using is one of bases of the \emph{VINLEN} system. \emph{Salomon}
+    aims also in this respect achieve equal easiness and what is more: to outrun
+    his predecessor. One of most expected facilitation is the replacement of the
+    language of defining ''scouts'' with a graphical interface in the form of
+    the graph depicting the knowledge flow.
 \end{description}
 
 
@@ -83,21 +98,20 @@ Main assumptions of the platform are:
 %\end{description}
 
 \medskip
-System \emph{Salomon} consists of two components. 
-First from them is a platform. The second part is a set of plug-ins, 
-providing logic needed for configuring, executing and showing the results of execution.
-The platform consists of two elements: the engine and the data storage.
-The first of them is responsible for managing and executing tasks 
-and the second is serving for the data and knowledge storage.
-A possibility of elastic defining the course of the processing 
-is one of essential advantages of the system. 
-It is realized in the form of so-called \emph{tasks}.
+System \emph{Salomon} consists of two components. First from them is a platform.
+The second component is a set of plug-ins, providing the logic needed for 
+configuring, executing and showing the results of execution. The platform
+consists of two elements: the engine and the data storage. The former one is
+responsible for managing and executing tasks and latter one stores the data and
+knowledge. The possibility of elastic definition of  the course of the
+processing is one of the essential advantages of the system. It is realized in
+the form of so-called \emph{tasks}. An extraction of the knowledge is a process
+which can be divided in stages – in every stage the knowledge is being subjected
+to sure processing (e.g. attributes are discretized, the rules are created, the
+knowledge is tested). Since every stage is creating a separate integrity and 
+some of the stages are independent from each other,  they can be processed
+simultaneously.
 
-An extraction of the knowledge is a process which can be divided in stages 
--- in every stage the knowledge is being subjected to sure processing 
-(e.g. attributes are discretized, the rules are created, the knowledge is tested). 
-Since every stage is creating the separate integrity 
-and the part of stages is independent of oneself, so they can be processed simultaneously.
 
 %\medskip
 %System \emph{Salomon} sk³ada siê z dwóch zasadniczych czêœci.
@@ -125,16 +139,21 @@ It is defined as:
 $$
 z=(a, p, in, out)
 $$
-gdzie:
+where:
 \begin{itemize}
-    \item $a$ is an algorithm, provided to the system in the form of the component -- pluing,
+    \item $a$ is an algorithm, passed to the system in the form of a component –
+    plug-in,
+
     \item $p$ represents parameters of the algorithm,
     \item $in$ and $out$ are the input and output information of the algorithm.
 \end{itemize}
 
-Input and output can have the form of data (in the case of algorithms which accomplishes selection of data),
-of knowledge (e.g. generated rules) or of data and the knowledge 
-all at once (e.g. rules and exceptions for them).
+Input and output can have the form of data
+(in the case of algorithms, which accomplishes
+selection of data), of knowledge (e.g. generated
+rules) or of both data and the knowledge
+(e.g. rules and exceptions for them).
+
 
 %Zadanie to podstawowa jednostka reprezentuj¹ca obliczenia.
 %Zdefiniowane jest ono jako: 
@@ -154,18 +173,17 @@ all at once (e.g. rules and exceptions for them).
 %regu³y) lub danych i wiedzy naraz (np.\ regu³y i~wyj¹tki dla
 %nich).
 
-We expect that the exit of one task can be an access of certain number of next tasks.
-So that the task can be made, all tasks on which it is depending must be made earlier.
-Connected objectives can be introduced in the form of the directed graph.
-Such a graph with the emphasized initial task is creating the \emph{program}.
-Additionally, every edge can have the assigned condition which is required 
-so that steering is handed over in length to this edge. 
-This way the defined program can easily be introduced the user 
-in the graphical form. 
-In the system it will be possible also to define agents 
-which will be reacting to changes in data and/or of the knowledge
-(e.g. to adding the new record to training data 
-or generating the knowledge by the different agent).
+We expect that the exit of one task can become an access to certain number of
+consequent tasks. A task can be performed only if all the dependent  asks have
+been finished. Combined objectives can be introduced in the form of a directed 
+graph. Such a graph with a marked initial task is creating the program.
+Additionally, every edge can have an assigned condition, which is required in
+order to hand over the guidance along  this edge. This way, the defined program
+can easily be introduced the user in a graphical form. In the system it is
+possible to define agents which will be reacting to changes in data and/or of
+the knowledge (e.g. to adding a new record to training data or generating the 
+knowledge by a different agent).
+
 
 %Przewiduje siê, ¿e
 %wyjœcie jednego zadania mo¿e byæ wejœciem pewnej liczby nastêpnych
