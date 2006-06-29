@@ -1,0 +1,190 @@
+\section{Case study}
+%Rozwa¿my sytuacje, kiedy zamierzamy stworzyæ system wspomagaj¹cy onkologów w 
+%diagnostyce nowotworowej.Do dyspozycji mamy dane z wielu szpitali rozproszonych 
+%po ca³ej Polsce.
+Let us consider situations when we are going to create the system aiding 
+oncologists. We have data from  
+around many hospitals distributed all over entire Poland.
+%Ze wzglêdów wydajnoœciowych oraz bezpieczeñstwa (szpitale nie 
+%wyra¿aj¹ zgody udostêpnianie ich danych innym placówk¹) nie mo¿liwy jest 
+%jednoczesny dostêp do wszystkich baz. Naszym celem stworzenie regu³ 
+%wspomagaj¹cych lekarzy przy diagnostyce nowotworów. W tym celu przejêliœmy 
+%nastêpuj¹ce podejœcie.
+Becouse of the efficiency and the safety (hospitals aren't expressing
+making the agreement available of their data different with institution) a 
+simultaneous access to all databases is not possible. Our purpose is to create
+set of rules which aid doctoros at the diagnostics of cancers. To
+this purpose we adopted the the following approach.
+%Szukamy generalnych regu³ dla wszystkich przypadków 
+%(zgodnych z danymi w ka¿dej bazie) oraz regu³ najbardziej pasuj¹cych dla danej 
+%placówki. Dodatkowo zale¿y nam na grupowanie przypadków ze wzglêdu na ich 
+%zgodnoœæ do ogólnych regu³ (najbardziej, œrednio i najmniej zgodne) i dla 
+%ka¿dej z tych grup znalezienie bardziej specyficznych regu³. 
+We search for general rules for all coincidences (in accordance with 
+data in every base) and of rules the most fitting for the every institution. 
+Additionally we are caring for grouping cases on account of their
+agreement to general rules (the most, on average and least agreeable) and for every of these 
+groups finding more unique rules.
+%Pogrupowanie przypadków pozwoli na uproszenie regu³ (stan¹ siê czytelniejsze 
+%dla lekarzy) dla ka¿dej takiej grupy, co pozwoli analitykowi na ewentualne 
+%sterowanie procesem uczenia. Dodatkowo chcielibyœmy mieæ dostêp do danych 
+%statystycznych, dla poszczególnych placówek (porównanie z reszt¹).
+Grouping coincidences will permit for getting rules (will become more readable 
+for doctors) for every of such a group what will permit the analyst for 
+possible steering the process of learing. Additionally we would like to have 
+access to statistical data, for individual institutions (comparison to the 
+rest).
+%Wp³yw ró¿nych czynników w zale¿noœci o po³o¿enia geograficznego, oraz wielkoœæ 
+%poczególnych gróp. Takie dane nie tylko u¿yteczne byby³y dla lekarzy czy osób 
+%steruj¹cych procesem odkrywania widzy, ale mog³by byæ równie¿ wykorzystane jako 
+%dane wejœciowe dla algorytmów uczenia maszynowego.
+Influence of different factors in the relation against locations geographical, 
+and size of each group. Such data could be useful not only for doctors or
+persons resposible for steering the process of learing, but they could be used
+as as the input for algorithms of machine learing.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Przedstawiamy sposó realizacji takiego zadania z wykorzystaniem systemu
+%\emph{Salomon}. Obecna wersja nie posiada zaimplementowanych wszystkich
+%niezbêdnych funkcjonalnoœci, jednak wszystkie one powinny pojawiæ siê w kolejnym
+%wydaniu.
+We are presenting the way to the realization of such an objective with using 
+the system \emph{Salomon}. The current version is lacking implement of all 
+essential functionalities, however all they should avaiable at the next
+edition.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Zgodnie z za³o¿eniami zadania, nie mo¿liwa jest wymiana danych o pacjentach 
+%miêdzy placówkami. Wymaga³oby to stworzenia potê¿nego centrum sk³aduj¹cego 
+%wszystkie dane, albo dostêpu zdalnego do tych danych dla algorytmów, co jednak 
+%z racji ograniczonej przepustowoœci sieci bardzo spowolni³oby obliczenia.
+According to with principles of the objective, an exchange of data about 
+patients is not possible among institutions. It would require creating the 
+big centre storing all data or the remote access to this data for algorithms.
+However remote access could reduce the speed of computation becouse of the 
+network capacity.
+%Dodatkowo tak wielka iloœæ danych jest nie mo¿liwa do przeanalizowania w 
+%sensownym czasie. Jeœli w naszych przyk³adowym zastosowaniu bezpieczeñstwo 
+%danych nie jest spraw¹ krytyczn¹, to jednak mo¿na sobie wyobraziæ wiele 
+%przyk³adowych zastosowañ, dla których ka¿dej placówce zale¿a³oby na 
+%nieudostêpnianiu swoich danych.
+Additionally such amount of data is not possible to analyse in the 
+sensible time. If in our demonstration applying the data security isn't a 
+critical matter, however it is possible to imagine it a lot 
+demonstration of applying, which every institution would care about not-opening 
+its data for.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+%Dlatego naturalnym rozwi¹zaniem jest 
+%wyszukiwanie wiedzy w ka¿dej placówce z osobna, a przesy³anie jedynie wiedzy 
+%miêdzy pomiêdzy poszczególnymi wêz³ami. Dlatego w ka¿dej wêŸle zostanie 
+%zainstalowany agent systemu. Obrazek \ref{fig:example} przedstawia koncepcje
+%przyk³adowej architektury.
+Therefore searching for the knowledge at every institution individually and 
+sending only a knowledge between between individual institution is a natural solution.
+In every node \emph{Salomon Agent} is installed agent. Picture \\ ref{fig:example}
+is presenting conceptions of demonstration architecture.
+\begin{figure}[!ht]
+    \centering
+        \includegraphics[width=0.8\linewidth]{img/hospital_example.png}
+%    \caption{Architekura systemu \emph{Salomon}}
+    \caption{The architecture of the example}
+    \label{fig:example}
+\end{figure}
+
+%System reagowa³ bêdzie na zdarzenia:
+The system will react to events:
+
+\begin{enumerate}
+%  \item Bazda danych zosta³a zmieniona wiêcej ni¿ 20\% W takim przypadku 
+%  zostan¹ podjête nastêpuj¹ce kroki:
+  \item The database was changed more than the 20\% in such case taken the 
+  following footsteps will remain:
+	  \begin{enumerate}
+%		\item Dostêpne regu³y i klastry zostan¹ sprawdzone na nowych danych i 
+%		ewentualnie zostan¹ ulepszone
+		\item Aviable rules and clusters will be checked on new data and if necessary
+		they will be improved
+%		\item Zostan¹ wygenerowane nowe regu³y i klastry i porównane z najlepszymi 
+%		obecnie dostêpnymi
+		\item New rules and clusters will be generated and compared with best at
+		avialiable ones
+%		\item Zostan¹ wygenerowane nowe dane statystyczne
+		\item New statistic data will be generated
+%		\item Jeœli rezultatem powy¿ych kroków bêdzie uzyskanie lepszej wiedzy, 
+%		zostanie ona rozes³ana do reszty wêz³ów
+		\item If the better knowledge is a result of above steps, it will be
+		sent out up to other nodes
+      \end{enumerate}
+%	\item Inny wêze³ wygenerowa³ now¹ wiedzê
+	\item The different node generated the new knowledge
+		\begin{enumerate}
+%		  \item Wiedza z innego agenta zostanie przetestowana na lokalnych danych
+		  \item The knowledge in the different agent will be tested on local data
+%		  \item Jeœli wynik testów jest zadawalaj¹cy, wiedza ta zostanie ulepszona
+%		  korzystaj¹c z lokalnych danych
+		  \item If the result of tests is satisfactory, the knowledge will be improved
+		  using local data %!! nie wiem czy cos takiego jest mozliwego
+		  % wiedza z innego wezla zostanie sumowana z lokana wiedza po czym rezultat
+		  % zostanie oceniony
+%		  \item W przypadku otrzymania lepszych regó³, klastry zostana zaktualizowane
+		  \item In case of obtained better rules, clusters will be updated
+		  \item Wiedza statystyczna zostanie zaktualizowana
+		  \item The statistical knowledge will be updated
+%		  \item Podobnie jak w przyadku pierwszego zda¿enia, jeœli powy¿sze kroki
+%			wygeneruj¹ dostaniecznie lepsz¹ wiedzê, zostanie ona rozes³ana do pozosta³ych
+%			wêz³ów.
+		  \item As in case of the first event, if above steps generate the
+		  enough better knowledge, it will sent out to another nodes.
+		\end{enumerate}
+\end{enumerate}
+
+%Dziêki takiej architekturze moglibyœmy otrzymaæ system który:
+Thanks to such architecture we could receive the system which:
+\begin{enumerate}
+%  \item Zapewnia bezpieczêñstwo danych dla ka¿dego agenta
+  \item It provides the data security for every agent
+%  \item Iloœæ przysy³anych danych jest zminimalizowana
+  \item The amount of sent data is minimized
+%  \item System reaguje na zdarzenia, zatem skomplikowane obliczenia wykonywane
+%  s¹ tylko w przypadku powstania nowych danych lub nowej wiedzy
+  \item The system reacts to events, and so computing is only in case of the
+  uprising of new data or the new knowledge being made
+%  \item Ka¿dy wêze³ oprócz ogólnej (najbardziej odpowiadaj¹cej wszystkim wêz³¹)
+%  wiedzy, posiada tak¿e wiêdzê specyficzn¹ dla swoich danych
+  \item Every node apart from general (the most suitable to all nods) of 
+  knowledge, has also knowledges unique to its data
+%  \item Mo¿liwoœæ zastosowania ró¿nych algorytmów i ró¿nej ich konfiguracji dla
+%  ka¿ego agenta z osobna
+  \item Possibility of applying different algorithms and different of their 
+  configuration for every agent individually
+%  \item System \emph{Salomon} mo¿na zainstalowaæ w œrodowisko heterogenicznym.
+%  Ka¿da placówka mo¿e posiadaæ inny system bazodanowy (np. inny schemat bazy
+%  danych).
+%  Algorytm przekszta³ci³by ró¿nie zapisane dane do postaci jednolitych
+%  atrybutów.
+  \item System \emph{Salomon} it is possible to install into 
+  heterogeneous environments. Every institution can have the different database system (e.g.
+  different database schema). Using attributes the knowledge could be
+  distributed among nodes. The algorithm would convert data differently saved to the figure
+  of uniform attributes.
+%  \item Obliczenia nie s¹ scentralizowane. W ka¿dej chwili mo¿na dodawaæ nowych
+%  i usuwaæ stary agentów.
+  \item Calculations aren't centralized. At any time it is possible to add new
+  or to remove old of agents.
+\end{enumerate}
+
+% obliczenia nie sa scentralizowane w ka¿dej chwili mo¿nda dodawaæ nowe i usuwaæ
+% stare wêz³y
+
+%Jak widaæ na powy¿szym przyk³¹dzie, \emph{Salomon} œwietnie nadajê siê do
+%rozwi¹zywania skomplikowanych i rozproszonych obliczeñ. Pozwalaj¹c przy tym na
+%minimalizacje wysi³ku oraz zasobów. Nowa wersja platformy ma zawieraæ te
+%udogodnienia, którê s¹ niezbêdnê do realizacji tego zadania. Jednak potrzebne s¹
+%tak¿e odpowiednie wtyczki, które dostarcza³by odpowiednich algorytmów.
+How you can see on above example, \emph{Salomon} is fit for solving
+complicated and distributed computation. Letting 
+minimizations of effort and resources usage. An updated version of
+the platform is supposed to contain these conveniences, which are neccesery for the 
+realization of this objective. However also appropriate plugs which provide
+algorithms are needed.
