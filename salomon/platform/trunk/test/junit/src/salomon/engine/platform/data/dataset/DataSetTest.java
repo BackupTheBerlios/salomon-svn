@@ -123,7 +123,8 @@ public class DataSetTest extends TestCase
         LOGGER.info("DataSetTest.testSelect()");
         SQLSelect select = new SQLSelect();
         select.addTable(DataSetInfo.TABLE_NAME);
-        select.addCondition("dataset_name =", "test select");
+        String dataSetName = "generated4";
+        select.addCondition("dataset_name =", dataSetName);
 
         // if not exists, then adding test data set
         if (!_manager.existsSelect(select)) {
@@ -138,7 +139,7 @@ public class DataSetTest extends TestCase
                     new Integer(4));
 
             IDataSet dataSet = mainDataSet.createSubset(conditions);
-            ((DataSetInfo) ((DataSet) dataSet).getInfo()).setName("test select");
+            ((DataSetInfo) ((DataSet) dataSet).getInfo()).setName(dataSetName);
             _dataSetManager.add(dataSet);
         }
 

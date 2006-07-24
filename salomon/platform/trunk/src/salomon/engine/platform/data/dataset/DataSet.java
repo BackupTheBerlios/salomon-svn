@@ -24,6 +24,9 @@ package salomon.engine.platform.data.dataset;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
@@ -32,6 +35,7 @@ import salomon.engine.database.DBManager;
 import salomon.engine.database.ExternalDBManager;
 import salomon.engine.database.queries.SQLSelect;
 import salomon.engine.platform.data.dataset.condition.AbstractCondition;
+import salomon.engine.platform.data.dataset.condition.OrCondition;
 import salomon.platform.IInfo;
 import salomon.platform.data.IColumn;
 import salomon.platform.data.dataset.ICondition;
@@ -142,21 +146,45 @@ public class DataSet implements IDataSet
 
         // setting data set conditions
         AbstractCondition[] dataSetConditions = _info.getConditions();
-        for (AbstractCondition condition : dataSetConditions) {
-            select.addCondition(condition.toSQL());
 
-            // adding table (tables are kept is set
-            // so it doesnt have to be checked if table exists in query
-            select.addTable(condition.getColumn().getTable().getName());
+        List<ICondition> conditionList = new LinkedList<ICondition>();
+        for (AbstractCondition condtion : dataSetConditions) {
+            conditionList.add(condtion);
         }
 
         // adding additional conditions
         if (conditions != null) {
             for (ICondition condition : conditions) {
-                select.addCondition(((AbstractCondition) condition).toSQL());
-                // adding table
-                select.addTable(((AbstractCondition) condition).getColumn().getTable().getName());
+                conditionList.add(condition);
             }
+        }
+
+        AbstractCondition selectCondition = null;
+        // FIXME:
+        // workaround - dataset supports only OR conditions
+        if (conditionList.size() > 0) {
+            if (conditionList.size() > 1) {
+                Iterator iter = conditionList.iterator();
+                AbstractCondition firstCondition = (AbstractCondition) iter.next();
+
+                AbstractCondition[] subset = new AbstractCondition[conditionList.size() - 1];
+                int i = 0;
+                while (iter.hasNext()) {
+                    AbstractCondition condition = (AbstractCondition) iter.next();
+                    subset[i] = condition;
+                    // adding table (tables are kept is set
+                    // so it doesnt have to be checked if table exists in query
+                    select.addTable(((AbstractCondition) condition).getColumn().getTable().getName());
+                    ++i;
+                }
+
+                selectCondition = new OrCondition(firstCondition, subset);
+            } else {
+                selectCondition = (AbstractCondition) conditionList.iterator().next();
+                select.addTable(selectCondition.getColumn().getTable().getName());
+            }
+            // adding conditions to the query
+            select.addCondition(selectCondition.toSQL());
         }
 
         // executing query
