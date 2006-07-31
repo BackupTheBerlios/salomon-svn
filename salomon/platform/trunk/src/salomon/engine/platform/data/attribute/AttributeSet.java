@@ -4,13 +4,12 @@
 
 package salomon.engine.platform.data.attribute;
 
-import java.util.LinkedList;
-
-import org.apache.log4j.Logger;
-
-import salomon.platform.data.attribute.IAttribute;
+import salomon.engine.database.DBManager;
+import salomon.engine.database.ExternalDBManager;
+import salomon.platform.data.attribute.IAttributeData;
 import salomon.platform.data.attribute.IAttributeSet;
 import salomon.platform.data.attribute.description.IAttributeDescription;
+import salomon.platform.data.dataset.IDataSet;
 import salomon.platform.exception.PlatformException;
 
 /**
@@ -19,177 +18,63 @@ import salomon.platform.exception.PlatformException;
  */
 public class AttributeSet implements IAttributeSet
 {
+    private AttributeSetInfo _info;
 
-    private LinkedList<IAttribute[]> _attributesList;
+    private AttributeManager _attributeManager;
 
-    private boolean _restrictiveTypeCheck;
-
-    IAttributeDescription[] _descriptions;
-
-    private String _name = "";
-
-    private String _info = "";
-
-    private int _attributeSetId = -1;;
-
-    protected AttributeSet(IAttributeDescription[] descriptions,
-            boolean restrictiveTypeCheck)
-    {
-        _attributesList = new LinkedList<IAttribute[]>();
-        _descriptions = descriptions;
-        _restrictiveTypeCheck = restrictiveTypeCheck;
-    }
-
-    /* (non-Javadoc)
-     * @see salomon.platform.data.attribute.IAttributeSet#getAttributeSetId()
+    /**
+     * @param descriptions
      */
-    public int getAttributeSetId()
+    protected AttributeSet(AttributeManager attributeManager,
+            IAttributeDescription[] descriptions, DBManager manager,
+            ExternalDBManager externalDBManager)
     {
-        return _attributeSetId;
+        _attributeManager = attributeManager;
+        _info = new AttributeSetInfo(manager, externalDBManager);
+        _info.setDescriptions(descriptions);
     }
 
-    protected void setAttributeSetId(int id)
-    {
-        _attributeSetId = id;
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see salomon.platform.data.attribute.IAttributeSet#close()
-     */
-    public void close() throws PlatformException
-    {
-        LOGGER.debug("Closing AttributeSet (cleaning queue)");
-        _attributesList = null;
-        _attributesList = new LinkedList<IAttribute[]>();
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see salomon.platform.data.attribute.IAttributeSet#getAttributes()
-     */
-    public IAttribute[] getAttributes() throws PlatformException
-    {
-        return _attributesList.getFirst();
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see salomon.platform.data.attribute.IAttributeSet#getAttribute(salomon.platform.data.attribute.description.IAttributeDescription)
-     */
-    public IAttribute getAttribute(IAttributeDescription attributeDescription)
-            throws PlatformException
-    {
-        for (IAttribute attr : _attributesList.getFirst()) {
-            if (attr.getDescription().equals(attributeDescription))
-                return attr;
-        }
-        LOGGER.warn("Attribute of type " + attributeDescription
-                + " was not found!");
-        return null;
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
+    /**
      * @see salomon.platform.data.attribute.IAttributeSet#getDesciptions()
      */
     public IAttributeDescription[] getDesciptions() throws PlatformException
     {
-        return _descriptions;
-
+        return _info.getDescriptions();
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see salomon.platform.data.attribute.IAttributeSet#next()
+    /**
+     * Returns the info.
+     * @return The info
      */
-    public boolean next() throws PlatformException
-    {
-        return (_attributesList.removeFirst() == null) ? false : true;
-
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see salomon.platform.data.attribute.IAttributeSet#add(salomon.platform.data.attribute.IAttribute[])
-     */
-    public void add(IAttribute[] attributes) throws PlatformException
-    {
-        if (this._restrictiveTypeCheck) {
-            if (attributes.length != _descriptions.length)
-                throw new PlatformException(
-                        "Restrictive type check failed! Incorrect number od attributes given (is "
-                                + attributes.length + " should be "
-                                + _descriptions.length + ").");
-            for (int i = 0; i < attributes.length; i++) {
-                if (!attributes[i].getDescription().equals(_descriptions[i])) {
-                    throw new PlatformException(
-                            "Restrictive type check failed! Incorrect type of attr no. "
-                                    + i + " (is "
-                                    + attributes[i].getDescription()
-                                    + " should be " + _descriptions[i] + ").");
-                }
-            }
-        }
-        _attributesList.add(attributes);
-        LOGGER.debug("Adding to attributeSet " + this.toString()
-                + " attributes " + attributes);
-    }
-
-    @Override
-    public String toString()
-    {
-        return "Attribute set name:" + _name;
-    }
-
-    private static final Logger LOGGER = Logger.getLogger(AttributeSet.class);
-
-    /* (non-Javadoc)
-     * @see salomon.platform.data.attribute.IAttributeSet#getName()
-     */
-    public String getName()
-    {
-        return _name;
-    }
-
-    /* (non-Javadoc)
-     * @see salomon.platform.data.attribute.IAttributeSet#setName(java.lang.String)
-     */
-    public void setName(String name)
-    {
-        _name = name;
-        if (_name.length() > 10) {
-            _name = _name.substring(0, 10);
-            LOGGER.warn("Name too long (should be max 10 chars). Trimming... ("
-                    + _name + ")");
-        }
-    }
-
-    /* (non-Javadoc)
-     * @see salomon.platform.data.attribute.IAttributeSet#getInfo()
-     */
-    public String getInfo()
+    public final AttributeSetInfo getInfo()
     {
         return _info;
     }
 
-    /* (non-Javadoc)
-     * @see salomon.platform.data.attribute.IAttributeSet#setInfo(java.lang.String)
+    /**
+     * @see salomon.platform.data.attribute.IAttributeSet#getName()
      */
-    public void setInfo(String info)
+    public String getName()
     {
-        this._info = info;
-        if (_info.length() > 250) {
-            _name = _name.substring(0, 250);
-            LOGGER.warn("Info too long (should be max 250 chars). Trimming... ("
-                    + _info + ")");
-        }
+        return (_info == null ? null : _info.getName());
+    }
+
+    /**
+     * @see salomon.platform.data.attribute.IAttributeSet#selectAttributeData(salomon.platform.data.dataset.IDataSet)
+     */
+    public IAttributeData selectAttributeData(IDataSet dataSet)
+            throws PlatformException
+    {
+        throw new UnsupportedOperationException(
+                "Method AttributeSet.selectAttributeData() not implemented yet!");
+    }
+
+    /**
+     * @see salomon.platform.data.attribute.IAttributeSet#setName(java.lang.String)
+     */
+    public void setName(String name)
+    {
+        _info.setName(name);
     }
 
 }

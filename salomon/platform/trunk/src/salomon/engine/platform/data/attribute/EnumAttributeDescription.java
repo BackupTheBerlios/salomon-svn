@@ -24,38 +24,42 @@ package salomon.engine.platform.data.attribute;
 import java.util.HashSet;
 import java.util.Set;
 
+import salomon.platform.data.IColumn;
 import salomon.platform.data.attribute.IAttribute;
-import salomon.platform.data.attribute.description.IEnumAttributeDescription;
+import salomon.platform.data.attribute.description.IAttributeDescription;
 import salomon.platform.exception.PlatformException;
 
 public class EnumAttributeDescription extends AttributeDescription
-        implements IEnumAttributeDescription
 {
 
     private Set _possibleValuesSet = new HashSet();
 
-    protected EnumAttributeDescription(String name, Set possibleValuesSet)
-    {
-        super(name);
-        _possibleValuesSet = possibleValuesSet;
-    }
-
+    /**
+     * @param name
+     * @param column
+     * @param possibleValuesSet
+     */
     @SuppressWarnings("unchecked")
-    protected EnumAttributeDescription(String name, Object[] possibleValuesSet)
+    protected EnumAttributeDescription(String name, IColumn column,
+            Object[] possibleValuesSet)
     {
-        super(name);
+        super(name, column);
         _possibleValuesSet = new HashSet();
         if (possibleValuesSet != null)
             for (Object ob : possibleValuesSet)
                 _possibleValuesSet.add(ob);
     }
 
-    /* (non-Javadoc)
-     * @see salomon.platform.data.attribute.description.IEnumAttributeDescription#getPossibleValues()
+    /**
+     * @param name
+     * @param column
+     * @param possibleValuesSet
      */
-    public Object[] getPossibleValues()
+    protected EnumAttributeDescription(String name, IColumn column,
+            Set possibleValuesSet)
     {
-        return _possibleValuesSet.toArray();
+        super(name, column);
+        _possibleValuesSet = possibleValuesSet;
     }
 
     /* (non-Javadoc)
@@ -78,6 +82,22 @@ public class EnumAttributeDescription extends AttributeDescription
         else
             throw new PlatformException(
                     "Trying to insert not allowed enum value (" + value + ")");
+    }
+
+    /* (non-Javadoc)
+     * @see salomon.platform.data.attribute.description.IEnumAttributeDescription#getPossibleValues()
+     */
+    public Object[] getPossibleValues()
+    {
+        return _possibleValuesSet.toArray();
+    }
+
+    /**
+     * @see salomon.platform.data.attribute.description.IAttributeDescription#getType()
+     */
+    public String getType()
+    {
+        return IAttributeDescription.TYPE_ENUM;
     }
 
 }

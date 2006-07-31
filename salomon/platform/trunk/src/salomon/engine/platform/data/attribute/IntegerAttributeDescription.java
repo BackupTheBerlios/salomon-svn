@@ -25,17 +25,18 @@ import java.math.BigDecimal;
 
 import org.apache.log4j.Logger;
 
+import salomon.platform.data.IColumn;
 import salomon.platform.data.attribute.IAttribute;
-import salomon.platform.data.attribute.description.IIntegerAttributeDescription;
 import salomon.platform.exception.PlatformException;
 
 public class IntegerAttributeDescription extends AttributeDescription
-        implements IIntegerAttributeDescription
 {
 
-    protected IntegerAttributeDescription(String name)
+    private static final Logger LOGGER = Logger.getLogger(IntegerAttributeDescription.class);
+
+    protected IntegerAttributeDescription(String name, IColumn column)
     {
-        super(name);
+        super(name, column);
     }
 
     /* (non-Javadoc)
@@ -59,5 +60,11 @@ public class IntegerAttributeDescription extends AttributeDescription
             }
     }
 
-    private static final Logger LOGGER = Logger.getLogger(IntegerAttributeDescription.class);
+    /**
+     * @see salomon.platform.data.attribute.description.IAttributeDescription#getType()
+     */
+    public String getType()
+    {
+        return IntegerAttributeDescription.TYPE_INTEGER;
+    }
 }

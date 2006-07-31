@@ -73,7 +73,8 @@ public final class DataEngine implements IDataEngine
     public DataEngine(DBManager dbManager, ExternalDBManager externalDBManager,
             ShortSolutionInfo solutionInfo) throws SQLException
     {
-        _attributeManager = new AttributeManager(dbManager, solutionInfo);
+        _attributeManager = new AttributeManager(dbManager, solutionInfo,
+                externalDBManager);
         _dataSetManager = new DataSetManager(dbManager, solutionInfo,
                 externalDBManager);
         _ruleSetManager = new RuleSetManager(dbManager, solutionInfo);

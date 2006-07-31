@@ -52,7 +52,9 @@ import salomon.platform.exception.PlatformException;
  */
 public class DataSet implements IDataSet
 {
-    DataSetManager _dataSetManager;
+    private static final Logger LOGGER = Logger.getLogger(DataSet.class);
+
+    private DataSetManager _dataSetManager;
 
     private ExternalDBManager _externalDBManager;
 
@@ -69,6 +71,9 @@ public class DataSet implements IDataSet
         _info = new DataSetInfo(manager, externalDBManager);
     }
 
+    /**
+     * @see salomon.platform.data.dataset.IDataSet#createSubset(salomon.platform.data.dataset.ICondition[])
+     */
     public IDataSet createSubset(ICondition[] conditions)
             throws PlatformException
     {
@@ -77,21 +82,30 @@ public class DataSet implements IDataSet
         return dataSet;
     }
 
+    /**
+     * @see salomon.platform.data.dataset.IDataSet#getConditions()
+     */
     public ICondition[] getConditions()
     {
-        return _info.getConditions();
+        return (_info == null ? null : _info.getConditions());
     }
 
-    public IInfo getInfo() throws PlatformException
+    public DataSetInfo getInfo()
     {
         return _info;
     }
 
+    /**
+     * @see salomon.platform.data.dataset.IDataSet#getName()
+     */
     public String getName() throws PlatformException
     {
         return (_info == null ? null : _info.getName());
     }
 
+    /**
+     * @see salomon.platform.data.dataset.IDataSet#intersection(salomon.platform.data.dataset.IDataSet)
+     */
     public IDataSet intersection(IDataSet dataSet) throws PlatformException
     {
         DataSet newDataSet = (DataSet) _dataSetManager.getMainDataSet();
@@ -105,6 +119,9 @@ public class DataSet implements IDataSet
         return newDataSet;
     }
 
+    /**
+     * @see salomon.platform.data.dataset.IDataSet#intersection(salomon.platform.data.dataset.IDataSet, int)
+     */
     public IDataSet intersection(IDataSet dataSet, int id)
             throws PlatformException
     {
@@ -112,6 +129,9 @@ public class DataSet implements IDataSet
                 "Method intersection() not implemented yet!");
     }
 
+    /**
+     * @see salomon.platform.data.dataset.IDataSet#minus(salomon.platform.data.dataset.IDataSet)
+     */
     public IDataSet minus(IDataSet dataSet) throws PlatformException
     {
         DataSet newDataSet = (DataSet) _dataSetManager.getMainDataSet();
@@ -125,12 +145,18 @@ public class DataSet implements IDataSet
         return newDataSet;
     }
 
+    /**
+     * @see salomon.platform.data.dataset.IDataSet#minus(salomon.platform.data.dataset.IDataSet, int)
+     */
     public IDataSet minus(IDataSet dataSet, int id) throws PlatformException
     {
         throw new UnsupportedOperationException(
                 "Method minus() not implemented yet!");
     }
 
+    /**
+     * @see salomon.platform.data.dataset.IDataSet#selectData(salomon.platform.data.IColumn[], salomon.platform.data.dataset.ICondition[])
+     */
     public IData selectData(IColumn[] columns, ICondition[] conditions)
             throws PlatformException
     {
@@ -197,6 +223,9 @@ public class DataSet implements IDataSet
         return new Data(resultSet);
     }
 
+    /**
+     * @see salomon.platform.data.dataset.IDataSet#setName(java.lang.String)
+     */
     public void setName(String name) throws PlatformException
     {
         if (_info != null) {
@@ -215,6 +244,9 @@ public class DataSet implements IDataSet
         return _info.toString();
     }
 
+    /**
+     * @see salomon.platform.data.dataset.IDataSet#union(salomon.platform.data.dataset.IDataSet)
+     */
     public IDataSet union(IDataSet dataSet) throws PlatformException
     {
         DataSet newDataSet = (DataSet) _dataSetManager.getMainDataSet();
@@ -228,11 +260,12 @@ public class DataSet implements IDataSet
         return newDataSet;
     }
 
+    /**
+     * @see salomon.platform.data.dataset.IDataSet#union(salomon.platform.data.dataset.IDataSet, int)
+     */
     public IDataSet union(IDataSet dataSet, int id) throws PlatformException
     {
         throw new UnsupportedOperationException(
                 "Method union() not implemented yet!");
     }
-
-    private static final Logger LOGGER = Logger.getLogger(DataSet.class);
 }

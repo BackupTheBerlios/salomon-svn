@@ -23,17 +23,22 @@ package salomon.engine.platform.data.attribute;
 
 import org.apache.log4j.Logger;
 
+import salomon.platform.data.IColumn;
 import salomon.platform.data.attribute.IAttribute;
-import salomon.platform.data.attribute.description.IRealAttributeDescription;
 import salomon.platform.exception.PlatformException;
 
 public class RealAttributeDescription extends AttributeDescription
-        implements IRealAttributeDescription
 {
 
-    protected RealAttributeDescription(String name)
+    private static final Logger LOGGER = Logger.getLogger(RealAttributeDescription.class);
+
+    /**
+     * @param name
+     * @param column
+     */
+    protected RealAttributeDescription(String name, IColumn column)
     {
-        super(name);
+        super(name, column);
     }
 
     /* (non-Javadoc)
@@ -56,5 +61,11 @@ public class RealAttributeDescription extends AttributeDescription
             }
     }
 
-    private static final Logger LOGGER = Logger.getLogger(RealAttributeDescription.class);
+    /**
+     * @see salomon.platform.data.attribute.description.IAttributeDescription#getType()
+     */
+    public String getType()
+    {
+        return IntegerAttributeDescription.TYPE_REAL;
+    }
 }

@@ -21,17 +21,16 @@
 
 package salomon.engine.platform.data.attribute;
 
+import salomon.platform.data.IColumn;
 import salomon.platform.data.attribute.IAttribute;
-import salomon.platform.data.attribute.description.IStringAttributeDescription;
 import salomon.platform.exception.PlatformException;
 
 public class StringAttributeDescription extends AttributeDescription
-        implements IStringAttributeDescription
 {
 
-    protected StringAttributeDescription(String name)
+    protected StringAttributeDescription(String name, IColumn column)
     {
-        super(name);
+        super(name, column);
     }
 
     /* (non-Javadoc)
@@ -41,5 +40,13 @@ public class StringAttributeDescription extends AttributeDescription
     public IAttribute createAttribute(Object value) throws PlatformException
     {
         return new Attribute(this, value);
+    }
+
+    /**
+     * @see salomon.platform.data.attribute.description.IAttributeDescription#getType()
+     */
+    public String getType()
+    {
+        return IntegerAttributeDescription.TYPE_STRING;
     }
 }

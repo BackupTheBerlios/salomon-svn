@@ -21,27 +21,22 @@
 
 package salomon.engine.platform.data.attribute;
 
+import salomon.platform.data.IColumn;
 import salomon.platform.data.attribute.IAttribute;
-import salomon.platform.data.attribute.description.IIntegerAttributeDescription;
+import salomon.platform.data.attribute.description.IAttributeDescription;
 import salomon.platform.exception.PlatformException;
 
-public abstract class AttributeDescription
-        implements IIntegerAttributeDescription
+public abstract class AttributeDescription implements IAttributeDescription
 {
+
+    private IColumn _column;
 
     private String _name;
 
-    protected AttributeDescription(String name)
+    protected AttributeDescription(String name, IColumn column)
     {
         _name = name;
-    }
-
-    /* (non-Javadoc)
-     * @see salomon.platform.data.attribute.description.IAttributeDescription#getName()
-     */
-    public String getName()
-    {
-        return _name;
+        _column = column;
     }
 
     /* (non-Javadoc)
@@ -60,5 +55,22 @@ public abstract class AttributeDescription
     public boolean equals(AttributeDescription a)
     {
         return (_name.equals(a.getName()));
+    }
+
+    /**
+     * Returns the column.
+     * @return The column
+     */
+    public final IColumn getColumn()
+    {
+        return _column;
+    }
+
+    /* (non-Javadoc)
+     * @see salomon.platform.data.attribute.description.IAttributeDescription#getName()
+     */
+    public String getName()
+    {
+        return _name;
     }
 }

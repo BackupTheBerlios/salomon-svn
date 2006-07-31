@@ -23,17 +23,22 @@ package salomon.engine.platform.data.attribute;
 
 import org.apache.log4j.Logger;
 
+import salomon.platform.data.IColumn;
 import salomon.platform.data.attribute.IAttribute;
-import salomon.platform.data.attribute.description.IDateAttributeDescription;
+import salomon.platform.data.attribute.description.IAttributeDescription;
 import salomon.platform.exception.PlatformException;
 
 public class DateAttributeDescription extends AttributeDescription
-        implements IDateAttributeDescription
 {
+    private static final Logger LOGGER = Logger.getLogger(IntegerAttributeDescription.class);
 
-    protected DateAttributeDescription(String name)
+    /**
+     * @param name
+     * @param column
+     */
+    protected DateAttributeDescription(String name, IColumn column)
     {
-        super(name);
+        super(name, column);
     }
 
     @Override
@@ -55,6 +60,12 @@ public class DateAttributeDescription extends AttributeDescription
             }
     }
 
-    private static final Logger LOGGER = Logger.getLogger(IntegerAttributeDescription.class);
+    /**
+     * @see salomon.platform.data.attribute.description.IAttributeDescription#getType()
+     */
+    public String getType()
+    {
+        return IAttributeDescription.TYPE_DATE;
+    }
 
 }

@@ -52,15 +52,6 @@ public interface IAttributeSet
             throws PlatformException;
 
     /**
-     * Adds "row" to the IAttributeSet
-     * 
-     * @param attributes
-     * @throws PlatformException
-     */
-    void setDesciptions(IAttributeDescription[] attributeDescriptions)
-            throws PlatformException;
-
-    /**
      * Sets the IAttributeSet name
      * 
      * @param name
