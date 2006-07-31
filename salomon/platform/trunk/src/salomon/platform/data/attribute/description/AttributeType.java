@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2005 Salomon Team
+ * Copyright (C) 2006 Salomon Team
  *
  * This file is part of Salomon.
  *
@@ -21,39 +21,26 @@
 
 package salomon.platform.data.attribute.description;
 
-import salomon.platform.data.IColumn;
-import salomon.platform.data.attribute.IAttribute;
-import salomon.platform.exception.PlatformException;
+public enum AttributeType {
+    DATE("D"),
 
-/**
- * 
- */
-public interface IAttributeDescription
-{
+    ENUM("E"),
 
-    /**
-     * Creates new attribute with given value.
-     * @return the new attribute
-     */
-    IAttribute createAttribute(Object value) throws PlatformException;
+    INTEGER("I"),
 
-    /**
-     * Returns the column associated with the attribute.
-     * 
-     * @return the column
-     */
-    IColumn getColumn();
+    REAL("R"),
 
-    /**
-     * Returns the name of the attribute.
-     * @return the name
-     */
-    String getName();
+    STRING("S");
 
-    /**
-     * Returns the type of the attribute description.
-     * 
-     * @return the type
-     */
-    AttributeType getType();
+    private String _dbString;
+
+    AttributeType(String dbString)
+    {
+        _dbString = dbString;
+    }
+
+    public String getDBString()
+    {
+        return _dbString;
+    }
 }

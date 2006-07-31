@@ -222,7 +222,7 @@ public final class AttributeSetInfo implements IInfo
                     SQLInsert insert = new SQLInsert(ITEMS_TABLE_NAME);
                     insert.addValue("attributeset_id", _attributeSetID);
                     insert.addValue("attribute_name", description.getName());
-                    insert.addValue("attribute_type", description.getType());
+                    insert.addValue("attribute_type", description.getType().getDBString());
                     insert.addValue("table_name",
                             description.getColumn().getTable().getName());
                     insert.addValue("column_name",

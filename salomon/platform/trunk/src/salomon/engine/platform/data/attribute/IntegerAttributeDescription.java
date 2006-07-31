@@ -27,6 +27,7 @@ import org.apache.log4j.Logger;
 
 import salomon.platform.data.IColumn;
 import salomon.platform.data.attribute.IAttribute;
+import salomon.platform.data.attribute.description.AttributeType;
 import salomon.platform.exception.PlatformException;
 
 public class IntegerAttributeDescription extends AttributeDescription
@@ -63,8 +64,8 @@ public class IntegerAttributeDescription extends AttributeDescription
     /**
      * @see salomon.platform.data.attribute.description.IAttributeDescription#getType()
      */
-    public String getType()
+    public AttributeType getType()
     {
-        return IntegerAttributeDescription.TYPE_INTEGER;
+        return AttributeType.INTEGER;
     }
 }
