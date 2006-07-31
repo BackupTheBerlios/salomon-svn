@@ -21,12 +21,10 @@
 
 package salomon.platform.data.attribute;
 
+import salomon.platform.data.IColumn;
 import salomon.platform.data.attribute.description.IAttributeDescription;
-import salomon.platform.data.attribute.description.IDateAttributeDescription;
-import salomon.platform.data.attribute.description.IEnumAttributeDescription;
-import salomon.platform.data.attribute.description.IIntegerAttributeDescription;
-import salomon.platform.data.attribute.description.IRealAttributeDescription;
-import salomon.platform.data.attribute.description.IStringAttributeDescription;
+import salomon.platform.data.dataset.ICondition;
+import salomon.platform.data.dataset.IData;
 import salomon.platform.exception.PlatformException;
 
 /**
@@ -52,43 +50,52 @@ public interface IAttributeManager
      * Creates a new date attribute description
      * 
      * @param name the name
+     * @param column the column name
      * @return a new date arribute description
      */
-    IDateAttributeDescription createDateAttributeDescription(String name);
+    IAttributeDescription createDateAttributeDescription(String name,
+            IColumn column);
 
     /**
      * Creates a new enum attribute description.
      * 
      * @param name the name
+     * @param column the column name
      * @param possibleValues the possible values
      * @return a new enum attribute description
      */
-    IEnumAttributeDescription createEnumAttributeDescription(String name,
-            Object[] possibleValues);
+    IAttributeDescription createEnumAttributeDescription(String name,
+            IColumn column, Object[] possibleValues);
 
     /**
      * Creates a new integer attribute description
      * 
      * @param name the name
+     * @param column the column name
      * @return a new integer arribute description
      */
-    IIntegerAttributeDescription createIntegerAttributeDescription(String name);
+    IAttributeDescription createIntegerAttributeDescription(String name,
+            IColumn column);
 
     /**
      * Creates a new real attribute description
      * 
      * @param name the name
+     * @param column the column name
      * @return a new real arribute description
      */
-    IRealAttributeDescription createRealAttributeDescription(String name);
+    IAttributeDescription createRealAttributeDescription(String name,
+            IColumn column);
 
     /**
      * Creates a new string attribute description
      * 
      * @param name the name
+     * @param column the column name
      * @return a new string arribute description
      */
-    IStringAttributeDescription createStringAttributeDescription(String name);
+    IAttributeDescription createStringAttributeDescription(String name,
+            IColumn column);
 
     /**
      * Gets all attribute sets.
@@ -106,11 +113,6 @@ public interface IAttributeManager
     IAttributeSet getAttributeSet(int id) throws PlatformException;
 
     /**
-     * @return restrictive type checking switch
-     */
-    boolean getRestrictiveTypeCheck();
-
-    /**
      * Removes the given attribute set from the storage.
      * 
      * @param attributeSet the attribute set to remove
@@ -118,10 +120,6 @@ public interface IAttributeManager
      */
     void remove(IAttributeSet attributeSet) throws PlatformException;
 
-    /**
-     * Sets restrictive type checking (slower)
-     * @param restrictiveTypeCheck
-     */
-    void setRestrictiveTypeCheck(boolean restrictiveTypeCheck);
+
 
 }

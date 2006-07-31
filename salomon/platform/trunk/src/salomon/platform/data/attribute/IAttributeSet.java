@@ -27,31 +27,6 @@ import salomon.platform.exception.PlatformException;
 public interface IAttributeSet
 {
     /**
-     * Closes the IAttributeSet
-     * 
-     * @throws PlatformException
-     */
-    void close() throws PlatformException;
-
-    /**
-     * Returns all attributes in current "line" od IAttributeSet
-     * 
-     * @return attributes
-     * @throws PlatformException
-     */
-    IAttribute[] getAttributes() throws PlatformException;
-
-    /**
-     * Returns specified attribute in current "line" od IAttributeSet
-     * 
-     * @param attributeDescription
-     * @return
-     * @throws PlatformException
-     */
-    IAttribute getAttribute(IAttributeDescription attributeDescription)
-            throws PlatformException;
-
-    /**
      * Returns all the IAttributeDescriptions associated with this IAttributeSet
      * 
      * @return
@@ -60,13 +35,15 @@ public interface IAttributeSet
     IAttributeDescription[] getDesciptions() throws PlatformException;
 
     /**
-     * Iterates through IAttributeSet till it's possible to iterate (there are
-     * any more items)
+     * Gets the IAttributeSet name
      * 
-     * @return value indicating if there the "row" was changed
-     * @throws PlatformException
+     * @return name
      */
-    boolean next() throws PlatformException;
+    String getName();
+
+    IAttributeData selectAttributeData(
+            IAttributeDescription[] attributeDescriptions)
+            throws PlatformException;
 
     /**
      * Adds "row" to the IAttributeSet
@@ -74,14 +51,8 @@ public interface IAttributeSet
      * @param attributes
      * @throws PlatformException
      */
-    void add(IAttribute[] attributes) throws PlatformException;
-
-    /**
-     * Gets the IAttributeSet name
-     * 
-     * @return name
-     */
-    String getName();
+    void setDesciptions(IAttributeDescription[] attributeDescriptions)
+            throws PlatformException;
 
     /**
      * Sets the IAttributeSet name
@@ -89,26 +60,4 @@ public interface IAttributeSet
      * @param name
      */
     void setName(String name);
-
-    /**
-     * Gets the IAttributeSet info.
-     * 
-     * @return info
-     */
-    String getInfo();
-
-    /**
-     * Sets the IAttributeSet info
-     * 
-     * @param info
-     */
-    void setInfo(String info);
-
-    /**
-     * Gets the IAttributeSet id
-     * 
-     * @return id
-     */
-    public int getAttributeSetId();
-
 }

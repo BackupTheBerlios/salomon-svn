@@ -21,6 +21,7 @@
 
 package salomon.platform.data.attribute.description;
 
+import salomon.platform.data.IColumn;
 import salomon.platform.data.attribute.IAttribute;
 import salomon.platform.exception.PlatformException;
 
@@ -29,6 +30,29 @@ import salomon.platform.exception.PlatformException;
  */
 public interface IAttributeDescription
 {
+    public static final String TYPE_DATE = "D";
+
+    public static final String TYPE_ENUM = "E";
+
+    public static final String TYPE_INTEGER = "I";
+
+    public static final String TYPE_REAL = "R";
+
+    public static final String TYPE_STRING = "S";
+
+    /**
+     * Creates new attribute with given value.
+     * @return the new attribute
+     */
+    IAttribute createAttribute(Object value) throws PlatformException;
+
+    /**
+     * Returns the column associated with the attribute.
+     * 
+     * @return the column
+     */
+    IColumn getColumn();
+
     /**
      * Returns the name of the attribute.
      * @return the name
@@ -36,8 +60,9 @@ public interface IAttributeDescription
     String getName();
 
     /**
-     * Creates new attribute with given value.
-     * @return the new attribute
+     * Returns the type of the attribute description.
+     * 
+     * @return the type
      */
-    IAttribute createAttribute(Object value) throws PlatformException;
+    String getType();
 }

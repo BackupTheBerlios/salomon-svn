@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2005 Salomon Team
+ * Copyright (C) 2006 Salomon Team
  *
  * This file is part of Salomon.
  *
@@ -19,9 +19,22 @@
  * 
  */
 
-package salomon.platform.data.attribute.description;
+package salomon.platform.data.attribute;
 
-public interface IStringAttributeDescription extends IAttributeDescription
+import salomon.platform.exception.PlatformException;
+
+/**
+ * 
+ */
+public interface IAttributeData
 {
-    // empty body
+    IAttribute[] getAttributes() throws PlatformException;
+
+    String[] getHeader() throws PlatformException;
+
+    IAttribute getAttribute(String attributeName) throws PlatformException;
+
+    boolean next() throws PlatformException;
+
+    void close() throws PlatformException;
 }
