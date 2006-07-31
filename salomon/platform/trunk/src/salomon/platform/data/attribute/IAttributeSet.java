@@ -22,6 +22,7 @@
 package salomon.platform.data.attribute;
 
 import salomon.platform.data.attribute.description.IAttributeDescription;
+import salomon.platform.data.dataset.IDataSet;
 import salomon.platform.exception.PlatformException;
 
 public interface IAttributeSet
@@ -41,8 +42,13 @@ public interface IAttributeSet
      */
     String getName();
 
-    IAttributeData selectAttributeData(
-            IAttributeDescription[] attributeDescriptions)
+    /**
+     * Converts the given data set to attributes.
+     * @param dataSet the data set
+     * @return the attributes
+     * @throws PlatformException
+     */
+    IAttributeData selectAttributeData(IDataSet dataSet)
             throws PlatformException;
 
     /**
