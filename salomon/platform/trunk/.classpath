@@ -18,5 +18,6 @@
 	<classpathentry kind="lib" path="lib/looks.jar"/>
 	<classpathentry kind="lib" path="lib/binding.jar"/>
 	<classpathentry kind="lib" path="lib/validation.jar"/>
+	<classpathentry kind="lib" path="lib/weka.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
