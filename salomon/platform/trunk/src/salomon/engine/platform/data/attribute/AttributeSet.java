@@ -18,9 +18,9 @@ import salomon.platform.exception.PlatformException;
  */
 public class AttributeSet implements IAttributeSet
 {
-    private AttributeSetInfo _info;
-
     private AttributeManager _attributeManager;
+
+    private AttributeSetInfo _info;
 
     /**
      * @param descriptions
@@ -30,7 +30,8 @@ public class AttributeSet implements IAttributeSet
             ExternalDBManager externalDBManager)
     {
         _attributeManager = attributeManager;
-        _info = new AttributeSetInfo(manager, externalDBManager);
+        _info = new AttributeSetInfo(_attributeManager, manager,
+                externalDBManager);
         _info.setDescriptions(descriptions);
     }
 

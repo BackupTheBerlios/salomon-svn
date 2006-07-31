@@ -43,4 +43,5 @@ public enum AttributeType {
     {
         return _dbString;
     }
+    
 }

@@ -24,6 +24,9 @@ package salomon.engine.platform.data.attribute;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 
@@ -33,6 +36,8 @@ import salomon.engine.database.queries.SQLDelete;
 import salomon.engine.database.queries.SQLInsert;
 import salomon.engine.database.queries.SQLUpdate;
 import salomon.platform.IInfo;
+import salomon.platform.data.IColumn;
+import salomon.platform.data.attribute.description.AttributeType;
 import salomon.platform.data.attribute.description.IAttributeDescription;
 import salomon.platform.exception.DBException;
 import salomon.platform.exception.PlatformException;
@@ -43,13 +48,15 @@ import salomon.platform.exception.PlatformException;
 public final class AttributeSetInfo implements IInfo
 {
 
-    private static final String GEN_NAME = "gen_attributeset_id";
+    public static final String GEN_NAME = "gen_attributeset_id";
 
-    private static final String ITEMS_TABLE_NAME = "attributeset_items";
+    public static final String ITEMS_TABLE_NAME = "attributeset_items";
+
+    public static final String TABLE_NAME = "attributesets";
 
     private static final Logger LOGGER = Logger.getLogger(AttributeSetInfo.class);
 
-    private static final String TABLE_NAME = "attributesets";
+    private AttributeManager _attributeManager;
 
     private int _attributeSetID;
 
@@ -57,7 +64,7 @@ public final class AttributeSetInfo implements IInfo
 
     private DBManager _dbManager;
 
-    private IAttributeDescription[] _descriptions;
+    private List<IAttributeDescription> _descriptions;
 
     private ExternalDBManager _externalDBManager;
 
@@ -69,10 +76,13 @@ public final class AttributeSetInfo implements IInfo
 
     private int _solutionID;
 
-    AttributeSetInfo(DBManager dbManager, ExternalDBManager externalDBManager)
+    AttributeSetInfo(AttributeManager attributeManager, DBManager dbManager,
+            ExternalDBManager externalDBManager)
     {
+        _attributeManager = attributeManager;
         _dbManager = dbManager;
         _externalDBManager = externalDBManager;
+        _descriptions = new LinkedList<IAttributeDescription>();
     }
 
     public boolean delete() throws PlatformException, DBException
@@ -113,7 +123,7 @@ public final class AttributeSetInfo implements IInfo
      */
     public final IAttributeDescription[] getDescriptions()
     {
-        return _descriptions;
+        return _descriptions.toArray(new IAttributeDescription[_descriptions.size()]);
     }
 
     public int getId()
@@ -168,11 +178,38 @@ public final class AttributeSetInfo implements IInfo
     public void loadDescriptions(ResultSet resultSet) throws SQLException,
             PlatformException
     {
-        //        String condition = resultSet.getString("condition");
-        //        AbstractCondition abstractCondition = (AbstractCondition) ConditionParser.parse(
-        //                _externalDBManager.getMetaData(), condition);
-        //        _conditions.add(abstractCondition);
+        IAttributeDescription description = null;
+        String type = resultSet.getString("attribute_type");
+        String name = resultSet.getString("attribute_name");
+        String tableName = resultSet.getString("table_name");
+        String columnName = resultSet.getString("column_name");
 
+        IColumn column = _externalDBManager.getMetaData().getTable(tableName).getColumn(
+                columnName);
+
+        if (type != null) {
+            if (AttributeType.STRING.getDBString().equals(type)) {
+                description = _attributeManager.createStringAttributeDescription(
+                        name, column);
+            } else if (AttributeType.INTEGER.getDBString().equals(type)) {
+                description = _attributeManager.createIntegerAttributeDescription(
+                        name, column);
+            } else if (AttributeType.ENUM.getDBString().equals(type)) {
+                // FIXME: add support for enum
+                //description = _attributeManager.createEnumAttributeDescription(name, column, possibleValues)
+                throw new UnsupportedOperationException(
+                        "Method AttributeSetInfo.loadDescriptions() for ENUM not implemented yet!");
+            } else if (AttributeType.REAL.getDBString().equals(type)) {
+                description = _attributeManager.createRealAttributeDescription(
+                        name, column);
+            } else if (AttributeType.DATE.getDBString().equals(type)) {
+                description = _attributeManager.createDateAttributeDescription(
+                        name, column);
+            } else {
+                throw new PlatformException("Invalid attribute type: " + type);
+            }
+        }
+        _descriptions.add(description);
     }
 
     public int save() throws PlatformException, DBException
@@ -222,7 +259,8 @@ public final class AttributeSetInfo implements IInfo
                     SQLInsert insert = new SQLInsert(ITEMS_TABLE_NAME);
                     insert.addValue("attributeset_id", _attributeSetID);
                     insert.addValue("attribute_name", description.getName());
-                    insert.addValue("attribute_type", description.getType().getDBString());
+                    insert.addValue("attribute_type",
+                            description.getType().getDBString());
                     insert.addValue("table_name",
                             description.getColumn().getTable().getName());
                     insert.addValue("column_name",
@@ -246,7 +284,9 @@ public final class AttributeSetInfo implements IInfo
      */
     public final void setDescriptions(IAttributeDescription[] descriptions)
     {
-        _descriptions = descriptions;
+        if (descriptions != null) {
+            _descriptions = Arrays.asList(descriptions);
+        }        
     }
 
     /**
@@ -267,4 +307,13 @@ public final class AttributeSetInfo implements IInfo
         _solutionID = solutionID;
     }
 
+    @Override
+    public String toString()
+    {
+        String info = _attributeSetID + " " + _solutionID;
+        info += (_name == null ? "" : _name);
+        info += (_name == null ? "" : " " + _info);
+        info += _descriptions;
+        return info;
+    }
 }

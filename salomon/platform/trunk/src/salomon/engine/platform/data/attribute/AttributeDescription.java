@@ -73,4 +73,10 @@ public abstract class AttributeDescription implements IAttributeDescription
     {
         return _name;
     }
+    
+    @Override
+    public String toString()
+    {
+        return _name + " " + _column + " " + getType();
+    }
 }

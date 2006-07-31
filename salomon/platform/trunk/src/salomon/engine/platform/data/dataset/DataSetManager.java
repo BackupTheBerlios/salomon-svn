@@ -141,6 +141,7 @@ public final class DataSetManager implements IDataSetManager
         select.addColumn("di.table_name");
         select.addColumn("di.condition");
         select.addCondition("d.dataset_id = di.dataset_id");
+        select.addCondition("d.solution_id = ", _solutionInfo.getId());
         select.addOrderBy("d.dataset_id");
 
         ResultSet resultSet;
@@ -156,10 +157,6 @@ public final class DataSetManager implements IDataSetManager
                     dataSet = this.getMainDataSet();
                     ((DataSet) dataSet).getInfo().load(resultSet);
                     dataSets.add(dataSet);
-                    // not loading items, if there is no more rows
-                    if (!resultSet.next()) {
-                        break;
-                    }
                 }
                 // loading items
                 ((DataSetInfo) ((DataSet) dataSet).getInfo()).loadItems(resultSet);

@@ -56,13 +56,14 @@ public class AttributeManagerTest extends TestCase
         LOGGER.info("adding: " + attributeSet.getName());
         _attributeManager.add(attributeSet);
     }
-    
+
     private IAttributeSet createTestAttributeSet()
     {
         IMetaData metaData = _dataEngine.getMetaData();
 
         AttributeDescription name = (AttributeDescription) _attributeManager.createIntegerAttributeDescription(
-                "attr_name", metaData.getTable("persons").getColumn("first_name"));
+                "attr_name", metaData.getTable("persons").getColumn(
+                        "first_name"));
         AttributeDescription surname = (AttributeDescription) _attributeManager.createStringAttributeDescription(
                 "attr_surname", metaData.getTable("persons").getColumn(
                         "last_name"));
@@ -75,22 +76,32 @@ public class AttributeManagerTest extends TestCase
         return attributeSet;
     }
 
- 
-
     /*
      * Test method for 'salomon.engine.platform.data.attribute.AttributeManager.getAll()'
      */
-    public void testGetAll()
+    public void testGetAll() throws PlatformException
     {
-
+        LOGGER.info("AttributeManagerTest.testGetAll()");
+        IAttributeSet[] attributeSets = null;
+        attributeSets = _attributeManager.getAll();
+        for (IAttributeSet attributeSet : attributeSets) {
+            LOGGER.info(((AttributeSet) attributeSet).getInfo());
+        }
     }
 
     /*
      * Test method for 'salomon.engine.platform.data.attribute.AttributeManager.getAttributeSet(int)'
      */
-    public void testGetAttributeSet()
+    public void testGetAttributeSet() throws PlatformException
     {
-
+        LOGGER.info("AttributeManagerTest.testGetAttributeSet()");
+        IAttributeSet attributeSet = createTestAttributeSet();
+        _attributeManager.add(attributeSet);
+        int id = ((AttributeSet) attributeSet).getInfo().getId();
+        LOGGER.debug("Loading attributeset, id: " + id);
+        attributeSet = null;
+        attributeSet = _attributeManager.getAttributeSet(id);
+        LOGGER.debug(attributeSet);
     }
 
     /*
@@ -103,7 +114,7 @@ public class AttributeManagerTest extends TestCase
         _attributeManager.add(attributeSet);
         LOGGER.info("added...");
         LOGGER.info("removing: " + attributeSet.getName());
-        _attributeManager.remove(attributeSet);        
+        _attributeManager.remove(attributeSet);
     }
 
     private static final Logger LOGGER = Logger.getLogger(AttributeManagerTest.class);
