@@ -28,9 +28,10 @@ import salomon.platform.data.IColumn;
 import salomon.platform.data.attribute.IAttribute;
 import salomon.platform.data.attribute.description.AttributeType;
 import salomon.platform.data.attribute.description.IAttributeDescription;
+import salomon.platform.data.attribute.description.IEnumAttributeDescription;
 import salomon.platform.exception.PlatformException;
 
-public class EnumAttributeDescription extends AttributeDescription
+public class EnumAttributeDescription extends AttributeDescription implements IEnumAttributeDescription
 {
 
     private Set _possibleValuesSet = new HashSet();
@@ -99,6 +100,11 @@ public class EnumAttributeDescription extends AttributeDescription
     public AttributeType getType()
     {
         return AttributeType.ENUM;
+    }
+
+    public String[] getValues()
+    {
+        throw new UnsupportedOperationException("Method EnumAttributeDescription.getValues() not implemented yet!");
     }
 
 }
