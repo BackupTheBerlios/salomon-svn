@@ -40,7 +40,7 @@ import salomon.platform.exception.DBException;
 import salomon.platform.exception.PlatformException;
 
 /**
- * Not used yet.
+ * 
  */
 public final class AttributeManager implements IAttributeManager
 {

@@ -286,7 +286,7 @@ public final class AttributeSetInfo implements IInfo
     {
         if (descriptions != null) {
             _descriptions = Arrays.asList(descriptions);
-        }        
+        }
     }
 
     /**

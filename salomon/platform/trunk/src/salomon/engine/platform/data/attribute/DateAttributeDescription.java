@@ -26,7 +26,6 @@ import org.apache.log4j.Logger;
 import salomon.platform.data.IColumn;
 import salomon.platform.data.attribute.IAttribute;
 import salomon.platform.data.attribute.description.AttributeType;
-import salomon.platform.data.attribute.description.IAttributeDescription;
 import salomon.platform.exception.PlatformException;
 
 public class DateAttributeDescription extends AttributeDescription

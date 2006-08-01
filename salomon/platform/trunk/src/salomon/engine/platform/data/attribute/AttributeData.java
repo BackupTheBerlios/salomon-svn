@@ -21,16 +21,12 @@
 
 package salomon.engine.platform.data.attribute;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
 import org.apache.log4j.Logger;
 
 import salomon.platform.data.attribute.IAttribute;
 import salomon.platform.data.attribute.IAttributeData;
 import salomon.platform.data.attribute.description.IAttributeDescription;
 import salomon.platform.data.dataset.IData;
-import salomon.platform.exception.DBException;
 import salomon.platform.exception.PlatformException;
 
 /**

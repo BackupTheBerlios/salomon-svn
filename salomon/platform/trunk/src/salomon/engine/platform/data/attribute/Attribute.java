@@ -25,7 +25,7 @@ import salomon.platform.data.attribute.IAttribute;
 import salomon.platform.data.attribute.description.IAttributeDescription;
 
 /**
- * Not used yet.
+ * 
  */
 public class Attribute implements IAttribute
 {

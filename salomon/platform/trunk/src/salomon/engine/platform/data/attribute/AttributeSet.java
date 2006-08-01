@@ -15,7 +15,6 @@ import salomon.platform.data.dataset.IDataSet;
 import salomon.platform.exception.PlatformException;
 
 /**
- * @author Lukasz
  * 
  */
 public class AttributeSet implements IAttributeSet
