@@ -35,6 +35,7 @@ import salomon.engine.solution.ShortSolutionInfo;
 import salomon.platform.data.IColumn;
 import salomon.platform.data.attribute.IAttributeManager;
 import salomon.platform.data.attribute.IAttributeSet;
+import salomon.platform.data.attribute.description.AttributeType;
 import salomon.platform.data.attribute.description.IAttributeDescription;
 import salomon.platform.exception.DBException;
 import salomon.platform.exception.PlatformException;
@@ -74,6 +75,49 @@ public final class AttributeManager implements IAttributeManager
             LOGGER.fatal("", e);
             throw new DBException(e);
         }
+    }
+
+    /**
+     * @see salomon.platform.data.attribute.IAttributeManager#createAttributeDescription(java.lang.String, java.lang.String, java.lang.String, java.lang.String)
+     */
+    public IAttributeDescription createAttributeDescription(
+            String attributeName, String tableName, String columnName,
+            String type) throws PlatformException
+    {
+        IAttributeDescription description = null;
+
+        IColumn column = null;
+        try {
+            column = _externalDBManager.getMetaData().getTable(tableName).getColumn(
+                    columnName);
+        } catch (SQLException e) {
+            LOGGER.fatal("", e);
+            throw new DBException(e.getLocalizedMessage());
+        }
+
+        if (type != null) {
+            if (AttributeType.STRING.getDBString().equals(type)) {
+                description = this.createStringAttributeDescription(
+                        attributeName, column);
+            } else if (AttributeType.INTEGER.getDBString().equals(type)) {
+                description = this.createIntegerAttributeDescription(
+                        attributeName, column);
+            } else if (AttributeType.ENUM.getDBString().equals(type)) {
+                // FIXME: add support for enum
+                //description = _attributeManager.createEnumAttributeDescription(name, column, possibleValues)
+                throw new UnsupportedOperationException(
+                        "Method AttributeSetInfo.loadDescriptions() for ENUM not implemented yet!");
+            } else if (AttributeType.REAL.getDBString().equals(type)) {
+                description = this.createRealAttributeDescription(
+                        attributeName, column);
+            } else if (AttributeType.DATE.getDBString().equals(type)) {
+                description = this.createDateAttributeDescription(
+                        attributeName, column);
+            } else {
+                throw new PlatformException("Invalid attribute type: " + type);
+            }
+        }
+        return description;
     }
 
     /* (non-Javadoc)
@@ -131,7 +175,50 @@ public final class AttributeManager implements IAttributeManager
      */
     public IAttributeSet getAttributeSet(int id) throws PlatformException
     {
-        return getAttributeSets(id)[0];
+        IAttributeSet[] attributeSets = getAttributeSets(id);
+        IAttributeSet attributeSet = attributeSets.length > 0
+                ? attributeSets[0]
+                : null;
+        return attributeSet;
+    }
+
+    public IAttributeSet getAttributeSet(String name) throws PlatformException
+    {
+
+        SQLSelect attributeSetSelect = new SQLSelect();
+        attributeSetSelect.addTable(AttributeSetInfo.TABLE_NAME);
+        attributeSetSelect.addCondition("attributeset_name =", name);
+        // to ensure solution_id consistency
+        attributeSetSelect.addCondition("solution_id =", _solutionInfo.getId());
+
+        ResultSet resultSet = null;
+        try {
+            resultSet = _dbManager.select(attributeSetSelect);
+
+            // WARNING!
+            // cannot be < 0, cause then attributeManager returns all attributesets
+            int attributeSetID = 0;
+            IAttributeSet attributeSet = null;
+            if (resultSet.next()) {
+                attributeSetID = resultSet.getInt("attributeset_id");
+                // assuming it exist, cause it was return by the query above (no multiuser access supported)
+                attributeSet = getAttributeSets(attributeSetID)[0];
+            }
+
+            return attributeSet;
+
+        } catch (SQLException e) {
+            LOGGER.fatal("", e);
+            throw new DBException(e.getLocalizedMessage());
+        } finally {
+            try {
+                resultSet.close();
+            } catch (SQLException e) {
+                LOGGER.fatal("", e);
+                throw new DBException(e.getLocalizedMessage());
+            }
+        }
+
     }
 
     /* (non-Javadoc)
@@ -167,8 +254,8 @@ public final class AttributeManager implements IAttributeManager
         select.addColumn("ai.column_name");
         select.addCondition("a.attributeset_id = ai.attributeset_id");
         select.addCondition("a.solution_id = ", _solutionInfo.getId());
-        // if attributeSetID > 0 it means, that certain attribute set should be selected
-        if (attributeSetID > 0) {
+        // if attributeSetID >= 0 it means, that certain attribute set should be selected
+        if (attributeSetID >= 0) {
             select.addCondition("a.attributeset_id = ", attributeSetID);
         }
         select.addOrderBy("a.attributeset_id");
@@ -207,5 +294,4 @@ public final class AttributeManager implements IAttributeManager
         IAttributeSet[] attributeSetsArray = new IAttributeSet[attributeSets.size()];
         return attributeSets.toArray(attributeSetsArray);
     }
-
 } // end AttributeManager

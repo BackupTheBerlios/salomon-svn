@@ -178,37 +178,14 @@ public final class AttributeSetInfo implements IInfo
     public void loadDescriptions(ResultSet resultSet) throws SQLException,
             PlatformException
     {
-        IAttributeDescription description = null;
+
         String type = resultSet.getString("attribute_type");
         String name = resultSet.getString("attribute_name");
         String tableName = resultSet.getString("table_name");
         String columnName = resultSet.getString("column_name");
 
-        IColumn column = _externalDBManager.getMetaData().getTable(tableName).getColumn(
-                columnName);
-
-        if (type != null) {
-            if (AttributeType.STRING.getDBString().equals(type)) {
-                description = _attributeManager.createStringAttributeDescription(
-                        name, column);
-            } else if (AttributeType.INTEGER.getDBString().equals(type)) {
-                description = _attributeManager.createIntegerAttributeDescription(
-                        name, column);
-            } else if (AttributeType.ENUM.getDBString().equals(type)) {
-                // FIXME: add support for enum
-                //description = _attributeManager.createEnumAttributeDescription(name, column, possibleValues)
-                throw new UnsupportedOperationException(
-                        "Method AttributeSetInfo.loadDescriptions() for ENUM not implemented yet!");
-            } else if (AttributeType.REAL.getDBString().equals(type)) {
-                description = _attributeManager.createRealAttributeDescription(
-                        name, column);
-            } else if (AttributeType.DATE.getDBString().equals(type)) {
-                description = _attributeManager.createDateAttributeDescription(
-                        name, column);
-            } else {
-                throw new PlatformException("Invalid attribute type: " + type);
-            }
-        }
+        IAttributeDescription description = _attributeManager.createAttributeDescription(
+                name, tableName, columnName, type);
         _descriptions.add(description);
     }
 

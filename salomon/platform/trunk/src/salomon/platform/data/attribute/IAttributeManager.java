@@ -23,8 +23,6 @@ package salomon.platform.data.attribute;
 
 import salomon.platform.data.IColumn;
 import salomon.platform.data.attribute.description.IAttributeDescription;
-import salomon.platform.data.dataset.ICondition;
-import salomon.platform.data.dataset.IData;
 import salomon.platform.exception.PlatformException;
 
 /**
@@ -39,6 +37,17 @@ public interface IAttributeManager
      * 
      */
     void add(IAttributeSet attributeSet) throws PlatformException;
+
+    /**
+     * Creates a new condition basing on its string representation.
+     * 
+     * @param attributeDescription string representing condition
+     * @return a new attribute description
+     * @throws PlatformException if any error occurs (e.g. invalid attribute description)
+     */
+    IAttributeDescription createAttributeDescription(String attributeName,
+            String tableName, String columnName, String type)
+            throws PlatformException;
 
     /**
      * Creates a new empty attribute set.
@@ -107,10 +116,19 @@ public interface IAttributeManager
     /**
      * Gets a attribute set with the given id.
      * 
-     * @param id data set id
+     * @param id attribute set id
      * @return wanted attribute set
      */
     IAttributeSet getAttributeSet(int id) throws PlatformException;
+
+    /**
+     * Gets a attribute set with the given name.
+     * 
+     * @param name attribute set name
+     * @return
+     * @throws PlatformException
+     */
+    IAttributeSet getAttributeSet(String name) throws PlatformException;
 
     /**
      * Removes the given attribute set from the storage.
@@ -119,7 +137,5 @@ public interface IAttributeManager
      * @throws PlatformException
      */
     void remove(IAttributeSet attributeSet) throws PlatformException;
-
-
 
 }

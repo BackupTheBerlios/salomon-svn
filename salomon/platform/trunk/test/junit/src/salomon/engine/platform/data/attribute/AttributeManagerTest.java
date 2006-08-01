@@ -104,6 +104,13 @@ public class AttributeManagerTest extends TestCase
         LOGGER.info(((AttributeSet) attributeSet).getInfo());
     }
 
+    public void testGetAttributeSetByNameNotFound() throws PlatformException
+    {
+        LOGGER.info("AttributeManagerTest.testGetAttributeSetByName()");
+        IAttributeSet attributeSet = _attributeManager.getAttributeSet("not found");        
+        assertTrue(attributeSet == null);
+    }
+    
     /*
      * Test method for 'salomon.engine.platform.data.attribute.AttributeManager.remove(IAttributeSet)'
      */
