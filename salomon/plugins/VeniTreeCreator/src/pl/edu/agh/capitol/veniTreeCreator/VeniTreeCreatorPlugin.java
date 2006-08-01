@@ -7,24 +7,21 @@ import pl.edu.agh.capitol.veniTreeCreator.components.VeniTreeCreatorResultCompon
 import pl.edu.agh.capitol.veniTreeCreator.components.VeniTreeCreatorSettingsComponent;
 import pl.edu.agh.capitol.veniTreeCreator.logic.TreeConstructionTask;
 import pl.edu.agh.capitol.veniTreeCreator.util.VeniTreeCreatorResult;
-
-import salomon.util.serialization.SimpleInteger;
-import salomon.util.serialization.SimpleString;
-import salomon.util.serialization.SimpleStruct;
-
 import salomon.platform.IDataEngine;
 import salomon.platform.IEnvironment;
 import salomon.platform.IVariable;
 import salomon.platform.data.tree.IDataSource;
 import salomon.platform.exception.PlatformException;
 import salomon.platform.serialization.IObject;
-
 import salomon.plugin.IPlatformUtil;
 import salomon.plugin.IPlugin;
 import salomon.plugin.IResult;
 import salomon.plugin.IResultComponent;
 import salomon.plugin.ISettingComponent;
 import salomon.plugin.ISettings;
+import salomon.util.serialization.SimpleInteger;
+import salomon.util.serialization.SimpleString;
+import salomon.util.serialization.SimpleStruct;
 
 /**
  * @author Lukasz
@@ -118,8 +115,8 @@ public final class VeniTreeCreatorPlugin extends SimpleStruct
 
     public ISettingComponent getSettingComponent(IPlatformUtil platformUtil)
     {
-        throw new UnsupportedOperationException(
-                "Method VeniTreeCreatorPlugin.getSettingComponent() not implemented yet!");
+        // TODO:
+        return getSettingComponent();
     }
 
     /**
