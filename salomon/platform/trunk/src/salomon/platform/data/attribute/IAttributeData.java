@@ -30,8 +30,6 @@ public interface IAttributeData
 {
     IAttribute[] getAttributes() throws PlatformException;
 
-    String[] getHeader() throws PlatformException;
-
     IAttribute getAttribute(String attributeName) throws PlatformException;
 
     boolean next() throws PlatformException;

@@ -55,4 +55,10 @@ public class Attribute implements IAttribute
         return _value;
     }
 
+    @Override
+    public String toString()
+    {
+        return "(" + _description + ")" + _value;
+    }
+
 } // end Attribute

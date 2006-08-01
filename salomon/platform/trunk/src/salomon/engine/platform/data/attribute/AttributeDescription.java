@@ -28,7 +28,6 @@ import salomon.platform.exception.PlatformException;
 
 public abstract class AttributeDescription implements IAttributeDescription
 {
-
     private IColumn _column;
 
     private String _name;
@@ -73,7 +72,7 @@ public abstract class AttributeDescription implements IAttributeDescription
     {
         return _name;
     }
-    
+
     @Override
     public String toString()
     {

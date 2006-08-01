@@ -45,11 +45,13 @@ import salomon.platform.exception.PlatformException;
 public final class AttributeManager implements IAttributeManager
 {
 
+    private static final Logger LOGGER = Logger.getLogger(AttributeManager.class);
+
     private DBManager _dbManager;
 
-    private ShortSolutionInfo _solutionInfo;
-
     private ExternalDBManager _externalDBManager;
+
+    private ShortSolutionInfo _solutionInfo;
 
     public AttributeManager(DBManager dbManager,
             ShortSolutionInfo solutionInfo, ExternalDBManager externalDBManager)
@@ -85,6 +87,36 @@ public final class AttributeManager implements IAttributeManager
         return attributeSet;
     }
 
+    public IAttributeDescription createDateAttributeDescription(String name,
+            IColumn column)
+    {
+        return new DateAttributeDescription(name, column);
+    }
+
+    public IAttributeDescription createEnumAttributeDescription(String name,
+            IColumn column, Object[] possibleValues)
+    {
+        return new EnumAttributeDescription(name, column, possibleValues);
+    }
+
+    public IAttributeDescription createIntegerAttributeDescription(String name,
+            IColumn column)
+    {
+        return new IntegerAttributeDescription(name, column);
+    }
+
+    public IAttributeDescription createRealAttributeDescription(String name,
+            IColumn column)
+    {
+        return new RealAttributeDescription(name, column);
+    }
+
+    public IAttributeDescription createStringAttributeDescription(String name,
+            IColumn column)
+    {
+        return new StringAttributeDescription(name, column);
+    }
+
     /* (non-Javadoc)
      * @see salomon.platform.data.attribute.IAttributeManager#getAll()
      */
@@ -93,8 +125,33 @@ public final class AttributeManager implements IAttributeManager
         // enforcing getting all attribute sets
         return getAttributeSets(-1);
     }
-    
-    private IAttributeSet[] getAttributeSets(int attributeSetID) throws PlatformException
+
+    /* (non-Javadoc)
+     * @see salomon.platform.data.attribute.IAttributeManager#getAttributeSet(salomon.platform.IUniqueId)
+     */
+    public IAttributeSet getAttributeSet(int id) throws PlatformException
+    {
+        return getAttributeSets(id)[0];
+    }
+
+    /* (non-Javadoc)
+     * @see salomon.platform.data.attribute.IAttributeManager#remove(salomon.platform.data.attribute.IAttributeSet)
+     */
+    public void remove(IAttributeSet attributeSet) throws PlatformException
+    {
+        // deleting attribute set
+        // others should be deleted cascadly
+        try {
+            ((AttributeSet) attributeSet).getInfo().delete();
+            _dbManager.commit();
+        } catch (Exception e) {
+            _dbManager.rollback();
+            LOGGER.fatal("", e);
+        }
+    }
+
+    private IAttributeSet[] getAttributeSets(int attributeSetID)
+            throws PlatformException
     {
         List<IAttributeSet> attributeSets = new LinkedList<IAttributeSet>();
 
@@ -149,62 +206,6 @@ public final class AttributeManager implements IAttributeManager
         LOGGER.info("AttributeSet list successfully loaded.");
         IAttributeSet[] attributeSetsArray = new IAttributeSet[attributeSets.size()];
         return attributeSets.toArray(attributeSetsArray);
-    }
-
-    /* (non-Javadoc)
-     * @see salomon.platform.data.attribute.IAttributeManager#getAttributeSet(salomon.platform.IUniqueId)
-     */
-    public IAttributeSet getAttributeSet(int id) throws PlatformException
-    {
-        return getAttributeSets(id)[0];
-    }
-
-    /* (non-Javadoc)
-     * @see salomon.platform.data.attribute.IAttributeManager#remove(salomon.platform.data.attribute.IAttributeSet)
-     */
-    public void remove(IAttributeSet attributeSet) throws PlatformException
-    {
-        // deleting attribute set
-        // others should be deleted cascadly
-        try {
-            ((AttributeSet) attributeSet).getInfo().delete();
-            _dbManager.commit();
-        } catch (Exception e) {
-            _dbManager.rollback();
-            LOGGER.fatal("", e);
-        }
-    }
-
-    private static final Logger LOGGER = Logger.getLogger(AttributeManager.class);
-
-    public IAttributeDescription createDateAttributeDescription(String name,
-            IColumn column)
-    {
-        return new DateAttributeDescription(name, column);
-    }
-
-    public IAttributeDescription createEnumAttributeDescription(String name,
-            IColumn column, Object[] possibleValues)
-    {
-        return new EnumAttributeDescription(name, column, possibleValues);
-    }
-
-    public IAttributeDescription createIntegerAttributeDescription(String name,
-            IColumn column)
-    {
-        return new IntegerAttributeDescription(name, column);
-    }
-
-    public IAttributeDescription createRealAttributeDescription(String name,
-            IColumn column)
-    {
-        return new RealAttributeDescription(name, column);
-    }
-
-    public IAttributeDescription createStringAttributeDescription(String name,
-            IColumn column)
-    {
-        return new StringAttributeDescription(name, column);
     }
 
 } // end AttributeManager
