@@ -90,6 +90,12 @@ public final class AttributeManager implements IAttributeManager
      */
     public IAttributeSet[] getAll() throws PlatformException
     {
+        // enforcing getting all attribute sets
+        return getAttributeSets(-1);
+    }
+    
+    private IAttributeSet[] getAttributeSets(int attributeSetID) throws PlatformException
+    {
         List<IAttributeSet> attributeSets = new LinkedList<IAttributeSet>();
 
         SQLSelect select = new SQLSelect();
@@ -103,19 +109,24 @@ public final class AttributeManager implements IAttributeManager
         select.addColumn("ai.table_name");
         select.addColumn("ai.column_name");
         select.addCondition("a.attributeset_id = ai.attributeset_id");
-        select.addCondition("a.solution_id = " + _solutionInfo.getId());
+        select.addCondition("a.solution_id = ", _solutionInfo.getId());
+        // if attributeSetID > 0 it means, that certain attribute set should be selected
+        if (attributeSetID > 0) {
+            select.addCondition("a.attributeset_id = ", attributeSetID);
+        }
         select.addOrderBy("a.attributeset_id");
 
         ResultSet resultSet = null;
-        int attributeSetID = -1;
+        // always set default
+        int firstAttributeSetID = -1;
         try {
             resultSet = _dbManager.select(select);
             AttributeSet attributeSet = null;
             while (resultSet.next()) {
                 int tmpAttributeSetID = resultSet.getInt("attributeset_id");
                 // when dataset_id changes, creating new DataSet object
-                if (tmpAttributeSetID != attributeSetID) {
-                    attributeSetID = tmpAttributeSetID;
+                if (tmpAttributeSetID != firstAttributeSetID) {
+                    firstAttributeSetID = tmpAttributeSetID;
                     attributeSet = (AttributeSet) this.createAttributeSet(null);
                     attributeSet.getInfo().load(resultSet);
                     attributeSets.add(attributeSet);
@@ -145,56 +156,7 @@ public final class AttributeManager implements IAttributeManager
      */
     public IAttributeSet getAttributeSet(int id) throws PlatformException
     {
-        //        SQLSelect select = new SQLSelect();
-        //        select.addTable(AttributeManager.ATTRIBUTESETS_TABLE_NAME + " d");
-        //        select.addTable(AttributeManager.ATTRIBUTES_TABLE_NAME + " di");
-        //        select.addColumn("d.ATTRIBUTESET_ID");
-        //        select.addColumn("d.ATTRIBUTESET_NAME");
-        //        select.addColumn("d.ATTRIBUTESET_INFO");
-        //        select.addColumn("d.INFO");
-        //        select.addColumn("di.ATTRIBUTESET_ITEM_ID");
-        //        select.addColumn("di.COLUMN_NAME");
-        //        select.addColumn("di.COLUMN_TYPE");
-        //        select.addCondition("d.ATTRIBUTESET_ID = di.ATTRIBUTESET_ID");
-        //        select.addCondition("d.ATTRIBUTESET_ID = " + id);
-        //
-        //        ResultSet resultSet;
-        //
-        //        int attrSetId = -1;
-        //
-        //        try {
-        //            resultSet = _dbManager.select(select);
-        //
-        //            Vector<IAttributeDescription> tmpDescriptions = new Vector<IAttributeDescription>();
-        //            int attrSetTmpId;
-        //            if (resultSet.next()) {
-        //                attrSetTmpId = resultSet.getInt("ATTRIBUTESET_ID");
-        //                if (attrSetId != attrSetTmpId) {
-        //                    // new attrSet begin in query
-        //                    // error situation - should NOT happen
-        //                    throw new PlatformException("Query returned too many rows");
-        //                }
-        //                tmpDescriptions.add(retrieveAttrDescFromDb(resultSet));
-        //            }
-        //            // finish with the last one
-        //            IAttributeSet iAttributeSet = null;
-        //            if (tmpDescriptions.size() > 0) {
-        //                iAttributeSet = this.createAttributeSet((IAttributeDescription[]) tmpDescriptions.toArray());
-        //                iAttributeSet.setName(resultSet.getString("ATTRIBUTESET_NAME"));
-        //                iAttributeSet.setInfo(resultSet.getString("ATTRIBUTESET_INFO"));
-        //
-        //            }
-        //            resultSet.close();
-        //            // now late queries (query possible enum values)
-        //            proceedWithLateQueries();
-        //            LOGGER.info("AttributeSet successfully loaded.");
-        //            return iAttributeSet;
-        //        } catch (Exception e) {
-        //            LOGGER.fatal("", e);
-        //            throw new PlatformException(e);
-        //        }
-        throw new UnsupportedOperationException(
-                "Method AttributeManager.getAttributeSet() not implemented yet!");
+        return getAttributeSets(id)[0];
     }
 
     /* (non-Javadoc)
@@ -212,65 +174,6 @@ public final class AttributeManager implements IAttributeManager
             LOGGER.fatal("", e);
         }
     }
-
-    //    private Object[] getAllowedValuesForAttrSetItem(int id)
-    //            throws PlatformException
-    //    {
-    //        Vector<String> result = new Vector<String>();
-    //        SQLSelect select = new SQLSelect();
-    //        select.addTable(AttributeManager.ATTRIBUTE_SET_ITEM_ENUM_ALLOWED_VALUES
-    //                + " d");
-    //        select.addCondition("d.ALLOWED_TYPE_ID = " + id);
-    //        select.addColumn("d.ALLOWED_VALUE_TO_STRING");
-    //        ResultSet resultSet;
-    //        try {
-    //            resultSet = _dbManager.select(select);
-    //            while (resultSet.next()) {
-    //                result.add(resultSet.getString("ALLOWED_VALUE_TO_STRING"));
-    //            }
-    //            /* resultSet.close(); */
-    //            return result.toArray();
-    //        } catch (Exception e) {
-    //            LOGGER.fatal("", e);
-    //            throw new PlatformException(e);
-    //        }
-    //    }
-
-    //    private void proceedWithLateQueries() throws PlatformException
-    //    {
-    //        Enumeration en = _invokeLaterEnumTypes.keys();
-    //        while (en.hasMoreElements()) {
-    //            IEnumAttributeDescription ie = (IEnumAttributeDescription) en.nextElement();
-    //            for (Object ob : getAllowedValuesForAttrSetItem(_invokeLaterEnumTypes.get(ie))) {
-    //                ie.addPossibleValue(ob);
-    //            }
-    //        }
-    //    }
-
-    //    private IAttributeDescription retrieveAttrDescFromDb(ResultSet resultSet)
-    //            throws SQLException, PlatformException
-    //    {
-    //        int type = resultSet.getInt("COLUMN_TYPE");
-    //        switch (type) {
-    //            case ATTRIBUTE_TYPE_INTEGER :
-    //                return this.createIntegerAttributeDescription(resultSet.getString("COLUMN_NAME"));
-    //            case ATTRIBUTE_TYPE_REAL :
-    //                return this.createRealAttributeDescription(resultSet.getString("COLUMN_NAME"));
-    //            case ATTRIBUTE_TYPE_ENUM :
-    //                IEnumAttributeDescription ie = this.createEnumAttributeDescription(
-    //                        resultSet.getString("COLUMN_NAME"), null);
-    //                _invokeLaterEnumTypes.put(ie,
-    //                        resultSet.getInt("ATTRIBUTESET_ITEM_ID"));
-    //                return ie;
-    //            case ATTRIBUTE_TYPE_STRING :
-    //                return this.createStringAttributeDescription(resultSet.getString("COLUMN_NAME"));
-    //            case ATTRIBUTE_TYPE_DATE :
-    //                return this.createDateAttributeDescription(resultSet.getString("COLUMN_NAME"));
-    //            default :
-    //                throw new PlatformException("Unsupported column type (" + type
-    //                        + ")");
-    //        }
-    //    }
 
     private static final Logger LOGGER = Logger.getLogger(AttributeManager.class);
 

@@ -101,7 +101,7 @@ public class AttributeManagerTest extends TestCase
         LOGGER.debug("Loading attributeset, id: " + id);
         attributeSet = null;
         attributeSet = _attributeManager.getAttributeSet(id);
-        LOGGER.debug(attributeSet);
+        LOGGER.info(((AttributeSet) attributeSet).getInfo());
     }
 
     /*
