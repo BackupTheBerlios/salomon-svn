@@ -44,8 +44,8 @@ public class TaskViewer extends AbstractSearchSpread
     public void initFilters()
     {
         addFilteredField("Task id", "task_id");
-        addFilteredField("ProjectId", "project_id");
-        addFilteredField("PluginId", "plugin_id");
+        addFilteredField("ProjectName", "project_name");
+        addFilteredField("PluginName", "plugin_name");
         addFilteredField("Name", "task_name");
         addFilteredField("Status", "status");
     }
