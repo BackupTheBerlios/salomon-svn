@@ -29,10 +29,6 @@ import salomon.platform.data.attribute.description.IAttributeDescription;
  */
 public interface ITreeNode
 {
-    enum Type {
-        COLUMN, VALUE,
-    };
-    
     ITreeEdge getParentEdge();
     
     ITreeEdge[] getChildrenEdges();
@@ -40,42 +36,6 @@ public interface ITreeNode
     IAttributeDescription getAttributeDescription();
     
     IAttributeDescription setAttributeDescription();
-    
-//// old
-    int getId();
-
-    void setId(int id);
-
-    Type getType();
-
-    void setType(Type type);
-
-    String getValue();
-
-    void setValue(String value);
-
-    //String getParentEdge();
-
-    void setParentEdge(String parentEdge);
-
-    boolean isRoot();
-
-    ITreeNode getRoot();
-
-    ITreeNode getParent();
-
-    void setParent(ITreeNode parent);
-
-    ITreeNode[] getChildren();
-
-    void setChildren(ITreeNode[] children);
-
-    void addChild(ITreeNode child);
-
-    void addChildren(ITreeNode[] child);
-
-    ITreeNode[] getLeafs();
 
     boolean isLeaf();
-/////
 }

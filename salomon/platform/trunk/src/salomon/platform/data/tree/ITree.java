@@ -21,40 +21,18 @@
 
 package salomon.platform.data.tree;
 
-import java.util.Date;
-
 import salomon.platform.data.attribute.IAttribute;
 
 /**
- * Drzewo decyzyjne
- * 
  *
  */
 public interface ITree
 {
-    ITreeNode evaluate(IAttribute attribute);
-    
-    int getId();
-
-    void setId(int id);
+    ITreeNode evaluate(IAttribute[] attribute);
 
     String getName();
 
     void setName(String name);
 
-    String getInfo();
-
-    void setInfo(String info);
-
-    Date getCreateDate();
-
-    void setCreateDate(Date createDate);
-
-    IDataSource getDataSource();
-
-    void setDataSource(IDataSource dataSource);
-
-    ITreeNode getRoot();
-
-    void setRoot(ITreeNode root);
+    ITreeNode getRootNode();
 }
