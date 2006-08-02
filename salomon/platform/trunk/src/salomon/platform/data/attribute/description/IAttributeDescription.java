@@ -56,4 +56,11 @@ public interface IAttributeDescription
      * @return the type
      */
     AttributeType getType();
+    
+    /**
+     * Returns whether the attribute is output attribute.
+     * 
+     * @return
+     */
+    boolean isOutput();
 }

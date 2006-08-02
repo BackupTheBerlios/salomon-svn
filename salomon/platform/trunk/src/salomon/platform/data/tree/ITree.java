@@ -22,6 +22,7 @@
 package salomon.platform.data.tree;
 
 import salomon.platform.data.attribute.IAttribute;
+import salomon.platform.data.attribute.IAttributeSet;
 
 /**
  *
@@ -35,4 +36,6 @@ public interface ITree
     void setName(String name);
 
     ITreeNode getRootNode();
+    
+    IAttributeSet getAttributeSet();
 }
