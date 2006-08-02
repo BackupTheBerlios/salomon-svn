@@ -30,6 +30,8 @@ public abstract class AttributeDescription implements IAttributeDescription
 {
     private IColumn _column;
 
+    private boolean _isOutput;
+
     private String _name;
 
     protected AttributeDescription(String name, IColumn column)
@@ -71,6 +73,24 @@ public abstract class AttributeDescription implements IAttributeDescription
     public String getName()
     {
         return _name;
+    }
+
+    /**
+     * Returns the isOutput.
+     * @return The isOutput
+     */
+    public final boolean isOutput()
+    {
+        return _isOutput;
+    }
+
+    /**
+     * Set the value of isOutput field.
+     * @param isOutput The isOutput to set
+     */
+    public final void setOutput(boolean isOutput)
+    {
+        _isOutput = isOutput;
     }
 
     @Override
