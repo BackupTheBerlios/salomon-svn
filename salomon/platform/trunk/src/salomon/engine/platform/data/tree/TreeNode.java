@@ -25,7 +25,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import salomon.platform.data.tree.INode;
+import salomon.platform.data.attribute.description.IAttributeDescription;
+import salomon.platform.data.tree.ITreeEdge;
+import salomon.platform.data.tree.ITreeNode;
 
 /**
  * Implementacja elementu drzewa
@@ -33,7 +35,7 @@ import salomon.platform.data.tree.INode;
  * @author Mateusz Nowakowski
  *
  */
-public class Node implements INode
+public final class TreeNode implements ITreeNode
 {
     private int id;
 
@@ -43,14 +45,14 @@ public class Node implements INode
 
     private String parentEdge;
 
-    private INode parent;
+    private ITreeNode parent;
 
-    private INode[] children;
+    private ITreeNode[] children;
 
     /**
      * Konstruktor dodatkowo ustawiajacy identyfikator
      */
-    public Node(int id, INode parent, String edge, Type type, String value)
+    public TreeNode(int id, ITreeNode parent, String edge, Type type, String value)
     {
         this(parent, edge, type, value);
         this.id = id;
@@ -60,11 +62,11 @@ public class Node implements INode
      *
      * Konstruktor elementu drzewa. W przypadku gdy lement drzewa jest korzeniem drzewa  - w miejsce parent nalezy umieœciæ null.
      */
-    public Node(INode parent, String edge, Type type, String value)
+    public TreeNode(ITreeNode parent, String edge, Type type, String value)
     {
         this.type = type;
         this.value = value;
-        this.children = new INode[0];
+        this.children = new ITreeNode[0];
         if (parent != null) {
             this.parentEdge = edge;
             this.setParent(parent);
@@ -74,10 +76,10 @@ public class Node implements INode
     /* (non-Javadoc)
      * @see salomon.platform.data.tree.INode#setParent(salomon.platform.data.tree.INode)
      */
-    public void setParent(INode parent)
+    public void setParent(ITreeNode parent)
     {
         this.parent = parent;
-        for (INode node : parent.getChildren())
+        for (ITreeNode node : parent.getChildren())
             if (node.equals(this))
                 return;
         parent.addChild(this);
@@ -86,34 +88,34 @@ public class Node implements INode
     /* (non-Javadoc)
      * @see salomon.platform.data.tree.INode#addChild(salomon.platform.data.tree.INode)
      */
-    public void addChild(INode child)
+    public void addChild(ITreeNode child)
     {
-        List<INode> childs = new ArrayList<INode>(Arrays.asList(children));
+        List<ITreeNode> childs = new ArrayList<ITreeNode>(Arrays.asList(children));
         childs.add(child);
-        this.children = childs.toArray(new INode[childs.size()]);
+        this.children = childs.toArray(new ITreeNode[childs.size()]);
         child.setParent(this);
     }
 
     /* (non-Javadoc)
      * @see salomon.platform.data.tree.INode#addChildren(salomon.platform.data.tree.INode[])
      */
-    public void addChildren(INode[] ch)
+    public void addChildren(ITreeNode[] ch)
     {
-        List<INode> childs = new ArrayList<INode>(Arrays.asList(children));
+        List<ITreeNode> childs = new ArrayList<ITreeNode>(Arrays.asList(children));
         childs.addAll(Arrays.asList(ch));
-        for (INode child : ch) {
+        for (ITreeNode child : ch) {
             child.setParent(this);
         }
-        this.children = childs.toArray(new INode[childs.size()]);
+        this.children = childs.toArray(new ITreeNode[childs.size()]);
     }
 
     /* (non-Javadoc)
      * @see salomon.platform.data.tree.INode#setChildren(salomon.platform.data.tree.INode[])
      */
-    public void setChildren(INode[] children)
+    public void setChildren(ITreeNode[] children)
     {
         this.children = children;
-        for (INode child : children) {
+        for (ITreeNode child : children) {
             child.setParent(this);
         }
     }
@@ -121,20 +123,20 @@ public class Node implements INode
     /* (non-Javadoc)
      * @see salomon.platform.data.tree.INode#getLeafs()
      */
-    public INode[] getLeafs()
+    public ITreeNode[] getLeafs()
     {
         if (this.isLeaf())
-            return new INode[]{this};
-        List<INode> leafs = new ArrayList<INode>();
-        for (INode child : children)
+            return new ITreeNode[]{this};
+        List<ITreeNode> leafs = new ArrayList<ITreeNode>();
+        for (ITreeNode child : children)
             leafs.addAll(Arrays.asList(child.getLeafs()));
-        return leafs.toArray(new INode[leafs.size()]);
+        return leafs.toArray(new ITreeNode[leafs.size()]);
     }
 
     /* (non-Javadoc)
      * @see salomon.platform.data.tree.INode#getRoot()
      */
-    public INode getRoot()
+    public ITreeNode getRoot()
     {
         if (this.isRoot())
             return this;
@@ -164,7 +166,7 @@ public class Node implements INode
     /* (non-Javadoc)
      * @see salomon.platform.data.tree.INode#getChildren()
      */
-    public INode[] getChildren()
+    public ITreeNode[] getChildren()
     {
         return children;
     }
@@ -175,21 +177,21 @@ public class Node implements INode
     /* (non-Javadoc)
      * @see salomon.platform.data.tree.INode#getParent()
      */
-    public INode getParent()
+    public ITreeNode getParent()
     {
         return parent;
     }
 
-    /**
-     * @return Returns the parentEdge.
-     */
-    /* (non-Javadoc)
-     * @see salomon.platform.data.tree.INode#getParentEdge()
-     */
-    public String getParentEdge()
-    {
-        return parentEdge;
-    }
+//    /**
+//     * @return Returns the parentEdge.
+//     */
+//    /* (non-Javadoc)
+//     * @see salomon.platform.data.tree.INode#getParentEdge()
+//     */
+//    public String getParentEdge()
+//    {
+//        return parentEdge;
+//    }
 
     /**
      * @param parentEdge The parentEdge to set.
@@ -266,6 +268,26 @@ public class Node implements INode
     public void setId(int id)
     {
         this.id = id;
+    }
+
+    public IAttributeDescription getAttributeDescription()
+    {
+        throw new UnsupportedOperationException("Method Node.getAttributeDescription() not implemented yet!");
+    }
+
+    public ITreeEdge[] getChildrenEdges()
+    {
+        throw new UnsupportedOperationException("Method Node.getChildrenEdges() not implemented yet!");
+    }
+
+    public ITreeEdge getParentEdge()
+    {
+        throw new UnsupportedOperationException("Method Node.getParentEdge() not implemented yet!");
+    }
+
+    public IAttributeDescription setAttributeDescription()
+    {
+        throw new UnsupportedOperationException("Method Node.setAttributeDescription() not implemented yet!");
     }
 
 }

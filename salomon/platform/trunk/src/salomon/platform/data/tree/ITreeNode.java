@@ -21,17 +21,27 @@
 
 package salomon.platform.data.tree;
 
+import salomon.platform.data.attribute.description.IAttributeDescription;
+
 /**
  * Element drzewa. Komentarze nie potrzebne, chyba ze ktos nie wie co to drzewo...
- * @author Mateusz Nowakowski
  *
  */
-public interface INode
+public interface ITreeNode
 {
     enum Type {
         COLUMN, VALUE,
     };
-
+    
+    ITreeEdge getParentEdge();
+    
+    ITreeEdge[] getChildrenEdges();
+    
+    IAttributeDescription getAttributeDescription();
+    
+    IAttributeDescription setAttributeDescription();
+    
+//// old
     int getId();
 
     void setId(int id);
@@ -44,28 +54,28 @@ public interface INode
 
     void setValue(String value);
 
-    String getParentEdge();
+    //String getParentEdge();
 
     void setParentEdge(String parentEdge);
 
     boolean isRoot();
 
-    INode getRoot();
+    ITreeNode getRoot();
 
-    INode getParent();
+    ITreeNode getParent();
 
-    void setParent(INode parent);
+    void setParent(ITreeNode parent);
 
-    INode[] getChildren();
+    ITreeNode[] getChildren();
 
-    void setChildren(INode[] children);
+    void setChildren(ITreeNode[] children);
 
-    void addChild(INode child);
+    void addChild(ITreeNode child);
 
-    void addChildren(INode[] child);
+    void addChildren(ITreeNode[] child);
 
-    INode[] getLeafs();
+    ITreeNode[] getLeafs();
 
     boolean isLeaf();
-
+/////
 }

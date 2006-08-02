@@ -23,13 +23,12 @@ package salomon.platform.data.tree;
 
 import java.util.List;
 
-import salomon.platform.data.tree.INode.Type;
+import salomon.platform.data.tree.ITreeNode.Type;
 import salomon.platform.exception.PlatformException;
 
 /**
  * Interfejs managera umo¿liwiaj¹cy operacje na drzewach
  * 
- * @author Mateusz Nowakowski
  *
  */
 public interface ITreeManager
@@ -119,7 +118,7 @@ public interface ITreeManager
      * @throws PlatformException
      */
     public ITree createTree(int dataSourceId, String info, String name,
-            INode root) throws PlatformException;
+            ITreeNode root) throws PlatformException;
 
     /**
      * Tworzy node dla drzewa. Nalezy dodawac dzieci metoda addChild(ren), setChildren na nodach
@@ -129,7 +128,7 @@ public interface ITreeManager
      * @param value
      * @return
      */
-    public INode createNode(INode parentNode, String edge, Type type,
+    public ITreeNode createNode(ITreeNode parentNode, String edge, Type type,
             String value);
 
     /**

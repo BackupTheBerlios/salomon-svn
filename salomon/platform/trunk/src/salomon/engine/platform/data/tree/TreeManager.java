@@ -36,10 +36,10 @@ import salomon.engine.database.queries.SQLInsert;
 import salomon.engine.database.queries.SQLSelect;
 import salomon.engine.solution.ShortSolutionInfo;
 import salomon.platform.data.tree.IDataSource;
-import salomon.platform.data.tree.INode;
+import salomon.platform.data.tree.ITreeNode;
 import salomon.platform.data.tree.ITree;
 import salomon.platform.data.tree.ITreeManager;
-import salomon.platform.data.tree.INode.Type;
+import salomon.platform.data.tree.ITreeNode.Type;
 import salomon.platform.exception.PlatformException;
 
 /**
@@ -387,7 +387,7 @@ public final class TreeManager implements ITreeManager
      * @see salomon.platform.data.tree.ITreeManager#createTree(int, java.lang.String, java.lang.String, salomon.platform.data.tree.INode)
      */
     public ITree createTree(int dataSourceId, String info, String name,
-            INode root) throws PlatformException
+            ITreeNode root) throws PlatformException
     {
         IDataSource dataSource = getTreeDataSource(dataSourceId);
         if (dataSource == null)
@@ -402,10 +402,10 @@ public final class TreeManager implements ITreeManager
     /* (non-Javadoc)
      * @see salomon.platform.data.tree.ITreeManager#createNode(salomon.platform.data.tree.INode, java.lang.String, salomon.platform.data.tree.INode.Type, java.lang.String)
      */
-    public INode createNode(INode parentNode, String edge, Type type,
+    public ITreeNode createNode(ITreeNode parentNode, String edge, Type type,
             String value)
     {
-        return new Node(parentNode, edge, type, value);
+        return new TreeNode(parentNode, edge, type, value);
     }
 
     /* (non-Javadoc)
@@ -448,7 +448,7 @@ public final class TreeManager implements ITreeManager
      * @return
      * @throws PlatformException
      */
-    protected int insertNode(INode in, Integer nodeTableId)
+    protected int insertNode(ITreeNode in, Integer nodeTableId)
             throws PlatformException
     {
         int returnId;
@@ -456,9 +456,10 @@ public final class TreeManager implements ITreeManager
         insert.addValue("TRN_PARENT_NODE_ID", (nodeTableId == null
                 ? 0
                 : nodeTableId));
-        insert.addValue("TRN_PARENT_EDGE", (in.getParentEdge() == null
-                ? ""
-                : in.getParentEdge()));
+        //FIXME:
+//        insert.addValue("TRN_PARENT_EDGE", (in.getParentEdge() == null
+//                ? ""
+//                : in.getParentEdge()));
         insert.addValue("TRN_TYPE", (in.getType().equals(Type.COLUMN)
                 ? "C"
                 : "V"));
@@ -469,7 +470,7 @@ public final class TreeManager implements ITreeManager
         try {
             returnId = _dbManager.insert(insert, "TRN_ID", " GEN_TREE_NODES_ID");
             if (!in.isLeaf())
-                for (INode node : in.getChildren()) {
+                for (ITreeNode node : in.getChildren()) {
                     insertNode(node, returnId);
                 }
         } catch (SQLException e) {
@@ -542,9 +543,9 @@ public final class TreeManager implements ITreeManager
      * @param rootId
      * @return
      */
-    protected INode getTreeNodes(int rootId) throws PlatformException
+    protected ITreeNode getTreeNodes(int rootId) throws PlatformException
     {
-        INode rootNode = null;
+        ITreeNode rootNode = null;
         SQLSelect tselect = new SQLSelect();
         tselect.addTable("TREE_NODES");
         tselect.addColumn("TRN_TYPE");
@@ -558,7 +559,7 @@ public final class TreeManager implements ITreeManager
                         ? Type.COLUMN
                         : Type.VALUE);
                 String value = resultSet.getString(i++);
-                rootNode = new Node(rootId, null, null, type, value);
+                rootNode = new TreeNode(rootId, null, null, type, value);
                 setChildren(rootNode);
             } else
                 throw new PlatformException("Cannot find root with id: "
@@ -577,7 +578,7 @@ public final class TreeManager implements ITreeManager
      * @param root
      * @throws PlatformException
      */
-    protected void setChildren(INode root) throws PlatformException
+    protected void setChildren(ITreeNode root) throws PlatformException
     {
         SQLSelect tselect = new SQLSelect();
         tselect.addTable("TREE_NODES");
@@ -588,7 +589,7 @@ public final class TreeManager implements ITreeManager
         tselect.addCondition("TRN_PARENT_NODE_ID = ", root.getId());
         try {
             ResultSet resultSet = _dbManager.select(tselect);
-            List<INode> childs = new ArrayList<INode>();
+            List<ITreeNode> childs = new ArrayList<ITreeNode>();
             while (resultSet.next()) {
                 int i = 1;
                 int id = resultSet.getInt(i++);
@@ -597,10 +598,10 @@ public final class TreeManager implements ITreeManager
                         ? Type.COLUMN
                         : Type.VALUE);
                 String value = resultSet.getString(i++);
-                childs.add(new Node(id, root, parentEdge, type, value));
+                childs.add(new TreeNode(id, root, parentEdge, type, value));
             }
             resultSet.close();
-            for (INode child : childs) {
+            for (ITreeNode child : childs) {
                 this.setChildren(child);
             }
         } catch (SQLException e) {

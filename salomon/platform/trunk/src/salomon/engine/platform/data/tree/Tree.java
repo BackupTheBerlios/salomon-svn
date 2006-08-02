@@ -23,8 +23,9 @@ package salomon.engine.platform.data.tree;
 
 import java.util.Date;
 
+import salomon.platform.data.attribute.IAttribute;
 import salomon.platform.data.tree.IDataSource;
-import salomon.platform.data.tree.INode;
+import salomon.platform.data.tree.ITreeNode;
 import salomon.platform.data.tree.ITree;
 
 /**
@@ -33,7 +34,7 @@ import salomon.platform.data.tree.ITree;
  * @author Mateusz Nowakowski
  *
  */
-public class Tree implements ITree
+public final class Tree implements ITree
 {
 
     private int id;
@@ -44,7 +45,7 @@ public class Tree implements ITree
 
     private IDataSource dataSource;
 
-    private INode root;
+    private ITreeNode root;
 
     private Date createDate;
 
@@ -72,7 +73,7 @@ public class Tree implements ITree
     /**
      * 
      */
-    public Tree(IDataSource source, String info, String name, INode root)
+    public Tree(IDataSource source, String info, String name, ITreeNode root)
     {
         dataSource = source;
         this.info = info;
@@ -81,7 +82,7 @@ public class Tree implements ITree
     }
 
     public Tree(int id, Date date, IDataSource source, String info,
-            String name, INode root)
+            String name, ITreeNode root)
     {
         createDate = date;
         dataSource = source;
@@ -158,7 +159,7 @@ public class Tree implements ITree
     /**
      * @return Returns the root.
      */
-    public INode getRoot()
+    public ITreeNode getRoot()
     {
         return root;
     }
@@ -166,7 +167,7 @@ public class Tree implements ITree
     /**
      * @param root The root to set.
      */
-    public void setRoot(INode root)
+    public void setRoot(ITreeNode root)
     {
         this.root = root;
     }
@@ -185,6 +186,11 @@ public class Tree implements ITree
     public void setCreateDate(Date createDate)
     {
         this.createDate = createDate;
+    }
+
+    public ITreeNode evaluate(IAttribute attribute)
+    {
+        throw new UnsupportedOperationException("Method Tree.evaluate() not implemented yet!");
     }
 
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004 Salomon Team
+ * Copyright (C) 2006 Salomon Team
  *
  * This file is part of Salomon.
  *
@@ -21,40 +21,14 @@
 
 package salomon.platform.data.tree;
 
-import java.util.Date;
-
-import salomon.platform.data.attribute.IAttribute;
-
-/**
- * Drzewo decyzyjne
- * 
- *
- */
-public interface ITree
+public interface ITreeEdge
 {
-    ITreeNode evaluate(IAttribute attribute);
-    
-    int getId();
+    ITreeNode getChildNode();
 
-    void setId(int id);
+    ITreeNode getParentNode();
 
-    String getName();
+    String getValue();
 
-    void setName(String name);
+    void setValue(String value);
 
-    String getInfo();
-
-    void setInfo(String info);
-
-    Date getCreateDate();
-
-    void setCreateDate(Date createDate);
-
-    IDataSource getDataSource();
-
-    void setDataSource(IDataSource dataSource);
-
-    ITreeNode getRoot();
-
-    void setRoot(ITreeNode root);
 }
