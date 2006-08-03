@@ -893,6 +893,7 @@ public final class TreeManager implements ITreeManager
                     TreeNode childNode = (TreeNode) iter.next();
                     LOGGER.debug("childNodeID: " + childNode.getInfo().getId());
                     TreeEdge edge = new TreeEdge(parentNode, childNode);
+                    edge.setValue(childNode.getInfo().getParentEdgeValue());
                     childNode.setParentEdge(edge);
                     parentNode.addChildEdge(edge);
                     connectNodes(nodesMap, childNode);
