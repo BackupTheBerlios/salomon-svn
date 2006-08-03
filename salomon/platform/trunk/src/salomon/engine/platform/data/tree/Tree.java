@@ -28,9 +28,6 @@ import salomon.platform.data.tree.ITree;
 import salomon.platform.data.tree.ITreeNode;
 
 /**
- * Implementacja drzewa
- * 
- * @author Mateusz Nowakowski
  *
  */
 public final class Tree implements ITree
@@ -38,7 +35,7 @@ public final class Tree implements ITree
     private TreeInfo _info;
 
     private ITreeNode _rootNode;
-    
+
     private IAttributeSet _attributeSet;
 
     /**

@@ -120,7 +120,7 @@ public final class TreeNode implements ITreeNode
     {
         _parentEdge = parentEdge;
     }
-    
+
     @Override
     public String toString()
     {

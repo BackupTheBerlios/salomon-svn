@@ -53,11 +53,15 @@ final class TreeInfo implements IInfo
 
     private int _attributeSetID;
 
+    private Date _cDate;
+
     private DBManager _dbManager;
 
     private ExternalDBManager _externalDBManager;
 
     private String _info;
+
+    private Date _lmDate;
 
     private String _name;
 
@@ -68,10 +72,6 @@ final class TreeInfo implements IInfo
     private int _solutionID;
 
     private int _treeID;
-
-    private Date _cDate;
-
-    private Date _lmDate;
 
     TreeInfo(DBManager dbManager)
     {

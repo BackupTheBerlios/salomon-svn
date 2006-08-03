@@ -113,7 +113,6 @@ final class TreeNodeInfo implements IInfo
                 "Method TreeNodeInfo.getLastModificationDate() not implemented yet!");
     }
 
-
     /**
      * Returns the nodeValue.
      * @return The nodeValue
@@ -180,16 +179,16 @@ final class TreeNodeInfo implements IInfo
         insert.addValue("parent_node_id", _parentNodeID);
         insert.addValue("parent_edge_value", _parentEdgeValue);
         insert.addValue("node_value", _nodeValue);
-        
+
         LOGGER.debug("insert: " + insert.getQuery());
-        
+
         try {
             _nodeID = _dbManager.insert(insert, "node_id", GEN_NAME);
         } catch (SQLException e) {
             LOGGER.fatal("", e);
             throw new DBException("Cannot save item!", e);
         }
-        
+
         return _nodeID;
     }
 
