@@ -60,6 +60,14 @@ public interface ITreeManager
     ITree getTree(int treeId) throws PlatformException;
 
     /**
+     * Zwraca drzewo zwiazane z obecnym solutionem i posiadajace podane id. W przeciwnym razie rzuca PlatformException
+     * @param treeId
+     * @return
+     * @throws PlatformException
+     */
+    ITree getTree(String name) throws PlatformException;    
+    
+    /**
      * Usuwa drzewo o podanym id z bazy danych.
      * @param treeId
      * @throws PlatformException

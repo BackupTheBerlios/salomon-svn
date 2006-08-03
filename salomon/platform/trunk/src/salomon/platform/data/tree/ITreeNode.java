@@ -29,13 +29,15 @@ import salomon.platform.data.attribute.description.IAttributeDescription;
  */
 public interface ITreeNode
 {
-    ITreeEdge getParentEdge();
-    
-    ITreeEdge[] getChildrenEdges();
-    
     IAttributeDescription getAttributeDescription();
-    
-    IAttributeDescription setAttributeDescription();
+
+    ITreeEdge[] getChildrenEdges();
+
+    String getLeafValue();
+
+    ITreeEdge getParentEdge();
 
     boolean isLeaf();
+
+    IAttributeDescription setAttributeDescription();
 }
