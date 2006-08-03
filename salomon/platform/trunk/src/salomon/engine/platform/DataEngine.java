@@ -78,8 +78,8 @@ public final class DataEngine implements IDataEngine
         _dataSetManager = new DataSetManager(dbManager, solutionInfo,
                 externalDBManager);
         _ruleSetManager = new RuleSetManager(dbManager, solutionInfo);
-        _treeManager = new TreeManager(dbManager, solutionInfo,
-                externalDBManager);
+        _treeManager = new TreeManager(_attributeManager, dbManager,
+                solutionInfo, externalDBManager);
         _metaData = externalDBManager.getMetaData();
     }
 

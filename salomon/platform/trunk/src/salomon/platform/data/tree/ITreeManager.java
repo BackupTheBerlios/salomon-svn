@@ -72,5 +72,5 @@ public interface ITreeManager
      * @param treeId
      * @throws PlatformException
      */
-    void remove(int treeId) throws PlatformException;
+    void remove(ITree tree) throws PlatformException;
 }

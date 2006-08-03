@@ -4,22 +4,16 @@
 
 package salomon.engine.platform.data.tree;
 
-import java.util.List;
-
-import junit.framework.AssertionFailedError;
 import junit.framework.TestCase;
 
 import org.apache.log4j.Logger;
-import org.apache.log4j.PropertyConfigurator;
 
-import salomon.engine.database.DBManager;
-import salomon.engine.database.queries.SQLInsert;
-import salomon.engine.platform.ManagerEngine;
+import salomon.TestObjectFactory;
+import salomon.engine.platform.data.attribute.AttributeSet;
 import salomon.engine.solution.ISolution;
-import salomon.platform.data.tree.IDataSource;
-import salomon.platform.data.tree.ITreeNode;
+import salomon.platform.IDataEngine;
+import salomon.platform.data.attribute.IAttributeSet;
 import salomon.platform.data.tree.ITree;
-import salomon.platform.data.tree.ITreeManager;
 import salomon.platform.exception.PlatformException;
 
 /**
@@ -265,4 +259,27 @@ public class TreeManagerTest extends TestCase
 //        }
 //    }
 //
+
+    private static final Logger LOGGER = Logger.getLogger(TreeManagerTest.class);
+
+    private TreeManager _treeManager;
+
+    public TreeManagerTest() throws PlatformException
+    {
+        ISolution solution = TestObjectFactory.getSolution("Trees");
+        IDataEngine dataEngine = solution.getDataEngine();
+        _treeManager = (TreeManager) dataEngine.getTreeManager();
+        LOGGER.info("Connected");
+    }
+    
+    public void testGetAll() throws PlatformException
+    {
+        LOGGER.info("AttributeManagerTest.testGetAll()");
+        ITree[] trees = null;
+        trees = _treeManager.getAll();
+        for (ITree attributeSet : trees) {
+            LOGGER.info(((Tree) attributeSet).getInfo());
+        }
+    }
+
 }

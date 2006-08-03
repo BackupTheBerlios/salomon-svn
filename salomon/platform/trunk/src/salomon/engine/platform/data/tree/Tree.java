@@ -21,12 +21,11 @@
 
 package salomon.engine.platform.data.tree;
 
-import java.util.Date;
-
+import salomon.engine.database.DBManager;
 import salomon.platform.data.attribute.IAttribute;
-import salomon.platform.data.tree.IDataSource;
-import salomon.platform.data.tree.ITreeNode;
+import salomon.platform.data.attribute.IAttributeSet;
 import salomon.platform.data.tree.ITree;
+import salomon.platform.data.tree.ITreeNode;
 
 /**
  * Implementacja drzewa
@@ -36,161 +35,68 @@ import salomon.platform.data.tree.ITree;
  */
 public final class Tree implements ITree
 {
+    private TreeInfo _info;
 
-    private int id;
-
-    private String name;
-
-    private String info;
-
-    private IDataSource dataSource;
-
-    private ITreeNode root;
-
-    private Date createDate;
-
-    @Override
-    public String toString()
-    {
-        return name;
-    }
+    private ITreeNode _rootNode;
+    
+    private IAttributeSet _attributeSet;
 
     /**
-     * Empty constructor 
+     * @param rootNode
      */
-    public Tree()
+    public Tree(ITreeNode rootNode, DBManager dbManager)
     {
+        _rootNode = rootNode;
+        _info = new TreeInfo(dbManager);
+    }
+
+    public ITreeNode evaluate(IAttribute[] attribute)
+    {
+        throw new UnsupportedOperationException(
+                "Method Tree.evaluate() not implemented yet!");
+    }
+
+    public IAttributeSet getAttributeSet()
+    {
+        return _attributeSet;
     }
 
     /**
-     * @param source
+     * Returns the info.
+     * @return The info
      */
-    public Tree(IDataSource source)
+    public final TreeInfo getInfo()
     {
-        dataSource = source;
+        return _info;
     }
 
     /**
-     * 
-     */
-    public Tree(IDataSource source, String info, String name, ITreeNode root)
-    {
-        dataSource = source;
-        this.info = info;
-        this.name = name;
-        this.root = root;
-    }
-
-    public Tree(int id, Date date, IDataSource source, String info,
-            String name, ITreeNode root)
-    {
-        createDate = date;
-        dataSource = source;
-        this.id = id;
-        this.info = info;
-        this.name = name;
-        this.root = root;
-    }
-
-    /**
-     * @return Returns the dataSource.
-     */
-    public IDataSource getDataSource()
-    {
-        return dataSource;
-    }
-
-    /**
-     * @param dataSource The dataSource to set.
-     */
-    public void setDataSource(IDataSource dataSource)
-    {
-        this.dataSource = dataSource;
-    }
-
-    /**
-     * @return Returns the id.
-     */
-    public int getId()
-    {
-        return id;
-    }
-
-    /**
-     * @param id The id to set.
-     */
-    public void setId(int id)
-    {
-        this.id = id;
-    }
-
-    /**
-     * @return Returns the info.
-     */
-    public String getInfo()
-    {
-        return info;
-    }
-
-    /**
-     * @param info The info to set.
-     */
-    public void setInfo(String info)
-    {
-        this.info = info;
-    }
-
-    /**
-     * @return Returns the name.
+     * @see salomon.platform.data.tree.ITree#getName()
      */
     public String getName()
     {
-        return name;
+        return _info.getName();
     }
 
     /**
-     * @param name The name to set.
+     * @see salomon.platform.data.tree.ITree#getRootNode()
      */
+    public ITreeNode getRootNode()
+    {
+        return _rootNode;
+    }
+
     public void setName(String name)
     {
-        this.name = name;
+        _info.setName(name);
     }
 
     /**
-     * @return Returns the root.
+     * Set the value of rootNode field.
+     * @param rootNode The rootNode to set
      */
-    public ITreeNode getRoot()
+    public final void setRootNode(ITreeNode rootNode)
     {
-        return root;
+        _rootNode = rootNode;
     }
-
-    /**
-     * @param root The root to set.
-     */
-    public void setRoot(ITreeNode root)
-    {
-        this.root = root;
-    }
-
-    /**
-     * @return Returns the createDate.
-     */
-    public Date getCreateDate()
-    {
-        return createDate;
-    }
-
-    /**
-     * @param createDate The createDate to set.
-     */
-    public void setCreateDate(Date createDate)
-    {
-        this.createDate = createDate;
-    }
-
-    public ITreeNode evaluate(IAttribute attribute)
-    {
-        throw new UnsupportedOperationException("Method Tree.evaluate() not implemented yet!");
-    }
-
 }

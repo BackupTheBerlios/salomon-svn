@@ -24,7 +24,6 @@ package salomon.platform.data.tree;
 import salomon.platform.data.attribute.description.IAttributeDescription;
 
 /**
- * Element drzewa. Komentarze nie potrzebne, chyba ze ktos nie wie co to drzewo...
  *
  */
 public interface ITreeNode
@@ -39,5 +38,5 @@ public interface ITreeNode
 
     boolean isLeaf();
 
-    IAttributeDescription setAttributeDescription();
+    void setAttributeDescription(IAttributeDescription attributeDescription);
 }
