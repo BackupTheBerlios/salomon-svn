@@ -36,8 +36,6 @@ import salomon.engine.database.queries.SQLDelete;
 import salomon.engine.database.queries.SQLInsert;
 import salomon.engine.database.queries.SQLUpdate;
 import salomon.platform.IInfo;
-import salomon.platform.data.IColumn;
-import salomon.platform.data.attribute.description.AttributeType;
 import salomon.platform.data.attribute.description.IAttributeDescription;
 import salomon.platform.exception.DBException;
 import salomon.platform.exception.PlatformException;
@@ -45,7 +43,7 @@ import salomon.platform.exception.PlatformException;
 /**
  * 
  */
-public final class AttributeSetInfo implements IInfo
+final class AttributeSetInfo implements IInfo
 {
 
     public static final String GEN_NAME = "gen_attributeset_id";
@@ -66,8 +64,6 @@ public final class AttributeSetInfo implements IInfo
 
     private List<IAttributeDescription> _descriptions;
 
-    private ExternalDBManager _externalDBManager;
-
     private String _info;
 
     private Date _lmDate;
@@ -76,12 +72,10 @@ public final class AttributeSetInfo implements IInfo
 
     private int _solutionID;
 
-    AttributeSetInfo(AttributeManager attributeManager, DBManager dbManager,
-            ExternalDBManager externalDBManager)
+    AttributeSetInfo(AttributeManager attributeManager, DBManager dbManager)
     {
         _attributeManager = attributeManager;
         _dbManager = dbManager;
-        _externalDBManager = externalDBManager;
         _descriptions = new LinkedList<IAttributeDescription>();
     }
 

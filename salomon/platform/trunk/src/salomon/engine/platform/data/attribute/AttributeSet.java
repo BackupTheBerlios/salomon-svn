@@ -5,7 +5,6 @@
 package salomon.engine.platform.data.attribute;
 
 import salomon.engine.database.DBManager;
-import salomon.engine.database.ExternalDBManager;
 import salomon.platform.data.IColumn;
 import salomon.platform.data.attribute.IAttributeData;
 import salomon.platform.data.attribute.IAttributeSet;
@@ -31,13 +30,11 @@ public class AttributeSet implements IAttributeSet
      * @param descriptions
      */
     protected AttributeSet(AttributeManager attributeManager,
-            IAttributeDescription[] descriptions, DBManager manager,
-            ExternalDBManager externalDBManager)
+            IAttributeDescription[] descriptions, DBManager manager)
     {
         _attributeManager = attributeManager;
         _descriptions = descriptions;
-        _info = new AttributeSetInfo(_attributeManager, manager,
-                externalDBManager);
+        _info = new AttributeSetInfo(_attributeManager, manager);
         _info.setDescriptions(descriptions);
         // initializing columns
         initColumns(descriptions);
