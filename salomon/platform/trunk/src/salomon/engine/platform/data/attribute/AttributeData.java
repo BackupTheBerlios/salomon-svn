@@ -21,8 +21,6 @@
 
 package salomon.engine.platform.data.attribute;
 
-import org.apache.log4j.Logger;
-
 import salomon.platform.data.attribute.IAttribute;
 import salomon.platform.data.attribute.IAttributeData;
 import salomon.platform.data.attribute.description.IAttributeDescription;
@@ -34,9 +32,6 @@ import salomon.platform.exception.PlatformException;
  */
 public final class AttributeData implements IAttributeData
 {
-
-    private static final Logger LOGGER = Logger.getLogger(AttributeData.class);
-
     private IData _data;
 
     private IAttributeDescription[] _descriptions;

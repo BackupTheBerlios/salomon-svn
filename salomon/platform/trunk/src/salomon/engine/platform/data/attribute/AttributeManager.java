@@ -248,6 +248,7 @@ public final class AttributeManager implements IAttributeManager
         select.addColumn("a.attributeset_id");
         select.addColumn("a.attributeset_name");
         select.addColumn("a.attributeset_info");
+        select.addColumn("ai.attributeset_item_id");
         select.addColumn("ai.attribute_name");
         select.addColumn("ai.attribute_type");
         select.addColumn("ai.table_name");

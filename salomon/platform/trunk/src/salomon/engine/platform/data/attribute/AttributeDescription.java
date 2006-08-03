@@ -30,6 +30,8 @@ public abstract class AttributeDescription implements IAttributeDescription
 {
     private IColumn _column;
 
+    private int _descriptionID;
+
     private boolean _isOutput;
 
     private String _name;
@@ -67,6 +69,15 @@ public abstract class AttributeDescription implements IAttributeDescription
         return _column;
     }
 
+    /**
+     * Returns the descriptionID.
+     * @return The descriptionID
+     */
+    public final int getDescriptionID()
+    {
+        return _descriptionID;
+    }
+
     /* (non-Javadoc)
      * @see salomon.platform.data.attribute.description.IAttributeDescription#getName()
      */
@@ -82,6 +93,15 @@ public abstract class AttributeDescription implements IAttributeDescription
     public final boolean isOutput()
     {
         return _isOutput;
+    }
+
+    /**
+     * Set the value of descriptionID field.
+     * @param descriptionID The descriptionID to set
+     */
+    public final void setDescriptionID(int descriptionID)
+    {
+        _descriptionID = descriptionID;
     }
 
     /**

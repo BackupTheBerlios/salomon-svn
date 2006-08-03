@@ -31,7 +31,6 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import salomon.engine.database.DBManager;
-import salomon.engine.database.ExternalDBManager;
 import salomon.engine.database.queries.SQLDelete;
 import salomon.engine.database.queries.SQLInsert;
 import salomon.engine.database.queries.SQLUpdate;
@@ -169,17 +168,19 @@ final class AttributeSetInfo implements IInfo
         }
     }
 
-    public void loadDescriptions(ResultSet resultSet) throws SQLException,
+    void loadDescriptions(ResultSet resultSet) throws SQLException,
             PlatformException
     {
 
+        int descriptionID = resultSet.getInt("attributeset_item_id");
         String type = resultSet.getString("attribute_type");
         String name = resultSet.getString("attribute_name");
         String tableName = resultSet.getString("table_name");
-        String columnName = resultSet.getString("column_name");
+        String columnName = resultSet.getString("column_name");        
 
         IAttributeDescription description = _attributeManager.createAttributeDescription(
                 name, tableName, columnName, type);
+        ((AttributeDescription)description).setDescriptionID(descriptionID);
         _descriptions.add(description);
     }
 
@@ -194,7 +195,7 @@ final class AttributeSetInfo implements IInfo
             rows = _dbManager.delete(delete);
         } catch (SQLException e) {
             LOGGER.fatal("!", e);
-            throw new DBException("Cannot save!", e);
+            throw new DBException("Cannot delete!", e);
         }
         LOGGER.debug("rows deleted: " + rows);
 
