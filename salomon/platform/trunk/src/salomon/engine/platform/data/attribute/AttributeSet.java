@@ -22,8 +22,6 @@ public class AttributeSet implements IAttributeSet
 
     private IColumn[] _columns;
 
-    private IAttributeDescription[] _descriptions;
-
     private AttributeSetInfo _info;
 
     /**
@@ -33,7 +31,6 @@ public class AttributeSet implements IAttributeSet
             IAttributeDescription[] descriptions, DBManager manager)
     {
         _attributeManager = attributeManager;
-        _descriptions = descriptions;
         _info = new AttributeSetInfo(_attributeManager, manager);
         _info.setDescriptions(descriptions);
         // initializing columns
@@ -43,7 +40,7 @@ public class AttributeSet implements IAttributeSet
     /**
      * @see salomon.platform.data.attribute.IAttributeSet#getDesciptions()
      */
-    public IAttributeDescription[] getDesciptions() throws PlatformException
+    public AttributeDescription[] getDesciptions() throws PlatformException
     {
         return _info.getDescriptions();
     }
@@ -73,7 +70,7 @@ public class AttributeSet implements IAttributeSet
     {
         // selecting all data from the dataSet
         IData data = dataSet.selectData(_columns, null);
-        return new AttributeData(_descriptions, data);
+        return new AttributeData(_info.getDescriptions(), data);
     }
 
     /**

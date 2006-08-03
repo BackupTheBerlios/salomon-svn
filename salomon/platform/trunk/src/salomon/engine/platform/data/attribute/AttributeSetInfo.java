@@ -114,9 +114,9 @@ final class AttributeSetInfo implements IInfo
      * Returns the descriptions.
      * @return The descriptions
      */
-    public final IAttributeDescription[] getDescriptions()
+    public final AttributeDescription[] getDescriptions()
     {
-        return _descriptions.toArray(new IAttributeDescription[_descriptions.size()]);
+        return _descriptions.toArray(new AttributeDescription[_descriptions.size()]);
     }
 
     public int getId()
