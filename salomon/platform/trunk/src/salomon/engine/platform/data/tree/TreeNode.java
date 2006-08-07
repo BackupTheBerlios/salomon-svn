@@ -24,6 +24,7 @@ package salomon.engine.platform.data.tree;
 import java.util.LinkedList;
 import java.util.List;
 
+import salomon.engine.platform.data.attribute.AttributeDescription;
 import salomon.platform.data.attribute.description.IAttributeDescription;
 import salomon.platform.data.tree.ITreeEdge;
 import salomon.platform.data.tree.ITreeNode;
@@ -31,7 +32,7 @@ import salomon.platform.data.tree.ITreeNode;
 /**
  *
  */
-public final class TreeNode implements ITreeNode
+final class TreeNode implements ITreeNode
 {
     private IAttributeDescription _attributeDescription;
 
@@ -41,23 +42,28 @@ public final class TreeNode implements ITreeNode
 
     private ITreeEdge _parentEdge;
 
-    private String _value;
+    private Tree _tree;
 
     /**
      * @param attributeDescription
      * @param nodeID
      */
-    public TreeNode(IAttributeDescription attributeDescription,
+    public TreeNode(Tree tree, IAttributeDescription attributeDescription,
             TreeNodeInfo info)
     {
-        _attributeDescription = attributeDescription;
+        _tree = tree;
         _info = info;
+        setAttributeDescription(attributeDescription);        
         _childEdges = new LinkedList<ITreeEdge>();
     }
 
-    public void addChildEdge(ITreeEdge edge)
+    public void addChildNode(ITreeNode childNode, String edgeValue)
     {
+        TreeEdge edge = new TreeEdge(this, childNode);
+        edge.setValue(edgeValue);
+        ((TreeNode) childNode).setParentEdge(edge);
         _childEdges.add(edge);
+        _tree.addNode((TreeNode) childNode);
     }
 
     /**
@@ -85,7 +91,7 @@ public final class TreeNode implements ITreeNode
 
     public String getLeafValue()
     {
-        return _value;
+        return _info.getNodeValue();
     }
 
     /**
@@ -102,6 +108,12 @@ public final class TreeNode implements ITreeNode
         return (_childEdges.size() == 0);
     }
 
+    public void removeChildNode(ITreeNode childNode)
+    {
+        throw new UnsupportedOperationException(
+                "Method TreeNode.removeChildNode() not implemented yet!");
+    }
+
     /**
      * Set the value of attributeDescription field.
      * @param attributeDescription The attributeDescription to set
@@ -110,6 +122,13 @@ public final class TreeNode implements ITreeNode
             IAttributeDescription attributeDescription)
     {
         _attributeDescription = attributeDescription;
+        _info.setAttributeItemID(((AttributeDescription)_attributeDescription).getDescriptionID());
+    }
+
+    public void setLeafValue(String value)
+    {
+        // add isLeaf() checking?
+        _info.setNodeValue(value);
     }
 
     /**
@@ -119,6 +138,8 @@ public final class TreeNode implements ITreeNode
     public final void setParentEdge(ITreeEdge parentEdge)
     {
         _parentEdge = parentEdge;
+        _info.setParentEdgeValue(parentEdge.getValue());
+        _info.setParentNodeID(((TreeNode) parentEdge.getParentNode()).getInfo().getId());
     }
 
     @Override

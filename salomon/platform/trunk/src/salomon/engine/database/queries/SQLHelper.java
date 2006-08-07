@@ -87,8 +87,12 @@ final class SQLHelper
     public static void addValue(Collection<SQLPair> values, String columnName,
             String value)
     {
-        addValueImpl(values, columnName, "'" + value.replaceAll("'", "''")
-                + "'");
+        if (value != null) {
+            addValueImpl(values, columnName, "'" + value.replaceAll("'", "''")
+                    + "'");
+        } else {
+            addValueImpl(values, columnName, "''");
+        }
     }
 
     private static void addConditionImpl(Collection<String> conditions,

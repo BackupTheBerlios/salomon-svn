@@ -96,15 +96,6 @@ final class AttributeSetInfo implements IInfo
         return (rows > 0);
     }
 
-    /**
-     * Returns the attributeSetID.
-     * @return The attributeSetID
-     */
-    public final int getAttributeSetID()
-    {
-        return _attributeSetID;
-    }
-
     public Date getCreationDate() throws PlatformException
     {
         return _cDate;

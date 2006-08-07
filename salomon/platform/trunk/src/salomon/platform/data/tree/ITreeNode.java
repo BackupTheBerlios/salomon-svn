@@ -28,6 +28,8 @@ import salomon.platform.data.attribute.description.IAttributeDescription;
  */
 public interface ITreeNode
 {
+    void addChildNode(ITreeNode childNode, String edgeValue);
+
     IAttributeDescription getAttributeDescription();
 
     ITreeEdge[] getChildrenEdges();
@@ -38,5 +40,6 @@ public interface ITreeNode
 
     boolean isLeaf();
 
-    void setAttributeDescription(IAttributeDescription attributeDescription);
+    void removeChildNode(ITreeNode childNode);
+
 }

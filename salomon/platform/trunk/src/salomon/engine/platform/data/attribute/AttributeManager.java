@@ -127,7 +127,7 @@ public final class AttributeManager implements IAttributeManager
     {
         AttributeSet attributeSet = new AttributeSet(this, descriptions,
                 _dbManager);
-        attributeSet.getInfo().setSolutionID(_solutionInfo.getId());
+        ((AttributeSetInfo) attributeSet.getInfo()).setSolutionID(_solutionInfo.getId());
         return attributeSet;
     }
 

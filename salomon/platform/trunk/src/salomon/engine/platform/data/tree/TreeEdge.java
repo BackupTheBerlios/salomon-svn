@@ -27,7 +27,7 @@ import salomon.platform.data.tree.ITreeNode;
 /**
  * 
  */
-public final class TreeEdge implements ITreeEdge
+final class TreeEdge implements ITreeEdge
 {
     private ITreeNode _childNode;
 

@@ -5,6 +5,7 @@
 package salomon.engine.platform.data.attribute;
 
 import salomon.engine.database.DBManager;
+import salomon.platform.IInfo;
 import salomon.platform.data.IColumn;
 import salomon.platform.data.attribute.IAttributeData;
 import salomon.platform.data.attribute.IAttributeSet;
@@ -49,7 +50,7 @@ public class AttributeSet implements IAttributeSet
      * Returns the info.
      * @return The info
      */
-    public final AttributeSetInfo getInfo()
+    public final IInfo getInfo()
     {
         return _info;
     }

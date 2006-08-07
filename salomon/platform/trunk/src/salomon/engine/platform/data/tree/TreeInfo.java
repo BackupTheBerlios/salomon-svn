@@ -79,6 +79,11 @@ final class TreeInfo implements IInfo
         _nodes = new LinkedList<TreeNodeInfo>();
     }
 
+    public void addNode(TreeNodeInfo nodeInfo)
+    {
+        _nodes.add(nodeInfo);
+    }
+
     /**
      * @see salomon.platform.IInfo#delete()
      */
@@ -201,6 +206,9 @@ final class TreeInfo implements IInfo
         }
 
         update.addValue("solution_id", _solutionID);
+        update.addValue("attributeset_id", _attributeSetID);
+        update.addValue("root_node_id", _rootNodeID);
+
         _lmDate = new Date(System.currentTimeMillis());
         update.addValue("lm_date", _lmDate);
 
@@ -208,12 +216,13 @@ final class TreeInfo implements IInfo
             _treeID = _dbManager.insertOrUpdate(update, "tree_id", _treeID,
                     GEN_NAME);
         } catch (SQLException e) {
-            LOGGER.fatal("Exception was thrown!", e);
+            LOGGER.fatal("", e);
             throw new DBException("Cannot save!", e);
         }
 
         // saving items
         for (TreeNodeInfo node : _nodes) {
+            node.setTreeID(_treeID);
             node.save();
         }
 
@@ -239,6 +248,15 @@ final class TreeInfo implements IInfo
     }
 
     /**
+     * Set the value of rootNodeID field.
+     * @param rootNodeID The rootNodeID to set
+     */
+    public final void setRootNodeID(int rootNodeID)
+    {
+        _rootNodeID = rootNodeID;
+    }
+
+    /**
      * Set the value of solutionID field.
      * @param solutionID The solutionID to set
      */
@@ -259,7 +277,7 @@ final class TreeInfo implements IInfo
 
     void loadNodes(ResultSet resultSet) throws DBException, PlatformException
     {
-        TreeNodeInfo nodeInfo = new TreeNodeInfo();
+        TreeNodeInfo nodeInfo = new TreeNodeInfo(_dbManager);
         nodeInfo.load(resultSet);
         _nodes.add(nodeInfo);
     }

@@ -41,6 +41,7 @@ import salomon.engine.platform.data.attribute.AttributeDescription;
 import salomon.engine.platform.data.attribute.AttributeManager;
 import salomon.engine.platform.data.attribute.AttributeSet;
 import salomon.engine.solution.ShortSolutionInfo;
+import salomon.platform.data.attribute.description.IAttributeDescription;
 import salomon.platform.data.tree.ITree;
 import salomon.platform.data.tree.ITreeManager;
 import salomon.platform.data.tree.ITreeNode;
@@ -58,13 +59,13 @@ public final class TreeManager implements ITreeManager
 
     private static final Logger LOGGER = Logger.getLogger(TreeManager.class);
 
+    private AttributeManager _attributeManager;
+
     private DBManager _dbManager;
 
     private ExternalDBManager _externalDBManager;
 
     private ShortSolutionInfo _solutionInfo;
-
-    private AttributeManager _attributeManager;
 
     public TreeManager(AttributeManager attributeManager, DBManager dbManager,
             ShortSolutionInfo solutionInfo, ExternalDBManager externalDBManager)
@@ -87,9 +88,15 @@ public final class TreeManager implements ITreeManager
         }
     }
 
-    public ITree createTree(ITreeNode rootNode) throws PlatformException
+    public ITreeNode createNode(ITree tree, IAttributeDescription description)
+            throws PlatformException
     {
-        Tree tree = new Tree(rootNode, _dbManager);
+        return new TreeNode((Tree) tree, description, new TreeNodeInfo(_dbManager));
+    }
+
+    public ITree createTree() throws PlatformException
+    {
+        Tree tree = new Tree(_dbManager);
         tree.getInfo().setSolutionID(_solutionInfo.getId());
         return tree;
     }
@@ -123,6 +130,75 @@ public final class TreeManager implements ITreeManager
         } catch (Exception e) {
             _dbManager.rollback();
             LOGGER.fatal("", e);
+        }
+    }
+
+    /**
+     * Method builds the tree basing on its database definition.
+     * 
+     * @param tree
+     * @throws PlatformException
+     */
+    private void buildTree(Tree tree) throws PlatformException
+    {
+        TreeInfo treeInfo = (TreeInfo) tree.getInfo();
+
+        // loading nodes
+        List<TreeNodeInfo> nodeInfos = treeInfo.getNodes();
+
+        // loading attribute set
+        AttributeSet attributeSet = (AttributeSet) _attributeManager.getAttributeSet(treeInfo.getAttributeSetID());
+        // getting attribute desciptions
+        AttributeDescription[] descriptions = attributeSet.getDesciptions();
+
+        // putting attributes to the map to speed up searching
+        Map<Integer, AttributeDescription> attributeMap = new HashMap<Integer, AttributeDescription>();
+        for (AttributeDescription description : descriptions) {
+            attributeMap.put(description.getDescriptionID(), description);
+        }
+
+        // getting root node
+        // according to the sorting order, it is the first node in the list od nodes
+        // it is removed to avoid complications while building tree
+        TreeNodeInfo rootNodeInfo = nodeInfos.remove(0);
+        TreeNode rootNode = new TreeNode(tree, attributeMap.get(rootNodeInfo.getAttributeItemID()),
+                rootNodeInfo);
+        // setting root node for given tree
+        tree.setRootNode(rootNode);
+
+        // creating nodes
+        MultiMap nodesMap = new MultiHashMap();
+
+        for (TreeNodeInfo nodeInfo : nodeInfos) {
+            AttributeDescription description = attributeMap.get(nodeInfo.getAttributeItemID());
+            TreeNode treeNode = new TreeNode(tree, description, nodeInfo);
+            // put it in map?
+            // putting node to the map
+            // it is indexed by parent node id (thats why root node was removed, cause it's parent id == 0
+            nodesMap.put(treeNode.getInfo().getParentNodeID(), treeNode);
+        }
+
+        // getting all child nodes starting from the root node
+        connectNodes(nodesMap, rootNode);
+    }
+
+    @SuppressWarnings("unchecked")
+    private void connectNodes(MultiMap nodesMap, TreeNode parentNode)
+    {
+        LOGGER.info("TreeManager.connectNodes()");
+        if (!nodesMap.isEmpty()) {
+            int parentNodeID = parentNode.getInfo().getId();
+            LOGGER.debug("parentNodeID: " + parentNodeID);
+            Collection<TreeNode> childNodes = (Collection<TreeNode>) nodesMap.remove(parentNodeID);
+            if (childNodes != null) {
+                for (Iterator iter = childNodes.iterator(); iter.hasNext();) {
+                    TreeNode childNode = (TreeNode) iter.next();
+                    LOGGER.debug("childNodeID: " + childNode.getInfo().getId());
+                    parentNode.addChildNode(childNode,
+                            childNode.getInfo().getParentEdgeValue());
+                    connectNodes(nodesMap, childNode);
+                }
+            }
         }
     }
 
@@ -167,7 +243,7 @@ public final class TreeManager implements ITreeManager
                 if (tmpTreeID != firstTreeID) {
                     // processing next tree 
                     firstTreeID = tmpTreeID;
-                    tree = (Tree) this.createTree(null);
+                    tree = (Tree) this.createTree();
                     tree.getInfo().load(resultSet);
                     trees.add(tree);
                 }
@@ -196,76 +272,5 @@ public final class TreeManager implements ITreeManager
         LOGGER.info("Trees list successfully loaded.");
         ITree[] treesArray = new ITree[trees.size()];
         return trees.toArray(treesArray);
-    }
-
-    /**
-     * Method builds the tree basing on its database definition.
-     * 
-     * @param tree
-     * @throws PlatformException
-     */
-    private void buildTree(Tree tree) throws PlatformException
-    {
-        TreeInfo treeInfo = (TreeInfo) tree.getInfo();
-
-        // loading nodes
-        List<TreeNodeInfo> nodeInfos = treeInfo.getNodes();
-
-        // loading attribute set
-        AttributeSet attributeSet = (AttributeSet) _attributeManager.getAttributeSet(treeInfo.getAttributeSetID());
-        // getting attribute desciptions
-        AttributeDescription[] descriptions = attributeSet.getDesciptions();
-
-        // putting attributes to the map to speed up searching
-        Map<Integer, AttributeDescription> attributeMap = new HashMap<Integer, AttributeDescription>();
-        for (AttributeDescription description : descriptions) {
-            attributeMap.put(description.getDescriptionID(), description);
-        }
-
-        // getting root node
-        // according to the sorting order, it is the first node in the list od nodes
-        // it is removed to avoid complications while building tree
-        TreeNodeInfo rootNodeInfo = nodeInfos.remove(0);
-        TreeNode rootNode = new TreeNode(attributeMap.get(rootNodeInfo),
-                rootNodeInfo);
-        // setting root node for given tree
-        tree.setRootNode(rootNode);
-
-        // creating nodes
-        MultiMap nodesMap = new MultiHashMap();
-
-        for (TreeNodeInfo nodeInfo : nodeInfos) {
-            AttributeDescription description = attributeMap.get(nodeInfo.getAttributeItemID());
-            TreeNode treeNode = new TreeNode(description, nodeInfo);
-            // put it in map?
-            // putting node to the map
-            // it is indexed by parent node id (thats why root node was removed, cause it's parent id == 0
-            nodesMap.put(treeNode.getInfo().getParentNodeID(), treeNode);
-        }
-
-        // getting all child nodes starting from the root node
-        connectNodes(nodesMap, rootNode);
-    }
-
-    @SuppressWarnings("unchecked")
-    private void connectNodes(MultiMap nodesMap, TreeNode parentNode)
-    {
-        LOGGER.info("TreeManager.connectNodes()");
-        if (!nodesMap.isEmpty()) {
-            int parentNodeID = parentNode.getInfo().getId();
-            LOGGER.debug("parentNodeID: " + parentNodeID);
-            Collection<TreeNode> childNodes = (Collection<TreeNode>) nodesMap.remove(parentNodeID);
-            if (childNodes != null) {
-                for (Iterator iter = childNodes.iterator(); iter.hasNext();) {
-                    TreeNode childNode = (TreeNode) iter.next();
-                    LOGGER.debug("childNodeID: " + childNode.getInfo().getId());
-                    TreeEdge edge = new TreeEdge(parentNode, childNode);
-                    edge.setValue(childNode.getInfo().getParentEdgeValue());
-                    childNode.setParentEdge(edge);
-                    parentNode.addChildEdge(edge);
-                    connectNodes(nodesMap, childNode);
-                }
-            }
-        }
     }
 }

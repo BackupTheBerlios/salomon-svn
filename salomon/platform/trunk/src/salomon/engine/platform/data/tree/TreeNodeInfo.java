@@ -39,13 +39,15 @@ import salomon.platform.exception.PlatformException;
  */
 final class TreeNodeInfo implements IInfo
 {
-    public static final String TABLE_NAME = "tree_nodes";
-
     public static final String GEN_NAME = "gen_tree_nodes_id";
+
+    public static final String TABLE_NAME = "tree_nodes";
 
     private static final Logger LOGGER = Logger.getLogger(TreeNodeInfo.class);
 
     private int _attributeItemID;
+
+    private DBManager _dbManager;
 
     private int _nodeID;
 
@@ -57,7 +59,13 @@ final class TreeNodeInfo implements IInfo
 
     private int _treeID;
 
-    private DBManager _dbManager;
+    /**
+     * @param dbManager
+     */
+    public TreeNodeInfo(DBManager dbManager)
+    {
+        _dbManager = dbManager;
+    }
 
     /**
      * @see salomon.platform.IInfo#delete()

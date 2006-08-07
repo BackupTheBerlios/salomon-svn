@@ -22,6 +22,7 @@
 package salomon.engine.platform.data.tree;
 
 import salomon.engine.database.DBManager;
+import salomon.engine.platform.data.attribute.AttributeSet;
 import salomon.platform.data.attribute.IAttribute;
 import salomon.platform.data.attribute.IAttributeSet;
 import salomon.platform.data.tree.ITree;
@@ -30,20 +31,19 @@ import salomon.platform.data.tree.ITreeNode;
 /**
  *
  */
-public final class Tree implements ITree
+final class Tree implements ITree
 {
+    private IAttributeSet _attributeSet;
+
     private TreeInfo _info;
 
     private ITreeNode _rootNode;
 
-    private IAttributeSet _attributeSet;
-
     /**
      * @param rootNode
      */
-    public Tree(ITreeNode rootNode, DBManager dbManager)
+    public Tree(DBManager dbManager)
     {
-        _rootNode = rootNode;
         _info = new TreeInfo(dbManager);
     }
 
@@ -83,6 +83,16 @@ public final class Tree implements ITree
         return _rootNode;
     }
 
+    /**
+     * Set the value of attributeSet field.
+     * @param attributeSet The attributeSet to set
+     */
+    public final void setAttributeSet(IAttributeSet attributeSet)
+    {
+        _attributeSet = attributeSet;
+        _info.setAttributeSetID(((AttributeSet) _attributeSet).getInfo().getId());
+    }
+
     public void setName(String name)
     {
         _info.setName(name);
@@ -95,5 +105,11 @@ public final class Tree implements ITree
     public final void setRootNode(ITreeNode rootNode)
     {
         _rootNode = rootNode;
+        _info.setRootNodeID(((TreeNode) _rootNode).getInfo().getId());
+    }
+
+    void addNode(TreeNode childNode)
+    {
+        _info.addNode(childNode.getInfo());
     }
 }
