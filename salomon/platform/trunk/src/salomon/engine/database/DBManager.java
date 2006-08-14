@@ -45,6 +45,8 @@ import salomon.util.gui.Utils;
  */
 public final class DBManager
 {
+    private static final Logger LOGGER = Logger.getLogger(DBManager.class);
+
     private Connection _connection;
 
     private DBMetaData _metaData;
@@ -164,6 +166,38 @@ public final class DBManager
         return _statement.execute(query);
     }
 
+    /**
+     * Method checks if given query return any result.
+     * 
+     * @param select query to be selected
+     * @return true if query returns anything, false otherwise
+     * @throws SQLException
+     */
+    public boolean existsSelect(SQLSelect select) throws SQLException
+    {
+        boolean exists = false;
+        String query = select.getQuery();
+        LOGGER.info("query = " + query); //$NON-NLS-1$
+        ResultSet resultSet = _statement.executeQuery(query);
+        exists = resultSet.next();
+        resultSet.close();
+        return exists;
+    }
+
+    public int generateID(String generator) throws SQLException
+    {
+        // selecting value of primary key
+        String autoIncrement = "SELECT GEN_ID(" + generator
+                + ", 1) FROM RDB$DATABASE";
+        LOGGER.debug("autoIncrement: " + autoIncrement);
+        ResultSet resultSet = _statement.executeQuery(autoIncrement);
+        resultSet.next();
+        int primaryKeyID = resultSet.getInt(1);
+        LOGGER.debug("primaryKeyID: " + primaryKeyID);
+        resultSet.close();
+        return primaryKeyID;
+    }
+
     public DatabaseMetaData getDatabaseMetaData() throws SQLException
     {
         return _connection.getMetaData();
@@ -264,16 +298,7 @@ public final class DBManager
     public int insert(SQLInsert insertObject, String primaryKey,
             String generator) throws SQLException
     {
-        // selecting value of primary key
-        String autoIncrement = "SELECT GEN_ID(" + generator
-                + ", 1) FROM RDB$DATABASE";
-        LOGGER.debug("autoIncrement: " + autoIncrement);
-        ResultSet resultSet = _statement.executeQuery(autoIncrement);
-        resultSet.next();
-        int primaryKeyID = resultSet.getInt(1);
-        LOGGER.debug("primaryKeyID: " + primaryKeyID);
-        resultSet.close();
-
+        int primaryKeyID = generateID(generator);
         // Inserting data
         // (primary key will be at the end of query, it's not nice
         // but doesn't requeire any changes in SQLInsert class
@@ -377,24 +402,6 @@ public final class DBManager
     }
 
     /**
-     * Method checks if given query return any result.
-     * 
-     * @param select query to be selected
-     * @return true if query returns anything, false otherwise
-     * @throws SQLException
-     */
-    public boolean existsSelect(SQLSelect select) throws SQLException
-    {
-        boolean exists = false;
-        String query = select.getQuery();
-        LOGGER.info("query = " + query); //$NON-NLS-1$
-        ResultSet resultSet = _statement.executeQuery(query);
-        exists = resultSet.next();
-        resultSet.close();
-        return exists;
-    }
-
-    /**
      * Updates record if exists in data base.
      * 
      * @param updateObject
@@ -430,6 +437,4 @@ public final class DBManager
 
         return foundID;
     }
-
-    private static final Logger LOGGER = Logger.getLogger(DBManager.class);
 }

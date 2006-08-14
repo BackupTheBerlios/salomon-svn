@@ -46,9 +46,6 @@ final class TreeInfo implements IInfo
 
     public static final String TABLE_NAME = "trees";
 
-    // TODO:
-    //    private int _attributeSetID;
-
     private static final Logger LOGGER = Logger.getLogger(TreeInfo.class);
 
     private int _attributeSetID;
@@ -207,7 +204,8 @@ final class TreeInfo implements IInfo
 
         update.addValue("solution_id", _solutionID);
         update.addValue("attributeset_id", _attributeSetID);
-        update.addValue("root_node_id", _rootNodeID);
+        // it must be performed after inserting nodes        
+        //        update.addValue("root_node_id", _rootNodeID);
 
         _lmDate = new Date(System.currentTimeMillis());
         update.addValue("lm_date", _lmDate);
@@ -220,11 +218,19 @@ final class TreeInfo implements IInfo
             throw new DBException("Cannot save!", e);
         }
 
+        // ensure that parent is always inserted before the child
+        _nodes = sortNodes(_nodes);
+
         // saving items
         for (TreeNodeInfo node : _nodes) {
             node.setTreeID(_treeID);
             node.save();
         }
+
+        // updating root node
+        update = new SQLUpdate(TABLE_NAME);
+        update.addValue("root_node_id", _rootNodeID);
+        update.addCondition("tree_id =", _treeID);
 
         return _treeID;
     }
@@ -277,8 +283,65 @@ final class TreeInfo implements IInfo
 
     void loadNodes(ResultSet resultSet) throws DBException, PlatformException
     {
-        TreeNodeInfo nodeInfo = new TreeNodeInfo(_dbManager);
+        TreeNodeInfo nodeInfo = new TreeNodeInfo(_dbManager, false);
         nodeInfo.load(resultSet);
-        _nodes.add(nodeInfo);
+        addNode(nodeInfo);
+    }
+
+    /**
+     * Returns child nodes for given list of parent nodes.
+     * The list of parent nodes is removed from list of all nodes after finding all children.
+     * 
+     * @param parentNodes list of parent nodes
+     * @param nodes list of all nodes
+     * @return list of parent nodes
+     */
+    private List<TreeNodeInfo> getChildNodes(List<TreeNodeInfo> parentNodes,
+            List<TreeNodeInfo> nodes)
+    {
+        List<TreeNodeInfo> childNodes = new LinkedList<TreeNodeInfo>();
+        for (TreeNodeInfo parentNode : parentNodes) {
+            for (TreeNodeInfo node : nodes) {
+                if (node.getParentNodeID() == parentNode.getId()) {
+                    childNodes.add(node);
+                }
+            }
+        }
+        // removing child nodes from nodes collection, they are unnecessary there
+        nodes.removeAll(childNodes);
+        return childNodes;
+    }
+
+    /**
+     * Method sorts list of nodes. It moves all parents before their children
+     * to ensure inserting them before children and don't break DB constraints (FK).
+     * 
+     * @param nodes
+     * @return
+     */
+    private List<TreeNodeInfo> sortNodes(List<TreeNodeInfo> nodes)
+    {
+        LinkedList<TreeNodeInfo> nodeList = new LinkedList<TreeNodeInfo>();
+        // looking for root node
+        List<TreeNodeInfo> parentNodes = new LinkedList<TreeNodeInfo>();
+        for (TreeNodeInfo node : nodes) {
+            if (node.getParentNodeID() == 0) {
+                parentNodes.add(node);
+            }
+        }
+
+        TreeNodeInfo rootNode = parentNodes.get(0);
+        // removing root node
+        nodes.remove(rootNode);
+        nodeList.add(rootNode);
+
+        while (!nodes.isEmpty()) {
+            List<TreeNodeInfo> childNodes = getChildNodes(parentNodes, nodes);
+            nodeList.addAll(childNodes);
+            parentNodes = childNodes;
+        }
+
+        // pointing to the proper list
+        return nodeList;
     }
 }

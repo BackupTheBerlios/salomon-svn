@@ -53,7 +53,7 @@ final class TreeNode implements ITreeNode
     {
         _tree = tree;
         _info = info;
-        setAttributeDescription(attributeDescription);        
+        setAttributeDescription(attributeDescription);
         _childEdges = new LinkedList<ITreeEdge>();
     }
 
@@ -62,6 +62,7 @@ final class TreeNode implements ITreeNode
         TreeEdge edge = new TreeEdge(this, childNode);
         edge.setValue(edgeValue);
         ((TreeNode) childNode).setParentEdge(edge);
+        ((TreeNode) childNode).getInfo().setParentNodeID(_info.getId());
         _childEdges.add(edge);
         _tree.addNode((TreeNode) childNode);
     }
@@ -122,7 +123,7 @@ final class TreeNode implements ITreeNode
             IAttributeDescription attributeDescription)
     {
         _attributeDescription = attributeDescription;
-        _info.setAttributeItemID(((AttributeDescription)_attributeDescription).getDescriptionID());
+        _info.setAttributeItemID(((AttributeDescription) _attributeDescription).getDescriptionID());
     }
 
     public void setLeafValue(String value)

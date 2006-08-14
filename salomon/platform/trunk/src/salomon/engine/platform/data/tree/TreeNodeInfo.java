@@ -61,10 +61,20 @@ final class TreeNodeInfo implements IInfo
 
     /**
      * @param dbManager
+     * @throws DBException 
      */
-    public TreeNodeInfo(DBManager dbManager)
+    public TreeNodeInfo(DBManager dbManager, boolean generateID)
+            throws DBException
     {
         _dbManager = dbManager;
+        if (generateID) {
+            try {
+                _nodeID = _dbManager.generateID(GEN_NAME);
+            } catch (SQLException e) {
+                LOGGER.fatal("", e);
+                throw new DBException(e.getLocalizedMessage());
+            }
+        }
     }
 
     /**
@@ -180,18 +190,17 @@ final class TreeNodeInfo implements IInfo
      */
     public int save() throws PlatformException, DBException
     {
-        // assuming, that old records has been deleted
+
         SQLInsert insert = new SQLInsert(TABLE_NAME);
+        insert.addValue("node_id", _nodeID);
         insert.addValue("tree_id", _treeID);
         insert.addValue("attribute_item_id", _attributeItemID);
         insert.addValue("parent_node_id", _parentNodeID);
         insert.addValue("parent_edge_value", _parentEdgeValue);
         insert.addValue("node_value", _nodeValue);
 
-        LOGGER.debug("insert: " + insert.getQuery());
-
         try {
-            _nodeID = _dbManager.insert(insert, "node_id", GEN_NAME);
+            _dbManager.insert(insert);
         } catch (SQLException e) {
             LOGGER.fatal("", e);
             throw new DBException("Cannot save item!", e);
@@ -258,11 +267,11 @@ final class TreeNodeInfo implements IInfo
     public String toString()
     {
         String value = "[node_id: " + _nodeID;
-        value += " ,tree_id: " + _treeID;
+        //        value += " ,tree_id: " + _treeID;
         value += " ,parent_id: " + _parentNodeID;
-        value += " ,attr_id: " + _attributeItemID;
-        value += " ,parent_edge: " + _parentEdgeValue;
-        value += " ,value: " + _nodeValue;
+        //        value += " ,attr_id: " + _attributeItemID;
+        //        value += " ,parent_edge: " + _parentEdgeValue;
+        //        value += " ,value: " + _nodeValue;
         value += "]";
         return value;
     }

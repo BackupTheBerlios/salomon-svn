@@ -105,7 +105,13 @@ final class Tree implements ITree
     public final void setRootNode(ITreeNode rootNode)
     {
         _rootNode = rootNode;
-        _info.setRootNodeID(((TreeNode) _rootNode).getInfo().getId());
+        TreeNodeInfo rootNodeInfo = ((TreeNode) _rootNode).getInfo();
+        // setting parent id for the root node
+        rootNodeInfo.setParentNodeID(0);
+        _info.setRootNodeID(rootNodeInfo.getId());
+
+        // adding the node to the tree
+        _info.addNode(rootNodeInfo);
     }
 
     void addNode(TreeNode childNode)

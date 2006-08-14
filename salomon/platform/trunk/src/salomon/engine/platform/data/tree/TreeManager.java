@@ -79,6 +79,7 @@ public final class TreeManager implements ITreeManager
     public void add(ITree tree) throws PlatformException
     {
         try {
+            // saving it in DB
             ((Tree) tree).getInfo().save();
             _dbManager.commit();
         } catch (Exception e) {
@@ -91,7 +92,8 @@ public final class TreeManager implements ITreeManager
     public ITreeNode createNode(ITree tree, IAttributeDescription description)
             throws PlatformException
     {
-        return new TreeNode((Tree) tree, description, new TreeNodeInfo(_dbManager));
+        return new TreeNode((Tree) tree, description, new TreeNodeInfo(
+                _dbManager, true));
     }
 
     public ITree createTree() throws PlatformException
@@ -161,7 +163,8 @@ public final class TreeManager implements ITreeManager
         // according to the sorting order, it is the first node in the list od nodes
         // it is removed to avoid complications while building tree
         TreeNodeInfo rootNodeInfo = nodeInfos.remove(0);
-        TreeNode rootNode = new TreeNode(tree, attributeMap.get(rootNodeInfo.getAttributeItemID()),
+        TreeNode rootNode = new TreeNode(tree,
+                attributeMap.get(rootNodeInfo.getAttributeItemID()),
                 rootNodeInfo);
         // setting root node for given tree
         tree.setRootNode(rootNode);
