@@ -184,6 +184,13 @@ public final class DBManager
         return exists;
     }
 
+    /**
+     * Method generates the ID using given generator.
+     * 
+     * @param generator generator name
+     * @return the ID generated using the generator
+     * @throws SQLException
+     */
     public int generateID(String generator) throws SQLException
     {
         // selecting value of primary key

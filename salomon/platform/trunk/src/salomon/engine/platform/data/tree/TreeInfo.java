@@ -30,7 +30,6 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import salomon.engine.database.DBManager;
-import salomon.engine.database.ExternalDBManager;
 import salomon.engine.database.queries.SQLDelete;
 import salomon.engine.database.queries.SQLUpdate;
 import salomon.platform.IInfo;
@@ -53,8 +52,6 @@ final class TreeInfo implements IInfo
     private Date _cDate;
 
     private DBManager _dbManager;
-
-    private ExternalDBManager _externalDBManager;
 
     private String _info;
 
