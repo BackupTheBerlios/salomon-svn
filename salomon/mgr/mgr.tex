@@ -1,0 +1,89 @@
+\documentclass{mgragh} % opcje: robocza,man
+\usepackage[cp1250]{inputenc}  % opcja latin2 dla Linuxa lub cp1250 dla Windows
+\usepackage[polish]{babel}
+\usepackage[OT4]{fontenc}
+\usepackage{polski}
+%%
+%%
+\makeindex 
+% \includeonly{Mgr_pom,Mgr_wst,Mgr_roz1,Mgr_roz2,Mgr_lit}
+
+\bibliographystyle{ddabbrv}
+%\nocite{*}
+
+\begin{document}
+%%
+%%
+%% ======== METRYCZKA PRACY ========
+\title{O budyniu tyczkowym}
+\author{Nikodem }
+\promotor{prof. dr hab. Kongruencja Kowariantna}
+\nralbumu{137}
+\uczelniaNazwa{Akademia Górniczo-Hutnicza}
+\uczelniaImienia{im. Stanis³awa Staszica}
+\wydzial{Wydzia³ Monterstwa Sprytnego}
+\kierunek{Atryku³y biurowe}
+\specjalnosc{Skrêcanie d³ugopisów}
+\rok{2006}
+
+\maketitle
+%%
+\slowakluczowe{maciejka, nafta, serek}
+
+%\keywords{a,b,c,d,e,f,g,h} 
+%%
+%%
+%% ======== NASZE MAKRA ========
+%%
+\input{macros}
+%%
+%% ======== SPIS TREŒCI ========
+%%
+\tableofcontents
+%%
+%% ======== STRESZCZENIE PRACY (POLSKIE) ========
+\begin{streszczenie}
+%%
+\input{abstract}
+%%
+\end{streszczenie}
+%%
+%% ======== G£ÓWNA CZÊŒÆ PRACY ========
+%%
+%% ==== WSTÊP ====
+%%
+\begin{wstep}
+%%
+\input{introduction}
+%%
+\end{wstep}
+%%
+%% ==== ROZDZIA£ 1 ====
+%%
+%% A tutaj tak dla przyk³adu jest \part
+\part{Musztarda kotwiczna}
+
+\chapter{Wprowadzenie do przypraw walcowych}
+%%
+% \input{Mgr_roz1}
+%%
+\mgrclosechapter
+%%
+%% ==== ROZDZIA£ 2 ====
+%%
+% \input{Mgr_roz2}
+%%
+%%
+%% ======== DODATKI ========
+%%
+%%
+%% ======== BIBLIOGRAFIA ========
+%%
+\input{bibliography}
+%%
+%% ======== DODATKOWE ELEMENTY PRACY (nieobowi¹zkowe) ======== 
+%%
+%\printindex  
+%%
+
+\end{document}
