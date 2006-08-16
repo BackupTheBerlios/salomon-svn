@@ -1,0 +1,83 @@
+\section{Indukcyjne bazy danych}
+
+% przetlumaczone z pdf-a
+Indukcyjne bazy danych œciœle integruj¹ bazy danych z konepcj¹ \emph{data mining}.
+G³ówn¹ ich ideê stanowi to, ¿e zarówno dane jak i wzorce s¹ przetwarzane 
+w ten sam sposób, a indukcyjny jêzyk zapytañ pozwala u¿ytkownikowi 
+na zadawanie zapytañ i manipulacjê danymi wzorcami.
+
+Od pocz¹tku istnienia idei data miningu zdawano sobie sprawê,
+¿e proces ich przetwarzania powinien byæ wspierany przez technologiê baz danych.
+W ostatnich latach idea ta zosta³a sformalizowana jako koncepcja
+\emph{indukcyjnych baz danych}. 
+
+%cytat z artykulu
+Integracja technologii baz danych z nowoczesnymi metodami
+indukcyjnego generowania wiedzy jest naturalnym kierunkiem rozwoju
+systemów bazodanowych. Systemy nazywane indukcyjnymi bazami
+danych potrafi¹ odpowiedzieæ nie tylko na pytania, dla których
+odpowiedŸ znajduje siê w bazie danych, ale równie¿ na pytania,
+które wymagaj¹ zsyntetyzowania i zastosowania wiedzy,
+wygenerowanej przez indukcyjne wnioskowanie z faktów z bazy danych
+i wczeœniejszej wiedzy~\cite{bib3}. Schemat typowej indukcyjnej
+bazy danych przedstawiony jest na rysunku~\ref{fig:inddb}.
+
+%\begin{figure}[!ht]
+%    \centering
+%        \includegraphics[width=\linewidth]{img/knowledge_mining.png}
+%    \caption{Indukcyjna baza danych~\cite{bib2}}
+%    \label{fig:inddb}
+%\end{figure}
+
+Jak zosta³o ju¿ wy¿ej wspomniane, indukcyjne bazy danych przechowuj¹ nie tylko dane
+ale równie¿ wzorce. Mo¿na za³o¿yæ, ¿e zarówno dane, jak i wzorce stanowi¹ zbiory zbiorów.
+To za³o¿enie wynika z analogii do tradycyjnych, relacyjnych baz danych. 
+Relacyjna baza danych zawiera zbiór relacji, które to stanowi¹ zbiory \emph{tupli}, 
+a wiêc mo¿na powiedzieæ, ze stanowi zbiór zbiorów.
+
+W przypadku baz indukcyjnych rozró¿nia siê natomiast zbiór trenuj¹cy od testuj¹cego, 
+zbiór poprawnie zaklasyfikowanych przyk³adów od zaklasyfikowanych b³êdnie itp.
+ 
+To samo, co tyczy siê danych, odnosi siê równie¿ do wzorców.
+I rzeczywiœcie -- podczas procesu przetwarzania wiedzy mo¿na pracowaæ 
+na ró¿nych zbiorach wzorców.  Zbiory te mog¹ odnosiæ siê do odmiennych hipotez 
+stworzonych na podstawie ró¿nych zbiorów danych,
+czy ró¿nych ustawieñ parametrów algortymów je tworz¹cych.
+
+%jezyk
+Jednym z zasadniczych powodów, które przyczyni³y siê do sukcesu relacyjnych baz danych
+jest opracowanie uniwersalnego jêzyka zapytañ, który podobnie jak sama algebra relacyjna
+dostarcza du¿ych mo¿liwoœci przy jego relatywnej prostocie.
+
+Podobnymi cechami powinien wyró¿niaæ siê jêzyk zapytañ do indukcyjnych baz danych.
+
+Rezultatem zapytania wykonanego w takim jêzyku jest albo zbiór wzorców, albo zbiór danych.
+Jest to tak zwana \emph{w³asnoœæ zamkniêcia} (\emph{ ang. closure property}).
+Stanowi ona analogiê do rezultatów zapytania do relacyjnych baz danych, gdzie jest nim zawsze relacja.
+Rozró¿nianie miêdzy zbiorami wzorców i zbiorami danych powoduje, ¿e potrzebne s¹ dwa rodzaje zapytañ:
+te które generuj¹ zbiory wzorców i zbiory danych. Zapytania do jednoczeœnie obu typów zbiorów nazywane
+s¹ czasami \emph{zapytaniami krzy¿uj¹cymi} (\emph{ang. corss-over operations}).
+
+% przetlumaczone z pdf-a
+%We will assume that the result of an inductive query is either a
+%pattern set or a data set. This assumption guarantees the
+%so-called closure property [28; 6]. The closure property is
+%again justi¯ed by analogy with relational databases, where
+%the result of a query is always a relation; one can argue that
+%the reason for the success of relational algebra was due to
+%the closure property and not to its inherent strength.
+%Given that we distinguish data sets from pattern sets, we
+%need two types of queries: those that generate data sets and
+%those that generate pattern sets. Queries that start from
+%both data sets as well as pattern sets are sometimes called
+%cross-over operations [6].
+
+
+%wnioskowanie
+%A theory of inductive databases can only be useful if it o®ers
+%the possibility to reason about data mining and its processes.
+%This section explores the possibilities of our logical view for
+%reasoning about query evaluation and optimization. Such
+%reasoning processes must start from logical axioms.
+
+
