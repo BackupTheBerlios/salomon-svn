@@ -21,7 +21,6 @@
 
 package salomon.platform.data.tree;
 
-import salomon.platform.data.attribute.description.IAttributeDescription;
 import salomon.platform.exception.PlatformException;
 
 /**
@@ -44,9 +43,6 @@ public interface ITreeManager
      * Dodaje drzewo do bazy danych
      */
     void add(ITree tree) throws PlatformException;
-
-    ITreeNode createNode(ITree tree, IAttributeDescription description)
-            throws PlatformException;
 
     /**
      * Zwraca drzewa zwiazane z danym solutionem

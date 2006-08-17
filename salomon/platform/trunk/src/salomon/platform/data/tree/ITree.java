@@ -23,6 +23,8 @@ package salomon.platform.data.tree;
 
 import salomon.platform.data.attribute.IAttribute;
 import salomon.platform.data.attribute.IAttributeSet;
+import salomon.platform.data.attribute.description.IAttributeDescription;
+import salomon.platform.exception.PlatformException;
 
 /**
  *
@@ -36,6 +38,10 @@ public interface ITree
     void setName(String name);
 
     ITreeNode getRootNode();
-    
+
     IAttributeSet getAttributeSet();
+
+    ITreeNode createNode(IAttributeDescription description)
+            throws PlatformException;
+
 }

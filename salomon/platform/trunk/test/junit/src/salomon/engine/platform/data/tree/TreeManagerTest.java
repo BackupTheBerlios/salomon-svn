@@ -76,15 +76,15 @@ public class TreeManagerTest extends TestCase
         
         for (int i = 0; i < descriptions.length; ++i) {
             if (descriptions[i].getName().equals("attr_age")) {
-                ageNode = _treeManager.createNode(tree, descriptions[i]);
+                ageNode = tree.createNode(descriptions[i]);
             } else if (descriptions[i].getName().equals("attr_education")) {
-                eduNode = _treeManager.createNode(tree, descriptions[i]);
+                eduNode = tree.createNode(descriptions[i]);
             } else if (descriptions[i].getName().equals("attr_assigned")) {
-                assignedYes = _treeManager.createNode(tree, descriptions[i]);
+                assignedYes = tree.createNode(descriptions[i]);
                 ((TreeNode)assignedYes).setLeafValue("Y");
-                assignedNo = _treeManager.createNode(tree, descriptions[i]);
+                assignedNo = tree.createNode(descriptions[i]);
                 ((TreeNode)assignedNo).setLeafValue("N");
-                assignedNo2 = _treeManager.createNode(tree, descriptions[i]);
+                assignedNo2 = tree.createNode(descriptions[i]);
                 ((TreeNode)assignedNo2).setLeafValue("N");
             }
         }

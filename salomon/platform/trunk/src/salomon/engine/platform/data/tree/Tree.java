@@ -25,8 +25,10 @@ import salomon.engine.database.DBManager;
 import salomon.engine.platform.data.attribute.AttributeSet;
 import salomon.platform.data.attribute.IAttribute;
 import salomon.platform.data.attribute.IAttributeSet;
+import salomon.platform.data.attribute.description.IAttributeDescription;
 import salomon.platform.data.tree.ITree;
 import salomon.platform.data.tree.ITreeNode;
+import salomon.platform.exception.PlatformException;
 
 /**
  *
@@ -34,6 +36,8 @@ import salomon.platform.data.tree.ITreeNode;
 final class Tree implements ITree
 {
     private IAttributeSet _attributeSet;
+
+    private DBManager _dbManager;
 
     private TreeInfo _info;
 
@@ -44,7 +48,15 @@ final class Tree implements ITree
      */
     public Tree(DBManager dbManager)
     {
-        _info = new TreeInfo(dbManager);
+        _dbManager = dbManager;
+        _info = new TreeInfo(_dbManager);
+    }
+
+    public ITreeNode createNode(IAttributeDescription description)
+            throws PlatformException
+    {
+        return new TreeNode(this, description, new TreeNodeInfo(_dbManager,
+                true));
     }
 
     public ITreeNode evaluate(IAttribute[] attribute)

@@ -41,10 +41,8 @@ import salomon.engine.platform.data.attribute.AttributeDescription;
 import salomon.engine.platform.data.attribute.AttributeManager;
 import salomon.engine.platform.data.attribute.AttributeSet;
 import salomon.engine.solution.ShortSolutionInfo;
-import salomon.platform.data.attribute.description.IAttributeDescription;
 import salomon.platform.data.tree.ITree;
 import salomon.platform.data.tree.ITreeManager;
-import salomon.platform.data.tree.ITreeNode;
 import salomon.platform.exception.DBException;
 import salomon.platform.exception.PlatformException;
 
@@ -87,13 +85,6 @@ public final class TreeManager implements ITreeManager
             LOGGER.fatal("", e);
             throw new DBException(e);
         }
-    }
-
-    public ITreeNode createNode(ITree tree, IAttributeDescription description)
-            throws PlatformException
-    {
-        return new TreeNode((Tree) tree, description, new TreeNodeInfo(
-                _dbManager, true));
     }
 
     public ITree createTree() throws PlatformException
