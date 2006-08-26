@@ -40,10 +40,8 @@ import salomon.platform.data.dataset.IDataSetManager;
 import salomon.platform.data.tree.ITree;
 import salomon.platform.data.tree.ITreeManager;
 import salomon.plugin.*;
-import salomon.util.weka.AttributeConverter;
 import salomon.util.weka.TreeConverter;
 import weka.classifiers.Classifier;
-import weka.classifiers.trees.J48;
 import weka.core.Drawable;
 import weka.core.Instances;
 
@@ -79,13 +77,17 @@ public final class WekaTreeGeneratorPlugin implements IPlugin
             Classifier classifier = Classifier.forName("weka.classifiers.trees." + algorithmName, null);
 
             ITreeManager treeManager = engine.getTreeManager();
-            ITree tree = treeManager.createTree();
             String treeName = treeSettings.getTreeName();
-            tree.setName(treeName);
-            //CORRECT TreeConverter.convert(tree, (Drawable) classifier);
+            ITree tree = null;//TODO fixme: treeManager.getTree(treeName);
+            if (tree == null) {
+                tree = treeManager.createTree();
+                tree.setName(treeName);
+            }
+            classifier.buildClassifier(instances);
+
+            TreeConverter.convert(tree, attributeSet, (Drawable) classifier);
             treeManager.add(tree);
 
-            classifier.buildClassifier(instances);
             result.setOutput(classifier.toString());
         } catch (Exception e) {
             LOGGER.error("", e);
