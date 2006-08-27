@@ -1,0 +1,142 @@
+\section{Interfejs u¿ytkownika}
+
+\subsection{Zarz¹dzanie obiektami Solution}
+
+Uruchomienie programu rozpoczyna siê od wyboru lub zdefiniowaniu odpowiedniego obiektu \emph{Solution}.
+Okreœla on po³o¿enie bazy danych, na której operowaæ bêd¹ wtyczki. Bez jego okreœlenia praca z systemem nie jest mo¿liwa.
+
+\begin{figure}[H]
+	\centering
+		%\includegraphics[width=0.40\textwidth]{img/screenshot/choose_solution.png}
+	\caption{Wybór Solutiona przy uruchomieniu programu}
+	\label{fig:choose_solution}
+\end{figure}
+
+Po wybraniu przycisku \emph{New} pojawia siê okno do definiowania nowego obiektu \emph{Solution}. Pozwala ono na okreœlenie po³o¿enia pliku z baz¹ danych oraz parametrów po³¹czenia. Po ich zdefiniowaniu mo¿na przetestowaæ po³¹czenie za pomoc¹ przycisku \emph{Test connection}.
+
+\begin{figure}[H]
+	\centering
+		%\includegraphics[width=0.40\textwidth]{img/screenshot/edit_solution.png}
+	\caption{Definiowanie nowego obiektu Solution}
+	\label{fig:edit_solution}
+\end{figure}
+
+Tworzenie i edycja aktualnego obiektu \emph{Solution} mo¿liwa jest tak¿e za pomoc¹ odpowiednich opcji z menu \emph{Solutions} oraz za pomoc¹ przycisków na toolbarze.
+
+Po wybraniu obiektu \emph{Solution} pokazuje siê g³ówne okno programu. 
+Po lewej stronie znajduje siê lista dostêpnych wtyczek, po prawej jest panel do definiowania zadañ.
+Na górze umieszczony jest toolbar do szybkiego wykonywania operacji na obiekcie \emph{Solution}.
+Wiêkszoœæ opcji dostêpna jest z menu lub menu kontekstowych dostêpnych na po klikniêciu prawym przyciskiem myszy na panelu z wtyczkami lub zadaniami.
+
+Na dole okna, w pasku statusu, wyœwietlane s¹ informacje o aktualnie wybranym obiekcie \emph{Solution} i projekcie.
+
+\begin{figure}[H]
+	\centering
+		%\includegraphics[width=0.90\textwidth]{img/screenshot/main_window.png}
+	\caption{G³ówne okno programu}
+	\label{fig:main_window}
+\end{figure}
+
+\subsection{Zarz¹dzanie projektami}
+
+Projekty s¹ obiektami grupuj¹cymi zadania. Umo¿liwiaj¹ zdefiniowanie zadañ, które nastêpnie mog¹ zostaæ zapisane wraz z konfiguracj¹, a póŸniej za³adowanie ponownie.
+
+Nowy projekt tworzony jest automatycznie po uruchomieniu programu. Domyœlnie nie ma on ¿adnej nazwy, co mo¿e zostaæ zmodyfikowane poprzez opcjê \emph{Solutions} $\rightarrow$ \emph{Projects} $\rightarrow$ \emph{Edit}. Po jej wybraniu mo¿liwa jest zmiana podstawowych w³aœciwoœci projektu, czyli jego nazwy i informacji dodatkowych.
+
+\begin{figure}[H]
+	\centering
+		%\includegraphics[width=0.90\textwidth]{img/screenshot/edit_project.png}
+	\caption{Edycja ustawieñ projektu}
+	\label{fig:edit_project}
+\end{figure}
+
+Po zapisaniu projektu za pomoc¹ opcji \emph{Solutions} $\rightarrow$ \emph{Projects} $\rightarrow$ \emph{Save} mo¿liwe jest jego ponowne za³adowanie. Dziêki temu mo¿na zdefiniowaæ ró¿ne listy zadañ i wykonywaæ je wielokrotnie, bez potrzeby ich ponownego tworzenia i konfiguracji. 
+
+Do zapisania projektu s³u¿y opcja \emph{Solutions} $\rightarrow$ \emph{Projects} $\rightarrow$ \emph{Open}.
+Po jej wybraniu pojawia siê okno z list¹ dostêpnych projektów, z której nale¿y wybraæ projekt do za³adowania.
+Projekt zostanie za³adowany wraz z zadaniami, które zosta³y w nim zdefiniowane oraz z ich konfiguracj¹.
+
+\begin{figure}[H]
+	\centering
+		%\includegraphics[width=0.90\textwidth]{img/screenshot/open_project.png}
+	\caption{Okno z wyborem projektu do za³adowania}
+	\label{fig:open_project}
+\end{figure}
+
+\subsection{Zarz¹dzanie wtyczkami}
+
+Lista wtyczek tworzona jest na podstawie odpowiednich wpisów w bazie danych. 
+Mo¿na j¹ jednak  modyfikowaæ -- dodawaæ, usuwaæ lub modyfikowaæ dane wtyczki. 
+S³u¿¹ do tego odpowiednie opcje z menu kontekstowego wywo³ywanego dla wtyczek. 
+
+Aby dodaæ now¹ wtyczkê nale¿y wybraæ opcjê \emph{Add plugin}. Po jej wybraniu pojawia siê okno, w którym nale¿y zdefiniowaæ nazwê, pod jak¹ wtyczka bêdzie identyfikowana w systemie oraz wskazañ lokalizacjê pliku j¹ reprezentuj¹cego.
+
+\begin{figure}[H]
+	\centering
+		%\includegraphics[width=0.90\textwidth]{img/screenshot/add_plugin.png}
+	\caption{Dodawanie nowej wtyczki}
+	\label{fig:add_plugin}
+\end{figure}
+
+Lokalizacja pliku mo¿e byæ lokalna lub zdalna, podawana w postaci \emph{URL-a}. To, w jaki sposób interpretowana jest lokalizacja zale¿y od zaznaczenia \emph{File} lub \emph{URL}. Prawid³owe zdefiniowanie lokalizacji jest konieczne, by wtyczka mog³a zostaæ poprawnie za³adowana.
+
+
+\subsection{Zarz¹dzanie zadaniami}
+
+Zadania reprezentowane s¹ w formie grafu -- poszczególne wêz³y odpowiadaj¹ zadaniom a krawêdzie je ³¹cz¹ce okreœlaj¹ kolejnoœæ ich wykonania.
+
+W obecnej wersji systemu zaimplementowane jest jedynie liniowe przetwarzanie zadañ, w przysz³oœci nie bêdzie ju¿ tego ograniczenia i kolejnoœæ wykonywania zadañ bêdzie mog³a byæ dowolna, zadania bêd¹ mog³y tak¿e byæ wykonywane równolegle.
+
+Zadanie mo¿e zostaæ utworzone poprzez jednokrotne klikniêcie na panelu z zdaniami, lub poprzez wybór z menu kontekstowego opcji \emph{Create Task}. W obu przypadkach pojawia siê okno umo¿liwiaj¹ce ustawienie podstawowych parametrów zadania, a wiêc okreœlenia jego nazwy, wtyczki, która u¿yta bêdzie to przetwarzania oraz dodatkowych informacji. Nieaktywne pola zawieraj¹ informacje administracyjne i nie mog¹ byæ zmieniane przez u¿ytkownika.
+
+\begin{figure}[H]
+	\centering
+		%\includegraphics[width=0.90\textwidth]{img/screenshot/edit_task.png}
+	\caption{Definiowanie zadania}
+	\label{fig:edit_task}
+\end{figure}
+
+Po zdefiniowaniu zadania mo¿na skonfigurowaæ parametry algorytmu, który ma zostaæ wykonany w ramach danego zadania.
+W tym celu nale¿y wybraæ z menu kontekstowego wywo³anego na wêŸle reprezentuj¹cym dane zadanie opcjê \emph{Show Settings}.
+Po jej wybraniu pojawia siê okno umo¿liwiaj¹ce konfiguracjê wtyczki. Wygl¹d tego okna zale¿y od danej wtyczki i od parametrów które mo¿na dla niej ustawiæ.
+
+\begin{figure}[H]
+	\centering
+		%\includegraphics[width=0.90\textwidth]{img/screenshot/show_settings.png}
+	\caption{Przyk³adowe okno konfiguracyjne dla wtyczki}
+	\label{fig:show_settings}
+\end{figure}
+
+Po skonfigurowaniu zadañ mo¿na uruchomiæ ich przetwarzanie. S³u¿y do tego przycisk ze strza³k¹ z prawej strony panelu konfiguracyjnego zadañ. Po przetworzeniu zadañ mo¿na obejrzeæ rezultaty ich wykonania. S³u¿y do tego opcja \emph{Show Result} z menu kontekstowego dla ka¿dego zadania. Podobnie jak w przypadku ustawieñ, tak¿e i wygl¹d tego okna zale¿y od danej wtyczki.
+
+
+\subsection{Administracyjne}
+
+Opcje w menu administracyjnym pozwalaj¹ na przeprowadzenie zaawansowanych operacji.
+
+\subsubsection{Przegl¹danie obiektów}
+
+Wybór jednej z opcji z menu \emph{Tools} $\rightarrow$ \emph{<nazwa obiektu>} pozwala przegl¹danie poszczególnych obiektów w takiej postaci, w jakiej zapisane s¹ w bazie danych. Po jej wybraniu pojawia siê okno umo¿liwiaj¹ce na wyszukiwanie poszczególnych obiektów w oparciu o filtry, ograniczaj¹ce liczbê zwracanych rezultatów. Podczas wyszukiwania mo¿na u¿ywaæ \emph{metaznaków} (\%).
+
+\begin{figure}[H]
+	\centering
+		%\includegraphics[width=0.90\textwidth]{img/screenshot/search.png}
+	\caption{Wyszukiwanie obiektów}
+	\label{fig:search}
+\end{figure}
+
+\subsubsection{SQL Console}
+
+Do bardziej zaawansowanych operacji s³u¿y opcja \emph{Tools} $\rightarrow$ \emph{SQL Console}.
+Po jej wybraniu pojawia siê konsola, w której mo¿liwe jest wprowadzanie dowolnych zapytañ oraz operacji w jêzyku \emph{SQL}. Po wprowadzeniu zapytania jego wykonanie nastêpuje po nacœniêciu przycisku \emph{Execute} lub kombinacji klawiszy \emph{Alt} $+$ \emph{Enter}.
+
+Konsola obs³uguje transakcje (przyciski \emph{Commit} i \emph{Rollback}), zachowuje tak¿e historiê ostatnio wykonanych operacji, po której mo¿na poruszaæ siê za pomoc¹ przycisków przedstawiaj¹cych strza³ki.
+
+\begin{figure}[H]
+	\centering
+		%\includegraphics[width=0.90\textwidth]{img/screenshot/sqlconsole.png}
+	\caption{SQL Console}
+	\label{fig:sqlconsole}
+\end{figure}
+
+
