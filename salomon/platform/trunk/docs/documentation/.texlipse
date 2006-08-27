@@ -1,0 +1,13 @@
+#TeXlipse project settings
+#Wed Aug 16 19:13:38 CEST 2006
+builderNum=2
+outputDir=
+makeIndSty=
+bibrefDir=
+outputFormat=pdf
+tempDir=tmp
+mainTexFile=salomon.tex
+outputFile=salomon.pdf
+langSpell=pl
+markDer=true
+srcDir=
