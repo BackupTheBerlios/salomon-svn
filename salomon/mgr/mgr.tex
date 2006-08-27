@@ -1,12 +1,13 @@
-\documentclass{article} % opcje: robocza,man
-%\documentclass{mgragh} % opcje: robocza,man
+%\documentclass{article} % opcje: robocza,man
+\documentclass{mgragh} % opcje: robocza,man
 \usepackage[cp1250]{inputenc}  % opcja latin2 dla Linuxa lub cp1250 dla Windows
 \usepackage[polish]{babel}
 \usepackage[OT4]{fontenc}
 \usepackage{polski}
-\usepackage{graphicx}
+%\usepackage{graphicx}
 \usepackage[urlcolor=blue, colorlinks=true, bookmarks=true, bookmarksnumbered=true]{hyperref}
 
+\usepackage{epsfig}
 
 
 %%
@@ -25,46 +26,46 @@
 \title{Komponentowa architektura indukcyjnej bazy danych jako platformy uczenia
 maszynowego}
 \author{Nikodem Jura, Krzysztof Rajda}
-%\promotor{dr hab. in¿. Marek Kisiel-Dorohinicki}
-%\nralbumu{11957}
-%\uczelniaNazwa{Akademia Górniczo-Hutnicza}
-%\uczelniaImienia{im. Stanis³awa Staszica}
-%\wydzial{Elektroniki, Automatyki, Informatyki i Elektrotechniki}
-%\kierunek{Informatyka}
-%\specjalnosc{In¿ynieria systemów informatycznych i baz danych}
-%\rok{2006}
+\promotor{dr hab. in¿. Marek Kisiel-Dorohinicki}
+\nralbumu{11957}
+\uczelniaNazwa{Akademia Górniczo-Hutnicza}
+\uczelniaImienia{im. Stanis³awa Staszica}
+\wydzial{Elektroniki, Automatyki, Informatyki i Elektrotechniki}
+\kierunek{Informatyka}
+\specjalnosc{In¿ynieria systemów informatycznych i baz danych}
+\rok{2006}
 
-\maketitle
+%\maketitle
 %%
-%\slowakluczowe{}
+\slowakluczowe{}
 
-%\keywords{a,b,c,d,e,f,g,h} 
+\keywords{a,b,c,d,e,f,g,h} 
 %%
 %%
 %% ======== NASZE MAKRA ========
 %%
-%\input{macros}
+\input{macros}
 %%
 %% ======== SPIS TREŒCI ========
 %%
 \tableofcontents
 %%
 %% ======== STRESZCZENIE PRACY (POLSKIE) ========
-%\begin{streszczenie}
+\begin{streszczenie}
 %%
 \input{abstract}
 %%
-%\end{streszczenie}
+\end{streszczenie}
 %%
 %% ======== G£ÓWNA CZÊŒÆ PRACY ========
 %%
 %% ==== WSTÊP ====
 %%
-%\begin{wstep}
+\begin{wstep}
 %%
 \input{introduction}
 %%
-%\end{wstep}
+\end{wstep}
 %%
 %% ==== ROZDZIA£ 1 ====
 %%
@@ -72,14 +73,14 @@ maszynowego}
 \part{Wprowadzenie}
 
 %%
-%\chapter{Uczenie maszynowe}
+\chapter{Uczenie maszynowe}
 \input{machine_learning}
 \input{algorithms}
 
-%\chapter{Indukcyjne bazy danych}
+\chapter{Indukcyjne bazy danych}
 \input{ind_databases}
 
-%\chapter{Opis systemu}
+\chapter{Opis systemu}
 \input{salomon/intro}
 \input{salomon/concepts}
 \input{salomon/functionality}
@@ -90,14 +91,14 @@ maszynowego}
 \input{salomon/ui}
 \input{salomon/production}
 
-%\chapter{Eksperyment}
+\chapter{Eksperyment}
 
 %%
-%\mgrclosechapter
+\mgrclosechapter
 %%
 %% ==== ROZDZIA£ 2 ====
 %%
-% \input{Mgr_roz2}
+%\input{Mgr_roz2}
 %%
 %%
 %% ======== DODATKI ========
@@ -109,7 +110,7 @@ maszynowego}
 %%
 %% ======== DODATKOWE ELEMENTY PRACY (nieobowi¹zkowe) ======== 
 %%
-%\printindex  
+\printindex  
 %%
 
 \end{document}
