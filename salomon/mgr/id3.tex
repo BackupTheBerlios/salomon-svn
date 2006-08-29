@@ -50,14 +50,19 @@ Stosunek $p(\frac{d_i}{a_j})$ oznacza prawdopodobieñstwo, ¿e zachodzi $d_i$ pod 
 
 Teoria informacji definiuje pojêcie \emph{entropii}.
 
-%TODO wzorek
+\[
+	E = -\sum_{i=1}^{n} p(\frac{d_i}{a_j})log_{2}p(\frac{d_i}{a_j})
+\]
 
 Wyra¿enie to okreœla entropiê wzlgêdem atrybutu decyzyjnego D dla konkretnej
 wartoœci atrybutu aj. 
 
 Œrednia entropia wyra¿ona wzorem:
 
-%TODO: wzorek Esr = \ldots
+\[
+	E_{sr} = -\sum_{j=1}^{m} p(a_j) \sum_{i=1}^{n}
+	p(\frac{d_i}{a_j})log_{2}p(\frac{d_i}{a_j}) 
+\]
 
 oznacza entropiê atrybutu $A$ w stosunku do atrybutu decyzyjnego $D$.
 
