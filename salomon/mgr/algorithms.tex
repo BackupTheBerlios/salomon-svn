@@ -97,6 +97,20 @@ roœnie iloœæ niezale¿nych zmiennych.
 
 \subsection{Omówienie algorytmów}
 
-\subsubsection{ID3}
+\emph{ID3} i \emph{C4.5} to algorytmy wprowadzone przez \emph{J. Ross Quinlan'a}
+do tworzenia na podstawie danych indukcyjnych modeli klasyfikuj¹cych, zwanych tak¿e
+drzewami decyzyjnymi. 
 
-\subsubsection{C4.5}
+Jako wejœcie otrzymuj¹ one zbiór rekordów o jednakowej strukturze, sk³adaj¹cy siê
+z pewnej liczby par atrybut-wartoœæ. Jeden z tych atrybutów reprezentuje
+tzw. kategoriê rekordu, jest te¿ okreœlany mianem atrybutu decyzyjnego.
+
+Celem algorytmów jest stworzenie drzewa, które na podstawie wartoœci
+pozosta³ych atrybutów okreœli wartoœæ atrybutu decyzyjnego.
+Zwykle atrybut decyzyjny przyjmuje wartoœci logiczne \emph{(prawda, fa³sz)}, 
+\emph{(sukces/pora¿ka)} lub podobne. W ka¿dym przypadku jedna z wartoœci
+atrybutu oznacza pora¿kê.
+
+\input{id3}
+
+\input{c45}
