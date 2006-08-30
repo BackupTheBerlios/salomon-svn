@@ -21,6 +21,7 @@
 
 package salomon.engine.platform.data.attribute;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -33,6 +34,8 @@ import salomon.platform.exception.PlatformException;
 public class EnumAttributeDescription extends AttributeDescription
         implements IEnumAttributeDescription
 {
+
+    private static final String SEPARATOR = ";";
 
     private Set _possibleValuesSet = new HashSet();
 
@@ -104,8 +107,33 @@ public class EnumAttributeDescription extends AttributeDescription
 
     public String[] getValues()
     {
-        throw new UnsupportedOperationException(
-                "Method EnumAttributeDescription.getValues() not implemented yet!");
+        return (String[]) _possibleValuesSet.toArray(new String[_possibleValuesSet.size()]);
+    }
+
+    public void parseValues(String values)
+    {
+        _possibleValuesSet.addAll(Arrays.asList(values.split(SEPARATOR)));
+    }
+
+    @Override
+    public String toString()
+    {
+        return super.toString() + "(" + valuesToString() + ")";
+    }
+
+    /**
+     * FIXME: workaround
+     * 
+     * @return
+     */
+    public String valuesToString()
+    {
+        String[] values = getValues();
+        String valuesString = values[0];
+        for (int i = 1; i < values.length; ++i) {
+            valuesString += SEPARATOR + values[i];
+        }
+        return valuesString;
     }
 
 }

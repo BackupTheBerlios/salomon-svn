@@ -25,15 +25,22 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedList;
 
+import org.apache.log4j.Logger;
+
 import salomon.engine.database.DBManager;
+import salomon.engine.database.queries.SQLSelect;
+import salomon.platform.data.IColumn;
 import salomon.platform.data.IMetaData;
 import salomon.platform.data.ITable;
+import salomon.platform.exception.DBException;
 
 /**
  * 
  */
 public final class DBMetaData implements IMetaData
 {
+    private static final Logger LOGGER = Logger.getLogger(DBMetaData.class);
+
     private DBManager _manager;
 
     private DBTable[] _tables;
@@ -41,6 +48,69 @@ public final class DBMetaData implements IMetaData
     public DBMetaData(DBManager manager)
     {
         _manager = manager;
+    }
+
+    /**
+     * Returns distinct values for given column.
+     * 
+     * FIXME: it's a workaround for attribute values choosing!
+     * 
+     * @param column
+     * @return array of distinct values for the given column
+     * @throws DBException 
+     */
+    public String[] getDistinctValues(IColumn column) throws DBException
+    {
+        SQLSelect select = new SQLSelect();
+        select.addTable(column.getTable().getName());
+        select.addColumn("DISTINCT " + column.getName());
+        ResultSet resultSet = null;
+        String[] values = null;
+        try {
+            resultSet = _manager.select(select);
+
+            LinkedList<Object> valuesList = new LinkedList<Object>();
+            while (resultSet.next()) {
+                valuesList.add(resultSet.getObject(1).toString());
+            }
+            resultSet.close();
+
+            // filling values array            
+            values = valuesList.toArray(new String[valuesList.size()]);
+
+        } catch (SQLException e) {
+            LOGGER.fatal("", e);
+            throw new DBException(e.getLocalizedMessage());
+        } finally {
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (SQLException e) {
+                    LOGGER.fatal("", e);
+                    throw new DBException(e.getLocalizedMessage());
+                }
+            }
+        }
+        return values;
+    }
+
+    /**
+     * Returns table basing on given name.
+     * Method is case insensitive.
+     *
+     * @name table name
+     * @return table object
+     */
+    public ITable getTable(String name)
+    {
+        ITable table = null;
+        for (ITable t : _tables) {
+            if (t.getName().equalsIgnoreCase(name)) {
+                table = t;
+                break;
+            }
+        }
+        return table;
     }
 
     /**
@@ -111,24 +181,4 @@ public final class DBMetaData implements IMetaData
             ++i;
         }
     }
-
-    /**
-     * Returns table basing on given name.
-     * Method is case insensitive.
-     *
-     * @name table name
-     * @return table object
-     */
-    public ITable getTable(String name)
-    {
-        ITable table = null;
-        for (ITable t : _tables) {
-            if (t.getName().equalsIgnoreCase(name)) {
-                table = t;
-                break;
-            }
-        }
-        return table;
-    }
-
 }

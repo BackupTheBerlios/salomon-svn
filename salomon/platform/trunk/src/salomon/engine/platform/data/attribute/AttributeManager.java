@@ -103,10 +103,17 @@ public final class AttributeManager implements IAttributeManager
                 description = this.createIntegerAttributeDescription(
                         attributeName, column);
             } else if (AttributeType.ENUM.getDBString().equals(type)) {
-                // FIXME: add support for enum
-                //description = _attributeManager.createEnumAttributeDescription(name, column, possibleValues)
-                throw new UnsupportedOperationException(
-                        "Method AttributeSetInfo.loadDescriptions() for ENUM not implemented yet!");
+                // FIXME: workaround!
+                String[] possibleValues;
+                try {
+                    possibleValues = _externalDBManager.getMetaData().getDistinctValues(
+                            column);
+                } catch (Exception e) {
+                    LOGGER.fatal("", e);
+                    throw new PlatformException(e.getLocalizedMessage());
+                }
+                description = this.createEnumAttributeDescription(
+                        attributeName, column, possibleValues);
             } else if (AttributeType.REAL.getDBString().equals(type)) {
                 description = this.createRealAttributeDescription(
                         attributeName, column);

@@ -30,25 +30,21 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
 import salomon.engine.database.queries.SQLSelect;
+import salomon.engine.platform.data.DBMetaData;
 import salomon.platform.data.IColumn;
 import salomon.platform.data.IMetaData;
 import salomon.platform.data.ITable;
+import salomon.platform.exception.DBException;
 import salomon.util.gui.Utils;
 
 public class DBManagerTest extends TestCase
 {
 
+    private static final Logger LOGGER = Logger.getLogger(DBManagerTest.class);
+
     private DBManager manager;
 
     private DBManager personManager;
-
-    @Override
-    protected void setUp() throws Exception
-    {
-        PropertyConfigurator.configure("log.conf"); //$NON-NLS-1$
-        manager = new DBManager();
-        personManager = new DBManager();
-    }
 
     public void testConnect()
     {
@@ -89,6 +85,26 @@ public class DBManagerTest extends TestCase
         }
     }
 
+    public void testGetDistinctValues() throws SQLException,
+            ClassNotFoundException, DBException
+    {
+        LOGGER.info("DBManagerTest.testGetDistinctValues()");
+        try {
+            personManager.connect("", "\\db\\persons.gdb", "sysdba",
+                    "masterkey");
+
+            DBMetaData metaData = (DBMetaData) personManager.getMetaData();
+            ITable table = metaData.getTables()[0];
+            String[] values = metaData.getDistinctValues(table.getColumns()[2]);
+
+            for (String value : values) {
+                LOGGER.info(value);
+            }
+        } finally {
+            personManager.disconnect();
+        }
+    }
+
     public void testGetMetaData()
     {
         LOGGER.info("DBManagerTest.testGetMetaData()");
@@ -120,5 +136,11 @@ public class DBManagerTest extends TestCase
         }
     }
 
-    private static final Logger LOGGER = Logger.getLogger(DBManagerTest.class);
+    @Override
+    protected void setUp() throws Exception
+    {
+        PropertyConfigurator.configure("log.conf"); //$NON-NLS-1$
+        manager = new DBManager();
+        personManager = new DBManager();
+    }
 }

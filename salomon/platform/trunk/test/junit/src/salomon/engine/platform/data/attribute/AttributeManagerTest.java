@@ -30,10 +30,13 @@ import salomon.engine.solution.ISolution;
 import salomon.platform.IDataEngine;
 import salomon.platform.data.IMetaData;
 import salomon.platform.data.attribute.IAttributeSet;
+import salomon.platform.data.attribute.description.AttributeType;
 import salomon.platform.exception.PlatformException;
 
 public class AttributeManagerTest extends TestCase
 {
+    private static final Logger LOGGER = Logger.getLogger(AttributeManagerTest.class);
+
     private AttributeManager _attributeManager;
 
     private IDataEngine _dataEngine;
@@ -55,25 +58,6 @@ public class AttributeManagerTest extends TestCase
         IAttributeSet attributeSet = createTestAttributeSet();
         LOGGER.info("adding: " + attributeSet.getName());
         _attributeManager.add(attributeSet);
-    }
-
-    private IAttributeSet createTestAttributeSet()
-    {
-        IMetaData metaData = _dataEngine.getMetaData();
-
-        AttributeDescription name = (AttributeDescription) _attributeManager.createIntegerAttributeDescription(
-                "attr_name", metaData.getTable("persons").getColumn(
-                        "first_name"));
-        AttributeDescription surname = (AttributeDescription) _attributeManager.createStringAttributeDescription(
-                "attr_surname", metaData.getTable("persons").getColumn(
-                        "last_name"));
-
-        AttributeDescription[] descriptions = new AttributeDescription[]{name,
-                surname};
-
-        IAttributeSet attributeSet = _attributeManager.createAttributeSet(descriptions);
-        attributeSet.setName("test" + System.currentTimeMillis());
-        return attributeSet;
     }
 
     /*
@@ -107,10 +91,10 @@ public class AttributeManagerTest extends TestCase
     public void testGetAttributeSetByNameNotFound() throws PlatformException
     {
         LOGGER.info("AttributeManagerTest.testGetAttributeSetByName()");
-        IAttributeSet attributeSet = _attributeManager.getAttributeSet("not found");        
+        IAttributeSet attributeSet = _attributeManager.getAttributeSet("not found");
         assertTrue(attributeSet == null);
     }
-    
+
     /*
      * Test method for 'salomon.engine.platform.data.attribute.AttributeManager.remove(IAttributeSet)'
      */
@@ -124,5 +108,24 @@ public class AttributeManagerTest extends TestCase
         _attributeManager.remove(attributeSet);
     }
 
-    private static final Logger LOGGER = Logger.getLogger(AttributeManagerTest.class);
+    private IAttributeSet createTestAttributeSet() throws PlatformException
+    {
+        IMetaData metaData = _dataEngine.getMetaData();
+
+        AttributeDescription name = (AttributeDescription) _attributeManager.createIntegerAttributeDescription(
+                "attr_name", metaData.getTable("persons").getColumn(
+                        "first_name"));
+        AttributeDescription surname = (AttributeDescription) _attributeManager.createStringAttributeDescription(
+                "attr_surname", metaData.getTable("persons").getColumn(
+                        "last_name"));
+        AttributeDescription age = (AttributeDescription) _attributeManager.createAttributeDescription(
+                "attr_age", "persons", "age", AttributeType.ENUM.getDBString());
+
+        AttributeDescription[] descriptions = new AttributeDescription[]{name,
+                surname, age};
+
+        IAttributeSet attributeSet = _attributeManager.createAttributeSet(descriptions);
+        attributeSet.setName("test" + System.currentTimeMillis());
+        return attributeSet;
+    }
 }

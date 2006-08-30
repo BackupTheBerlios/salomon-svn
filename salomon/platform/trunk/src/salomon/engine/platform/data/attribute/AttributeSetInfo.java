@@ -35,7 +35,9 @@ import salomon.engine.database.queries.SQLDelete;
 import salomon.engine.database.queries.SQLInsert;
 import salomon.engine.database.queries.SQLUpdate;
 import salomon.platform.IInfo;
+import salomon.platform.data.attribute.description.AttributeType;
 import salomon.platform.data.attribute.description.IAttributeDescription;
+import salomon.platform.data.attribute.description.IEnumAttributeDescription;
 import salomon.platform.exception.DBException;
 import salomon.platform.exception.PlatformException;
 
@@ -167,11 +169,19 @@ final class AttributeSetInfo implements IInfo
         String type = resultSet.getString("attribute_type");
         String name = resultSet.getString("attribute_name");
         String tableName = resultSet.getString("table_name");
-        String columnName = resultSet.getString("column_name");        
+        String columnName = resultSet.getString("column_name");
 
         IAttributeDescription description = _attributeManager.createAttributeDescription(
                 name, tableName, columnName, type);
-        ((AttributeDescription)description).setDescriptionID(descriptionID);
+
+        // FIXME: if attribute type is enum, reading the value additionally
+        if (AttributeType.ENUM.equals(type)
+                && description instanceof EnumAttributeDescription) {
+            String stringValue = resultSet.getString("attribute_value");
+            ((EnumAttributeDescription) description).parseValues(stringValue);
+        }
+
+        ((AttributeDescription) description).setDescriptionID(descriptionID);
         _descriptions.add(description);
     }
 
@@ -228,8 +238,15 @@ final class AttributeSetInfo implements IInfo
                             description.getColumn().getTable().getName());
                     insert.addValue("column_name",
                             description.getColumn().getName());
+
+                    // FIXME: workaround!
+                    if (description instanceof EnumAttributeDescription) {
+                        insert.addValue(
+                                "attribute_value",
+                                ((EnumAttributeDescription) description).valuesToString());
+                    }
+
                     LOGGER.debug("insert: " + insert.getQuery());
-                    // TODO: remove the paremeter -- the item doesn't have to be generated
                     _dbManager.insert(insert, "attributeset_item_id");
                 }
             }
