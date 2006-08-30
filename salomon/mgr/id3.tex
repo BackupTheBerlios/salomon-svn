@@ -69,3 +69,15 @@ oznacza entropiê atrybutu $A$ w stosunku do atrybutu decyzyjnego $D$.
 Wyra¿enie to okreœla stopieñ niepewnoœci informacji -- im wy¿sza entropia, tym
 mniej pewna jest wartoœæ atrybutu decyzyjnego. Oznacza to, ¿e im atrybut ma
 ni¿sz¹ entropiê, tym lepszy jest z punktu widzenia klasyfikacji.
+
+Do zalet tego algorytmu nale¿¹ niew¹tpliwie jego prostota oraz to, ¿e jeœli w
+zbiorze treningowym nie ma tzw. ha³asu, czyli rekordów, które dla takich samych
+wartoœci atrybutów daj¹ ró¿n¹ decyzjê, to algorytm ten daje zawsze poprawne
+wyniki.
+
+Posiada on jednak kilka ograniczeñ -- nie radzi sobie z ci¹g³ymi dziedzinami
+atrybutów oraz z niepe³nymi danymi (rekordami wype³nionymi tylko czêœciwo)
+a tak¿e drzewo przez niego generowane ma przewa¿nie du¿y rozmiar.
+Algorytm ten nie jest tak¿e odporny na zaburzenia danych wejœciowych 
+(ha³asu) -- w takim przypadku mo¿e on prowadziæ do wyst¹pienia wysokiego
+wspó³czynnika b³êdów na danych testowych.
