@@ -21,9 +21,9 @@
 
 package salomon.platform.data.tree;
 
-import salomon.platform.data.attribute.IAttribute;
 import salomon.platform.data.attribute.IAttributeSet;
 import salomon.platform.data.attribute.description.IAttributeDescription;
+import salomon.platform.data.dataset.IDataSet;
 import salomon.platform.exception.PlatformException;
 
 /**
@@ -31,7 +31,7 @@ import salomon.platform.exception.PlatformException;
  */
 public interface ITree
 {
-    ITreeNode evaluate(IAttribute[] attribute);
+    ITreeNode evaluate(IDataSet[] attribute);
 
     String getName();
 

@@ -24,6 +24,7 @@ package salomon.plugin;
 import java.awt.Component;
 
 import salomon.platform.IDataEngine;
+import salomon.platform.exception.PlatformException;
 
 /**
  * Interface represents object, which is responsible for showing result of
@@ -38,7 +39,7 @@ public interface IResultComponent
      * @param result of plugin execution
      * @return component showing given result
      */
-    Component getComponent(IResult result, IDataEngine dataEngine);
+    Component getComponent(IResult result, IDataEngine dataEngine) throws PlatformException;
 
     /**
      * Method returns default result of plugin execution. 

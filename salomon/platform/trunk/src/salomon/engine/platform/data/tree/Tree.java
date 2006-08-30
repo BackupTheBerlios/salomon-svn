@@ -23,9 +23,9 @@ package salomon.engine.platform.data.tree;
 
 import salomon.engine.database.DBManager;
 import salomon.engine.platform.data.attribute.AttributeSet;
-import salomon.platform.data.attribute.IAttribute;
 import salomon.platform.data.attribute.IAttributeSet;
 import salomon.platform.data.attribute.description.IAttributeDescription;
+import salomon.platform.data.dataset.IDataSet;
 import salomon.platform.data.tree.ITree;
 import salomon.platform.data.tree.ITreeNode;
 import salomon.platform.exception.PlatformException;
@@ -59,7 +59,7 @@ final class Tree implements ITree
                 true));
     }
 
-    public ITreeNode evaluate(IAttribute[] attribute)
+    public ITreeNode evaluate(IDataSet[] attribute)
     {
         throw new UnsupportedOperationException(
                 "Method Tree.evaluate() not implemented yet!");
