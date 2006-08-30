@@ -5,7 +5,7 @@
 	<target name="all" description="builds distribution jars" depends="compile">
 		<jar destfile="${dist_dir}/VisPlugin.jar" basedir="${bin_dir}" includes="pl/capitol/**">
 			<manifest>
-				<attribute name="Main-Class" value="pl.capitol.tree.plugins.test.VisPlugin" />
+				<attribute name="Main-Class" value="pl.edu.agh.iisg.salomon.plugin.treevis.TreeVisPlugin" />
 			</manifest>
 		</jar>
 		<copy file="${dist_dir}/VisPlugin.jar" todir="${jar_loc}"/>

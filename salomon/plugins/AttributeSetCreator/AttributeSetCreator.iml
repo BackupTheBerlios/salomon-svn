@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module version="4" relativePaths="true" type="JAVA_MODULE">
+  <component name="DependecySynchronizer" />
   <component name="ModuleRootManager" />
-  <component name="NewModuleRootManager" inherit-compiler-output="true">
-    <output url="file://$MODULE_DIR$/../../platform/trunk/bin/production/AttributeSetCreator" />
+  <component name="NewModuleRootManager" inherit-compiler-output="false">
+    <output url="file://$MODULE_DIR$/bin" />
     <exclude-output />
     <output-test url="file://$MODULE_DIR$/../../platform/trunk/bin/test/AttributeSetCreator" />
     <content url="file://$MODULE_DIR$">

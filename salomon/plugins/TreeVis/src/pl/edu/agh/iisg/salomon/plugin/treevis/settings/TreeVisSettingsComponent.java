@@ -61,19 +61,19 @@ public final class TreeVisSettingsComponent implements ISettingComponent
     private JComponent createSettingsComponent(IDataEngine dataEngine) throws PlatformException
     {
 
-        ITree[] attributeSets = dataEngine.getTreeManager().getAll();
-        String[] attributeSetNames = new String[attributeSets.length];
-        for (int i = 0; i < attributeSets.length; i++) {
-            ITree attributeSet = attributeSets[i];
-            attributeSetNames[i] = attributeSet.getName();
+        ITree[] trees = dataEngine.getTreeManager().getAll();
+        String[] treesNames = new String[trees.length];
+        for (int i = 0; i < trees.length; i++) {
+            ITree attributeSet = trees[i];
+            treesNames[i] = attributeSet.getName();
 
         }
-        _treeName = new JComboBox(attributeSetNames);
+        _treeName = new JComboBox(treesNames);
 
 
         FormLayout formLayout = new FormLayout("pref, 4dlu, pref:GROW, 4dlu, min", // columns
-                "pref"); // rows)
-        formLayout.setRowGroups(new int[][]{{3, 5, 7, 11}});
+                "pref, 2dlu, pref"); // rows)
+//        formLayout.setRowGroups(new int[][]{{3, 5, 7, 11}});
 
         CellConstraints cellConstraints = new CellConstraints();
         PanelBuilder panelBuilder = new PanelBuilder(formLayout);

@@ -21,6 +21,11 @@
 
 package pl.edu.agh.iisg.salomon.plugin.treevis;
 
+import pl.edu.agh.iisg.salomon.plugin.treevis.result.TreeVisResult;
+import pl.edu.agh.iisg.salomon.plugin.treevis.result.TreeVisResultComponent;
+import pl.edu.agh.iisg.salomon.plugin.treevis.settings.TreeVisSettings;
+import pl.edu.agh.iisg.salomon.plugin.treevis.settings.TreeVisSettingsComponent;
+
 import salomon.platform.IDataEngine;
 import salomon.platform.IEnvironment;
 
@@ -31,23 +36,27 @@ import salomon.plugin.IResultComponent;
 import salomon.plugin.ISettingComponent;
 import salomon.plugin.ISettings;
 
-public class TreeVisPlugin implements IPlugin
+public final class TreeVisPlugin implements IPlugin
 {
 
     public IResult doJob(IDataEngine engine, IEnvironment environment,
             ISettings settings)
     {
-        throw new UnsupportedOperationException("Method TreeVisPlugin.doJob() not implemented yet!");
+        TreeVisSettings visSettings = (TreeVisSettings) settings;
+        TreeVisResult result = new TreeVisResult();
+        result.setTreeName(visSettings.getTreeName());
+        
+        return result;
     }
 
     public IResultComponent getResultComponent()
     {
-        throw new UnsupportedOperationException("Method TreeVisPlugin.getResultComponent() not implemented yet!");
+        return new TreeVisResultComponent();
     }
 
     public ISettingComponent getSettingComponent(IPlatformUtil platformUtil)
     {
-        throw new UnsupportedOperationException("Method TreeVisPlugin.getSettingComponent() not implemented yet!");
+        return new TreeVisSettingsComponent();
     }
 
 }

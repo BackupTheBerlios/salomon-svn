@@ -22,20 +22,12 @@
 package pl.edu.agh.iisg.salomon.plugin.treevis.result;
 
 import java.awt.Component;
-import java.awt.Point;
-import java.util.Iterator;
 
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 
-import pl.edu.agh.iisg.salomon.plugin.treevis.settings.TreeVisSettings;
-
-import salomon.engine.controller.gui.graph.TaskVertex;
-import salomon.engine.task.ITask;
-
 import edu.uci.ics.jung.graph.Edge;
 import edu.uci.ics.jung.graph.Graph;
-import edu.uci.ics.jung.graph.Vertex;
 import edu.uci.ics.jung.graph.impl.DirectedSparseGraph;
 import edu.uci.ics.jung.utils.GraphUtils;
 
