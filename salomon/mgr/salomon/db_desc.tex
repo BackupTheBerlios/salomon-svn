@@ -82,18 +82,23 @@ rezultacie zadania oraz statusie, w jakim pozostaje po wykonaniu.
 
 \subsection{Organizacja wiedzy}
 
-Obecnie jedynym wspieranym typem wiedzy s¹ zbiory danych. Ich struktura opisana zosta³a ponie¿ej.
+\emph{Salomon} wspiera kilka rodzajów wiedzy: zbiory danych (\emph{datasets}),
+atrybuty oraz drzewa decyzyjne.
 
 \subsubsection{Datasets}
-Zawiera nag³ówki zbiorów zadañ.
+
+Tabela zawiera nag³ówki zbiorów danych.
+
 \begin{itemize}
     \item \emph{dataset\_id} -- identyfikator zbioru danych
+    \item \emph{solution\_id} -- powi¹zanie z tabel¹ \emph{solutions}
     \item \emph{dataset\_name} -- nazwa
-    \item \emph{info} -- dodatkowy opis
+    \item \emph{dataset\_info} -- dodatkowy opis
     \item \emph{lm\_date} -- data ostatniej modyfikacji
 \end{itemize}
 
 \subsubsection{Dataset\_items}
+
 Zawiera definicje zbiorów zadañ. Zbiór danych definiowany jest
 przez nazwê tabeli oraz warunki, jakie ograniczaj¹ rekordy w tej
 tabeli. Tabela ta s³u¿y do przechowywania podzbioru danych pochodz¹cych z rzeczywistej bazy danych.
@@ -104,6 +109,72 @@ tabeli. Tabela ta s³u¿y do przechowywania podzbioru danych pochodz¹cych z rzeczy
 element
     \item \emph{table\_name} -- nazwa tabeli
     \item \emph{condition} -- warunek ograniczaj¹cy zakres danych
+\end{itemize}
+
+\subsubsection{Attributesets}
+
+Tabela zawiera nag³ówki zbiorów atrybutów.
+
+\begin{itemize}
+    \item \emph{attributeset\_id} -- identyfikator zbioru atrybutów
+    \item \emph{solution\_id} -- powi¹zanie z tabel¹ \emph{solutions}
+    \item \emph{attributeset\_name} -- nazwa
+    \item \emph{attributeset\_info} -- dodatkowy opis
     \item \emph{lm\_date} -- data ostatniej modyfikacji
 \end{itemize}
+
+\subsubsection{Attributeset\_items}
+
+Tabela przechowuje atrybuty, nale¿¹ce do danego zbioru atrybutów.
+Ka¿dy atrybut ma nazwê oraz typ. Obecnie wspierane s¹ atrybuty typu tekstowego,
+numeryczne (ca³kowite i zmiennoprzecinkowe) oraz wyliczeniowe.
+Dla atrybutów typu wyliczeniowego, w polu $attribute_value$ przechowywana jest
+lista wartoœci, które dany atrybut mo¿e przyjmowaæ.
+Atrybuty odpowiadaj¹ kolumnom z bazy danych, st¹d ka¿dy z nich przechowuje
+odwolanie do kolumny w tabeli, na podstawie której zosta³ zdefiniowany. 
+
+\begin{itemize}
+  	\item \emph{attributeset\_item\_id} -- identyfikator atrybutu
+    \item \emph{attributeset\_id} -- identyfikator zbioru atrybutów, do którego
+    dany atrybut nale¿y
+    \item \emph{solution\_id} -- powi¹zanie z tabel¹ \emph{solutions}
+    \item \emph{attribute\_name} -- nazwa
+    \item \emph{attribute\_type} -- typ atrybutu
+	\item \emph{table\_name} -- nazwa tabeli, na podstawie której atrybut zosta³
+	zdefiniowany
+	\item  \emph{column\_name} -- nazwa kolumny z tej tabeli
+	\item  \emph{attribute\_value} -- lista wartoœci, które atrybut mo¿e
+	przyjmowaæ. Dotyczy atrybutów typu wyliczeniowego.
+\end{itemize}
+
+\subsubsection{Trees}
+
+Tabela przechowuje nag³ówki drzew decyzyjnych. Zawiera odniesienie do zbioru
+atrybutów, gdy¿ to w³aœnie na ich podstawie drzewa s¹ budowane.
+
+\begin{itemize}
+  	\item \emph{tree\_id} -- identyfikator drzewa decyzyjnego
+    \item \emph{attributeset\_id} -- identyfikator zbioru atrybutów
+    \item \emph{solution\_id} -- powi¹zanie z tabel¹ \emph{solutions}
+    \item \emph{root\_node\_id} -- identyfikator korzenia drzewa
+    \item \emph{tree\_name} -- nazwa
+    \item \emph{tree\_info} -- dodatkowy opis
+    \item \emph{lm\_date} -- data ostatniej modyfikacji
+\end{itemize}
+
+\subsubsection{Tree\_nodes}
+
+Zawiera definicje wêz³ów drzewa decyzyjnego.
+
+\begin{itemize}
+  	\item \emph{node\_id} -- identyfikator wêz³a
+  	\item \emph{tree\_id} -- identyfikator drzewa decyzyjnego, do którego nale¿y
+    \item \emph{parent\_node\_id} -- identyfikator wêz³a rodzica (0 dla korzenia)
+    \item \emph{attribute\_item\_id} -- identyfikator atrybutu, któremu wêze³ odpowiada
+    \item \emph{parent\_edge\_value} -- warunek na krawêdzi prowadz¹cej do wêz³a
+    \item \emph{node\_value} -- wartoœæ w wêŸle
+\end{itemize}
+
+
+
 
