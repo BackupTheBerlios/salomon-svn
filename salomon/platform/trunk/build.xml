@@ -32,6 +32,7 @@
     <property name="db_user" value="sysdba" />
     <property name="db_password" value="masterkey" />
     <property name="db_schema_dir" value="schema" />
+	<property name="sample_db_file" value="trees.gdb" />
     <property name="crebas_file" value="crebas.sql" />
     <property name="views_file" value="views.sql" />
     <property name="run_script" value="run.bat" />
@@ -40,8 +41,12 @@
     <property name="plugin_src_dir" value="${basedir}/../../plugins" />
     <property name="salomon_file" value="salomon.jar" />
     <property name="salomon_install_file" value="install.jar" />
-
-
+	<property name="scripts_dir" value="scripts" />
+	<property name="convert_script" value="convert2sql.sh" />
+	<property name="def_file" value="contact-lenses.def" />
+	<property name="data_file" value="contact-lenses.csv" />
+	<property name="tmp_sql_file" value="contact-lenses.sql" />
+	
     <property file="config/hosts/${build.host}/build.properties" />
     <property file="config/users/${build.user}/build.properties" />
 
@@ -230,6 +235,19 @@
                 </antcall>
             </sequential>
         </for>
+    </target>
+	
+	<target name="generate_sample_data">
+		<!-- assume that cygwin is installed and bash is on the PATH -->
+        <exec executable="bash" output="${db_dir}/${tmp_sql_file}">
+            <arg line="${db_dir}/${scripts_dir}/${convert_script} ${db_dir}/${scripts_dir}/${def_file} ${db_dir}/${scripts_dir}/${data_file}" />			
+        </exec>
+    </target>
+	
+	<target name="fill_sample_data" depends="generate_sample_data">
+        <exec executable="${isql_dir}isql">
+            <arg line="${db_dir}/${sample_db_file} -u ${db_user} -p ${db_password} -i ${db_dir}/${tmp_sql_file}" />
+        </exec>
     </target>
 
 </project>

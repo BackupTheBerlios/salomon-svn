@@ -50,7 +50,7 @@ do
 done
 
 # deleting old records
-echo DELETE FROM ${fields[0]};
+echo DELETE FROM ${fields[0]}\;;
 
 # building query
 # first line is a table name   
@@ -70,5 +70,5 @@ do
  echo $query \(\'$values\'\)\;;
 done
 
-echo COMMIT;
+echo COMMIT\;;
 
