@@ -303,7 +303,8 @@ public class CreatorSettingComponent implements ISettingComponent
         _attributeTypes = new JComboBox(new String[]{
                 AttributeType.INTEGER.getDBString(),
                 AttributeType.STRING.getDBString(),
-                AttributeType.REAL.getDBString()});
+                AttributeType.REAL.getDBString(),
+                AttributeType.ENUM.getDBString()});
         _txtColumnName = new JTextField();
         _txtAttributeName = new JTextField();
 
