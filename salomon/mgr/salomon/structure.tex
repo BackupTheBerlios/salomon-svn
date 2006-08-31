@@ -24,38 +24,15 @@ pozosta³e nie s¹ dostêpne dla wtyczek. Plugin, zale¿nie od
 potrzeb, pobiera z niego potrzebny mu menad¿er i za jego
 poœrednictwem wykonuje operacje na bazie danych.
 
-\subsubsection{IDataEngine}
-
-Obiekt implementuj¹cy ten interfejs przekazywany jest wtyczkom podczas ich wykonania.
-Za pomoc¹ pobieranych z niego menad¿erów (\emph{IDataSetManager}, \emph{IAttributeManager}, w przysz³oœci \emph{IRuleSetManager} i inne) wtyczki mog¹ operowaæ na danych znajduj¹cych siê w bazie.
-
-\paragraph{DBManager}
-
-Odpowiada za po³¹czenie z baz¹ danych. Dostarcza metody
-zapewniaj¹ce dostêp do danych przechowywanych w bazie. Swoj¹
-funkcjonalnoœæ udostêpnia odpowiednim menad¿erom.
-
-\paragraph{IDataSetManager}
-
-Zarz¹dza zbiorami danych. Pozwala tworzyæ nowe podzbiory danych na
-podstawie zawartych w bazie informacji oraz umo¿liwia operowanie
-na nich.
-
-\paragraph{IRuleSetManager}
-
-Zarz¹dza regu³ami. Pozwala tworzyæ nowe regu³y oraz
-zarz¹dza dostêpem do ju¿ istniej¹cych.
-
-\paragraph{IAttributeManager}
-
-Zarz¹dza atrybutami. Pozwala tworzyæ nowe atrybuty oraz
-zarz¹dza dostêpem do ju¿ istniej¹cych.
-
-
 \subsubsection{IManagerEngine}
 
 Zarz¹dza pozosta³ymi menad¿erami. Utrzymuje jedn¹ instancjê ka¿dego z nich 
 i udostêpnia je pozosta³ym klasom z platformy.
+Wszystkie menad¿ery, którmi zarz¹dza maj¹ analogiczn¹ funkcjonalnoœæ -- ka¿dy z
+nich pozwala na stworzenie nowego obiektu, którym zarz¹dza (nie ma innej
+mo¿liwoœci ich stworzenia, ni¿ przez metody udostêpniane przez menad¿era), jego
+zesk³adowanie w bazie danych, zwrócenie wszystkich zarz¹dzanych obiektów, czy
+te¿ pojedynczego, bazuj¹c na unikalnym identyfikatorze.
 
 \paragraph{ISolutionManager}
 
@@ -70,13 +47,46 @@ projektu, zapisanie bie¿¹cego do bazy danych oraz na za³adowanie z bazy.
 
 \paragraph{IPluginManager}
 
-Zarz¹dza pluginami. Pozwala na zapisanie informacji o nowym pluginie (jego nazwa, lokalizacja) oraz na pobranie listy dostêpnych pluginów.
+Zarz¹dza pluginami. Pozwala na zapisanie informacji o nowym pluginie 
+(jego nazwa, lokalizacja) oraz na pobranie listy dostêpnych pluginów.
 
 \paragraph{ITaskManager}
 
-Zarz¹dza zadaniami. Jego zadaniem jest nie tylko umo¿liwienie utworzenia lub edycji istniej¹cych zadañ, ale tak¿e nadzorowanie ich uruchamiania.
+Zarz¹dza zadaniami. Jego zadaniem jest nie tylko umo¿liwienie utworzenia 
+lub edycji istniej¹cych zadañ, ale tak¿e nadzorowanie ich uruchamiania.
+
+\subsubsection{IDataEngine}
+
+Obiekt implementuj¹cy ten interfejs przekazywany jest wtyczkom podczas ich wykonania.
+Za pomoc¹ pobieranych z niego menad¿erów (\emph{IDataSetManager},\emph{IAttributeManager}, 
+\emph{ITreeManager} w przysz³oœci \emph{IRuleSetManager} i inne) 
+wtyczki mog¹ operowaæ na danych znajduj¹cych siê w bazie.
+
+\paragraph{DBManager}
+
+Odpowiada za po³¹czenie z baz¹ danych. Dostarcza metody
+zapewniaj¹ce dostêp do danych przechowywanych w bazie. Swoj¹
+funkcjonalnoœæ udostêpnia odpowiednim menad¿erom, wtyczki nie maj¹ do niego
+bezpoœredniego dostêpu.
+
+\paragraph{IDataSetManager}
+
+Zarz¹dza zbiorami danych. Pozwala tworzyæ nowe podzbiory danych na
+podstawie zawartych w bazie informacji oraz umo¿liwia operowanie
+na nich.
+
+\paragraph{IAttributeManager}
+
+Zarz¹dza atrybutami. Pozwala tworzyæ nowe atrybuty i organizowaæ je w zbiory
+atrybutów oraz pozwala na operowanie na nich.
+
+\paragraph{ITreeManager}
+
+Zarz¹dza drzewami decyzyjnymi. Umo¿liwia ich tworzenie (ale nie generowanie ich
+struktury, tym zajmuj¹ siê pluginy) oraz operowanie na nich.
 
 \subsection{Kontrolery}
+
 Kontrolery odpowiadaj¹ za interakcjê
 systemu z otoczeniem. W zale¿noœci od konfiguracji systemu przy
 starcie uruchamiany jest jeden z kontrolerów. Kontrolery operuj¹
@@ -95,9 +105,8 @@ wtyczkami i zadaniami.
 
 Zadaniem tego kontrolera jest dostarczenie interfejsu do
 zarz¹dzania zdalnymi kontrolerami (\emph{ServantController}). 
-Po dodaniu warstwy \emph{Solution} kontroler ten musi zostaæ zmodyfikowany, co planowane jest w nastêpnej wersji systemu.
-%Po uruchomieniu nas³uchuje na po³¹czenia od klientów, rozdziela
-%zadania oraz wyœwietla ich wyniki.
+Po dodaniu warstwy \emph{Solution} kontroler ten musi zostaæ zmodyfikowany, 
+co planowane jest w nastêpnej wersji systemu.
 
 \paragraph{ServantController}
 
@@ -112,6 +121,7 @@ Podobnie jak w przypadku klasy \emph{MasterController}, kontroler ten musi zosta
 %\input{winsalomon}
 
 \subsection{Wtyczki}
+
 G³ówna funkcjonalnoœæ zosta³a  przeniesiona
 do wtyczek, zadaniem systemu jest tylko zarz¹dzanie ich
 wykonaniem. Dziêki takiemu podejœciu system jest ³atwo skalowalny
