@@ -1,100 +1,3 @@
-\section{Drzewa decyzyjne}
-% http://www.dbmsmag.com/9807m05.html
-% When a businessperson needs to make a decision based on several factors, a
-% decision tree can help identify which factors to consider and how each factor
-% has historically been associated with different outcomes of the decision. For
-% example, in our credit risk case study (See the sidebar Predicting Credit Risk),
-% we have data for each applicantýs debt, income, and marital status. A decision
-% tree creates a model as either a graphical tree or a set of text rules that can
-% predict (classify) each applicant as a good or bad credit risk.
-
-Kiedy biznesmen potrzebuje podj¹æ decyzje bazuj¹c na kilku wspó³czynnikach,
-drzewa decyzyjne mog¹ pomoc w wybraniu odpowiednich wspó³czynników oraz 
-opowiedzieæ jak dany wspó³czynnik w przesz³oœci wp³ywa³ na decyzje.
-Przyk³adowo, podczas obliczania ryzyka kredytowego, posiadamy dla ka¿dego
-potencjalnego kredytobiorcy dane o jego kredytach, przychodach oraz jego
-statusie materialnym. Drzewa decyzyjne tworz¹ zarówno drzewo w postaci
-graficznej, jak zbiór regu³ tekstowych, dziêki którym mo¿emy okreœliæ,
-czy dana aplikacja jest obarczona du¿ym lub ma³ym ryzykiem kredytowym.
-
-% A decision tree is a model that is both predictive and descriptive. It is called
-% a decision tree because the resulting model is presented in the form of a tree
-% structure. (See Figure 1.) The visual presentation makes the decision tree model
-% very easy to understand and assimilate. As a result, the decision tree has
-% become a very popular data mining technique. Decision trees are most commonly
-% used for classification (predicting what group a case belongs to), but can also
-% be used for regression (predicting a specific value).
-
-Drzewo decyzyjne jest modelem, który jest zarówno predyktywnym jak i opisowym.
-%!!!predictive and descriptive!!!.
-Nazywany jest drzewem decyzyjnym, poniewa¿ prezentowany jest w formie
-drzewiastej struktury~\ref{fig:sample_tree}. Graficzna reprezentacja powoduje,
-¿e zrozumienie go czy porównanie go nie jest trudnym zadaniem. Drzewa decyzyjne
-sta³y siê bardzo popularne w technikach ,,data maning''. Drzewa decyzyjne s¹
-najpowszechniej u¿ywane do klasyfikacji (predykuj¹ do której grupy nale¿y dany
-przypadek), lecz mog¹ byæ równie¿ u¿ywane przy regresji (predykuj¹ wartoœæ).
-
-% The decision tree method encompasses a number of specific algorithms, including
-% Classification and Regression Trees (CART), Chi-squared Automatic Interaction
-% Detection (CHAID), C4.5 and C5.0 (from work by J. Ross Quinlan of Rulequest
-% Research Pty Ltd, in St. Ives, Australia, www.rulequest.com).
-
-Metody drzew decyzyjnych obejmuj¹ wiele algorytmów. Miêdzy innymi drzewa
-klasyfikuj¹ce i regresyjne (ang. \emph{Classification and Regression Trees
-(CART)}), \emph{Chi-squared Automatic
-Interaction Detection (CHAID)}, \emph{C4.5} and \emph{C5.0}.
-
-% Decision trees graphically display the relationships found in data. Most
-% products also translate the tree-to-text rules such as If Income = High and
-% Years on job > 5 Then Credit risk = Good. In fact, decision tree algorithms are
-% very similar to rule induction algorithms which produce rule sets without a
-% decision tree.
-
-Drzewa decyzyjne w graficzny sposób obrazuj¹ zale¿noœci wystêpuj¹ce w danych.
-Mo¿na je równie¿ przedstawiaæ w postaci regu³ tekstowych np.
-\\
-\\
-\emph{Jeœli Dochód = Wysoki i Lata Pracy $>$ 5 Wtedy Ryzyko kredytowe = Ma³e}.
-\\
-\\
-Algorytmy drzew decyzyjnych s¹ bardzo podobne do algorytmów indukcji regu³, które
-produkuj¹ zbiory regu³ bez drzew decyzyjnych.
-
-% The primary output of a decision tree algorithm is the tree itself. The 
-% training process that creates the decision tree is usually called induction. 
-% Induction requires a small number of passes (generally far fewer than 100) 
-% through the training dataset. This makes the algorithm somewhat less efficient 
-% than Naýve-Bayes algorithms (See Naýve-Bayes and Nearest Neighbor.), which 
-% require only one pass, but significantly more efficient than neural nets, which 
-% typically require a large number of passes, sometimes numbering in the 
-% thousands. To be more precise, the number of passes required to build a 
-% decision tree is no more than the number of levels in the tree. There is no 
-% predetermined limit to the number of levels, although the complexity of the 
-% tree as measured by the depth and breadth of the tree generally increases as 
-% the number of independent variables increases.
-
-G³ówny rezultatem algorytmu drzew decyzyjnych jest w³aœnie drzewo. Proces
-treningu tworzy drzewo, jest zwyczajowy nazywany indukcj¹. Indukcja wymaga kilku
-przejœæ (generalnie znacznie mniej ni¿ 100) przez zbioru trenuj¹cy (eg.
-training dataset). Powoduje to, ¿e algorytmy te s¹ mniej wydajne ni¿ algorytmy 
-\emph{Naýve-Bayes}, które wymagaj¹ tylko jednego przejœcia, ale znacznie wydajne
-ni¿ sieci neuronowe, które zazwyczaj wymaj¹ wielkiej iloœci przejœæ, czasami
-liczonych w tysi¹cach. Dok³adniej iloœæ iloœæ potrzebnych przejœæ wymaganych do
-zbudowania drzewa decyzyjnego jest nie wiêksza ni¿ wysokoœæ drzewa (iloœæ
-warstw). Nie istnieje okreœlona z góry maksymalna wysokoœæ drzewa, jednak¿e
-z³o¿onoœæ drzewa mierzona jako jego wysokoœæ i szerokoœæ generalnie roœnie jeœli
-roœnie iloœæ niezale¿nych zmiennych.
-
-
-%\usepackage{graphics} is needed for \includegraphics
-\begin{figure}[htp]
-\begin{center}
-  \includegraphics[width=0.3\textwidth]{img/sample_tree.jpg}
-  \caption[labelInTOC]{Drzewo decyzyjne}
-  \label{fig:sample_tree}
-\end{center}
-\end{figure}
-
 \subsection{Omówienie algorytmów}
 
 \emph{ID3} i \emph{C4.5} to algorytmy wprowadzone przez \emph{J. Ross Quinlan'a}
@@ -111,6 +14,128 @@ Zwykle atrybut decyzyjny przyjmuje wartoœci logiczne \emph{(prawda, fa³sz)},
 \emph{(sukces/pora¿ka)} lub podobne. W ka¿dym przypadku jedna z wartoœci
 atrybutu oznacza pora¿kê.
 
-\input{id3}
 
-\input{c45}
+\subsubsection{Algorytm ID3}
+
+%http://www.cise.ufl.edu/~ddd/cap6635/Fall-97/Short-papers/2.htm
+Algorytm \emph{ID3} tworzy drzewo decyzyjne na podstawie zbioru danych przyk³adowych.
+Utworzone w ten sposób drzewo u¿ywne jest do póŸniejszego klasyfikowania
+zbiorów zawieraj¹cych podobne dane.
+
+Ka¿dy liœæ drzewa odpowiada podjêtej decyzji (czyli wartoœci atrybutu
+decyzyjnego), natomiast wêz³y reprezentuj¹ testy wartoœci pozosta³ych
+atrybutów, wp³ywaj¹cych na decyzjê.
+
+Algorytm \emph{ID3} przedstawiony zosta³ przez \emph{J. Ross Quinlan'a} w roku
+1975. Bazuje on na algorytmie \emph{CLS (ang. Concept Learning System)}, który w
+uproszczeniu dzia³a nastêpuj¹co:
+
+\begin{enumerate}
+  \item Jeœli wszystkie instancje zbioru trenuj¹cego s¹ pozytywne, tworzony jest
+  wêze³ oznaczaj¹cy sukces i algorytm koñczy dzia³anie -- analogicznie, jeœli
+  wszystkie s¹ negatywne, tworzony jest wêze³ oznaczaj¹cy pora¿kê i algorytm siê
+  koñczy. W przeciwnym przypadku wybierany jest jeden z atrybutów
+  (niedecyzyjnych) i tworzony jest wêze³ decyzyjny.
+  \item Zbiór trenuj¹cy dzielony jest na podzbiory wzglêdem wartoœci wybranego w
+  kroku 1 atrybutu.
+  \item Algorytm dzia³a rekurencyjnie dla ka¿dego z podzbiorów utworzonych w
+  kroku 2. O wyborze atrybutu, wzglêdem którego dokonywany jest podzia³ na
+  podzbiory decyduje u¿ytkownik.
+\end{enumerate}
+
+\emph{ID3} ulepsza algorytm \emph{CLS} poprzez wprowadzenie heurystycznego
+wyboru atrybutu, wzglêdem którego dokonywany jest podzia³ zbioru.
+Spoœród wszystkich atrybutów niedecyzyjnych w ka¿dym przebiegu algorytmu
+wybierany jest ten, który w najlepszy sposób rozdzieli zbiór trenuj¹cy.
+Jest to przyk³ad algorytmu zach³annego, za ka¿dym razem wybierany jest bowiem
+najlepszy w danym momencie atrybut.
+
+Decyzja o tym, który atrybut jest najlepszy w danym przebiegu algorytmu
+podejmowana jest na podstawie tzn. \emph{miary informacji} w zbiorze.
+Mierzy ona, jak dobrze dany atrybut dzieli zbiór trenuj¹cy na klasy docelowe.
+Atrybut z najwiêksz¹ miar¹ informacji, czyli taki, który jest najbardziej
+przydatny z punktu widzenia klasyfikacji, jest wybierany.
+
+%http://www.dcs.napier.ac.uk/~peter/vldb/dm/node11.html
+
+Teoria informacji udziela odpowiedzi na pytanie, który z atrybutów jest
+najbardziej przydany. Przypuœcmy, ¿e atrybut decyzyjny $D$ przyjmuje wartoœci
+$d_1..d_n$, z kolei aktualnie rozwa¿any atrybut $A$ wartoœci $a_1..a_m$.
+
+Stosunek $p(\frac{d_i}{a_j})$ oznacza prawdopodobieñstwo, ¿e zachodzi $d_i$ pod warunkiem $a_j$.
+
+Teoria informacji definiuje pojêcie \emph{entropii}.
+
+\[
+	E = -\sum_{i=1}^{n} p(\frac{d_i}{a_j})log_{2}p(\frac{d_i}{a_j})
+\]
+
+Wyra¿enie to okreœla entropiê wzlgêdem atrybutu decyzyjnego D dla konkretnej
+wartoœci atrybutu aj. 
+
+Œrednia entropia wyra¿ona wzorem:
+
+\[
+	E_{sr} = -\sum_{j=1}^{m} p(a_j) \sum_{i=1}^{n}
+	p(\frac{d_i}{a_j})log_{2}p(\frac{d_i}{a_j}) 
+\]
+
+oznacza entropiê atrybutu $A$ w stosunku do atrybutu decyzyjnego $D$.
+
+Wyra¿enie to okreœla stopieñ niepewnoœci informacji -- im wy¿sza entropia, tym
+mniej pewna jest wartoœæ atrybutu decyzyjnego. Oznacza to, ¿e im atrybut ma
+ni¿sz¹ entropiê, tym lepszy jest z punktu widzenia klasyfikacji.
+
+Do zalet tego algorytmu nale¿¹ niew¹tpliwie jego prostota oraz to, ¿e jeœli w
+zbiorze treningowym nie ma tzw. ha³asu, czyli rekordów, które dla takich samych
+wartoœci atrybutów daj¹ ró¿n¹ decyzjê, to algorytm ten daje zawsze poprawne
+wyniki.
+
+Posiada on jednak kilka ograniczeñ -- nie radzi sobie z ci¹g³ymi dziedzinami
+atrybutów oraz z niepe³nymi danymi (rekordami wype³nionymi tylko czêœciwo)
+a tak¿e drzewo przez niego generowane ma przewa¿nie du¿y rozmiar.
+Algorytm ten nie jest tak¿e odporny na zaburzenia danych wejœciowych 
+(ha³asu) -- w takim przypadku mo¿e on prowadziæ do wyst¹pienia wysokiego
+wspó³czynnika b³êdów na danych testowych.
+
+
+\subsubsection{Algorytm C4.5}
+
+Algorytm \emph{C4.5} jest jednym z najpopularniejszych algorytmów budowy drzew
+decyzyjnych. Stworzony zosta³ przez \emph{Quinlan'a} na bazie metody \emph{ID3}
+i w zamyœle mia³ usuwaæ ograniczenia swego poprzednika.
+
+W czasie budowy drzewa decyzyjnego algorytm \emph{ID3} nie radzi sobie z
+przypadkiem, gdy zbiór danych zawiera niekompletne informacje, czyli gdy rekordy maj¹ nieznan¹ wartoœæ dla pewnych
+atrybutów. Algorytm \emph{C4.5} potrafi obs³u¿yæ ten przypadek -- w takiej
+sytuacji miara informacji obliczana jest na podstawie atrybutów, dla których
+wartoœæ jest zdefiniowana. Podczas przetwarzania przez tak utworzone drzewo zbioru testuj¹cego, mo¿liwe
+jest sklasyfikowanie rekordów z nieznan¹ wartoœci¹ pewnych atrybutów poprzez
+wyliczenie prawdopodobieñstwa mo¿liwych wyników.
+
+Kolejnym ograniczeniem algortymu \emph{ID3} jest mo¿liwoœæ obs³ugi tylko
+atrybutów o wartoœciach dyskretnych. Algorytm \emph{C4.5} radzi sobie tak¿e z
+atrybutami przyjmuj¹cymi ci¹g³e wartoœci. W takim przypadku przedzia³ wartoœci
+przyjmowany przez dany atrybut $A$ dzielony jest na podprzedzia³y w nastêpuj¹cy
+sposób: 
+
+\begin{itemize}
+  \item wartoœci atrybutu $A$ szeregowane s¹ rosn¹co ($a_1..a_m$)
+  \item dla ka¿dej z wartoœci zbiór rekordów dzielony jest na takie, dla których
+  wartoœæ atrybutu $A$ jest mniejsza b¹dŸ równa $a_i$ i wieksza od $a_i$
+  \item dla ka¿dego takiego podzia³u wyliczana jest miara informacji i wybierany
+jest najbardziej optymalny z nich (dla którego miara informacji jest najwiêksza)
+\end{itemize}
+
+Drzewo decyzyjne utworzone za pomoc¹ algorytmu \emph{ID3} mo¿e byæ dosyæ
+z³o¿one i mieæ mocno zró¿nicowane pod wzglêdem d³ugoœci ga³êzie, co, wraz z
+brakiem odpornoœci na ha³as w danych wejœciowych, prowadzi do dosyæ wysokiego
+poziomu b³edów dla rzeczywistych danych.
+
+Jednym z udoskonaleñ tego algorytmu wprowadzonym przez algorytm \emph{C4.5} jest
+przycinanie ga³êzi drzewa. Polega ono na zast¹pieniu ca³ego poddrzewa pojedynczym
+liœciem. Decyzja o zast¹pieniu poddrzewa dokonywana jest na podstawie porównania
+wyników obliczeñ algorytmu heurystycznego dokonywanych na danym poddrzewie i na liœciu.
+
+Dziêki przycinaniu uzyskuje siê wieksz¹ generalizacjê oceny nowych przypadków.
+
