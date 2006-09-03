@@ -193,6 +193,8 @@ ALTER TABLE ATTRIBUTESET_ITEMS ADD CONSTRAINT ATTRIBUTE_IS_OUTPUT check (IS_OUTP
 /****                             Generators                               ****/
 /******************************************************************************/
 
+CREATE GENERATOR GEN_SOLUTION_ID;
+SET GENERATOR GEN_SOLUTION_ID TO 1;
 
 CREATE GENERATOR GEN_PLUGIN_ID;
 SET GENERATOR GEN_PLUGIN_ID TO 1;
