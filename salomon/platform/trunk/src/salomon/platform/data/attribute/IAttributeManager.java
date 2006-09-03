@@ -46,7 +46,7 @@ public interface IAttributeManager
      * @throws PlatformException if any error occurs (e.g. invalid attribute description)
      */
     IAttributeDescription createAttributeDescription(String attributeName,
-            String tableName, String columnName, String type)
+            String tableName, String columnName, String type, boolean isOutput)
             throws PlatformException;
 
     /**

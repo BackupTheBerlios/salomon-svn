@@ -29,6 +29,7 @@ import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JList;
@@ -98,6 +99,8 @@ public class CreatorSettingComponent implements ISettingComponent
 
     private IPlatformUtil _platformUtil;
 
+    private JCheckBox _chkIsOutput;
+
     public CreatorSettingComponent(IPlatformUtil platformUtil)
     {
         _platformUtil = platformUtil;
@@ -139,20 +142,21 @@ public class CreatorSettingComponent implements ISettingComponent
                 _attributeSet.getAttributeSetName());
 
         // setting attribute set name
-        settings.setAttributeSetName(_txtAttributeSetName.getText());        
-        
+        settings.setAttributeSetName(_txtAttributeSetName.getText());
+
         // setting conditions
         int size = _attributeListModel.getSize();
 
         Description[] descArray = new Description[size];
         for (int i = 0; i < size; ++i) {
             IAttributeDescription attrDescription = (IAttributeDescription) _attributeListModel.get(i);
-            Description description = settings. new Description();            
+            Description description = settings.new Description();
             description.setAttributeName(attrDescription.getName());
             description.setTableName(attrDescription.getColumn().getTable().getName());
             description.setColumnName(attrDescription.getColumn().getName());
             description.setType(attrDescription.getType().getDBString());
-            descArray[i] = description; 
+            description.setIsOutput(attrDescription.isOutput() ? "Y" : "N");
+            descArray[i] = description;
         }
 
         settings.setDescriptions(descArray);
@@ -182,8 +186,12 @@ public class CreatorSettingComponent implements ISettingComponent
                         String type = (String) _attributeTypes.getSelectedItem();
                         IAttributeDescription description = attributeManager.createAttributeDescription(
                                 attrName, _selectedColumn.getTable().getName(),
-                                _selectedColumn.getName(), type);
-
+                                _selectedColumn.getName(), type,
+                                _chkIsOutput.isSelected());
+                        
+                        // setting isOutput default value
+                        _chkIsOutput.setSelected(false);
+                        
                         // adding description to the list
                         LOGGER.debug("adding description: " + description);
                         _attributeListModel.addElement(description);
@@ -272,7 +280,7 @@ public class CreatorSettingComponent implements ISettingComponent
     {
         if (_addAttributePanel == null) {
             FormLayout layout = new FormLayout(
-                    "fill:100dlu:grow, 3dlu, fill:default:grow, 3dlu, fill:100dlu:grow",
+                    "fill:100dlu:grow, 3dlu, fill:default:grow, 3dlu, fill:100dlu:grow, 3dlu, fill:default:grow",
                     "");
             DefaultFormBuilder builder = new DefaultFormBuilder(layout);
 
@@ -281,6 +289,7 @@ public class CreatorSettingComponent implements ISettingComponent
             builder.append(_txtColumnName);
             builder.append(_attributeTypes);
             builder.append(_txtAttributeName);
+            builder.append(_chkIsOutput);
 
             _addAttributePanel = builder.getPanel();
         }
@@ -307,6 +316,8 @@ public class CreatorSettingComponent implements ISettingComponent
                 AttributeType.ENUM.getDBString()});
         _txtColumnName = new JTextField();
         _txtAttributeName = new JTextField();
+        _chkIsOutput = new JCheckBox("Is output?");
+        _chkIsOutput.setSelected(false);
 
         // validation
         _attributeSet = new AttributeSet();
@@ -332,7 +343,8 @@ public class CreatorSettingComponent implements ISettingComponent
             for (Description desc : strDesc) {
                 descriptions[i] = attributeManager.createAttributeDescription(
                         desc.getAttributeName(), desc.getTableName(),
-                        desc.getColumnName(), desc.getType());
+                        desc.getColumnName(), desc.getType(),
+                        desc.getIsOutput().equals("Y"));
                 ++i;
             }
         }

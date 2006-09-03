@@ -77,6 +77,7 @@ public final class CreatorSettings extends SimpleStruct implements ISettings
             _descriptions[i].setTableName(((SimpleString) ((IStruct) objects[i]).getField(Description.ATTR_TABLE_NAME)).getValue());
             _descriptions[i].setColumnName(((SimpleString) ((IStruct) objects[i]).getField(Description.ATTR_COLUMN_NAME)).getValue());
             _descriptions[i].setType(((SimpleString) ((IStruct) objects[i]).getField(Description.ATTR_TYPE)).getValue());
+            _descriptions[i].setIsOutput(((SimpleString) ((IStruct) objects[i]).getField(Description.ATTR_IS_OUTPUT)).getValue());
         }
     }
 
@@ -100,6 +101,8 @@ public final class CreatorSettings extends SimpleStruct implements ISettings
                     new SimpleString(descriptions[i].getColumnName()));
             structArray[i].setField(Description.ATTR_TYPE, new SimpleString(
                     descriptions[i].getType()));
+            structArray[i].setField(Description.ATTR_IS_OUTPUT,
+                    new SimpleString(descriptions[i].getIsOutput()));
 
         }
         SimpleArray array = new SimpleArray(structArray);
@@ -112,6 +115,8 @@ public final class CreatorSettings extends SimpleStruct implements ISettings
 
         public static final String ATTR_COLUMN_NAME = "columnName";
 
+        public static final String ATTR_IS_OUTPUT = "isOutput";
+
         public static final String ATTR_TABLE_NAME = "tableName";
 
         public static final String ATTR_TYPE = "type";
@@ -119,6 +124,8 @@ public final class CreatorSettings extends SimpleStruct implements ISettings
         private String _attributeName;
 
         private String _columnName;
+
+        private String _isOutput;
 
         private String _tableName;
 
@@ -140,6 +147,15 @@ public final class CreatorSettings extends SimpleStruct implements ISettings
         public final String getColumnName()
         {
             return _columnName;
+        }
+
+        /**
+         * Returns the isOutput.
+         * @return The isOutput
+         */
+        public final String getIsOutput()
+        {
+            return _isOutput;
         }
 
         /**
@@ -176,6 +192,15 @@ public final class CreatorSettings extends SimpleStruct implements ISettings
         public final void setColumnName(String columnName)
         {
             _columnName = columnName;
+        }
+
+        /**
+         * Set the value of isOutput field.
+         * @param isOutput The isOutput to set
+         */
+        public final void setIsOutput(String isOutput)
+        {
+            _isOutput = isOutput;
         }
 
         /**

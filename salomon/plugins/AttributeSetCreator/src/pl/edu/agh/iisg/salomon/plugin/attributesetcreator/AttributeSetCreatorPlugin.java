@@ -71,7 +71,7 @@ public final class AttributeSetCreatorPlugin implements IPlugin
                 if (desc != null) {
                     descriptions[i] = attributeSetManager.createAttributeDescription(
                             desc.getAttributeName(), desc.getTableName(),
-                            desc.getColumnName(), desc.getType());
+                            desc.getColumnName(), desc.getType(), desc.getIsOutput().equals("Y"));
                     ++i;
                 }
             }

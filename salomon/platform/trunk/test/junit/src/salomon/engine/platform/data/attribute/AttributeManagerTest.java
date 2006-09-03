@@ -119,7 +119,7 @@ public class AttributeManagerTest extends TestCase
                 "attr_surname", metaData.getTable("persons").getColumn(
                         "last_name"));
         AttributeDescription age = (AttributeDescription) _attributeManager.createAttributeDescription(
-                "attr_age", "persons", "age", AttributeType.ENUM.getDBString());
+                "attr_age", "persons", "age", AttributeType.ENUM.getDBString(), false);
 
         AttributeDescription[] descriptions = new AttributeDescription[]{name,
                 surname, age};

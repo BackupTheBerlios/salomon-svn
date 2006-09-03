@@ -170,9 +170,11 @@ final class AttributeSetInfo implements IInfo
         String name = resultSet.getString("attribute_name");
         String tableName = resultSet.getString("table_name");
         String columnName = resultSet.getString("column_name");
+        boolean isOutput = resultSet.getString("is_output").equals("Y");
 
-        IAttributeDescription description = _attributeManager.createAttributeDescription(
-                name, tableName, columnName, type);
+        AttributeDescription description = (AttributeDescription) _attributeManager.createAttributeDescription(
+                name, tableName, columnName, type, isOutput);
+        description.setOutput(isOutput);
 
         // FIXME: if attribute type is enum, reading the value additionally
         if (AttributeType.ENUM.equals(type)
@@ -238,7 +240,9 @@ final class AttributeSetInfo implements IInfo
                             description.getColumn().getTable().getName());
                     insert.addValue("column_name",
                             description.getColumn().getName());
-
+                    insert.addValue("is_output", description.isOutput()
+                            ? "Y"
+                            : "N");
                     // FIXME: workaround!
                     if (description instanceof EnumAttributeDescription) {
                         insert.addValue(
