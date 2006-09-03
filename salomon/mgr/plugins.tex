@@ -1,0 +1,41 @@
+\section{Wtyczki}
+
+\subsection{Tworzenie zbioru danych}
+
+By u³atwiæ generowanie testowych zbiorów danych utworzone zosta³y 2 wtyczki:
+\emph{DataSetCreator} i \emph{RandomDataSetCreator}.
+
+Zadaniem obydwu z nich jest utworzenie zbioru danych o podanej przez u¿ytkownika
+nazwie i zapisanie jego struktury w bazie danych. Jako, ¿e wtyczki nie maj¹
+bezpoœredniego dostêpu do g³ównej bazy danych \emph{Salomona}, do tworzenia
+i~zapisywania zbiorów danych wykorzystuj¹ menad¿era zbiorów danych
+(\emph{IDataSetManager}).
+
+Ich dzia³anie jest zbli¿one, ró¿ni¹ siê tylko rodzajem danych wejœciowych.
+\emph{DataSetCreator} pozwala u¿ytkownikowi na dok³adne wyspecyfikowanie jakie
+warunki musz¹ spe³niaæ poszczególne rekordy, np. bazuj¹c na relacji Osoby, 
+w wynikowym zbiorze danych mog¹ siê znaleŸæ tylko takie, których wiek przekracza
+20 lat, a nazwisko zaczyna  siê na literê ,,K''. 
+Wykorzystanie tej wtyczki pozwala na dok³adne okreœlenie
+interesuj¹cego zbioru danych, jednak jest dosyæ pracoch³onne.
+W przypadku, gdy nie jest wa¿ne, które konkretnie rekordy znajd¹ siê w wynikowym
+zbiorze danych lepiej pos³u¿yæ siê wtyczk¹ \emph{RandomDataSetCreator}. 
+Podobnie jak wtyczka \emph{DataSetCreator} pozwala ona na okreœlenie, które
+kolumny z poszczególnych relacji maj¹ byæ uwzglêdniane w wynikowym zbiorze
+danych, jednak poszczególne wiersze dobierane s¹ losowo. U¿ytkownik okreœla
+tylko, ile wierszy z danej relacji ma znaleŸæ siê w wygenerowanym zbiorze danych.
+
+Obie wtyczki oferuj¹ podobny graficzny interfejs u¿ytkownika. Panel z
+ustawieniami wtyczki pozwala na wybór kolumn z poszczególnych relacji, które
+maj¹ znaleŸæ siê w wygenerowanym zbiorze danych. W przypadku wtyczki
+\emph{DataSetCreator} dodatkowo okreœla siê, jakie waruneki maj¹ spe³aniaæ
+rekordy (Rys \ref{fig:datasetcreator}), 
+a wtyczka \emph{RandomDataSetCreator} wymaga podania iloœci
+wierszów z poszczególnych relacji, które maj¹ byæ wygenerowane.
+
+\begin{figure}[H]
+	\centering
+		\includegraphics[width=0.90\textwidth]{img/salomon/plugins/datasetcreator.png}
+	\caption{Wprowadzanie ustawieñ wtyczki DataSetCreator}
+	\label{fig:datasetcreator}
+\end{figure}
