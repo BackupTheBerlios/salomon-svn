@@ -16,6 +16,7 @@ Ich dzia³anie jest zbli¿one, ró¿ni¹ siê tylko rodzajem danych wejœciowych.
 warunki musz¹ spe³niaæ poszczególne rekordy, np. bazuj¹c na relacji Osoby, 
 w wynikowym zbiorze danych mog¹ siê znaleŸæ tylko takie, których wiek przekracza
 20 lat, a nazwisko zaczyna  siê na literê ,,K''. 
+
 Wykorzystanie tej wtyczki pozwala na dok³adne okreœlenie
 interesuj¹cego zbioru danych, jednak jest dosyæ pracoch³onne.
 W przypadku, gdy nie jest wa¿ne, które konkretnie rekordy znajd¹ siê w wynikowym
@@ -39,3 +40,33 @@ wierszów z poszczególnych relacji, które maj¹ byæ wygenerowane.
 	\caption{Wprowadzanie ustawieñ wtyczki DataSetCreator}
 	\label{fig:datasetcreator}
 \end{figure}
+
+\subsection{Tworzenie zbioru atrybutów}
+
+Tworzenie zbioru atrybutów odbywa siê za pomoc¹ wtyczki
+\emph{AttributeSetCreator}.  
+
+Jej zadaniem jest utworzenie zbioru atrybutów, który mo¿e potem zostaæ
+wykorzystany np. do budowy drzewa decyzyjnego.
+
+Ka¿dy atrybut odpowiada kolumnie relacji z bazy danych, posiada tak¿e dodatkowo
+typ oraz w³aœciwoœæ okreœlaj¹c¹, czy jest to atrybut decyzyjny. 
+
+Graficzny interfejs s³u¿¹cy do tworzenia zbioru atrybutów jest podobny do
+interfejsu wtyczek tworz¹cych zbiory danych. Pozwala na wybór kolumny, której
+nowy atrybut ma odpowiadaæ, wprowadzenie nazwy atrybutu, okreœlenie jego typu
+(liczba ca³kowita, liczba zmiennoprzecinkowa, tekstowy i wyliczeniowy) oraz
+tego, czy jest to atrybut decyzyjny (Rys \ref{fig:attrsetcreator}). 
+
+\begin{figure}[H]
+	\centering
+		\includegraphics[width=0.90\textwidth]{img/salomon/plugins/attrsetcreator.png}
+	\caption{Wprowadzanie ustawieñ wtyczki AttributeSetCreator}
+	\label{fig:attrsetcreator}
+\end{figure}
+
+W danym zbiorze danych musi znajdowaæ siê dok³adnie jeden atrybut decyzyjny.
+W przypadku atrybutów wyliczeniowych przyjêto za³o¿enie, ¿e wartoœci, które mo¿e
+on przyjmowaæ to te, które przechowuje kolumna w relacji, której odpowiada.
+
+
