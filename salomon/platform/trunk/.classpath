@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry excluding="**/.svn/*" kind="src" path="src"/>
-	<classpathentry output="test/junit/bin" kind="src" path="test/junit/src"/>
+	<classpathentry kind="src" output="test/junit/bin" path="test/junit/src"/>
 	<classpathentry kind="lib" path="lib/firebirdsql.jar"/>
 	<classpathentry kind="lib" path="lib/mini-j2ee.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="lib/log4j-1.2.8.jar"/>
-	<classpathentry output="test/grinder/bin" kind="src" path="test/grinder/src"/>
+	<classpathentry kind="src" output="test/grinder/bin" path="test/grinder/src"/>
 	<classpathentry kind="lib" path="lib/colt.jar"/>
 	<classpathentry kind="lib" path="lib/commons-collections-3.1.jar"/>
 	<classpathentry kind="lib" path="lib/tablesorter.jar"/>
-	<classpathentry kind="lib" path="lib/jung.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jung.jar"/>
 	<classpathentry kind="lib" path="lib/dynamicjava.jar"/>
-	<classpathentry kind="lib" path="lib/forms.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/forms.jar"/>
 	<classpathentry kind="lib" path="lib/jedit.jar"/>
 	<classpathentry kind="lib" path="lib/junit.jar"/>
 	<classpathentry kind="lib" path="lib/looks.jar"/>
