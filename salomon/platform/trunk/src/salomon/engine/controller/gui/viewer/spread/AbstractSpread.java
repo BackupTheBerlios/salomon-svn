@@ -26,14 +26,11 @@ import java.awt.Dimension;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTable;
 
 import salomon.engine.database.DBManager;
 import salomon.engine.database.queries.SQLSelect;
+import salomon.util.gui.DBDataTable;
 
-/**
- * @author nico
- */
 public abstract class AbstractSpread extends JPanel
 {
     /**
@@ -47,7 +44,7 @@ public abstract class AbstractSpread extends JPanel
 
     protected SQLSelect _select;
 
-    protected JTable _table;
+    protected DBDataTable _table;
 
     public AbstractSpread(DBManager dbManager)
     {
@@ -59,7 +56,12 @@ public abstract class AbstractSpread extends JPanel
         this.add(_scrTablePane, BorderLayout.CENTER);
 
         this.initColumns();
-        this.setPreferredSize(new Dimension(640, 480));
+        this.setPreferredSize(new Dimension(400, 200));
+    }
+
+    protected void addColumn(String columnName)
+    {
+        addColumn("", columnName);
     }
 
     protected void addColumn(String title, String columnName)

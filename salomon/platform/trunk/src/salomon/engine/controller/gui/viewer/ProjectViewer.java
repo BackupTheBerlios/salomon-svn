@@ -21,19 +21,28 @@
 
 package salomon.engine.controller.gui.viewer;
 
-import salomon.engine.controller.gui.viewer.spread.AbstractSearchSpread;
+import java.sql.SQLException;
+
+import javax.swing.JPanel;
+
+import salomon.engine.controller.gui.viewer.spread.AbstractChildForm;
+import salomon.engine.controller.gui.viewer.spread.AbstractManagedSearchSpread;
 import salomon.engine.database.DBManager;
+import salomon.engine.database.queries.SQLDelete;
 import salomon.engine.project.ProjectInfo;
+import salomon.platform.exception.DBException;
 
 /**
  * 
  */
-public final class ProjectViewer extends AbstractSearchSpread
+public final class ProjectViewer extends AbstractManagedSearchSpread
 {
-
     public ProjectViewer(DBManager dbManager)
     {
         super(dbManager);
+        setButtonVisable(Buttons.ADD, false);
+        setButtonVisable(Buttons.EDIT, false);
+        _childForm = new ProjectChildForm(this, dbManager);
     }
 
     @Override
@@ -48,5 +57,78 @@ public final class ProjectViewer extends AbstractSearchSpread
         addFilteredField("Id", "project_id");
         addFilteredField("Name", "project_name");
         addFilteredField("Info", "project_info");
+    }
+
+    private class ProjectChildForm extends AbstractChildForm
+    {
+
+        public ProjectChildForm(AbstractManagedSearchSpread spread,
+                DBManager manager)
+        {
+            super(spread, manager);
+        }
+
+        @Override
+        public JPanel getPanel()
+        {
+            throw new UnsupportedOperationException(
+                    "Method ProjectChildForm.getPanel() not implemented yet!");
+        }
+
+        @Override
+        public void initData()
+        {
+            throw new UnsupportedOperationException(
+                    "Method ProjectChildForm.initData() not implemented yet!");
+        }
+
+        @Override
+        public void loadData(int key) throws DBException
+        {
+            throw new UnsupportedOperationException(
+                    "Method ProjectChildForm.loadData() not implemented yet!");
+        }
+
+        @Override
+        public void refreshControls()
+        {
+            throw new UnsupportedOperationException(
+                    "Method ProjectChildForm.refreshControls() not implemented yet!");
+        }
+
+        @Override
+        public void removeData(int key) throws DBException
+        {
+            SQLDelete delete = new SQLDelete(ProjectInfo.TABLE_NAME);
+            delete.addCondition(ProjectInfo.PRIMARY_KEY + "=", key);
+            try {
+                _manager.delete(delete);
+                _manager.commit();
+            } catch (SQLException e) {
+                throw new DBException(e);
+            }
+        }
+
+        @Override
+        public void save() throws DBException
+        {
+            throw new UnsupportedOperationException(
+                    "Method ProjectChildForm.save() not implemented yet!");
+        }
+
+        @Override
+        public void save(int key) throws DBException
+        {
+            throw new UnsupportedOperationException(
+                    "Method ProjectChildForm.save() not implemented yet!");
+        }
+
+        @Override
+        protected void refreshForm(int key)
+        {
+            throw new UnsupportedOperationException(
+                    "Method ProjectChildForm.refreshForm() not implemented yet!");
+        }
+
     }
 }

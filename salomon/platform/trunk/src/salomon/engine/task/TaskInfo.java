@@ -58,6 +58,8 @@ public final class TaskInfo implements IInfo
 
     private static final Logger LOGGER = Logger.getLogger(TaskInfo.class);
 
+    public static final String PRIMARY_KEY = "task_id";
+
     private Date _cDate;
 
     /**
@@ -107,7 +109,7 @@ public final class TaskInfo implements IInfo
     public boolean delete() throws DBException
     {
         SQLDelete delete = new SQLDelete(TABLE_NAME);
-        delete.addCondition("task_id =", _taskID);
+        delete.addCondition(PRIMARY_KEY + " =", _taskID);
         try {
             return (_dbManager.delete(delete) > 0);
         } catch (SQLException e) {
@@ -253,7 +255,7 @@ public final class TaskInfo implements IInfo
             _status = TaskInfo.ACTIVE;
         }
         update.addValue("status", _status);
-        
+
         // updating start/stop time depanding on status
         if (_status == REALIZATION) {
             update.addValue("start_time", new Time(System.currentTimeMillis()));
@@ -267,7 +269,7 @@ public final class TaskInfo implements IInfo
         }
         update.addValue("lm_date", new Date(System.currentTimeMillis()));
         try {
-            _taskID = _dbManager.insertOrUpdate(update, "task_id", _taskID,
+            _taskID = _dbManager.insertOrUpdate(update, PRIMARY_KEY, _taskID,
                     GEN_NAME);
         } catch (SQLException e) {
             _cDate = null;

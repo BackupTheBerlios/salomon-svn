@@ -21,17 +21,27 @@
 
 package salomon.engine.controller.gui.viewer;
 
-import salomon.engine.controller.gui.viewer.spread.AbstractSearchSpread;
-import salomon.engine.database.DBManager;
-import salomon.engine.task.TaskInfo;
+import java.sql.SQLException;
 
-public class TaskViewer extends AbstractSearchSpread
+import javax.swing.JPanel;
+
+import salomon.engine.controller.gui.viewer.spread.AbstractChildForm;
+import salomon.engine.controller.gui.viewer.spread.AbstractManagedSearchSpread;
+import salomon.engine.database.DBManager;
+import salomon.engine.database.queries.SQLDelete;
+import salomon.engine.task.TaskInfo;
+import salomon.platform.exception.DBException;
+
+public class TaskViewer extends AbstractManagedSearchSpread
 {
     private static final long serialVersionUID = 1L;
 
     public TaskViewer(DBManager dbManager)
     {
         super(dbManager);
+        setButtonVisable(Buttons.ADD, false);
+        setButtonVisable(Buttons.EDIT, false);
+        _childForm = new TaskChildForm(this, dbManager);
     }
 
     @Override
@@ -48,5 +58,78 @@ public class TaskViewer extends AbstractSearchSpread
         addFilteredField("PluginName", "plugin_name");
         addFilteredField("Name", "task_name");
         addFilteredField("Status", "status");
+    }
+
+    private class TaskChildForm extends AbstractChildForm
+    {
+
+        public TaskChildForm(AbstractManagedSearchSpread spread,
+                DBManager manager)
+        {
+            super(spread, manager);
+        }
+
+        @Override
+        public JPanel getPanel()
+        {
+            throw new UnsupportedOperationException(
+                    "Method TaskChildForm.getPanel() not implemented yet!");
+        }
+
+        @Override
+        public void initData()
+        {
+            throw new UnsupportedOperationException(
+                    "Method TaskChildForm.initData() not implemented yet!");
+        }
+
+        @Override
+        public void loadData(int key) throws DBException
+        {
+            throw new UnsupportedOperationException(
+                    "Method TaskChildForm.loadData() not implemented yet!");
+        }
+
+        @Override
+        public void refreshControls()
+        {
+            throw new UnsupportedOperationException(
+                    "Method TaskChildForm.refreshControls() not implemented yet!");
+        }
+
+        @Override
+        public void removeData(int key) throws DBException
+        {
+            SQLDelete delete = new SQLDelete(TaskInfo.TABLE_NAME);
+            delete.addCondition(TaskInfo.PRIMARY_KEY + "=", key);
+            try {
+                _manager.delete(delete);
+                _manager.commit();
+            } catch (SQLException e) {
+                throw new DBException(e);
+            }
+        }
+
+        @Override
+        public void save() throws DBException
+        {
+            throw new UnsupportedOperationException(
+                    "Method TaskChildForm.save() not implemented yet!");
+        }
+
+        @Override
+        public void save(int key) throws DBException
+        {
+            throw new UnsupportedOperationException(
+                    "Method TaskChildForm.save() not implemented yet!");
+        }
+
+        @Override
+        protected void refreshForm(int key)
+        {
+            throw new UnsupportedOperationException(
+                    "Method TaskChildForm.refreshForm() not implemented yet!");
+        }
+
     }
 }

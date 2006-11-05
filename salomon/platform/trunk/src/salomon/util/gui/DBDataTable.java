@@ -21,16 +21,51 @@
 
 package salomon.util.gui;
 
+import java.util.Enumeration;
+import java.util.Map;
+
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
-
-import org.apache.log4j.Logger;
+import javax.swing.table.TableColumn;
 
 import tablesorter.TableSorter;
 
 public final class DBDataTable extends JTable
 {
+    public DBDataTable(Object[][] data, Object[] columnNames)
+    {
+        setModel(new DBDataTableModel(data, columnNames));
+        setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        //      setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+        setModel(new TableSorter(new DBDataTableModel(data, columnNames),
+                getTableHeader()));
+
+        // hiding the first column with the row ID
+        getColumnModel().removeColumn(getColumnModel().getColumn(0));
+    }
+
+    public int getSelectedKey()
+    {
+        int selectedRow = getSelectedRow();
+        int key = -1;
+        if (selectedRow >= 0) {
+            key = ((Integer) getModel().getValueAt(selectedRow, 0)).intValue();
+        }
+        return key;
+    }
+
+    public void remapColumnNames(Map<String, String> columnNames)
+    {
+        Enumeration<TableColumn> columns = getColumnModel().getColumns();
+        while (columns.hasMoreElements()) {
+            TableColumn column = columns.nextElement();
+            String newName = null;
+            if ((newName = columnNames.get(column.getHeaderValue().toString())) != null) {
+                column.setHeaderValue(newName);
+            }
+        }
+    }
 
     private class DBDataTableModel extends DefaultTableModel
     {
@@ -45,28 +80,5 @@ public final class DBDataTable extends JTable
         {
             return false;
         }
-    }
-
-    private static final Logger LOGGER = Logger.getLogger(DBDataTable.class);
-
-    public DBDataTable(Object[][] data, Object[] columnNames)
-    {
-        setModel(new DBDataTableModel(data, columnNames));
-        setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        setModel(new TableSorter(new DBDataTableModel(data, columnNames),
-                getTableHeader()));
-
-        // hiding the first column with the row ID
-        //		getColumnModel().removeColumn(getColumnModel().getColumn(0));
-    }
-
-    public int getSelectedKey()
-    {
-        int selectedRow = getSelectedRow();
-        int key = -1;
-        if (selectedRow >= 0) {
-            key = ((Integer) getModel().getValueAt(selectedRow, 0)).intValue();
-        }
-        return key;
     }
 }

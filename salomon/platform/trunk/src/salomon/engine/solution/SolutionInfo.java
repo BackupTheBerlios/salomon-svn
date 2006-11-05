@@ -37,6 +37,18 @@ import salomon.platform.exception.PlatformException;
 public final class SolutionInfo implements IInfo
 {
 
+    public static final String PRIMARY_KEY = "solution_id";
+
+    public static final String TABLE_NAME = "solutions";
+
+    public static final String VIEW_NAME = "solutions_view";
+
+    private static final String GEN_NAME = "gen_solution_id";
+
+    private static final Logger LOGGER = Logger.getLogger(SolutionInfo.class);
+
+    private Date _cDate;
+
     /**
      * 
      * @uml.property name="_dbManager"
@@ -48,6 +60,8 @@ public final class SolutionInfo implements IInfo
 
     private String _info;
 
+    private Date _lmDate;
+
     private String _name;
 
     private String _passwd;
@@ -58,10 +72,6 @@ public final class SolutionInfo implements IInfo
 
     private String _user;
 
-    private Date _cDate;
-
-    private Date _lmDate;
-
     public SolutionInfo(DBManager manager)
     {
         _dbManager = manager;
@@ -70,7 +80,7 @@ public final class SolutionInfo implements IInfo
     public boolean delete() throws DBException
     {
         SQLDelete delete = new SQLDelete(TABLE_NAME);
-        delete.addCondition("solution_id =", _solutionID);
+        delete.addCondition(PRIMARY_KEY + " =", _solutionID);
         try {
             return (_dbManager.delete(delete) > 0);
         } catch (SQLException e) {
@@ -201,7 +211,7 @@ public final class SolutionInfo implements IInfo
 
         update.addValue("lm_date", new Date(System.currentTimeMillis()));
         try {
-            _solutionID = _dbManager.insertOrUpdate(update, "solution_id",
+            _solutionID = _dbManager.insertOrUpdate(update, PRIMARY_KEY,
                     _solutionID, GEN_NAME);
         } catch (SQLException e) {
             _cDate = null;
@@ -273,13 +283,5 @@ public final class SolutionInfo implements IInfo
         return "[" + _solutionID + ", " + _name + ", " + _info + ", " + _host
                 + ", " + _path + ", " + _user + ", " + _passwd + "]";
     }
-
-    public static final String TABLE_NAME = "solutions";
-
-    public static final String VIEW_NAME = "solutions_view";
-
-    private static final String GEN_NAME = "gen_solution_id";
-
-    private static final Logger LOGGER = Logger.getLogger(SolutionInfo.class);
 
 }

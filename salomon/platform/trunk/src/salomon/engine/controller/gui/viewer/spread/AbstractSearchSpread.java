@@ -29,7 +29,9 @@ import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -51,6 +53,106 @@ import salomon.util.gui.Utils;
  */
 public abstract class AbstractSearchSpread extends AbstractSpread
 {
+    //    private static final SoftResourceBundle BUNDLE = BundleManager.getResourceBundle("farm.gui.common");
+
+    private static final Logger LOGGER = Logger.getLogger(AbstractSearchSpread.class);
+
+    protected JButton _btnSearch;
+
+    protected Map<String, String> _columnNamesMap;
+
+    protected JPanel _filterPanel;
+
+    protected LinkedList<FilterField> _filters;
+
+    protected Collection<String> _searchConditions;
+
+    public AbstractSearchSpread(DBManager dbManager)
+    {
+        super(dbManager);
+        _filters = new LinkedList<FilterField>();
+        _searchConditions = new LinkedList<String>();
+        _columnNamesMap = new HashMap<String, String>();
+
+        _btnSearch = new JButton(Messages.getString("BTN_SEARCH"));
+        _btnSearch.addActionListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent e)
+            {
+                search();
+            }
+        });
+        _filterPanel = new JPanel();
+        _filterPanel.setLayout(new BoxLayout(_filterPanel, BoxLayout.LINE_AXIS));
+
+        this.add(_filterPanel, BorderLayout.NORTH);
+        this.initFilters();
+        _filterPanel.add(Box.createHorizontalGlue());
+        _filterPanel.add(_btnSearch);
+
+        initColumnMapping();
+    }
+
+    public abstract void initFilters();
+
+    /**
+     * Set the value of columnNamesMap field.
+     * @param columnNamesMap The columnNamesMap to set
+     */
+    public void setColumnNamesMap(Map<String, String> columnNamesMap)
+    {
+        _columnNamesMap = columnNamesMap;
+    }
+
+    protected void addFilteredField(String title, String columnName)
+    {
+        FilterField filter = new FilterField(title, columnName);
+        _filters.add(filter);
+        _filterPanel.add(filter);
+        _filterPanel.add(Box.createHorizontalStrut(5));
+    }
+
+    protected void addSearchCondition(String condition)
+    {
+        _searchConditions.add(condition);
+    }
+
+    protected void clearSearchConditions()
+    {
+        _searchConditions.clear();
+    }
+
+    protected void initColumnMapping()
+    {
+        // empty by default
+    }
+
+    protected void search()
+    {
+        _select.clearConditions();
+        for (FilterField filter : _filters) {
+            if (!filter.isEmpty()) {
+                _select.addCondition(filter.getCondition());
+            }
+        }
+        for (String condition : _searchConditions) {
+            _select.addCondition(condition);
+        }
+        ResultSet resultSet = null;
+        try {
+            resultSet = _dbManager.select(_select);
+            _table = Utils.createResultTable(resultSet);
+            // remap columns
+            if (_columnNamesMap != null) {
+                _table.remapColumnNames(_columnNamesMap);
+            }
+            _scrTablePane.setViewportView(_table);
+        } catch (SQLException e) {
+            LOGGER.fatal("", e);
+            Utils.showErrorMessage("ERR_QUERY_EXEC_ERROR");
+        }
+    }
+
     private class FilterField extends JComponent
     {
 
@@ -102,81 +204,6 @@ public abstract class AbstractSearchSpread extends AbstractSpread
         public boolean isEmpty()
         {
             return "".equals(_txtColumn.getText().trim());
-        }
-    }
-
-    private static final Logger LOGGER = Logger.getLogger(AbstractSearchSpread.class);
-
-    protected JButton _btnSearch;
-
-    protected JPanel _filterPanel;
-
-    protected LinkedList<FilterField> _filters;
-
-    protected Collection<String> _searchConditions;
-
-    public AbstractSearchSpread(DBManager dbManager)
-    {
-        super(dbManager);
-        _filters = new LinkedList<FilterField>();
-        _searchConditions = new LinkedList<String>();
-
-        _btnSearch = new JButton("Search");
-        _btnSearch.addActionListener(new ActionListener() {
-
-            public void actionPerformed(ActionEvent e)
-            {
-                search();
-            }
-        });
-        _filterPanel = new JPanel();
-        _filterPanel.setLayout(new BoxLayout(_filterPanel, BoxLayout.LINE_AXIS));
-
-        this.add(_filterPanel, BorderLayout.NORTH);
-        this.initFilters();
-        _filterPanel.add(Box.createHorizontalGlue());
-        _filterPanel.add(_btnSearch);
-    }
-
-    protected void addFilteredField(String title, String columnName)
-    {
-        FilterField filter = new FilterField(title, columnName);
-        _filters.add(filter);
-        _filterPanel.add(filter);
-        _filterPanel.add(Box.createHorizontalStrut(5));
-    }
-
-    protected void addSearchCondition(String condition)
-    {
-        _searchConditions.add(condition);
-    }
-
-    protected void clearSearchConditions()
-    {
-        _searchConditions.clear();
-    }
-
-    public abstract void initFilters();
-
-    protected void search()
-    {
-        _select.clearConditions();
-        for (FilterField filter : _filters) {
-            if (!filter.isEmpty()) {
-                _select.addCondition(filter.getCondition());
-            }
-        }
-        for (String condition : _searchConditions) {
-            _select.addCondition(condition);
-        }
-        ResultSet resultSet = null;
-        try {
-            resultSet = _dbManager.select(_select);
-            _table = Utils.createResultTable(resultSet);
-            _scrTablePane.setViewportView(_table);
-        } catch (SQLException e) {
-            LOGGER.fatal("", e);
-            Utils.showErrorMessage(Messages.getString("ERR_QUERY_EXEC_ERROR"));
         }
     }
 }

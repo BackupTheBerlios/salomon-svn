@@ -51,6 +51,8 @@ public class PluginInfo implements IInfo, Serializable
 
     public static final String VIEW_NAME = "plugins_view";
 
+    public static final String PRIMARY_KEY = "plugin_id";
+
     /**
      * 
      * @uml.property name="_dbManager"
@@ -99,7 +101,7 @@ public class PluginInfo implements IInfo, Serializable
     public boolean delete() throws DBException
     {
         SQLDelete delete = new SQLDelete(TABLE_NAME);
-        delete.addCondition("plugin_id =", _pluginID);
+        delete.addCondition(PRIMARY_KEY + " =", _pluginID);
         try {
             return (_dbManager.delete(delete) > 0);
         } catch (SQLException e) {
@@ -225,7 +227,7 @@ public class PluginInfo implements IInfo, Serializable
         }
         update.addValue("lm_date", new Date(System.currentTimeMillis()));
         try {
-            _pluginID = _dbManager.insertOrUpdate(update, "plugin_id",
+            _pluginID = _dbManager.insertOrUpdate(update, PRIMARY_KEY,
                     _pluginID, GEN_NAME);
         } catch (SQLException e) {
             _cDate = null;

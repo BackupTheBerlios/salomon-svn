@@ -41,6 +41,8 @@ public final class ProjectInfo implements IInfo
 
     public static final String VIEW_NAME = "projects_view";
 
+    public static final String PRIMARY_KEY = "project_id";
+
     private static final String GEN_NAME = "gen_project_id";
 
     private static final Logger LOGGER = Logger.getLogger(ProjectInfo.class);
@@ -81,7 +83,7 @@ public final class ProjectInfo implements IInfo
     public boolean delete() throws DBException
     {
         SQLDelete delete = new SQLDelete(TABLE_NAME);
-        delete.addCondition("project_id =", _projectID);
+        delete.addCondition(PRIMARY_KEY + " =", _projectID);
         try {
             return (_dbManager.delete(delete) > 0);
         } catch (SQLException e) {
@@ -189,7 +191,7 @@ public final class ProjectInfo implements IInfo
         }
         update.addValue("lm_date", new Date(System.currentTimeMillis()));
         try {
-            _projectID = _dbManager.insertOrUpdate(update, "project_id",
+            _projectID = _dbManager.insertOrUpdate(update, PRIMARY_KEY,
                     _projectID, GEN_NAME);
         } catch (SQLException e) {
             _cDate = null;

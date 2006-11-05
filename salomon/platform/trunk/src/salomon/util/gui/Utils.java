@@ -23,7 +23,6 @@ package salomon.util.gui;
 
 import java.awt.Component;
 import java.awt.Point;
-import java.awt.Window;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
@@ -32,7 +31,6 @@ import java.util.Collection;
 import java.util.LinkedList;
 
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
 
 import org.apache.log4j.Logger;
 
@@ -44,51 +42,16 @@ import salomon.engine.Messages;
  */
 public final class Utils
 {
+    /**
+     * 
+     * @uml.property name="_instance"
+     * @uml.associationEnd multiplicity="(0 1)"
+     */
+    private static Utils _instance;
+
+    private static final Logger LOGGER = Logger.getLogger(Utils.class);
+
     private Component _parent;
-
-    private Point getCenterLocationImpl(Window window)
-    {
-        Point location = new Point();
-        location.x = _parent.getLocation().x
-                + (_parent.getSize().width - window.getWidth()) / 2;
-        location.y = _parent.getLocation().y
-                + (_parent.getSize().height - window.getHeight()) / 2;
-        return location;
-    }
-
-    private void setParentImpl(Component parent)
-    {
-        _parent = parent;
-    }
-
-    private void showErrorMessageImpl(String msg)
-    {
-        JOptionPane.showMessageDialog(_parent, msg,
-                Messages.getString("TIT_ERROR"), JOptionPane.ERROR_MESSAGE);
-    }
-
-    private void showInfoMessageImpl(String msg)
-    {
-        JOptionPane.showMessageDialog(_parent, msg,
-                Messages.getString("TIT_INFO"), JOptionPane.INFORMATION_MESSAGE);
-    }
-
-    private boolean showQuestionMessageImpl(String title, String msg)
-    {
-        int retVal = JOptionPane.showConfirmDialog(_parent, msg, title,
-                JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
-
-        return (retVal == JOptionPane.YES_OPTION);
-    }
-
-    private boolean showWarningMessageImpl(String msg)
-    {
-        int retVal = JOptionPane.showConfirmDialog(_parent, msg,
-                Messages.getString("TIT_WARN"), JOptionPane.YES_NO_OPTION,
-                JOptionPane.WARNING_MESSAGE);
-
-        return (retVal == JOptionPane.YES_OPTION);
-    }
 
     /**
      * Creates JTable basing on given collection of data.
@@ -96,7 +59,7 @@ public final class Utils
      * @param allData collection of data
      * @return JTable representing given data
      */
-    public static JTable createResultTable(Collection<Object[]> allData)
+    public static DBDataTable createResultTable(Collection<Object[]> allData)
     {
         String[] columnNames = null;
         Object[][] data = null;
@@ -126,14 +89,14 @@ public final class Utils
      * @return table representing given result set.
      * @throws SQLException
      */
-    public static JTable createResultTable(ResultSet resultSet)
+    public static DBDataTable createResultTable(ResultSet resultSet)
             throws SQLException
     {
-        JTable table = createResultTable(getDataFromResultSet(resultSet));
+        DBDataTable table = createResultTable(getDataFromResultSet(resultSet));
         return table;
     }
 
-    public static Point getCenterLocation(Window window)
+    public static Point getCenterLocation(Component window)
     {
         return getInstance().getCenterLocationImpl(window);
     }
@@ -146,7 +109,7 @@ public final class Utils
      * @return
      * @throws SQLException
      */
-    public static Collection getDataFromResultSet(ResultSet resultSet)
+    public static Collection<Object[]> getDataFromResultSet(ResultSet resultSet)
             throws SQLException
     {
         LinkedList<Object[]> allData = new LinkedList<Object[]>();
@@ -223,6 +186,19 @@ public final class Utils
     /**
      * Shows a question message
      * 
+     * @parent parent component
+     * @param title title of message
+     * @param msg text of the message
+     */
+    public static boolean showQuestionMessage(Component parent, String title,
+            String msg)
+    {
+        return getInstance().showQuestionMessageImpl(parent, title, msg);
+    }
+
+    /**
+     * Shows a question message
+     * 
      * @param title title of message
      * @param msg text of the message
      */
@@ -249,12 +225,53 @@ public final class Utils
         return _instance;
     }
 
-    /**
-     * 
-     * @uml.property name="_instance"
-     * @uml.associationEnd multiplicity="(0 1)"
-     */
-    private static Utils _instance;
+    private Point getCenterLocationImpl(Component window)
+    {
+        Point location = new Point();
+        location.x = _parent.getLocation().x
+                + (_parent.getSize().width - window.getWidth()) / 2;
+        location.y = _parent.getLocation().y
+                + (_parent.getSize().height - window.getHeight()) / 2;
+        return location;
+    }
 
-    private static final Logger LOGGER = Logger.getLogger(Utils.class);
+    private void setParentImpl(Component parent)
+    {
+        _parent = parent;
+    }
+
+    private void showErrorMessageImpl(String msg)
+    {
+        JOptionPane.showMessageDialog(_parent, msg,
+                Messages.getString("TIT_ERROR"), JOptionPane.ERROR_MESSAGE);
+    }
+
+    private void showInfoMessageImpl(String msg)
+    {
+        JOptionPane.showMessageDialog(_parent, msg,
+                Messages.getString("TIT_INFO"), JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    private boolean showQuestionMessageImpl(Component parent, String title,
+            String msg)
+    {
+        int retVal = JOptionPane.showConfirmDialog(parent, msg, title,
+                JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+
+        return (retVal == JOptionPane.YES_OPTION);
+    }
+
+    private boolean showQuestionMessageImpl(String title, String msg)
+    {
+        return showQuestionMessageImpl(_parent, title, msg);
+    }
+
+    private boolean showWarningMessageImpl(String msg)
+    {
+        int retVal = JOptionPane.showConfirmDialog(_parent, msg,
+                Messages.getString("TIT_WARN"), JOptionPane.YES_NO_OPTION,
+                JOptionPane.WARNING_MESSAGE);
+
+        return (retVal == JOptionPane.YES_OPTION);
+    }
 }
