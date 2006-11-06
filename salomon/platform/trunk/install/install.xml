@@ -22,11 +22,9 @@ Installation file for salomon project
         <authors>
             <author name="Krzysztof Rajda" email="krzycho@student.uci.agh.edu.pl"/>
             <author name="Nikodem Jura" email="nico@icslab.agh.edu.pl"/>
-            <author name="Jakub Galkowski" email="avi@student.uci.agh.edu.pl"/>
-            <author name="Jakub Pawlowski" email="qoooba@student.uci.agh.edu.pl"/>
         </authors>
         <javaversion>1.5</javaversion>
-	    <url>http://salomon.iisg.agh.edu.pl</url>
+	<url>http://developer.berlios.de/projects/salomon</url>
     </info>
     
     <!-- 
@@ -85,34 +83,32 @@ Installation file for salomon project
 	    <file src="../db/salomon.gdb" targetdir="$INSTALL_PATH/db"/>
 	    
 	    <!-- external lib jars -->
-        <file src="../lib/colt.jar" targetdir="$INSTALL_PATH/lib"/>
+	    <file src="../lib/binding.jar" targetdir="$INSTALL_PATH/lib"/>
+       	<file src="../lib/colt.jar" targetdir="$INSTALL_PATH/lib"/>
         <file src="../lib/commons-collections-3.1.jar" targetdir="$INSTALL_PATH/lib"/>
+        <file src="../lib/dynamicjava.jar" targetdir="$INSTALL_PATH/lib"/>
         <file src="../lib/firebirdsql.jar" targetdir="$INSTALL_PATH/lib"/>
-        <file src="../lib/forms-1.0.5.jar" targetdir="$INSTALL_PATH/lib"/>
-        <file src="../lib/jung-1.7.2.jar" targetdir="$INSTALL_PATH/lib"/>
+        <file src="../lib/forms.jar" targetdir="$INSTALL_PATH/lib"/>
+        <file src="../lib/jedit.jar" targetdir="$INSTALL_PATH/lib"/>
+        <file src="../lib/jung.jar" targetdir="$INSTALL_PATH/lib"/>
         <file src="../lib/log4j-1.2.8.jar" targetdir="$INSTALL_PATH/lib"/>
-        <file src="../lib/looks-1.3.2.jar" targetdir="$INSTALL_PATH/lib"/>
-	    <file src="../lib/mini-j2ee.jar" targetdir="$INSTALL_PATH/lib"/>
-
-
-        
-            <!-- plugins -->
-	    <!--<file src="../plugins/AveragePrice.jar" targetdir="$INSTALL_PATH/plugins"/>
-	    <file src="../plugins/SimpleSQLConsole.jar" targetdir="$INSTALL_PATH/plugins"/> src-->
-        <!-- <file src="../plugins/datasetunion.jar" targetdir="$INSTALL_PATH/plugins"/> -->
+        <file src="../lib/looks.jar" targetdir="$INSTALL_PATH/lib"/>
+	<file src="../lib/mini-j2ee.jar" targetdir="$INSTALL_PATH/lib"/>
+	<file src="../lib/tablesorter.jar" targetdir="$INSTALL_PATH/lib"/>
+	<file src="../lib/validation.jar" targetdir="$INSTALL_PATH/lib"/>
+	<file src="../lib/weka.jar" targetdir="$INSTALL_PATH/lib"/>
 	    
+	<file src="../salomon.jar" targetdir="$INSTALL_PATH"/>
 	    
-	    <file src="../salomon.jar" targetdir="$INSTALL_PATH"/>
+	<!-- native libraries-->
+	<file src="../fbembed.dll" targetdir="$INSTALL_PATH"/>
+	<file src="../jaybird.dll" targetdir="$INSTALL_PATH"/>
 	    
-	    <!-- native libraries-->
-	    <file src="../fbembed.dll" targetdir="$INSTALL_PATH"/>
-	    <file src="../jaybird.dll" targetdir="$INSTALL_PATH"/>
-	    
-	    <!-- configurations -->
-	    <file src="../bin/messages.properties" targetdir="$INSTALL_PATH"/>
-	    <file src="../src/version.properties" targetdir="$INSTALL_PATH"/>
-	    <file src="../bin/config.properties" targetdir="$INSTALL_PATH"/>
-	    <file src="../bin/resources.properties" targetdir="$INSTALL_PATH"/>
+	<!-- configurations -->
+	<file src="../bin/messages.properties" targetdir="$INSTALL_PATH"/>
+	<file src="../src/version.properties" targetdir="$INSTALL_PATH"/>
+	<file src="../bin/config.properties" targetdir="$INSTALL_PATH"/>
+	<file src="../bin/resources.properties" targetdir="$INSTALL_PATH"/>
         <file src="../bin/log.conf" targetdir="$INSTALL_PATH"/>
         <file src="../bin/all.policy" targetdir="$INSTALL_PATH"/>
         <file src="../install/run.bat" targetdir="$INSTALL_PATH"/>
@@ -122,20 +118,36 @@ Installation file for salomon project
     <!--            <parsable targetfile="$INSTALL_PATH/script.bat"/> The file will be parsed -->
         </pack>
        
-        <pack name="JRE" required="no">
+	<!-- <pack name="JRE" required="no">
 		<description>Java Runtime Environment</description>
 		<fileset dir="../jre" targetdir="$INSTALL_PATH/jre" defaultexcludes="yes"/>
-        </pack>       
-        
+	</pack>     -->  
+
+	<!--
         <pack name="Docs" required="no">
             <description>The documentation</description>
-	    <file src="../docs/documentation/salomon.pdf" targetdir="$INSTALL_PATH/docs"/> <!-- Reccursive adding -->
-        </pack>
-        
-        <pack name="Sources" required="no">
-		<description>The sources</description>
-		<fileset dir="../src" targetdir="$INSTALL_PATH/src" defaultexcludes="yes"/>
-        </pack>
-    </packs>
+	    <file src="../docs/documentation/salomon.pdf" targetdir="$INSTALL_PATH/docs"/>
+    </pack> -->
+    <pack name="Plugins" required="no">
+	<description>The sample plugins</description>
+	<file src="../plugins/AttributeSetCreator.jar" targetdir="$INSTALL_PATH/plugins"/>
+	<file src="../plugins/DataSetCreator.jar" targetdir="$INSTALL_PATH/plugins"/>
+	<file src="../plugins/DataSetVis.jar" targetdir="$INSTALL_PATH/plugins"/>
+	<file src="../plugins/PluginDebugger.jar" targetdir="$INSTALL_PATH/plugins"/>
+	<file src="../plugins/RandomDSCreator.jar" targetdir="$INSTALL_PATH/plugins"/>
+	<file src="../plugins/TreeEvaluator.jar" targetdir="$INSTALL_PATH/plugins"/>
+	<file src="../plugins/VisPlugin.jar" targetdir="$INSTALL_PATH/plugins"/>
+	<file src="../plugins/WekaTreeGenerator.jar" targetdir="$INSTALL_PATH/plugins"/>
+    </pack>
+
+    	<pack name="Sources" required="no">
+	    <description>The sources</description>
+	    <fileset dir="../src" targetdir="$INSTALL_PATH/src" defaultexcludes="yes"/>
+    	</pack>
+	<pack name="SampleDatabase" required="no">
+	    <description>The sources</description>
+	    <file src="../db/persons.gdb" targetdir="$INSTALL_PATH/db"/>
+	</pack>
+</packs>
     
 </installation>
