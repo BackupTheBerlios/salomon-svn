@@ -147,7 +147,7 @@ public final class ControllerPanel extends JPanel implements IControllerPanel
      * 
      * @return JPanel
      */
-    private JPanel getLstTasks()
+    private JPanel getGraphPanel()
     {
         if (_graphPanel == null) {
             _graphPanel = _taskManagerGUI.getGraphPanel();
@@ -161,7 +161,7 @@ public final class ControllerPanel extends JPanel implements IControllerPanel
     {
         if (_mainPanel == null) {
             JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
-                    getPnlPlugins(), getPnlTasks());
+                    getPnlPlugins(), getTasksPanel());
             splitPane.setOneTouchExpandable(true);
             _mainPanel = splitPane;
         }
@@ -191,7 +191,7 @@ public final class ControllerPanel extends JPanel implements IControllerPanel
      * 
      * @return JPanel
      */
-    private JPanel getPnlTaskButtons()
+    private JPanel getTaskButtons()
     {
         if (_taskControlPane == null) {
             _taskControlPane = new TaskControlPane(_taskManagerGUI).getPanel();
@@ -204,13 +204,13 @@ public final class ControllerPanel extends JPanel implements IControllerPanel
      * 
      * @return JPanel
      */
-    private JPanel getPnlTasks()
+    private JPanel getTasksPanel()
     {
         if (_pnlTasks == null) {
             _pnlTasks = new JPanel();
             _pnlTasks.setLayout(new BorderLayout());
-            _pnlTasks.add(getPnlTaskButtons(), BorderLayout.NORTH);
-            _pnlTasks.add(getLstTasks(), BorderLayout.CENTER);
+            _pnlTasks.add(getTaskButtons(), BorderLayout.NORTH);
+            _pnlTasks.add(getGraphPanel(), BorderLayout.CENTER);
             _pnlTasks.setBorder(BorderFactory.createTitledBorder(null,
                     Messages.getString("TIT_TASKS"), //$NON-NLS-1$
                     TitledBorder.LEFT, TitledBorder.DEFAULT_POSITION));
