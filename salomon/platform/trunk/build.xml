@@ -38,7 +38,7 @@
     <property name="run_script" value="run.bat" />
     <property name="release_dir" value="_release" />
     <property name="controller" value="local" />
-    <property name="plugin_src_dir" value="${basedir}/../../plugins" />
+    <property name="plugin_src_dir" value="${basedir}/../../plugins/trunk" />
     <property name="salomon_file" value="salomon.jar" />
     <property name="salomon_install_file" value="install.jar" />
 	<property name="scripts_dir" value="scripts" />
