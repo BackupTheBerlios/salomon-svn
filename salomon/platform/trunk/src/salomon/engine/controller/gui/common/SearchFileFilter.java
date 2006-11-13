@@ -25,23 +25,30 @@ import java.io.File;
 
 import javax.swing.filechooser.FileFilter;
 
-public class SearchFileFilter extends FileFilter
+public class SearchFileFilter extends FileFilter implements java.io.FileFilter
 {
 
-    String _description;
+    private String _description;
 
     private String _extension;
+
+    private boolean _showHiddenFiles;
 
     public SearchFileFilter(String extension, String description)
     {
         _extension = extension;
         _description = description;
+        // do not show hidden files by default
+        _showHiddenFiles = false;
     }
 
     @Override
     public boolean accept(File file)
     {
         if (file != null) {
+            if (!_showHiddenFiles && file.isHidden()) {
+                return false;
+            }
             if (file.isDirectory()) {
                 return true;
             }
@@ -59,9 +66,27 @@ public class SearchFileFilter extends FileFilter
         return _description + " (*." + _extension + ")";
     }
 
+    /**
+     * Returns the showHiddenFiles.
+     * @return The showHiddenFiles
+     */
+    public final boolean isShowHiddenFiles()
+    {
+        return _showHiddenFiles;
+    }
+
     public void setDescription(String description)
     {
         _description = description;
+    }
+
+    /**
+     * Set the value of showHiddenFiles field.
+     * @param showHiddenFiles The showHiddenFiles to set
+     */
+    public final void setShowHiddenFiles(boolean showHiddenFiles)
+    {
+        _showHiddenFiles = showHiddenFiles;
     }
 
     private String getExtension(File f)

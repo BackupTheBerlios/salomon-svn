@@ -92,14 +92,14 @@ CREATE VIEW PLUGINS_VIEW(
     PLUGIN_NAME,
     LOCATION,
     PLUGIN_INFO,
+    PLUGIN_TYPE,
     LM_DATE)
 AS
 select pl.plugin_id,
 pl.plugin_name,
 pl.location,
 pl.plugin_info,
+pl.plugin_type,
 pl.lm_date
 from plugins pl
 ;
-
-

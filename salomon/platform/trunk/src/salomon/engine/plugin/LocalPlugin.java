@@ -1,7 +1,9 @@
 
 package salomon.engine.plugin;
 
+import java.io.File;
 import java.io.Serializable;
+import java.net.URL;
 
 import org.apache.log4j.Logger;
 
@@ -94,7 +96,13 @@ public final class LocalPlugin implements ILocalPlugin, Serializable, Cloneable
     {
         LOGGER.debug("trying to load plugin"); //$NON-NLS-1$
         if (_plugin == null) {
-            _plugin = PluginLoader.loadPlugin(_pluginInfo.getLocation());
+            URL url = null;
+            if (_pluginInfo.getPluginType() == PluginInfo.PluginType.LOCAL) {
+                url = new File(_pluginInfo.getLocation()).toURL();
+            } else {
+                url = new URL(_pluginInfo.getLocation());
+            }
+            _plugin = PluginLoader.loadPlugin(url);
         } else {
             LOGGER.debug("plugin already loaded"); //$NON-NLS-1$
         }

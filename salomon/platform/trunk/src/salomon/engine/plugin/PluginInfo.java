@@ -43,15 +43,17 @@ import salomon.platform.exception.PlatformException;
 public class PluginInfo implements IInfo, Serializable
 {
 
-    private static final String GEN_NAME = "gen_plugin_id";
-
-    private static final Logger LOGGER = Logger.getLogger(PluginInfo.class);
+    public static final String PRIMARY_KEY = "plugin_id";
 
     public static final String TABLE_NAME = "plugins";
 
     public static final String VIEW_NAME = "plugins_view";
 
-    public static final String PRIMARY_KEY = "plugin_id";
+    private static final String GEN_NAME = "gen_plugin_id";
+
+    private static final Logger LOGGER = Logger.getLogger(PluginInfo.class);
+
+    private Date _cDate;
 
     /**
      * 
@@ -64,7 +66,9 @@ public class PluginInfo implements IInfo, Serializable
 
     private String _input;
 
-    private URL _location;
+    private Date _lmDate;
+
+    private String _location;
 
     private String _name;
 
@@ -72,11 +76,9 @@ public class PluginInfo implements IInfo, Serializable
 
     private int _pluginID;
 
+    private PluginType _pluginType;
+
     private String _version;
-
-    private Date _cDate;
-
-    private Date _lmDate;
 
     public PluginInfo(DBManager manager)
     {
@@ -144,7 +146,7 @@ public class PluginInfo implements IInfo, Serializable
     /**
      * @return Returns the location.
      */
-    public URL getLocation()
+    public String getLocation()
     {
         return _location;
     }
@@ -174,6 +176,15 @@ public class PluginInfo implements IInfo, Serializable
     }
 
     /**
+     * Returns the pluginType.
+     * @return The pluginType
+     */
+    public final PluginType getPluginType()
+    {
+        return _pluginType;
+    }
+
+    /**
      * @return Returns the version.
      */
     public String getVersion()
@@ -192,16 +203,21 @@ public class PluginInfo implements IInfo, Serializable
         try {
             _pluginID = resultSet.getInt("plugin_id");
             _name = resultSet.getString("plugin_name");
-            _location = new URL(resultSet.getString("location"));
+            _location = resultSet.getString("location");
             _info = resultSet.getString("plugin_info");
+            String type = resultSet.getString("plugin_type");
+            if (type.equals(PluginType.LOCAL.getDBType())) {
+                _pluginType = PluginType.LOCAL;
+            } else if (type.equals(PluginType.REMOTE.getDBType())) {
+                _pluginType = PluginType.REMOTE;
+            } else {
+                throw new PlatformException("Invalid plugin type:" + type);
+            }
             _cDate = resultSet.getDate("c_date");
             _lmDate = resultSet.getDate("lm_date");
         } catch (SQLException e) {
             LOGGER.fatal("Cannot load result!!", e);
             throw new DBException("Cannot load result!", e);
-        } catch (MalformedURLException e) {
-            LOGGER.fatal("Cannot load result!!", e);
-            throw new PlatformException("Cannot load result!", e);
         }
     }
 
@@ -218,6 +234,7 @@ public class PluginInfo implements IInfo, Serializable
         SQLUpdate update = new SQLUpdate(TABLE_NAME);
         update.addValue("plugin_name", _name);
         update.addValue("location", _location.toString());
+        update.addValue("plugin_type", _pluginType.getDBType());
         if (_info != null) {
             update.addValue("plugin_info", _info);
         }
@@ -253,7 +270,7 @@ public class PluginInfo implements IInfo, Serializable
     /**
      * @param location The location to set.
      */
-    public void setLocation(URL location)
+    public void setLocation(String location)
     {
         _location = location;
     }
@@ -283,6 +300,15 @@ public class PluginInfo implements IInfo, Serializable
     }
 
     /**
+     * Set the value of pluginType field.
+     * @param pluginType The pluginType to set
+     */
+    public final void setPluginType(PluginType pluginType)
+    {
+        _pluginType = pluginType;
+    }
+
+    /**
      * @param version The version to set.
      */
     public void setVersion(String version)
@@ -294,5 +320,21 @@ public class PluginInfo implements IInfo, Serializable
     public String toString()
     {
         return "" + _pluginID + "," + _name + "," + _location + "," + _info;
+    }
+
+    public static enum PluginType {
+        LOCAL("L"), REMOTE("R");
+
+        private String _type;
+
+        PluginType(String type)
+        {
+            _type = type;
+        }
+
+        String getDBType()
+        {
+            return _type;
+        }
     }
 }

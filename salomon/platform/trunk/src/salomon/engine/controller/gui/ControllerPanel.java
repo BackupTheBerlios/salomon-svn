@@ -48,13 +48,6 @@ public final class ControllerPanel extends JPanel implements IControllerPanel
 
     private JPanel _graphPanel;
 
-    /**
-     * 
-     * @uml.property name="_guiButtons"
-     * @uml.associationEnd multiplicity="(0 1)"
-     */
-    private TaskControlPane _guiButtons;
-
     private JList _lstPlugins;
 
     private JComponent _mainPanel;

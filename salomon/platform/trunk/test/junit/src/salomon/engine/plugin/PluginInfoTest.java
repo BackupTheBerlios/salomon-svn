@@ -41,7 +41,7 @@ public class PluginInfoTest extends TestCase
         PluginInfo info = new PluginInfo(_manager);
         info.setName("test plugin");
         info.setInfo("info");
-        info.setLocation(new URL("http://location.com"));
+        info.setLocation("http://location.com");
 
         // starting transaction
         _manager.rollback();

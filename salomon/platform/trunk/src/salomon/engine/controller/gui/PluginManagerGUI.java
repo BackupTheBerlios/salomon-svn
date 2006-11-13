@@ -25,7 +25,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
-import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -33,7 +32,6 @@ import javax.swing.ButtonGroup;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComponent;
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JMenuItem;
@@ -47,9 +45,11 @@ import javax.swing.JTextField;
 
 import org.apache.log4j.Logger;
 
+import salomon.engine.Config;
 import salomon.engine.Messages;
 import salomon.engine.controller.gui.action.ActionManager;
 import salomon.engine.controller.gui.common.SearchFileFilter;
+import salomon.engine.controller.gui.common.TreeFileChooser;
 import salomon.engine.controller.gui.statusbar.StatusBar;
 import salomon.engine.controller.gui.viewer.PluginViewer;
 import salomon.engine.plugin.ILocalPlugin;
@@ -57,6 +57,7 @@ import salomon.engine.plugin.IPluginManager;
 import salomon.engine.plugin.LocalPlugin;
 import salomon.engine.plugin.PluginInfo;
 import salomon.engine.plugin.PluginManager;
+import salomon.engine.plugin.PluginInfo.PluginType;
 import salomon.platform.exception.PlatformException;
 import salomon.util.gui.Utils;
 
@@ -82,7 +83,7 @@ public final class PluginManagerGUI
 
     private JComponent _editPluginPanel;
 
-    private JFileChooser _fileChooserPlugin;
+    private TreeFileChooser _treeFileChooserPlugin;
 
     /**
      * 
@@ -150,13 +151,18 @@ public final class PluginManagerGUI
                 getEditPluginPanel(), Messages.getString("MNU_ADD_PLUGIN"),
                 JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
         if (retVal == JOptionPane.OK_OPTION) {
-            URL url = null;
-            try {
-                url = new URL(_txtPluginLocation.getText());
-            } catch (MalformedURLException e) {
-                LOGGER.fatal("", e);
-                Utils.showErrorMessage(Messages.getString("ERR_CANNOT_SAVE_PLUGIN_INVALID_URL"));
-                return;
+            // determine plugin type
+            boolean isUrl = _radioLocationUrl.isSelected();
+            String location = _txtPluginLocation.getText();
+            if (isUrl) {
+                try {
+                    // try to validate given URL
+                    new URL(location);
+                } catch (MalformedURLException e) {
+                    LOGGER.fatal("", e);
+                    Utils.showErrorMessage(Messages.getString("ERR_CANNOT_SAVE_PLUGIN_INVALID_URL"));
+                    return;
+                }
             }
             LocalPlugin plugin = null;
             try {
@@ -170,8 +176,13 @@ public final class PluginManagerGUI
             try {
                 PluginInfo desc = plugin.getInfo();
                 desc.setName(_txtPluginName.getText());
-                desc.setLocation(url);
+                desc.setLocation(location);
                 desc.setInfo(_txtPluginInfo.getText());
+                if (isUrl) {
+                    desc.setPluginType(PluginType.REMOTE);
+                } else {
+                    desc.setPluginType(PluginType.LOCAL);
+                }
 
                 wasOk = _pluginManager.savePlugin(plugin);
             } catch (PlatformException e) {
@@ -191,16 +202,10 @@ public final class PluginManagerGUI
      */
     public void choosePluginFile()
     {
-        int returnVal = _fileChooserPlugin.showOpenDialog(_editPluginPanel);
-
-        if (returnVal == JFileChooser.APPROVE_OPTION) {
-            File file = _fileChooserPlugin.getSelectedFile();
-
-            try {
-                _txtPluginLocation.setText(file.toURL().toExternalForm());
-            } catch (IOException e) {
-                LOGGER.fatal("File choosing error: ", e);
-            }
+        if (_treeFileChooserPlugin.showDialog(_parent)) {
+            File file = _treeFileChooserPlugin.getSelectedFiles()[0];
+            // TODO: doesn't support subdirecotries
+            _txtPluginLocation.setText(file.getName());
             LOGGER.debug("Opening: " + file.getName());
         }
 
@@ -266,6 +271,8 @@ public final class PluginManagerGUI
      */
     public void savePlugin()
     {
+        // TODO: reimplement this method, substract some common code from this and addPlugin()
+        // and move it to separate method
         LocalPlugin plugin = (LocalPlugin) _pluginListModel.get(_selectedItem);
         PluginInfo pluginInfo = null;
         try {
@@ -284,20 +291,28 @@ public final class PluginManagerGUI
                 getEditPluginPanel(), Messages.getString("MNU_EDIT_PLUGIN"),
                 JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
         if (retVal == JOptionPane.OK_OPTION) {
-            URL url = null;
-            try {
-                url = new URL(_txtPluginLocation.getText());
-            } catch (MalformedURLException e) {
-                LOGGER.fatal("", e);
-                Utils.showErrorMessage(Messages.getString("ERR_CANNOT_SAVE_PLUGIN"));
-                return;
+            // determine plugin type
+            boolean isUrl = _radioLocationUrl.isSelected();
+            String location = _txtPluginLocation.getText();
+            if (isUrl) {
+                try {
+                    // try to validate given URL
+                    new URL(location);
+                } catch (MalformedURLException e) {
+                    LOGGER.fatal("", e);
+                    Utils.showErrorMessage(Messages.getString("ERR_CANNOT_SAVE_PLUGIN_INVALID_URL"));
+                    return;
+                }
             }
             boolean wasOk = false;
             try {
-                pluginInfo.setName(_txtPluginName.getText());
-                pluginInfo.setLocation(url);
+                pluginInfo.setName(_txtPluginName.getText());                
                 pluginInfo.setInfo(_txtPluginInfo.getText());
-
+                if (isUrl) {
+                    pluginInfo.setPluginType(PluginType.REMOTE);
+                } else {
+                    pluginInfo.setPluginType(PluginType.LOCAL);
+                }
                 wasOk = _pluginManager.savePlugin(plugin);
             } catch (PlatformException e) {
                 LOGGER.error("", e);
@@ -335,6 +350,7 @@ public final class PluginManagerGUI
      */
     public void setStatusBar(StatusBar statusBar)
     {
+        // empty body
     }
 
     /**
@@ -344,7 +360,7 @@ public final class PluginManagerGUI
     {
         if (_radioLocationFile.isSelected()) {
             _btnPluginFileLoad.setEnabled(true);
-            _txtPluginLocation.setText("file://");
+            _txtPluginLocation.setText("");
         }
         if (_radioLocationUrl.isSelected()) {
             _btnPluginFileLoad.setEnabled(false);
@@ -379,8 +395,9 @@ public final class PluginManagerGUI
         _btnPluginFileLoad.setAction(_actionManager.getChoosePluginFileAction());
         _btnPluginFileLoad.setText(Messages.getString("BTN_BROWSE"));
 
-        _fileChooserPlugin = new JFileChooser(".");
-        _fileChooserPlugin.setFileFilter(new SearchFileFilter(PLUGIN_EXT,
+        _treeFileChooserPlugin = new TreeFileChooser(new File(
+                Config.getString("PLUGINS_DIR")));
+        _treeFileChooserPlugin.setFileFilter(new SearchFileFilter(PLUGIN_EXT,
                 PLUGIN_DESC));
 
         int size = 100;
@@ -389,7 +406,7 @@ public final class PluginManagerGUI
         _txtPluginInfo = new JTextArea(3, 10);
         _radioLocationUrl = new JRadioButton();
         _radioLocationFile = new JRadioButton();
-        _txtPluginLocation.setText("file://");
+        _txtPluginLocation.setText("");
 
         _radioLocationUrl.setAction(_actionManager.getSwitchPluginLocationTypeAction());
         _radioLocationFile.setAction(_actionManager.getSwitchPluginLocationTypeAction());
