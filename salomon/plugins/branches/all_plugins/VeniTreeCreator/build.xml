@@ -1,0 +1,58 @@
+<project name="VeniTreeCreator" default="all" basedir=".">
+
+	<property file="build.properties"/>
+
+	<target name="all" description="builds distribution jars" depends="compile">
+		<jar destfile="${dist_dir}/VeniTreeCreator.jar" basedir="${bin_dir}" includes="pl/**">
+			<manifest>
+				<attribute name="Main-Class" value="pl.edu.agh.capitol.veniTreeCreator.VeniTreeCreatorPlugin" />
+			</manifest>
+		</jar>
+		<copy file="${dist_dir}/VeniTreeCreator.jar" todir="${jar_loc}"/>
+	</target>
+	
+	<path id="project.class.path">
+		<fileset dir="${lib_dir}">
+			<include name="**/platform.jar"/>
+			<include name="**/plugin.jar"/>
+			<include name="**/util.jar"/>
+		</fileset>
+		<fileset dir="${sal_lib_dir}">
+			<include name="**/*.jar"/>
+		</fileset>		
+	</path>
+
+
+	
+	<target name="compile" depends="init">
+		<echo message="Building project"/>
+		<javac srcdir="${src_dir}/" classpathref="project.class.path" destdir="${bin_dir}" source="1.5" debug="true"/>
+	</target>
+	
+	<target name="init" depends="clean">
+		<mkdir dir="${bin_dir}"/>
+		<mkdir dir="${dist_dir}"/>
+	</target>
+
+
+	<target name="clean">
+		<delete dir="${bin_dir}" />		
+		<delete dir="${dist_dir}" />
+		<delete file="${jar_loc}/VeniTreeCreator"/>
+	</target>	
+
+	
+    <target name="javadoc">
+    	<javadoc destdir="${doc_dir}/api" access="public" source="1.5" use="true" 
+    		notree="false" nonavbar="false" noindex="false" splitindex="true" 
+    		author="true" version="true" nodeprecatedlist="false" 
+    		link="http://java.sun.com/j2se/1.5.0/docs/api/index.html"
+    		nodeprecated="false" 
+    		packagenames="com.ifactory.cms.*" 
+    		sourcepath="config:src/java">
+    		<classpath refid="project.class.path" />
+    		<bottom><![CDATA[<i>Copyright &#169; 2004-2005 AGH. All Rights Reserved.</i>]]></bottom>
+    	</javadoc>
+    </target>
+
+</project>
