@@ -26,9 +26,6 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.rmi.RMISecurityManager;
-import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
 import javax.swing.BorderFactory;
@@ -54,7 +51,6 @@ import salomon.engine.controller.gui.graph.GraphTaskManagerGUI;
 import salomon.engine.holder.ManagerEngineHolder;
 import salomon.engine.platform.IManagerEngine;
 import salomon.engine.remote.CentralController;
-import salomon.engine.remote.ICentralController;
 import salomon.engine.remote.event.IMasterControllerListener;
 import salomon.engine.remote.event.RemoteControllerEvent;
 
@@ -178,35 +174,38 @@ public final class MasterController implements IController
 
     private void initRMI()
     {
-        try {
-            System.setSecurityManager(new RMISecurityManager());
-            _masterController = new CentralController();
-            _masterController.addMasterControllerListener(new CentralControllerListener());
-            String rmiPortProperty = Config.getString("SERVER_PORT");
-            int rmiPort = RMI_PORT;
-            if ((rmiPortProperty != null) && (rmiPortProperty.length() != 0)) {
-                try {
-                    rmiPort = Integer.parseInt(rmiPortProperty);
-                } catch (NumberFormatException e) {
-                    LOGGER.fatal("Error while parsing rmiPort property", e);
-                }
-            }
-            _registry = LocateRegistry.createRegistry(rmiPort);
-
-            LOGGER.debug("Registry at  on port: " + rmiPort);
-            // TODO: Use bind method
-            LOGGER.debug("Registering CentralController...");
-            _registry.rebind("CentralController", _masterController);
-        } catch (RemoteException e) {
-            LOGGER.error(e);
-            System.exit(1);
-        }
-        try {
-            ICentralController controller = (ICentralController) _registry.lookup("CentralController");
-            System.out.println(controller);
-        } catch (Exception e1) {
-            LOGGER.fatal("Exception was thrown!", e1);
-        }
+        // indicate that method is not implemented correctly
+        throw new UnsupportedOperationException(
+                "Method MasterController.initRMI() not implemented yet!");
+//        try {
+//            System.setSecurityManager(new RMISecurityManager());
+//            _masterController = new CentralController();
+//            _masterController.addMasterControllerListener(new CentralControllerListener());
+//            String rmiPortProperty = Config.getString("SERVER_PORT");
+//            int rmiPort = RMI_PORT;
+//            if ((rmiPortProperty != null) && (rmiPortProperty.length() != 0)) {
+//                try {
+//                    rmiPort = Integer.parseInt(rmiPortProperty);
+//                } catch (NumberFormatException e) {
+//                    LOGGER.fatal("Error while parsing rmiPort property", e);
+//                }
+//            }
+//            _registry = LocateRegistry.createRegistry(rmiPort);
+//
+//            LOGGER.debug("Registry at  on port: " + rmiPort);
+//            // TODO: Use bind method
+//            LOGGER.debug("Registering CentralController...");
+//            _registry.rebind("CentralController", _masterController);
+//        } catch (RemoteException e) {
+//            LOGGER.error(e);
+//            System.exit(1);
+//        }
+//        try {
+//            ICentralController controller = (ICentralController) _registry.lookup("CentralController");
+//            System.out.println(controller);
+//        } catch (Exception e1) {
+//            LOGGER.fatal("Exception was thrown!", e1);
+//        }
 
     }
 
@@ -279,7 +278,6 @@ public final class MasterController implements IController
         public MasterGUIMenu(ActionManager actionManager)
         {
             _actionManager = actionManager;
-            _resourcesDir = Config.getString("RESOURCES_DIR");
         }
 
         JButton getBtnNew()
@@ -390,18 +388,6 @@ public final class MasterController implements IController
             return _itmSQLConsole;
         }
 
-        JPanel getPnlAbout()
-        {
-            if (_pnlAbout == null) {
-                if (Config.getString("OFFICIAL").equalsIgnoreCase("Y")) {
-                    _pnlAbout = getOfficialAbout();
-                } else {
-                    _pnlAbout = getUnofficialAbout();
-                }
-            }
-            return _pnlAbout;
-        }
-
         void setPositionComponent(JComponent component)
         {
             _positionComponent = component;
@@ -503,7 +489,7 @@ public final class MasterController implements IController
         /** Method shows about dialog. */
         private void showAboutDialog()
         {
-            JOptionPane.showMessageDialog(_positionComponent, getPnlAbout(),
+            JOptionPane.showMessageDialog(_positionComponent, getOfficialAbout(),
                     "About", JOptionPane.PLAIN_MESSAGE);
         }
 

@@ -21,13 +21,6 @@
 
 package salomon.engine;
 
-import java.rmi.RMISecurityManager;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
-
-import salomon.engine.platform.ManagerEngine;
-import salomon.engine.remote.ICentralController;
-import salomon.engine.remote.RemoteController;
 
 /**
  * 
@@ -45,18 +38,20 @@ public class TestRegister
      */
     public void test() throws Exception
     {
-        String server = Config.getString("SERVER_HOST");
-
-        String port = Config.getString("SERVER_PORT");
-        int serverPort = Integer.parseInt(port);
-        System.setSecurityManager(new RMISecurityManager());
-        ManagerEngine managerEngine = new ManagerEngine();
-        RemoteController remoteController = new RemoteController(managerEngine,
-                server);
-        Registry registry = LocateRegistry.getRegistry(server, serverPort);
-        ICentralController centralController = (ICentralController) registry.lookup("CentralController");
-        centralController.register(remoteController);
-        centralController.unregister(remoteController);
+        throw new UnsupportedOperationException(
+                "Method TestRegister.test() not implemented yet!");
+//        String server = Config.getString("SERVER_HOST");
+//
+//        String port = Config.getString("SERVER_PORT");
+//        int serverPort = Integer.parseInt(port);
+//        System.setSecurityManager(new RMISecurityManager());
+//        ManagerEngine managerEngine = new ManagerEngine();
+//        RemoteController remoteController = new RemoteController(managerEngine,
+//                server);
+//        Registry registry = LocateRegistry.getRegistry(server, serverPort);
+//        ICentralController centralController = (ICentralController) registry.lookup("CentralController");
+//        centralController.register(remoteController);
+//        centralController.unregister(remoteController);
     }
 
     public static void main(String[] args)

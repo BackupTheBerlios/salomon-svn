@@ -86,8 +86,6 @@ public final class ServantController implements IController
     public void start(IManagerEngine managerEngine)
     {
         _managerEngine = managerEngine;
-        _serverHost = Config.getString("SERVER_HOST");
-        _serverPort = Integer.parseInt(Config.getString("SERVER_PORT"));
         initRMI();
     }
 

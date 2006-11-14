@@ -27,7 +27,6 @@ import javax.swing.filechooser.FileFilter;
 
 public class SearchFileFilter extends FileFilter implements java.io.FileFilter
 {
-
     private String _description;
 
     private String _extension;

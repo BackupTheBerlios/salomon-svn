@@ -21,8 +21,6 @@
 
 package salomon.engine;
 
-import java.util.MissingResourceException;
-
 import javax.swing.UIManager;
 
 import org.apache.log4j.Logger;
@@ -111,35 +109,9 @@ public final class Starter
      */
     public static void main(String[] args)
     {
-        if (args.length > 0) {
-            if ("--local".equals(args[0])) {
-                Starter.startLocal();
-            } else if ("--server".equals(args[0])) {
-                Starter.startServer();
-            } else if ("--client".equals(args[0])) {
-                Starter.startClient();
-            }
-        } else {
-            String mode = null;
-            try {
-                mode = Config.getString("MODE");
-                if ("local".equals(mode)) {
-                    Starter.startLocal();
-                } else if ("server".equals(mode)) {
-                    Starter.startServer();
-                } else if ("client".equals(mode)) {
-                    Starter.startClient();
-                } else {
-                    LOGGER.error("Wrong argument");
-                    Starter.startLocal();
-                }
-
-            } catch (MissingResourceException e) {
-                LOGGER.fatal("", e);
-                LOGGER.warn("No argument choosen");
-                Starter.startLocal();
-            }
-        }
+        // currently only LOCAL mode is supported,
+        // other modes have been remove from config file
+        Starter.startLocal();
     }
 
     private static Starter getInstance()
@@ -151,14 +123,18 @@ public final class Starter
         return _instance;
     }
 
+    @Deprecated
     private static void startClient()
     {
-        getInstance().startClientImpl();
+        throw new UnsupportedOperationException(
+                "Method Starter.startClient() not implemented yet!");
     }
 
+    @Deprecated
     private static LibraryController startLibrary()
     {
-        return getInstance().startLibraryImpl();
+        throw new UnsupportedOperationException(
+                "Method Starter.startLibrary() not implemented yet!");
     }
 
     private static void startLocal()
@@ -166,9 +142,11 @@ public final class Starter
         getInstance().startLocalImpl();
     }
 
+    @Deprecated
     private static void startServer()
     {
-        getInstance().startServerImpl();
+        throw new UnsupportedOperationException(
+                "Method Starter.startServer() not implemented yet!");
     }
 
     private void exitImpl()

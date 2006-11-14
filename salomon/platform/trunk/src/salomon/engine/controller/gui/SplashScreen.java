@@ -45,8 +45,6 @@ import salomon.engine.Version;
  */
 public final class SplashScreen
 {
-    private String _resourcesDir = null;
-
     private JWindow _splashScreen = null;
 
     private long _startTime = 0;
@@ -54,9 +52,8 @@ public final class SplashScreen
     private SplashScreen()
     {
         _startTime = System.currentTimeMillis();
-        _resourcesDir = Config.getString("RESOURCES_DIR");
-        ImageIcon image = new ImageIcon(_resourcesDir + Config.FILE_SEPARATOR
-                + Resources.getString("SPLASH_SCREEN"));
+        ImageIcon image = new ImageIcon(Config.RESOURCES_DIR
+                + Config.FILE_SEPARATOR + Resources.getString("SPLASH_SCREEN"));
         SplashLabel splashLabel = new SplashLabel(image);
         _splashScreen = new JWindow();
         _splashScreen.setLocation(splashLabel.getLocation());
@@ -90,7 +87,7 @@ public final class SplashScreen
         long splashTime = 0;
         long waitingTime = 0;
         try {
-            splashTime = Long.parseLong(Config.getString("SPLASH_TIME")) * 1000;
+            splashTime = Config.SPLASH_TIME * 1000;
             waitingTime = splashTime - (currentTime - _startTime);
         } catch (NumberFormatException e) {
             LOGGER.fatal("", e);

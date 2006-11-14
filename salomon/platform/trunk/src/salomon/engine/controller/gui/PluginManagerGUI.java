@@ -306,7 +306,7 @@ public final class PluginManagerGUI
             }
             boolean wasOk = false;
             try {
-                pluginInfo.setName(_txtPluginName.getText());                
+                pluginInfo.setName(_txtPluginName.getText());
                 pluginInfo.setInfo(_txtPluginInfo.getText());
                 if (isUrl) {
                     pluginInfo.setPluginType(PluginType.REMOTE);
@@ -395,8 +395,8 @@ public final class PluginManagerGUI
         _btnPluginFileLoad.setAction(_actionManager.getChoosePluginFileAction());
         _btnPluginFileLoad.setText(Messages.getString("BTN_BROWSE"));
 
-        _treeFileChooserPlugin = new TreeFileChooser(new File(
-                Config.getString("PLUGINS_DIR")));
+        _treeFileChooserPlugin = new TreeFileChooser(
+                new File(Config.PLUGIN_DIR));
         _treeFileChooserPlugin.setFileFilter(new SearchFileFilter(PLUGIN_EXT,
                 PLUGIN_DESC));
 

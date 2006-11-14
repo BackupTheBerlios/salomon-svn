@@ -84,10 +84,10 @@ public final class DBManager
      */
     public void connect() throws SQLException, ClassNotFoundException
     {
-        String hostName = Config.getString("HOSTNAME"); //$NON-NLS-1$
-        String dataBasePath = Config.getString("DB_PATH"); //$NON-NLS-1$
-        String user = Config.getString("USER"); //$NON-NLS-1$
-        String passwd = Config.getString("PASSWD"); //$NON-NLS-1$	
+        String hostName = Config.HOSTNAME;
+        String dataBasePath = Config.DB_PATH;
+        String user = Config.USER;
+        String passwd = Config.PASSWORD;	
         this.connect(hostName, dataBasePath, user, passwd);
     }
 

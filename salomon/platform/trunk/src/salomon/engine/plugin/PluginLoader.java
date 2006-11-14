@@ -36,6 +36,7 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 
 import salomon.engine.Config;
+import salomon.engine.controller.gui.common.SearchFileFilter;
 import salomon.plugin.IPlugin;
 
 /**
@@ -80,7 +81,7 @@ public final class PluginLoader
 
     private static File downloadFile(URL url) throws IOException
     {
-        String fileName = _pluginsDir + Config.FILE_SEPARATOR;
+        String fileName = Config.PLUGIN_DIR + Config.FILE_SEPARATOR;
         String tmpFileName = url.getFile();
         LOGGER.debug("trying to download: " + tmpFileName);
         fileName += tmpFileName.substring(tmpFileName.lastIndexOf("/") + 1);
@@ -112,10 +113,9 @@ public final class PluginLoader
         File pluginFile = null;
         String tmpFileName = url.getFile();
         String fileName = tmpFileName.substring(tmpFileName.lastIndexOf("/") + 1);
-        File dir = new File(_pluginsDir);
+        File dir = new File(Config.PLUGIN_DIR);
         LOGGER.info("looking for plugins in: " + dir.getAbsolutePath());
-        File[] plugins = dir.listFiles(new PluginLoader().new PluginFileFilter(
-                "jar"));
+        File[] plugins = dir.listFiles(new SearchFileFilter("jar", ""));
         for (int i = 0; i < plugins.length; i++) {
             if (plugins[i].getName().equals(fileName)) {
                 LOGGER.info("found in cache: " + plugins[i]);
@@ -126,60 +126,6 @@ public final class PluginLoader
 
         return pluginFile;
     }
-
-    /**
-     * File filter used to find plugins.
-     */
-    class PluginFileFilter implements FileFilter
-    {
-
-        private String extension;
-
-        public PluginFileFilter()
-        {
-            super();
-        }
-
-        public PluginFileFilter(String extension)
-        {
-            this();
-            this.extension = extension;
-        }
-
-        public boolean accept(File file)
-        {
-            if (file != null) {
-                if (file.isDirectory()) {
-                    return false;
-                }
-                String extension = getExtension(file);
-                if (extension != null) {
-                    return this.extension.equalsIgnoreCase(extension);
-                }
-            }
-            return false;
-        }
-
-        /**
-         * Returns an extention of given file.
-         * 
-         * @param file
-         * @return file extension (or null if there is no extenstion)
-         */
-        private String getExtension(File f)
-        {
-            if (f != null) {
-                String filename = f.getName();
-                int i = filename.lastIndexOf('.');
-                if (i > 0 && i < filename.length() - 1) {
-                    return filename.substring(i + 1).toLowerCase();
-                }
-            }
-            return null;
-        }
-    }
-
-    private static String _pluginsDir = Config.getString("PLUGINS_DIR");
 
     private static Map<IPlugin, URL> _pluginsLoaded = new HashMap<IPlugin, URL>();
 

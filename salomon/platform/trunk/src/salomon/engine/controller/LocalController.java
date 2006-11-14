@@ -326,9 +326,7 @@ public final class LocalController implements IController
         private JPanel _pnlAbout;
 
         private JComponent _positionComponent;
-
-        private String _resourcesDir;
-
+ 
         /**
          * creates LocalGUIMenu
          * 
@@ -337,7 +335,6 @@ public final class LocalController implements IController
         public LocalGUIMenu(ActionManager actionManager)
         {
             _actionManager = actionManager;
-            _resourcesDir = Config.getString("RESOURCES_DIR"); //$NON-NLS-1$
         }
 
         JButton getBtnNewProject()
@@ -345,7 +342,7 @@ public final class LocalController implements IController
             if (_btnNewProject == null) {
                 _btnNewProject = new JButton(
                         _actionManager.getNewProjectAction());
-                _btnNewProject.setIcon(new ImageIcon(_resourcesDir
+                _btnNewProject.setIcon(new ImageIcon(Config.RESOURCES_DIR
                         + Config.FILE_SEPARATOR + "")); //$NON-NLS-1$
             }
             return _btnNewProject;
@@ -367,7 +364,7 @@ public final class LocalController implements IController
             if (_btnOpenProject == null) {
                 _btnOpenProject = new JButton(
                         _actionManager.getOpenProjectAction());
-                _btnOpenProject.setIcon(new ImageIcon(_resourcesDir
+                _btnOpenProject.setIcon(new ImageIcon(Config.RESOURCES_DIR
                         + Config.FILE_SEPARATOR + "")); //$NON-NLS-1$                
             }
             return _btnOpenProject;
@@ -390,7 +387,7 @@ public final class LocalController implements IController
             if (_btnSaveProject == null) {
                 _btnSaveProject = new JButton(
                         _actionManager.getSaveProjectAction());
-                _btnSaveProject.setIcon(new ImageIcon(_resourcesDir
+                _btnSaveProject.setIcon(new ImageIcon(Config.RESOURCES_DIR
                         + Config.FILE_SEPARATOR + "")); //$NON-NLS-1$
             }
             return _btnSaveProject;
@@ -646,7 +643,7 @@ public final class LocalController implements IController
         private ImageIcon getMenuIcon(String iconKey)
         {
             String iconFileName = Resources.getString(iconKey);
-            String iconPath = _resourcesDir + Config.FILE_SEPARATOR
+            String iconPath = Config.RESOURCES_DIR + Config.FILE_SEPARATOR
                     + iconFileName;
 
             return new ImageIcon(iconPath);

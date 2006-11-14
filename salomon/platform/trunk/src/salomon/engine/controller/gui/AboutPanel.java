@@ -55,7 +55,7 @@ public class AboutPanel
 
         // application name
         JLabel lblAppName = new JLabel(new ImageIcon(
-                Config.getString("RESOURCES_DIR") + Config.FILE_SEPARATOR
+                Config.RESOURCES_DIR + Config.FILE_SEPARATOR
                         + "logo.jpg")); //$NON-NLS-1$
 
         builder.append(lblAppName, 3);

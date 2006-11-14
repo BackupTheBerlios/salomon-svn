@@ -30,9 +30,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 
-import org.apache.log4j.Logger;
-
-import salomon.engine.Config;
 import salomon.engine.task.event.TaskEvent;
 import salomon.engine.task.event.TaskListener;
 
@@ -45,11 +42,7 @@ import com.jgoodies.forms.layout.FormLayout;
  */
 public final class TaskControlPane
 {
-    private static final Logger LOGGER = Logger.getLogger(TaskControlPane.class);
-
     private DefaultFormBuilder _builder;
-
-    private String _resourcesDir = null;
 
     private TaskControlButtons _taskControlButtons;
 
@@ -65,7 +58,6 @@ public final class TaskControlPane
     public TaskControlPane(GraphTaskManagerGUI taskManagerGUI)
     {
         _taskManagerGUI = taskManagerGUI;
-        _resourcesDir = Config.getString("RESOURCES_DIR");
         initComponents();
         initGUI();
     }

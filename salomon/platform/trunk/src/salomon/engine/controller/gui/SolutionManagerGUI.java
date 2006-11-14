@@ -41,7 +41,6 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -52,10 +51,12 @@ import javax.swing.JTextField;
 
 import org.apache.log4j.Logger;
 
+import salomon.engine.Config;
 import salomon.engine.Messages;
 import salomon.engine.Starter;
 import salomon.engine.controller.gui.action.ActionManager;
 import salomon.engine.controller.gui.common.SearchFileFilter;
+import salomon.engine.controller.gui.common.TreeFileChooser;
 import salomon.engine.controller.gui.viewer.SolutionViewer;
 import salomon.engine.database.ExternalDBManager;
 import salomon.engine.project.IProject;
@@ -98,7 +99,7 @@ public final class SolutionManagerGUI
 
     private JComboBox _comboSolutionList;
 
-    private JFileChooser _dbFileChooser;
+    private TreeFileChooser _dbFileChooser;
 
     private ControllerFrame _parent;
 
@@ -514,14 +515,12 @@ public final class SolutionManagerGUI
     private void searchDataBase()
     {
         if (_dbFileChooser == null) {
-            _dbFileChooser = new JFileChooser(".");
+            _dbFileChooser = new TreeFileChooser(new File(Config.DB_DIR));
             _dbFileChooser.setFileFilter(new SearchFileFilter(DB_EXT, DB_DESC));
         }
-        int retVal = _dbFileChooser.showOpenDialog(_parent);
-        if (retVal == JFileChooser.APPROVE_OPTION) {
-            File file = _dbFileChooser.getSelectedFile();
-            // FIXME: supports only relative paths !!!
-            _txtDBPath.setText("db\\" + file.getName());
+        if (_dbFileChooser.showDialog(_parent)) {
+            File file = _dbFileChooser.getSelectedFiles()[0];
+            _txtDBPath.setText(file.getName());
             LOGGER.debug("Opening: " + file.getName());
         }
     }
