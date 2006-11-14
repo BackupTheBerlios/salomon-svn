@@ -66,7 +66,7 @@ public final class Config
     /**
      * Plugins directory.
      */
-    public static String PLUGIN_DIR;
+    public static String PLUGINS_DIR;
 
     /**
      * Resources directory.
@@ -92,7 +92,7 @@ public final class Config
             CURR_DIR = System.getProperty("user.dir");
 
             DB_DIR = RESOURCE_BUNDLE.getString("DB_DIR"); //$NON-NLS-1$
-            PLUGIN_DIR = RESOURCE_BUNDLE.getString("PLUGIN_DIR"); //$NON-NLS-1$
+            PLUGINS_DIR = RESOURCE_BUNDLE.getString("PLUGINS_DIR"); //$NON-NLS-1$
             RESOURCES_DIR = RESOURCE_BUNDLE.getString("RESOURCES_DIR"); //$NON-NLS-1$
             HOSTNAME = RESOURCE_BUNDLE.getString("HOSTNAME"); //$NON-NLS-1$
             DB_PATH = RESOURCE_BUNDLE.getString("DB_PATH"); //$NON-NLS-1$

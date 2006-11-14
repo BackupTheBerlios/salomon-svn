@@ -24,6 +24,7 @@ package salomon.engine.database;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import salomon.engine.Config;
 import salomon.engine.database.queries.SQLSelect;
 import salomon.engine.platform.data.DBMetaData;
 
@@ -42,7 +43,7 @@ public final class ExternalDBManager
     public void connect(String host, String dataBasePath, String user,
             String passwd) throws SQLException, ClassNotFoundException
     {
-        _externalManager.connect(host, dataBasePath, user, passwd);
+        _externalManager.connect(host, Config.DB_DIR + Config.FILE_SEPARATOR + dataBasePath, user, passwd);
     }
 
     public void disconnect() throws SQLException

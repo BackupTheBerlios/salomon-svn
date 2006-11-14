@@ -33,6 +33,7 @@ import salomon.engine.controller.MasterController;
 import salomon.engine.controller.ServantController;
 import salomon.engine.platform.IManagerEngine;
 import salomon.engine.platform.ManagerEngine;
+import salomon.platform.exception.ConfigurationException;
 import salomon.platform.exception.PlatformException;
 import salomon.util.gui.Utils;
 
@@ -170,7 +171,7 @@ public final class Starter
         } catch (Exception e) {
             LOGGER.fatal("", e);
             Utils.showErrorMessage(Messages.getString("ERR_MAIN_CONNECTION_ERROR"));
-            Starter.exit();
+            exit();
         }
     }
 
@@ -193,6 +194,14 @@ public final class Starter
     private void startLocalImpl()
     {
         LOGGER.debug("starting LocalController");
+        // reading configuration
+        try {
+            Config.readConfiguration();
+        } catch (ConfigurationException e) {
+            LOGGER.fatal("", e);
+            Utils.showErrorMessage(Messages.getString("ERR_CONFIGURATION_ERROR"));
+            exit();
+        }
         _contoroller = new LocalController();
         start();
     }

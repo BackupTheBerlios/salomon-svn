@@ -81,7 +81,7 @@ public final class PluginLoader
 
     private static File downloadFile(URL url) throws IOException
     {
-        String fileName = Config.PLUGIN_DIR + Config.FILE_SEPARATOR;
+        String fileName = Config.PLUGINS_DIR + Config.FILE_SEPARATOR;
         String tmpFileName = url.getFile();
         LOGGER.debug("trying to download: " + tmpFileName);
         fileName += tmpFileName.substring(tmpFileName.lastIndexOf("/") + 1);
@@ -113,7 +113,7 @@ public final class PluginLoader
         File pluginFile = null;
         String tmpFileName = url.getFile();
         String fileName = tmpFileName.substring(tmpFileName.lastIndexOf("/") + 1);
-        File dir = new File(Config.PLUGIN_DIR);
+        File dir = new File(Config.PLUGINS_DIR);
         LOGGER.info("looking for plugins in: " + dir.getAbsolutePath());
         File[] plugins = dir.listFiles(new SearchFileFilter("jar", ""));
         for (int i = 0; i < plugins.length; i++) {

@@ -396,7 +396,7 @@ public final class PluginManagerGUI
         _btnPluginFileLoad.setText(Messages.getString("BTN_BROWSE"));
 
         _treeFileChooserPlugin = new TreeFileChooser(
-                new File(Config.PLUGIN_DIR));
+                new File(Config.PLUGINS_DIR));
         _treeFileChooserPlugin.setFileFilter(new SearchFileFilter(PLUGIN_EXT,
                 PLUGIN_DESC));
 
