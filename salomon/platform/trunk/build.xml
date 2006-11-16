@@ -50,7 +50,23 @@
     <property file="config/hosts/${build.host}/build.properties" />
     <property file="config/users/${build.user}/build.properties" />
 
-
+    <!-- Default task -->
+    <target name="build" depends="build_salomon_jar">
+    </target>
+    
+    <!-- Setup the classpath -->
+    <path id="project.class.path">
+        <fileset dir="${lib_dir}">
+            <include name="**/*.jar" />
+        </fileset>
+    </path>
+    
+    <!-- Initialize commands -->
+    <target name="init">
+        <mkdir dir="${bin_dir}" />
+    </target>
+    
+    <!-- Compile project -->
     <target name="compile_salomon" depends="init">
         <echo message="Build salomon core" />
         <javac srcdir="${src_dir}/"
@@ -60,18 +76,7 @@
                source="1.5" />
     </target>
 
-
-    <path id="project.class.path">
-        <fileset dir="${lib_dir}">
-            <include name="**/*.jar" />
-        </fileset>
-    </path>
-
-
-    <target name="init">
-        <mkdir dir="${bin_dir}" />
-    </target>
-
+    <!-- Build Salomon executable (jar) file -->
     <target name="build_salomon_jar" depends="compile_salomon">
         <copy todir="${bin_dir}">
             <fileset dir="${src_dir}" includes="*.properties" />
@@ -89,6 +94,7 @@
         </jar>
     </target>
 
+    <!-- Build Salomon platform libraries. They are used by plugins -->
     <target name="build_plugin_jars" depends="compile_salomon">
         <mkdir dir="${plugin_dev_dir}" />
         <jar destfile="${plugin_dev_dir}/platform.jar"
@@ -102,6 +108,7 @@
              includes="salomon/util/**" />
     </target>
 
+    <!-- Coping neccessary resources to the deployment directrory -->    
     <target name="copy_data_base">
         <mkdir dir="${release_dir}/${db_dir}" />
         <copy file="${db_dir}/${db_file}" todir="${release_dir}/${db_dir}" />
@@ -148,15 +155,18 @@
         <copy file="${salomon_file}" todir="${release_dir}" />
     </target>
 
+    <!-- Deploy Salomon -->
     <target name="deploy"
             depends="copy_salomon, copy_plugins, 
 		copy_libs, copy_drivers, copy_data_base,
 		copy_res, copy_config, get_version" />
 
+    <!-- Create zip file -->
     <target name="compress" depends="deploy">
         <zip destfile="salomon.zip" basedir="${release_dir}" />
     </target>
 
+    <!-- Cleaning -->
     <target name="clean">
         <delete dir="${bin_dir}" />
         <delete dir="${release_dir}" />
@@ -174,6 +184,7 @@
                 izPackDir="${izpack_dir}/" />
     </target>
 
+    <!-- Generates version basing on the repository version -->
     <target name="get_version">
         <svn>
             <status path="${basedir}" revisionProperty="testStatus.revision" />
@@ -182,21 +193,16 @@
               file="${src_dir}/version.properties" />
     </target>
 
+    <!-- Starts Salomon -->
     <target name="start" depends="deploy">
         <java dir="${release_dir}"
               fork="true"
               classname="salomon.engine.Starter"
               classpathref="project.class.path">
             <classpath path="${release_dir}/${salomon_file}" />
-            <jvmarg value="-Djava.rmi.server.RMIClassLoaderSpi=salomon.core.plugin.PluginRMIClassLoaderSpi" />
-            <jvmarg value="-Djava.security.policy=all.policy" />
-            <arg value="-${controller}" />
         </java>
     </target>
-
-    <target name="build" depends="build_salomon_jar">
-    </target>
-
+    
     <!-- Deploys one plugin. The target is used by the deploy_all_plugins target -->
     <target name="deploy_plugin">
         <ant antfile="${plugin_dir}/build.xml" target="all" inheritall="true">
