@@ -22,6 +22,7 @@
 package salomon.util.gui;
 
 import java.awt.Component;
+import java.awt.GraphicsEnvironment;
 import java.awt.Point;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -228,10 +229,14 @@ public final class Utils
     private Point getCenterLocationImpl(Component window)
     {
         Point location = new Point();
-        location.x = _parent.getLocation().x
-                + (_parent.getSize().width - window.getWidth()) / 2;
-        location.y = _parent.getLocation().y
-                + (_parent.getSize().height - window.getHeight()) / 2;
+        if (_parent != null) {
+            location.x = _parent.getLocation().x
+                    + (_parent.getSize().width - window.getWidth()) / 2;
+            location.y = _parent.getLocation().y
+                    + (_parent.getSize().height - window.getHeight()) / 2;
+        } else {
+            location = GraphicsEnvironment.getLocalGraphicsEnvironment().getCenterPoint();
+        }
         return location;
     }
 

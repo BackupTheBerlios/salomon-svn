@@ -26,10 +26,17 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.Reader;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringTokenizer;
 
 import javax.swing.Box;
 import javax.swing.JButton;
@@ -49,6 +56,7 @@ import org.syntax.jedit.JEditTextArea;
 import org.syntax.jedit.tokenmarker.PLSQLTokenMarker;
 
 import salomon.engine.database.DBManager;
+import salomon.platform.exception.PlatformException;
 import salomon.util.gui.Utils;
 
 /**
@@ -58,6 +66,8 @@ import salomon.util.gui.Utils;
  */
 public final class SQLConsole extends JFrame
 {
+    private static final Logger LOGGER = Logger.getLogger(SQLConsole.class);
+
     private JButton _btnCommit = null;
 
     private JButton _btnExecute = null;
@@ -68,6 +78,8 @@ public final class SQLConsole extends JFrame
 
     private JButton _btnRollback = null;
 
+    // private JPanel _contentPane = null;
+
     /**
      * Class represents connection to data base
      * 
@@ -75,8 +87,6 @@ public final class SQLConsole extends JFrame
      * @uml.associationEnd multiplicity="(0 1)"
      */
     private DBManager _dbManager = null;
-
-    // private JPanel _contentPane = null;
 
     //    private JTextPane _edtSQLQuery = null;
     private JEditTextArea _edtSQLQuery = null;
@@ -87,6 +97,11 @@ public final class SQLConsole extends JFrame
      * @uml.associationEnd multiplicity="(0 1)"
      */
     private CommandHistory _history = null;
+
+    /**
+     * Indicates if console has been initialized.
+     */
+    private boolean _initialized = false;
 
     /**
      * If true it means than it is run standalone, and on exit close connection
@@ -126,9 +141,53 @@ public final class SQLConsole extends JFrame
             throw new UnsupportedOperationException(
                     "Standalone mode not supported!");
         }
-        _msgArea = getMessageArea();
-        _history = new CommandHistory(100);
-        initialize();
+    }
+
+    /**
+     * starts SQLConsole
+     * 
+     * @param args parameters from the command line
+     */
+    public static void main(String[] args)
+    {
+        new SQLConsole(null);
+    }
+
+    public void executeBatch(File file) throws PlatformException
+    {
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(file));
+            StringBuffer string = new StringBuffer((int) file.length());
+
+            String line = null;
+            while ((line = reader.readLine()) != null) {
+                // skip lines starting with comment
+                // TODO: add full supprot for comments
+                if (line.trim().startsWith("/*")) {
+                    continue;
+                }
+                string.append(line.trim());
+            }
+            String[] commands = string.toString().split(";");            
+            _dbManager.executeBatch(commands);
+            // do not commit by default
+            // if commit is required, it should be included in batch file
+
+        } catch (FileNotFoundException e) {
+            throw new PlatformException(e.getLocalizedMessage());
+        } catch (IOException e) {
+            throw new PlatformException(e.getLocalizedMessage());
+        } catch (SQLException e) {
+            throw new PlatformException(e.getLocalizedMessage());
+        }
+    }
+
+    public void showConsole()
+    {
+        if (!_initialized) {
+            initialize();
+            _initialized = true;
+        }
     }
 
     private void commit()
@@ -284,15 +343,6 @@ public final class SQLConsole extends JFrame
         return _edtSQLQuery;
     }
 
-    // private JPanel getJContentPane()
-    // {
-    // if (_contentPane == null) {
-    // _contentPane = new JPanel();
-    // _contentPane.setLayout(new BorderLayout());
-    // }
-    // return _contentPane;
-    // }
-
     private JTextArea getMessageArea()
     {
         JTextArea txtArea = new JTextArea();
@@ -385,6 +435,8 @@ public final class SQLConsole extends JFrame
      */
     private void initialize()
     {
+        _msgArea = getMessageArea();
+        _history = new CommandHistory(100);
         this.setContentPane(getPnlMain());
         this.setSize(400, 400);
         this.setTitle(Messages.getString("TIT_CONSOLE")); //$NON-NLS-1$
@@ -444,16 +496,6 @@ public final class SQLConsole extends JFrame
     }
 
     /**
-     * starts SQLConsole
-     * 
-     * @param args parameters from the command line
-     */
-    public static void main(String[] args)
-    {
-        new SQLConsole(null);
-    }
-
-    /**
      * Class manages command history list.
      */
     private static final class CommandHistory
@@ -507,6 +549,4 @@ public final class SQLConsole extends JFrame
             return command;
         }
     }
-
-    private static final Logger LOGGER = Logger.getLogger(SQLConsole.class);
 }

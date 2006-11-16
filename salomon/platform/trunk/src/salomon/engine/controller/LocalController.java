@@ -276,6 +276,7 @@ public final class LocalController implements IController
 
     private final class LocalGUIMenu
     {
+        private SQLConsole _console;
 
         private JButton _btnNewProject;
 
@@ -326,7 +327,7 @@ public final class LocalController implements IController
         private JPanel _pnlAbout;
 
         private JComponent _positionComponent;
- 
+
         /**
          * creates LocalGUIMenu
          * 
@@ -637,7 +638,11 @@ public final class LocalController implements IController
          */
         void showSQLConsole()
         {
-            new SQLConsole(((ManagerEngine) _managerEngine).getDbManager());
+            if (_console == null) {
+                _console = new SQLConsole(
+                        ((ManagerEngine) _managerEngine).getDbManager());
+            }
+            _console.showConsole();
         }
 
         private ImageIcon getMenuIcon(String iconKey)

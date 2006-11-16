@@ -87,7 +87,7 @@ public final class DBManager
         String hostName = Config.HOSTNAME;
         String dataBasePath = Config.DB_PATH;
         String user = Config.USER;
-        String passwd = Config.PASSWORD;	
+        String passwd = Config.PASSWORD;
         this.connect(hostName, dataBasePath, user, passwd);
     }
 
@@ -146,11 +146,28 @@ public final class DBManager
     {
         if (_statement != null) {
             _statement.close();
+            _statement = null;
         }
-        if (_connection != null) {
+        if (_connection != null && !_connection.isClosed()) {
             _connection.close();
+            _connection = null;
         }
         LOGGER.info("disconected from database");
+    }
+
+    /**
+     * Executes given set of commands.
+     * 
+     * @param commands commands to be executed.
+     * @throws SQLException 
+     */
+    public void executeBatch(String[] commands) throws SQLException
+    {
+        LOGGER.info("Executing batch..."); //$NON-NLS-1$
+        for (String command : commands) {
+            _statement.executeUpdate(command);
+        }
+        LOGGER.info("Executed.");
     }
 
     /**
