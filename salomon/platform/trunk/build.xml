@@ -148,18 +148,6 @@
         <copy file="${salomon_file}" todir="${release_dir}" />
     </target>
 
-    <target name="create_new_database">
-        <copy file="${db_dir}/${empty_db_file}"
-              tofile="${db_dir}/${db_file}"
-              overwrite="true" />
-        <exec executable="${isql_dir}isql">
-            <arg line="${db_dir}/${db_file} -u ${db_user} -p ${db_password} -i ${db_dir}/${db_schema_dir}/${crebas_file}" />
-        </exec>
-        <exec executable="${isql_dir}isql">
-            <arg line="${db_dir}/${db_file} -u ${db_user} -p ${db_password} -i ${db_dir}/${db_schema_dir}/${views_file}" />
-        </exec>
-    </target>
-
     <target name="deploy"
             depends="copy_salomon, copy_plugins, 
 		copy_libs, copy_drivers, copy_data_base,
@@ -249,5 +237,25 @@
             <arg line="${db_dir}/${sample_db_file} -u ${db_user} -p ${db_password} -i ${db_dir}/${tmp_sql_file}" />
         </exec>
     </target>
+    
+    <!-- build empty Salomon DB basing on empty.gdb file -->
+    <target name="create_salomon_db" >
+        <!-- copy the template empty DB file to the new file -->
+        <copy file="${db_dir}/${empty_db_file}"
+                      tofile="${db_dir}/${db_file}"
+                      overwrite="true" />
+        <!-- creating connection to database -->
+        <sql driver="org.firebirdsql.jdbc.FBDriver" 
+             url="jdbc:firebirdsql:embedded:${basedir}/${db_dir}/${db_file}" 
+             userid="${db_user}"
+             password="${db_password}"
+             autocommit="false"
+             classpathref="project.class.path">
+            <!-- generating schema -->
+            <transaction  src="${db_dir}/${db_schema_dir}/${crebas_file}"/>
+            <!-- adding views -->
+            <transaction  src="${db_dir}/${db_schema_dir}/${views_file}"/>
+        </sql>
+    </target>    
 
 </project>
