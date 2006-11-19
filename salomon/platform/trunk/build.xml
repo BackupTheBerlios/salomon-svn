@@ -32,6 +32,7 @@
     <property name="db_user" value="sysdba" />
     <property name="db_password" value="masterkey" />
     <property name="db_schema_dir" value="schema" />
+    <property name="db_data_dir" value="data" />
 	<property name="sample_db_file" value="trees.gdb" />
     <property name="crebas_file" value="crebas.sql" />
     <property name="views_file" value="views.sql" />
@@ -46,7 +47,8 @@
 	<property name="def_file" value="contact-lenses.def" />
 	<property name="data_file" value="contact-lenses.csv" />
 	<property name="tmp_sql_file" value="contact-lenses.sql" />
-	
+    <property name="sample_data_file" value="sample_data.sql" />
+
     <property file="config/hosts/${build.host}/build.properties" />
     <property file="config/users/${build.user}/build.properties" />
 
@@ -244,7 +246,7 @@
         </exec>
     </target>
     
-    <!-- build empty Salomon DB basing on empty.gdb file -->
+    <!-- Build empty Salomon DB basing on empty.gdb file -->
     <target name="create_salomon_db" >
         <!-- copy the template empty DB file to the new file -->
         <copy file="${db_dir}/${empty_db_file}"
@@ -262,6 +264,23 @@
             <!-- adding views -->
             <transaction  src="${db_dir}/${db_schema_dir}/${views_file}"/>
         </sql>
-    </target>    
+    </target>
+    
+    <!-- Insert sample data -->
+    <!-- NOTE: delimeter is set to '//'. 
+    It separates the statements. Cannot use standard ';' as it may be used e.g. in procedures -->
+	<target name="insert_sample_data" depends="create_salomon_db">
+        <sql driver="org.firebirdsql.jdbc.FBDriver" 
+             url="jdbc:firebirdsql:embedded:${basedir}/${db_dir}/${db_file}" 
+             userid="${db_user}"
+             password="${db_password}"
+             autocommit="false"
+             classpathref="project.class.path"
+             keepformat="true"
+             delimiter="//">	    	
+	    	    <transaction src="${db_dir}/${db_data_dir}/${sample_data_file}"/>
+            </sql>
+    </target>
+
 
 </project>
