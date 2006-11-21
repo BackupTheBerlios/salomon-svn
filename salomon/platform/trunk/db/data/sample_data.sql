@@ -1,5 +1,5 @@
-/* Procedure inserts sample data to the Salomon DB */
-create procedure insert_sample_data
+/* Procedure inserts initial data to the Salomon DB */
+create procedure insert_initial_data
 as
 declare variable tmp_solution_id integer;
 declare variable tmp_plugin_id integer;
@@ -15,26 +15,43 @@ begin
 
 
 	/* Insert plugins */
-	select gen_id(gen_plugin_id, 1)
-	from rdb$database
-	into :tmp_plugin_id;
 
-	INSERT INTO PLUGINS (PLUGIN_ID, PLUGIN_NAME, LOCATION, PLUGIN_INFO, PLUGIN_TYPE, C_DATE, LM_DATE)
-	VALUES (:tmp_plugin_id, 'AttributeSet Creator', 'AttributeSetCreator.jar', 'Plugin creates attribute set.', 'L', current_timestamp, current_timestamp);
-
-
+	/* Dataset plugins */
 	select gen_id(gen_plugin_id, 1)
 	from rdb$database
 	into :tmp_plugin_id;
 	INSERT INTO PLUGINS (PLUGIN_ID, PLUGIN_NAME, LOCATION, PLUGIN_INFO, PLUGIN_TYPE, C_DATE, LM_DATE)
 	VALUES (:tmp_plugin_id, 'DataSet Creator', 'DataSetCreator.jar', 'Plugin creates dataset basing on conditons provided by the User.', 'L', current_timestamp, current_timestamp);
 
-
 	select gen_id(gen_plugin_id, 1)
 	from rdb$database
 	into :tmp_plugin_id;
 	INSERT INTO PLUGINS (PLUGIN_ID, PLUGIN_NAME, LOCATION, PLUGIN_INFO, PLUGIN_TYPE, C_DATE, LM_DATE)
 	VALUES (:tmp_plugin_id, 'Random dataset creator', 'RandomDSCreator.jar', 'Creates random dataset.', 'L', current_timestamp, current_timestamp);
+
+	select gen_id(gen_plugin_id, 1)
+	from rdb$database
+	into :tmp_plugin_id;
+	INSERT INTO PLUGINS (PLUGIN_ID, PLUGIN_NAME, LOCATION, PLUGIN_INFO, PLUGIN_TYPE, C_DATE, LM_DATE)
+	VALUES (:tmp_plugin_id, 'Dataset visualizer', 'DataSetVis.jar', 'Displays dataset.', 'L', current_timestamp, current_timestamp);
+
+	select gen_id(gen_plugin_id, 1)
+	from rdb$database
+	into :tmp_plugin_id;
+	INSERT INTO PLUGINS (PLUGIN_ID, PLUGIN_NAME, LOCATION, PLUGIN_INFO, PLUGIN_TYPE, C_DATE, LM_DATE)
+	VALUES (:tmp_plugin_id, 'Dataset union', 'DataSetUnion.jar', 'Creates the union of 2 datasets.', 'L', current_timestamp, current_timestamp);
+
+	/* Attribute plugins */
+	select gen_id(gen_plugin_id, 1)
+	from rdb$database
+	into :tmp_plugin_id;
+	INSERT INTO PLUGINS (PLUGIN_ID, PLUGIN_NAME, LOCATION, PLUGIN_INFO, PLUGIN_TYPE, C_DATE, LM_DATE)
+	VALUES (:tmp_plugin_id, 'Attributeset creator', 'AttributeSetCreator.jar', 'Creates attributeset.', 'L', current_timestamp, current_timestamp);
+
+	/* Tree plugins */
+	/*WekaTreeGenerator.jar
+	TreeEvaluator.jar */
+
 	
 end;
 
@@ -42,10 +59,10 @@ end;
 //
 
 /* Execution of the procedure above */
-execute procedure insert_sample_data;
+execute procedure insert_initial_data;
 
 //
 
 /* Dropping after execution */
-drop procedure insert_sample_data;
+drop procedure insert_initial_data;
 

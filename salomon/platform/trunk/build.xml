@@ -266,10 +266,10 @@
         </sql>
     </target>
     
-    <!-- Insert sample data -->
+    <!-- Insert initial data -->
     <!-- NOTE: delimeter is set to '//'. 
     It separates the statements. Cannot use standard ';' as it may be used e.g. in procedures -->
-	<target name="insert_sample_data" depends="create_salomon_db">
+	<target name="insert_initial_data" depends="create_salomon_db">
         <sql driver="org.firebirdsql.jdbc.FBDriver" 
              url="jdbc:firebirdsql:embedded:${basedir}/${db_dir}/${db_file}" 
              userid="${db_user}"
