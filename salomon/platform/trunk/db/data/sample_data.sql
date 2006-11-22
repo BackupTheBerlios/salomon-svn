@@ -11,7 +11,7 @@ begin
 	into :tmp_solution_id;
 
 	INSERT INTO SOLUTIONS (SOLUTION_ID, SOLUTION_NAME, SOLUTION_INFO, HOSTNAME, DB_PATH, USERNAME, PASSWD, C_DATE, LM_DATE)
-	VALUES (:tmp_solution_id, 'Persons', 'Sample solution.', '', 'PERSONS.GDB', 'SYSDBA', 'masterkey', current_timestamp, current_timestamp);
+	VALUES (:tmp_solution_id, 'Example', 'Example solution.', '', 'example.gdb', 'SYSDBA', 'masterkey', current_timestamp, current_timestamp);
 
 
 	/* Insert plugins */
