@@ -25,6 +25,7 @@ import java.sql.ResultSet;
 
 import org.apache.log4j.PropertyConfigurator;
 
+import salomon.engine.Config;
 import salomon.engine.database.DBManager;
 import salomon.engine.database.queries.SQLSelect;
 import salomon.engine.platform.ManagerEngine;
@@ -107,6 +108,7 @@ public final class TestObjectFactory
     {
         if (MANAGER_ENGINE == null) {
             PropertyConfigurator.configure("log.conf"); //$NON-NLS-1$
+            Config.readConfiguration();
             MANAGER_ENGINE = new ManagerEngine();
         }
 
