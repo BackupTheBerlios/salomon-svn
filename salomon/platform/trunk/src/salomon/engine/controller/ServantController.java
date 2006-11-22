@@ -31,6 +31,7 @@ import org.apache.log4j.Logger;
 
 import salomon.engine.Config;
 import salomon.engine.platform.IManagerEngine;
+import salomon.engine.platform.ManagerEngine;
 import salomon.engine.remote.ICentralController;
 import salomon.engine.remote.IRemoteController;
 import salomon.engine.remote.RemoteController;
@@ -81,11 +82,12 @@ public final class ServantController implements IController
     }
 
     /**
+     * @throws PlatformException 
      * @see salomon.engine.controller.IController#start(salomon.engine.platform.IManagerEngine)
      */
-    public void start(IManagerEngine managerEngine)
+    public void start() throws PlatformException
     {
-        _managerEngine = managerEngine;
+        _managerEngine = new ManagerEngine();
         initRMI();
     }
 

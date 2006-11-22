@@ -24,6 +24,8 @@ package salomon.engine.controller;
 import org.apache.log4j.Logger;
 
 import salomon.engine.platform.IManagerEngine;
+import salomon.engine.platform.ManagerEngine;
+import salomon.platform.exception.PlatformException;
 
 public final class LibraryController implements IController
 {
@@ -54,11 +56,12 @@ public final class LibraryController implements IController
     }
 
     /**
+     * @throws PlatformException 
      * @see salomon.engine.controller.IController#start(salomon.engine.platform.IManagerEngine)
      */
-    public void start(IManagerEngine managerEngine)
+    public void start() throws PlatformException
     {
-        _managerEngine = managerEngine;
+        _managerEngine = new ManagerEngine();
     }
 
     private void initManagers()

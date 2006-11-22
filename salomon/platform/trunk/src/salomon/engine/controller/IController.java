@@ -21,7 +21,7 @@
 
 package salomon.engine.controller;
 
-import salomon.engine.platform.IManagerEngine;
+import salomon.platform.exception.PlatformException;
 
 /**
  * An interface implemented by all controllers. 
@@ -32,8 +32,9 @@ public interface IController
     /**
      * starts the controller
      * @param managerEngine
+     * @throws PlatformException 
      */
-    void start(IManagerEngine managerEngine);
+    void start() throws PlatformException;
 
     /**
      * ends controller

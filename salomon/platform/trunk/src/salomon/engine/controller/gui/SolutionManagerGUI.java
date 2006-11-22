@@ -238,6 +238,45 @@ public final class SolutionManagerGUI
         return panel;
     }
 
+    public void initSolutionFrame()
+    {
+        JPanel panel = new JPanel();
+        panel.setBorder(BorderFactory.createEmptyBorder(4, 4, 4, 4));
+
+        JPanel pnlManagerButtons = new JPanel();
+        pnlManagerButtons.setLayout(new BoxLayout(pnlManagerButtons,
+                BoxLayout.Y_AXIS));
+        pnlManagerButtons.add(Box.createVerticalGlue());
+        pnlManagerButtons.add(getBtnOpen());
+        pnlManagerButtons.add(getBtnNew());
+        pnlManagerButtons.add(Box.createVerticalStrut(10));
+        pnlManagerButtons.add(getBtnExit());
+        pnlManagerButtons.add(Box.createVerticalGlue());
+
+        panel.setLayout(new BorderLayout());
+        panel.add(getSolutionsPanel(), BorderLayout.CENTER);
+        panel.add(pnlManagerButtons, BorderLayout.EAST);
+
+        _solutionChooserFrame = new JFrame(Messages.getString("TIT_SOLUTIONS"));
+        _solutionChooserFrame.setResizable(false);
+
+        _solutionChooserFrame.getContentPane().add(panel);
+        _solutionChooserFrame.pack();
+
+        _solutionChooserFrame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e)
+            {
+                Starter.exit();
+            }
+        });
+
+        Point location = new Point();
+        location.x = (Toolkit.getDefaultToolkit().getScreenSize().width - _solutionChooserFrame.getWidth()) / 2;
+        location.y = (Toolkit.getDefaultToolkit().getScreenSize().height - _solutionChooserFrame.getHeight()) / 2;
+        _solutionChooserFrame.setLocation(location);
+    }
+
     public void newSolution()
     {
         try {
@@ -354,42 +393,10 @@ public final class SolutionManagerGUI
 
     public void showSolutionChooser()
     {
-        JPanel panel = new JPanel();
-        panel.setBorder(BorderFactory.createEmptyBorder(4, 4, 4, 4));
-
-        JPanel pnlManagerButtons = new JPanel();
-        pnlManagerButtons.setLayout(new BoxLayout(pnlManagerButtons,
-                BoxLayout.Y_AXIS));
-        pnlManagerButtons.add(Box.createVerticalGlue());
-        pnlManagerButtons.add(getBtnOpen());
-        pnlManagerButtons.add(getBtnNew());
-        pnlManagerButtons.add(Box.createVerticalStrut(10));
-        pnlManagerButtons.add(getBtnExit());
-        pnlManagerButtons.add(Box.createVerticalGlue());
-
-        panel.setLayout(new BorderLayout());
-        panel.add(getSolutionsPanel(), BorderLayout.CENTER);
-        panel.add(pnlManagerButtons, BorderLayout.EAST);
-
-        _solutionChooserFrame = new JFrame(Messages.getString("TIT_SOLUTIONS"));
-        _solutionChooserFrame.setResizable(false);
-
-        _solutionChooserFrame.getContentPane().add(panel);
-        _solutionChooserFrame.pack();
-
-        _solutionChooserFrame.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e)
-            {
-                Starter.exit();
-            }
-        });
-
-        Point location = new Point();
-        location.x = (Toolkit.getDefaultToolkit().getScreenSize().width - _solutionChooserFrame.getWidth()) / 2;
-        location.y = (Toolkit.getDefaultToolkit().getScreenSize().height - _solutionChooserFrame.getHeight()) / 2;
-        _solutionChooserFrame.setLocation(location);
-
+        if (_solutionChooserFrame == null) {
+            // it should never happen, as frame should be initialized in the constructor
+            initSolutionFrame();
+        }
         _solutionChooserFrame.setVisible(true);
     }
 

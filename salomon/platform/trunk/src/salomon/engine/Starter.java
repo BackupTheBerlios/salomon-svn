@@ -253,16 +253,10 @@ public final class Starter
         System.exit(0);
     }
 
-    private void initManagers() throws PlatformException
-    {
-        _managerEngine = new ManagerEngine();
-    }
-
     private void start()
     {
         try {
-            initManagers();
-            _contoroller.start(_managerEngine);
+            _contoroller.start();
         } catch (Exception e) {
             LOGGER.fatal("", e);
             Utils.showErrorMessage(Messages.getString("ERR_MAIN_CONNECTION_ERROR"));

@@ -50,9 +50,11 @@ import salomon.engine.controller.gui.action.ActionManager;
 import salomon.engine.controller.gui.graph.GraphTaskManagerGUI;
 import salomon.engine.holder.ManagerEngineHolder;
 import salomon.engine.platform.IManagerEngine;
+import salomon.engine.platform.ManagerEngine;
 import salomon.engine.remote.CentralController;
 import salomon.engine.remote.event.IMasterControllerListener;
 import salomon.engine.remote.event.RemoteControllerEvent;
+import salomon.platform.exception.PlatformException;
 
 /**
  * Server side implementation of IController interface.
@@ -119,11 +121,12 @@ public final class MasterController implements IController
     }
 
     /**
+     * @throws PlatformException 
      * @see salomon.engine.controller.IController#start(salomon.engine.platform.IManagerEngine)
      */
-    public void start(IManagerEngine managerEngine)
+    public void start() throws PlatformException
     {
-        _managerEngineHolder = new ManagerEngineHolder(managerEngine);
+        _managerEngineHolder = new ManagerEngineHolder(new ManagerEngine());
         initGUI();
         initRMI();
     }

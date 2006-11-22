@@ -225,12 +225,13 @@ public final class LocalController implements IController
     }
 
     /**
+     * @throws PlatformException 
      * @see salomon.engine.controller.gui.IControllerPanel#start(salomon.engine.platform.IManagerEngine)
      */
-    public void start(IManagerEngine managerEngine)
-    {
-        _managerEngine = managerEngine;
+    public void start() throws PlatformException
+    {        
         SplashScreen.show();
+        _managerEngine = new ManagerEngine();
         // TODO: add cascade model support (?)
         try {
             _solutionManagerGUI = new SolutionManagerGUI(
@@ -263,14 +264,15 @@ public final class LocalController implements IController
         _taskManagerGUI.setActionManager(_actionManager);
         _projectManagerGUI.setTaskManagerGUI(_taskManagerGUI);
 
-        SplashScreen.hide();
-
         frame.setContentPane(getJContentPane());
         frame.setJMenuBar(getJMenuBar());
         frame.setJToolBar(getToolBar());
         frame.setControllerPanel(_contentPane);
         Utils.setParent(frame);
-
+        
+        // initializing solution frame before hiding splash screen
+        _solutionManagerGUI.initSolutionFrame();
+        SplashScreen.hide();
         _solutionManagerGUI.showSolutionChooser();
     }
 
