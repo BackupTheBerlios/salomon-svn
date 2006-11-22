@@ -47,8 +47,13 @@
 	<property name="def_file" value="contact-lenses.def" />
 	<property name="data_file" value="contact-lenses.csv" />
 	<property name="tmp_sql_file" value="contact-lenses.sql" />
-    <property name="sample_data_file" value="sample_data.sql" />
-
+    <property name="initial_data_file" value="initial_data.sql" />
+    <!-- variables used to create example database -->
+    <property name="example_db_file" value="example.gdb" />
+    <property name="db_example_dir" value="example" />
+    <property name="lens_schema" value="contact-lenses.t.sql" />
+    <property name="lens_data" value="contact-lenses.init.sql" />
+    
     <property file="config/hosts/${build.host}/build.properties" />
     <property file="config/users/${build.user}/build.properties" />
 
@@ -235,14 +240,8 @@
 	
 	<target name="generate_sample_data">
 		<!-- assume that cygwin is installed and bash is on the PATH -->
-        <exec executable="bash" output="${db_dir}/${tmp_sql_file}">
+        <exec executable="bash" output="${db_dir}/${db_example_dir}/${lens_data}">
             <arg line="${db_dir}/${scripts_dir}/${convert_script} ${db_dir}/${scripts_dir}/${def_file} ${db_dir}/${scripts_dir}/${data_file}" />			
-        </exec>
-    </target>
-	
-	<target name="fill_sample_data" depends="generate_sample_data">
-        <exec executable="${isql_dir}isql">
-            <arg line="${db_dir}/${sample_db_file} -u ${db_user} -p ${db_password} -i ${db_dir}/${tmp_sql_file}" />
         </exec>
     </target>
     
@@ -278,9 +277,28 @@
              classpathref="project.class.path"
              keepformat="true"
              delimiter="//">	    	
-	    	    <transaction src="${db_dir}/${db_data_dir}/${sample_data_file}"/>
+	    	    <transaction src="${db_dir}/${db_data_dir}/${initial_data_file}"/>
             </sql>
     </target>
 
+    <!-- Build example DB basing on empty.gdb file -->
+    <target name="create_example_db" >
+        <!-- copy the template empty DB file to the new file -->
+        <copy file="${db_dir}/${empty_db_file}"
+                      tofile="${db_dir}/${example_db_file}"
+                      overwrite="true" />
+        <!-- creating connection to database -->
+        <sql driver="org.firebirdsql.jdbc.FBDriver" 
+             url="jdbc:firebirdsql:embedded:${basedir}/${db_dir}/${example_db_file}" 
+             userid="${db_user}"
+             password="${db_password}"
+             autocommit="false"
+             classpathref="project.class.path">
+            <!-- generating schema -->
+            <transaction  src="${db_dir}/${db_example_dir}/${lens_schema}"/>
+            <!-- adding data -->
+            <transaction  src="${db_dir}/${db_example_dir}/${lens_data}"/>
+        </sql>
+    </target>
 
 </project>

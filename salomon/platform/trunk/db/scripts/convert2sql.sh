@@ -70,5 +70,3 @@ do
  echo $query \(\'$values\'\)\;;
 done
 
-echo COMMIT\;;
-
