@@ -293,12 +293,25 @@
              userid="${db_user}"
              password="${db_password}"
              autocommit="false"
-             classpathref="project.class.path">
+             classpathref="project.class.path"
+             keepformat="true"
+             delimiter="//">
             <!-- generating schema -->
             <transaction  src="${db_dir}/${db_example_dir}/${lens_schema}"/>
-            <!-- adding data -->
-            <transaction  src="${db_dir}/${db_example_dir}/${lens_data}"/>
         </sql>
-    </target>
+    </target>    
 
+    <!-- Insert data to example DB -->
+	<target name="insert_example_data" depends="create_example_db">
+        <sql driver="org.firebirdsql.jdbc.FBDriver" 
+             url="jdbc:firebirdsql:embedded:${basedir}/${db_dir}/${example_db_file}" 
+             userid="${db_user}"
+             password="${db_password}"
+             autocommit="false"
+             classpathref="project.class.path">	    	
+            	<!-- adding data -->
+            	<transaction  src="${db_dir}/${db_example_dir}/${lens_data}"/>
+            </sql>
+    </target>
+    
 </project>
