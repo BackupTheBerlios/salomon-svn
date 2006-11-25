@@ -227,6 +227,7 @@ public final class TaskManager implements ITaskManager
             select.addColumn("t.lm_date");
             select.addColumn("p.plugin_id");
             select.addColumn("p.plugin_name");
+            select.addColumn("p.plugin_type");
             select.addColumn("p.plugin_info");
             select.addColumn("p.location");
             int projectID = currProject.getInfo().getId();

@@ -234,6 +234,7 @@ public final class ProjectManagerGUI
         IProject[] projects = _projectManager.getProjects();
         String[] columnNames = new String[]{"ID", "Name", "Info", "Cr. date",
                 "Lm. date"};
+        // FIXME: workaround, reimplement this 
         Object[][] data = new Object[projects.length][columnNames.length];
 
         int i = 0;
@@ -370,7 +371,8 @@ public final class ProjectManagerGUI
         if (result == JOptionPane.OK_OPTION) {
             int selectedRow = table.getSelectedRow();
             if (selectedRow >= 0) {
-                projectID = ((Integer) table.getValueAt(selectedRow, 0)).intValue();
+                // FIXME: hack
+                projectID = ((Integer) table.getModel().getValueAt(selectedRow, 0)).intValue();
             }
         }
 
