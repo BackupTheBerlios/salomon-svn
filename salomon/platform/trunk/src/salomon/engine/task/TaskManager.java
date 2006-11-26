@@ -22,6 +22,7 @@
 package salomon.engine.task;
 
 import java.io.ByteArrayInputStream;
+import java.lang.annotation.Target;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collection;
@@ -583,6 +584,18 @@ public final class TaskManager implements ITaskManager
         }
     }
 
+    /** 
+     * For testing purpose only.
+     * This method runs task using run() method.
+     * Using Thread.start() causes some Firebird synchronization problems.
+     */
+    public void runTasks()
+    {
+        LOGGER.info("TaskManager.runTasks()");
+        // intentionally used run() instead of start()
+        new TaskEngine().run();
+    }
+
     private final class TaskRunner implements ITaskRunner
     {
         private TaskEngine _taskEngine;
@@ -621,6 +634,5 @@ public final class TaskManager implements ITaskManager
             }
             _taskEngine = null;
         }
-
     }
 }

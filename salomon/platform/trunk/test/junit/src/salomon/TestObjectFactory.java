@@ -22,9 +22,7 @@
 package salomon;
 
 import java.sql.ResultSet;
-import java.sql.SQLException;
 
-import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
 import salomon.engine.Config;
@@ -47,8 +45,6 @@ import salomon.plugin.IPlugin;
 public final class TestObjectFactory
 {
     private static DBManager DB_MANGER;
-
-    private static final Logger LOGGER = Logger.getLogger(TestObjectFactory.class);
 
     private static ManagerEngine MANAGER_ENGINE;
 
@@ -104,9 +100,9 @@ public final class TestObjectFactory
             resultSet = getDbManager().select(select);
             if (resultSet.next()) {
                 pluginID = resultSet.getInt(PluginInfo.PRIMARY_KEY);
+                getDbManager().closeResultSet(resultSet);
+                plugin = getManagerEngine().getPluginManager().getPlugin(pluginID);
             }
-            getDbManager().closeResultSet(resultSet);
-            plugin = getManagerEngine().getPluginManager().getPlugin(pluginID);
 
         } catch (Exception e) {
             throw new PlatformException(e);
@@ -138,10 +134,11 @@ public final class TestObjectFactory
             resultSet = getDbManager().select(select);
             if (resultSet.next()) {
                 projectID = resultSet.getInt(ProjectInfo.PRIMARY_KEY);
+                getDbManager().closeResultSet(resultSet);
+                project = getSolutionManager().getCurrentSolution().getProjectManager().getProject(
+                        projectID);
             }
-            getDbManager().closeResultSet(resultSet);
-            project = getSolutionManager().getCurrentSolution().getProjectManager().getProject(
-                    projectID);
+
         } catch (Exception e) {
             throw new PlatformException(e);
         } 
@@ -170,10 +167,9 @@ public final class TestObjectFactory
             resultSet = getDbManager().select(select);
             if (resultSet.next()) {
                 solutionID = resultSet.getInt(SolutionInfo.PRIMARY_KEY);
-
+                getDbManager().closeResultSet(resultSet);
+                solution = getSolutionManager().getSolution(solutionID);
             }
-            getDbManager().closeResultSet(resultSet);
-            solution = getSolutionManager().getSolution(solutionID);
         } catch (Exception e) {
             throw new PlatformException(e);
         } 
