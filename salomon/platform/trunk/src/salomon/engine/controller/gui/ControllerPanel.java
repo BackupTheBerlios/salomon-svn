@@ -34,9 +34,12 @@ import javax.swing.border.TitledBorder;
 import org.apache.log4j.Logger;
 
 import salomon.engine.Messages;
-import salomon.engine.controller.gui.graph.GraphTaskManagerGUI;
-import salomon.engine.controller.gui.graph.TaskControlPane;
-import salomon.engine.controller.gui.statusbar.StatusBarManager;
+import salomon.engine.controller.gui.common.statusbar.StatusBarManager;
+import salomon.engine.controller.gui.plugin.PluginManagerGUI;
+import salomon.engine.controller.gui.project.ProjectManagerGUI;
+import salomon.engine.controller.gui.solution.SolutionManagerGUI;
+import salomon.engine.controller.gui.task.GraphTaskManagerGUI;
+import salomon.engine.controller.gui.task.TaskControlPane;
 
 /**
  * Class represents main panel - list of tasks and available plugins, buttons to
