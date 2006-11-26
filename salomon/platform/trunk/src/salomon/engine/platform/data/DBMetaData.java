@@ -73,7 +73,7 @@ public final class DBMetaData implements IMetaData
             while (resultSet.next()) {
                 valuesList.add(resultSet.getObject(1).toString());
             }
-            resultSet.close();
+            _manager.closeResultSet(resultSet);
 
             // filling values array            
             values = valuesList.toArray(new String[valuesList.size()]);
@@ -84,7 +84,7 @@ public final class DBMetaData implements IMetaData
         } finally {
             if (resultSet != null) {
                 try {
-                    resultSet.close();
+                    _manager.closeResultSet(resultSet);
                 } catch (SQLException e) {
                     LOGGER.fatal("", e);
                     throw new DBException(e.getLocalizedMessage());
@@ -133,7 +133,7 @@ public final class DBMetaData implements IMetaData
         while (resultSet.next()) {
             tables.add(resultSet.getString("table_name"));
         }
-        resultSet.close();
+        _manager.closeResultSet(resultSet);
 
         _tables = new DBTable[tables.size()];
 
@@ -155,7 +155,7 @@ public final class DBMetaData implements IMetaData
                 DBColumn column = new DBColumn(_tables[i], colName, colType);
                 columns.add(column);
             }
-            resultSet.close();
+            _manager.closeResultSet(resultSet);
 
             DBColumn[] colArray = new DBColumn[columns.size()];
             colArray = columns.toArray(colArray);
@@ -173,7 +173,7 @@ public final class DBMetaData implements IMetaData
                     }
                 }
             }
-            resultSet.close();
+            _manager.closeResultSet(resultSet);
             DBColumn[] keysArray = new DBColumn[primaryKeys.size()];
             keysArray = primaryKeys.toArray(keysArray);
             _tables[i].setPrimaryKeys(keysArray);

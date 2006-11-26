@@ -51,11 +51,27 @@ public final class DBManager
 
     private DBMetaData _metaData;
 
-    private Statement _statement;
+    /**
+     * This variable should be used carefully.
+     * Only to get result set (or update count) after executing query with executeQuery method
+     * 
+     * It's not thread safe!
+     */
+    private Statement _currentStatement;
 
     public DBManager()
     {
         //empty body
+    }
+
+    public void closeResultSet(ResultSet resultSet) throws SQLException
+    {
+        if (resultSet != null) {
+            Statement statement = resultSet.getStatement();
+            if (statement != null) {
+                statement.close();
+            }
+        }
     }
 
     /**
@@ -119,7 +135,6 @@ public final class DBManager
                 user, passwd);
         // setting auto commit off
         _connection.setAutoCommit(false);
-        _statement = _connection.createStatement();
         LOGGER.info("connected to database");
     }
 
@@ -134,7 +149,7 @@ public final class DBManager
     {
         String query = deleteObject.getQuery();
         LOGGER.info("query = " + query); //$NON-NLS-1$
-        return _statement.executeUpdate(query);
+        return _connection.createStatement().executeUpdate(query);
     }
 
     /**
@@ -144,10 +159,6 @@ public final class DBManager
      */
     public void disconnect() throws SQLException
     {
-        if (_statement != null) {
-            _statement.close();
-            _statement = null;
-        }
         if (_connection != null && !_connection.isClosed()) {
             _connection.close();
             _connection = null;
@@ -165,7 +176,7 @@ public final class DBManager
     {
         LOGGER.info("Executing batch..."); //$NON-NLS-1$
         for (String command : commands) {
-            _statement.executeUpdate(command);
+            _connection.createStatement().executeUpdate(command);
         }
         LOGGER.info("Executed.");
     }
@@ -180,7 +191,8 @@ public final class DBManager
     public boolean executeQuery(String query) throws SQLException
     {
         LOGGER.info("Executing query = " + query); //$NON-NLS-1$
-        return _statement.execute(query);
+        _currentStatement = _connection.createStatement();
+        return _currentStatement.execute(query);
     }
 
     /**
@@ -195,9 +207,9 @@ public final class DBManager
         boolean exists = false;
         String query = select.getQuery();
         LOGGER.info("query = " + query); //$NON-NLS-1$
-        ResultSet resultSet = _statement.executeQuery(query);
+        ResultSet resultSet = _connection.createStatement().executeQuery(query);
         exists = resultSet.next();
-        resultSet.close();
+        closeResultSet(resultSet);
         return exists;
     }
 
@@ -214,11 +226,12 @@ public final class DBManager
         String autoIncrement = "SELECT GEN_ID(" + generator
                 + ", 1) FROM RDB$DATABASE";
         LOGGER.debug("autoIncrement: " + autoIncrement);
-        ResultSet resultSet = _statement.executeQuery(autoIncrement);
+        ResultSet resultSet = _connection.createStatement().executeQuery(
+                autoIncrement);
         resultSet.next();
         int primaryKeyID = resultSet.getInt(1);
         LOGGER.debug("primaryKeyID: " + primaryKeyID);
-        resultSet.close();
+        closeResultSet(resultSet);
         return primaryKeyID;
     }
 
@@ -250,7 +263,7 @@ public final class DBManager
      */
     public ResultSet getResultSet() throws SQLException
     {
-        return _statement.getResultSet();
+        return _currentStatement != null ? _currentStatement.getResultSet() : null;
     }
 
     /**
@@ -261,7 +274,7 @@ public final class DBManager
      */
     public int getUpdateCount() throws SQLException
     {
-        return _statement.getUpdateCount();
+        return _currentStatement != null ? _currentStatement.getUpdateCount() : null;
     }
 
     /**
@@ -275,7 +288,7 @@ public final class DBManager
     {
         String query = insertObject.getQuery();
         LOGGER.info("query = " + query); //$NON-NLS-1$	
-        return _statement.execute(query);
+        return _connection.createStatement().execute(query);
     }
 
     /**
@@ -295,11 +308,11 @@ public final class DBManager
                 + "), 0) + 1 ";
         autoIncrement += "FROM " + insertObject.getTableName();
         LOGGER.debug("autoIncrement: " + autoIncrement);
-        ResultSet resultSet = _statement.executeQuery(autoIncrement);
+        ResultSet resultSet = _connection.createStatement().executeQuery(autoIncrement);
         resultSet.next();
         int primaryKeyID = resultSet.getInt(1);
         LOGGER.debug("primaryKeyID: " + primaryKeyID);
-        resultSet.close();
+        closeResultSet(resultSet);
 
         // Inserting data
         // (primary key will be at the end of query, it's not nice
@@ -407,7 +420,8 @@ public final class DBManager
     {
         String query = selectObject.getQuery();
         LOGGER.info("query = " + query); //$NON-NLS-1$
-        return _statement.executeQuery(query);
+        assert(_connection != null);
+        return _connection.createStatement().executeQuery(query);
     }
 
     /**
@@ -422,7 +436,7 @@ public final class DBManager
         String query = updateObject.getQuery();
         LOGGER.info("query = " + query); //$NON-NLS-1$
 
-        return _statement.executeUpdate(query);
+        return _connection.createStatement().executeUpdate(query);
     }
 
     /**
@@ -450,7 +464,6 @@ public final class DBManager
             foundID = resultSet.getInt(primaryKey);
             LOGGER.info("Record found, id = " + foundID);
             updateObject.addCondition(primaryKey + " =", foundID);
-            resultSet.close();
             int updatedRows = update(updateObject);
             if (updatedRows > 1) {
                 LOGGER.error("TOO MANY ROWS: " + updatedRows);
@@ -458,7 +471,7 @@ public final class DBManager
             }
             LOGGER.info("Record updated");
         }
-
+        closeResultSet(resultSet);
         return foundID;
     }
 }

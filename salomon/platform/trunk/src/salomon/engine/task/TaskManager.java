@@ -295,14 +295,14 @@ public final class TaskManager implements ITaskManager
                     task.setPlugin(localPlugin);
                     tasks.add(task);
                 }
-                resultSet.close();
+                _dbManager.closeResultSet(resultSet);
                 // if everything is OK, then loaded tasks list is assigned
                 // to manager's tasks list
                 _tasks = tasks;
             } catch (Exception e) {
                 LOGGER.fatal("", e);
                 try {
-                    resultSet.close();
+                    _dbManager.closeResultSet(resultSet);
                 } catch (SQLException ex) {
                     LOGGER.fatal("", ex);
                 }

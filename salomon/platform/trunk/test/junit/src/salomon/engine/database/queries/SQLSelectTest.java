@@ -54,7 +54,7 @@ public class SQLSelectTest extends TestCase
 
             ResultSet resultSet = _manager.select(sel);
             assertNotNull(resultSet);
-            resultSet.close();
+            _manager.closeResultSet(resultSet);
             success = true;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -85,7 +85,7 @@ public class SQLSelectTest extends TestCase
 
             ResultSet resultSet = _manager.select(sel);
             assertNotNull(resultSet);
-            resultSet.close();
+            _manager.closeResultSet(resultSet);
             success = true;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -107,7 +107,7 @@ public class SQLSelectTest extends TestCase
         try {
             ResultSet resultSet = _manager.select(sel);
             assertNotNull(resultSet);
-            resultSet.close();
+            _manager.closeResultSet(resultSet);
             success = true;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -131,7 +131,7 @@ public class SQLSelectTest extends TestCase
             assertNotNull(resultSet);
             // just to print results
             Utils.getDataFromResultSet(resultSet);
-            resultSet.close();
+            _manager.closeResultSet(resultSet);
             success = true;
         } catch (SQLException e) {
             e.printStackTrace();

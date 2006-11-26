@@ -22,7 +22,9 @@
 package salomon;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
+import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
 import salomon.engine.Config;
@@ -30,16 +32,30 @@ import salomon.engine.database.DBManager;
 import salomon.engine.database.queries.SQLSelect;
 import salomon.engine.platform.ManagerEngine;
 import salomon.engine.platform.data.DBMetaData;
+import salomon.engine.plugin.PluginInfo;
+import salomon.engine.project.IProject;
+import salomon.engine.project.ProjectInfo;
 import salomon.engine.solution.ISolution;
 import salomon.engine.solution.ISolutionManager;
 import salomon.engine.solution.SolutionInfo;
 import salomon.platform.exception.PlatformException;
+import salomon.plugin.IPlugin;
 
 /**
  * 
  */
 public final class TestObjectFactory
 {
+    private static DBManager DB_MANGER;
+
+    private static final Logger LOGGER = Logger.getLogger(TestObjectFactory.class);
+
+    private static ManagerEngine MANAGER_ENGINE;
+
+    private static DBMetaData META_DATA;
+
+    private static ISolutionManager SOLUTION_MANAGER;
+
     /**
      * TODO: add comment.
      * @return
@@ -65,28 +81,102 @@ public final class TestObjectFactory
         return META_DATA;
     }
 
-    public static ISolution getSolution(String name) throws PlatformException
+    /**
+     * Returns plugin by given name.
+     * If plugin was not found, null is returend
+     * 
+     * @param name
+     * @return plugin object with given name or null if not found in DB
+     * @throws PlatformException
+     */
+
+    public static IPlugin getPlugin(String name) throws PlatformException
     {
-
         SQLSelect select = new SQLSelect();
-        select.addTable(SolutionInfo.TABLE_NAME);
-        select.addColumn("solution_id");
-        select.addCondition("solution_name =", name);
+        select.addTable(PluginInfo.TABLE_NAME);
+        select.addColumn(PluginInfo.PRIMARY_KEY);
+        select.addCondition("plugin_name =", name);
 
-        final int solutionID;
+        int pluginID = 0;
+        IPlugin plugin = null;
+        ResultSet resultSet = null;
         try {
-            ResultSet resultSet = getDbManager().select(select);
+            resultSet = getDbManager().select(select);
             if (resultSet.next()) {
-                solutionID = resultSet.getInt("solution_id");
-            } else {
-                throw new PlatformException("Solution not found");
+                pluginID = resultSet.getInt(PluginInfo.PRIMARY_KEY);
             }
+            getDbManager().closeResultSet(resultSet);
+            plugin = getManagerEngine().getPluginManager().getPlugin(pluginID);
+
         } catch (Exception e) {
             throw new PlatformException(e);
-        }
+        } 
 
-        ISolution solution = getSolutionManager().getSolution(solutionID);
+        return plugin;
+    }
 
+    /**
+     * Returns project by given name.
+     * If project was not found, null is returend
+     * 
+     * @param name
+     * @return project object with given name or null if not found in DB
+     * @throws PlatformException
+     */
+
+    public static IProject getProject(String name) throws PlatformException
+    {
+        SQLSelect select = new SQLSelect();
+        select.addTable(ProjectInfo.TABLE_NAME);
+        select.addColumn(ProjectInfo.PRIMARY_KEY);
+        select.addCondition("project_name =", name);
+
+        int projectID = 0;
+        IProject project = null;
+        ResultSet resultSet = null;
+        try {
+            resultSet = getDbManager().select(select);
+            if (resultSet.next()) {
+                projectID = resultSet.getInt(ProjectInfo.PRIMARY_KEY);
+            }
+            getDbManager().closeResultSet(resultSet);
+            project = getSolutionManager().getCurrentSolution().getProjectManager().getProject(
+                    projectID);
+        } catch (Exception e) {
+            throw new PlatformException(e);
+        } 
+        return project;
+    }
+
+    /**
+     * Returns solution by given name.
+     * If solution was not found, null is returend
+     * 
+     * @param name
+     * @return solution object with given name or null if not found in DB
+     * @throws PlatformException
+     */
+    public static ISolution getSolution(String name) throws PlatformException
+    {
+        SQLSelect select = new SQLSelect();
+        select.addTable(SolutionInfo.TABLE_NAME);
+        select.addColumn(SolutionInfo.PRIMARY_KEY);
+        select.addCondition("solution_name =", name);
+
+        int solutionID = 0;
+        ISolution solution = null;
+        ResultSet resultSet = null;
+        try {
+            resultSet = getDbManager().select(select);
+            if (resultSet.next()) {
+                solutionID = resultSet.getInt(SolutionInfo.PRIMARY_KEY);
+
+            }
+            getDbManager().closeResultSet(resultSet);
+            solution = getSolutionManager().getSolution(solutionID);
+        } catch (Exception e) {
+            throw new PlatformException(e);
+        } 
         return solution;
     }
 
@@ -114,12 +204,4 @@ public final class TestObjectFactory
 
         return MANAGER_ENGINE;
     }
-
-    private static DBManager DB_MANGER;
-
-    private static ManagerEngine MANAGER_ENGINE;
-
-    private static DBMetaData META_DATA;
-
-    private static ISolutionManager SOLUTION_MANAGER;
 }

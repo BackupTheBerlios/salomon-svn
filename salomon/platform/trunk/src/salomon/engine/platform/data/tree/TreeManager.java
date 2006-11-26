@@ -250,7 +250,7 @@ public final class TreeManager implements ITreeManager
         } finally {
             if (resultSet != null) {
                 try {
-                    resultSet.close();
+                    _dbManager.closeResultSet(resultSet);
                 } catch (SQLException e) {
                     LOGGER.fatal("", e);
                 }

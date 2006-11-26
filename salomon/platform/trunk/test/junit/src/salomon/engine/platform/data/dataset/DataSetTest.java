@@ -147,7 +147,7 @@ public class DataSetTest extends TestCase
         assertTrue(resultSet.next());
 
         final int dataSetID = resultSet.getInt("dataset_id");
-        resultSet.close();
+        _manager.closeResultSet(resultSet);
 
         IDataSet dataSet = _dataSetManager.getDataSet(dataSetID);
 

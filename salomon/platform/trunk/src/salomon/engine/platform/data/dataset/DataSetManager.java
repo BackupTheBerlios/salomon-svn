@@ -161,7 +161,7 @@ public final class DataSetManager implements IDataSetManager
                 // loading items
                 ((DataSetInfo) ((DataSet) dataSet).getInfo()).loadItems(resultSet);
             }
-            resultSet.close();
+            _dbManager.closeResultSet(resultSet);
         } catch (Exception e) {
             LOGGER.fatal("", e);
             throw new PlatformException(e);
@@ -240,7 +240,7 @@ public final class DataSetManager implements IDataSetManager
             if (resultSet.next()) {
                 LOGGER.warn("TOO MANY ROWS");
             }
-            resultSet.close();
+            _dbManager.closeResultSet(resultSet);
 
             // loading items
             SQLSelect dataSetItemsSelect = new SQLSelect();
@@ -255,7 +255,7 @@ public final class DataSetManager implements IDataSetManager
             while (resultSet.next()) {
                 dataSetInfo.loadItems(resultSet);
             }
-            resultSet.close();
+            _dbManager.closeResultSet(resultSet);
 
         } catch (Exception e) {
             LOGGER.fatal("", e);

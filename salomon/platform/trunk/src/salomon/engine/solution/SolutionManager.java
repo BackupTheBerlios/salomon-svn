@@ -130,7 +130,7 @@ public final class SolutionManager implements ISolutionManager
             if (resultSet.next()) {
                 LOGGER.warn("TOO MANY ROWS");
             }
-            resultSet.close();
+            _dbManager.closeResultSet(resultSet);
         } catch (Exception e) {
             LOGGER.fatal("", e);
             throw new DBException(e.getLocalizedMessage());

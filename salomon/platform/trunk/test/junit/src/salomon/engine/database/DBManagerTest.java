@@ -57,7 +57,7 @@ public class DBManagerTest extends TestCase
             select.addTable("projects");
             ResultSet resultSet = manager.select(select);
             Utils.getDataFromResultSet(resultSet);
-            resultSet.close();
+            manager.closeResultSet(resultSet);
 
             personManager.connect("", "\\db\\persons.gdb", "sysdba",
                     "masterkey");

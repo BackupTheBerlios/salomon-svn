@@ -220,7 +220,7 @@ public final class AttributeManager implements IAttributeManager
             throw new DBException(e.getLocalizedMessage());
         } finally {
             try {
-                resultSet.close();
+                _dbManager.closeResultSet(resultSet);
             } catch (SQLException e) {
                 LOGGER.fatal("", e);
                 throw new DBException(e.getLocalizedMessage());
@@ -297,7 +297,7 @@ public final class AttributeManager implements IAttributeManager
         } finally {
             if (resultSet != null) {
                 try {
-                    resultSet.close();
+                    _dbManager.closeResultSet(resultSet);
                 } catch (SQLException e) {
                     LOGGER.fatal("", e);
                 }

@@ -158,7 +158,7 @@ public final class ProjectManager implements IProjectManager
             if (resultSet.next()) {
                 LOGGER.warn("TOO MANY ROWS");
             }
-            resultSet.close();
+            _dbManager.closeResultSet(resultSet);
 
             // loading tasks
             _managerEngine.getTasksManager().getTasks();

@@ -93,7 +93,7 @@ public class DescriptionTest extends TestCase
             LOGGER.fatal("", e);
         } finally {
             try {
-                resultSet.close();
+                _manager.closeResultSet(resultSet);
             } catch (SQLException ex) {
                 LOGGER.fatal("", ex);
             }
