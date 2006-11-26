@@ -52,11 +52,11 @@ public final class TestScenario extends TestCase
 
     private final static String PROJECT_NAME = "Dataset project";
 
+    private static final String RDS_DATASET_NAME = "Contact Lenses";
+
     private static final String RDS_PLUGIN = "Random dataset creator";
 
     private static final String RDS_SETTINGS = "rds_settings.xml";
-    
-    private static final String RDS_DATASET_NAME = "Contact Lenses";
 
     private final static String SOLUTION_NAME = "Example";
 
@@ -89,7 +89,7 @@ public final class TestScenario extends TestCase
                 project = createProject();
                 createTasks(project);
                 TestObjectFactory.getDbManager().commit();
-            }           
+            }
             // cleaning before tasks execution
             clear();
 
@@ -100,10 +100,10 @@ public final class TestScenario extends TestCase
 
         } catch (Exception e) {
             LOGGER.fatal("", e);
-            throw(e);
+            throw (e);
         } finally {
             TestObjectFactory.getDbManager().disconnect();
-        }        
+        }
     }
 
     private void clear() throws Exception
@@ -112,10 +112,10 @@ public final class TestScenario extends TestCase
         SQLDelete delete = new SQLDelete("datasets");
         delete.addCondition("dataset_name = ", RDS_DATASET_NAME);
         TestObjectFactory.getDbManager().delete(delete);
-        
+
         TestObjectFactory.getDbManager().commit();
     }
-    
+
     /**
      * Creates project.
      * 
@@ -169,7 +169,7 @@ public final class TestScenario extends TestCase
     private void createTasks(IProject project) throws Exception
     {
         ITaskManager taskManager = project.getTaskManager();
-        
+
         ITask createRDSTask = createTask(taskManager, RDS_PLUGIN, RDS_SETTINGS);
         taskManager.addTask(createRDSTask);
     }

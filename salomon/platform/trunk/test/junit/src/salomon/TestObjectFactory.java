@@ -101,12 +101,13 @@ public final class TestObjectFactory
             if (resultSet.next()) {
                 pluginID = resultSet.getInt(PluginInfo.PRIMARY_KEY);
                 getDbManager().closeResultSet(resultSet);
-                plugin = getManagerEngine().getPluginManager().getPlugin(pluginID);
+                plugin = getManagerEngine().getPluginManager().getPlugin(
+                        pluginID);
             }
 
         } catch (Exception e) {
             throw new PlatformException(e);
-        } 
+        }
 
         return plugin;
     }
@@ -141,7 +142,7 @@ public final class TestObjectFactory
 
         } catch (Exception e) {
             throw new PlatformException(e);
-        } 
+        }
         return project;
     }
 
@@ -172,7 +173,7 @@ public final class TestObjectFactory
             }
         } catch (Exception e) {
             throw new PlatformException(e);
-        } 
+        }
         return solution;
     }
 
