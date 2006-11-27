@@ -31,7 +31,7 @@
         <option name="FIELD_NAME_PREFIX" value="_" />
         <option name="IMPORT_LAYOUT_TABLE">
           <value>
-            <package name="java" withSubpackages="false" />
+            <package name="java" withSubpackages="true" />
             <emptyLine />
             <package name="javax" withSubpackages="true" />
             <emptyLine />
