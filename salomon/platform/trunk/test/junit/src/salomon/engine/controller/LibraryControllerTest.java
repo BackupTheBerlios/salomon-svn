@@ -21,16 +21,18 @@
 
 package salomon.engine.controller;
 
-import junit.framework.TestCase;
-
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
+import salomon.engine.Config;
 import salomon.engine.project.IProject;
 import salomon.engine.project.IProjectManager;
-import salomon.engine.task.ITask;
+import salomon.engine.solution.ISolutionManager;
 import salomon.engine.task.ITaskManager;
+
 import salomon.platform.exception.PlatformException;
+
+import junit.framework.TestCase;
 
 /**
  * 
@@ -40,31 +42,22 @@ public class LibraryControllerTest extends TestCase
     public void test() throws PlatformException
     {
         LibraryController controller = new LibraryController();
-        IProjectManager projectManager = null;
+        controller.start();
+        ISolutionManager solutionManager = null;
         try {
-            projectManager = controller.getManagerEngine().getProjectManager();
+            solutionManager = controller.getManagerEngine().getSolutionManager();
         } catch (PlatformException e) {
             LOGGER.fatal("Exception was thrown!", e);
         }
 
+
+        IProjectManager projectManager = solutionManager.getSolution(1).getProjectManager();
         IProject project = projectManager.createProject();
         //project.setName("testLib");
         //project.setInfo("Created from library controller");
-        ITaskManager taskManager = controller.getManagerEngine().getTasksManager();
-        ITask task = taskManager.createTask();
+        ITaskManager taskManager =  project.getTaskManager();
+        assertNotNull(taskManager.createTask());
         //task.setName("testName");
-
-        StringBuilder builder = new StringBuilder();
-        builder.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-        builder.append("<!DOCTYPE struct SYSTEM \"config/struct.dtd\">");
-        builder.append("<struct><string name=\"resultDataSet\" value=\"ResultDataSet\"/>");
-        builder.append("<string name=\"firstDataSet\" value=\"second\"/>");
-        builder.append("<string name=\"secondDataSet\" value=\"third\"/></struct>");
-        // this method is not supported now
-        //		taskManager.addTask(task, pluginUrl, builder.toString());
-        projectManager.saveProject(false);
-        taskManager.getRunner().start();
-        LOGGER.debug("task result:" + task.getResult());
     }
 
     /**
@@ -73,7 +66,8 @@ public class LibraryControllerTest extends TestCase
     @Override
     protected void setUp() throws Exception
     {
-        PropertyConfigurator.configure("log.conf"); //$NON-NLS-1$  
+        PropertyConfigurator.configure("log.conf"); //$NON-NLS-1$
+        Config.readConfiguration();
     }
 
     private static final Logger LOGGER = Logger.getLogger(LibraryControllerTest.class);

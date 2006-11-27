@@ -24,18 +24,21 @@ package salomon.engine.database;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import junit.framework.TestCase;
-
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
 import salomon.engine.database.queries.SQLSelect;
-import salomon.engine.platform.data.DBMetaData;
+
+import salomon.util.gui.Utils;
+
 import salomon.platform.data.IColumn;
 import salomon.platform.data.IMetaData;
 import salomon.platform.data.ITable;
 import salomon.platform.exception.DBException;
-import salomon.util.gui.Utils;
+
+import salomon.engine.platform.data.DBMetaData;
+
+import junit.framework.TestCase;
 
 public class DBManagerTest extends TestCase
 {
@@ -59,7 +62,7 @@ public class DBManagerTest extends TestCase
             Utils.getDataFromResultSet(resultSet);
             manager.closeResultSet(resultSet);
 
-            personManager.connect("", "\\db\\persons.gdb", "sysdba",
+            personManager.connect("", "\\db\\example.gdb", "sysdba",
                     "masterkey");
             LOGGER.info("CONNECTED to PERSONS");
             select = new SQLSelect();
@@ -90,10 +93,10 @@ public class DBManagerTest extends TestCase
     {
         LOGGER.info("DBManagerTest.testGetDistinctValues()");
         try {
-            personManager.connect("", "\\db\\persons.gdb", "sysdba",
+            personManager.connect("", "\\db\\example.gdb", "sysdba",
                     "masterkey");
 
-            DBMetaData metaData = (DBMetaData) personManager.getMetaData();
+            DBMetaData metaData = personManager.getMetaData();
             ITable table = metaData.getTables()[0];
             String[] values = metaData.getDistinctValues(table.getColumns()[2]);
 
@@ -118,8 +121,8 @@ public class DBManagerTest extends TestCase
             for (ITable table : tables) {
                 LOGGER.debug("table: " + table);
                 IColumn[] columns = table.getColumns();
-                for (int i = 0; i < columns.length; ++i) {
-                    LOGGER.debug(columns[i]);
+                for (IColumn column : columns) {
+                    LOGGER.debug(column);
                 }
             }
 

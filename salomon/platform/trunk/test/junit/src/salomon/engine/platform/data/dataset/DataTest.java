@@ -23,25 +23,30 @@ package salomon.engine.platform.data.dataset;
 
 import java.sql.ResultSet;
 
-import junit.framework.TestCase;
-
 import org.apache.log4j.Logger;
 
-import salomon.TestObjectFactory;
 import salomon.engine.database.DBManager;
 import salomon.engine.database.queries.SQLSelect;
 import salomon.engine.solution.SolutionInfo;
+
 import salomon.platform.data.dataset.IData;
+
+import junit.framework.TestCase;
+import salomon.TestObjectFactory;
 
 public class DataTest extends TestCase
 {
 
     private DBManager _manager;
 
-    public DataTest() throws Exception
+
+    @Override
+    protected void setUp() throws Exception
     {
+        super.setUp();
         _manager = TestObjectFactory.getDbManager();
     }
+
 
     /*
      * Test method for 'salomon.engine.platform.data.dataset.Data.getData()'

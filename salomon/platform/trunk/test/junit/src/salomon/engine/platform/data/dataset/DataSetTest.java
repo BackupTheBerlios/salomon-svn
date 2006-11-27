@@ -27,16 +27,12 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-import junit.framework.TestCase;
-
 import org.apache.log4j.Logger;
 
-import salomon.TestObjectFactory;
 import salomon.engine.database.DBManager;
 import salomon.engine.database.queries.SQLSelect;
-import salomon.engine.platform.data.DBColumn;
-import salomon.engine.platform.data.DBTable;
 import salomon.engine.solution.ISolution;
+
 import salomon.platform.IDataEngine;
 import salomon.platform.data.IColumn;
 import salomon.platform.data.IMetaData;
@@ -45,6 +41,12 @@ import salomon.platform.data.dataset.ICondition;
 import salomon.platform.data.dataset.IData;
 import salomon.platform.data.dataset.IDataSet;
 import salomon.platform.exception.PlatformException;
+
+import salomon.engine.platform.data.DBColumn;
+import salomon.engine.platform.data.DBTable;
+
+import junit.framework.TestCase;
+import salomon.TestObjectFactory;
 
 /**
  * 
@@ -112,7 +114,7 @@ public class DataSetTest extends TestCase
 
         IDataSet dataSet = mainDataSet.createSubset(condition);
 
-        ((DataSetInfo) ((DataSet) dataSet).getInfo()).setName(dataSetName);
+        ((DataSet) dataSet).getInfo().setName(dataSetName);
         ((DataSet) dataSet).getInfo().save();
 
         _manager.commit();
@@ -139,7 +141,7 @@ public class DataSetTest extends TestCase
                     new Integer(4));
 
             IDataSet dataSet = mainDataSet.createSubset(conditions);
-            ((DataSetInfo) ((DataSet) dataSet).getInfo()).setName(dataSetName);
+            ((DataSet) dataSet).getInfo().setName(dataSetName);
             _dataSetManager.add(dataSet);
         }
 
@@ -225,8 +227,10 @@ public class DataSetTest extends TestCase
         return result;
     }
 
-    private static void init() throws Exception
+
+    protected void setUp() throws Exception
     {
+        super.setUp();
         LOGGER.info("DataSetTest.init()");
         ISolution solution = TestObjectFactory.getSolution("Persons");
         IDataEngine dataEngine = solution.getDataEngine();
@@ -288,7 +292,7 @@ public class DataSetTest extends TestCase
             conditions[2] = _cond3ds1;
             // column type is not important
             _dataSet1 = (DataSet) mainDataSet.createSubset(conditions);
-            ((DataSetInfo) _dataSet1.getInfo()).setName(dataSetName);
+            _dataSet1.getInfo().setName(dataSetName);
             _dataSetManager.add(_dataSet1);
             _manager.commit();
         } else {
@@ -314,7 +318,7 @@ public class DataSetTest extends TestCase
             conditions[2] = _cond3ds2;
             // column type is not important
             _dataSet2 = (DataSet) mainDataSet.createSubset(conditions);
-            ((DataSetInfo) _dataSet2.getInfo()).setName(dataSetName);
+            _dataSet2.getInfo().setName(dataSetName);
             _dataSetManager.add(_dataSet2);
         } else {
             ResultSet resultSet = _manager.select(select);
@@ -366,15 +370,5 @@ public class DataSetTest extends TestCase
 
     private static IMetaData _metaData;
 
-    private static final Logger LOGGER;
-
-    static {
-        LOGGER = Logger.getLogger(DataSetTest.class);
-        try {
-            init();
-        } catch (Exception e) {
-            LOGGER.fatal("", e);
-        }
-    }
-
+    private static final Logger LOGGER = Logger.getLogger(DataSetTest.class);
 }
