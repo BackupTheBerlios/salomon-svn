@@ -27,11 +27,15 @@ import salomon.engine.plugin.ILocalPlugin;
 import salomon.engine.plugin.IPluginManager;
 import salomon.engine.project.IProject;
 import salomon.engine.project.IProjectManager;
+import salomon.engine.project.ProjectInfo;
 import salomon.engine.solution.ISolution;
 import salomon.engine.task.ITask;
 import salomon.engine.task.ITaskManager;
 
+import salomon.util.serialization.SimpleStruct;
+
 import salomon.platform.exception.PlatformException;
+import salomon.platform.serialization.IObject;
 
 import salomon.engine.platform.ManagerEngine;
 
@@ -48,8 +52,10 @@ public class TreeTest extends TestCase
         ISolution solution = TestObjectFactory.getSolution("Example");
         IProject project = createProject(solution);
 
+
         ITaskManager taskManager = project.getTaskManager();
         IPluginManager pluginManager = managerEngine.getPluginManager();
+        
         createTasks(pluginManager, taskManager);
 
         LOGGER.info("Test finished!");
@@ -58,10 +64,10 @@ public class TreeTest extends TestCase
     private void createTasks(IPluginManager pluginManager, ITaskManager taskManager)
         throws PlatformException
     {
-        createDataSetCreatorTask(pluginManager, taskManager);
+//        createDataSetCreatorTask(pluginManager, taskManager);
         createRandomDataSetCreatorTask(pluginManager, taskManager);
-        createDataSetVisualizerTask(pluginManager, taskManager);
-        createAttributeSetTask(pluginManager, taskManager);
+//        createDataSetVisualizerTask(pluginManager, taskManager);
+//        createAttributeSetTask(pluginManager, taskManager);
     }
 
     private void createDataSetCreatorTask(IPluginManager pluginManager, ITaskManager taskManager)
@@ -73,7 +79,14 @@ public class TreeTest extends TestCase
     private void createRandomDataSetCreatorTask(IPluginManager pluginManager, ITaskManager taskManager)
         throws PlatformException
     {
-        createTask(pluginManager, taskManager, "Random dataset creator", null);
+        MockSettings settings = new MockSettings();
+        settings.setField("dataSetName", "testedDataSet");
+        SimpleStruct deffinitions = new SimpleStruct();
+        deffinitions.setField("rowCount", 4);
+        deffinitions.setField("tableName", "CONTACT_LENSES");
+        settings.setField("definitions", new IObject[] {deffinitions});
+
+        createTask(pluginManager, taskManager, "Random dataset creator", settings);
     }
 
     private void createDataSetVisualizerTask(IPluginManager pluginManager, ITaskManager taskManager)
@@ -107,11 +120,21 @@ public class TreeTest extends TestCase
         LOGGER.info("Creating project!");
         IProjectManager projectManager = solution.getProjectManager();
         IProject project = projectManager.createProject();
-        projectManager.saveProject(true);
+        ProjectInfo projectInfo = (ProjectInfo) project.getInfo();
+        projectInfo.setName("Tree testing project");
+        projectInfo.setInfo("The tree testing project creating automaticly");
+        projectManager.saveProject(false);
 
         LOGGER.info("Project created!");
 
         return project;
+    }
+
+    class MockSettings extends SimpleStruct implements ISettings
+    {
+        public void init(IObject o)
+        {
+        }
     }
 
     private static final Logger LOGGER = Logger.getLogger(TreeTest.class);

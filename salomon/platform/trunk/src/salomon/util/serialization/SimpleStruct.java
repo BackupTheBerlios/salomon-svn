@@ -94,4 +94,39 @@ public class SimpleStruct implements IStruct
     {
         _fields.put(name, value);
     }
+
+    public void setField(String name, String value)
+    {
+        _fields.put(name, new SimpleString(value));
+    }
+
+    public void setField(String name, Object[] values)
+    {
+        IObject[] objects = new IObject[values.length];
+        for (int i = 0; i < values.length; i++) {
+            objects[i] = createObject(values[i]);
+        }
+        _fields.put(name, new SimpleArray(objects));
+    }
+
+    public void setField(String name, IObject[] values) {
+        setField(name, new SimpleArray(values));
+    }
+
+    private static IObject createObject(Object value) {
+        if (value instanceof String) {
+            return new SimpleString((String) value);
+        }
+
+        if (value == null) {
+            throw new UnsupportedOperationException("Cannot create IObjec for null");
+        }
+
+        throw new UnsupportedOperationException("Cannot create IObject for class: " + value.getClass());
+    }
+
+    public void setField(String name, int value)
+    {
+        setField(name, new SimpleInteger(value));
+    }
 }
