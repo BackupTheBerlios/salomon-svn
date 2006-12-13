@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module version="4" relativePaths="true" type="JAVA_MODULE">
+  <component name="DependecySynchronizer" />
   <component name="ModuleRootManager" />
   <component name="NewModuleRootManager" inherit-compiler-output="false">
     <output url="file://$MODULE_DIR$/bin" />
@@ -32,7 +33,7 @@
     <Base>
       <setting name="state" value="1" />
     </Base>
-    <LanguageOptions name="HTML">
+    <LanguageOptions name="JAVA">
       <option name="templateOptions">
         <value>
           <option name="block" value="true" />
@@ -51,7 +52,7 @@
       <option name="addBlankAfter" value="true" />
       <option name="fileLocation" value="1" />
     </LanguageOptions>
-    <LanguageOptions name="JAVA">
+    <LanguageOptions name="HTML">
       <option name="templateOptions">
         <value>
           <option name="block" value="true" />
@@ -108,7 +109,7 @@
       <option name="addBlankAfter" value="true" />
       <option name="fileLocation" value="1" />
     </LanguageOptions>
-    <LanguageOptions name="CSS">
+    <LanguageOptions name="JavaScript">
       <option name="templateOptions">
         <value>
           <option name="block" value="true" />
@@ -127,7 +128,7 @@
       <option name="addBlankAfter" value="true" />
       <option name="fileLocation" value="1" />
     </LanguageOptions>
-    <LanguageOptions name="JavaScript">
+    <LanguageOptions name="CSS">
       <option name="templateOptions">
         <value>
           <option name="block" value="true" />

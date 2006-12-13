@@ -43,6 +43,8 @@ public interface IPluginManager
      */
     ILocalPlugin getPlugin(int id) throws PlatformException;
 
+    ILocalPlugin getPlugin(String name) throws PlatformException;
+
     /**
      * Returns collection of plugin descriptions
      * 
@@ -55,7 +57,7 @@ public interface IPluginManager
     /**
      * Removes plugin corresponding to given plugin description.
      * 
-     * @param description description of plugin to be removed
+     * @param plugin the plugin to be removed
      * @return true if successfully removed, false otherwise
      */
     boolean removePlugin(ILocalPlugin plugin) throws PlatformException;

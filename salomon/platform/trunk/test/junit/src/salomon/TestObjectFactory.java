@@ -28,15 +28,18 @@ import org.apache.log4j.PropertyConfigurator;
 import salomon.engine.Config;
 import salomon.engine.database.DBManager;
 import salomon.engine.database.queries.SQLSelect;
-import salomon.engine.platform.ManagerEngine;
-import salomon.engine.platform.data.DBMetaData;
 import salomon.engine.plugin.PluginInfo;
 import salomon.engine.project.IProject;
 import salomon.engine.project.ProjectInfo;
 import salomon.engine.solution.ISolution;
 import salomon.engine.solution.ISolutionManager;
 import salomon.engine.solution.SolutionInfo;
+
 import salomon.platform.exception.PlatformException;
+
+import salomon.engine.platform.ManagerEngine;
+import salomon.engine.platform.data.DBMetaData;
+
 import salomon.plugin.IPlugin;
 
 /**
@@ -191,7 +194,7 @@ public final class TestObjectFactory
      * @return
      * @throws PlatformException
      */
-    private static ManagerEngine getManagerEngine() throws PlatformException
+    public static ManagerEngine getManagerEngine() throws PlatformException
     {
         if (MANAGER_ENGINE == null) {
             PropertyConfigurator.configure("log.conf"); //$NON-NLS-1$

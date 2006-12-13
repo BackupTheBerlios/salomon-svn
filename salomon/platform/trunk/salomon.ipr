@@ -2,6 +2,13 @@
 <project version="4" relativePaths="true">
   <component name="AntConfiguration">
     <defaultAnt bundledAnt="true" />
+    <buildFile url="file://$PROJECT_DIR$/build.xml">
+      <additionalClassPath />
+      <antReference projectDefault="true" />
+      <customJdkName value="" />
+      <maximumHeapSize value="128" />
+      <properties />
+    </buildFile>
   </component>
   <component name="BuildJarProjectSettings">
     <option name="BUILD_JARS_ON_MAKE" value="false" />
@@ -485,6 +492,15 @@
       </value>
     </option>
   </component>
+  <component name="com.sixrr.metrics.MetricsReloaded">
+    <option name="selectedProfile" value="Default" />
+    <option name="autoscroll" value="false" />
+    <option name="calculateMetrics" value="true" />
+    <option name="includeTestClasses" value="false" />
+    <option name="flattenInnerClasses" value="true" />
+    <option name="cycleTableSpecificationString" value="" />
+    <option name="shortCycleTableSpecificationString" value="" />
+  </component>
   <component name="com.siyeh.metrics.MetricsReloaded">
     <option name="selectedProfile" value="Default" />
     <option name="autoscroll" value="false" />
@@ -496,7 +512,7 @@
     <Base>
       <setting name="state" value="1" />
     </Base>
-    <LanguageOptions name="JAVA">
+    <LanguageOptions name="HTML">
       <option name="templateOptions">
         <value>
           <option name="block" value="true" />
@@ -515,7 +531,7 @@
       <option name="addBlankAfter" value="true" />
       <option name="fileLocation" value="1" />
     </LanguageOptions>
-    <LanguageOptions name="HTML">
+    <LanguageOptions name="JAVA">
       <option name="templateOptions">
         <value>
           <option name="block" value="true" />
@@ -572,7 +588,7 @@
       <option name="addBlankAfter" value="true" />
       <option name="fileLocation" value="1" />
     </LanguageOptions>
-    <LanguageOptions name="JavaScript">
+    <LanguageOptions name="CSS">
       <option name="templateOptions">
         <value>
           <option name="block" value="true" />
@@ -591,7 +607,7 @@
       <option name="addBlankAfter" value="true" />
       <option name="fileLocation" value="1" />
     </LanguageOptions>
-    <LanguageOptions name="CSS">
+    <LanguageOptions name="JavaScript">
       <option name="templateOptions">
         <value>
           <option name="block" value="true" />

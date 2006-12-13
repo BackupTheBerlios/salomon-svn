@@ -23,8 +23,8 @@ package salomon.engine.holder;
 
 import salomon.engine.plugin.ILocalPlugin;
 import salomon.engine.plugin.IPluginManager;
+
 import salomon.platform.exception.PlatformException;
-import salomon.plugin.IPlugin;
 
 /**
  * Holds pluginManager of current client.
@@ -47,7 +47,6 @@ final class PluginManagerHolder implements IPluginManager
 
     /**
      * @throws PlatformException 
-     * @see salomon.engine.plugin.IPluginManager#addPlugin(salomon.plugin.IPlugin)
      */
     public void addPlugin(ILocalPlugin plugin) throws PlatformException
     {
@@ -73,6 +72,11 @@ final class PluginManagerHolder implements IPluginManager
         return _currentPluginManager.getPlugin(id);
     }
 
+    public ILocalPlugin getPlugin(String name) throws PlatformException
+    {
+        return null;
+    }
+
     /**
      * @see IPluginManager#getPlugins()
      */
@@ -87,7 +91,6 @@ final class PluginManagerHolder implements IPluginManager
     }
 
     /**
-     * @see IPluginManager#removePlugin(IPlugin)
      */
     public boolean removePlugin(ILocalPlugin description)
             throws PlatformException
@@ -96,7 +99,6 @@ final class PluginManagerHolder implements IPluginManager
     }
 
     /**
-     * @see IPluginManager#savePlugin(IPlugin)
      */
     public boolean savePlugin(ILocalPlugin plugin) throws PlatformException
     {

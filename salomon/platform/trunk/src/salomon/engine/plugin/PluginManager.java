@@ -29,6 +29,7 @@ import org.apache.log4j.Logger;
 import salomon.engine.database.DBManager;
 import salomon.engine.database.queries.SQLDelete;
 import salomon.engine.database.queries.SQLSelect;
+
 import salomon.platform.exception.PlatformException;
 
 /**
@@ -53,7 +54,6 @@ public final class PluginManager implements IPluginManager
 
     /**
      * @throws PlatformException 
-     * @see salomon.engine.plugin.IPluginManager#addPlugin(salomon.plugin.IPlugin)
      */
     public void addPlugin(ILocalPlugin plugin) throws PlatformException
     {
@@ -77,8 +77,7 @@ public final class PluginManager implements IPluginManager
      */
     public LocalPlugin createPlugin() throws PlatformException
     {
-        LocalPlugin localPlugin = new LocalPlugin(_dbManager);
-        return localPlugin;
+        return new LocalPlugin(_dbManager);
     }
 
     public DBManager getDBManager()
@@ -100,6 +99,25 @@ public final class PluginManager implements IPluginManager
                 break;
             }
         }
+        return localPlugin;
+    }
+
+    public ILocalPlugin getPlugin(String name) throws PlatformException
+    {
+        LocalPlugin localPlugin = null;
+
+        if (_plugins.isEmpty()) {
+            loadPlugins();
+        }
+        // if plugin exists in collection, then it is returned
+        for (ILocalPlugin plugin : _plugins){
+            PluginInfo pluginInfo = (PluginInfo) plugin.getInfo();
+            if (pluginInfo.getName().equals(name)) {
+                localPlugin = (LocalPlugin) plugin;
+                break;
+            }
+        }
+
         return localPlugin;
     }
 

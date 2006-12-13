@@ -27,7 +27,9 @@ import org.apache.log4j.Logger;
 
 import salomon.engine.plugin.ILocalPlugin;
 import salomon.engine.plugin.IPluginManager;
+
 import salomon.platform.exception.PlatformException;
+
 import salomon.plugin.IPlugin;
 
 /**
@@ -63,7 +65,6 @@ public final class PluginManagerProxy implements IPluginManager
     }
 
     /**
-     * @see salomon.engine.plugin.IPluginManager#addPlugin(salomon.plugin.IPlugin)
      */
     public void addPlugin(IPlugin plugin)
     {
@@ -84,6 +85,12 @@ public final class PluginManagerProxy implements IPluginManager
     }
 
     public ILocalPlugin getPlugin(int id) throws PlatformException
+    {
+        throw new UnsupportedOperationException(
+                "Method getPlugin() not implemented yet!");
+    }
+
+    public ILocalPlugin getPlugin(String name) throws PlatformException
     {
         throw new UnsupportedOperationException(
                 "Method getPlugin() not implemented yet!");
@@ -123,7 +130,6 @@ public final class PluginManagerProxy implements IPluginManager
     }
 
     /**
-     * @see IPluginManager#removePlugin(IPlugin)
      */
     public boolean removePlugin(IPlugin plugin) throws PlatformException
     {
@@ -146,7 +152,6 @@ public final class PluginManagerProxy implements IPluginManager
     }
 
     /**
-     * @see IPluginManager#savePlugin(IPlugin)
      */
     public boolean savePlugin(IPlugin plugin) throws PlatformException
     {
