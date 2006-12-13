@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project version="4" relativePaths="false">
+<project version="4" relativePaths="true">
   <component name="AntConfiguration">
     <defaultAnt bundledAnt="true" />
   </component>
@@ -437,19 +437,19 @@
   </component>
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://C:/home/dv/private/salomon/plugins/trunk/AttributeSetCreator/AttributeSetCreator.iml" filepath="C:/home/dv/private/salomon/plugins/trunk/AttributeSetCreator/AttributeSetCreator.iml" group="plugins" />
-      <module fileurl="file://C:/home/dv/private/salomon/plugins/trunk/DataSetCreator/DataSetCreator.iml" filepath="C:/home/dv/private/salomon/plugins/trunk/DataSetCreator/DataSetCreator.iml" group="plugins" />
-      <module fileurl="file://C:/home/dv/private/salomon/plugins/trunk/datasetunion/DataSetUnion.iml" filepath="C:/home/dv/private/salomon/plugins/trunk/datasetunion/DataSetUnion.iml" group="plugins" />
-      <module fileurl="file://C:/home/dv/private/salomon/plugins/trunk/DataSetVis/DataSetVis.iml" filepath="C:/home/dv/private/salomon/plugins/trunk/DataSetVis/DataSetVis.iml" group="plugins" />
-      <module fileurl="file://C:/home/dv/private/salomon/plugins/trunk/PluginDebugger/PluginDebugger.iml" filepath="C:/home/dv/private/salomon/plugins/trunk/PluginDebugger/PluginDebugger.iml" group="plugins" />
-      <module fileurl="file://C:/home/dv/private/salomon/plugins/trunk/RandomDataSetCreator/RandomDataSetCreator.iml" filepath="C:/home/dv/private/salomon/plugins/trunk/RandomDataSetCreator/RandomDataSetCreator.iml" group="plugins" />
-      <module fileurl="file://C:/home/dv/private/salomon/plugins/trunk/TreeEvaluator/TreeEvaluator.iml" filepath="C:/home/dv/private/salomon/plugins/trunk/TreeEvaluator/TreeEvaluator.iml" group="plugins" />
-      <module fileurl="file://C:/home/dv/private/salomon/plugins/trunk/TreeVis/TreeVis.iml" filepath="C:/home/dv/private/salomon/plugins/trunk/TreeVis/TreeVis.iml" group="plugins" />
-      <module fileurl="file://C:/home/dv/private/salomon/plugins/trunk/WekaTreeGenerator/WekaTreeGenerator.iml" filepath="C:/home/dv/private/salomon/plugins/trunk/WekaTreeGenerator/WekaTreeGenerator.iml" group="plugins" />
+      <module fileurl="file://$PROJECT_DIR$/../../plugins/trunk/AttributeSetCreator/AttributeSetCreator.iml" filepath="$PROJECT_DIR$/../../plugins/trunk/AttributeSetCreator/AttributeSetCreator.iml" group="plugins" />
+      <module fileurl="file://$PROJECT_DIR$/../../plugins/trunk/DataSetCreator/DataSetCreator.iml" filepath="$PROJECT_DIR$/../../plugins/trunk/DataSetCreator/DataSetCreator.iml" group="plugins" />
+      <module fileurl="file://$PROJECT_DIR$/../../plugins/trunk/datasetunion/DataSetUnion.iml" filepath="$PROJECT_DIR$/../../plugins/trunk/datasetunion/DataSetUnion.iml" group="plugins" />
+      <module fileurl="file://$PROJECT_DIR$/../../plugins/trunk/DataSetVis/DataSetVis.iml" filepath="$PROJECT_DIR$/../../plugins/trunk/DataSetVis/DataSetVis.iml" group="plugins" />
+      <module fileurl="file://$PROJECT_DIR$/../../plugins/trunk/PluginDebugger/PluginDebugger.iml" filepath="$PROJECT_DIR$/../../plugins/trunk/PluginDebugger/PluginDebugger.iml" group="plugins" />
+      <module fileurl="file://$PROJECT_DIR$/../../plugins/trunk/RandomDataSetCreator/RandomDataSetCreator.iml" filepath="$PROJECT_DIR$/../../plugins/trunk/RandomDataSetCreator/RandomDataSetCreator.iml" group="plugins" />
+      <module fileurl="file://$PROJECT_DIR$/../../plugins/trunk/TreeEvaluator/TreeEvaluator.iml" filepath="$PROJECT_DIR$/../../plugins/trunk/TreeEvaluator/TreeEvaluator.iml" group="plugins" />
+      <module fileurl="file://$PROJECT_DIR$/../../plugins/trunk/TreeVis/TreeVis.iml" filepath="$PROJECT_DIR$/../../plugins/trunk/TreeVis/TreeVis.iml" group="plugins" />
+      <module fileurl="file://$PROJECT_DIR$/../../plugins/trunk/WekaTreeGenerator/WekaTreeGenerator.iml" filepath="$PROJECT_DIR$/../../plugins/trunk/WekaTreeGenerator/WekaTreeGenerator.iml" group="plugins" />
       <module fileurl="file://$PROJECT_DIR$/platform.iml" filepath="$PROJECT_DIR$/platform.iml" />
     </modules>
   </component>
-  <component name="ProjectRootManager" version="2" assert-keyword="true" jdk-15="true" project-jdk-name="1.5" />
+  <component name="ProjectRootManager" version="2" assert-keyword="true" jdk-15="true" project-jdk-name="1.5" project-jdk-type="JavaSDK" />
   <component name="ProjectRunConfigurationManager" />
   <component name="RmicSettings">
     <option name="IS_EANABLED" value="false" />
@@ -496,7 +496,7 @@
     <Base>
       <setting name="state" value="1" />
     </Base>
-    <LanguageOptions name="HTML">
+    <LanguageOptions name="JAVA">
       <option name="templateOptions">
         <value>
           <option name="block" value="true" />
@@ -515,7 +515,7 @@
       <option name="addBlankAfter" value="true" />
       <option name="fileLocation" value="1" />
     </LanguageOptions>
-    <LanguageOptions name="JAVA">
+    <LanguageOptions name="HTML">
       <option name="templateOptions">
         <value>
           <option name="block" value="true" />
@@ -572,7 +572,7 @@
       <option name="addBlankAfter" value="true" />
       <option name="fileLocation" value="1" />
     </LanguageOptions>
-    <LanguageOptions name="CSS">
+    <LanguageOptions name="JavaScript">
       <option name="templateOptions">
         <value>
           <option name="block" value="true" />
@@ -591,7 +591,7 @@
       <option name="addBlankAfter" value="true" />
       <option name="fileLocation" value="1" />
     </LanguageOptions>
-    <LanguageOptions name="JavaScript">
+    <LanguageOptions name="CSS">
       <option name="templateOptions">
         <value>
           <option name="block" value="true" />
