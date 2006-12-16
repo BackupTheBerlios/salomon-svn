@@ -21,10 +21,14 @@
 
 package salomon.tree;
 
+import junit.framework.TestCase;
+
 import org.apache.log4j.Logger;
 
-import salomon.engine.plugin.ILocalPlugin;
+import salomon.TestObjectFactory;
+import salomon.engine.platform.ManagerEngine;
 import salomon.engine.plugin.IPluginManager;
+import salomon.engine.plugin.LocalPlugin;
 import salomon.engine.project.IProject;
 import salomon.engine.project.IProjectManager;
 import salomon.engine.project.ProjectInfo;
@@ -32,33 +36,27 @@ import salomon.engine.solution.ISolution;
 import salomon.engine.task.ITask;
 import salomon.engine.task.ITaskManager;
 import salomon.engine.task.TaskInfo;
-
-import salomon.util.serialization.SimpleStruct;
-
 import salomon.platform.exception.PlatformException;
 import salomon.platform.serialization.IObject;
-
-import salomon.engine.platform.ManagerEngine;
-
-import junit.framework.TestCase;
-import salomon.TestObjectFactory;
 import salomon.plugin.ISettings;
+import salomon.util.serialization.SimpleStruct;
 
 public class TreeTest extends TestCase
 {
     private static final String TESTED_DATA_SET_NAME = "testedDataSet";
 
+    private final static String SOLUTION_NAME = "Example";
+
     public void testCreate() throws PlatformException
     {
         LOGGER.info("Test started");
         ManagerEngine managerEngine = TestObjectFactory.getManagerEngine();
-        ISolution solution = TestObjectFactory.getSolution("Example");
+        ISolution solution = TestObjectFactory.getSolution(SOLUTION_NAME);
         IProject project = createProject(solution);
-
 
         ITaskManager taskManager = project.getTaskManager();
         IPluginManager pluginManager = managerEngine.getPluginManager();
-        
+
         createTasks(pluginManager, taskManager);
 
         taskManager.getRunner().start();
@@ -66,66 +64,76 @@ public class TreeTest extends TestCase
         LOGGER.info("Test finished!");
     }
 
-    private void createTasks(IPluginManager pluginManager, ITaskManager taskManager)
-        throws PlatformException
+    private void createTasks(IPluginManager pluginManager,
+            ITaskManager taskManager) throws PlatformException
     {
-//        createDataSetCreatorTask(pluginManager, taskManager);
+        //        createDataSetCreatorTask(pluginManager, taskManager);
         createRandomDataSetCreatorTask(pluginManager, taskManager);
-//        createDataSetVisualizerTask(pluginManager, taskManager);
-//        createAttributeSetTask(pluginManager, taskManager);
+        //        createDataSetVisualizerTask(pluginManager, taskManager);
+        //        createAttributeSetTask(pluginManager, taskManager);
 
         taskManager.saveTasks();
     }
 
-    private void createDataSetCreatorTask(IPluginManager pluginManager, ITaskManager taskManager)
-        throws PlatformException
-    {
-        createTask(pluginManager, taskManager, "DataSet Creator", null);
-    }
+    //    private void createDataSetCreatorTask(IPluginManager pluginManager,
+    //            ITaskManager taskManager) throws PlatformException
+    //    {
+    //        createTask(pluginManager, taskManager, "DataSet Creator", null);
+    //    }
 
-    private void createRandomDataSetCreatorTask(IPluginManager pluginManager, ITaskManager taskManager)
-        throws PlatformException
+    private void createRandomDataSetCreatorTask(IPluginManager pluginManager,
+            ITaskManager taskManager) throws PlatformException
     {
-        MockSettings settings = new MockSettings();
+        ITask task = createTask(pluginManager, taskManager,
+                "Random dataset creator");
+        SimpleStruct settings = (SimpleStruct) task.getPlugin().getSettingComponent(
+                null).getDefaultSettings();
         settings.setField("dataSetName", TESTED_DATA_SET_NAME);
         SimpleStruct deffinitions = new SimpleStruct();
         deffinitions.setField("rowCount", 4);
         deffinitions.setField("tableName", "CONTACT_LENSES");
-        settings.setField("definitions", new IObject[] {deffinitions});
+        settings.setField("definitions", new IObject[]{deffinitions});
+        task.setSettings((ISettings) settings);
 
-        createTask(pluginManager, taskManager, "Random dataset creator", settings);
+        taskManager.addTask(task);
+        LOGGER.info("Task created.");
     }
 
-    private void createDataSetVisualizerTask(IPluginManager pluginManager, ITaskManager taskManager)
-        throws PlatformException
-    {
-        createTask(pluginManager, taskManager, "Dataset visualizer", null);
-    }
+    //    private void createDataSetVisualizerTask(IPluginManager pluginManager,
+    //            ITaskManager taskManager) throws PlatformException
+    //    {
+    //        createTask(pluginManager, taskManager, "Dataset visualizer", null);
+    //    }
+    //
+    //    private void createAttributeSetTask(IPluginManager pluginManager,
+    //            ITaskManager taskManager) throws PlatformException
+    //    {
+    //        createTask(pluginManager, taskManager, "Attributeset creator", null);
+    //    }
 
-    private void createAttributeSetTask(IPluginManager pluginManager, ITaskManager taskManager)
-        throws PlatformException
-    {
-        createTask(pluginManager, taskManager, "Attributeset creator", null);
-    }
-
-
-    private void createTask(IPluginManager pluginManager, ITaskManager taskManager, String pluginName, ISettings pluginSettings)
-        throws PlatformException
+    private ITask createTask(IPluginManager pluginManager,
+            ITaskManager taskManager, String pluginName)
+            throws PlatformException
     {
         LOGGER.info("Creating task: " + pluginName);
-        ILocalPlugin plugin = pluginManager.getPlugin(pluginName);
+        LocalPlugin plugin = (LocalPlugin) pluginManager.getPlugin(pluginName);
+        
+        // loading plugin
+        try {
+            plugin.load();
+        } catch (Exception e) {
+            throw new PlatformException(e.getLocalizedMessage());
+        }
+
         ITask task = taskManager.createTask();
-        task.setPlugin(plugin);
-        task.setSettings(pluginSettings);
         TaskInfo taskInfo = (TaskInfo) task.getInfo();
-        taskInfo.setName("Run " + pluginName);
-        taskInfo.setInfo("The task wich run plugin " + pluginName + " for testing trees algorithms");
-        taskManager.addTask(task);
-        LOGGER.info("Task created");
+        taskInfo.setName(pluginName);
+        task.setPlugin(plugin);
+
+        return task;
     }
 
-    private IProject createProject(ISolution solution)
-        throws PlatformException
+    private IProject createProject(ISolution solution) throws PlatformException
     {
         LOGGER.info("Creating project!");
         IProjectManager projectManager = solution.getProjectManager();
@@ -138,13 +146,6 @@ public class TreeTest extends TestCase
         LOGGER.info("Project created!");
 
         return project;
-    }
-
-    class MockSettings extends SimpleStruct implements ISettings
-    {
-        public void init(IObject o)
-        {
-        }
     }
 
     private static final Logger LOGGER = Logger.getLogger(TreeTest.class);

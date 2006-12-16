@@ -95,7 +95,6 @@ public final class TestScenario extends TestCase
 
             // running tasks
             TaskManager taskManager = (TaskManager) project.getTaskManager();
-            taskManager.addTaskListener(new ScenerioTaskListener(this));
             taskManager.runTasks();
 
         } catch (Exception e) {
