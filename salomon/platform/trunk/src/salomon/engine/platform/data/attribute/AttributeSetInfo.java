@@ -34,10 +34,10 @@ import salomon.engine.database.DBManager;
 import salomon.engine.database.queries.SQLDelete;
 import salomon.engine.database.queries.SQLInsert;
 import salomon.engine.database.queries.SQLUpdate;
+
 import salomon.platform.IInfo;
 import salomon.platform.data.attribute.description.AttributeType;
 import salomon.platform.data.attribute.description.IAttributeDescription;
-import salomon.platform.data.attribute.description.IEnumAttributeDescription;
 import salomon.platform.exception.DBException;
 import salomon.platform.exception.PlatformException;
 
@@ -161,7 +161,7 @@ final class AttributeSetInfo implements IInfo
         }
     }
 
-    void loadDescriptions(ResultSet resultSet) throws SQLException,
+    void loadDescription(ResultSet resultSet) throws SQLException,
             PlatformException
     {
 

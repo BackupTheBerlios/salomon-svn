@@ -5,6 +5,7 @@
 package salomon.engine.platform.data.attribute;
 
 import salomon.engine.database.DBManager;
+
 import salomon.platform.IInfo;
 import salomon.platform.data.IColumn;
 import salomon.platform.data.attribute.IAttributeData;
@@ -82,7 +83,7 @@ public class AttributeSet implements IAttributeSet
         _info.setName(name);
     }
 
-    private void initColumns(IAttributeDescription[] descriptions)
+    void initColumns(IAttributeDescription[] descriptions)
     {
         if (descriptions != null) {
             _columns = new IColumn[descriptions.length];
@@ -91,5 +92,4 @@ public class AttributeSet implements IAttributeSet
             }
         }
     }
-
 }

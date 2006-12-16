@@ -32,6 +32,7 @@ import salomon.engine.database.DBManager;
 import salomon.engine.database.ExternalDBManager;
 import salomon.engine.database.queries.SQLSelect;
 import salomon.engine.solution.ShortSolutionInfo;
+
 import salomon.platform.data.IColumn;
 import salomon.platform.data.attribute.IAttributeManager;
 import salomon.platform.data.attribute.IAttributeSet;
@@ -77,9 +78,6 @@ public final class AttributeManager implements IAttributeManager
         }
     }
 
-    /**
-     * @see salomon.platform.data.attribute.IAttributeManager#createAttributeDescription(java.lang.String, java.lang.String, java.lang.String, java.lang.String)
-     */
     public IAttributeDescription createAttributeDescription(
             String attributeName, String tableName, String columnName,
             String type, boolean isOutput) throws PlatformException
@@ -279,6 +277,7 @@ public final class AttributeManager implements IAttributeManager
         try {
             resultSet = _dbManager.select(select);
             AttributeSet attributeSet = null;
+            AttributeSetInfo attributeSetInfo = null;
             while (resultSet.next()) {
                 int tmpAttributeSetID = resultSet.getInt("attributeset_id");
                 // when dataset_id changes, creating new DataSet object
@@ -286,11 +285,14 @@ public final class AttributeManager implements IAttributeManager
                     firstAttributeSetID = tmpAttributeSetID;
                     attributeSet = (AttributeSet) this.createAttributeSet(null);
                     attributeSet.getInfo().load(resultSet);
+                    attributeSetInfo = (AttributeSetInfo) attributeSet.getInfo();
                     attributeSets.add(attributeSet);
                 }
                 // loading items
-                ((AttributeSetInfo) attributeSet.getInfo()).loadDescriptions(resultSet);
+                attributeSetInfo.loadDescription(resultSet);
             }
+            // todo soon cleanup KRA Cleanup loading descriptions and column initilization
+            attributeSet.initColumns(attributeSetInfo.getDescriptions());
         } catch (Exception e) {
             LOGGER.fatal("", e);
             throw new PlatformException(e);

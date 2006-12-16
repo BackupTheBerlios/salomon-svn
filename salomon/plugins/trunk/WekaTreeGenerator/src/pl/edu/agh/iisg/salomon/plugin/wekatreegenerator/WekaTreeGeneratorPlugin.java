@@ -21,15 +21,11 @@
 
 package pl.edu.agh.iisg.salomon.plugin.wekatreegenerator;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.Reader;
-
 import org.apache.log4j.Logger;
-import pl.edu.agh.iisg.salomon.plugin.wekatreegenerator.result.WekaTreeGeneratorResult;
-import pl.edu.agh.iisg.salomon.plugin.wekatreegenerator.result.WekaTreeGeneratorResultComponent;
-import pl.edu.agh.iisg.salomon.plugin.wekatreegenerator.settings.WekaTreeGeneratorSettings;
-import pl.edu.agh.iisg.salomon.plugin.wekatreegenerator.settings.WekaTreeGeneratorSettingsComponent;
+
+import salomon.util.weka.AttributeConverter;
+import salomon.util.weka.TreeConverter;
+
 import salomon.platform.IDataEngine;
 import salomon.platform.IEnvironment;
 import salomon.platform.data.attribute.IAttributeData;
@@ -39,8 +35,12 @@ import salomon.platform.data.dataset.IDataSet;
 import salomon.platform.data.dataset.IDataSetManager;
 import salomon.platform.data.tree.ITree;
 import salomon.platform.data.tree.ITreeManager;
+
+import pl.edu.agh.iisg.salomon.plugin.wekatreegenerator.result.WekaTreeGeneratorResult;
+import pl.edu.agh.iisg.salomon.plugin.wekatreegenerator.result.WekaTreeGeneratorResultComponent;
+import pl.edu.agh.iisg.salomon.plugin.wekatreegenerator.settings.WekaTreeGeneratorSettings;
+import pl.edu.agh.iisg.salomon.plugin.wekatreegenerator.settings.WekaTreeGeneratorSettingsComponent;
 import salomon.plugin.*;
-import salomon.util.weka.TreeConverter;
 import weka.classifiers.Classifier;
 import weka.core.Drawable;
 import weka.core.Instances;
@@ -66,23 +66,21 @@ public final class WekaTreeGeneratorPlugin implements IPlugin
             IDataSet dataSet = dataSetManager.getDataSet(dataSetName);
 
             IAttributeData attributeData = attributeSet.selectAttributeData(dataSet);
-            // CORRECT Instances instances = AttributeConverter.toWeka(attributeData);
+            String treeName = treeSettings.getTreeName();
+            // CORRECT
+            Instances instances = AttributeConverter.toWeka(attributeData, treeName);
             /////// FAKE
-            Reader reader = new BufferedReader(new FileReader("D:\\home\\iju\\dv\\salomon\\platform\\trunk\\test\\junit\\res\\weka\\labor.arff"));
-            Instances instances = new Instances(new Instances(reader));
-            instances.setClassIndex(instances.numAttributes() - 1);            
+//            Reader reader = new BufferedReader(new FileReader("D:\\home\\iju\\dv\\salomon\\platform\\trunk\\test\\junit\\res\\weka\\labor.arff"));
+//            Instances instances = new Instances(new Instances(reader));
+//            instances.setClassIndex(instances.numAttributes() - 1);
             ///////////
 
             String algorithmName = treeSettings.getAlgorithmName();
             Classifier classifier = Classifier.forName("weka.classifiers.trees." + algorithmName, null);
 
             ITreeManager treeManager = engine.getTreeManager();
-            String treeName = treeSettings.getTreeName();
-            ITree tree = null;//TODO fixme: treeManager.getTree(treeName);
-            if (tree == null) {
-                tree = treeManager.createTree();
-                tree.setName(treeName);
-            }
+            ITree tree = treeManager.createTree();
+            tree.setName(treeName);
             classifier.buildClassifier(instances);
 
             TreeConverter.convert(tree, attributeSet, (Drawable) classifier);

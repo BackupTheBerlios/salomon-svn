@@ -21,13 +21,9 @@
 
 package salomon.tree;
 
-import junit.framework.TestCase;
-
 import org.apache.log4j.Logger;
 
-import salomon.TestObjectFactory;
 import salomon.engine.database.queries.SQLDelete;
-import salomon.engine.platform.ManagerEngine;
 import salomon.engine.plugin.IPluginManager;
 import salomon.engine.plugin.LocalPlugin;
 import salomon.engine.project.IProject;
@@ -38,12 +34,19 @@ import salomon.engine.task.ITask;
 import salomon.engine.task.ITaskManager;
 import salomon.engine.task.TaskInfo;
 import salomon.engine.task.TaskManager;
+
+import salomon.util.serialization.SimpleArray;
+import salomon.util.serialization.SimpleStruct;
+
 import salomon.platform.data.attribute.description.AttributeType;
 import salomon.platform.exception.PlatformException;
 import salomon.platform.serialization.IObject;
+
+import salomon.engine.platform.ManagerEngine;
+
+import junit.framework.TestCase;
+import salomon.TestObjectFactory;
 import salomon.plugin.ISettings;
-import salomon.util.serialization.SimpleArray;
-import salomon.util.serialization.SimpleStruct;
 
 public class TreeTest extends TestCase
 {
@@ -51,11 +54,16 @@ public class TreeTest extends TestCase
 
     private static final String TESTED_ATTRIBUTE_SET_NAME = "testedAttributeSet";
 
+    private static final String TESTED_TREE_NAME = "testedTree";
+
     private static final String SOLUTION_NAME = "Example";
 
     private static final String RAND_DATASET_PLUGIN = "Random dataset creator";
 
     private static final String ATTR_SET_PLUGIN = "Attributeset creator";
+
+    private static final String WEKA_TREE_GENERATOR_PLUGIN = "Weka tree generator";
+
 
     public void testCreate() throws PlatformException
     {
@@ -97,12 +105,14 @@ public class TreeTest extends TestCase
     }
 
     private void createTasks(IPluginManager pluginManager,
-            ITaskManager taskManager) throws PlatformException
+                             ITaskManager taskManager) throws PlatformException
     {
-        //        createDataSetCreatorTask(pluginManager, taskManager);
         createRandomDataSetCreatorTask(pluginManager, taskManager);
-        //        createDataSetVisualizerTask(pluginManager, taskManager);
         createAttributeSetTask(pluginManager, taskManager);
+        createWekaTreeGeneratorTask(pluginManager, taskManager);
+
+        //        createDataSetVisualizerTask(pluginManager, taskManager);
+        //        createDataSetCreatorTask(pluginManager, taskManager);
 
         taskManager.saveTasks();
 
@@ -115,12 +125,12 @@ public class TreeTest extends TestCase
     //    }
 
     private void createRandomDataSetCreatorTask(IPluginManager pluginManager,
-            ITaskManager taskManager) throws PlatformException
+                                                ITaskManager taskManager) throws PlatformException
     {
         SimpleStruct settings = new SimpleStruct();
         settings.setField("dataSetName", TESTED_DATA_SET_NAME);
         SimpleStruct deffinitions = new SimpleStruct();
-        deffinitions.setField("rowCount", 4);
+        deffinitions.setField("rowCount", 10);
         deffinitions.setField("tableName", "CONTACT_LENSES");
         settings.setField("definitions", new IObject[]{deffinitions});
 
@@ -135,58 +145,55 @@ public class TreeTest extends TestCase
     //    }
     //
     private void createAttributeSetTask(IPluginManager pluginManager,
-            ITaskManager taskManager) throws PlatformException
+                                        ITaskManager taskManager) throws PlatformException
     {
         SimpleStruct settings = new SimpleStruct();
         settings.setField("attributeSetName", TESTED_ATTRIBUTE_SET_NAME);
 
         SimpleArray descriptions = new SimpleArray();
 
-        SimpleStruct age = new SimpleStruct();
-        age.setField("attributeName", "age");
-        age.setField("type", AttributeType.ENUM.getDBString());
-        age.setField("columnName", "AGE");
-        age.setField("isOutput", "N");
-        age.setField("tableName", "CONTACT_LENSES");
+        SimpleStruct age = createAttribute("age", "AGE", "N");
+        SimpleStruct spectacle = createAttribute("spectacle", "SPECTACLE_PRESCRIP", "N");
+        SimpleStruct astigmatism = createAttribute("astigmatism", "ASTIGMATISM", "N");
+        SimpleStruct tear = createAttribute("tear-prod-rate", "TEAR_PROD_RATE", "N");
 
-        SimpleStruct spectacle = new SimpleStruct();
-        spectacle.setField("attributeName", "spectacle");
-        spectacle.setField("type", AttributeType.ENUM.getDBString());
-        spectacle.setField("columnName", "SPECTACLE_PRESCRIP");
-        spectacle.setField("isOutput", "N");
-        spectacle.setField("tableName", "CONTACT_LENSES");
-
-        SimpleStruct astigmatism = new SimpleStruct();
-        astigmatism.setField("attributeName", "astigmatism");
-        astigmatism.setField("type", AttributeType.ENUM.getDBString());
-        astigmatism.setField("columnName", "ASTIGMATISM");
-        astigmatism.setField("isOutput", "N");
-        astigmatism.setField("tableName", "CONTACT_LENSES");
-
-        SimpleStruct tear = new SimpleStruct();
-        tear.setField("attributeName", "tear prod rate");
-        tear.setField("type", AttributeType.ENUM.getDBString());
-        tear.setField("columnName", "TEAR_PROD_RATE");
-        tear.setField("isOutput", "N");
-        tear.setField("tableName", "CONTACT_LENSES");
-
-        SimpleStruct contactLenses = new SimpleStruct();
-        contactLenses.setField("attributeName", "contact lenses");
-        contactLenses.setField("type", AttributeType.ENUM.getDBString());
-        contactLenses.setField("columnName", "CONTACT_LENSES");
-        contactLenses.setField("isOutput", "Y");
-        contactLenses.setField("tableName", "CONTACT_LENSES");
+        SimpleStruct contactLenses = createAttribute("contact-lenses", "CONTACT_LENSES", "Y");
 
         descriptions.setValue(new IObject[]{age, spectacle, astigmatism, tear,
-                contactLenses});
+            contactLenses});
         settings.setField("descriptions", descriptions);
 
         createTask(pluginManager, taskManager, ATTR_SET_PLUGIN, settings);
     }
 
+    private static SimpleStruct createAttribute(String name, String columnName, String isOutput)
+    {
+        SimpleStruct age = new SimpleStruct();
+        age.setField("attributeName", name);
+        age.setField("type", AttributeType.ENUM.getDBString());
+        age.setField("columnName", columnName);
+        age.setField("isOutput", isOutput);
+        age.setField("tableName", "CONTACT_LENSES");
+
+        return age;
+    }
+
+    private void createWekaTreeGeneratorTask(IPluginManager pluginManager,
+                                                ITaskManager taskManager) throws PlatformException
+    {
+        SimpleStruct settings = new SimpleStruct();
+        settings.setField("attribute_set", TESTED_ATTRIBUTE_SET_NAME);
+        settings.setField("data_set", TESTED_DATA_SET_NAME);
+        settings.setField("algorithm", "J48");
+        settings.setField("tree", TESTED_TREE_NAME);
+
+        createTask(pluginManager, taskManager, WEKA_TREE_GENERATOR_PLUGIN, settings);
+    }
+
+
     private void createTask(IPluginManager pluginManager,
-            ITaskManager taskManager, String pluginName, SimpleStruct settings)
-            throws PlatformException
+                            ITaskManager taskManager, String pluginName, SimpleStruct settings)
+        throws PlatformException
     {
         LOGGER.info("Creating task: " + pluginName);
         LocalPlugin plugin = (LocalPlugin) pluginManager.getPlugin(pluginName);

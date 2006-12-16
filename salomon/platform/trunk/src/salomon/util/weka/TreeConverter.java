@@ -24,7 +24,9 @@ package salomon.util.weka;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.StringReader;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -32,7 +34,6 @@ import java.util.regex.Pattern;
 import org.apache.log4j.Logger;
 
 import salomon.platform.data.attribute.IAttributeSet;
-import salomon.platform.data.attribute.description.AttributeType;
 import salomon.platform.data.attribute.description.IAttributeDescription;
 import salomon.platform.data.attribute.description.IEnumAttributeDescription;
 import salomon.platform.data.tree.ITree;
@@ -45,31 +46,28 @@ import weka.core.Drawable;
 
 /**
  * J48 pruned tree
- ------------------
-
- wage-increase-first-year <= 2.5: bad (15.27/2.27)
- wage-increase-first-year > 2.5
- |   statutory-holidays <= 10: bad (10.77/4.77)
- |   statutory-holidays > 10: good (30.96/1.0)
-
- Number of Leaves  : 	3
-
- Size of the tree : 	5
-
- digraph J48Tree {
- N0 [label="wage-increase-first-year" ]
- N0->N1 [label="<= 2.5"]
- N1 [label="bad (15.27/2.27)" shape=box style=filled ]
- N0->N2 [label="> 2.5"]
- N2 [label="statutory-holidays" ]
- N2->N3 [label="<= 10"]
- N3 [label="bad (10.77/4.77)" shape=box style=filled ]
- N2->N4 [label="> 10"]
- N4 [label="good (30.96/1.0)" shape=box style=filled ]
- }
-
-
-
+ * ------------------
+ * <p/>
+ * wage-increase-first-year <= 2.5: bad (15.27/2.27)
+ * wage-increase-first-year > 2.5
+ * |   statutory-holidays <= 10: bad (10.77/4.77)
+ * |   statutory-holidays > 10: good (30.96/1.0)
+ * <p/>
+ * Number of Leaves  : 	3
+ * <p/>
+ * Size of the tree : 	5
+ * <p/>
+ * digraph J48Tree {
+ * N0 [label="wage-increase-first-year" ]
+ * N0->N1 [label="<= 2.5"]
+ * N1 [label="bad (15.27/2.27)" shape=box style=filled ]
+ * N0->N2 [label="> 2.5"]
+ * N2 [label="statutory-holidays" ]
+ * N2->N3 [label="<= 10"]
+ * N3 [label="bad (10.77/4.77)" shape=box style=filled ]
+ * N2->N4 [label="> 10"]
+ * N4 [label="good (30.96/1.0)" shape=box style=filled ]
+ * }
  */
 public final class TreeConverter
 {
@@ -85,8 +83,10 @@ public final class TreeConverter
 
     private Map<String, IAttributeDescription> _attributesMap = new HashMap<String, IAttributeDescription>();
 
+    private IAttributeDescription _outputAttributeDescription;
+
     private TreeConverter(ITree outputTree,
-            IAttributeSet attributeSet, Drawable wekaTree) throws Exception
+                          IAttributeSet attributeSet, Drawable wekaTree) throws Exception
     {
         String tree = wekaTree.graph();
         _attributeSet = attributeSet;
@@ -100,7 +100,11 @@ public final class TreeConverter
 //                
 //            }
             _attributesMap.put(attributeDescription.getName(),
-                    attributeDescription);
+                attributeDescription);
+
+            if (attributeDescription.isOutput()) {
+                _outputAttributeDescription = attributeDescription;
+            }
         }
 
         parse();
@@ -116,15 +120,28 @@ public final class TreeConverter
             return;
         }
         parseNode(line);
+        List<String> edges = new ArrayList<String>();
         while (true) {
             line = _reader.readLine();
             if (line.trim().equals("}")) {
-                return;
+                break;
             }
 
-            parseEdge(line);
-            parseNode(line);
+            if (isEdge(line)) {
+                edges.add(line);
+            } else {
+                parseNode(line);
+            }
         }
+
+        for (String edge : edges) {
+            parseEdge(edge);
+        }
+    }
+
+    private static boolean isEdge(String line)
+    {
+        return EDGE_REGEXP.matcher(line).matches();
     }
 
     private void parseEdge(String line) throws WekaTreeParseException
@@ -132,7 +149,7 @@ public final class TreeConverter
         Matcher matcher = EDGE_REGEXP.matcher(line);
         if (!matcher.matches() && (matcher.groupCount() != 4)) {
             throw new WekaTreeParseException(
-                    "Invalid tree format: Cannot parse edge: " + line);
+                "Invalid tree format: Cannot parse edge: " + line);
         }
 
         String parentNodeName = matcher.group(1);
@@ -145,7 +162,7 @@ public final class TreeConverter
 
         parentNode.addChildNode(childNode, findCondition(attributeDescription, conditionLabel));
     }
-    
+
     private String findCondition(IEnumAttributeDescription attributeDescription, String label)
     {
         String result = null;
@@ -155,7 +172,7 @@ public final class TreeConverter
                 result = val;
             }
         }
-        
+
         return result;
     }
 
@@ -164,24 +181,31 @@ public final class TreeConverter
         Matcher matcher = NODE_REGEXP.matcher(line);
         if (!matcher.matches() && (matcher.groupCount() != 3)) {
             throw new WekaTreeParseException(
-                    "Invalid tree format: Cannot parse node: " + line);
+                "Invalid tree format: Cannot parse node: " + line);
         }
 
         String nodeName = matcher.group(1);
         String attributeName = matcher.group(2);
         IAttributeDescription attributeDescription = _attributesMap.get(attributeName);
-        ITreeNode node = _tree.createNode(attributeDescription);
+        ITreeNode node = null;
+        if (attributeDescription == null) {
+            // todo soon flaw KRA add support for more types of attribute
+            findCondition((IEnumAttributeDescription) _outputAttributeDescription, attributeName);
+            node = _tree.createNode(_outputAttributeDescription);
+        } else {
+            node = _tree.createNode(attributeDescription);
+        }
         _nodesMap.put(nodeName, node);
 
     }
 
     public static void convert(ITree outputTree,
-            IAttributeSet attributeSet, Drawable wekaTree)
-            throws PlatformException
+                               IAttributeSet attributeSet, Drawable wekaTree)
+        throws PlatformException
     {
         if (wekaTree.graphType() != Drawable.TREE) {
             throw new PlatformException("Invalid type of graph! "
-                    + wekaTree.graphType());
+                + wekaTree.graphType());
         }
 
         //removeOldData(outputTree);
@@ -199,20 +223,20 @@ public final class TreeConverter
         Matcher matcher = NODE_REGEXP.matcher(line);
         if (!matcher.matches() && (matcher.groupCount() != 3)) {
             throw new WekaTreeParseException(
-                    "Invalid tree format: Cannot parse line: " + line);
+                "Invalid tree format: Cannot parse line: " + line);
         }
 
         String nodeName = matcher.group(1);
         String attributeName = matcher.group(2);
 
         System.out.println("NodeName = " + nodeName + ": attributeName = "
-                + attributeName);
+            + attributeName);
 
         line = "N0->N1 [label=\"<= 2.5\"]";
         matcher = EDGE_REGEXP.matcher(line);
         if (!matcher.matches() && (matcher.groupCount() != 4)) {
             throw new WekaTreeParseException(
-                    "Invalid tree format: Cannot parse line: " + line);
+                "Invalid tree format: Cannot parse line: " + line);
         }
 
         String node1Name = matcher.group(1);
@@ -220,7 +244,7 @@ public final class TreeConverter
         String condition = matcher.group(3);
 
         System.out.println("Node1 = " + node1Name + " Node2 = " + node2Name
-                + " : condition = " + condition);
+            + " : condition = " + condition);
 
         //        _treeManager.createNode(_tree, null);
 

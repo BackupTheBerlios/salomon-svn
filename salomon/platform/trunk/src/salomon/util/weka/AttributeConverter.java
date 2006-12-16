@@ -39,10 +39,11 @@ import weka.core.Instances;
 public final class AttributeConverter
 {
 
-    public static Instances toWeka(IAttributeData data) throws IOException
+    public static Instances toWeka(IAttributeData data, String treeName) throws IOException
     {
         boolean wasHeaderRead = false;
         StringBuilder builder = new StringBuilder();
+        builder.append("@relation ").append(treeName).append("\n");
         IAttribute[] firstRow = null;
         try {
             while (data.next()) {
@@ -123,6 +124,7 @@ public final class AttributeConverter
             }
             builder.append('\n');
         }
+        builder.append("@data\n");
     }
 
     private static final Logger LOGGER = Logger.getLogger(AttributeConverter.class);
