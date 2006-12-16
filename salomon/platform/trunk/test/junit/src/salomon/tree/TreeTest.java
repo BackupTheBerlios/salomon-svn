@@ -45,6 +45,8 @@ import salomon.plugin.ISettings;
 
 public class TreeTest extends TestCase
 {
+    private static final String TESTED_DATA_SET_NAME = "testedDataSet";
+
     public void testCreate() throws PlatformException
     {
         LOGGER.info("Test started");
@@ -80,7 +82,7 @@ public class TreeTest extends TestCase
         throws PlatformException
     {
         MockSettings settings = new MockSettings();
-        settings.setField("dataSetName", "testedDataSet");
+        settings.setField("dataSetName", TESTED_DATA_SET_NAME);
         SimpleStruct deffinitions = new SimpleStruct();
         deffinitions.setField("rowCount", 4);
         deffinitions.setField("tableName", "CONTACT_LENSES");

@@ -49,10 +49,29 @@ begin
 	VALUES (:tmp_plugin_id, 'Attributeset creator', 'AttributeSetCreator.jar', 'Creates attributeset.', 'L', current_timestamp, current_timestamp);
 
 	/* Tree plugins */
+	/* Weka tree generator */
+	select gen_id(gen_plugin_id, 1)
+	from rdb$database
+	into :tmp_plugin_id;
+	INSERT INTO PLUGINS (PLUGIN_ID, PLUGIN_NAME, LOCATION, PLUGIN_INFO, PLUGIN_TYPE, C_DATE, LM_DATE)
+	VALUES (:tmp_plugin_id, 'Weka tree generator', 'WekaTreeGenerator.jar', 'Creates tree using weka agorithms.', 'L', current_timestamp, current_timestamp);
+
+	/* Tree evaluator */
+	select gen_id(gen_plugin_id, 1)
+	from rdb$database
+	into :tmp_plugin_id;
+	INSERT INTO PLUGINS (PLUGIN_ID, PLUGIN_NAME, LOCATION, PLUGIN_INFO, PLUGIN_TYPE, C_DATE, LM_DATE)
+	VALUES (:tmp_plugin_id, 'Tree evaluator', 'TreeEvaluator.jar', 'Evaluates tree.', 'L', current_timestamp, current_timestamp);
+
+	/* Tree vis */
+	select gen_id(gen_plugin_id, 1)
+	from rdb$database
+	into :tmp_plugin_id;
+	INSERT INTO PLUGINS (PLUGIN_ID, PLUGIN_NAME, LOCATION, PLUGIN_INFO, PLUGIN_TYPE, C_DATE, LM_DATE)
+	VALUES (:tmp_plugin_id, 'Tree vis', 'TreeVis.jar', 'Prints tree.', 'L', current_timestamp, current_timestamp);
+
 	/*WekaTreeGenerator.jar
 	TreeEvaluator.jar */
-
-	
 end;
 
 /* Double slash separates statements */
