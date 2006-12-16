@@ -73,8 +73,7 @@ public final class DBMetaData implements IMetaData
             while (resultSet.next()) {
                 valuesList.add(resultSet.getObject(1).toString());
             }
-            _manager.closeResultSet(resultSet);
-
+            
             // filling values array            
             values = valuesList.toArray(new String[valuesList.size()]);
 

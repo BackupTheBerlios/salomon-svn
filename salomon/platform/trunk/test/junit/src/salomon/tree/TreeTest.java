@@ -21,8 +21,13 @@
 
 package salomon.tree;
 
+import junit.framework.TestCase;
+
 import org.apache.log4j.Logger;
 
+import salomon.TestObjectFactory;
+import salomon.engine.database.queries.SQLDelete;
+import salomon.engine.platform.ManagerEngine;
 import salomon.engine.plugin.IPluginManager;
 import salomon.engine.plugin.LocalPlugin;
 import salomon.engine.project.IProject;
@@ -32,27 +37,32 @@ import salomon.engine.solution.ISolution;
 import salomon.engine.task.ITask;
 import salomon.engine.task.ITaskManager;
 import salomon.engine.task.TaskInfo;
-
-import salomon.util.serialization.SimpleStruct;
-
+import salomon.engine.task.TaskManager;
+import salomon.platform.data.attribute.description.AttributeType;
 import salomon.platform.exception.PlatformException;
 import salomon.platform.serialization.IObject;
-
-import salomon.engine.platform.ManagerEngine;
-
-import junit.framework.TestCase;
-import salomon.TestObjectFactory;
 import salomon.plugin.ISettings;
+import salomon.util.serialization.SimpleArray;
+import salomon.util.serialization.SimpleStruct;
 
 public class TreeTest extends TestCase
 {
     private static final String TESTED_DATA_SET_NAME = "testedDataSet";
 
-    private final static String SOLUTION_NAME = "Example";
+    private static final String TESTED_ATTRIBUTE_SET_NAME = "testedAttributeSet";
+
+    private static final String SOLUTION_NAME = "Example";
+
+    private static final String RAND_DATASET_PLUGIN = "Random dataset creator";
+
+    private static final String ATTR_SET_PLUGIN = "Attributeset creator";
 
     public void testCreate() throws PlatformException
     {
         LOGGER.info("Test started");
+        // clean after previous test executions
+        clean();
+
         ManagerEngine managerEngine = TestObjectFactory.getManagerEngine();
         ISolution solution = TestObjectFactory.getSolution(SOLUTION_NAME);
         IProject project = createProject(solution);
@@ -62,9 +72,28 @@ public class TreeTest extends TestCase
 
         createTasks(pluginManager, taskManager);
 
-        taskManager.getRunner().start();
+        ((TaskManager) taskManager).runTasks();
 
         LOGGER.info("Test finished!");
+    }
+
+    private void clean() throws PlatformException
+    {
+        try {
+            // delete dataset to be created
+            SQLDelete delete = new SQLDelete("datasets");
+            delete.addCondition("dataset_name = ", TESTED_DATA_SET_NAME);
+            TestObjectFactory.getDbManager().delete(delete);
+
+            // delete attribute set to be created
+            delete = new SQLDelete("attributesets");
+            delete.addCondition("attributeset_name = ", TESTED_DATA_SET_NAME);
+            TestObjectFactory.getDbManager().delete(delete);
+
+            TestObjectFactory.getDbManager().commit();
+        } catch (Exception e) {
+            new PlatformException(e.getLocalizedMessage());
+        }
     }
 
     private void createTasks(IPluginManager pluginManager,
@@ -73,10 +102,10 @@ public class TreeTest extends TestCase
         //        createDataSetCreatorTask(pluginManager, taskManager);
         createRandomDataSetCreatorTask(pluginManager, taskManager);
         //        createDataSetVisualizerTask(pluginManager, taskManager);
-        //        createAttributeSetTask(pluginManager, taskManager);
+        createAttributeSetTask(pluginManager, taskManager);
 
         taskManager.saveTasks();
-        
+
     }
 
     //    private void createDataSetCreatorTask(IPluginManager pluginManager,
@@ -95,8 +124,7 @@ public class TreeTest extends TestCase
         deffinitions.setField("tableName", "CONTACT_LENSES");
         settings.setField("definitions", new IObject[]{deffinitions});
 
-        createTask(pluginManager, taskManager,
-            "Random dataset creator", settings);
+        createTask(pluginManager, taskManager, RAND_DATASET_PLUGIN, settings);
 
     }
 
@@ -106,11 +134,55 @@ public class TreeTest extends TestCase
     //        createTask(pluginManager, taskManager, "Dataset visualizer", null);
     //    }
     //
-    //    private void createAttributeSetTask(IPluginManager pluginManager,
-    //            ITaskManager taskManager) throws PlatformException
-    //    {
-    //        createTask(pluginManager, taskManager, "Attributeset creator", null);
-    //    }
+    private void createAttributeSetTask(IPluginManager pluginManager,
+            ITaskManager taskManager) throws PlatformException
+    {
+        SimpleStruct settings = new SimpleStruct();
+        settings.setField("attributeSetName", TESTED_ATTRIBUTE_SET_NAME);
+
+        SimpleArray descriptions = new SimpleArray();
+
+        SimpleStruct age = new SimpleStruct();
+        age.setField("attributeName", "age");
+        age.setField("type", AttributeType.ENUM.getDBString());
+        age.setField("columnName", "AGE");
+        age.setField("isOutput", "N");
+        age.setField("tableName", "CONTACT_LENSES");
+
+        SimpleStruct spectacle = new SimpleStruct();
+        spectacle.setField("attributeName", "spectacle");
+        spectacle.setField("type", AttributeType.ENUM.getDBString());
+        spectacle.setField("columnName", "SPECTACLE_PRESCRIP");
+        spectacle.setField("isOutput", "N");
+        spectacle.setField("tableName", "CONTACT_LENSES");
+
+        SimpleStruct astigmatism = new SimpleStruct();
+        astigmatism.setField("attributeName", "astigmatism");
+        astigmatism.setField("type", AttributeType.ENUM.getDBString());
+        astigmatism.setField("columnName", "ASTIGMATISM");
+        astigmatism.setField("isOutput", "N");
+        astigmatism.setField("tableName", "CONTACT_LENSES");
+
+        SimpleStruct tear = new SimpleStruct();
+        tear.setField("attributeName", "tear prod rate");
+        tear.setField("type", AttributeType.ENUM.getDBString());
+        tear.setField("columnName", "TEAR_PROD_RATE");
+        tear.setField("isOutput", "N");
+        tear.setField("tableName", "CONTACT_LENSES");
+
+        SimpleStruct contactLenses = new SimpleStruct();
+        contactLenses.setField("attributeName", "contact lenses");
+        contactLenses.setField("type", AttributeType.ENUM.getDBString());
+        contactLenses.setField("columnName", "CONTACT_LENSES");
+        contactLenses.setField("isOutput", "Y");
+        contactLenses.setField("tableName", "CONTACT_LENSES");
+
+        descriptions.setValue(new IObject[]{age, spectacle, astigmatism, tear,
+                contactLenses});
+        settings.setField("descriptions", descriptions);
+
+        createTask(pluginManager, taskManager, ATTR_SET_PLUGIN, settings);
+    }
 
     private void createTask(IPluginManager pluginManager,
             ITaskManager taskManager, String pluginName, SimpleStruct settings)
@@ -118,7 +190,7 @@ public class TreeTest extends TestCase
     {
         LOGGER.info("Creating task: " + pluginName);
         LocalPlugin plugin = (LocalPlugin) pluginManager.getPlugin(pluginName);
-        
+
         // loading plugin
         try {
             plugin.load();
@@ -131,8 +203,7 @@ public class TreeTest extends TestCase
         taskInfo.setName(pluginName);
         task.setPlugin(plugin);
 
-        ISettings pluginSettings = task.getPlugin().getSettingComponent(
-                null).getDefaultSettings();
+        ISettings pluginSettings = task.getPlugin().getSettingComponent(null).getDefaultSettings();
 
         pluginSettings.init(settings);
         task.setSettings(pluginSettings);
