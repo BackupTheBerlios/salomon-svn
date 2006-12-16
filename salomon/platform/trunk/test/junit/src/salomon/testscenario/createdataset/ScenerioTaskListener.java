@@ -21,15 +21,16 @@
 
 package salomon.testscenario.createdataset;
 
-import junit.framework.TestCase;
+import salomon.engine.task.event.ITaskListener;
 import salomon.engine.task.event.TaskEvent;
-import salomon.engine.task.event.TaskListener;
+
+import junit.framework.TestCase;
 
 /**
  * Listener to handle task events in tests.
  *
  */
-class ScenerioTaskListener implements TaskListener
+class ScenerioTaskListener implements ITaskListener
 {
     private TestCase _testCase;
 

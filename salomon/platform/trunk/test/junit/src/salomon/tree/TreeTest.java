@@ -31,6 +31,7 @@ import salomon.engine.project.ProjectInfo;
 import salomon.engine.solution.ISolution;
 import salomon.engine.task.ITask;
 import salomon.engine.task.ITaskManager;
+import salomon.engine.task.TaskInfo;
 
 import salomon.util.serialization.SimpleStruct;
 
@@ -116,6 +117,9 @@ public class TreeTest extends TestCase
         ITask task = taskManager.createTask();
         task.setPlugin(plugin);
         task.setSettings(pluginSettings);
+        TaskInfo taskInfo = (TaskInfo) task.getInfo();
+        taskInfo.setName("Run " + pluginName);
+        taskInfo.setInfo("The task wich run plugin " + pluginName + " for testing trees algorithms");
         taskManager.addTask(task);
         LOGGER.info("Task created");
     }

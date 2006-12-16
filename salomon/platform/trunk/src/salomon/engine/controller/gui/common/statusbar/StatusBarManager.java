@@ -25,14 +25,14 @@ import salomon.engine.project.event.ProjectEvent;
 import salomon.engine.project.event.ProjectListener;
 import salomon.engine.solution.event.SolutionEvent;
 import salomon.engine.solution.event.SolutionListener;
+import salomon.engine.task.event.ITaskListener;
 import salomon.engine.task.event.TaskEvent;
-import salomon.engine.task.event.TaskListener;
 
 /**
  * 
  */
 public final class StatusBarManager
-        implements TaskListener, ProjectListener, SolutionListener
+        implements ITaskListener, ProjectListener, SolutionListener
 {
     private static final String CURRENT_PROJECT = "TT_CURRENT_PROJECT";
 

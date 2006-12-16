@@ -24,7 +24,7 @@ package salomon.engine.task.event;
 /**
  * 
  */
-public interface TaskListener
+public interface ITaskListener
 {
     void taskFailed(TaskEvent event);
 

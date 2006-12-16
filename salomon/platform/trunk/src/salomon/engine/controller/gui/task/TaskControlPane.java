@@ -21,21 +21,18 @@
 
 package salomon.engine.controller.gui.task;
 
-import java.awt.Color;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JProgressBar;
-
-import salomon.engine.task.event.TaskEvent;
-import salomon.engine.task.event.TaskListener;
+import javax.swing.*;
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.factories.ButtonBarFactory;
 import com.jgoodies.forms.layout.FormLayout;
+
+import salomon.engine.task.event.ITaskListener;
+import salomon.engine.task.event.TaskEvent;
 
 /**
  * Class agregates all buttons used in GUIController.
@@ -171,10 +168,10 @@ public final class TaskControlPane
     }
 
     private enum ProcessState {
-        PAUSED, RESUMED, STARTED, STOPPED;
+        PAUSED, RESUMED, STARTED, STOPPED
     }
 
-    private class TaskProcessPane implements TaskListener
+    private class TaskProcessPane implements ITaskListener
     {
         private Color _defaultForegroundColor;
 

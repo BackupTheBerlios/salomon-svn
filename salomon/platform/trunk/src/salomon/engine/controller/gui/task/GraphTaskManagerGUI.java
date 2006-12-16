@@ -21,22 +21,18 @@
 
 package salomon.engine.controller.gui.task;
 
-import java.awt.Component;
-import java.awt.Dimension;
+import java.awt.*;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.List;
 
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
+import javax.swing.*;
 
 import org.apache.log4j.Logger;
+
+import com.jgoodies.forms.builder.DefaultFormBuilder;
+import com.jgoodies.forms.layout.FormLayout;
+import com.jgoodies.validation.ValidationResultModel;
 
 import salomon.engine.Messages;
 import salomon.engine.controller.gui.ControllerFrame;
@@ -45,24 +41,15 @@ import salomon.engine.plugin.IPluginManager;
 import salomon.engine.plugin.LocalPlugin;
 import salomon.engine.plugin.PlatformUtil;
 import salomon.engine.plugin.PluginManager;
-import salomon.engine.task.ITask;
-import salomon.engine.task.ITaskManager;
-import salomon.engine.task.Task;
-import salomon.engine.task.TaskInfo;
-import salomon.engine.task.TaskManager;
-import salomon.engine.task.event.TaskListener;
-import salomon.platform.IDataEngine;
-import salomon.platform.exception.PlatformException;
-import salomon.plugin.IPlugin;
-import salomon.plugin.IResult;
-import salomon.plugin.IResultComponent;
-import salomon.plugin.ISettingComponent;
-import salomon.plugin.ISettings;
+import salomon.engine.task.*;
+import salomon.engine.task.event.ITaskListener;
+
 import salomon.util.gui.Utils;
 
-import com.jgoodies.forms.builder.DefaultFormBuilder;
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.validation.ValidationResultModel;
+import salomon.platform.IDataEngine;
+import salomon.platform.exception.PlatformException;
+
+import salomon.plugin.*;
 
 public final class GraphTaskManagerGUI
 {
@@ -104,7 +91,7 @@ public final class GraphTaskManagerGUI
         _platformUtil = _taskManager.getPlatformUtil();
     }
 
-    public void addTaskListener(TaskListener listener)
+    public void addTaskListener(ITaskListener listener)
     {
         _taskManager.addTaskListener(listener);
     }
@@ -197,7 +184,7 @@ public final class GraphTaskManagerGUI
                 "Method removeTask() not implemented yet!");
     }
 
-    public void removeTaskListener(TaskListener listener)
+    public void removeTaskListener(ITaskListener listener)
     {
         _taskManager.removeTaskListener(listener);
     }

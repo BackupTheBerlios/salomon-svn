@@ -33,23 +33,27 @@ import org.apache.log4j.Logger;
 import salomon.engine.database.DBManager;
 import salomon.engine.database.queries.SQLDelete;
 import salomon.engine.database.queries.SQLSelect;
-import salomon.engine.platform.Environment;
-import salomon.engine.platform.IManagerEngine;
-import salomon.engine.platform.serialization.XMLSerializer;
 import salomon.engine.plugin.ILocalPlugin;
 import salomon.engine.plugin.LocalPlugin;
 import salomon.engine.plugin.PlatformUtil;
 import salomon.engine.plugin.PluginInfo;
 import salomon.engine.project.IProject;
+import salomon.engine.task.event.ITaskListener;
 import salomon.engine.task.event.TaskEvent;
-import salomon.engine.task.event.TaskListener;
+
+import salomon.util.serialization.SimpleString;
+
 import salomon.platform.IDataEngine;
 import salomon.platform.IVariable;
 import salomon.platform.exception.PlatformException;
 import salomon.platform.serialization.IObject;
+
+import salomon.engine.platform.Environment;
+import salomon.engine.platform.IManagerEngine;
+import salomon.engine.platform.serialization.XMLSerializer;
+
 import salomon.plugin.IResult;
 import salomon.plugin.ISettings;
-import salomon.util.serialization.SimpleString;
 
 /**
  * An implemetation of ITaskManager interface. Class manages with tasks editing
@@ -90,7 +94,7 @@ public final class TaskManager implements ITaskManager
 
     private PlatformUtil _platformUtil;
 
-    private List<TaskListener> _taskListeners;
+    private List<ITaskListener> _taskListeners;
 
     private ITaskRunner _taskRunner;
 
@@ -108,7 +112,7 @@ public final class TaskManager implements ITaskManager
         _dbManager = manager;
         _taskRunner = new TaskRunner();
         _tasks = new LinkedList<ITask>();
-        _taskListeners = new LinkedList<TaskListener>();
+        _taskListeners = new LinkedList<ITaskListener>();
         // TODO: where it should be created?
         _environment = new Environment();
         // TODO: temporary
@@ -130,9 +134,6 @@ public final class TaskManager implements ITaskManager
         _tasks.addAll(tasks);
     }
 
-    /**
-     * @see salomon.engine.task.ITaskManager#loadTasks(salomon.platform.task.ITask)
-     */
     public void addTask(ITask task) throws PlatformException
     {
         try {
@@ -146,7 +147,7 @@ public final class TaskManager implements ITaskManager
         _tasks.add(task);
     }
 
-    public void addTaskListener(TaskListener listener)
+    public void addTaskListener(ITaskListener listener)
     {
         _taskListeners.add(listener);
     }
@@ -365,7 +366,7 @@ public final class TaskManager implements ITaskManager
         return retVal;
     }
 
-    public void removeTaskListener(TaskListener listener)
+    public void removeTaskListener(ITaskListener listener)
     {
         _taskListeners.remove(listener);
     }
@@ -409,56 +410,56 @@ public final class TaskManager implements ITaskManager
 
     private void fireTaskFailed(TaskEvent event)
     {
-        for (TaskListener listener : _taskListeners) {
+        for (ITaskListener listener : _taskListeners) {
             listener.taskFailed(event);
         }
     }
 
     private void fireTaskPaused(TaskEvent event)
     {
-        for (TaskListener listener : _taskListeners) {
+        for (ITaskListener listener : _taskListeners) {
             listener.taskPaused(event);
         }
     }
 
     private void fireTaskProcessed(TaskEvent event)
     {
-        for (TaskListener listener : _taskListeners) {
+        for (ITaskListener listener : _taskListeners) {
             listener.taskProcessed(event);
         }
     }
 
     private void fireTaskResumed(TaskEvent event)
     {
-        for (TaskListener listener : _taskListeners) {
+        for (ITaskListener listener : _taskListeners) {
             listener.taskResumed(event);
         }
     }
 
     private void fireTasksInitialized(int taskCount)
     {
-        for (TaskListener listener : _taskListeners) {
+        for (ITaskListener listener : _taskListeners) {
             listener.tasksInitialized(taskCount);
         }
     }
 
     private void fireTasksProcessed()
     {
-        for (TaskListener listener : _taskListeners) {
+        for (ITaskListener listener : _taskListeners) {
             listener.tasksProcessed();
         }
     }
 
     private void fireTaskStarted(TaskEvent event)
     {
-        for (TaskListener listener : _taskListeners) {
+        for (ITaskListener listener : _taskListeners) {
             listener.taskStarted(event);
         }
     }
 
     private void fireTaskStopped(TaskEvent event)
     {
-        for (TaskListener listener : _taskListeners) {
+        for (ITaskListener listener : _taskListeners) {
             listener.taskStopped(event);
         }
     }
