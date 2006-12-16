@@ -60,6 +60,8 @@ public class TreeTest extends TestCase
         
         createTasks(pluginManager, taskManager);
 
+        taskManager.getRunner().start();
+
         LOGGER.info("Test finished!");
     }
 
@@ -70,6 +72,8 @@ public class TreeTest extends TestCase
         createRandomDataSetCreatorTask(pluginManager, taskManager);
 //        createDataSetVisualizerTask(pluginManager, taskManager);
 //        createAttributeSetTask(pluginManager, taskManager);
+
+        taskManager.saveTasks();
     }
 
     private void createDataSetCreatorTask(IPluginManager pluginManager, ITaskManager taskManager)
