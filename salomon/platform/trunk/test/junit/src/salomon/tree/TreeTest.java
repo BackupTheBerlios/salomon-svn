@@ -21,12 +21,8 @@
 
 package salomon.tree;
 
-import junit.framework.TestCase;
-
 import org.apache.log4j.Logger;
 
-import salomon.TestObjectFactory;
-import salomon.engine.platform.ManagerEngine;
 import salomon.engine.plugin.IPluginManager;
 import salomon.engine.plugin.LocalPlugin;
 import salomon.engine.project.IProject;
@@ -36,10 +32,17 @@ import salomon.engine.solution.ISolution;
 import salomon.engine.task.ITask;
 import salomon.engine.task.ITaskManager;
 import salomon.engine.task.TaskInfo;
+
+import salomon.util.serialization.SimpleStruct;
+
 import salomon.platform.exception.PlatformException;
 import salomon.platform.serialization.IObject;
+
+import salomon.engine.platform.ManagerEngine;
+
+import junit.framework.TestCase;
+import salomon.TestObjectFactory;
 import salomon.plugin.ISettings;
-import salomon.util.serialization.SimpleStruct;
 
 public class TreeTest extends TestCase
 {
@@ -73,6 +76,7 @@ public class TreeTest extends TestCase
         //        createAttributeSetTask(pluginManager, taskManager);
 
         taskManager.saveTasks();
+        
     }
 
     //    private void createDataSetCreatorTask(IPluginManager pluginManager,
@@ -84,19 +88,16 @@ public class TreeTest extends TestCase
     private void createRandomDataSetCreatorTask(IPluginManager pluginManager,
             ITaskManager taskManager) throws PlatformException
     {
-        ITask task = createTask(pluginManager, taskManager,
-                "Random dataset creator");
-        SimpleStruct settings = (SimpleStruct) task.getPlugin().getSettingComponent(
-                null).getDefaultSettings();
+        SimpleStruct settings = new SimpleStruct();
         settings.setField("dataSetName", TESTED_DATA_SET_NAME);
         SimpleStruct deffinitions = new SimpleStruct();
         deffinitions.setField("rowCount", 4);
         deffinitions.setField("tableName", "CONTACT_LENSES");
         settings.setField("definitions", new IObject[]{deffinitions});
-        task.setSettings((ISettings) settings);
 
-        taskManager.addTask(task);
-        LOGGER.info("Task created.");
+        createTask(pluginManager, taskManager,
+            "Random dataset creator", settings);
+
     }
 
     //    private void createDataSetVisualizerTask(IPluginManager pluginManager,
@@ -111,8 +112,8 @@ public class TreeTest extends TestCase
     //        createTask(pluginManager, taskManager, "Attributeset creator", null);
     //    }
 
-    private ITask createTask(IPluginManager pluginManager,
-            ITaskManager taskManager, String pluginName)
+    private void createTask(IPluginManager pluginManager,
+            ITaskManager taskManager, String pluginName, SimpleStruct settings)
             throws PlatformException
     {
         LOGGER.info("Creating task: " + pluginName);
@@ -130,7 +131,14 @@ public class TreeTest extends TestCase
         taskInfo.setName(pluginName);
         task.setPlugin(plugin);
 
-        return task;
+        ISettings pluginSettings = task.getPlugin().getSettingComponent(
+                null).getDefaultSettings();
+
+        pluginSettings.init(settings);
+        task.setSettings(pluginSettings);
+
+        taskManager.addTask(task);
+        LOGGER.info("Task created.");
     }
 
     private IProject createProject(ISolution solution) throws PlatformException
