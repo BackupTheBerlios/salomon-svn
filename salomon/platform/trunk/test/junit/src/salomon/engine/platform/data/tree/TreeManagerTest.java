@@ -4,15 +4,10 @@
 
 package salomon.engine.platform.data.tree;
 
-import junit.framework.TestCase;
-
 import org.apache.log4j.Logger;
 
-import salomon.TestObjectFactory;
-import salomon.engine.platform.data.attribute.AttributeDescription;
-import salomon.engine.platform.data.attribute.AttributeManager;
-import salomon.engine.platform.data.attribute.AttributeSet;
 import salomon.engine.solution.ISolution;
+
 import salomon.platform.IDataEngine;
 import salomon.platform.data.IMetaData;
 import salomon.platform.data.ITable;
@@ -22,6 +17,12 @@ import salomon.platform.data.tree.ITree;
 import salomon.platform.data.tree.ITreeEdge;
 import salomon.platform.data.tree.ITreeNode;
 import salomon.platform.exception.PlatformException;
+
+import salomon.engine.platform.data.attribute.AttributeDescription;
+import salomon.engine.platform.data.attribute.AttributeManager;
+
+import junit.framework.TestCase;
+import salomon.TestObjectFactory;
 
 /**
  * @author Mateusz Nowakowski
@@ -72,26 +73,25 @@ public class TreeManagerTest extends TestCase
         ITreeNode assignedNo = null;
         ITreeNode assignedNo2 = null;
         
-        Tree tree = (Tree) _treeManager.createTree();
-        
-        for (int i = 0; i < descriptions.length; ++i) {
-            if (descriptions[i].getName().equals("attr_age")) {
-                ageNode = tree.createNode(descriptions[i]);
-            } else if (descriptions[i].getName().equals("attr_education")) {
-                eduNode = tree.createNode(descriptions[i]);
-            } else if (descriptions[i].getName().equals("attr_assigned")) {
-                assignedYes = tree.createNode(descriptions[i]);
-                ((TreeNode)assignedYes).setLeafValue("Y");
-                assignedNo = tree.createNode(descriptions[i]);
-                ((TreeNode)assignedNo).setLeafValue("N");
-                assignedNo2 = tree.createNode(descriptions[i]);
-                ((TreeNode)assignedNo2).setLeafValue("N");
+        ITree tree = _treeManager.createTree(attributeSet);
+
+        for (IAttributeDescription description : descriptions) {
+            if (description.getName().equals("attr_age")) {
+                ageNode = tree.createNode(description);
+            } else if (description.getName().equals("attr_education")) {
+                eduNode = tree.createNode(description);
+            } else if (description.getName().equals("attr_assigned")) {
+                assignedYes = tree.createNode(description);
+                ((TreeNode) assignedYes).setLeafValue("Y");
+                assignedNo = tree.createNode(description);
+                ((TreeNode) assignedNo).setLeafValue("N");
+                assignedNo2 = tree.createNode(description);
+                ((TreeNode) assignedNo2).setLeafValue("N");
             }
         }
-        
+
         tree.setName("test" + System.currentTimeMillis());
         tree.setRootNode(ageNode);
-        tree.setAttributeSet(attributeSet);
         ageNode.addChildNode(eduNode, " > 22");
         ageNode.addChildNode(assignedNo, " <= 22"); 
         eduNode.addChildNode(assignedYes, "High school");

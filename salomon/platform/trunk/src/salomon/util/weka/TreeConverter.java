@@ -119,7 +119,7 @@ public final class TreeConverter
         if (line.trim().equals("}")) {
             return;
         }
-        parseNode(line);
+        _tree.setRootNode(parseNode(line));
         List<String> edges = new ArrayList<String>();
         while (true) {
             line = _reader.readLine();
@@ -130,7 +130,7 @@ public final class TreeConverter
             if (isEdge(line)) {
                 edges.add(line);
             } else {
-                parseNode(line);
+                _tree.addNode(parseNode(line));
             }
         }
 
@@ -176,7 +176,7 @@ public final class TreeConverter
         return result;
     }
 
-    private void parseNode(String line) throws PlatformException
+    private ITreeNode parseNode(String line) throws PlatformException
     {
         Matcher matcher = NODE_REGEXP.matcher(line);
         if (!matcher.matches() && (matcher.groupCount() != 3)) {
@@ -197,6 +197,7 @@ public final class TreeConverter
         }
         _nodesMap.put(nodeName, node);
 
+        return node;
     }
 
     public static void convert(ITree outputTree,

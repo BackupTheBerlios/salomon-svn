@@ -21,6 +21,7 @@
 
 package salomon.platform.data.tree;
 
+import salomon.platform.data.attribute.IAttributeSet;
 import salomon.platform.exception.PlatformException;
 
 /**
@@ -32,12 +33,8 @@ public interface ITreeManager
     /**
      * Tworzy puste drzewo. Przed zapisem do bazy nalezy je zainicjowac korzeniem 
      * oraz zrodlem danych z ktorego powstalo.
-     * 
-     * @param rootNode TODO
-     * @return
-     * @throws PlatformException
      */
-    public ITree createTree() throws PlatformException;
+    public ITree createTree(IAttributeSet attributeSet) throws PlatformException;
 
     /**
      * Dodaje drzewo do bazy danych
@@ -46,31 +43,21 @@ public interface ITreeManager
 
     /**
      * Zwraca drzewa zwiazane z danym solutionem
-     * @return
-     * @throws PlatformException
      */
     ITree[] getAll() throws PlatformException;
 
     /**
      * Zwraca drzewo zwiazane z obecnym solutionem i posiadajace podane id. W przeciwnym razie rzuca PlatformException
-     * @param treeId
-     * @return
-     * @throws PlatformException
      */
     ITree getTree(int treeId) throws PlatformException;
 
     /**
      * Zwraca drzewo zwiazane z obecnym solutionem i posiadajace podane id. W przeciwnym razie rzuca PlatformException
-     * @param treeId
-     * @return
-     * @throws PlatformException
      */
     ITree getTree(String name) throws PlatformException;
 
     /**
      * Usuwa drzewo o podanym id z bazy danych.
-     * @param treeId
-     * @throws PlatformException
      */
     void remove(ITree tree) throws PlatformException;
 }

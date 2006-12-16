@@ -79,7 +79,8 @@ public final class WekaTreeGeneratorPlugin implements IPlugin
             Classifier classifier = Classifier.forName("weka.classifiers.trees." + algorithmName, null);
 
             ITreeManager treeManager = engine.getTreeManager();
-            ITree tree = treeManager.createTree();
+            ITree tree = treeManager.createTree(attributeSet);
+            // todo soon flaw KRA Use interface (move method to interface)
             tree.setName(treeName);
             classifier.buildClassifier(instances);
 

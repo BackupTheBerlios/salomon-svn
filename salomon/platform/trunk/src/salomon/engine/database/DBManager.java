@@ -21,12 +21,7 @@
 
 package salomon.engine.database;
 
-import java.sql.Connection;
-import java.sql.DatabaseMetaData;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 import org.apache.log4j.Logger;
 
@@ -36,8 +31,10 @@ import salomon.engine.database.queries.SQLDelete;
 import salomon.engine.database.queries.SQLInsert;
 import salomon.engine.database.queries.SQLSelect;
 import salomon.engine.database.queries.SQLUpdate;
-import salomon.engine.platform.data.DBMetaData;
+
 import salomon.util.gui.Utils;
+
+import salomon.engine.platform.data.DBMetaData;
 
 /**
  * Class is responsible for data base operations. It enables executing SQL

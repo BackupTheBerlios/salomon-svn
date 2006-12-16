@@ -23,12 +23,7 @@ package salomon.engine.platform.data.tree;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import org.apache.commons.collections.MultiHashMap;
 import org.apache.commons.collections.MultiMap;
@@ -37,14 +32,17 @@ import org.apache.log4j.Logger;
 import salomon.engine.database.DBManager;
 import salomon.engine.database.ExternalDBManager;
 import salomon.engine.database.queries.SQLSelect;
-import salomon.engine.platform.data.attribute.AttributeDescription;
-import salomon.engine.platform.data.attribute.AttributeManager;
-import salomon.engine.platform.data.attribute.AttributeSet;
 import salomon.engine.solution.ShortSolutionInfo;
+
+import salomon.platform.data.attribute.IAttributeSet;
 import salomon.platform.data.tree.ITree;
 import salomon.platform.data.tree.ITreeManager;
 import salomon.platform.exception.DBException;
 import salomon.platform.exception.PlatformException;
+
+import salomon.engine.platform.data.attribute.AttributeDescription;
+import salomon.engine.platform.data.attribute.AttributeManager;
+import salomon.engine.platform.data.attribute.AttributeSet;
 
 /**
  * Implementacja Tree manager`a
@@ -87,10 +85,12 @@ public final class TreeManager implements ITreeManager
         }
     }
 
-    public ITree createTree() throws PlatformException
+    public ITree createTree(IAttributeSet attributeSet) throws PlatformException
     {
         Tree tree = new Tree(_dbManager);
+        tree.setAttributeSet(attributeSet);
         tree.getInfo().setSolutionID(_solutionInfo.getId());
+        
         return tree;
     }
 
@@ -237,7 +237,7 @@ public final class TreeManager implements ITreeManager
                 if (tmpTreeID != firstTreeID) {
                     // processing next tree 
                     firstTreeID = tmpTreeID;
-                    tree = (Tree) this.createTree();
+                    tree = (Tree) this.createTree(null);
                     tree.getInfo().load(resultSet);
                     trees.add(tree);
                 }

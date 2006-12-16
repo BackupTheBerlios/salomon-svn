@@ -22,13 +22,15 @@
 package salomon.engine.platform.data.tree;
 
 import salomon.engine.database.DBManager;
-import salomon.engine.platform.data.attribute.AttributeSet;
+
 import salomon.platform.data.attribute.IAttributeSet;
 import salomon.platform.data.attribute.description.IAttributeDescription;
 import salomon.platform.data.dataset.IDataSet;
 import salomon.platform.data.tree.ITree;
 import salomon.platform.data.tree.ITreeNode;
 import salomon.platform.exception.PlatformException;
+
+import salomon.engine.platform.data.attribute.AttributeSet;
 
 /**
  *
@@ -43,9 +45,6 @@ final class Tree implements ITree
 
     private ITreeNode _rootNode;
 
-    /**
-     * @param rootNode
-     */
     public Tree(DBManager dbManager)
     {
         _dbManager = dbManager;
@@ -126,8 +125,8 @@ final class Tree implements ITree
         _info.addNode(rootNodeInfo);
     }
 
-    void addNode(TreeNode childNode)
+    public void addNode(ITreeNode childNode)
     {
-        _info.addNode(childNode.getInfo());
+        _info.addNode(((TreeNode) childNode).getInfo());
     }
 }

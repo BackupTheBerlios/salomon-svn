@@ -29,6 +29,7 @@ import salomon.platform.exception.PlatformException;
 /**
  *
  */
+// todo soon cleanup KRA cleanup interface
 public interface ITree
 {
     ITreeNode evaluate(IDataSet[] attribute);
@@ -42,6 +43,9 @@ public interface ITree
     IAttributeSet getAttributeSet();
 
     ITreeNode createNode(IAttributeDescription description)
-            throws PlatformException;
+        throws PlatformException;
 
+    void setRootNode(ITreeNode rootNode);
+
+    void addNode(ITreeNode childNode);
 }
