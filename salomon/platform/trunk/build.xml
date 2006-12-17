@@ -53,6 +53,8 @@
     <property name="db_example_dir" value="example" />
     <property name="lens_schema" value="contact-lenses.t.sql" />
     <property name="lens_data" value="contact-lenses.init.sql" />
+    <property name="cand_schema" value="candidates.t.sql" />
+    <property name="cand_data" value="candidates.init.sql" />
     
     <property file="config/hosts/${build.host}/build.properties" />
     <property file="config/users/${build.user}/build.properties" />
@@ -298,6 +300,7 @@
              delimiter="//">
             <!-- generating schema -->
             <transaction  src="${db_dir}/${db_example_dir}/${lens_schema}"/>
+            <transaction  src="${db_dir}/${db_example_dir}/${cand_schema}"/>
         </sql>
     </target>    
 
@@ -311,6 +314,7 @@
              classpathref="project.class.path">	    	
             	<!-- adding data -->
             	<transaction  src="${db_dir}/${db_example_dir}/${lens_data}"/>
+            	<transaction  src="${db_dir}/${db_example_dir}/${cand_data}"/>
             </sql>
     </target>
     

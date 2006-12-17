@@ -25,8 +25,7 @@ import junit.framework.TestCase;
 import salomon.TestObjectFactory;
 
 /**
- * @author Mateusz Nowakowski
- *
+ * 
  */
 public class TreeManagerTest extends TestCase
 {
@@ -40,7 +39,7 @@ public class TreeManagerTest extends TestCase
 
     public TreeManagerTest() throws PlatformException
     {
-        ISolution solution = TestObjectFactory.getSolution("Trees");
+        ISolution solution = TestObjectFactory.getSolution("Example");
         IDataEngine dataEngine = solution.getDataEngine();
         _treeManager = (TreeManager) dataEngine.getTreeManager();
         _attributeManager = (AttributeManager) dataEngine.getAttributeManager();
@@ -50,7 +49,7 @@ public class TreeManagerTest extends TestCase
     
     public void testGetAll() throws PlatformException
     {
-        LOGGER.info("AttributeManagerTest.testGetAll()");
+        LOGGER.info("TreeManagerTest.testGetAll()");
         ITree[] trees = null;
         trees = _treeManager.getAll();
         for (ITree tree : trees) {
