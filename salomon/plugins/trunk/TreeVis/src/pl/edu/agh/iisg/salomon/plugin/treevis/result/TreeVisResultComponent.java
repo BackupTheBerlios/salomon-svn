@@ -21,20 +21,12 @@
 
 package pl.edu.agh.iisg.salomon.plugin.treevis.result;
 
-import java.awt.Component;
+import java.awt.*;
 
-import javax.swing.JComponent;
-import javax.swing.JPanel;
-
-import edu.uci.ics.jung.graph.Edge;
-import edu.uci.ics.jung.graph.Graph;
-import edu.uci.ics.jung.graph.impl.DirectedSparseGraph;
-import edu.uci.ics.jung.utils.GraphUtils;
+import javax.swing.*;
 
 import salomon.platform.IDataEngine;
 import salomon.platform.data.tree.ITree;
-import salomon.platform.data.tree.ITreeEdge;
-import salomon.platform.data.tree.ITreeNode;
 import salomon.platform.exception.PlatformException;
 
 import salomon.plugin.IResult;
@@ -42,8 +34,6 @@ import salomon.plugin.IResultComponent;
 
 public final class TreeVisResultComponent implements IResultComponent
 {
-    private Graph _graph;
-
     private JComponent _resultComponent;
 
     public Component getComponent(IResult result, IDataEngine dataEngine)
@@ -65,41 +55,8 @@ public final class TreeVisResultComponent implements IResultComponent
     private JComponent createComponent(IDataEngine dataEngine,
             TreeVisResult result) throws PlatformException
     {
-        JComponent component = new JPanel();
         ITree tree = dataEngine.getTreeManager().getTree(result.getTreeName());
-        createGraph(tree);
 
-        //TODO: add graph component
-        return component;
+        return new TreePanel(tree);
     }
-
-    private void createGraph(ITree tree)
-    {
-        _graph = new DirectedSparseGraph();
-
-        ITreeNode node = tree.getRootNode();
-        if (node == null) {
-            return;
-        }
-
-        createVertex(null, node);
-    }
-
-    private void createVertex(TreeNodeVertex parentVertex, ITreeNode node)
-    {
-        TreeNodeVertex vertex = new TreeNodeVertex(node);
-        //        _vertexLocations.setLocation(vertex, new Point(0, 0));
-        _graph.addVertex(vertex);
-        if (parentVertex != null) {
-            Edge edge = GraphUtils.addEdge(_graph, parentVertex, vertex);
-            //TODO add label
-        }
-
-        ITreeEdge[] edges = node.getChildrenEdges();
-
-        for (ITreeEdge edge : edges) {
-            createVertex(vertex, edge.getChildNode());
-        }
-    }
-
 }

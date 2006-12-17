@@ -42,9 +42,9 @@ public final class TreeVisSettings extends SimpleStruct implements ISettings
         SimpleStruct struct = (SimpleStruct) o;
 
         // setting struct fields
-        SimpleString attributeSetName = (SimpleString) struct.getField(TREE_NAME);
-        setField(TREE_NAME, attributeSetName);
-        _treeName = attributeSetName.getValue();
+        SimpleString treeName = (SimpleString) struct.getField(TREE_NAME);
+        setField(TREE_NAME, treeName);
+        _treeName = treeName.getValue();
     }
 
     public void setTreeName(String treeName)

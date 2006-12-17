@@ -21,16 +21,15 @@
 
 package pl.edu.agh.iisg.salomon.plugin.treevis.result;
 
-import edu.uci.ics.jung.graph.impl.SparseVertex;
-
 import salomon.platform.data.tree.ITreeNode;
 
-public class TreeNodeVertex  extends SparseVertex
+import edu.uci.ics.jung.graph.impl.DirectedSparseVertex;
+
+public class TreeNodeVertex  extends DirectedSparseVertex
 {
     private ITreeNode _node;
 
     /**
-     * @param task
      */
     public TreeNodeVertex(ITreeNode node)
     {

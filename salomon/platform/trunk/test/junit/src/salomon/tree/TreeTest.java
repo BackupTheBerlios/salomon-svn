@@ -64,6 +64,8 @@ public class TreeTest extends TestCase
 
     private static final String WEKA_TREE_GENERATOR_PLUGIN = "Weka tree generator";
 
+    private static final String TREE_VIS_PLUGIN = "Tree vis";
+
 
     public void testCreate() throws PlatformException
     {
@@ -83,7 +85,7 @@ public class TreeTest extends TestCase
         ((TaskManager) taskManager).runTasks();
 
         for (ITask task : taskManager.getTasks()) {
-            assertTrue("Task "  + ((TaskInfo) task.getInfo()).getName(), task.getResult().isSuccessful());
+            assertTrue("Task " + ((TaskInfo) task.getInfo()).getName(), task.getResult().isSuccessful());
         }
 
         LOGGER.info("Test finished!");
@@ -114,6 +116,7 @@ public class TreeTest extends TestCase
         createRandomDataSetCreatorTask(pluginManager, taskManager);
         createAttributeSetTask(pluginManager, taskManager);
         createWekaTreeGeneratorTask(pluginManager, taskManager);
+        createTreeVisTask(pluginManager, taskManager);
 
         //        createDataSetVisualizerTask(pluginManager, taskManager);
         //        createDataSetCreatorTask(pluginManager, taskManager);
@@ -183,7 +186,7 @@ public class TreeTest extends TestCase
     }
 
     private void createWekaTreeGeneratorTask(IPluginManager pluginManager,
-                                                ITaskManager taskManager) throws PlatformException
+                                             ITaskManager taskManager) throws PlatformException
     {
         SimpleStruct settings = new SimpleStruct();
         settings.setField("attribute_set", TESTED_ATTRIBUTE_SET_NAME);
@@ -192,6 +195,16 @@ public class TreeTest extends TestCase
         settings.setField("tree", TESTED_TREE_NAME);
 
         createTask(pluginManager, taskManager, WEKA_TREE_GENERATOR_PLUGIN, settings);
+    }
+
+
+    private void createTreeVisTask(IPluginManager pluginManager,
+                                   ITaskManager taskManager) throws PlatformException
+    {
+        SimpleStruct settings = new SimpleStruct();
+        settings.setField("tree_name", TESTED_TREE_NAME);
+
+        createTask(pluginManager, taskManager, TREE_VIS_PLUGIN, settings);
     }
 
 

@@ -37,14 +37,14 @@ public final class TreeVisResult extends SimpleStruct implements IResult
         return _treeName;
     }
 
-    public void init(IObject o)
+    public void init(IObject object)
     {
-        SimpleStruct struct = (SimpleStruct) o;
+        SimpleStruct struct = (SimpleStruct) object;
 
         // setting struct fields
-        SimpleString attributeSetName = (SimpleString) struct.getField(TREE_NAME);
-        setField(TREE_NAME, attributeSetName);
-        _treeName = attributeSetName.getValue();
+        SimpleString treeName = (SimpleString) struct.getField(TREE_NAME);
+        setField(TREE_NAME, treeName);
+        _treeName = treeName.getValue();
     }
 
     public boolean isSuccessful()
