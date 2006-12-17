@@ -96,7 +96,7 @@ public final class TreeManager implements ITreeManager
 
     public ITree[] getAll() throws PlatformException
     {
-        // enforcing getting all attribute sets
+        // enforcing getting all trees
         return getTrees(-1);
     }
 

@@ -24,11 +24,10 @@ package salomon.engine.platform.data.tree;
 import java.util.LinkedList;
 import java.util.List;
 
+import salomon.engine.platform.data.attribute.AttributeDescription;
 import salomon.platform.data.attribute.description.IAttributeDescription;
 import salomon.platform.data.tree.ITreeEdge;
 import salomon.platform.data.tree.ITreeNode;
-
-import salomon.engine.platform.data.attribute.AttributeDescription;
 
 /**
  *
@@ -45,6 +44,10 @@ final class TreeNode implements ITreeNode
 
     private Tree _tree;
 
+    /**
+     * @param attributeDescription
+     * @param nodeID
+     */
     public TreeNode(Tree tree, IAttributeDescription attributeDescription,
             TreeNodeInfo info)
     {
@@ -61,7 +64,8 @@ final class TreeNode implements ITreeNode
         ((TreeNode) childNode).setParentEdge(edge);
         ((TreeNode) childNode).getInfo().setParentNodeID(_info.getId());
         _childEdges.add(edge);
-        _tree.addNode(childNode);
+        // don't add node chile setting child node - it's already in the tree
+        // _tree.addNode((TreeNode) childNode);
     }
 
     /**

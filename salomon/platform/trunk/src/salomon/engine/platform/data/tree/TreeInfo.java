@@ -75,6 +75,8 @@ final class TreeInfo implements IInfo
 
     public void addNode(TreeNodeInfo nodeInfo)
     {
+        // TODO: quick fix, investigate why nodes are added twice
+        // if node already exists, don't add it        
         _nodes.add(nodeInfo);
     }
 
