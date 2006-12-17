@@ -21,12 +21,9 @@
 
 package pl.edu.agh.iisg.salomon.plugin.datasetunion.result;
 
-import java.awt.BorderLayout;
-import java.awt.Component;
+import java.awt.*;
 
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.*;
 
 import salomon.util.serialization.SimpleString;
 
@@ -61,7 +58,7 @@ public final class UResultComponent implements IResultComponent
 			text = "";
 		}
 
-		if (text.equals("ERROR")) {
+		if ("ERROR".equals(text)) {
 			String error = ((SimpleString) ((UResult) result).getField(UResult.ERROR_MESSAGE)).getValue();
 			text += " - " + error;
 		}
@@ -77,8 +74,7 @@ public final class UResultComponent implements IResultComponent
 	 */
 	public IResult getDefaultResult()
 	{
-		IResult result = new UResult();
-		return result;
+        return new UResult();
 	}
 
 }

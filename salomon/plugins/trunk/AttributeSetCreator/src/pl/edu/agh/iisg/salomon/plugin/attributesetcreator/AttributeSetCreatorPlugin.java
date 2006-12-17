@@ -23,23 +23,19 @@ package pl.edu.agh.iisg.salomon.plugin.attributesetcreator;
 
 import org.apache.log4j.Logger;
 
-import pl.edu.agh.iisg.salomon.plugin.attributesetcreator.result.CreatorResult;
-import pl.edu.agh.iisg.salomon.plugin.attributesetcreator.result.CreatorResultComponent;
-import pl.edu.agh.iisg.salomon.plugin.attributesetcreator.settings.CreatorSettingComponent;
-import pl.edu.agh.iisg.salomon.plugin.attributesetcreator.settings.CreatorSettings;
-import pl.edu.agh.iisg.salomon.plugin.attributesetcreator.settings.CreatorSettings.Description;
 import salomon.platform.IDataEngine;
 import salomon.platform.IEnvironment;
 import salomon.platform.data.attribute.IAttributeManager;
 import salomon.platform.data.attribute.IAttributeSet;
 import salomon.platform.data.attribute.description.IAttributeDescription;
 import salomon.platform.exception.PlatformException;
-import salomon.plugin.IPlatformUtil;
-import salomon.plugin.IPlugin;
-import salomon.plugin.IResult;
-import salomon.plugin.IResultComponent;
-import salomon.plugin.ISettingComponent;
-import salomon.plugin.ISettings;
+
+import pl.edu.agh.iisg.salomon.plugin.attributesetcreator.result.CreatorResult;
+import pl.edu.agh.iisg.salomon.plugin.attributesetcreator.result.CreatorResultComponent;
+import pl.edu.agh.iisg.salomon.plugin.attributesetcreator.settings.CreatorSettingComponent;
+import pl.edu.agh.iisg.salomon.plugin.attributesetcreator.settings.CreatorSettings;
+import pl.edu.agh.iisg.salomon.plugin.attributesetcreator.settings.CreatorSettings.Description;
+import salomon.plugin.*;
 
 /**
  * @author nico
@@ -71,7 +67,7 @@ public final class AttributeSetCreatorPlugin implements IPlugin
                 if (desc != null) {
                     descriptions[i] = attributeSetManager.createAttributeDescription(
                             desc.getAttributeName(), desc.getTableName(),
-                            desc.getColumnName(), desc.getType(), desc.getIsOutput().equals("Y"));
+                            desc.getColumnName(), desc.getType(), "Y".equals(desc.getIsOutput()));
                     ++i;
                 }
             }

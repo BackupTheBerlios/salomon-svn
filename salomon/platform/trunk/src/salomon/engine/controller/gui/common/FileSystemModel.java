@@ -24,11 +24,7 @@ package salomon.engine.controller.gui.common;
 import java.io.File;
 import java.io.FileFilter;
 import java.text.Collator;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 import javax.swing.event.TreeModelListener;
 import javax.swing.tree.TreeModel;
@@ -71,7 +67,7 @@ public class FileSystemModel implements TreeModel
 
     public Object getChild(Object parent, int index)
     {
-        List children = (List) _sortedChildren.get(parent);
+        List children = _sortedChildren.get(parent);
         return children == null ? null : children.get(index);
     }
 
@@ -101,7 +97,7 @@ public class FileSystemModel implements TreeModel
 
     public int getIndexOfChild(Object parent, Object child)
     {
-        List children = (List) _sortedChildren.get(parent);
+        List children = _sortedChildren.get(parent);
         return children.indexOf(child);
     }
 
@@ -150,7 +146,7 @@ public class FileSystemModel implements TreeModel
          * Compare two FileTreeNode objects so that directories
          * are sorted first.
          * 
-         * @param object  Object to compare to.
+         * @param otherFile  Object to compare to.
          * @return        Compare identifier.
          */
         @Override
@@ -173,6 +169,7 @@ public class FileSystemModel implements TreeModel
          * 
          * @return  String representation of this node.
          */
+        @Override
         public String toString()
         {
             return getName();

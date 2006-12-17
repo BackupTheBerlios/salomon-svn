@@ -21,28 +21,25 @@
 
 package pl.edu.agh.iisg.salomon.plugin.attributesetcreator.settings;
 
-import java.awt.BorderLayout;
-import java.awt.Component;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.BorderFactory;
-import javax.swing.DefaultListModel;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JComponent;
-import javax.swing.JList;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextField;
+import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import org.apache.log4j.Logger;
 
-import pl.edu.agh.iisg.salomon.plugin.attributesetcreator.settings.CreatorSettings.Description;
+import com.jgoodies.forms.builder.DefaultFormBuilder;
+import com.jgoodies.forms.factories.ButtonBarFactory;
+import com.jgoodies.forms.layout.FormLayout;
+
+import salomon.util.gui.validation.IComponentFactory;
+import salomon.util.gui.validation.IValidationModel;
+import salomon.util.gui.validation.attributeset.AttributeSet;
+import salomon.util.gui.validation.attributeset.AttributeSetValidator;
+
 import salomon.platform.IDataEngine;
 import salomon.platform.data.IColumn;
 import salomon.platform.data.IMetaData;
@@ -51,17 +48,11 @@ import salomon.platform.data.attribute.IAttributeManager;
 import salomon.platform.data.attribute.description.AttributeType;
 import salomon.platform.data.attribute.description.IAttributeDescription;
 import salomon.platform.exception.PlatformException;
+
+import pl.edu.agh.iisg.salomon.plugin.attributesetcreator.settings.CreatorSettings.Description;
 import salomon.plugin.IPlatformUtil;
 import salomon.plugin.ISettingComponent;
 import salomon.plugin.ISettings;
-import salomon.util.gui.validation.IComponentFactory;
-import salomon.util.gui.validation.IValidationModel;
-import salomon.util.gui.validation.attributeset.AttributeSet;
-import salomon.util.gui.validation.attributeset.AttributeSetValidator;
-
-import com.jgoodies.forms.builder.DefaultFormBuilder;
-import com.jgoodies.forms.factories.ButtonBarFactory;
-import com.jgoodies.forms.layout.FormLayout;
 
 /**
  * @author nico
@@ -129,8 +120,7 @@ public class CreatorSettingComponent implements ISettingComponent
      */
     public ISettings getDefaultSettings()
     {
-        ISettings defaultSettings = new CreatorSettings("");
-        return defaultSettings;
+        return new CreatorSettings("");
     }
 
     /**
@@ -344,7 +334,7 @@ public class CreatorSettingComponent implements ISettingComponent
                 descriptions[i] = attributeManager.createAttributeDescription(
                         desc.getAttributeName(), desc.getTableName(),
                         desc.getColumnName(), desc.getType(),
-                        desc.getIsOutput().equals("Y"));
+                    "Y".equals(desc.getIsOutput()));
                 ++i;
             }
         }

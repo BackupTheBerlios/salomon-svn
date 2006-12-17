@@ -21,25 +21,24 @@
 
 package pl.edu.agh.iisg.salomon.plugin.datasetcreator.settings;
 
-import java.awt.BorderLayout;
-import java.awt.Component;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.BorderFactory;
-import javax.swing.DefaultListModel;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JComponent;
-import javax.swing.JList;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextField;
+import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import org.apache.log4j.Logger;
+
+import com.jgoodies.forms.builder.DefaultFormBuilder;
+import com.jgoodies.forms.factories.ButtonBarFactory;
+import com.jgoodies.forms.layout.FormLayout;
+
+import salomon.util.gui.validation.IComponentFactory;
+import salomon.util.gui.validation.IValidationModel;
+import salomon.util.gui.validation.dataset.DataSet;
+import salomon.util.gui.validation.dataset.DataSetValidator;
 
 import salomon.platform.IDataEngine;
 import salomon.platform.data.IColumn;
@@ -48,17 +47,10 @@ import salomon.platform.data.ITable;
 import salomon.platform.data.dataset.ICondition;
 import salomon.platform.data.dataset.IDataSetManager;
 import salomon.platform.exception.PlatformException;
+
 import salomon.plugin.IPlatformUtil;
 import salomon.plugin.ISettingComponent;
 import salomon.plugin.ISettings;
-import salomon.util.gui.validation.IComponentFactory;
-import salomon.util.gui.validation.IValidationModel;
-import salomon.util.gui.validation.dataset.DataSet;
-import salomon.util.gui.validation.dataset.DataSetValidator;
-
-import com.jgoodies.forms.builder.DefaultFormBuilder;
-import com.jgoodies.forms.factories.ButtonBarFactory;
-import com.jgoodies.forms.layout.FormLayout;
 
 /**
  * @author nico
@@ -123,8 +115,7 @@ public class CreatorSettingComponent implements ISettingComponent
      */
     public ISettings getDefaultSettings()
     {
-        ISettings defaultSettings = new CreatorSettings("");
-        return defaultSettings;
+        return new CreatorSettings("");
     }
 
     /**
@@ -170,13 +161,13 @@ public class CreatorSettingComponent implements ISettingComponent
                         IDataSetManager dataSetManager = _dataEngine.getDataSetManager();
                         String operation = (String) _operations.getSelectedItem();
                         ICondition condition = null;
-                        if (operation.equals("=")) {
+                        if ("=".equals(operation)) {
                             condition = dataSetManager.createEqualsCondition(
                                     _selectedColumn, value);
-                        } else if (operation.equals("<")) {
+                        } else if ("<".equals(operation)) {
                             condition = dataSetManager.createLowerCondition(
                                     _selectedColumn, value);
-                        } else if (operation.equals(">")) {
+                        } else if (">".equals(operation)) {
                             condition = dataSetManager.createGreaterCondition(
                                     _selectedColumn, value);
                         }
