@@ -58,6 +58,19 @@ public class TreeManagerTest extends TestCase
         }
     }
     
+    public void testGetTree() throws PlatformException
+    {
+        LOGGER.info("TreeManagerTest.testGetTree()");
+        ITree[] trees = null;
+        trees = _treeManager.getAll();
+        // getting tree by name
+        if (trees.length > 0) {
+            ITree tree = _treeManager.getTree(trees[0].getName());
+            assertNotNull(tree);
+            walkTree(tree);
+        }
+    }
+    
     public void testAddTree() throws PlatformException
     {
         IAttributeSet attributeSet = createTestAttributeSet();

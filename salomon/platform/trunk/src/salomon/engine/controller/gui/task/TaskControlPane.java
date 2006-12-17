@@ -173,7 +173,7 @@ public final class TaskControlPane
 
     private class TaskProcessPane implements ITaskListener
     {
-        private Color _defaultForegroundColor;
+        private Color _successForegroundColor = Color.GREEN;
 
         private Color _errorForegroundColor = Color.RED;
 
@@ -227,7 +227,7 @@ public final class TaskControlPane
         {
             _taskCount = taskCount;
             _failuresCount = 0;
-            _progressBar.setForeground(_defaultForegroundColor);
+            _progressBar.setForeground(_successForegroundColor);
             _progressBar.setMaximum(_taskCount);
             _progressBar.setValue(0);
             _progressBar.setString("0/" + _taskCount);
@@ -256,7 +256,6 @@ public final class TaskControlPane
             _progressBar.setMinimum(0);
             _progressBar.setStringPainted(true);
             _progressBar.setString("");
-            _defaultForegroundColor = _progressBar.getForeground();
             _lblFailures = new JLabel(_failureMsg + 0);
         }
 

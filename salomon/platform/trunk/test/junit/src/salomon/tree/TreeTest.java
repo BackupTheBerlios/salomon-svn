@@ -38,7 +38,13 @@ import salomon.engine.task.TaskManager;
 import salomon.util.serialization.SimpleArray;
 import salomon.util.serialization.SimpleStruct;
 
+import salomon.platform.data.attribute.IAttributeManager;
+import salomon.platform.data.attribute.IAttributeSet;
 import salomon.platform.data.attribute.description.AttributeType;
+import salomon.platform.data.dataset.IDataSet;
+import salomon.platform.data.dataset.IDataSetManager;
+import salomon.platform.data.tree.ITree;
+import salomon.platform.data.tree.ITreeManager;
 import salomon.platform.exception.PlatformException;
 import salomon.platform.serialization.IObject;
 
@@ -66,15 +72,16 @@ public class TreeTest extends TestCase
 
     private static final String TREE_VIS_PLUGIN = "Tree vis";
 
-
     public void testCreate() throws PlatformException
     {
         LOGGER.info("Test started");
-        // clean after previous test executions
-        clean();
 
         ManagerEngine managerEngine = TestObjectFactory.getManagerEngine();
         ISolution solution = TestObjectFactory.getSolution(SOLUTION_NAME);
+
+        // clean after previous test executions
+        clean(solution);
+
         IProject project = createProject(solution);
 
         ITaskManager taskManager = project.getTaskManager();
@@ -85,33 +92,40 @@ public class TreeTest extends TestCase
         ((TaskManager) taskManager).runTasks();
 
         for (ITask task : taskManager.getTasks()) {
-            assertTrue("Task " + ((TaskInfo) task.getInfo()).getName(), task.getResult().isSuccessful());
+            assertTrue("Task " + ((TaskInfo) task.getInfo()).getName(),
+                    task.getResult().isSuccessful());
         }
 
         LOGGER.info("Test finished!");
     }
 
-    private void clean() throws PlatformException
+    private void clean(ISolution solution) throws PlatformException
     {
-        try {
-            // delete dataset to be created
-            SQLDelete delete = new SQLDelete("datasets");
-            delete.addCondition("dataset_name = ", TESTED_DATA_SET_NAME);
-            TestObjectFactory.getDbManager().delete(delete);
+        IDataSetManager dataSetManager = solution.getDataEngine().getDataSetManager();
+        IAttributeManager attributeManager = solution.getDataEngine().getAttributeManager();
+        ITreeManager treeManager = solution.getDataEngine().getTreeManager();
 
-            // delete attribute set to be created
-            delete = new SQLDelete("attributesets");
-            delete.addCondition("attributeset_name = ", TESTED_DATA_SET_NAME);
-            TestObjectFactory.getDbManager().delete(delete);
-
-            TestObjectFactory.getDbManager().commit();
-        } catch (Exception e) {
-            new PlatformException(e.getLocalizedMessage());
+        // removing tested objects if already exist
+        ITree tree = treeManager.getTree(TESTED_TREE_NAME);
+        if (tree != null) {
+            treeManager.remove(tree);
         }
+
+        IDataSet dataSet = dataSetManager.getDataSet(TESTED_DATA_SET_NAME);
+        if (dataSet != null) {
+            dataSetManager.remove(dataSet);
+        }
+
+        IAttributeSet attributeSet = attributeManager.getAttributeSet(TESTED_ATTRIBUTE_SET_NAME);
+        if (attributeSet != null) {
+            attributeManager.remove(attributeSet);
+        }
+
+        TestObjectFactory.getDbManager().commit();
     }
 
     private void createTasks(IPluginManager pluginManager,
-                             ITaskManager taskManager) throws PlatformException
+            ITaskManager taskManager) throws PlatformException
     {
         createRandomDataSetCreatorTask(pluginManager, taskManager);
         createAttributeSetTask(pluginManager, taskManager);
@@ -132,7 +146,7 @@ public class TreeTest extends TestCase
     //    }
 
     private void createRandomDataSetCreatorTask(IPluginManager pluginManager,
-                                                ITaskManager taskManager) throws PlatformException
+            ITaskManager taskManager) throws PlatformException
     {
         SimpleStruct settings = new SimpleStruct();
         settings.setField("dataSetName", TESTED_DATA_SET_NAME);
@@ -152,7 +166,7 @@ public class TreeTest extends TestCase
     //    }
     //
     private void createAttributeSetTask(IPluginManager pluginManager,
-                                        ITaskManager taskManager) throws PlatformException
+            ITaskManager taskManager) throws PlatformException
     {
         SimpleStruct settings = new SimpleStruct();
         settings.setField("attributeSetName", TESTED_ATTRIBUTE_SET_NAME);
@@ -160,20 +174,25 @@ public class TreeTest extends TestCase
         SimpleArray descriptions = new SimpleArray();
 
         SimpleStruct age = createAttribute("age", "AGE", "N");
-        SimpleStruct spectacle = createAttribute("spectacle", "SPECTACLE_PRESCRIP", "N");
-        SimpleStruct astigmatism = createAttribute("astigmatism", "ASTIGMATISM", "N");
-        SimpleStruct tear = createAttribute("tear-prod-rate", "TEAR_PROD_RATE", "N");
+        SimpleStruct spectacle = createAttribute("spectacle",
+                "SPECTACLE_PRESCRIP", "N");
+        SimpleStruct astigmatism = createAttribute("astigmatism",
+                "ASTIGMATISM", "N");
+        SimpleStruct tear = createAttribute("tear-prod-rate", "TEAR_PROD_RATE",
+                "N");
 
-        SimpleStruct contactLenses = createAttribute("contact-lenses", "CONTACT_LENSES", "Y");
+        SimpleStruct contactLenses = createAttribute("contact-lenses",
+                "CONTACT_LENSES", "Y");
 
         descriptions.setValue(new IObject[]{age, spectacle, astigmatism, tear,
-            contactLenses});
+                contactLenses});
         settings.setField("descriptions", descriptions);
 
         createTask(pluginManager, taskManager, ATTR_SET_PLUGIN, settings);
     }
 
-    private static SimpleStruct createAttribute(String name, String columnName, String isOutput)
+    private static SimpleStruct createAttribute(String name, String columnName,
+            String isOutput)
     {
         SimpleStruct age = new SimpleStruct();
         age.setField("attributeName", name);
@@ -186,7 +205,7 @@ public class TreeTest extends TestCase
     }
 
     private void createWekaTreeGeneratorTask(IPluginManager pluginManager,
-                                             ITaskManager taskManager) throws PlatformException
+            ITaskManager taskManager) throws PlatformException
     {
         SimpleStruct settings = new SimpleStruct();
         settings.setField("attribute_set", TESTED_ATTRIBUTE_SET_NAME);
@@ -194,12 +213,12 @@ public class TreeTest extends TestCase
         settings.setField("algorithm", "J48");
         settings.setField("tree", TESTED_TREE_NAME);
 
-        createTask(pluginManager, taskManager, WEKA_TREE_GENERATOR_PLUGIN, settings);
+        createTask(pluginManager, taskManager, WEKA_TREE_GENERATOR_PLUGIN,
+                settings);
     }
 
-
     private void createTreeVisTask(IPluginManager pluginManager,
-                                   ITaskManager taskManager) throws PlatformException
+            ITaskManager taskManager) throws PlatformException
     {
         SimpleStruct settings = new SimpleStruct();
         settings.setField("tree_name", TESTED_TREE_NAME);
@@ -207,10 +226,9 @@ public class TreeTest extends TestCase
         createTask(pluginManager, taskManager, TREE_VIS_PLUGIN, settings);
     }
 
-
     private void createTask(IPluginManager pluginManager,
-                            ITaskManager taskManager, String pluginName, SimpleStruct settings)
-        throws PlatformException
+            ITaskManager taskManager, String pluginName, SimpleStruct settings)
+            throws PlatformException
     {
         LOGGER.info("Creating task: " + pluginName);
         LocalPlugin plugin = (LocalPlugin) pluginManager.getPlugin(pluginName);

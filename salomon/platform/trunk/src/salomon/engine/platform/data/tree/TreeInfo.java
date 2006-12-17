@@ -86,8 +86,20 @@ final class TreeInfo implements IInfo
      */
     public boolean delete() throws PlatformException, DBException
     {
-        throw new UnsupportedOperationException(
-                "Method TreeInfo.delete() not implemented yet!");
+        SQLDelete delete = new SQLDelete();
+        // deleting data set
+        delete.setTable(TABLE_NAME);
+        delete.addCondition("tree_id =", _attributeSetID);
+        int rows;
+        try {
+            rows = _dbManager.delete(delete);
+        } catch (SQLException e) {
+            LOGGER.fatal("", e);
+            throw new DBException("Cannot delete!", e);
+        }
+
+        LOGGER.debug("rows deleted: " + rows);
+        return (rows > 0);
     }
 
     /**

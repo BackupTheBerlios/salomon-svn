@@ -101,7 +101,11 @@ final class Tree implements ITree
     public final void setAttributeSet(IAttributeSet attributeSet)
     {
         _attributeSet = attributeSet;
-        _info.setAttributeSetID(((AttributeSet) _attributeSet).getInfo().getId());
+        // FIXME: it shouldn't happen,
+        // but happens in getAll() method :-(
+        if (attributeSet != null) {
+            _info.setAttributeSetID(((AttributeSet) _attributeSet).getInfo().getId());
+        }
     }
 
     public void setName(String name)

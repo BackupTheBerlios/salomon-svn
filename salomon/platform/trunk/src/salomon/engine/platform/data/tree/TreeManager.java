@@ -23,7 +23,12 @@ package salomon.engine.platform.data.tree;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.*;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.collections.MultiHashMap;
 import org.apache.commons.collections.MultiMap;
@@ -32,22 +37,17 @@ import org.apache.log4j.Logger;
 import salomon.engine.database.DBManager;
 import salomon.engine.database.ExternalDBManager;
 import salomon.engine.database.queries.SQLSelect;
+import salomon.engine.platform.data.attribute.AttributeDescription;
+import salomon.engine.platform.data.attribute.AttributeManager;
+import salomon.engine.platform.data.attribute.AttributeSet;
 import salomon.engine.solution.ShortSolutionInfo;
-
 import salomon.platform.data.attribute.IAttributeSet;
 import salomon.platform.data.tree.ITree;
 import salomon.platform.data.tree.ITreeManager;
 import salomon.platform.exception.DBException;
 import salomon.platform.exception.PlatformException;
 
-import salomon.engine.platform.data.attribute.AttributeDescription;
-import salomon.engine.platform.data.attribute.AttributeManager;
-import salomon.engine.platform.data.attribute.AttributeSet;
-
 /**
- * Implementacja Tree manager`a
- * 
- * @author Mateusz Nowakowski
  *
  */
 public final class TreeManager implements ITreeManager
@@ -85,12 +85,13 @@ public final class TreeManager implements ITreeManager
         }
     }
 
-    public ITree createTree(IAttributeSet attributeSet) throws PlatformException
+    public ITree createTree(IAttributeSet attributeSet)
+            throws PlatformException
     {
         Tree tree = new Tree(_dbManager);
         tree.setAttributeSet(attributeSet);
         tree.getInfo().setSolutionID(_solutionInfo.getId());
-        
+
         return tree;
     }
 
@@ -109,8 +110,38 @@ public final class TreeManager implements ITreeManager
 
     public ITree getTree(String name) throws PlatformException
     {
-        throw new UnsupportedOperationException(
-                "Method TreeManager.getTree() not implemented yet!");
+        // selecting Tree by name
+        SQLSelect select = new SQLSelect();
+        select.addTable(TreeInfo.TABLE_NAME);
+        select.addCondition("tree_name =", name);
+        // to ensure solution_id consistency
+        select.addCondition("solution_id =", _solutionInfo.getId());
+
+        ResultSet resultSet = null;
+        ITree tree = null;
+        try {
+            resultSet = _dbManager.select(select);
+
+            // WARNING!
+            int treeID = 0;
+            if (resultSet.next()) {
+                treeID = resultSet.getInt("tree_id");
+                // assuming it exist, cause it was return by the query above (no multiuser access supported)
+                tree = getTree(treeID);
+            }
+
+        } catch (SQLException e) {
+            LOGGER.fatal("", e);
+            throw new DBException(e.getLocalizedMessage());
+        } finally {
+            try {
+                _dbManager.closeResultSet(resultSet);
+            } catch (SQLException e) {
+                LOGGER.fatal("", e);
+                throw new DBException(e.getLocalizedMessage());
+            }
+        }
+        return tree;
     }
 
     public void remove(ITree tree) throws PlatformException
