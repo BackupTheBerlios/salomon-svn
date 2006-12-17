@@ -73,8 +73,6 @@ public final class TreeConverter
 {
     private ITree _tree;
 
-    private IAttributeSet _attributeSet;
-
     private BufferedReader _reader;
 
     private Map<String, ITreeNode> _nodesMap = new HashMap<String, ITreeNode>();
@@ -89,7 +87,6 @@ public final class TreeConverter
                           IAttributeSet attributeSet, Drawable wekaTree) throws Exception
     {
         String tree = wekaTree.graph();
-        _attributeSet = attributeSet;
         _tree = outputTree;
         _reader = new BufferedReader(new StringReader(tree));
         LOGGER.debug(tree);
@@ -190,8 +187,9 @@ public final class TreeConverter
         ITreeNode node = null;
         if (attributeDescription == null) {
             // todo soon flaw KRA add support for more types of attribute
-            findCondition((IEnumAttributeDescription) _outputAttributeDescription, attributeName);
+            String leafValue = findCondition((IEnumAttributeDescription) _outputAttributeDescription, attributeName);
             node = _tree.createNode(_outputAttributeDescription);
+            node.setLeafValue(leafValue);
         } else {
             node = _tree.createNode(attributeDescription);
         }

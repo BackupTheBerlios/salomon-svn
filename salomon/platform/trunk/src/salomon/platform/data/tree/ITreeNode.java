@@ -42,4 +42,5 @@ public interface ITreeNode
 
     void removeChildNode(ITreeNode childNode);
 
+    void setLeafValue(String value);
 }

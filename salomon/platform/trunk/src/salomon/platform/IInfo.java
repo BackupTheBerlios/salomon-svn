@@ -24,7 +24,6 @@ package salomon.platform;
 import java.sql.Date;
 import java.sql.ResultSet;
 
-import salomon.platform.exception.DBException;
 import salomon.platform.exception.PlatformException;
 
 /**
@@ -42,28 +41,20 @@ public interface IInfo
      * Removes itself from database. After successsful finish object should be
      * destroyed.
      * 
-     * @throws PlatformException
-     * @throws DBException
      */
-    boolean delete() throws PlatformException, DBException;
+    boolean delete() throws PlatformException;
 
     /**
      * Initializes itself basing on given row from resultSet.
      * 
-     * @param resultSet
-     * @throws PlatformException
-     * @throws DBException
      */
-    void load(ResultSet resultSet) throws PlatformException, DBException;
+    void load(ResultSet resultSet) throws PlatformException;
 
     /**
      * Saves itself in data base. If already exists in database performs update
      * otherwise inserts new record. Returns current id if update was executed
      * or new id in case of insert.
      * 
-     * @return unique id
-     * @throws PlatformException
-     * @throws DBException
      */
-    int save() throws PlatformException, DBException;
+    int save() throws PlatformException;
 }
