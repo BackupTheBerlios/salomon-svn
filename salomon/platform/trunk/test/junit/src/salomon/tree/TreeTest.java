@@ -38,11 +38,7 @@ import salomon.engine.task.TaskManager;
 import salomon.util.serialization.SimpleArray;
 import salomon.util.serialization.SimpleStruct;
 
-import salomon.platform.data.attribute.IAttributeManager;
-import salomon.platform.data.attribute.IAttributeSet;
 import salomon.platform.data.attribute.description.AttributeType;
-import salomon.platform.data.dataset.IDataSet;
-import salomon.platform.data.dataset.IDataSetManager;
 import salomon.platform.exception.PlatformException;
 import salomon.platform.serialization.IObject;
 
@@ -72,13 +68,11 @@ public class TreeTest extends TestCase
     public void testCreate() throws PlatformException
     {
         LOGGER.info("Test started");
+        // clean after previous test executions
+        clean();
 
         ManagerEngine managerEngine = TestObjectFactory.getManagerEngine();
         ISolution solution = TestObjectFactory.getSolution(SOLUTION_NAME);
-
-        // clean after previous test executions
-        clean(solution);
-
         IProject project = createProject(solution);
 
         ITaskManager taskManager = project.getTaskManager();
@@ -86,27 +80,27 @@ public class TreeTest extends TestCase
 
         createTasks(pluginManager, taskManager);
 
-        ((TaskManager) taskManager).runTasks();        
-        
+        ((TaskManager) taskManager).runTasks();
+
+        for (ITask task : taskManager.getTasks()) {
+            assertTrue("Task + "  + ((TaskInfo) task.getInfo()).getName(), task.getResult().isSuccessful());
+        }
+
         LOGGER.info("Test finished!");
     }
 
-    private void clean(ISolution solution) throws PlatformException
+    private void clean() throws PlatformException
     {
         try {
             // delete dataset to be created
-            IDataSetManager dataSetManager = solution.getDataEngine().getDataSetManager();
-            IAttributeManager attributeManager = solution.getDataEngine().getAttributeManager();
-            
-            IDataSet dataSet = dataSetManager.getDataSet(TESTED_DATA_SET_NAME);
-            if (dataSet != null) {
-                dataSetManager.remove(dataSet);
-            }
-            
-            IAttributeSet attributeSet = attributeManager.getAttributeSet(TESTED_ATTRIBUTE_SET_NAME);
-            if (attributeSet != null) {
-                attributeManager.remove(attributeSet);
-            }            
+            SQLDelete delete = new SQLDelete("datasets");
+            delete.addCondition("dataset_name = ", TESTED_DATA_SET_NAME);
+            TestObjectFactory.getDbManager().delete(delete);
+
+            // delete attribute set to be created
+            delete = new SQLDelete("attributesets");
+            delete.addCondition("attributeset_name = ", TESTED_DATA_SET_NAME);
+            TestObjectFactory.getDbManager().delete(delete);
 
             TestObjectFactory.getDbManager().commit();
         } catch (Exception e) {

@@ -88,9 +88,12 @@ public final class WekaTreeGeneratorPlugin implements IPlugin
             treeManager.add(tree);
 
             result.setOutput(classifier.toString());
+            result.setSuccessful(true);
         } catch (Exception e) {
             LOGGER.error("", e);
+            result.setSuccessful(false);
         }
+
 
         return result;
     }

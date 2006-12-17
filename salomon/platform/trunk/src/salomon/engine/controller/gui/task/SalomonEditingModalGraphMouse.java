@@ -24,13 +24,7 @@ package salomon.engine.controller.gui.task;
 import java.awt.event.InputEvent;
 
 import edu.uci.ics.jung.visualization.SettableVertexLocationFunction;
-import edu.uci.ics.jung.visualization.control.AnimatedPickingGraphMousePlugin;
-import edu.uci.ics.jung.visualization.control.CrossoverScalingGraphMousePlugin;
-import edu.uci.ics.jung.visualization.control.EditingModalGraphMouse;
-import edu.uci.ics.jung.visualization.control.PickingGraphMousePlugin;
-import edu.uci.ics.jung.visualization.control.RotatingGraphMousePlugin;
-import edu.uci.ics.jung.visualization.control.ShearingGraphMousePlugin;
-import edu.uci.ics.jung.visualization.control.TranslatingGraphMousePlugin;
+import edu.uci.ics.jung.visualization.control.*;
 
 public final class SalomonEditingModalGraphMouse extends EditingModalGraphMouse
 {
@@ -49,14 +43,13 @@ public final class SalomonEditingModalGraphMouse extends EditingModalGraphMouse
         ((SalomonEditingGraphMousePlugin) editingPlugin).setVertexLocations(vertexLocations);
     }
 
-    //	@Override
     protected void loadPluginsImpl()
     {
         pickingPlugin = new PickingGraphMousePlugin();
         animatedPickingPlugin = new AnimatedPickingGraphMousePlugin();
         translatingPlugin = new TranslatingGraphMousePlugin(
                 InputEvent.BUTTON1_MASK);
-        scalingPlugin = new CrossoverScalingGraphMousePlugin(in, out);
+        scalingPlugin = new ScalingGraphMousePlugin(new CrossoverScalingControl(), 0, in, out);
         rotatingPlugin = new RotatingGraphMousePlugin();
         shearingPlugin = new ShearingGraphMousePlugin();
         editingPlugin = new SalomonEditingGraphMousePlugin(_graphTaskManagerGUI);

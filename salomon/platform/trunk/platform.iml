@@ -33,7 +33,7 @@
     <Base>
       <setting name="state" value="1" />
     </Base>
-    <LanguageOptions name="HTML">
+    <LanguageOptions name="JAVA">
       <option name="templateOptions">
         <value>
           <option name="block" value="true" />
@@ -52,7 +52,7 @@
       <option name="addBlankAfter" value="true" />
       <option name="fileLocation" value="1" />
     </LanguageOptions>
-    <LanguageOptions name="JAVA">
+    <LanguageOptions name="HTML">
       <option name="templateOptions">
         <value>
           <option name="block" value="true" />
@@ -109,7 +109,7 @@
       <option name="addBlankAfter" value="true" />
       <option name="fileLocation" value="1" />
     </LanguageOptions>
-    <LanguageOptions name="CSS">
+    <LanguageOptions name="JavaScript">
       <option name="templateOptions">
         <value>
           <option name="block" value="true" />
@@ -128,7 +128,7 @@
       <option name="addBlankAfter" value="true" />
       <option name="fileLocation" value="1" />
     </LanguageOptions>
-    <LanguageOptions name="JavaScript">
+    <LanguageOptions name="CSS">
       <option name="templateOptions">
         <value>
           <option name="block" value="true" />
