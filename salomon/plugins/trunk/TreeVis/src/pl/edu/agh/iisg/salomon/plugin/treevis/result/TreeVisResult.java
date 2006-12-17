@@ -55,6 +55,7 @@ public final class TreeVisResult extends SimpleStruct implements IResult
     public void setTreeName(String treeName)
     {
         _treeName = treeName;
+        setField(TREE_NAME, _treeName);
     }
 
     private static final String TREE_NAME = "tree_name";
