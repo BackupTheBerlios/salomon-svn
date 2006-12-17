@@ -21,43 +21,33 @@
 
 package salomon.engine.controller.gui.task;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics2D;
-import java.awt.Point;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.util.Iterator;
 
 import javax.imageio.ImageIO;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 import org.apache.log4j.Logger;
 
 import salomon.engine.task.ITask;
+import salomon.engine.task.TaskInfo;
+
+import salomon.platform.exception.PlatformException;
+
 import edu.uci.ics.jung.graph.ArchetypeVertex;
 import edu.uci.ics.jung.graph.Graph;
 import edu.uci.ics.jung.graph.Vertex;
 import edu.uci.ics.jung.graph.decorators.DefaultToolTipFunction;
 import edu.uci.ics.jung.graph.decorators.EdgeShape;
+import edu.uci.ics.jung.graph.decorators.PickableVertexPaintFunction;
 import edu.uci.ics.jung.graph.decorators.VertexStringer;
 import edu.uci.ics.jung.graph.impl.DirectedSparseGraph;
 import edu.uci.ics.jung.utils.GraphUtils;
-import edu.uci.ics.jung.visualization.AbstractLayout;
-import edu.uci.ics.jung.visualization.DefaultSettableVertexLocationFunction;
-import edu.uci.ics.jung.visualization.FRLayout;
-import edu.uci.ics.jung.visualization.GraphZoomScrollPane;
-import edu.uci.ics.jung.visualization.PluggableRenderer;
-import edu.uci.ics.jung.visualization.ShapePickSupport;
-import edu.uci.ics.jung.visualization.StaticLayout;
-import edu.uci.ics.jung.visualization.VisualizationViewer;
+import edu.uci.ics.jung.visualization.*;
 import edu.uci.ics.jung.visualization.control.CrossoverScalingControl;
 import edu.uci.ics.jung.visualization.control.EditingModalGraphMouse;
 import edu.uci.ics.jung.visualization.control.ModalGraphMouse;
@@ -82,42 +72,41 @@ public final class TaskGraphEditor extends JPanel
     private VisualizationViewer _visualazationViewer;
 
     private String instructions = "<html>"
-            + "<h3>All Modes:</h3>"
-            + "<ul>"
-            + "<li>Right-click an empty area for <b>Create Task</b> popup"
-            + "<li>Right-click on a Vertex for <b>Delete Task</b> popup"
-            + "<li>Right-click on a Vertex for <b>Add Edge</b> menus <br>(if there are selected Vertices)"
-            + "<li>Right-click on an Edge for <b>Delete Edge</b> popup"
-            + "<li>Mousewheel scales with a crossover value of 1.0.<p>"
-            + "     - scales the graph layout when the combined scale is greater than 1<p>"
-            + "     - scales the graph view when the combined scale is less than 1"
-            +
+        + "<h3>All Modes:</h3>"
+        + "<ul>"
+        + "<li>Right-click an empty area for <b>Create Task</b> popup"
+        + "<li>Right-click on a Vertex for <b>Delete Task</b> popup"
+        + "<li>Right-click on a Vertex for <b>Add Edge</b> menus <br>(if there are selected Vertices)"
+        + "<li>Right-click on an Edge for <b>Delete Edge</b> popup"
+        + "<li>Mousewheel scales with a crossover value of 1.0.<p>"
+        + "     - scales the graph layout when the combined scale is greater than 1<p>"
+        + "     - scales the graph view when the combined scale is less than 1"
+        +
 
-            "</ul>"
-            + "<h3>Editing Mode:</h3>"
-            + "<ul>"
-            + "<li>Left-click an empty area to create a new Task"
-            + "<li>Left-click on a Vertex and drag to another Task to create an Edge"
-            + "</ul>"
-            + "<h3>Picking Mode:</h3>"
-            + "<ul>"
-            + "<li>Mouse1 on a Task selects the vertex"
-            + "<li>Mouse1 elsewhere unselects all Tasks"
-            + "<li>Mouse1+Shift on a Task adds/removes Task selection"
-            + "<li>Mouse1+drag on a Task moves all selected Tasks"
-            + "<li>Mouse1+drag elsewhere selects Tasks in a region"
-            + "<li>Mouse1+Shift+drag adds selection of Tasks in a new region"
-            + "<li>Mouse1+CTRL on a Task selects the vertex and centers the display on it"
-            + "</ul>" + "<h3>Transforming Mode:</h3>" + "<ul>"
-            + "<li>Mouse1+drag pans the graph"
-            + "<li>Mouse1+Shift+drag rotates the graph"
-            + "<li>Mouse1+CTRL(or Command)+drag shears the graph" + "</ul>"
-            + "</html>";
+        "</ul>"
+        + "<h3>Editing Mode:</h3>"
+        + "<ul>"
+        + "<li>Left-click an empty area to create a new Task"
+        + "<li>Left-click on a Vertex and drag to another Task to create an Edge"
+        + "</ul>"
+        + "<h3>Picking Mode:</h3>"
+        + "<ul>"
+        + "<li>Mouse1 on a Task selects the vertex"
+        + "<li>Mouse1 elsewhere unselects all Tasks"
+        + "<li>Mouse1+Shift on a Task adds/removes Task selection"
+        + "<li>Mouse1+drag on a Task moves all selected Tasks"
+        + "<li>Mouse1+drag elsewhere selects Tasks in a region"
+        + "<li>Mouse1+Shift+drag adds selection of Tasks in a new region"
+        + "<li>Mouse1+CTRL on a Task selects the vertex and centers the display on it"
+        + "</ul>" + "<h3>Transforming Mode:</h3>" + "<ul>"
+        + "<li>Mouse1+drag pans the graph"
+        + "<li>Mouse1+Shift+drag rotates the graph"
+        + "<li>Mouse1+CTRL(or Command)+drag shears the graph" + "</ul>"
+        + "</html>";
 
     /**
      * create an instance of a simple graph with popup controls to
      * create a graph.
-     * 
      */
     public TaskGraphEditor(GraphTaskManagerGUI graphTaskManagerGUI)
     {
@@ -128,34 +117,36 @@ public final class TaskGraphEditor extends JPanel
         // create a simple graph for the demo
         _graph = new DirectedSparseGraph();// SparseGraph();
 
-        PluggableRenderer pr = new PluggableRenderer();
+        PluggableRenderer pluggableRenderer = new PluggableRenderer();
         _staticLayout = new StaticLayout(_graph);
         _staticLayout.initialize(new Dimension(600, 600), _vertexLocations);
 
         _automaticLayout = new FRLayout(_graph);
         _automaticLayout.initialize(new Dimension(600, 600), _vertexLocations);
 
-        _visualazationViewer = new VisualizationViewer(_staticLayout, pr);
+        _visualazationViewer = new VisualizationViewer(_staticLayout, pluggableRenderer);
         _visualazationViewer.setBackground(Color.white);
         _visualazationViewer.setPickSupport(new ShapePickSupport());
-        pr.setEdgeShapeFunction(new EdgeShape.QuadCurve());
-        //        pr.setEdgeShapeFunction(new EdgeShape.Wedge(2));
-        pr.setVertexStringer(new VertexStringer() {
+        pluggableRenderer.setEdgeShapeFunction(new EdgeShape.QuadCurve());
+        //        pluggableRenderer.setEdgeShapeFunction(new EdgeShape.Wedge(2));
+        pluggableRenderer.setVertexStringer(new VertexStringer()
+        {
 
             public String getLabel(ArchetypeVertex v)
             {
                 return v.toString();
             }
         });
+        pluggableRenderer.setVertexPaintFunction(new SalomonPickableVertexPaintFunction(pluggableRenderer));
 
         _visualazationViewer.setToolTipFunction(new DefaultToolTipFunction());
 
         final GraphZoomScrollPane panel = new GraphZoomScrollPane(
-                _visualazationViewer);
+            _visualazationViewer);
         setLayout(new BorderLayout());
         add(panel, BorderLayout.CENTER);
         final EditingModalGraphMouse graphMouse = new SalomonEditingModalGraphMouse(
-                graphTaskManagerGUI);
+            graphTaskManagerGUI);
 
         // the EditingGraphMouse will pass mouse event coordinates to the
         // vertexLocations function to set the locations of the vertices as
@@ -164,34 +155,37 @@ public final class TaskGraphEditor extends JPanel
         _visualazationViewer.setGraphMouse(graphMouse);
         //        graphMouse.add(new EditingPopupGraphMousePlugin(_vertexLocations));
         graphMouse.add(new SalomonEditingPopupGraphMousePlugin(
-                _vertexLocations, graphTaskManagerGUI));
+            _vertexLocations, graphTaskManagerGUI));
         graphMouse.setMode(ModalGraphMouse.Mode.EDITING);
 
         final ScalingControl scaler = new CrossoverScalingControl();
         JButton plus = new JButton("+");
-        plus.addActionListener(new ActionListener() {
+        plus.addActionListener(new ActionListener()
+        {
             public void actionPerformed(ActionEvent e)
             {
                 scaler.scale(_visualazationViewer, 1.1f,
-                        _visualazationViewer.getCenter());
+                    _visualazationViewer.getCenter());
             }
         });
         JButton minus = new JButton("-");
-        minus.addActionListener(new ActionListener() {
+        minus.addActionListener(new ActionListener()
+        {
             public void actionPerformed(ActionEvent e)
             {
                 scaler.scale(_visualazationViewer, 0.9f,
-                        _visualazationViewer.getCenter());
+                    _visualazationViewer.getCenter());
             }
         });
 
         JButton help = new JButton("Help");
-        help.addActionListener(new ActionListener() {
+        help.addActionListener(new ActionListener()
+        {
 
             public void actionPerformed(ActionEvent e)
             {
                 JOptionPane.showMessageDialog(_visualazationViewer,
-                        instructions);
+                    instructions);
             }
         });
 
@@ -247,8 +241,8 @@ public final class TaskGraphEditor extends JPanel
         _visualazationViewer.getModel().restart();
 
         // copy locations from automatiLyouter to _vertexLocations
-        for (Iterator iterator = _graph.getVertices().iterator(); iterator.hasNext();) {
-            Vertex vertex = (Vertex) iterator.next();
+        for (Object o : _graph.getVertices()) {
+            Vertex vertex = (Vertex) o;
             Point2D position = _automaticLayout.getLocation(vertex);
             _vertexLocations.setLocation(vertex, position);
         }
@@ -268,6 +262,7 @@ public final class TaskGraphEditor extends JPanel
 
     /**
      * copy the visible part of the graph to a file as a jpeg image
+     *
      * @param file
      */
     public void writeJPEGImage(File file)
@@ -276,7 +271,7 @@ public final class TaskGraphEditor extends JPanel
         int height = _visualazationViewer.getHeight();
 
         BufferedImage bi = new BufferedImage(width, height,
-                BufferedImage.TYPE_INT_RGB);
+            BufferedImage.TYPE_INT_RGB);
         Graphics2D graphics = bi.createGraphics();
         _visualazationViewer.paint(graphics);
         graphics.dispose();
@@ -284,7 +279,48 @@ public final class TaskGraphEditor extends JPanel
         try {
             ImageIO.write(bi, "jpeg", file);
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.error("", e);
+        }
+    }
+
+
+    private static class SalomonPickableVertexPaintFunction extends PickableVertexPaintFunction {
+
+        /**
+         * @param pi           specifies which vertices report as "picked"
+         */
+        public SalomonPickableVertexPaintFunction(PickedInfo pi)
+        {
+            super(pi, Color.BLACK, Color.RED, Color.ORANGE);
+        }
+
+
+        @Override
+        public Paint getFillPaint(Vertex v)
+        {
+            if (pi.isPicked(v)) {
+                return picked_paint;
+            } else {
+                TaskVertex taskVertex = (TaskVertex) v;
+                ITask task = taskVertex.getTask();
+                try {
+                    TaskInfo taskInfo = (TaskInfo) task.getInfo();
+                    String status = taskInfo.getStatus();
+                    if (TaskInfo.FINISHED.equals(status)) {
+                        return Color.GREEN;
+                    } else if (TaskInfo.EXCEPTION.equals(status)) {
+                        return Color.RED;
+                    } else if (TaskInfo.INTERRUPTED.equals(status)) {
+                        return Color.YELLOW;
+                    } else {
+                        return Color.BLUE;
+                    }
+                } catch (PlatformException e) {
+                    LOGGER.error("", e);
+                }
+            }
+
+            return Color.PINK;
         }
     }
 

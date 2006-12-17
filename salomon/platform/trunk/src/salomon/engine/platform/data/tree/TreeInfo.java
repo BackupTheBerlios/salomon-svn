@@ -32,6 +32,7 @@ import org.apache.log4j.Logger;
 import salomon.engine.database.DBManager;
 import salomon.engine.database.queries.SQLDelete;
 import salomon.engine.database.queries.SQLUpdate;
+
 import salomon.platform.IInfo;
 import salomon.platform.exception.DBException;
 import salomon.platform.exception.PlatformException;
@@ -213,8 +214,8 @@ final class TreeInfo implements IInfo
             _treeID = _dbManager.insertOrUpdate(update, "tree_id", _treeID,
                     GEN_NAME);
         } catch (SQLException e) {
-            LOGGER.fatal("", e);
-            throw new DBException("Cannot save!", e);
+            LOGGER.fatal("Cannot save node " + _treeID, e);
+            throw new DBException("Cannot save node " + _treeID, e);
         }
 
         // ensure that parent is always inserted before the child

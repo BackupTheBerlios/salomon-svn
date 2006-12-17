@@ -83,7 +83,7 @@ public class TreeTest extends TestCase
         ((TaskManager) taskManager).runTasks();
 
         for (ITask task : taskManager.getTasks()) {
-            assertTrue("Task + "  + ((TaskInfo) task.getInfo()).getName(), task.getResult().isSuccessful());
+            assertTrue("Task "  + ((TaskInfo) task.getInfo()).getName(), task.getResult().isSuccessful());
         }
 
         LOGGER.info("Test finished!");
