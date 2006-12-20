@@ -24,14 +24,14 @@ package salomon.plugin;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import junit.framework.TestCase;
-
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
 import salomon.engine.database.DBManager;
 import salomon.engine.database.queries.SQLSelect;
 import salomon.engine.plugin.PluginInfo;
+
+import junit.framework.TestCase;
 
 /**
  * TODO: add comment.
@@ -66,11 +66,11 @@ public class DescriptionTest extends TestCase
     public void testLoad()
     {
         LOGGER.debug("DescriptionTest.testLoad()");
-        boolean success = false;
         SQLSelect select = new SQLSelect();
         select.addTable(PluginInfo.TABLE_NAME);
         select.addCondition("plugin_id =", 20);
         ResultSet resultSet = null;
+        boolean success = false;
         try {
             resultSet = _manager.select(select);
             assertNotNull(resultSet);
@@ -130,11 +130,12 @@ public class DescriptionTest extends TestCase
     @Override
     protected void setUp() throws Exception
     {
+        super.setUp();
         PropertyConfigurator.configure("log.conf"); //$NON-NLS-1$   
         _manager = new DBManager();
         _manager.connect();
     }
 
-    private static Logger LOGGER = Logger.getLogger(DescriptionTest.class);
+    private static final Logger LOGGER = Logger.getLogger(DescriptionTest.class);
 
 }

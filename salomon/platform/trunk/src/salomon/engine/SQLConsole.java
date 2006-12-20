@@ -21,33 +21,15 @@
 
 package salomon.engine;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.Reader;
+import java.awt.*;
+import java.awt.event.*;
+import java.io.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.StringTokenizer;
 
-import javax.swing.Box;
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JSplitPane;
-import javax.swing.JTable;
-import javax.swing.JTextArea;
-import javax.swing.JToolBar;
+import javax.swing.*;
 import javax.swing.text.PlainDocument;
 
 import org.apache.log4j.Logger;
@@ -56,8 +38,10 @@ import org.syntax.jedit.JEditTextArea;
 import org.syntax.jedit.tokenmarker.PLSQLTokenMarker;
 
 import salomon.engine.database.DBManager;
-import salomon.platform.exception.PlatformException;
+
 import salomon.util.gui.Utils;
+
+import salomon.platform.exception.PlatformException;
 
 /**
  * Class represents simple SQL console. It is used to debug application. Allows
@@ -68,15 +52,15 @@ public final class SQLConsole extends JFrame
 {
     private static final Logger LOGGER = Logger.getLogger(SQLConsole.class);
 
-    private JButton _btnCommit = null;
+    private JButton _btnCommit;
 
-    private JButton _btnExecute = null;
+    private JButton _btnExecute;
 
-    private JButton _btnNext = null;
+    private JButton _btnNext;
 
-    private JButton _btnPrevious = null;
+    private JButton _btnPrevious;
 
-    private JButton _btnRollback = null;
+    private JButton _btnRollback;
 
     // private JPanel _contentPane = null;
 
@@ -86,44 +70,44 @@ public final class SQLConsole extends JFrame
      * @uml.property name="_dbManager"
      * @uml.associationEnd multiplicity="(0 1)"
      */
-    private DBManager _dbManager = null;
+    private DBManager _dbManager;
 
     //    private JTextPane _edtSQLQuery = null;
-    private JEditTextArea _edtSQLQuery = null;
+    private JEditTextArea _edtSQLQuery;
 
     /**
      * 
      * @uml.property name="_history"
      * @uml.associationEnd multiplicity="(0 1)"
      */
-    private CommandHistory _history = null;
+    private CommandHistory _history;
 
     /**
      * Indicates if console has been initialized.
      */
-    private boolean _initialized = false;
+    private boolean _initialized;
 
     /**
      * If true it means than it is run standalone, and on exit close connection
      * to database and calls System.exit();
      */
-    private boolean _isStandAlone = false;
+    private boolean _isStandAlone;
 
     /**
      * Text area which shows results of SQL query and error messages
      */
     private JTextArea _msgArea;
 
-    private JPanel _pnlMain = null;
+    private JPanel _pnlMain;
 
-    private JScrollPane _scrlResult = null;
+    private JScrollPane _scrlResult;
 
-    private JSplitPane _sptConsolePane = null;
+    private JSplitPane _sptConsolePane;
 
     /** Table which represents results of SQL query */
-    private JTable _tblResult = null;
+    private JTable _tblResult;
 
-    private JToolBar _toolCommands = null;
+    private JToolBar _toolCommands;
 
     /**
      * Creates instance of SQLConsole object.
@@ -157,7 +141,7 @@ public final class SQLConsole extends JFrame
     {
         try {
             BufferedReader reader = new BufferedReader(new FileReader(file));
-            StringBuffer string = new StringBuffer((int) file.length());
+            StringBuilder string = new StringBuilder((int) file.length());
 
             String line = null;
             while ((line = reader.readLine()) != null) {
@@ -254,8 +238,8 @@ public final class SQLConsole extends JFrame
             _btnExecute = new JButton();
             _btnExecute.setText(Messages.getString("BTN_EXECUTE")); //$NON-NLS-1$
             _btnExecute.setMnemonic(KeyEvent.VK_ENTER);
-            _btnExecute.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent e)
+            _btnExecute.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e)
                 {
                     executeQuery();
                 }
@@ -440,9 +424,9 @@ public final class SQLConsole extends JFrame
         this.setContentPane(getPnlMain());
         this.setSize(400, 400);
         this.setTitle(Messages.getString("TIT_CONSOLE")); //$NON-NLS-1$
-        this.addWindowListener(new java.awt.event.WindowAdapter() {
+        this.addWindowListener(new WindowAdapter() {
             @Override
-            public void windowClosing(java.awt.event.WindowEvent e)
+            public void windowClosing(WindowEvent e)
             {
                 if (_isStandAlone) {
                     try {
@@ -500,7 +484,7 @@ public final class SQLConsole extends JFrame
      */
     private static final class CommandHistory
     {
-        private List<String> _commandHistory = null;
+        private List<String> _commandHistory;
 
         private int _currentPosition = -1;
 

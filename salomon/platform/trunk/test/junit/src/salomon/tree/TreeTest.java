@@ -23,7 +23,6 @@ package salomon.tree;
 
 import org.apache.log4j.Logger;
 
-import salomon.engine.database.queries.SQLDelete;
 import salomon.engine.plugin.IPluginManager;
 import salomon.engine.plugin.LocalPlugin;
 import salomon.engine.project.IProject;
@@ -54,6 +53,7 @@ import junit.framework.TestCase;
 import salomon.TestObjectFactory;
 import salomon.plugin.ISettings;
 
+@SuppressWarnings({"OverlyCoupledClass"})
 public class TreeTest extends TestCase
 {
     private static final String TESTED_DATA_SET_NAME = "testedDataSet";

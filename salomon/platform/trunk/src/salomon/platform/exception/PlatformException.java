@@ -24,7 +24,7 @@ package salomon.platform.exception;
 /**
  * 
  */
-public class PlatformException extends Exception
+public class PlatformException extends RuntimeException
 {
 
     /**
