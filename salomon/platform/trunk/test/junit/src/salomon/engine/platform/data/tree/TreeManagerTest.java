@@ -31,60 +31,38 @@ public class TreeManagerTest extends TestCase
 {
     private static final Logger LOGGER = Logger.getLogger(TreeManagerTest.class);
 
-    private TreeManager _treeManager;
-    
+    private static final String SOLUTION_NAME = "Example";
+
     private AttributeManager _attributeManager;
-    
+
     private IMetaData _metaData;
+
+    private TreeManager _treeManager;
 
     public TreeManagerTest() throws PlatformException
     {
-        ISolution solution = TestObjectFactory.getSolution("Example");
+        ISolution solution = TestObjectFactory.getSolution(SOLUTION_NAME);
         IDataEngine dataEngine = solution.getDataEngine();
         _treeManager = (TreeManager) dataEngine.getTreeManager();
         _attributeManager = (AttributeManager) dataEngine.getAttributeManager();
         _metaData = dataEngine.getMetaData();
         LOGGER.info("Connected");
     }
-    
-    public void testGetAll() throws PlatformException
-    {
-        LOGGER.info("TreeManagerTest.testGetAll()");
-        ITree[] trees = null;
-        trees = _treeManager.getAll();
-        for (ITree tree : trees) {
-            LOGGER.info("walking tree: " + ((Tree) tree).getInfo());            
-            walkTree(tree);
-        }
-    }
-    
-    public void testGetTree() throws PlatformException
-    {
-        LOGGER.info("TreeManagerTest.testGetTree()");
-        ITree[] trees = null;
-        trees = _treeManager.getAll();
-        // getting tree by name
-        if (trees.length > 0) {
-            ITree tree = _treeManager.getTree(trees[0].getName());
-            assertNotNull(tree);
-            walkTree(tree);
-        }
-    }
-    
+
     public void testAddTree() throws PlatformException
     {
         IAttributeSet attributeSet = createTestAttributeSet();
         _attributeManager.add(attributeSet);
         // to enforce additional test
         attributeSet = _attributeManager.getAttributeSet(attributeSet.getName());
-        
+
         IAttributeDescription[] descriptions = attributeSet.getDesciptions();
         ITreeNode ageNode = null;
         ITreeNode eduNode = null;
         ITreeNode assignedYes = null;
         ITreeNode assignedNo = null;
         ITreeNode assignedNo2 = null;
-        
+
         ITree tree = _treeManager.createTree(attributeSet);
 
         for (IAttributeDescription description : descriptions) {
@@ -102,18 +80,44 @@ public class TreeManagerTest extends TestCase
             }
         }
 
-        tree.setName("test" + System.currentTimeMillis());
+        tree.setName("Tree");
         tree.setRootNode(ageNode);
         ageNode.addChildNode(eduNode, " > 22");
-        ageNode.addChildNode(assignedNo, " <= 22"); 
+        ageNode.addChildNode(assignedNo, " <= 22");
         eduNode.addChildNode(assignedYes, "High school");
         eduNode.addChildNode(assignedNo2, "Primary shool");
-        
-        LOGGER.debug("Adding tree... ");        
+
+        LOGGER.debug("Adding tree... ");
         _treeManager.add(tree);
+        // commiting transaction e.g. to test that tree with the same name can be added twice
+        TestObjectFactory.getDbManager().commit();
         LOGGER.debug("Tree added.");
     }
-    
+
+    public void testGetAll() throws PlatformException
+    {
+        LOGGER.info("TreeManagerTest.testGetAll()");
+        ITree[] trees = null;
+        trees = _treeManager.getAll();
+        for (ITree tree : trees) {
+            LOGGER.info("walking tree: " + ((Tree) tree).getInfo());
+            walkTree(tree);
+        }
+    }
+
+    public void testGetTree() throws PlatformException
+    {
+        LOGGER.info("TreeManagerTest.testGetTree()");
+        ITree[] trees = null;
+        trees = _treeManager.getAll();
+        // getting tree by name
+        if (trees.length > 0) {
+            ITree tree = _treeManager.getTree(trees[0].getName());
+            assertNotNull(tree);
+            walkTree(tree);
+        }
+    }
+
     private IAttributeSet createTestAttributeSet()
     {
         ITable table = _metaData.getTable("candidates");
@@ -126,28 +130,31 @@ public class TreeManagerTest extends TestCase
         AttributeDescription assigned = (AttributeDescription) _attributeManager.createStringAttributeDescription(
                 "attr_assigned", table.getColumn("assigned"));
         assigned.setOutput(true);
-        
-        AttributeDescription[] descriptions = new AttributeDescription[]{age, education, assigned};                
+
+        AttributeDescription[] descriptions = new AttributeDescription[]{age,
+                education, assigned};
 
         IAttributeSet attributeSet = _attributeManager.createAttributeSet(descriptions);
         attributeSet.setName("test" + System.currentTimeMillis());
         return attributeSet;
     }
-    
-    private void walkTree(ITree tree) {
-        ITreeNode rootNode = tree.getRootNode();
-        walkNode(rootNode);        
-    }
-    
-    private void walkNode(ITreeNode node) {
+
+    private void walkNode(ITreeNode node)
+    {
         if (!node.isLeaf()) {
             LOGGER.debug("node: " + node);
             ITreeEdge[] edges = node.getChildrenEdges();
-            for (ITreeEdge edge : edges){
-                LOGGER.debug("edge: " + edge);                
+            for (ITreeEdge edge : edges) {
+                LOGGER.debug("edge: " + edge);
                 walkNode(edge.getChildNode());
             }
-        }        
+        }
+    }
+
+    private void walkTree(ITree tree)
+    {
+        ITreeNode rootNode = tree.getRootNode();
+        walkNode(rootNode);
     }
 
 }

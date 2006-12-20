@@ -26,6 +26,7 @@ import junit.framework.TestCase;
 import org.apache.log4j.Logger;
 
 import salomon.TestObjectFactory;
+import salomon.engine.database.DBManager;
 import salomon.engine.platform.data.DBColumn;
 import salomon.engine.platform.data.DBTable;
 import salomon.engine.solution.ISolution;
@@ -37,14 +38,22 @@ import salomon.platform.exception.PlatformException;
 
 public class DataSetManagerTest extends TestCase
 {
+    private static final Logger LOGGER = Logger.getLogger(DataSetManagerTest.class);
+
+    private static final String SOLUTION_NAME = "Example";
+
+    private static final String TABLE_NAME = "candidates";
 
     private DataSetManager _dataSetManager;
 
+    private DBManager _dbManager;
+
     public DataSetManagerTest() throws PlatformException
     {
-        ISolution solution = TestObjectFactory.getSolution("Persons");
+        ISolution solution = TestObjectFactory.getSolution(SOLUTION_NAME);
         IDataEngine dataEngine = solution.getDataEngine();
         _dataSetManager = (DataSetManager) dataEngine.getDataSetManager();
+        _dbManager = TestObjectFactory.getDbManager();
         LOGGER.info("Connected");
     }
 
@@ -53,20 +62,21 @@ public class DataSetManagerTest extends TestCase
         LOGGER.info("DataSetManagerTest.testAdd()");
         DataSet mainDataSet = (DataSet) _dataSetManager.getMainDataSet();
 
-        DBTable table = new DBTable("persons");
+        DBTable table = new DBTable(TABLE_NAME);
         // column type is not important
         IColumn column = new DBColumn(table, "id", "INT");
         ICondition[] conditions = new ICondition[3];
         conditions[0] = _dataSetManager.createEqualsCondition(column,
                 new Integer(10));
-        column = new DBColumn(table, "first_name", "VARCHAR");
-        conditions[1] = _dataSetManager.createEqualsCondition(column, "Nikodem");
-        column = new DBColumn(table, "last_name", "VARCHAR");
-        conditions[2] = _dataSetManager.createEqualsCondition(column, "Jura");
+        column = new DBColumn(table, "age", "INT");
+        conditions[1] = _dataSetManager.createLowerCondition(column, 25);
+        column = new DBColumn(table, "sex", "VARCHAR");
+        conditions[2] = _dataSetManager.createEqualsCondition(column, "m");
         IDataSet dataSet = mainDataSet.createSubset(conditions);
-        ((DataSetInfo) ((DataSet) dataSet).getInfo()).setName("test add"
-                + System.currentTimeMillis());
+        ((DataSetInfo) ((DataSet) dataSet).getInfo()).setName("First");
         _dataSetManager.add(dataSet);
+        // e.g. to test adding dataset with the same name twice
+        _dbManager.commit();
     }
 
     public void testGetAll() throws PlatformException
@@ -83,18 +93,18 @@ public class DataSetManagerTest extends TestCase
     {
         DataSet mainDataSet = (DataSet) _dataSetManager.getMainDataSet();
 
-        DBTable table = new DBTable("persons");
+        DBTable table = new DBTable(TABLE_NAME);
         // column type is not important
         IColumn column = new DBColumn(table, "id", "INT");
         ICondition[] conditions = new ICondition[3];
         conditions[0] = _dataSetManager.createEqualsCondition(column,
                 new Integer(10));
-        column = new DBColumn(table, "first_name", "VARCHAR");
-        conditions[1] = _dataSetManager.createEqualsCondition(column, "Nikodem");
-        column = new DBColumn(table, "last_name", "VARCHAR");
-        conditions[2] = _dataSetManager.createEqualsCondition(column, "Jura");
+        column = new DBColumn(table, "age", "INT");
+        conditions[1] = _dataSetManager.createLowerCondition(column, "20");
+        column = new DBColumn(table, "sex", "VARCHAR");
+        conditions[2] = _dataSetManager.createEqualsCondition(column, "m");
         IDataSet dataSet = mainDataSet.createSubset(conditions);
-        ((DataSetInfo) ((DataSet) dataSet).getInfo()).setName("second");
+        ((DataSetInfo) ((DataSet) dataSet).getInfo()).setName("Second");
 
         final int dataSetID = ((DataSet) dataSet).getInfo().save();
 
@@ -102,7 +112,7 @@ public class DataSetManagerTest extends TestCase
         assertNotNull(loadedDataSet);
         LOGGER.info(((DataSet) loadedDataSet).getInfo());
 
-        loadedDataSet = _dataSetManager.getDataSet("second");
+        loadedDataSet = _dataSetManager.getDataSet("Second");
         assertNotNull(loadedDataSet);
         LOGGER.info(((DataSet) loadedDataSet).getInfo());
         _dataSetManager.remove(loadedDataSet);
@@ -113,18 +123,15 @@ public class DataSetManagerTest extends TestCase
         LOGGER.info("DataSetManagerTest.testRemove()");
         DataSet mainDataSet = (DataSet) _dataSetManager.getMainDataSet();
 
-        DBTable table = new DBTable("persons");
+        DBTable table = new DBTable(TABLE_NAME);
         // column type is not important
         IColumn column = new DBColumn(table, "id", "INT");
         ICondition[] conditions = new ICondition[1];
         conditions[0] = _dataSetManager.createEqualsCondition(column,
                 new Integer(10));
         IDataSet dataSet = mainDataSet.createSubset(conditions);
-        ((DataSetInfo) ((DataSet) dataSet).getInfo()).setName("test remove");
+        ((DataSetInfo) ((DataSet) dataSet).getInfo()).setName("To remove");
         _dataSetManager.add(dataSet);
         _dataSetManager.remove(dataSet);
     }
-
-    private static final Logger LOGGER = Logger.getLogger(DataSetManagerTest.class);
-
 }

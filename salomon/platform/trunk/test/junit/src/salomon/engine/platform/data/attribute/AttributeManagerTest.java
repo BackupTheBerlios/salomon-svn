@@ -37,13 +37,17 @@ public class AttributeManagerTest extends TestCase
 {
     private static final Logger LOGGER = Logger.getLogger(AttributeManagerTest.class);
 
+    private static final String SOLUTION_NAME = "Example";
+
+    private static final String TABLE_NAME = "candidates";
+
     private AttributeManager _attributeManager;
 
     private IDataEngine _dataEngine;
 
     public AttributeManagerTest() throws PlatformException
     {
-        ISolution solution = TestObjectFactory.getSolution("Persons");
+        ISolution solution = TestObjectFactory.getSolution(SOLUTION_NAME);
         _dataEngine = solution.getDataEngine();
         _attributeManager = (AttributeManager) _dataEngine.getAttributeManager();
         LOGGER.info("Connected");
@@ -58,6 +62,8 @@ public class AttributeManagerTest extends TestCase
         IAttributeSet attributeSet = createTestAttributeSet();
         LOGGER.info("adding: " + attributeSet.getName());
         _attributeManager.add(attributeSet);
+        // commit to test adding attributeset with the existing name
+        TestObjectFactory.getDbManager().commit();
     }
 
     /*
@@ -112,20 +118,16 @@ public class AttributeManagerTest extends TestCase
     {
         IMetaData metaData = _dataEngine.getMetaData();
 
-        AttributeDescription name = (AttributeDescription) _attributeManager.createIntegerAttributeDescription(
-                "attr_name", metaData.getTable("persons").getColumn(
-                        "first_name"));
-        AttributeDescription surname = (AttributeDescription) _attributeManager.createStringAttributeDescription(
-                "attr_surname", metaData.getTable("persons").getColumn(
-                        "last_name"));
-        AttributeDescription age = (AttributeDescription) _attributeManager.createAttributeDescription(
-                "attr_age", "persons", "age", AttributeType.ENUM.getDBString(), false);
+        AttributeDescription age = (AttributeDescription) _attributeManager.createIntegerAttributeDescription(
+                "attr_age", metaData.getTable(TABLE_NAME).getColumn("age"));
+        AttributeDescription sex = (AttributeDescription) _attributeManager.createStringAttributeDescription(
+                "attr_sex", metaData.getTable(TABLE_NAME).getColumn("sex"));
 
-        AttributeDescription[] descriptions = new AttributeDescription[]{name,
-                surname, age};
+        AttributeDescription[] descriptions = new AttributeDescription[]{age,
+                sex};
 
         IAttributeSet attributeSet = _attributeManager.createAttributeSet(descriptions);
-        attributeSet.setName("test" + System.currentTimeMillis());
+        attributeSet.setName("Test");
         return attributeSet;
     }
 }

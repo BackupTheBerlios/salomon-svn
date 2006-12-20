@@ -41,33 +41,42 @@ import salomon.platform.exception.PlatformException;
 
 public class AttributeSetTest extends TestCase
 {
+    private static final Logger LOGGER = Logger.getLogger(AttributeSetTest.class);
+
+    private static final String SOLUTION_NAME = "Example";
+
+    private static final String TABLE_NAME = "candidates";
+
     private AttributeManager _attributeManager;
 
     private IDataEngine _dataEngine;
-    
+
     public AttributeSetTest() throws PlatformException
     {
-        ISolution solution = TestObjectFactory.getSolution("Persons");
+        ISolution solution = TestObjectFactory.getSolution(SOLUTION_NAME);
         _dataEngine = solution.getDataEngine();
         _attributeManager = (AttributeManager) _dataEngine.getAttributeManager();
         LOGGER.info("Connected");
     }
-    
+
     public void testSelectAttributeData() throws PlatformException
     {
         LOGGER.info("AttributeSetTest.testSelectAttributeData()");
         // creating test dataset
-        IDataSetManager dataSetManager = _dataEngine.getDataSetManager(); 
+        IDataSetManager dataSetManager = _dataEngine.getDataSetManager();
         IDataSet mainDataSet = dataSetManager.getMainDataSet();
-        
-        IColumn id = _dataEngine.getMetaData().getTable("persons").getColumn("id");
-        IColumn id2 = _dataEngine.getMetaData().getTable("persons").getColumn("id");
-        
+
+        IColumn id = _dataEngine.getMetaData().getTable(TABLE_NAME).getColumn(
+                "id");
+        IColumn id2 = _dataEngine.getMetaData().getTable(TABLE_NAME).getColumn(
+                "id");
+
         ICondition cond1 = dataSetManager.createLowerCondition(id, 4);
         ICondition cond2 = dataSetManager.createGreaterCondition(id2, 7);
-        
-        IDataSet dataSet = mainDataSet.createSubset(new ICondition[]{cond1, cond2});
-        
+
+        IDataSet dataSet = mainDataSet.createSubset(new ICondition[]{cond1,
+                cond2});
+
         IData data = dataSet.selectData(null, null);
 
         LOGGER.debug("DATA SET:");
@@ -79,17 +88,17 @@ public class AttributeSetTest extends TestCase
                 dataString.append(d);
             }
             LOGGER.debug(dataString);
-        }        
+        }
         data.close();
-        
+
         // adding new dataSet to the storage
-        dataSet.setName("test" + System.currentTimeMillis());
+        dataSet.setName("Test dataset");
         dataSetManager.add(dataSet);
-        
+
         // creating attributeSet
         IAttributeSet attributeSet = createTestAttributeSet();
         IAttributeData attrData = attributeSet.selectAttributeData(dataSet);
-        
+
         LOGGER.debug("ATTRIBUTE SET DATA:");
         while (attrData.next()) {
             IAttribute[] attributes = attrData.getAttributes();
@@ -99,29 +108,27 @@ public class AttributeSetTest extends TestCase
                 dataString.append(a);
             }
             LOGGER.debug(dataString);
-        }        
+        }
         attrData.close();
-        
+
+        // commiting transaction to test e.g. adding the attribute set with the existing name
+        TestObjectFactory.getDbManager().commit();
     }
-    
+
     private IAttributeSet createTestAttributeSet()
     {
         IMetaData metaData = _dataEngine.getMetaData();
 
-        AttributeDescription name = (AttributeDescription) _attributeManager.createIntegerAttributeDescription(
-                "attr_name", metaData.getTable("persons").getColumn(
-                        "first_name"));
-        AttributeDescription surname = (AttributeDescription) _attributeManager.createStringAttributeDescription(
-                "attr_surname", metaData.getTable("persons").getColumn(
-                        "last_name"));
+        AttributeDescription age = (AttributeDescription) _attributeManager.createIntegerAttributeDescription(
+                "attr_age", metaData.getTable(TABLE_NAME).getColumn("age"));
+        AttributeDescription sex = (AttributeDescription) _attributeManager.createStringAttributeDescription(
+                "attr_sex", metaData.getTable(TABLE_NAME).getColumn("sex"));
 
-        AttributeDescription[] descriptions = new AttributeDescription[]{name,
-                surname};
+        AttributeDescription[] descriptions = new AttributeDescription[]{age,
+                sex};
 
         IAttributeSet attributeSet = _attributeManager.createAttributeSet(descriptions);
-        attributeSet.setName("test" + System.currentTimeMillis());
+        attributeSet.setName("Test attribute set");
         return attributeSet;
     }
-
-    private static final Logger LOGGER = Logger.getLogger(AttributeSetTest.class);
 }

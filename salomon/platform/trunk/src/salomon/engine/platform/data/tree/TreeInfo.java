@@ -185,17 +185,15 @@ final class TreeInfo implements IInfo
 
     public int save() throws PlatformException, DBException
     {
-        // saving tree header
-        // removing old items (not using TreeNodeInfo.delete() method, cause this way is more efficient)
-        // TODO: why not simply update?
+        // removing the old tree with the same name
         SQLDelete delete = new SQLDelete();
-        delete.setTable(TreeNodeInfo.TABLE_NAME);
-        delete.addCondition("tree_id = ", _treeID);
+        delete.setTable(TABLE_NAME);
+        delete.addCondition("tree_name = ", _name);
         int rows;
         try {
             rows = _dbManager.delete(delete);
         } catch (SQLException e) {
-            LOGGER.fatal("!", e);
+            LOGGER.fatal("", e);
             throw new DBException("Cannot delete!", e);
         }
         LOGGER.debug("rows deleted: " + rows);

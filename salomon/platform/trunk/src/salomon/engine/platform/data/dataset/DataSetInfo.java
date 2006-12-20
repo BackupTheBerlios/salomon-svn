@@ -43,6 +43,14 @@ import salomon.platform.exception.PlatformException;
 
 final class DataSetInfo implements IInfo
 {
+    public static final String ITEMS_TABLE_NAME = "dataset_items";
+
+    public static final String TABLE_NAME = "datasets";
+
+    private static final String GEN_NAME = "gen_dataset_id";
+
+    private static final Logger LOGGER = Logger.getLogger(DataSetInfo.class);
+
     /**
      * Conditions determinating data set. key is table name, value - list of
      * conditions corresponding to given table
@@ -158,15 +166,15 @@ final class DataSetInfo implements IInfo
      */
     public int save() throws DBException
     {
-        // removing old items
+        // removing old data set with the same name
         SQLDelete delete = new SQLDelete();
-        delete.setTable(ITEMS_TABLE_NAME);
-        delete.addCondition("dataset_id = ", _datasetID);
+        delete.setTable(TABLE_NAME);
+        delete.addCondition("dataset_name = ", _name);
         int rows;
         try {
             rows = _dbManager.delete(delete);
         } catch (SQLException e) {
-            LOGGER.fatal("Exception was thrown!", e);
+            LOGGER.fatal("", e);
             throw new DBException("Cannot save!", e);
         }
         LOGGER.debug("rows deleted: " + rows);
@@ -260,13 +268,5 @@ final class DataSetInfo implements IInfo
     {
         return _conditions;
     }
-
-    public static final String ITEMS_TABLE_NAME = "dataset_items";
-
-    public static final String TABLE_NAME = "datasets";
-
-    private static final String GEN_NAME = "gen_dataset_id";
-
-    private static final Logger LOGGER = Logger.getLogger(DataSetInfo.class);
 
 }

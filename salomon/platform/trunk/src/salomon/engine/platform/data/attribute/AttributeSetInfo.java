@@ -161,38 +161,12 @@ final class AttributeSetInfo implements IInfo
         }
     }
 
-    void loadDescription(ResultSet resultSet) throws SQLException,
-            PlatformException
-    {
-
-        int descriptionID = resultSet.getInt("attributeset_item_id");
-        String type = resultSet.getString("attribute_type");
-        String name = resultSet.getString("attribute_name");
-        String tableName = resultSet.getString("table_name");
-        String columnName = resultSet.getString("column_name");
-        boolean isOutput = resultSet.getString("is_output").equals("Y");
-
-        AttributeDescription description = (AttributeDescription) _attributeManager.createAttributeDescription(
-                name, tableName, columnName, type, isOutput);
-        description.setOutput(isOutput);
-
-        // FIXME: if attribute type is enum, reading the value additionally
-        if (AttributeType.ENUM.equals(type)
-                && description instanceof EnumAttributeDescription) {
-            String stringValue = resultSet.getString("attribute_value");
-            ((EnumAttributeDescription) description).parseValues(stringValue);
-        }
-
-        ((AttributeDescription) description).setDescriptionID(descriptionID);
-        _descriptions.add(description);
-    }
-
     public int save() throws PlatformException, DBException
     {
-        // removing old items
+        // removing old attribute set with the same name
         SQLDelete delete = new SQLDelete();
-        delete.setTable(ITEMS_TABLE_NAME);
-        delete.addCondition("attributeset_id = ", _attributeSetID);
+        delete.setTable(TABLE_NAME);
+        delete.addCondition("attributeset_name = ", _name);
         int rows;
         try {
             rows = _dbManager.delete(delete);
@@ -299,5 +273,31 @@ final class AttributeSetInfo implements IInfo
         info += (_name == null ? "" : " " + _info);
         info += _descriptions;
         return info;
+    }
+
+    void loadDescription(ResultSet resultSet) throws SQLException,
+            PlatformException
+    {
+
+        int descriptionID = resultSet.getInt("attributeset_item_id");
+        String type = resultSet.getString("attribute_type");
+        String name = resultSet.getString("attribute_name");
+        String tableName = resultSet.getString("table_name");
+        String columnName = resultSet.getString("column_name");
+        boolean isOutput = resultSet.getString("is_output").equals("Y");
+
+        AttributeDescription description = (AttributeDescription) _attributeManager.createAttributeDescription(
+                name, tableName, columnName, type, isOutput);
+        description.setOutput(isOutput);
+
+        // FIXME: if attribute type is enum, reading the value additionally
+        if (AttributeType.ENUM.equals(type)
+                && description instanceof EnumAttributeDescription) {
+            String stringValue = resultSet.getString("attribute_value");
+            ((EnumAttributeDescription) description).parseValues(stringValue);
+        }
+
+        ((AttributeDescription) description).setDescriptionID(descriptionID);
+        _descriptions.add(description);
     }
 }
