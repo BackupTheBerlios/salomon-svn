@@ -24,6 +24,8 @@ package salomon.engine.project;
 import salomon.engine.database.DBManager;
 import salomon.engine.platform.IManagerEngine;
 import salomon.engine.task.ITaskManager;
+import salomon.engine.event.IProjectEventManager;
+
 import salomon.platform.exception.PlatformException;
 
 /**
@@ -64,6 +66,11 @@ public final class Project implements IProject
     {
         //FIXME: change it after implementing cascade model
         return _projectManager;
+    }
+
+    public IProjectEventManager getAgentEventManager() throws PlatformException
+    {
+        throw new UnsupportedOperationException("");
     }
 
     /**

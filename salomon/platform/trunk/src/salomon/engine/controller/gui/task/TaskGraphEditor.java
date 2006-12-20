@@ -121,7 +121,9 @@ public final class TaskGraphEditor extends JPanel
         _staticLayout = new StaticLayout(_graph);
         _staticLayout.initialize(new Dimension(600, 600), _vertexLocations);
 
-        _automaticLayout = new FRLayout(_graph);
+        FRLayout frLayout = new FRLayout(_graph);
+        frLayout.setRepulsionMultiplier(0.2); // distance between vertexes
+        _automaticLayout = frLayout;
         _automaticLayout.initialize(new Dimension(600, 600), _vertexLocations);
 
         _visualazationViewer = new VisualizationViewer(_staticLayout, pluggableRenderer);
@@ -189,21 +191,6 @@ public final class TaskGraphEditor extends JPanel
             }
         });
 
-        final FRLayout layout = new FRLayout(_graph);
-        //		layout.initialize(new Dimension(100, 100), _vertexLocations);
-        //		layout.restart();
-        //		_visualazationViewer.setGraphLayout(layout);
-        //		_visualazationViewer.removeG
-        //		JButton layoutButton = new JButton("Layout");
-        //		layoutButton.addActionListener(new ActionListener() {
-        //
-        //			public void actionPerformed(ActionEvent e)
-        //			{
-        //				layout.restart();
-        ////				JOptionPane.showMessageDialog(_visualazationViewer,
-        ////						instructions);
-        //			}
-        //		});
 
         JPanel controls = new JPanel();
         controls.add(plus);
@@ -211,7 +198,6 @@ public final class TaskGraphEditor extends JPanel
         JComboBox modeBox = graphMouse.getModeComboBox();
         controls.add(modeBox);
         controls.add(help);
-        //		controls.add(layoutButton);
         add(controls, BorderLayout.SOUTH);
     }
 

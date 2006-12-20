@@ -21,7 +21,9 @@
 
 package salomon.engine.project;
 
+import salomon.engine.event.IProjectEventManager;
 import salomon.engine.task.ITaskManager;
+
 import salomon.platform.IInfo;
 import salomon.platform.exception.PlatformException;
 
@@ -37,9 +39,9 @@ public interface IProject
 
     /**
      * Returns the TaskManager.
+     *
      * @return The TaskManager
      * @throws PlatformException
-     * 
      * @pre $none
      * @post $result != null
      */
@@ -47,9 +49,14 @@ public interface IProject
 
     /**
      * Returns ProjectManager managing this project.
-     * 
+     *
      * @return
      * @throws PlatformException
      */
     IProjectManager getProjectManager() throws PlatformException;
+
+    /**
+     * Returns ProjectEventManager to manage events.
+     */
+    IProjectEventManager getAgentEventManager() throws PlatformException;
 }
