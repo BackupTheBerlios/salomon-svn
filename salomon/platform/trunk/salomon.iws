@@ -17,23 +17,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/salomon/engine/event/IDataEvent.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/salomon/engine/controller/gui/task/TaskGraphEditor.java" afterPath="$PROJECT_DIR$/src/salomon/engine/controller/gui/task/TaskGraphEditor.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/salomon/engine/project/IProject.java" afterPath="$PROJECT_DIR$/src/salomon/engine/project/IProject.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/salomon.iws" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/salomon/engine/event" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/salomon.iws" afterPath="$PROJECT_DIR$/salomon.iws" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../plugins/trunk/DataSetCreator/DataSetCreator.iml" afterPath="$PROJECT_DIR$/../../plugins/trunk/DataSetCreator/DataSetCreator.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../plugins/trunk/AttributeSetCreator/AttributeSetCreator.iml" afterPath="$PROJECT_DIR$/../../plugins/trunk/AttributeSetCreator/AttributeSetCreator.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib" afterPath="$PROJECT_DIR$/lib" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../plugins/trunk/DataSetVis/DataSetVis.iml" afterPath="$PROJECT_DIR$/../../plugins/trunk/DataSetVis/DataSetVis.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../plugins/trunk/datasetunion/DataSetUnion.iml" afterPath="$PROJECT_DIR$/../../plugins/trunk/datasetunion/DataSetUnion.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/salomon/engine/remote/project/ProjectProxy.java" afterPath="$PROJECT_DIR$/src/salomon/engine/remote/project/ProjectProxy.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../plugins/trunk/PluginDebugger/PluginDebugger.iml" afterPath="$PROJECT_DIR$/../../plugins/trunk/PluginDebugger/PluginDebugger.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../plugins/trunk/TreeEvaluator/TreeEvaluator.iml" afterPath="$PROJECT_DIR$/../../plugins/trunk/TreeEvaluator/TreeEvaluator.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../plugins/trunk/RandomDataSetCreator/RandomDataSetCreator.iml" afterPath="$PROJECT_DIR$/../../plugins/trunk/RandomDataSetCreator/RandomDataSetCreator.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../plugins/trunk/WekaTreeGenerator/WekaTreeGenerator.iml" afterPath="$PROJECT_DIR$/../../plugins/trunk/WekaTreeGenerator/WekaTreeGenerator.iml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/salomon/engine/event/IProjectEventManager.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db" afterPath="$PROJECT_DIR$/db" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/salomon/engine/project/Project.java" afterPath="$PROJECT_DIR$/src/salomon/engine/project/Project.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/platform.iml" afterPath="$PROJECT_DIR$/platform.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/salomon.ipr" afterPath="$PROJECT_DIR$/salomon.ipr" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../plugins/trunk/TreeVis/TreeVis.iml" afterPath="$PROJECT_DIR$/../../plugins/trunk/TreeVis/TreeVis.iml" />
@@ -160,7 +153,7 @@
       <file leaf-file-name="IProject.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/salomon/engine/project/IProject.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="60" column="16" selection-start="1682" selection-end="1682" vertical-scroll-proportion="0.696567">
+            <state line="60" column="16" selection-start="1682" selection-end="1682" vertical-scroll-proportion="1.0697279">
               <folding />
             </state>
           </provider>
@@ -169,16 +162,25 @@
       <file leaf-file-name="IProjectEventManager.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/salomon/engine/event/IProjectEventManager.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="33" column="9" selection-start="1032" selection-end="1032" vertical-scroll-proportion="0.2635659">
+            <state line="33" column="9" selection-start="1032" selection-end="1032" vertical-scroll-proportion="0.4047619">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="IDataEvent.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="IDataEvent.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/salomon/engine/event/IDataEvent.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="31" column="1" selection-start="976" selection-end="976" vertical-scroll-proportion="0.22591361">
+            <state line="32" column="0" selection-start="977" selection-end="977" vertical-scroll-proportion="0.37585035">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ProjectProxy.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/salomon/engine/remote/project/ProjectProxy.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="110" column="45" selection-start="3051" selection-end="3051" vertical-scroll-proportion="0.6105442">
               <folding />
             </state>
           </provider>
@@ -255,7 +257,16 @@
     <option name="LAST_EDITED_TAB_NAME" />
   </component>
   <component name="NamedScopeManager" />
-  <component name="PackagesPane" />
+  <component name="PackagesPane">
+    <subPane>
+      <PATH>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="salomon.ipr" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
+        </PATH_ELEMENT>
+      </PATH>
+    </subPane>
+  </component>
   <component name="PerforceChangeBrowserSettings">
     <option name="USE_CLIENT_FILTER" value="true" />
     <option name="CLIENT" value="" />
@@ -303,6 +314,34 @@
           <option name="myItemId" value="salomon.ipr" />
           <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
         </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="platform" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
+        </PATH_ELEMENT>
+      </PATH>
+      <PATH>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="salomon.ipr" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="plugins" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleGroupNode" />
+        </PATH_ELEMENT>
+      </PATH>
+      <PATH>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="salomon.ipr" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="plugins" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleGroupNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="AttributeSetCreator" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
+        </PATH_ELEMENT>
       </PATH>
     </subPane>
   </component>
@@ -317,7 +356,7 @@
       <showLibraryContents />
       <hideEmptyPackages />
       <abbreviatePackageNames />
-      <showStructure ProjectPane="false" />
+      <showStructure ProjectPane="false" PackagesPane="false" />
       <autoscrollToSource />
       <autoscrollFromSource />
       <sortByType />
@@ -337,23 +376,6 @@
   <component name="RecentsManager" />
   <component name="RestoreUpdateTree" />
   <component name="RunManager">
-    <configuration default="true" type="Remote" factoryName="Remote">
-      <option name="USE_SOCKET_TRANSPORT" value="true" />
-      <option name="SERVER_MODE" value="false" />
-      <option name="SHMEM_ADDRESS" value="javadebug" />
-      <option name="HOST" value="localhost" />
-      <option name="PORT" value="5005" />
-    </configuration>
-    <configuration default="true" type="Application" factoryName="Application" enabled="false" merge="false">
-      <option name="MAIN_CLASS_NAME" />
-      <option name="VM_PARAMETERS" />
-      <option name="PROGRAM_PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="ENABLE_SWING_INSPECTOR" value="false" />
-      <module name="" />
-    </configuration>
     <configuration default="true" type="Applet" factoryName="Applet">
       <module name="" />
       <option name="MAIN_CLASS_NAME" />
@@ -381,6 +403,23 @@
       <option name="TEST_SEARCH_SCOPE">
         <value defaultName="wholeProject" />
       </option>
+    </configuration>
+    <configuration default="true" type="Application" factoryName="Application" enabled="false" merge="false">
+      <option name="MAIN_CLASS_NAME" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <module name="" />
+    </configuration>
+    <configuration default="true" type="Remote" factoryName="Remote">
+      <option name="USE_SOCKET_TRANSPORT" value="true" />
+      <option name="SERVER_MODE" value="false" />
+      <option name="SHMEM_ADDRESS" value="javadebug" />
+      <option name="HOST" value="localhost" />
+      <option name="PORT" value="5005" />
     </configuration>
     <configuration name="&lt;template&gt;" type="WebApp" default="true" selected="false">
       <Host>localhost</Host>
@@ -459,33 +498,33 @@
     <frame x="-4" y="-4" width="1552" height="1058" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="SQL" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="-1" />
-      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="-1" />
-      <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="-1" />
+      <window_info id="SQL" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="8" />
+      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="3" />
+      <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3299933" order="3" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="7" />
-      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="-1" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" order="1" />
+      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="3" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.249833" order="1" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" order="4" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="-1" />
-      <window_info id="CVS" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="-1" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" order="0" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="8" />
+      <window_info id="CVS" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="8" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.249833" order="0" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="1" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" order="1" />
-      <window_info id="Dependency Cycles" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="-1" />
+      <window_info id="Dependency Cycles" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="8" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" order="6" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="-1" />
-      <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="-1" />
-      <window_info id="Module Dependencies" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="-1" />
-      <window_info id="Metrics" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="-1" />
-      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="-1" />
-      <window_info id="EclipseImporter" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="-1" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32976446" order="8" />
+      <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="8" />
+      <window_info id="Module Dependencies" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="3" />
+      <window_info id="Metrics" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="8" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="8" />
+      <window_info id="EclipseImporter" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="8" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="2" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" order="2" />
-      <window_info id="File View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="-1" />
-      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" order="0" />
-      <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="-1" />
-      <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" order="2" />
+      <window_info id="File View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="3" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3994656" order="0" />
+      <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="8" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="0" />
+      <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" order="2" />
       <window_info id="EJB" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" order="3" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" order="5" />
     </layout>
@@ -504,7 +543,7 @@
     <option name="PERFORM_COMMIT_IN_BACKGROUND" value="false" />
     <option name="PUT_FOCUS_INTO_COMMENT" value="false" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="true" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added IProjectEventManager and IDataEvent." />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed compilation problem." />
     <option name="SAVE_LAST_COMMIT_MESSAGE" value="true" />
     <option name="CHECKIN_DIALOG_SPLITTER_PROPORTION" value="0.8" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
@@ -518,6 +557,7 @@
     <option name="SHOW_FILE_HISTORY_AS_TREE" value="false" />
     <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.6" />
     <MESSAGE value="Added IProjectEventManager and IDataEvent." />
+    <MESSAGE value="Fixed compilation problem." />
   </component>
   <component name="VssConfiguration">
     <option name="CLIENT_PATH" value="" />
@@ -622,21 +662,28 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/salomon/engine/project/IProject.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="60" column="16" selection-start="1682" selection-end="1682" vertical-scroll-proportion="0.696567">
+        <state line="60" column="16" selection-start="1682" selection-end="1682" vertical-scroll-proportion="1.0697279">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/salomon/engine/event/IProjectEventManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="33" column="9" selection-start="1032" selection-end="1032" vertical-scroll-proportion="0.2635659">
+        <state line="33" column="9" selection-start="1032" selection-end="1032" vertical-scroll-proportion="0.4047619">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/salomon/engine/event/IDataEvent.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="31" column="1" selection-start="976" selection-end="976" vertical-scroll-proportion="0.22591361">
+        <state line="32" column="0" selection-start="977" selection-end="977" vertical-scroll-proportion="0.37585035">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/salomon/engine/remote/project/ProjectProxy.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="110" column="45" selection-start="3051" selection-end="3051" vertical-scroll-proportion="0.6105442">
           <folding />
         </state>
       </provider>

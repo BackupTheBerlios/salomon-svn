@@ -29,6 +29,8 @@ import salomon.engine.project.IProject;
 import salomon.engine.project.IProjectManager;
 import salomon.engine.remote.task.TaskManagerProxy;
 import salomon.engine.task.ITaskManager;
+import salomon.engine.event.IProjectEventManager;
+
 import salomon.platform.IInfo;
 import salomon.platform.exception.PlatformException;
 
@@ -182,6 +184,11 @@ public final class ProjectProxy implements IProject
     {
         throw new UnsupportedOperationException(
                 "Method getProjectManager() not implemented yet!");
+    }
+
+    public IProjectEventManager getAgentEventManager() throws PlatformException
+    {
+        return null;
     }
 
 }
