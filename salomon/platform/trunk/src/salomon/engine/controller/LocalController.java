@@ -262,7 +262,7 @@ public final class LocalController implements IController
         _solutionManagerGUI.setActionManager(_actionManager);
         _pluginMangerGUI.setActionManager(_actionManager);
         _taskManagerGUI.setActionManager(_actionManager);
-        _projectManagerGUI.setTaskManagerGUI(_taskManagerGUI);
+//        _projectManagerGUI.setTaskManagerGUI(_taskManagerGUI);
 
         frame.setContentPane(getJContentPane());
         frame.setJMenuBar(getJMenuBar());

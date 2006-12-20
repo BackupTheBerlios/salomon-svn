@@ -29,6 +29,7 @@ import salomon.engine.project.IProjectManager;
 import salomon.engine.solution.ISolutionManager;
 import salomon.engine.task.ITaskManager;
 import salomon.platform.exception.PlatformException;
+import salomon.plugin.IPlatformUtil;
 
 /**
  * Holds all other holders.
@@ -142,4 +143,9 @@ public final class ManagerEngineHolder implements IManagerEngine
     }
 
     private static final Logger LOGGER = Logger.getLogger(ManagerEngineHolder.class);
+
+    public IPlatformUtil getPlatformUtil()
+    {
+        throw new UnsupportedOperationException("Method ManagerEngineHolder.getPlatformUtil() not implemented yet!");
+    }
 }

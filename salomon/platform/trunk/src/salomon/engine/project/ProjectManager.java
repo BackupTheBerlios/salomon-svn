@@ -37,6 +37,7 @@ import salomon.engine.task.ITask;
 import salomon.engine.task.TaskInfo;
 import salomon.platform.exception.DBException;
 import salomon.platform.exception.PlatformException;
+import salomon.plugin.IPlatformUtil;
 
 /**
  * An implemetation of IProjectManager interface. Class manages with projects
@@ -115,6 +116,28 @@ public final class ProjectManager implements IProjectManager
     }
 
     /**
+     * Checks if project with give name already exists.
+     * It's much faster than loading project basing on name.
+     * 
+     * @param projectName
+     * @return true if project exists, false otherwise
+     * @throws SQLException 
+     */
+    public boolean exists(String projectName) throws PlatformException
+    {
+        boolean exists = false;
+        SQLSelect select = new SQLSelect();
+        select.addTable(ProjectInfo.TABLE_NAME);
+        select.addCondition("project_name =", projectName);
+        try {
+            exists = _dbManager.existsSelect(select);
+        } catch (SQLException e) {
+            throw new PlatformException(e.getLocalizedMessage());
+        }
+        return exists;
+    }
+
+    /**
      * @return Returns the currentProject.
      */
     public IProject getCurrentProject()
@@ -125,6 +148,11 @@ public final class ProjectManager implements IProjectManager
     public DBManager getDbManager()
     {
         return _dbManager;
+    }
+
+    public IPlatformUtil getPlaftormUtil()
+    {
+        return _managerEngine.getPlatformUtil();
     }
 
     /**
@@ -181,8 +209,9 @@ public final class ProjectManager implements IProjectManager
     {
         SQLSelect select = new SQLSelect();
         select.addTable(ProjectInfo.TABLE_NAME);
-        select.addCondition("solution_id =",
-                ((Project) _currentProject).getInfo().getSolutionID());
+        select.addCondition(
+                "solution_id =",
+                _managerEngine.getSolutionManager().getCurrentSolution().getInfo().getId());
 
         ResultSet resultSet = null;
 

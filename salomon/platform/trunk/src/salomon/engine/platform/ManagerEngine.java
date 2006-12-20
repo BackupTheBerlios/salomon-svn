@@ -25,6 +25,7 @@ import org.apache.log4j.Logger;
 
 import salomon.engine.database.DBManager;
 import salomon.engine.plugin.IPluginManager;
+import salomon.engine.plugin.PlatformUtil;
 import salomon.engine.plugin.PluginManager;
 import salomon.engine.project.IProjectManager;
 import salomon.engine.project.ProjectManager;
@@ -33,6 +34,7 @@ import salomon.engine.solution.SolutionManager;
 import salomon.engine.task.ITaskManager;
 import salomon.engine.task.TaskManager;
 import salomon.platform.exception.PlatformException;
+import salomon.plugin.IPlatformUtil;
 
 /**
  * Class creates and holds all managers used by plugins. They are created only
@@ -40,12 +42,16 @@ import salomon.platform.exception.PlatformException;
  */
 public final class ManagerEngine implements IManagerEngine
 {
+    private static final Logger LOGGER = Logger.getLogger(ManagerEngine.class);
+
     /**
      * 
      * @uml.property name="_dbManager"
      * @uml.associationEnd multiplicity="(0 1)"
      */
     private DBManager _dbManager;
+
+    private IPlatformUtil _platformUtil;
 
     /**
      * 
@@ -84,6 +90,7 @@ public final class ManagerEngine implements IManagerEngine
             LOGGER.fatal("Cannot create connection to data base", e);
             throw new PlatformException(e.getLocalizedMessage());
         }
+        _platformUtil = new PlatformUtil();
         _solutionManager = new SolutionManager(this, _dbManager);
         _projectManager = new ProjectManager(this, _dbManager);
         _taskManager = new TaskManager(this, _dbManager);
@@ -98,6 +105,15 @@ public final class ManagerEngine implements IManagerEngine
     public DBManager getDbManager()
     {
         return _dbManager;
+    }
+
+    /**
+     * Returns the platformUtil.
+     * @return The platformUtil
+     */
+    public final IPlatformUtil getPlatformUtil()
+    {
+        return _platformUtil;
     }
 
     /**
@@ -128,6 +144,4 @@ public final class ManagerEngine implements IManagerEngine
     {
         return _taskManager;
     }
-
-    private static final Logger LOGGER = Logger.getLogger(ManagerEngine.class);
 } // end ManagerEngine

@@ -33,27 +33,23 @@ import org.apache.log4j.Logger;
 import salomon.engine.database.DBManager;
 import salomon.engine.database.queries.SQLDelete;
 import salomon.engine.database.queries.SQLSelect;
+import salomon.engine.platform.Environment;
+import salomon.engine.platform.IManagerEngine;
+import salomon.engine.platform.serialization.XMLSerializer;
 import salomon.engine.plugin.ILocalPlugin;
 import salomon.engine.plugin.LocalPlugin;
-import salomon.engine.plugin.PlatformUtil;
 import salomon.engine.plugin.PluginInfo;
 import salomon.engine.project.IProject;
 import salomon.engine.task.event.ITaskListener;
 import salomon.engine.task.event.TaskEvent;
-
-import salomon.util.serialization.SimpleString;
-
 import salomon.platform.IDataEngine;
 import salomon.platform.IVariable;
 import salomon.platform.exception.PlatformException;
 import salomon.platform.serialization.IObject;
-
-import salomon.engine.platform.Environment;
-import salomon.engine.platform.IManagerEngine;
-import salomon.engine.platform.serialization.XMLSerializer;
-
+import salomon.plugin.IPlatformUtil;
 import salomon.plugin.IResult;
 import salomon.plugin.ISettings;
+import salomon.util.serialization.SimpleString;
 
 /**
  * An implemetation of ITaskManager interface. Class manages with tasks editing
@@ -92,8 +88,6 @@ public final class TaskManager implements ITaskManager
     // private IProject _project;
     private IManagerEngine _managerEngine;
 
-    private PlatformUtil _platformUtil;
-
     private List<ITaskListener> _taskListeners;
 
     private ITaskRunner _taskRunner;
@@ -124,8 +118,6 @@ public final class TaskManager implements ITaskManager
         } catch (PlatformException e) {
             LOGGER.fatal("Exception was thrown!", e);
         }
-
-        _platformUtil = new PlatformUtil();
     }
 
     @Deprecated
@@ -178,12 +170,14 @@ public final class TaskManager implements ITaskManager
     }
 
     /**
-     * Returns the platformUtil.
-     * @return The platformUtil
+     * Returns platform util.
+     * Delegates method call to manager engine.
+     * 
+     * @return
      */
-    public PlatformUtil getPlatformUtil()
+    public IPlatformUtil getPlatformUtil()
     {
-        return _platformUtil;
+        return _managerEngine.getPlatformUtil();
     }
 
     public IProject getProject() throws PlatformException
@@ -262,7 +256,7 @@ public final class TaskManager implements ITaskManager
                     // it will be used to parse string representation of
                     // settings
                     ISettings pluginSettings = localPlugin.getSettingComponent(
-                            _platformUtil).getDefaultSettings();
+                            _managerEngine.getPlatformUtil()).getDefaultSettings();
 
                     Task task = (Task) this.createTask();
                     // loading task

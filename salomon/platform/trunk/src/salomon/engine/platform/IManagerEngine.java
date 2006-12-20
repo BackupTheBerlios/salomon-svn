@@ -26,6 +26,7 @@ import salomon.engine.project.IProjectManager;
 import salomon.engine.solution.ISolutionManager;
 import salomon.engine.task.ITaskManager;
 import salomon.platform.exception.PlatformException;
+import salomon.plugin.IPlatformUtil;
 
 /**
  * 
@@ -73,4 +74,6 @@ public interface IManagerEngine
      */
     @Deprecated
     ITaskManager getTasksManager() throws PlatformException;
+
+    IPlatformUtil getPlatformUtil();
 }

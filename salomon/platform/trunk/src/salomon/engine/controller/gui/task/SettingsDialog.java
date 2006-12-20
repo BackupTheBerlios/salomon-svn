@@ -32,7 +32,6 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import salomon.engine.Messages;
 import salomon.util.gui.Utils;
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
@@ -54,7 +53,11 @@ public final class SettingsDialog
 
     private JButton _okButton;
 
+    private JFrame _parent;
+
     private ValidationResultModel _resultModel;
+
+    private String _separator;
 
     private Component _settingsComponent;
 
@@ -62,11 +65,12 @@ public final class SettingsDialog
 
     private ValidationListener _validationListener;
 
-    private JFrame _parent;
+    private String _title;
 
-    public SettingsDialog(JFrame parent)
+    public SettingsDialog(JFrame parent, String title)
     {
         _parent = parent;
+        _title = title;
         _approved = false;
         _validationListener = new ValidationListener();
         initComponents();
@@ -76,6 +80,15 @@ public final class SettingsDialog
     {
         _okButton.setEnabled(!_resultModel.hasErrors());
         _dialog.pack();
+    }
+
+    /**
+     * Set the value of separator field.
+     * @param separator The separator to set
+     */
+    public final void setSeparator(String separator)
+    {
+        _separator = separator;
     }
 
     /**
@@ -113,7 +126,7 @@ public final class SettingsDialog
     {
         FormLayout layout = new FormLayout(
                 "left:default:grow, 10dlu, left:default:grow",
-                "fill:default:grow");
+                "fill:max(22dlu;p), 10dlu, fill:default");
 
         DefaultFormBuilder builder = new DefaultFormBuilder(layout);
         builder.setDefaultDialogBorder();
@@ -121,7 +134,7 @@ public final class SettingsDialog
         if (_validationComponent != null) {
             builder.append(_validationComponent, 3);
         }
-        builder.appendSeparator("Plugin settings");
+        builder.appendSeparator(_separator);
         builder.append(_settingsComponent, 3);
 
         JPanel buttonPanel = ButtonBarFactory.buildRightAlignedBar(_okButton,
@@ -132,8 +145,7 @@ public final class SettingsDialog
 
     private void initComponents()
     {
-        _dialog = new JDialog(_parent,
-                Messages.getString("TIT_PLUGIN_SETTINGS"));
+        _dialog = new JDialog(_parent, _title);
         _dialog.setResizable(true);
         _dialog.setModal(true);
 

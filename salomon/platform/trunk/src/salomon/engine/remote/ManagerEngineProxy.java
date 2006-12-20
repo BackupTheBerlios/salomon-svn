@@ -35,6 +35,7 @@ import salomon.engine.remote.task.TaskManagerProxy;
 import salomon.engine.solution.ISolutionManager;
 import salomon.engine.task.ITaskManager;
 import salomon.platform.exception.PlatformException;
+import salomon.plugin.IPlatformUtil;
 
 /**
  * Class is a sever side wrapper of IRemoteManagerEngine object. It implements
@@ -126,5 +127,10 @@ public final class ManagerEngineProxy implements IManagerEngine
     }
 
     private static final Logger LOGGER = Logger.getLogger(ManagerEngineProxy.class);
+
+    public IPlatformUtil getPlatformUtil()
+    {
+        throw new UnsupportedOperationException("Method ManagerEngineProxy.getPlatformUtil() not implemented yet!");
+    }
 
 }

@@ -333,10 +333,7 @@ public final class SolutionManagerGUI
                     return;
                 }
                 LOGGER.info("Connected to external data base");
-
-                IProject project = solution.getProjectManager().createProject();
-                solution.getProjectManager().addProject(project);
-
+                
                 fireSolutionOpened(new SolutionEvent(solution.getInfo()));
             } catch (PlatformException e) {
                 LOGGER.fatal("", e);

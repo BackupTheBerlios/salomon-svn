@@ -88,7 +88,7 @@ public final class GraphTaskManagerGUI
     {
         _taskManager = (TaskManager) tasksManager;
         _pluginManager = (PluginManager) pluginManager;
-        _platformUtil = _taskManager.getPlatformUtil();
+        _platformUtil = (PlatformUtil) _taskManager.getPlatformUtil();
     }
 
     public void addTaskListener(ITaskListener listener)
@@ -198,18 +198,18 @@ public final class GraphTaskManagerGUI
         }
     }
 
-//    public boolean saveTasks()
-//    {
-//        boolean success = false;
-//        try {
-//            _taskManager.saveTasks();
-//            success = true;
-//        } catch (PlatformException e) {
-//            LOGGER.fatal("", e);
-//            Utils.showErrorMessage(Messages.getString("ERR_CANNOT_SAVE_TASKS"));
-//        }
-//        return success;
-//    }
+    //    public boolean saveTasks()
+    //    {
+    //        boolean success = false;
+    //        try {
+    //            _taskManager.saveTasks();
+    //            success = true;
+    //        } catch (PlatformException e) {
+    //            LOGGER.fatal("", e);
+    //            Utils.showErrorMessage(Messages.getString("ERR_CANNOT_SAVE_TASKS"));
+    //        }
+    //        return success;
+    //    }
 
     public void setActionManager(ActionManager actionManager)
     {
@@ -292,7 +292,9 @@ public final class GraphTaskManagerGUI
         }
 
         // showing dialog
-        SettingsDialog settingsDialog = new SettingsDialog(_parent);
+        SettingsDialog settingsDialog = new SettingsDialog(_parent,
+                Messages.getString("TIT_PLUGIN_SETTINGS"));
+        settingsDialog.setSeparator("Plugin settings");
         settingsDialog.setSettingsComponent(taskSettingsComponent);
         ValidationResultModel resultModel = _platformUtil.getValidationResultModel();
 

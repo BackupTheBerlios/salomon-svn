@@ -26,6 +26,7 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -38,7 +39,8 @@ import org.apache.log4j.Logger;
 
 import salomon.engine.Messages;
 import salomon.engine.controller.gui.ControllerFrame;
-import salomon.engine.controller.gui.task.GraphTaskManagerGUI;
+import salomon.engine.controller.gui.task.SettingsDialog;
+import salomon.engine.plugin.PlatformUtil;
 import salomon.engine.project.IProject;
 import salomon.engine.project.IProjectManager;
 import salomon.engine.project.Project;
@@ -49,9 +51,12 @@ import salomon.engine.project.event.ProjectListener;
 import salomon.platform.exception.PlatformException;
 import salomon.util.gui.DBDataTable;
 import salomon.util.gui.Utils;
+import salomon.util.gui.validation.IComponentFactory;
+import salomon.util.gui.validation.IValidationModel;
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.layout.FormLayout;
+import com.jgoodies.validation.ValidationResultModel;
 
 /**
  * Class used to manage with projects editing.
@@ -80,12 +85,7 @@ public final class ProjectManagerGUI
 
     private JFrame _projectViewerFrame;
 
-    /**
-     * 
-     * @uml.property name="_taskManagerGUI"
-     * @uml.associationEnd multiplicity="(0 1)"
-     */
-    private GraphTaskManagerGUI _taskManagerGUI;
+    private SettingsDialog _settingsDialog;
 
     private JTextField _txtProjectCrDate;
 
@@ -95,12 +95,15 @@ public final class ProjectManagerGUI
 
     private JTextField _txtProjectName;
 
+    private JComponent _validationComponent;
+
     /**
      */
     public ProjectManagerGUI(IProjectManager projectManager)
     {
         _projectManager = (ProjectManager) projectManager;
         _projectListeners = new LinkedList<ProjectListener>();
+        initComponents();
     }
 
     public void addProjectListener(ProjectListener listener)
@@ -147,6 +150,8 @@ public final class ProjectManagerGUI
             // informing listeners
             fireProjectCreated(new ProjectEvent((ProjectInfo) project.getInfo()));
 
+            // forcing panel to be rebuilt
+            _pnlProjectProperties = null;
         } catch (PlatformException e) {
             LOGGER.fatal("", e);
             Utils.showErrorMessage(Messages.getString("ERR_CANNOT_CREATE_PROJECT"));
@@ -197,11 +202,6 @@ public final class ProjectManagerGUI
         _parent = parent;
     }
 
-    public void setTaskManagerGUI(GraphTaskManagerGUI taskManagerGUI)
-    {
-        _taskManagerGUI = taskManagerGUI;
-    }
-
     public void viewProjects()
     {
         if (_projectViewerFrame == null) {
@@ -229,6 +229,27 @@ public final class ProjectManagerGUI
         return projectID;
     }
 
+    private JPanel createProjectPanel()
+    {
+        FormLayout layout = new FormLayout(
+                "left:pref, 3dlu, right:100dlu, 3dlu, right:20dlu", "");
+        DefaultFormBuilder builder = new DefaultFormBuilder(layout);
+        builder.setDefaultDialogBorder();
+        builder.appendSeparator("Project data");
+
+        builder.append("Project name");
+        builder.append(_txtProjectName, 3);
+        builder.append("Creation date");
+        builder.append(_txtProjectCrDate, 3);
+        builder.append("Last mod. date");
+        builder.append(_txtProjectLastMod, 3);
+
+        builder.appendSeparator("Project info");
+        builder.append(new JScrollPane(_txtProjectInfo), 5);
+
+        return builder.getPanel();
+    }
+
     private JTable createProjectsTable() throws PlatformException
     {
         IProject[] projects = _projectManager.getProjects();
@@ -253,37 +274,6 @@ public final class ProjectManagerGUI
         return table;
     }
 
-    private JPanel createProjectPanel()
-    {
-        FormLayout layout = new FormLayout(
-                "left:pref, 3dlu, right:100dlu, 3dlu, right:20dlu", "");
-        DefaultFormBuilder builder = new DefaultFormBuilder(layout);
-        builder.setDefaultDialogBorder();
-        builder.appendSeparator("Project data");
-
-        int size = 100;
-
-        _txtProjectName = new JTextField(size);
-        _txtProjectCrDate = new JTextField();
-        _txtProjectCrDate.setEnabled(false);
-        _txtProjectLastMod = new JTextField();
-        _txtProjectLastMod.setEnabled(false);
-
-        _txtProjectInfo = new JTextArea(3, 10);
-
-        builder.append("Project name");
-        builder.append(_txtProjectName, 3);
-        builder.append("Creation date");
-        builder.append(_txtProjectCrDate, 3);
-        builder.append("Last mod. date");
-        builder.append(_txtProjectLastMod, 3);
-
-        builder.appendSeparator("Project info");
-        builder.append(new JScrollPane(_txtProjectInfo), 5);
-
-        return builder.getPanel();
-    }
-
     private void fireProjectCreated(ProjectEvent event)
     {
         for (ProjectListener listener : _projectListeners) {
@@ -305,7 +295,24 @@ public final class ProjectManagerGUI
         }
     }
 
-    private void saveProject(Project project, boolean forceNew) throws PlatformException
+    private void initComponents()
+    {
+        _settingsDialog = new SettingsDialog(_parent,
+                Messages.getString("TIT_PLUGIN_SETTINGS"));
+        _settingsDialog.setSeparator("Project settings");
+
+        // project settings panel
+        _txtProjectCrDate = new JTextField();
+        _txtProjectCrDate.setEnabled(false);
+        _txtProjectLastMod = new JTextField();
+        _txtProjectLastMod.setEnabled(false);
+
+        _txtProjectInfo = new JTextArea(3, 10);
+
+    }
+
+    private void saveProject(Project project, boolean forceNew)
+            throws PlatformException
     {
         if (setProjectProperties(project)) {
             _projectManager.saveProject(forceNew);
@@ -314,7 +321,6 @@ public final class ProjectManagerGUI
         }
     }
 
-    
     /**
      * Shows dialog which enables to initialize project settings.
      * 
@@ -326,8 +332,30 @@ public final class ProjectManagerGUI
     {
         boolean approved = false;
         Project project = (Project) iProject;
+
         if (_pnlProjectProperties == null) {
+            // validation        
+            ProjectValidator projectValidator = new ProjectValidator(
+                    _projectManager);
+            PlatformUtil platformUtil = (PlatformUtil) _projectManager.getPlaftormUtil();
+            IValidationModel validationModel = platformUtil.getValidationModel(projectValidator);
+            IComponentFactory componentFactory = validationModel.getComponentFactory();
+
+            ValidationResultModel resultModel = platformUtil.getValidationResultModel();
+            _txtProjectName = componentFactory.createTextField(
+                    ProjectInfo.PROPERTYNAME_PROJECT_NAME, false);
+
+            // recreating panel with new projectName component
             _pnlProjectProperties = createProjectPanel();
+
+            // setting component for dialog
+            _settingsDialog.setSettingsComponent(_pnlProjectProperties);
+
+            // if resultModel == null 
+            //it means plugin doesn't use validation
+            if (resultModel != null) {
+                _settingsDialog.setValidationModel(resultModel);
+            }
         }
 
         String name = project.getInfo().getName();
@@ -348,10 +376,7 @@ public final class ProjectManagerGUI
         _txtProjectCrDate.setText(scdate == null ? "" : scdate);
         _txtProjectLastMod.setText(slmdate == null ? "" : slmdate);
 
-        int retVal = JOptionPane.showConfirmDialog(_parent,
-                _pnlProjectProperties, "Enter project properties",
-                JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE);
-        if (retVal == JOptionPane.YES_OPTION) {
+        if (_settingsDialog.showSettingsDialog()) {
             project.getInfo().setName(_txtProjectName.getText());
             project.getInfo().setInfo(_txtProjectInfo.getText());
             approved = true;
@@ -372,7 +397,8 @@ public final class ProjectManagerGUI
             int selectedRow = table.getSelectedRow();
             if (selectedRow >= 0) {
                 // FIXME: hack
-                projectID = ((Integer) table.getModel().getValueAt(selectedRow, 0)).intValue();
+                projectID = ((Integer) table.getModel().getValueAt(selectedRow,
+                        0)).intValue();
             }
         }
 

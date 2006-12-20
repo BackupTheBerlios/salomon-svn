@@ -27,6 +27,8 @@ import java.sql.SQLException;
 
 import org.apache.log4j.Logger;
 
+import com.jgoodies.binding.beans.Model;
+
 import salomon.engine.database.DBManager;
 import salomon.engine.database.queries.SQLDelete;
 import salomon.engine.database.queries.SQLUpdate;
@@ -34,18 +36,21 @@ import salomon.platform.IInfo;
 import salomon.platform.exception.DBException;
 import salomon.platform.exception.PlatformException;
 
-public final class ProjectInfo implements IInfo
+public final class ProjectInfo extends Model implements IInfo
 {
+    public static final String PRIMARY_KEY = "project_id";
+
+    public static String PROPERTYNAME_PROJECT_NAME = "name";
 
     public static final String TABLE_NAME = "projects";
 
     public static final String VIEW_NAME = "projects_view";
 
-    public static final String PRIMARY_KEY = "project_id";
-
     private static final String GEN_NAME = "gen_project_id";
 
     private static final Logger LOGGER = Logger.getLogger(ProjectInfo.class);
+
+    private Date _cDate;
 
     /**
      * 
@@ -58,15 +63,13 @@ public final class ProjectInfo implements IInfo
 
     private String _info;
 
+    private Date _lmDate;
+
     private String _name;
 
     private int _projectID = 0;
 
     private int _solutionID = 0;
-
-    private Date _cDate;
-
-    private Date _lmDate;
 
     public ProjectInfo(DBManager dbManager)
     {
@@ -224,7 +227,9 @@ public final class ProjectInfo implements IInfo
      */
     public void setName(String name)
     {
+        String oldValue = getName();
         _name = name;
+        firePropertyChange(PROPERTYNAME_PROJECT_NAME, oldValue, name);
     }
 
     /**
