@@ -58,8 +58,9 @@ import salomon.engine.controller.gui.ControllerFrame;
 import salomon.engine.controller.gui.common.SearchFileFilter;
 import salomon.engine.controller.gui.common.TreeFileChooser;
 import salomon.engine.controller.gui.common.action.ActionManager;
+import salomon.engine.controller.gui.task.SettingsDialog;
 import salomon.engine.database.ExternalDBManager;
-import salomon.engine.project.IProject;
+import salomon.engine.plugin.PlatformUtil;
 import salomon.engine.solution.ISolution;
 import salomon.engine.solution.ISolutionManager;
 import salomon.engine.solution.Solution;
@@ -69,9 +70,12 @@ import salomon.engine.solution.event.SolutionEvent;
 import salomon.engine.solution.event.SolutionListener;
 import salomon.platform.exception.PlatformException;
 import salomon.util.gui.Utils;
+import salomon.util.gui.validation.IComponentFactory;
+import salomon.util.gui.validation.IValidationModel;
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.layout.FormLayout;
+import com.jgoodies.validation.ValidationResultModel;
 
 /**
  * Class used to manage with solutions editing.
@@ -91,11 +95,15 @@ public final class SolutionManagerGUI
      */
     private ActionManager _actionManager;
 
+    private JButton _btnChooseDB;
+
     private JButton _btnExit;
 
     private JButton _btnNew;
 
     private JButton _btnOpen;
+
+    private JButton _btnTestConnect;
 
     private JComboBox _comboSolutionList;
 
@@ -106,6 +114,8 @@ public final class SolutionManagerGUI
     private JPanel _pnlSolutionController;
 
     private JPanel _pnlSolutionProperties;
+
+    private SettingsDialog _settingsDialog;
 
     private JFrame _solutionChooserFrame;
 
@@ -144,6 +154,7 @@ public final class SolutionManagerGUI
     {
         _solutionManager = (SolutionManager) solutionManager;
         _solutionListeners = new LinkedList<SolutionListener>();
+        initComponents();
     }
 
     public void addSolutionListener(SolutionListener listener)
@@ -291,6 +302,8 @@ public final class SolutionManagerGUI
                 // informing listeners
                 fireSolutionCreated(new SolutionEvent(
                         (SolutionInfo) solution.getInfo()));
+                // forcing panel to be rebuilt
+                _pnlSolutionProperties = null;
             }
         } catch (PlatformException e) {
             LOGGER.fatal("", e);
@@ -333,7 +346,7 @@ public final class SolutionManagerGUI
                     return;
                 }
                 LOGGER.info("Connected to external data base");
-                
+
                 fireSolutionOpened(new SolutionEvent(solution.getInfo()));
             } catch (PlatformException e) {
                 LOGGER.fatal("", e);
@@ -431,49 +444,17 @@ public final class SolutionManagerGUI
         builder.setDefaultDialogBorder();
         builder.appendSeparator("Solution data");
 
-        int size = 100;
-
-        _txtSolutionName = new JTextField(size);
-        _txtHostname = new JTextField(size);
-        _txtDBPath = new JTextField(size);
-        _txtUsername = new JTextField(size);
-        _txtPasswd = new JPasswordField(size);
-        _txtSolutionCrDate = new JTextField();
-        _txtSolutionCrDate.setEnabled(false);
-        //        _txtSolutionCrDate.setPreferredSize(size);
-
-        _txtSolutionLastMod = new JTextField();
-        _txtSolutionLastMod.setEnabled(false);
-        //        _txtSolutionLastMod.setPreferredSize(size);
-
-        _txtSolutionInfo = new JTextArea(3, 10);
-        JButton btnChooseDB = new JButton(Messages.getString("BTN_BROWSE"));
-        btnChooseDB.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e)
-            {
-                searchDataBase();
-            }
-        });
-
-        JButton btnTestConnect = new JButton("Test connection");
-        btnTestConnect.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e)
-            {
-                testConnect();
-            }
-        });
-
         builder.append("Solution name");
         builder.append(_txtSolutionName, 3);
         builder.append("Hostname", _txtHostname, 3);
         builder.append("Database path");
-        builder.append(_txtDBPath, btnChooseDB);
+        builder.append(_txtDBPath, _btnChooseDB);
         builder.append("Username", _txtUsername, 3);
         builder.append("Password", _txtPasswd, 3);
         builder.append("Creation date", _txtSolutionCrDate, 3);
         builder.append("Last mod. date", _txtSolutionLastMod, 3);
         builder.appendSeparator("Test connection");
-        builder.append("", btnTestConnect, 2);
+        builder.append("", _btnTestConnect, 2);
 
         builder.appendSeparator("Solution info");
         builder.append(new JScrollPane(_txtSolutionInfo), 5);
@@ -516,6 +497,36 @@ public final class SolutionManagerGUI
         return _comboSolutionList;
     }
 
+    private void initComponents()
+    {
+        _settingsDialog = new SettingsDialog(_parent, "Solution settings");
+        _settingsDialog.setSeparator("Solution settings");
+
+        int size = 100;
+        _txtHostname = new JTextField(size);
+        _txtSolutionCrDate = new JTextField();
+        _txtSolutionCrDate.setEnabled(false);
+        _txtSolutionLastMod = new JTextField();
+        _txtSolutionLastMod.setEnabled(false);
+        _txtSolutionInfo = new JTextArea(3, 10);
+
+        _btnChooseDB = new JButton(Messages.getString("BTN_BROWSE"));
+        _btnChooseDB.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e)
+            {
+                searchDataBase();
+            }
+        });
+
+        _btnTestConnect = new JButton("Test connection");
+        _btnTestConnect.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e)
+            {
+                testConnect();
+            }
+        });
+    }
+
     private void searchDataBase()
     {
         if (_dbFileChooser == null) {
@@ -541,7 +552,31 @@ public final class SolutionManagerGUI
         boolean approved = false;
         Solution solution = (Solution) iSolution;
         if (_pnlSolutionProperties == null) {
+            // validation        
+            SolutionModel solutionModel = new SolutionModel();
+            SolutionValidator solutionValidator = new SolutionValidator(
+                    solutionModel, _solutionManager);
+            PlatformUtil platformUtil = (PlatformUtil) _solutionManager.getPlaftormUtil();
+            IValidationModel validationModel = platformUtil.getValidationModel(solutionValidator);
+            IComponentFactory componentFactory = validationModel.getComponentFactory();
+
+            ValidationResultModel resultModel = platformUtil.getValidationResultModel();
+
+            // creating fields
+            _txtSolutionName = componentFactory.createTextField(
+                    SolutionModel.PROPERTYNAME_SOLUTION_NAME, false);
+
+            // FIXME:
+            _txtDBPath = new JTextField();
+            _txtUsername = new JTextField();
+            _txtPasswd = new JPasswordField();
+
+            // recreating solution panel
             _pnlSolutionProperties = createSolutionPanel();
+
+            // setting component for dialog
+            _settingsDialog.setSettingsComponent(_pnlSolutionProperties);
+            _settingsDialog.setValidationModel(resultModel);
         }
 
         String name = solution.getInfo().getName();
@@ -571,11 +606,7 @@ public final class SolutionManagerGUI
         _txtSolutionCrDate.setText(cdate == null ? "" : cdate);
         _txtSolutionLastMod.setText(mdate == null ? "" : mdate);
 
-        int result = JOptionPane.showConfirmDialog(_parent,
-                _pnlSolutionProperties, "Enter solution properties",
-                JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
-
-        if (result == JOptionPane.OK_OPTION) {
+        if (_settingsDialog.showSettingsDialog()) {
             solution.getInfo().setName(_txtSolutionName.getText());
             solution.getInfo().setInfo(_txtSolutionInfo.getText());
             solution.getInfo().setHost(_txtHostname.getText());

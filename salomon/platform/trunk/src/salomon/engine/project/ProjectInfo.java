@@ -27,8 +27,6 @@ import java.sql.SQLException;
 
 import org.apache.log4j.Logger;
 
-import com.jgoodies.binding.beans.Model;
-
 import salomon.engine.database.DBManager;
 import salomon.engine.database.queries.SQLDelete;
 import salomon.engine.database.queries.SQLUpdate;
@@ -36,11 +34,9 @@ import salomon.platform.IInfo;
 import salomon.platform.exception.DBException;
 import salomon.platform.exception.PlatformException;
 
-public final class ProjectInfo extends Model implements IInfo
+public final class ProjectInfo implements IInfo
 {
     public static final String PRIMARY_KEY = "project_id";
-
-    public static String PROPERTYNAME_PROJECT_NAME = "name";
 
     public static final String TABLE_NAME = "projects";
 
@@ -52,11 +48,6 @@ public final class ProjectInfo extends Model implements IInfo
 
     private Date _cDate;
 
-    /**
-     * 
-     * @uml.property name="_dbManager"
-     * @uml.associationEnd multiplicity="(0 1)"
-     */
     private DBManager _dbManager;
 
     private String _environment;
@@ -227,9 +218,7 @@ public final class ProjectInfo extends Model implements IInfo
      */
     public void setName(String name)
     {
-        String oldValue = getName();
         _name = name;
-        firePropertyChange(PROPERTYNAME_PROJECT_NAME, oldValue, name);
     }
 
     /**

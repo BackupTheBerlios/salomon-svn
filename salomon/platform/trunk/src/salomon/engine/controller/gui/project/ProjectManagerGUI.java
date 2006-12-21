@@ -26,7 +26,6 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
-import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -94,8 +93,6 @@ public final class ProjectManagerGUI
     private JTextField _txtProjectLastMod;
 
     private JTextField _txtProjectName;
-
-    private JComponent _validationComponent;
 
     /**
      */
@@ -334,8 +331,9 @@ public final class ProjectManagerGUI
         Project project = (Project) iProject;
 
         if (_pnlProjectProperties == null) {
-            // validation        
-            ProjectValidator projectValidator = new ProjectValidator(
+            // validation
+            ProjectModel model = new ProjectModel();
+            ProjectValidator projectValidator = new ProjectValidator(model,
                     _projectManager);
             PlatformUtil platformUtil = (PlatformUtil) _projectManager.getPlaftormUtil();
             IValidationModel validationModel = platformUtil.getValidationModel(projectValidator);
@@ -343,19 +341,14 @@ public final class ProjectManagerGUI
 
             ValidationResultModel resultModel = platformUtil.getValidationResultModel();
             _txtProjectName = componentFactory.createTextField(
-                    ProjectInfo.PROPERTYNAME_PROJECT_NAME, false);
+                    ProjectModel.PROPERTYNAME_PROJECT_NAME, false);
 
             // recreating panel with new projectName component
             _pnlProjectProperties = createProjectPanel();
 
             // setting component for dialog
             _settingsDialog.setSettingsComponent(_pnlProjectProperties);
-
-            // if resultModel == null 
-            //it means plugin doesn't use validation
-            if (resultModel != null) {
-                _settingsDialog.setValidationModel(resultModel);
-            }
+            _settingsDialog.setValidationModel(resultModel);
         }
 
         String name = project.getInfo().getName();

@@ -19,12 +19,12 @@
  * 
  */
 
-package salomon.engine.controller.gui.project;
+package salomon.engine.controller.gui.solution;
 
 import org.apache.log4j.Logger;
 
-import salomon.engine.project.ProjectInfo;
-import salomon.engine.project.ProjectManager;
+import salomon.engine.solution.SolutionInfo;
+import salomon.engine.solution.SolutionManager;
 import salomon.platform.exception.PlatformException;
 import salomon.util.gui.validation.IValidator;
 
@@ -33,59 +33,60 @@ import com.jgoodies.validation.ValidationResult;
 import com.jgoodies.validation.util.PropertyValidationSupport;
 import com.jgoodies.validation.util.ValidationUtils;
 
-/**
- * 
- */
-public class ProjectValidator implements IValidator
+public class SolutionValidator implements IValidator
 {
-    private static final Logger LOGGER = Logger.getLogger(ProjectValidator.class);
+    private static final Logger LOGGER = Logger.getLogger(SolutionValidator.class);
 
-    private ProjectInfo _projectInfo;
+    // keeps the old value
+    private SolutionInfo _solutionInfo;
 
-    private ProjectManager _projectManager;
+    private SolutionManager _solutionManager;
 
-    private ProjectModel _projectModel;
-
-    public ProjectValidator(ProjectModel model, ProjectManager projectManager)
-    {
-        _projectModel = model;
-        _projectManager = projectManager;
-        _projectInfo = (ProjectInfo) _projectManager.getCurrentProject().getInfo();
-    }
+    private SolutionModel _solutionModel;
 
     /**
-     * @see salomon.util.gui.validation.IValidator#getModel()
+     * @param solutionManager
      */
+    public SolutionValidator(SolutionModel model,
+            SolutionManager solutionManager)
+    {
+        _solutionModel = model;
+        _solutionManager = solutionManager;
+        _solutionInfo = (SolutionInfo) _solutionManager.getCurrentSolution().getInfo();
+    }
+
     public Model getModel()
     {
-        return _projectModel;
+        return _solutionModel;
     }
 
     /**
-     * Method is responsible for project validation.
+     * Method is responsible for solution validation.
      * 
      * @see com.jgoodies.validation.Validator#validate()
      */
     public ValidationResult validate()
     {
-        LOGGER.debug("ProjectValidator.validate()");
+        LOGGER.debug("SolutionValidator.validate()");
         PropertyValidationSupport support = new PropertyValidationSupport(
-                _projectInfo, "Project");
+                _solutionInfo, "Solution");
 
-        String currentProjectName = _projectModel.getProjectName();
-        // name validatation if it has changed
-        if (!_projectInfo.getName().equals(currentProjectName)) {
-            if (ValidationUtils.isBlank(currentProjectName)) {
-                support.addError("Project Name", "is mandatory");
+        // solution name validation !!!
+        String currentSolutioName = _solutionModel.getSolutionName();
+        // not validate if the name is not changed - second validation fails as the name exists in DB
+        // this may happen when editing solution
+        if (!_solutionInfo.getName().equals(currentSolutioName)) {
+            if (ValidationUtils.isBlank(currentSolutioName)) {
+                support.addError("Solution Name", "is mandatory");
             } else {
                 try {
-                    boolean exists = _projectManager.exists(currentProjectName);
+                    boolean exists = _solutionManager.exists(currentSolutioName);
                     if (exists) {
-                        support.addError("Project Name", "already exists");
+                        support.addError("Solution Name", "already exists");
                     }
                 } catch (PlatformException e) {
                     LOGGER.fatal("", e);
-                    support.addError("Project Name", "INTERNAL ERROR");
+                    support.addError("Solution Name", "INTERNAL ERROR");
                 }
             }
         }

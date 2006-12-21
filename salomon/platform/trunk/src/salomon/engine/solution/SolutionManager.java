@@ -22,6 +22,7 @@
 package salomon.engine.solution;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
@@ -32,6 +33,7 @@ import salomon.engine.platform.IManagerEngine;
 import salomon.engine.platform.ManagerEngine;
 import salomon.platform.exception.DBException;
 import salomon.platform.exception.PlatformException;
+import salomon.plugin.IPlatformUtil;
 
 public final class SolutionManager implements ISolutionManager
 {
@@ -97,6 +99,20 @@ public final class SolutionManager implements ISolutionManager
         return result;
     }
 
+    public boolean exists(String solutionName)
+    {
+        boolean exists = false;
+        SQLSelect select = new SQLSelect();
+        select.addTable(SolutionInfo.TABLE_NAME);
+        select.addCondition("solution_name =", solutionName);
+        try {
+            exists = _dbManager.existsSelect(select);
+        } catch (SQLException e) {
+            throw new PlatformException(e.getLocalizedMessage());
+        }
+        return exists;
+    }
+
     public ISolution getCurrentSolution() throws PlatformException
     {
         return _currentSolution;
@@ -105,6 +121,11 @@ public final class SolutionManager implements ISolutionManager
     public DBManager getDBManager()
     {
         return _dbManager;
+    }
+
+    public IPlatformUtil getPlaftormUtil()
+    {
+        return _managerEngine.getPlatformUtil();
     }
 
     /**
