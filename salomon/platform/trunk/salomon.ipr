@@ -493,6 +493,11 @@
         <inspection_tool class="WaitNotInSynchronizedContext" level="WARNING" enabled="true" />
         <inspection_tool class="WaitWithoutCorrespondingNotify" level="WARNING" enabled="true" />
         <inspection_tool class="WhileLoopSpinsOnField" level="WARNING" enabled="true" />
+        <inspection_tool class="UnusedAssignment" level="INFO" enabled="true">
+          <option name="REPORT_PREFIX_EXPRESSIONS" value="false" />
+          <option name="REPORT_POSTFIX_EXPRESSIONS" value="true" />
+          <option name="REPORT_REDUNDANT_INITIALIZER" value="true" />
+        </inspection_tool>
       </profile>
       <profile version="1.0" is_locked="false">
         <option name="myName" value="Salomon2" />

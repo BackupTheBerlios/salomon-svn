@@ -21,11 +21,14 @@
 
 package salomon.engine.platform;
 
+import salomon.engine.agent.IAgentManager;
 import salomon.engine.plugin.IPluginManager;
 import salomon.engine.project.IProjectManager;
 import salomon.engine.solution.ISolutionManager;
 import salomon.engine.task.ITaskManager;
+
 import salomon.platform.exception.PlatformException;
+
 import salomon.plugin.IPlatformUtil;
 
 /**
@@ -76,4 +79,6 @@ public interface IManagerEngine
     ITaskManager getTasksManager() throws PlatformException;
 
     IPlatformUtil getPlatformUtil();
+
+    IAgentManager getAgentManager();
 }

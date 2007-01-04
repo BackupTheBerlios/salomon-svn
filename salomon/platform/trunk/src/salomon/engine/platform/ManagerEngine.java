@@ -23,6 +23,7 @@ package salomon.engine.platform;
 
 import org.apache.log4j.Logger;
 
+import salomon.engine.agent.IAgentManager;
 import salomon.engine.database.DBManager;
 import salomon.engine.plugin.IPluginManager;
 import salomon.engine.plugin.PlatformUtil;
@@ -33,7 +34,9 @@ import salomon.engine.solution.ISolutionManager;
 import salomon.engine.solution.SolutionManager;
 import salomon.engine.task.ITaskManager;
 import salomon.engine.task.TaskManager;
+
 import salomon.platform.exception.PlatformException;
+
 import salomon.plugin.IPlatformUtil;
 
 /**
@@ -114,6 +117,11 @@ public final class ManagerEngine implements IManagerEngine
     public final IPlatformUtil getPlatformUtil()
     {
         return _platformUtil;
+    }
+
+    public IAgentManager getAgentManager()
+    {
+        return null;
     }
 
     /**

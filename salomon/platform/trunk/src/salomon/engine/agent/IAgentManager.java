@@ -19,14 +19,11 @@
 *
 */
 
-package salomon.engine.event;
+package salomon.engine.agent;
 
 
 
-public interface IDataEvent
+public interface IAgentManager
 {
-    /**
-     * Sets the threshold which is required to produce an event
-     */
-    void setThreshold(int percentThreshold);
+    IAgent[] getAll();
 }

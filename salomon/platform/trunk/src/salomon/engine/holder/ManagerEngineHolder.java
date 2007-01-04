@@ -23,12 +23,16 @@ package salomon.engine.holder;
 
 import org.apache.log4j.Logger;
 
-import salomon.engine.platform.IManagerEngine;
+import salomon.engine.agent.IAgentManager;
 import salomon.engine.plugin.IPluginManager;
 import salomon.engine.project.IProjectManager;
 import salomon.engine.solution.ISolutionManager;
 import salomon.engine.task.ITaskManager;
+
 import salomon.platform.exception.PlatformException;
+
+import salomon.engine.platform.IManagerEngine;
+
 import salomon.plugin.IPlatformUtil;
 
 /**
@@ -147,5 +151,10 @@ public final class ManagerEngineHolder implements IManagerEngine
     public IPlatformUtil getPlatformUtil()
     {
         throw new UnsupportedOperationException("Method ManagerEngineHolder.getPlatformUtil() not implemented yet!");
+    }
+
+    public IAgentManager getAgentManager()
+    {
+        return null;
     }
 }

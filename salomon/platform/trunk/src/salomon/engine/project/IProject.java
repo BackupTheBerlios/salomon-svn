@@ -21,7 +21,8 @@
 
 package salomon.engine.project;
 
-import salomon.engine.event.IProjectEventManager;
+import salomon.engine.agent.IAgent;
+import salomon.engine.agent.IAgentManager;
 import salomon.engine.task.ITaskManager;
 
 import salomon.platform.IInfo;
@@ -58,5 +59,11 @@ public interface IProject
     /**
      * Returns ProjectEventManager to manage events.
      */
-    IProjectEventManager getAgentEventManager() throws PlatformException;
+    IAgentManager getAgentEventManager() throws PlatformException;
+
+    void addAgent(IAgent agent);
+
+    void removeAgent(IAgent agent);
+    
+    IAgent[] getAgents();
 }

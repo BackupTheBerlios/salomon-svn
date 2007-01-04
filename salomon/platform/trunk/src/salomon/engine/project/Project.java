@@ -21,12 +21,14 @@
 
 package salomon.engine.project;
 
+import salomon.engine.agent.IAgent;
+import salomon.engine.agent.IAgentManager;
 import salomon.engine.database.DBManager;
-import salomon.engine.platform.IManagerEngine;
 import salomon.engine.task.ITaskManager;
-import salomon.engine.event.IProjectEventManager;
 
 import salomon.platform.exception.PlatformException;
+
+import salomon.engine.platform.IManagerEngine;
 
 /**
  * Represents a project, it is an implementation of IProject interface.
@@ -68,9 +70,22 @@ public final class Project implements IProject
         return _projectManager;
     }
 
-    public IProjectEventManager getAgentEventManager() throws PlatformException
+    public IAgentManager getAgentEventManager() throws PlatformException
     {
         throw new UnsupportedOperationException("");
+    }
+
+    public void addAgent(IAgent agent)
+    {
+    }
+
+    public void removeAgent(IAgent agent)
+    {
+    }
+
+    public IAgent[] getAgents()
+    {
+        return new IAgent[0];
     }
 
     /**
