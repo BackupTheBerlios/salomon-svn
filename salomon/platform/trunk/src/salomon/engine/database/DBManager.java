@@ -21,7 +21,12 @@
 
 package salomon.engine.database;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 import org.apache.log4j.Logger;
 
@@ -31,10 +36,8 @@ import salomon.engine.database.queries.SQLDelete;
 import salomon.engine.database.queries.SQLInsert;
 import salomon.engine.database.queries.SQLSelect;
 import salomon.engine.database.queries.SQLUpdate;
-
-import salomon.util.gui.Utils;
-
 import salomon.engine.platform.data.DBMetaData;
+import salomon.util.gui.Utils;
 
 /**
  * Class is responsible for data base operations. It enables executing SQL
@@ -46,8 +49,6 @@ public final class DBManager
 
     private Connection _connection;
 
-    private DBMetaData _metaData;
-
     /**
      * This variable should be used carefully.
      * Only to get result set (or update count) after executing query with executeQuery method
@@ -55,6 +56,8 @@ public final class DBManager
      * It's not thread safe!
      */
     private Statement _currentStatement;
+
+    private DBMetaData _metaData;
 
     public DBManager()
     {
@@ -121,11 +124,11 @@ public final class DBManager
         StringBuilder connectString = new StringBuilder("jdbc:firebirdsql:");
         if (host == null || "".equals(host)) {
             connectString.append("embedded:");
-            connectString.append(Config.CURR_DIR);
-            connectString.append(Config.FILE_SEPARATOR);
         } else {
             connectString.append(host).append(":");
         }
+        connectString.append(Config.CURR_DIR);
+        connectString.append(Config.FILE_SEPARATOR);
         connectString.append(dataBasePath);
         LOGGER.info("connectString: " + connectString);
         _connection = DriverManager.getConnection(connectString.toString(),
@@ -260,7 +263,9 @@ public final class DBManager
      */
     public ResultSet getResultSet() throws SQLException
     {
-        return _currentStatement != null ? _currentStatement.getResultSet() : null;
+        return _currentStatement != null
+                ? _currentStatement.getResultSet()
+                : null;
     }
 
     /**
@@ -271,7 +276,9 @@ public final class DBManager
      */
     public int getUpdateCount() throws SQLException
     {
-        return _currentStatement != null ? _currentStatement.getUpdateCount() : null;
+        return _currentStatement != null
+                ? _currentStatement.getUpdateCount()
+                : null;
     }
 
     /**
@@ -305,7 +312,8 @@ public final class DBManager
                 + "), 0) + 1 ";
         autoIncrement += "FROM " + insertObject.getTableName();
         LOGGER.debug("autoIncrement: " + autoIncrement);
-        ResultSet resultSet = _connection.createStatement().executeQuery(autoIncrement);
+        ResultSet resultSet = _connection.createStatement().executeQuery(
+                autoIncrement);
         resultSet.next();
         int primaryKeyID = resultSet.getInt(1);
         LOGGER.debug("primaryKeyID: " + primaryKeyID);
@@ -417,7 +425,7 @@ public final class DBManager
     {
         String query = selectObject.getQuery();
         LOGGER.info("query = " + query); //$NON-NLS-1$
-        assert(_connection != null);
+        assert (_connection != null);
         return _connection.createStatement().executeQuery(query);
     }
 
