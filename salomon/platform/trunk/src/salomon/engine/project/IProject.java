@@ -57,13 +57,23 @@ public interface IProject
     IProjectManager getProjectManager() throws PlatformException;
 
     /**
-     * Returns ProjectEventManager to manage events.
+     * Adds a new agent to listen to database events.
+     * 
+     * @param agent
      */
-    IAgentManager getAgentEventManager() throws PlatformException;
-
     void addAgent(IAgent agent);
 
+    /**
+     * Removes given agent.
+     * 
+     * @param agent
+     */
     void removeAgent(IAgent agent);
-    
+
+    /**
+     * Returns all agents registered for a project.
+     * 
+     * @return
+     */
     IAgent[] getAgents();
 }

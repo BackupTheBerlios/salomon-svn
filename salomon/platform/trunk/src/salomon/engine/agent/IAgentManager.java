@@ -25,5 +25,5 @@ package salomon.engine.agent;
 
 public interface IAgentManager
 {
-    IAgent[] getAll();
+    IAgent[] getAgents();
 }

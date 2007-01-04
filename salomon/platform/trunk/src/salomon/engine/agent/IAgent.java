@@ -22,13 +22,17 @@
 
 package salomon.engine.agent;
 
-import java.awt.*;
+import java.awt.Component;
+
+import salomon.platform.IInfo;
 
 public interface IAgent
 {
+    Component getConfigurationComponent();
+
+    IInfo getInfo();
+
     void start();
 
     void stop();
-
-    Component getConfigurationComponent();
 }

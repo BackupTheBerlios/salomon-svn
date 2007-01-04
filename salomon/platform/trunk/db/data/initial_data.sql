@@ -13,6 +13,8 @@ begin
 	INSERT INTO SOLUTIONS (SOLUTION_ID, SOLUTION_NAME, SOLUTION_INFO, HOSTNAME, DB_PATH, USERNAME, PASSWD, C_DATE, LM_DATE)
 	VALUES (:tmp_solution_id, 'Example', 'Example solution.', '', 'example.gdb', 'SYSDBA', 'masterkey', current_timestamp, current_timestamp);
 
+	/* insert agents */
+	INSERT INTO AGENTS (AGENT_ID, AGENT_NAME, AGENT_INFO, AGENT_CLASS, C_DATE, LM_DATE) VALUES (1, 'Data increase agent', NULL, 'salomon.engine.agent.DataIncreaseAgent', current_timestamp, current_timestamp);
 
 	/* Insert plugins */
 

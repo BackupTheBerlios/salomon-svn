@@ -77,15 +77,20 @@ public final class Project implements IProject
 
     public void addAgent(IAgent agent)
     {
+        throw new UnsupportedOperationException(
+                "Method Project.addAgent() not implemented yet!");
     }
 
     public void removeAgent(IAgent agent)
     {
+        throw new UnsupportedOperationException(
+                "Method Project.removeAgent() not implemented yet!");
     }
 
     public IAgent[] getAgents()
     {
-        return new IAgent[0];
+        throw new UnsupportedOperationException(
+                "Method Project.getAgents() not implemented yet!");
     }
 
     /**
