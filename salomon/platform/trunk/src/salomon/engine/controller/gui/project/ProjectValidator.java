@@ -74,7 +74,8 @@ public class ProjectValidator implements IValidator
 
         String currentProjectName = _projectModel.getProjectName();
         // name validatation if it has changed
-        if (!_projectInfo.getName().equals(currentProjectName)) {
+        String projectName = _projectInfo.getName();
+        if (projectName == null || !projectName.equals(currentProjectName)) {
             if (ValidationUtils.isBlank(currentProjectName)) {
                 support.addError("Project Name", "is mandatory");
             } else {
