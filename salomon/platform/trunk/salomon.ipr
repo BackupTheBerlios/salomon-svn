@@ -40,6 +40,7 @@
         </option>
         <option name="CLASS_BRACE_STYLE" value="2" />
         <option name="METHOD_BRACE_STYLE" value="2" />
+        <option name="ALIGN_MULTILINE_FOR" value="false" />
         <option name="BLANK_LINES_BEFORE_PACKAGE" value="1" />
         <option name="BLANK_LINES_BEFORE_IMPORTS" value="0" />
         <option name="FIELD_NAME_PREFIX" value="_" />
@@ -1096,7 +1097,7 @@
     <Base>
       <setting name="state" value="1" />
     </Base>
-    <LanguageOptions name="HTML">
+    <LanguageOptions name="JAVA">
       <option name="templateOptions">
         <value>
           <option name="block" value="true" />
@@ -1115,7 +1116,7 @@
       <option name="addBlankAfter" value="true" />
       <option name="fileLocation" value="1" />
     </LanguageOptions>
-    <LanguageOptions name="JAVA">
+    <LanguageOptions name="HTML">
       <option name="templateOptions">
         <value>
           <option name="block" value="true" />
@@ -1172,7 +1173,7 @@
       <option name="addBlankAfter" value="true" />
       <option name="fileLocation" value="1" />
     </LanguageOptions>
-    <LanguageOptions name="CSS">
+    <LanguageOptions name="JavaScript">
       <option name="templateOptions">
         <value>
           <option name="block" value="true" />
@@ -1191,7 +1192,7 @@
       <option name="addBlankAfter" value="true" />
       <option name="fileLocation" value="1" />
     </LanguageOptions>
-    <LanguageOptions name="JavaScript">
+    <LanguageOptions name="CSS">
       <option name="templateOptions">
         <value>
           <option name="block" value="true" />
@@ -1222,7 +1223,7 @@
           <option name="box" value="false" />
         </value>
       </option>
-      <option name="notice" value="/*&#10; * Copyright (C) 2006 Salomon Team&#10; *&#10; * This file is part of Salomon.&#10; *&#10; * Salomon is free software; you can redistribute it and/or&#10; * modify it under the terms of the GNU Lesser General Public&#10; * License as published by the Free Software Foundation; either&#10; * version 2.1 of the License, or (at your option) any later version.&#10; *&#10; * Salomon is distributed in the hope that it will be useful,&#10; * but WITHOUT ANY WARRANTY; without even the implied warranty of&#10; * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU&#10; * Lesser General Public License for more details.&#10; *&#10; * You should have received a copy of the GNU Lesser General Public&#10; * License along with ${project_name}; if not, write to the Free Software&#10; * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA&#10; * &#10; */" />
+      <option name="notice" value="&#10;Copyright (C) 2006 Salomon Team&#10;&#10;This file is part of Salomon.&#10;&#10;Salomon is free software; you can redistribute it and/or&#10;modify it under the terms of the GNU Lesser General Public&#10;License as published by the Free Software Foundation; either&#10;version 2.1 of the License, or (at your option) any later version.&#10;&#10;Salomon is distributed in the hope that it will be useful,&#10;but WITHOUT ANY WARRANTY; without even the implied warranty of&#10;MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU&#10;Lesser General Public License for more details.&#10;&#10;You should have received a copy of the GNU Lesser General Public&#10;License along with ${project_name}; if not, write to the Free Software&#10;Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA&#10;" />
       <option name="keyword" value="Copyright" />
       <option name="fileTypeOverride" value="4" />
       <option name="relativeBefore" value="true" />

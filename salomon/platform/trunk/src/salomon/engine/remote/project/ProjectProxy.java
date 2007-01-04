@@ -25,11 +25,11 @@ import java.rmi.RemoteException;
 
 import org.apache.log4j.Logger;
 
+import salomon.engine.event.IProjectEventManager;
 import salomon.engine.project.IProject;
 import salomon.engine.project.IProjectManager;
 import salomon.engine.remote.task.TaskManagerProxy;
 import salomon.engine.task.ITaskManager;
-import salomon.engine.event.IProjectEventManager;
 
 import salomon.platform.IInfo;
 import salomon.platform.exception.PlatformException;
@@ -83,9 +83,6 @@ public final class ProjectProxy implements IProject
         return info;
     }
 
-    /**
-     * @see IProject#getName()
-     */
     public String getName() throws PlatformException
     {
         String name = null;
@@ -99,9 +96,6 @@ public final class ProjectProxy implements IProject
         return name;
     }
 
-    /**
-     * @see IProject#getProjectID()
-     */
     public int getProjectID() throws PlatformException
     {
         int id = -1;
@@ -133,9 +127,6 @@ public final class ProjectProxy implements IProject
         return _taskManagerProxy;
     }
 
-    /**
-     * @see IProject#setInfo(java.lang.String)
-     */
     public void setInfo(String info) throws PlatformException
     {
         try {
@@ -146,9 +137,6 @@ public final class ProjectProxy implements IProject
         }
     }
 
-    /**
-     * @see IProject#setName(java.lang.String)
-     */
     public void setName(String name) throws PlatformException
     {
         try {
@@ -159,9 +147,6 @@ public final class ProjectProxy implements IProject
         }
     }
 
-    /**
-     * @see IProject#setProjectID(int)
-     */
     public void setProjectID(int projectId) throws PlatformException
     {
         try {
