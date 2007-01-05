@@ -50,9 +50,21 @@ public class AgentManagerTest extends TestCase
     }
 
     /**
+     * Test method for {@link salomon.engine.agent.AgentManager#getAgent(int)}.
+     */
+    public void testGetAgent() throws Exception
+    {
+        LOGGER.info("AgentManagerTest.testGetAgent()");
+        IAgent[] agents = _agentManager.getAgents();
+        assertTrue(agents.length > 0);
+        IAgent agent = _agentManager.getAgent(agents[0].getInfo().getId());
+        LOGGER.debug("agent: " + agent);
+    }
+
+    /**
      * Test method for {@link salomon.engine.agent.AgentManager#getAgents()}.
      */
-    public void testGetAll()
+    public void testGetAgents() throws Exception
     {
         IAgent[] agents = _agentManager.getAgents();
         for (IAgent agent : agents) {

@@ -23,10 +23,8 @@ package salomon.engine.agent;
 
 import java.awt.Component;
 
-import salomon.engine.agentconfig.AgentConfig;
 import salomon.engine.agentconfig.IAgentConfig;
 import salomon.engine.agentconfig.IAgentConfigManager;
-import salomon.util.serialization.SimpleStruct;
 
 /**
  * 
@@ -37,9 +35,6 @@ public final class DataIncreaseAgent extends AbstractAgent
             AgentInfo agentInfo)
     {
         super(agentConfigManager, agentInfo);
-        SimpleStruct configuration = new SimpleStruct();
-        configuration.setField("treshold", 10);
-        ((AgentConfig) _agentConfig).setConfig(configuration);
     }
 
     public IAgentConfig getAgentConfig()

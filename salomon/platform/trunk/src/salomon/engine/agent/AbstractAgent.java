@@ -33,6 +33,7 @@ public abstract class AbstractAgent implements IAgent
 {
     protected IAgentConfig _agentConfig;
 
+    // FIXME: unnecessary?
     protected AgentConfigManager _agentConfigManager;
 
     protected AgentInfo _agentInfo;
@@ -44,7 +45,15 @@ public abstract class AbstractAgent implements IAgent
             AgentInfo agentInfo)
     {
         _agentInfo = agentInfo;
-        _agentConfig = agentConfigManager.createAgentConfig();
+    }
+
+    /**
+     * Set the value of agentConfig field.
+     * @param agentConfig The agentConfig to set
+     */
+    public final void setAgentConfig(IAgentConfig agentConfig)
+    {
+        _agentConfig = agentConfig;
     }
 
     /**

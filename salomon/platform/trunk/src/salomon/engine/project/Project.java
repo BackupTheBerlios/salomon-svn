@@ -22,6 +22,7 @@
 package salomon.engine.project;
 
 import salomon.engine.agent.AbstractAgent;
+import salomon.engine.agent.AgentInfo;
 import salomon.engine.agent.IAgent;
 import salomon.engine.agent.IAgentManager;
 import salomon.engine.agentconfig.AgentConfigInfo;
@@ -99,7 +100,10 @@ public final class Project implements IProject
             agents = new IAgent[agentConfigs.length];
             for (int i = 0; i < agentConfigs.length; ++i) {
                 AgentConfigInfo agentConfigInfo = (AgentConfigInfo) agentConfigs[i].getInfo();
-                agents[i] = (AbstractAgent) _agentManager.getAgent(agentConfigInfo.getAgentId());
+                AgentInfo agentInfo = (AgentInfo) _agentManager.getAgent(
+                        agentConfigInfo.getAgentId()).getInfo();
+                agents[i] = _agentManager.createAgent(agentInfo);
+                ((AbstractAgent) agents[i]).setAgentConfig(agentConfigs[i]);
             }
         }
         return agents;

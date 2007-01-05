@@ -26,79 +26,41 @@ import junit.framework.TestCase;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
-import salomon.engine.database.DBManager;
-import salomon.engine.platform.ManagerEngine;
-import salomon.engine.solution.SolutionManager;
+import salomon.TestObjectFactory;
+import salomon.engine.agent.IAgent;
 import salomon.plugin.DescriptionTest;
 
 public class ProjectTest extends TestCase
 {
-
-    /**
-     * 
-     * @uml.property name="_manager"
-     * @uml.associationEnd multiplicity="(0 1)"
-     */
-    private DBManager _manager;
-
     private ProjectManager _projectManager;
 
-    private SolutionManager _solutionManager;
+    private static final String SOLUTION_NAME = "Example";
 
-    public void testDelete()
-    {
-        LOGGER.debug("ProjectTest.testDelete()");
-        boolean success = false;
-        try {
-            _solutionManager.getSolution(1);
-
-            Project project = (Project) _projectManager.getProject(65);
-
-            // constraint - FIXME - add cascade delete for projects
-            //project.getInfo().delete();
-            success = true;
-            // to keep DB anaffected
-            _manager.rollback();
-        } catch (Exception e) {
-            LOGGER.fatal("", e);
-            _manager.rollback();
-        }
-        assertTrue(success);
+    static {
+        PropertyConfigurator.configure("log.conf"); //$NON-NLS-1$
     }
 
-    public void testSave()
+    public ProjectTest()
     {
-        LOGGER.debug("ProjectTest.testSave()");
-        boolean success = false;
-        try {
-            _solutionManager.getSolution(1);
-
-            Project project = (Project) _projectManager.getProject(65);
-            project.getInfo().setEnvironment("test env");
-            project.getInfo().save();
-            success = true;
-            // to keep DB anaffected
-            _manager.rollback();
-        } catch (Exception e) {
-            LOGGER.fatal("", e);
-            _manager.rollback();
-        }
-        assertTrue(success);
+        _projectManager = (ProjectManager) TestObjectFactory.getSolution(
+                SOLUTION_NAME).getProjectManager();
     }
 
-    @Override
-    protected void setUp() throws Exception
+    public void testGetAgents() throws Exception
     {
-        PropertyConfigurator.configure("log.conf"); //$NON-NLS-1$   
-
-        ManagerEngine managerEngine = new ManagerEngine();
-        _solutionManager = (SolutionManager) managerEngine.getSolutionManager();
-        _projectManager = (ProjectManager) managerEngine.getProjectManager();
-        // to force plugin loading - FIXME - fix loading tasks without loaded plugins
-        // to see this error - comment out the line below
-        managerEngine.getPluginManager().getPlugins();
-        _manager = managerEngine.getDbManager();
-
+        LOGGER.info("ProjectTest.testGetAgents()");
+        IProject[] projects = _projectManager.getProjects();
+        for (IProject project : projects) {
+            IAgent[] agents = project.getAgents();
+            if (agents != null) {
+                for (IAgent agent : agents) {
+                    LOGGER.debug("agent: " + agent);
+                    LOGGER.debug("config: " + agent.getAgentConfig());
+                }
+            } else {
+                LOGGER.debug("No agents for project: " + project.getInfo());
+            }
+        }
     }
 
     private static Logger LOGGER = Logger.getLogger(DescriptionTest.class);

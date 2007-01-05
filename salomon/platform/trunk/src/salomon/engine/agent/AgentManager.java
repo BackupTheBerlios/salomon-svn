@@ -30,7 +30,7 @@ import org.apache.log4j.Logger;
 import salomon.engine.agentconfig.IAgentConfigManager;
 import salomon.engine.database.DBManager;
 import salomon.engine.database.queries.SQLSelect;
-import salomon.platform.exception.DBException;
+import salomon.platform.IInfo;
 import salomon.platform.exception.PlatformException;
 
 /**
@@ -38,11 +38,11 @@ import salomon.platform.exception.PlatformException;
  */
 public final class AgentManager implements IAgentManager
 {
-    private static final Logger LOGGER = Logger.getLogger(AgentManager.class);
-
-    private DBManager _dbManager;
+    static final Logger LOGGER = Logger.getLogger(AgentManager.class);
 
     private IAgentConfigManager _agentConfigManager;
+
+    private DBManager _dbManager;
 
     public AgentManager(IAgentConfigManager agentConfigManager,
             DBManager dbManager)
@@ -52,15 +52,55 @@ public final class AgentManager implements IAgentManager
     }
 
     /**
+     * Creates agent basing on given agent info.
+     * 
+     * @param agentInfo
+     * @return
+     * @throws Exception
+     */
+    public IAgent createAgent(IInfo agentInfo)
+    {
+        IAgent agent = null;
+        try {
+            Class agentClass = Class.forName(((AgentInfo) agentInfo).getAgentClass());
+            Constructor constructor = agentClass.getConstructor(new Class[]{
+                    IAgentConfigManager.class, AgentInfo.class});
+            agent = (IAgent) constructor.newInstance(_agentConfigManager,
+                    agentInfo);
+        } catch (Exception e) {
+            LOGGER.fatal("", e);
+            throw new PlatformException(e.getLocalizedMessage());
+        }
+        return agent;
+    }
+
+    /**
+     * @see salomon.engine.agent.IAgentManager#getAgent(int)
+     */
+    public IAgent getAgent(int agentId)
+    {
+        IAgent[] agents = getAgents(agentId);
+        IAgent agent = agents.length > 0 ? agents[0] : null;
+        return agent;
+    }
+
+    /**
      * @see salomon.engine.agent.IAgentManager#getAgents()
      */
     public IAgent[] getAgents()
     {
+        return getAgents(-1);
+    }
+
+    private IAgent[] getAgents(int agentId)
+    {
         SQLSelect select = new SQLSelect();
         select.addTable(AgentInfo.TABLE_NAME);
+        if (agentId > 0) {
+            select.addCondition(AgentInfo.PRIMARY_KEY + " =", agentId);
+        }
 
         ResultSet resultSet = null;
-
         ArrayList<IAgent> agentArrayList = new ArrayList<IAgent>();
 
         try {
@@ -73,7 +113,7 @@ public final class AgentManager implements IAgentManager
             }
         } catch (Exception e) {
             LOGGER.fatal("", e);
-            throw new DBException(e.getLocalizedMessage());
+            throw new PlatformException(e.getLocalizedMessage());
         }
 
         IAgent[] agentArray = new IAgent[agentArrayList.size()];
@@ -81,34 +121,4 @@ public final class AgentManager implements IAgentManager
 
         return agentArray;
     }
-
-    /**
-     * Creates agent basing on given agent info.
-     * 
-     * @param agentInfo
-     * @return
-     * @throws Exception
-     */
-    private IAgent createAgent(AgentInfo agentInfo)
-    {
-        IAgent agent = null;
-        try {
-            Class agentClass = Class.forName(agentInfo.getAgentClass());
-            Constructor constructor = agentClass.getConstructor(new Class[]{
-                    IAgentConfigManager.class, AgentInfo.class});
-            agent = (IAgent) constructor.newInstance(_agentConfigManager,
-                    agentInfo);
-        } catch (Exception e) {
-            LOGGER.fatal("", e);
-            throw new PlatformException(e.getLocalizedMessage());
-        }
-        return agent;
-    }
-
-    public IAgent getAgent(int agentId)
-    {
-        throw new UnsupportedOperationException(
-                "Method AgentManager.getAgent() not implemented yet!");
-    }
-
 }
