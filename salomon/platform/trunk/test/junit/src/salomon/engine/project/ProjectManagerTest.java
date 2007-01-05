@@ -21,18 +21,23 @@
 
 package salomon.engine.project;
 
-import java.sql.SQLException;
-
 import junit.framework.TestCase;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
-import salomon.engine.database.DBManager;
-import salomon.engine.platform.ManagerEngine;
+import salomon.TestObjectFactory;
+import salomon.engine.solution.ISolution;
 
 public class ProjectManagerTest extends TestCase
 {
+    private static Logger LOGGER = Logger.getLogger(ProjectManagerTest.class);
+
+    private static final String SOLUTION_NAME = "Example";
+
+    static {
+        PropertyConfigurator.configure("log.conf"); //$NON-NLS-1$
+    }
 
     /**
      * 
@@ -41,31 +46,26 @@ public class ProjectManagerTest extends TestCase
      */
     private ProjectManager _projectManager;
 
-    public void testCreateProject() throws Exception
+    public ProjectManagerTest()
+    {
+        ISolution solution = TestObjectFactory.getSolution(SOLUTION_NAME);
+        _projectManager = (ProjectManager) solution.getProjectManager();
+    }
+
+    public void testAddProject() throws Exception
     {
         LOGGER.info("ProjectManagerTest.testCreateProject()");
         boolean success = false;
         try {
-            _projectManager.createProject();
+            IProject project = _projectManager.createProject();
+            ((ProjectInfo) project.getInfo()).setName("Project "
+                    + System.currentTimeMillis());
+            _projectManager.addProject(project);
             success = true;
         } catch (Exception e) {
             LOGGER.fatal("", e);
             throw e;
         }
-        assertTrue(success);
-    }
-
-    public void testGetProject() throws Exception
-    {
-        LOGGER.info("ProjectManagerTest.testGetProject()");
-        boolean success = false;
-        //try {
-        ///	_projectManager.getProject(10);
-        //	success = true;
-        //} catch (Exception e) {
-        //	LOGGER.fatal("", e);
-        //    throw e ;
-        //}
         assertTrue(success);
     }
 
@@ -84,23 +84,4 @@ public class ProjectManagerTest extends TestCase
         }
         assertTrue(success);
     }
-    
-    @Override
-    protected void setUp() throws Exception
-    {
-        PropertyConfigurator.configure("log.conf"); //$NON-NLS-1$           
-
-        try {
-            new DBManager().connect();
-        } catch (SQLException e) {
-            LOGGER.fatal("", e);
-        } catch (ClassNotFoundException e) {
-            LOGGER.error("", e);
-        }
-
-        ManagerEngine engine = new ManagerEngine();
-        _projectManager = (ProjectManager) engine.getProjectManager();
-    }
-
-    private static Logger LOGGER = Logger.getLogger(ProjectManagerTest.class);
 }

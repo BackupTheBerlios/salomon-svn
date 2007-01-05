@@ -30,6 +30,7 @@ import org.apache.log4j.Logger;
 import salomon.engine.database.DBManager;
 import salomon.engine.database.queries.SQLSelect;
 import salomon.platform.exception.DBException;
+import salomon.platform.exception.PlatformException;
 
 /**
  * 
@@ -43,6 +44,27 @@ public final class AgentManager implements IAgentManager
     public AgentManager(DBManager dbManager)
     {
         _dbManager = dbManager;
+    }
+
+    /**
+     * Creates agent basing on given agent info.
+     * 
+     * @param agentInfo
+     * @return
+     * @throws Exception
+     */
+    public IAgent createAgent(AgentInfo agentInfo)
+    {
+        IAgent agent = null;
+        try {
+            Class agentClass = Class.forName(agentInfo.getAgentClass());
+            Constructor constructor = agentClass.getConstructor(new Class[]{AgentInfo.class});
+            agent = (IAgent) constructor.newInstance(agentInfo);
+        } catch (Exception e) {
+            LOGGER.fatal("", e);
+            throw new PlatformException(e.getLocalizedMessage());
+        }
+        return agent;
     }
 
     /**
@@ -74,21 +96,6 @@ public final class AgentManager implements IAgentManager
         agentArray = agentArrayList.toArray(agentArray);
 
         return agentArray;
-    }
-
-    /**
-     * Creates agent basing on given agent info.
-     * 
-     * @param agentInfo
-     * @return
-     * @throws Exception
-     */
-    private IAgent createAgent(AgentInfo agentInfo) throws Exception
-    {
-        Class agentClass = Class.forName(agentInfo.getAgentClass());
-        Constructor constructor = agentClass.getConstructor(new Class[]{AgentInfo.class});
-        IAgent agent = (IAgent) constructor.newInstance(agentInfo);
-        return agent;
     }
 
 }

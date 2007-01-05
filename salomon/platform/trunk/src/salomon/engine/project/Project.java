@@ -22,13 +22,10 @@
 package salomon.engine.project;
 
 import salomon.engine.agent.IAgent;
-import salomon.engine.agent.IAgentManager;
 import salomon.engine.database.DBManager;
-import salomon.engine.task.ITaskManager;
-
-import salomon.platform.exception.PlatformException;
-
 import salomon.engine.platform.IManagerEngine;
+import salomon.engine.task.ITaskManager;
+import salomon.platform.exception.PlatformException;
 
 /**
  * Represents a project, it is an implementation of IProject interface.
@@ -68,11 +65,6 @@ public final class Project implements IProject
     {
         //FIXME: change it after implementing cascade model
         return _projectManager;
-    }
-
-    public IAgentManager getAgentEventManager() throws PlatformException
-    {
-        throw new UnsupportedOperationException("");
     }
 
     public void addAgent(IAgent agent)

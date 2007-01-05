@@ -23,13 +23,16 @@ package salomon.engine.agent;
 
 import java.awt.Component;
 
+import salomon.engine.agentconfig.IAgentConfig;
+
+
 /**
  * 
  */
 public final class DataIncreaseAgent implements IAgent
 {
     private AgentInfo _agentInfo;
-
+    
     public DataIncreaseAgent(AgentInfo agentInfo)
     {
         _agentInfo = agentInfo;
@@ -74,6 +77,11 @@ public final class DataIncreaseAgent implements IAgent
     public String toString()
     {
         return _agentInfo.toString();
+    }
+
+    public IAgentConfig getAgentConfig()
+    {
+        throw new UnsupportedOperationException("Method DataIncreaseAgent.getAgentConfig() not implemented yet!");
     }
 
 }

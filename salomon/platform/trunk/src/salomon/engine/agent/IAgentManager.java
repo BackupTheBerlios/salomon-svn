@@ -23,7 +23,17 @@ package salomon.engine.agent;
 
 
 
+
 public interface IAgentManager
 {
     IAgent[] getAgents();
+
+    /**
+     * Creates agent basing on given agent info.
+     * 
+     * @param agentInfo
+     * @return
+     * @throws Exception
+     */
+    public IAgent createAgent(AgentInfo agentInfo);
 }

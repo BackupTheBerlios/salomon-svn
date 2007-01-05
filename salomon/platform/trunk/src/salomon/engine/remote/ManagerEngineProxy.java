@@ -26,6 +26,8 @@ import java.rmi.RemoteException;
 import org.apache.log4j.Logger;
 
 import salomon.engine.agent.IAgentManager;
+import salomon.engine.agentconfig.IAgentConfigManager;
+import salomon.engine.platform.IManagerEngine;
 import salomon.engine.plugin.IPluginManager;
 import salomon.engine.project.IProjectManager;
 import salomon.engine.remote.plugin.PluginManagerProxy;
@@ -34,11 +36,7 @@ import salomon.engine.remote.solution.SolutionManagerProxy;
 import salomon.engine.remote.task.TaskManagerProxy;
 import salomon.engine.solution.ISolutionManager;
 import salomon.engine.task.ITaskManager;
-
 import salomon.platform.exception.PlatformException;
-
-import salomon.engine.platform.IManagerEngine;
-
 import salomon.plugin.IPlatformUtil;
 
 /**
@@ -140,6 +138,11 @@ public final class ManagerEngineProxy implements IManagerEngine
     public IAgentManager getAgentManager()
     {
         throw new UnsupportedOperationException("Method ManagerEngineProxy.getPlatformUtil() not implemented yet!");
+    }
+
+    public IAgentConfigManager getAgentConfigManager()
+    {
+        throw new UnsupportedOperationException("Method ManagerEngineProxy.getAgentConfigManager() not implemented yet!");
     }
 
 }

@@ -24,6 +24,7 @@ package salomon.engine.holder;
 import org.apache.log4j.Logger;
 
 import salomon.engine.agent.IAgentManager;
+import salomon.engine.agentconfig.IAgentConfigManager;
 import salomon.engine.plugin.IPluginManager;
 import salomon.engine.project.IProjectManager;
 import salomon.engine.solution.ISolutionManager;
@@ -156,5 +157,10 @@ public final class ManagerEngineHolder implements IManagerEngine
     public IAgentManager getAgentManager()
     {
         return null;
+    }
+
+    public IAgentConfigManager getAgentConfigManager()
+    {
+        throw new UnsupportedOperationException("Method ManagerEngineHolder.getAgentConfigManager() not implemented yet!");
     }
 }

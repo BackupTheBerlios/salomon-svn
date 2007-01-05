@@ -22,6 +22,7 @@
 package salomon.engine.platform;
 
 import salomon.engine.agent.IAgentManager;
+import salomon.engine.agentconfig.IAgentConfigManager;
 import salomon.engine.plugin.IPluginManager;
 import salomon.engine.project.IProjectManager;
 import salomon.engine.solution.ISolutionManager;
@@ -80,5 +81,17 @@ public interface IManagerEngine
 
     IPlatformUtil getPlatformUtil();
 
+    /**
+     * Returns the AgentManager.
+     * 
+     * @return
+     */
     IAgentManager getAgentManager();
+    
+    /**
+     * Returns the AgentConfigManager.
+     * 
+     * @return
+     */
+    IAgentConfigManager getAgentConfigManager();
 }

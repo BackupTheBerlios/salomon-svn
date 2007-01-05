@@ -87,12 +87,14 @@ public final class ProjectManager implements IProjectManager
     {
         try {
             project.getInfo().save();
+            _dbManager.commit();
         } catch (Exception e) {
             LOGGER.fatal("", e);
+            _dbManager.rollback();
             throw new PlatformException(e.getLocalizedMessage());
         }
         _currentProject = project;
-        LOGGER.info("nowy project "
+        LOGGER.info("New project: "
                 + ((ProjectInfo) _currentProject.getInfo()).getName());
     }
 

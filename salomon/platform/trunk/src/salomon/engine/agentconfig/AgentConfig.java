@@ -1,6 +1,5 @@
 /*
- *
- * Copyright (C) 2006 Salomon Team
+ * Copyright (C) 2007 Salomon Team
  *
  * This file is part of Salomon.
  *
@@ -15,27 +14,40 @@
  * Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public
- * License along with ${project_name}; if not, write to the Free Software
+ * License along with Salomon; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
+ * 
  */
 
-package salomon.engine.agent;
+package salomon.engine.agentconfig;
 
-import java.awt.Component;
-
-import salomon.engine.agentconfig.IAgentConfig;
+import salomon.engine.database.DBManager;
 import salomon.platform.IInfo;
 
-public interface IAgent
+/**
+ * 
+ */
+public final class AgentConfig implements IAgentConfig
 {
-    IAgentConfig getAgentConfig();
+    private AgentConfigInfo _agentConfigInfo;
 
-    Component getConfigurationComponent();
-    
-    IInfo getInfo();
+    protected AgentConfig(DBManager dbManager)
+    {
+        _agentConfigInfo = new AgentConfigInfo(dbManager);
+    }
 
-    void start();
+    /**
+     * Returns the agentConfigInfo.
+     * @return The agentConfigInfo
+     */
+    public final IInfo getInfo()
+    {
+        return _agentConfigInfo;
+    }
 
-    void stop();
+    @Override
+    public String toString()
+    {
+        return _agentConfigInfo.toString();
+    }
 }

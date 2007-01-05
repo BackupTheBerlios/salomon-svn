@@ -1,6 +1,5 @@
 /*
- *
- * Copyright (C) 2006 Salomon Team
+ * Copyright (C) 2007 Salomon Team
  *
  * This file is part of Salomon.
  *
@@ -15,27 +14,23 @@
  * Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public
- * License along with ${project_name}; if not, write to the Free Software
+ * License along with Salomon; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
+ * 
  */
 
-package salomon.engine.agent;
+package salomon.engine.agentconfig;
 
-import java.awt.Component;
-
-import salomon.engine.agentconfig.IAgentConfig;
-import salomon.platform.IInfo;
-
-public interface IAgent
+/**
+ * 
+ */
+public interface IAgentConfigManager
 {
-    IAgentConfig getAgentConfig();
+    void addAgentConfig(IAgentConfig config);
 
-    Component getConfigurationComponent();
-    
-    IInfo getInfo();
+    IAgentConfig createAgentConfig();
 
-    void start();
+    IAgentConfig[] getAgentConfigs(int projectId);
 
-    void stop();
+    boolean removeAgentConfig(IAgentConfig config);
 }

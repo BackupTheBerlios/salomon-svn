@@ -25,6 +25,8 @@ import org.apache.log4j.Logger;
 
 import salomon.engine.agent.AgentManager;
 import salomon.engine.agent.IAgentManager;
+import salomon.engine.agentconfig.AgentConfigManager;
+import salomon.engine.agentconfig.IAgentConfigManager;
 import salomon.engine.database.DBManager;
 import salomon.engine.plugin.IPluginManager;
 import salomon.engine.plugin.PlatformUtil;
@@ -47,6 +49,8 @@ import salomon.plugin.IPlatformUtil;
 public final class ManagerEngine implements IManagerEngine
 {
     private static final Logger LOGGER = Logger.getLogger(ManagerEngine.class);
+
+    private IAgentConfigManager _agentConfigManager;
 
     private IAgentManager _agentManager;
 
@@ -102,6 +106,12 @@ public final class ManagerEngine implements IManagerEngine
         _taskManager = new TaskManager(this, _dbManager);
         _pluginManager = new PluginManager(_dbManager);
         _agentManager = new AgentManager(_dbManager);
+        _agentConfigManager = new AgentConfigManager(_dbManager);
+    }
+
+    public IAgentConfigManager getAgentConfigManager()
+    {
+        return _agentConfigManager;
     }
 
     /**
