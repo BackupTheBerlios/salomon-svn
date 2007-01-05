@@ -19,56 +19,48 @@
  * 
  */
 
-package salomon.engine.agentconfig;
+package salomon.engine.agent;
 
-import salomon.engine.database.DBManager;
+import salomon.engine.agentconfig.AgentConfigManager;
+import salomon.engine.agentconfig.IAgentConfig;
+import salomon.engine.agentconfig.IAgentConfigManager;
 import salomon.platform.IInfo;
-import salomon.platform.serialization.IObject;
 
 /**
  * 
  */
-public final class AgentConfig implements IAgentConfig
+public abstract class AbstractAgent implements IAgent
 {
-    private AgentConfigInfo _agentConfigInfo;
+    protected IAgentConfig _agentConfig;
 
-    private IObject _config;
+    protected AgentConfigManager _agentConfigManager;
 
-    protected AgentConfig(DBManager dbManager)
-    {
-        _agentConfigInfo = new AgentConfigInfo(dbManager);
-    }
+    protected AgentInfo _agentInfo;
 
     /**
-     * Returns the config.
-     * @return The config
+     * @param agentInfo
      */
-    public final IObject getConfig()
+    public AbstractAgent(IAgentConfigManager agentConfigManager,
+            AgentInfo agentInfo)
     {
-        return _config;
+        _agentInfo = agentInfo;
+        _agentConfig = agentConfigManager.createAgentConfig();
     }
 
     /**
-     * Returns the agentConfigInfo.
-     * @return The agentConfigInfo
+     * @see salomon.engine.agent.IAgent#getAgentConfig()
+     */
+    public IAgentConfig getAgentConfig()
+    {
+        return _agentConfig;
+    }
+
+    /**
+     * @see salomon.engine.agent.IAgent#getInfo()
      */
     public final IInfo getInfo()
     {
-        return _agentConfigInfo;
+        return _agentInfo;
     }
 
-    /**
-     * Set the value of config field.
-     * @param config The config to set
-     */
-    public final void setConfig(IObject config)
-    {
-        _config = config;
-    }
-
-    @Override
-    public String toString()
-    {
-        return _agentConfigInfo.toString();
-    }
 }

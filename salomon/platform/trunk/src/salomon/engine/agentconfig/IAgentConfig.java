@@ -22,6 +22,7 @@
 package salomon.engine.agentconfig;
 
 import salomon.platform.IInfo;
+import salomon.platform.serialization.IObject;
 
 
 /**
@@ -30,4 +31,6 @@ import salomon.platform.IInfo;
 public interface IAgentConfig
 {
     IInfo getInfo();
+    
+    IObject getConfig();
 }

@@ -27,6 +27,7 @@ import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
 
+import salomon.engine.agentconfig.IAgentConfigManager;
 import salomon.engine.database.DBManager;
 import salomon.engine.database.queries.SQLSelect;
 import salomon.platform.exception.DBException;
@@ -41,30 +42,13 @@ public final class AgentManager implements IAgentManager
 
     private DBManager _dbManager;
 
-    public AgentManager(DBManager dbManager)
-    {
-        _dbManager = dbManager;
-    }
+    private IAgentConfigManager _agentConfigManager;
 
-    /**
-     * Creates agent basing on given agent info.
-     * 
-     * @param agentInfo
-     * @return
-     * @throws Exception
-     */
-    public IAgent createAgent(AgentInfo agentInfo)
+    public AgentManager(IAgentConfigManager agentConfigManager,
+            DBManager dbManager)
     {
-        IAgent agent = null;
-        try {
-            Class agentClass = Class.forName(agentInfo.getAgentClass());
-            Constructor constructor = agentClass.getConstructor(new Class[]{AgentInfo.class});
-            agent = (IAgent) constructor.newInstance(agentInfo);
-        } catch (Exception e) {
-            LOGGER.fatal("", e);
-            throw new PlatformException(e.getLocalizedMessage());
-        }
-        return agent;
+        _agentConfigManager = agentConfigManager;
+        _dbManager = dbManager;
     }
 
     /**
@@ -96,6 +80,35 @@ public final class AgentManager implements IAgentManager
         agentArray = agentArrayList.toArray(agentArray);
 
         return agentArray;
+    }
+
+    /**
+     * Creates agent basing on given agent info.
+     * 
+     * @param agentInfo
+     * @return
+     * @throws Exception
+     */
+    private IAgent createAgent(AgentInfo agentInfo)
+    {
+        IAgent agent = null;
+        try {
+            Class agentClass = Class.forName(agentInfo.getAgentClass());
+            Constructor constructor = agentClass.getConstructor(new Class[]{
+                    IAgentConfigManager.class, AgentInfo.class});
+            agent = (IAgent) constructor.newInstance(_agentConfigManager,
+                    agentInfo);
+        } catch (Exception e) {
+            LOGGER.fatal("", e);
+            throw new PlatformException(e.getLocalizedMessage());
+        }
+        return agent;
+    }
+
+    public IAgent getAgent(int agentId)
+    {
+        throw new UnsupportedOperationException(
+                "Method AgentManager.getAgent() not implemented yet!");
     }
 
 }

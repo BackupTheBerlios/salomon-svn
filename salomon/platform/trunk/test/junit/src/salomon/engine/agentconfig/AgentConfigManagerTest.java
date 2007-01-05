@@ -21,6 +21,8 @@
 
 package salomon.engine.agentconfig;
 
+import java.io.ByteArrayOutputStream;
+
 import junit.framework.TestCase;
 
 import org.apache.log4j.Logger;
@@ -28,12 +30,16 @@ import org.apache.log4j.PropertyConfigurator;
 
 import salomon.TestObjectFactory;
 import salomon.engine.agent.IAgent;
+import salomon.engine.platform.serialization.XMLSerializer;
 import salomon.engine.project.IProject;
 import salomon.engine.solution.Solution;
+import salomon.util.serialization.SimpleStruct;
 
 public class AgentConfigManagerTest extends TestCase
 {
     private static final Logger LOGGER = Logger.getLogger(AgentConfigManagerTest.class);
+
+    private static final String SOLUTION_NAME = "Example";
 
     static {
         PropertyConfigurator.configure("log.conf"); //$NON-NLS-1$
@@ -44,14 +50,12 @@ public class AgentConfigManagerTest extends TestCase
     private IAgentConfigManager _agentConfigManager;
 
     private IProject _project;
-    
-    private static final String SOLUTION_NAME = "Example";
 
     public AgentConfigManagerTest()
     {
         _agentConfigManager = TestObjectFactory.getManagerEngine().getAgentConfigManager();
         _agent = TestObjectFactory.getManagerEngine().getAgentManager().getAgents()[0];
-        Solution solution = (Solution) TestObjectFactory.getSolution(SOLUTION_NAME); 
+        Solution solution = (Solution) TestObjectFactory.getSolution(SOLUTION_NAME);
         _project = solution.getProjectManager().getProjects()[0];
     }
 
@@ -64,9 +68,19 @@ public class AgentConfigManagerTest extends TestCase
         TestObjectFactory.getDbManager().commit();
     }
 
+    public void testGetAgentConfig() throws Exception
+    {
+        LOGGER.info("AgentConfigManagerTest.testGetAgentConfig()");
+        IAgentConfig[] configs = _agentConfigManager.getAgentConfigs(_project.getInfo().getId());
+        assertTrue(configs.length > 0);
+
+        IAgentConfig agentConfig = _agentConfigManager.getAgentConfig(configs[0].getInfo().getId());
+        LOGGER.debug("config: " + agentConfig);
+    }
+
     public void testGetAgentConfigs() throws Exception
     {
-        LOGGER.info("AgentConfigManagerTest.enclosing_method()");
+        LOGGER.info("AgentConfigManagerTest.testGetAgentConfigs()");
         IAgentConfig[] configs = _agentConfigManager.getAgentConfigs(_project.getInfo().getId());
         for (IAgentConfig config : configs) {
             LOGGER.debug("config: " + config);
@@ -89,7 +103,13 @@ public class AgentConfigManagerTest extends TestCase
         AgentConfigInfo info = (AgentConfigInfo) agentConfig.getInfo();
         info.setAgentId(_agent.getInfo().getId());
         info.setProjectId(_project.getInfo().getId());
-        info.setConfiguration("Sample configutation");
+
+        SimpleStruct configuration = new SimpleStruct();
+        configuration.setField("treshold", 15);
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        XMLSerializer.serialize(configuration, bos);
+        info.setConfiguration(bos.toString());
+
         return agentConfig;
     }
 }

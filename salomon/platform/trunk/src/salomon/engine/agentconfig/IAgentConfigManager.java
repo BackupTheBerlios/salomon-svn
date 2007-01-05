@@ -30,6 +30,8 @@ public interface IAgentConfigManager
 
     IAgentConfig createAgentConfig();
 
+    IAgentConfig getAgentConfig(int configId);
+    
     IAgentConfig[] getAgentConfigs(int projectId);
 
     boolean removeAgentConfig(IAgentConfig config);

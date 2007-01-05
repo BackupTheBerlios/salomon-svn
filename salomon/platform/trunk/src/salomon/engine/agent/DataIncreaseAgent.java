@@ -23,19 +23,28 @@ package salomon.engine.agent;
 
 import java.awt.Component;
 
+import salomon.engine.agentconfig.AgentConfig;
 import salomon.engine.agentconfig.IAgentConfig;
-
+import salomon.engine.agentconfig.IAgentConfigManager;
+import salomon.util.serialization.SimpleStruct;
 
 /**
  * 
  */
-public final class DataIncreaseAgent implements IAgent
+public final class DataIncreaseAgent extends AbstractAgent
 {
-    private AgentInfo _agentInfo;
-    
-    public DataIncreaseAgent(AgentInfo agentInfo)
+    public DataIncreaseAgent(IAgentConfigManager agentConfigManager,
+            AgentInfo agentInfo)
     {
-        _agentInfo = agentInfo;
+        super(agentConfigManager, agentInfo);
+        SimpleStruct configuration = new SimpleStruct();
+        configuration.setField("treshold", 10);
+        ((AgentConfig) _agentConfig).setConfig(configuration);
+    }
+
+    public IAgentConfig getAgentConfig()
+    {
+        return _agentConfig;
     }
 
     /**
@@ -45,14 +54,6 @@ public final class DataIncreaseAgent implements IAgent
     {
         throw new UnsupportedOperationException(
                 "Method DataIncreaseAgent.getConfigurationComponent() not implemented yet!");
-    }
-
-    /**
-     * @see salomon.engine.agent.IAgent#getInfo()
-     */
-    public AgentInfo getInfo()
-    {
-        return _agentInfo;
     }
 
     /**
@@ -77,11 +78,6 @@ public final class DataIncreaseAgent implements IAgent
     public String toString()
     {
         return _agentInfo.toString();
-    }
-
-    public IAgentConfig getAgentConfig()
-    {
-        throw new UnsupportedOperationException("Method DataIncreaseAgent.getAgentConfig() not implemented yet!");
     }
 
 }

@@ -23,6 +23,7 @@ package salomon.engine.project;
 
 import salomon.engine.agent.IAgent;
 import salomon.engine.agent.IAgentManager;
+import salomon.engine.agentconfig.IAgentConfig;
 import salomon.engine.task.ITaskManager;
 
 import salomon.platform.IInfo;
@@ -59,21 +60,21 @@ public interface IProject
     /**
      * Adds a new agent to listen to database events.
      * 
-     * @param agent
+     * @param agentConfig
      */
-    void addAgent(IAgent agent);
+    void addAgentConfig(IAgentConfig agentConfig);
 
     /**
      * Removes given agent.
      * 
-     * @param agent
+     * @param agentConfig
      */
-    void removeAgent(IAgent agent);
+    void removeAgentConfig(IAgentConfig agentConfig);
 
     /**
-     * Returns all agents registered for a project.
+     * Returns all agents registered for a project or null if no agents are attached.
      * 
-     * @return
+     * @return array of agents attached to given project or null if no agents are attached.
      */
     IAgent[] getAgents();
 }

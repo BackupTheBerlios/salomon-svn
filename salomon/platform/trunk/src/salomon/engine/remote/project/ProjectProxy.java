@@ -27,6 +27,7 @@ import org.apache.log4j.Logger;
 
 import salomon.engine.agent.IAgent;
 import salomon.engine.agent.IAgentManager;
+import salomon.engine.agentconfig.IAgentConfig;
 import salomon.engine.project.IProject;
 import salomon.engine.project.IProjectManager;
 import salomon.engine.remote.task.TaskManagerProxy;
@@ -177,11 +178,11 @@ public final class ProjectProxy implements IProject
         return null;
     }
 
-    public void addAgent(IAgent agent)
+    public void addAgentConfig(IAgentConfig agentConfig)
     {
     }
 
-    public void removeAgent(IAgent agent)
+    public void removeAgentConfig(IAgentConfig agentConfig)
     {
     }
 

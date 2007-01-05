@@ -21,7 +21,12 @@
 
 package salomon.engine.project;
 
+import salomon.engine.agent.AbstractAgent;
 import salomon.engine.agent.IAgent;
+import salomon.engine.agent.IAgentManager;
+import salomon.engine.agentconfig.AgentConfigInfo;
+import salomon.engine.agentconfig.IAgentConfig;
+import salomon.engine.agentconfig.IAgentConfigManager;
 import salomon.engine.database.DBManager;
 import salomon.engine.platform.IManagerEngine;
 import salomon.engine.task.ITaskManager;
@@ -48,11 +53,17 @@ public final class Project implements IProject
 
     private IProjectManager _projectManager;
 
+    private IAgentConfigManager _agentConfigManager;
+
+    private IAgentManager _agentManager;
+
     protected Project(IManagerEngine managerEngine, DBManager manager)
             throws PlatformException
     {
         _taskManager = managerEngine.getTasksManager();
         _projectManager = managerEngine.getProjectManager();
+        _agentConfigManager = managerEngine.getAgentConfigManager();
+        _agentManager = managerEngine.getAgentManager();
         _projectInfo = new ProjectInfo(manager);
     }
 
@@ -67,22 +78,31 @@ public final class Project implements IProject
         return _projectManager;
     }
 
-    public void addAgent(IAgent agent)
+    public void addAgentConfig(IAgentConfig agentConfig)
     {
-        throw new UnsupportedOperationException(
-                "Method Project.addAgent() not implemented yet!");
+        _agentConfigManager.addAgentConfig(agentConfig);
     }
 
-    public void removeAgent(IAgent agent)
+    public void removeAgentConfig(IAgentConfig agentConfig)
     {
-        throw new UnsupportedOperationException(
-                "Method Project.removeAgent() not implemented yet!");
+        _agentConfigManager.removeAgentConfig(agentConfig);
     }
 
+    /**
+     * @see salomon.engine.project.IProject#getAgents()
+     */
     public IAgent[] getAgents()
     {
-        throw new UnsupportedOperationException(
-                "Method Project.getAgents() not implemented yet!");
+        IAgent[] agents = null;
+        IAgentConfig[] agentConfigs = _agentConfigManager.getAgentConfigs(_projectInfo.getId());
+        if (agentConfigs != null && agentConfigs.length > 0) {
+            agents = new IAgent[agentConfigs.length];
+            for (int i = 0; i < agentConfigs.length; ++i) {
+                AgentConfigInfo agentConfigInfo = (AgentConfigInfo) agentConfigs[i].getInfo();
+                agents[i] = (AbstractAgent) _agentManager.getAgent(agentConfigInfo.getAgentId());
+            }
+        }
+        return agents;
     }
 
     /**
