@@ -1,4 +1,4 @@
-\section{Data maining}
+%\section{Data maining}
 % czy mozna pisac takie ksiazkowe luzne wstawki?
 
 %CZY MOZNA TO TLUMACZYC?
@@ -17,8 +17,34 @@
 %embryos and their outcome. \\
 %KONIEC
 
+\section{Uczenie maszynowe}
 
+Próby opracowania algorytmów ucz¹cych siê nie wynikaj¹ z chêci wyeliminowania
+projektantów z procesów analizy i projektowania systemów komputerowych, a wiêc
+klasycznych zagadnieñ in¿ynierii oprogramowania. Nie mog¹ one bowiem byæ
+alternatyw¹ dla tradycyjnych metodologii tworzenia oprogramowania. Cele, jakie
+stawiaj¹ sobie twórcy algorytmów ucz¹cych siê wynikaj¹ ze z³o¿onoœci niektórych
+zagadnieñ algorytmicznych -- próbuj¹ oni w³aœnie za ich pomoc¹ opisaæ te
+problemy, dla których opracowanie poprawnych i pe³nych algorytmów klasycznych
+jest bardzo trudne lub wrêcz niemo¿liwe.
 
+Program ucz¹cy mo¿na wyobraziæ sobie jako abstrakcyjny, ,,parametryzowalny''
+algorytm wykonania zadania. Proces uczenia polega na dobraniu, na podstawie
+historycznych wartoœci tych ,,parametrów'', takich wartoœci, by rozwi¹zanie
+spe³nia³o za³o¿enia projektanta. 
 
-\section{Machine learning}
-M
+,,Parametry'' te mo¿na traktowaæ jako pewnego rodzaju \emph{wiedzê}.
+Nie s¹ one podawane do algorytmu w sposób bezpoœredni (a jeœli nawet s¹ podawane
+ich pocz¹tkowe wartoœci, to s¹ one najczêœciej dalekie od oczekiwanych), ale
+odkrywane s¹ przez sam algorytm podczas procesu uczenia siê.
+Z tego te¿ powodu s¹ one traktowane jako wiedza niepewna i mog¹ca wymagaæ weryfikacji.	
+
+Wiedza ta mo¿e okreœlaæ zarówno sekwencje operacji, które program ma wykonaæ
+podczas rozwi¹zywania danego problemu, jak i wybór spoœród ró¿nych wariantów
+mo¿liwych do podjêcia w danym momenecie decyzji.
+
+Wiedza, która okreœla strategie osi¹gania celów nazywana jest
+\emph{proceduraln¹}, natomiast taka, która opisuje obiekty i zwi¹zki miêdzy nimi
+-- \emph{deklaratywn¹}.
+
+Algorytmy pozyskiwania i doskonalenia zdobytej wiedzy nazywane s¹ \emph{algorytmami uczenia maszynowego}.
