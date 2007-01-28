@@ -19,6 +19,7 @@
 
 \section{Uczenie maszynowe}
 
+%Cichosz (35-36)
 Próby opracowania algorytmów ucz¹cych siê nie wynikaj¹ z chêci wyeliminowania
 projektantów z procesów analizy i projektowania systemów komputerowych, a wiêc
 klasycznych zagadnieñ in¿ynierii oprogramowania. Nie mog¹ one bowiem byæ
@@ -47,4 +48,47 @@ Wiedza, która okreœla strategie osi¹gania celów nazywana jest
 \emph{proceduraln¹}, natomiast taka, która opisuje obiekty i zwi¹zki miêdzy nimi
 -- \emph{deklaratywn¹}.
 
-Algorytmy pozyskiwania i doskonalenia zdobytej wiedzy nazywane s¹ \emph{algorytmami uczenia maszynowego}.
+Algorytmy pozyskiwania i doskonalenia zdobytej wiedzy nazywane s¹
+\emph{algorytmami uczenia maszynowego}. 
+
+% Cichosz 40
+Zastosowanie algorytmów uczenia maszynowego do rozwi¹zania niektórych problemów
+mo¿e byæ tak¿e podyktowane czynnikami ekonomicznymi -- czasem bardziej op³aca
+siê zastosowaæ algorytmy ucz¹ce siê, ni¿ traciæ czas na opracowywanie 
+skomplikowanych algorytmów klasycznych, które i tak w pewnych przypadkach mog¹
+dzia³aæ niepoprawnie.
+
+Dla naprawdê du¿ych i z³o¿onych problemów trudne jest opracowanie pe³nych i~poprawnych 
+algorytmów je rozwi¹zuj¹cych. Z takimi przypadkami mamy do czynienia
+np. w zagadnieniach dotycz¹cych realnie dzia³aj¹cych systemów, w których trzeba
+liczyæ siê z du¿¹ dynamik¹ i nieprzewidywalnoœci¹ œrodowiska, w którym dzia³a program.
+Uzyskanie poprawnie dzia³aj¹cych algorytmów pracuj¹cych w takich systemach mo¿e
+okazaæ siê bardzo kosztowne: albo ze wzglêdu na czas i œrodki potrzebne do ich
+opracowania, albo ze wzglêdu na zasoby u¿ywane podczas ich pracy. Zdarza siê
+tak¿e, ze opracowanie zadowalaj¹cych algorytmów jest wrêcz niemo¿liwe.
+Wynika to z tego, ¿e œrodowiska w których czêsto musz¹ dzia³aæ takie algorytmy
+s¹ trudne do opisania -- brakuje dla nich modeli teoretycznych, lub te¿
+uproszczenia, które musia³y zostaæ w nich przyjête, by wogóle mo¿liwe by³o
+opisanie danego œrodowiska nie pozwalaj¹ na uzyskanie wystarczaj¹co dok³adnie
+dzia³aj¹cych algorytmów.
+
+W wielu zastosowaniach systemy informatyczne powinny dzia³aæ mo¿liwe
+autonomicznie i wymagaæ znikomej ingerencji ze strony cz³owieka. Przyk³adami
+takich systemów mog¹ byæ systemy kontroli poszczególnych instalacji w
+nowoczesnych biurowcach, systemy sterowania robotami przemys³owymi czy pojazdami
+bezza³ogowymi. Wymagany stopieñ autonomii tych systemów jest niemo¿liwy do
+uzyskania bez wyposa¿enia ich w mo¿liwoœæ adaptacji, czyli przystosowania siê do
+zmieniaj¹cych siê warunków. Systemy posiadaj¹ce zdolnoœæ adaptacji mog¹ byæ
+u¿ywane w nieprzewidywalnym œrodowisku lub wielu podobnych œrodowiskach.
+
+Jednym z najwa¿niejszych zastosowaniem algorytmów ucz¹cych jest nowoczesna
+analiza danych, tzw. \emph{data mining}.
+Wspó³czesne zbiory danych, które musz¹ byæ poddawane analizie pochodz¹ np.
+z d³ugotrwa³ych pomiarów i eksperymentów naukowych. Zawieraj¹ ogromne iloœci
+danych, co powoduje, ze nie mog¹ one byæ analizowane w inny sposób, ni¿
+automatycznie. Do ich filtrowania i wyszukiwania zale¿noœci miêdzy nimi
+wykorzystuje siê specjalnie opracowane algorytmy, które potrafi¹ nie tylko
+przetwarzaæ dane aktualne, ale tak¿e wnioskowaæ na podstawie danych historycznych,
+przechowywanych w ogromnych bazach danych, zwanych \emph{hurtowniami danych}.
+
+%Troche przykladow
