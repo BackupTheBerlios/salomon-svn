@@ -92,7 +92,7 @@ przetwarzaæ dane aktualne, ale tak¿e wnioskowaæ na podstawie danych historycznyc
 przechowywanych w ogromnych bazach danych, zwanych \emph{hurtowniami danych}.
 
 %Troche przykladow
-% Cichosz 41-43
+% Cichosz 41-42
 Wiedza z punktu widzenia algorytmów ucz¹cych mo¿e byæ przechowywana na ró¿ne
 sposoby -- opracowano w tym celu wiele efektywnych struktur danych,
 pozwalaj¹cych na jej ³atwe zapisanie i przetwarzanie.
@@ -133,3 +133,51 @@ których opracowanie klasycznych modeli jest trudne, lub nawet niemo¿liwe.
 Znajduj¹ one tak¿e zastosowanie jako narzêdzia wspomagaj¹ce cz³owieka w
 przetwarzaniu du¿ej iloœci informacji -- mog¹ one przedstawiaæ wiedzê uzyskan¹ z
 analizy du¿ej iloœci danych w bardziej czytelnej dla cz³owieka formie.
+
+% Cichosz 43-44
+Algorytmy uczenia maszynowego mo¿na podzieliæ ze wzglêdu na sposób weryfikacji
+uzyskiwanej w procesie uczenia siê wiedzy. Takie kryterium prowadzi do podzia³u
+na \emph{uczenie siê z nadzorem} i \emph{bez nadzoru}.
+
+W przypadku uczenia z nadzorem (czasami nazywanego tak¿e \emph{uczeniem z
+nauczycielem}) wiedza uzyskiwana w czasie dzia³ania algorytmu ucz¹cego jest
+weryfikowana -- algorytm dla okreœlonych danych wejœciowych otrzymuje tak¿e
+oczekiwane informacje wyjœciowe, zwane \emph{informacj¹ trenuj¹c¹}.
+Zadaniem procesu uczenia siê jest takie dobranie parametrów algorytmu, aby dla
+okreœlonych danych wejœciowych otrzymaæ dane wyjœciowe mo¿liwie zbli¿one do
+wzorcowych.
+
+W procesie uczenia bez nadzoru nie jest dostêpna informacja trenuj¹ca. Podawane
+s¹ jedynie dane wejœciowe i jedynie na ich podstawie algorytm ma siê
+,,nauczyæ'' prawid³owo je interpretowaæ. Z takimi przypadkami mamy do czynienia
+g³ównie w algorytmach grupuj¹cych obiekty, gdzie nie s¹ znane kryteria, wed³ug
+których obiekty maj¹ zostaæ pogrupowane. Czasem mówi siê, ¿e takie algorytmy
+maj¹ wbudowanego nauczyciela, jako ¿e weryfikacja uzyskiwanej wiedzy jest
+integraln¹ czêœci¹ algorytmu.
+
+Uczenie z nauczecielem i bez nadzoru to najbardziej popularne grupy algorytmów,
+jednak wyró¿nia siê tak¿e inne. Podobn¹ do uczenia z nadzorem grup¹ algorytmów
+s¹ metody \emph{uczenia na podstawie zapytañ}. W takim przypadku informacja
+trenuj¹ca co prawda pochodzi od nauczyciela, lecz stanowi jedynie odpowiedŸ na
+zadane przez ucznia pytanie. W odró¿nieniu od uczenia pod nadzorem, nauczyciel
+nie podaje przyk³adów danych wejœciowych i oczekiwanych odpowiedzi, a jedynie
+odpowiada na jawne pytanie ucznia.
+
+Mo¿na tak¿e wyró¿niæ metodê \emph{uczenia przez eksperymentowanie}. Mamy z ni¹
+do czynienia, gdy algorytm gromadzi wiedzê poprzez wykonywanie eksperymentów ze
+œrodowiskiem, w którym dzia³a. Polega to na wykonywaniu pewnych dzia³añ, a
+nastêpnie obserwowaniu ich konsekwencji i wp³ywu, jakie maj¹ one na œrodowisko.
+
+Zbli¿on¹ to uczenia przez eksperymentowanie metod¹ jest \emph{uczenie ze
+wzmocnieniem}. Podobnie jak poprzednia metoda opiera siê ono na
+eksperymentowaniu, jednak wykorzystuje dodatkowo pewn¹ informacjê trenuj¹c¹,
+pozwalaj¹c¹ na ocenê uzyskanej wiedzy. W tym przypadku informacja ta nie 
+ma charakteru instrukta¿owego, ale pozwala na otrzymanej wartoœciowanie wiedzy
+poprzez przypisanie jej liczbowych wspó³czynników zwanych \emph{wzmocnieniami}.
+Pozwala to na ocenê dotychczasowego przebiegu procesu uczenia siê i dobieranie
+jego parametrów tak, by uzyskiwana by³a wiedza zbli¿ona do tej z najwy¿szymi wspó³czynnikami. 
+
+
+
+
+
