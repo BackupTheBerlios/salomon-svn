@@ -1,29 +1,98 @@
 \section{Powody powstania Salomona}
-Po przeanalizowaniu obecnie dostêpnych narzêdzi do uczenia maszynowego
-stwierdziliœmy, ¿e oprzemy nas system na na dwóch aplikacjach \emph{Weka}
-oraz \emph{Vinlen}. 
 
-\subsection{Indukcyjne bazy danych}
-Przyk³adem indukcyjnej bazy danych jest system \emph{Vinlen}. Powsta³ on jako 
-realizacja tej koncepcji. System ten s³u¿y³ nam jako wzorcowa implementacja. Z
-zwi¹zku z pewnymi niedoskona³oœciami tego rozwi¹zania zdecydowaliœmy siê na
-stworzenie w³asnej implementacji. 
+Po przeanalizowaniu obecnych narzêdzi do uczenia maszynowego stwierdziliœmy, ¿e 
+dostêpne systemu tego typu posiadaj¹ pewne ograniczenia, które chcielibyœmy 
+wyeliminowaæ. Po zapoznaniu z wieloma narzêdzami doszliœmy do wniosku, ¿e 
+najbli¿ej naszych wymagañ s¹ dwie aplikacje: VINLEN oraz Weka. Dlatego 
+omawiaj¹c nasze wymagania, bêdziemy nawi¹zywaæ do tych dwóch aplikacji. Równie¿ 
+dlatego, ¿e chcielibyœmy, tworz¹c nasz¹ aplikacje, wzorowaæ siê na tych dwóch 
+programach.
 
-W dobie Internetu, coraz wiêcej aplikacji pracuje w œrodowisku rozproszonym.
-Znana nam wersja systemu Vinlen nie posiada³a mo¿liwoœci pracy w œrodowisku
-rozproszonym, co jednak uznaliœmy za powa¿ny brak. Dwa g³ówne powody
-przemawiaj¹ce za rozproszeniem to lepsze wykorzystanie zasobów (klasteryzacja)
-oraz dostêp do rozproszonych danych oraz wiedzy.
+\subsection{Funkcjonalne}
 
-Vinlen jest rozwijany na uniwersytecie TUTAJ WSTAWIÆ NAZWÊ jako zamkniêty
-produkt. My jednak postanowiliœmy udostêpniæ nasz system na otwartej licencji
-\emph{LGPL}, która pozwala u¿ywanie go jako biblioteki w komercyjnych
-produktach. Jednak w takim przypadku nie mo¿na wykorzystaæ integracji z Weka z
-racji na jej licencjê (GNU). Weka dostarcza implementacji wielu popularnych
-algorytmów uczenia maszynowego, dlatego te¿ stwierdziliœmy, ¿e zamiast
-dostarczenia w³asnej implementacji dostarczymy integracji z Wek¹, przez co
-zyskamy dostêp do jej bogatej biblioteki gotowych algorytmów. Vinlen korzysta z
-w³asnych implementancji algorytmów, z których czêœæ powsta³a na uniwersytecie !!!!!.
+\begin{enumerate}
+	\item Postanowiliœmy, ¿e nasza aplikacja powinna posiadaæ 
+mo¿liwoœæ pracy w œrodowisku rozproszonym. W dobie rozpowszechniania siê 
+technologi gridowych, klastrów stwierdziliœmy, ¿e to bardzo wa¿ny aspekt takiej 
+aplikacji. Dzia³anie w œrodowisku heterogenicznym pozwala nie tylko na lepsze 
+wykorzystanie zasobów sprzêtowych, ale równie¿ na dostêp do wielu Ÿróde³ danych 
+przy zapewnieniu bezpieczeñstwach tych danych. Rozproszone instancje powinny 
+wymieniaæ jak najmniejsza iloœæ informacji. W celu zapewnianiu bezpieczeñstwa 
+danych, aplikacja nie powinna wysy³aæ samych danych, ale wy³¹cznie wiedze. 
+Nale¿y za³o¿yæ ograniczone zaufanie do instancji pracuj¹cych w œrodowisku, 
+dlatego ka¿de Ÿród³o danych powinno byæ zabezpieczone. 
+	\item Bezpieczeñstwo, 
+czêœciowo omówione wy¿ej jest wa¿nym aspektem systemu tego typu. W 
+zastosowaniach komercyjnych system mo¿e mieæ dostêp do kluczowych danych 
+przedsiêbiorstwa czy instytucji. Model bezpieczeñstwa komunikacji miêdzy 
+ró¿nymi instancjami, chcielibyœmy oprzeæ na obecnie dostêpnych metodach ochrony 
+jak np. VPN (Virtual Private Network). Ochron¹ warstwy komunikacji powinien 
+zaj¹æ siê administrator. Zak³adamy, ¿e nasz system bêdzie zainstalowany w 
+bezpiecznym œrodowisku. 
+	\item Obliczenia równoleg³e. Ten aspekt aplikacji zosta³ 
+czêœciowo umówiony wy¿ej. W tym punkcie chcielibyœmy zaznaczyæ, ¿e równoleg³e 
+obliczenia powinny byæ równie¿ dostêpne w ramach pojedynczej instancji systemu. 
+Po przeanalizowaniu dostêpnych metod zrównolegniania aplikacji doszliœmy do 
+wniosku, ¿e w naszym przypadku w³aœciwym i najprostszym modelem jest napsianie 
+aplikacji pracuj¹cych w oparciu o w¹tki i przeniesienie ciê¿aru zrownolegniania 
+na inne mechanizmy jak klasteryzcja itp. Obecnie na rynku znajduj¹ siê systemu 
+pozowalaj¹ce na zrównoleglenie aplikacji wielow¹tkowej w sposób przeŸroczysty 
+dla u¿ytkownika jak i dla aplikacji. Œwietnym przyk³adem takiej aplikacji jest 
+np. MOSIX (http://www.mosix.org/), który z klastrów linuxowych x86 tworzy 
+system wieloprocesorowy.   
+\end{enumerate}
+
+
+
+
+
+%II. Salomon
+%1. Napisaæ postulaty - dlaczego piszemy Salomona:
+%Funkcje:
+%rozproszenie
+%- wykorzystanie gotowych algorytmów
+%bezpieczeñstwo
+%- komponentowa architektura
+%- podejœcie do data set i attribute set
+%- jedna reprezentacja wiedzy dzielona pomiêdzy ro¿ne algorytmy
+%- przenoœnoœæ
+%- dostêp nie tylko do wiedzy, ale tak¿e do danych (indukcyjna baza danych)
+%Api i licencja:
+%- proste API
+%- licencja
+%
+
+
+
+
+
+
+% \section{Powody powstania Salomona}
+% Po przeanalizowaniu obecnie dostêpnych narzêdzi do uczenia maszynowego
+% stwierdziliœmy, ¿e oprzemy nas system na na dwóch aplikacjach \emph{Weka}
+% oraz \emph{Vinlen}. 
+% 
+% \subsection{Indukcyjne bazy danych}
+% Przyk³adem indukcyjnej bazy danych jest system \emph{Vinlen}. Powsta³ on jako 
+% realizacja tej koncepcji. System ten s³u¿y³ nam jako wzorcowa implementacja. Z
+% zwi¹zku z pewnymi niedoskona³oœciami tego rozwi¹zania zdecydowaliœmy siê na
+% stworzenie w³asnej implementacji. 
+% 
+% W dobie Internetu, coraz wiêcej aplikacji pracuje w œrodowisku rozproszonym.
+% Znana nam wersja systemu Vinlen nie posiada³a mo¿liwoœci pracy w œrodowisku
+% rozproszonym, co jednak uznaliœmy za powa¿ny brak. Dwa g³ówne powody
+% przemawiaj¹ce za rozproszeniem to lepsze wykorzystanie zasobów (klasteryzacja)
+% oraz dostêp do rozproszonych danych oraz wiedzy.
+% 
+% Vinlen jest rozwijany na uniwersytecie TUTAJ WSTAWIÆ NAZWÊ jako zamkniêty
+% produkt. My jednak postanowiliœmy udostêpniæ nasz system na otwartej licencji
+% \emph{LGPL}, która pozwala u¿ywanie go jako biblioteki w komercyjnych
+% produktach. Jednak w takim przypadku nie mo¿na wykorzystaæ integracji z Weka z
+% racji na jej licencjê (GNU). Weka dostarcza implementacji wielu popularnych
+% algorytmów uczenia maszynowego, dlatego te¿ stwierdziliœmy, ¿e zamiast
+% dostarczenia w³asnej implementacji dostarczymy integracji z Wek¹, przez co
+% zyskamy dostêp do jej bogatej biblioteki gotowych algorytmów. Vinlen korzysta z
+% w³asnych implementancji algorytmów, z których czêœæ powsta³a na uniwersytecie !!!!!.
 
 % Komponentowa oraz otwarta architektura
 % 
