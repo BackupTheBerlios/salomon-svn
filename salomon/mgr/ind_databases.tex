@@ -9,7 +9,7 @@ na zadawanie zapytañ i manipulacjê danymi wzorcami.
 Od pocz¹tku istnienia idei data miningu zdawano sobie sprawê,
 ¿e proces ich przetwarzania powinien byæ wspierany przez technologiê baz danych.
 W ostatnich latach idea ta zosta³a sformalizowana jako koncepcja
-\emph{indukcyjnych baz danych}. 
+\emph{indukcyjnych baz danych}.
 
 %cytat z artykulu
 Integracja technologii baz danych z nowoczesnymi metodami
@@ -22,12 +22,12 @@ wygenerowanej przez indukcyjne wnioskowanie z faktów z bazy danych
 i wczeœniejszej wiedzy~\cite{bib3}. Schemat typowej indukcyjnej
 bazy danych przedstawiony jest na rysunku~\ref{fig:inddb}.
 
-% \begin{figure}[!ht]
-%     \centering
-%         \includegraphics[width=0.90\textwidth]{img/knowledge_mining.png}
-%     \caption{Indukcyjna baza danych~\cite{bib2}}
-%     \label{fig:inddb}
-% \end{figure}
+\begin{figure}[!ht]
+     \centering
+         \includegraphics[width=0.90\textwidth]{img/knowledge_mining.png}
+     \caption{Indukcyjna baza danych~\cite{bib2}}
+     \label{fig:inddb}
+\end{figure}
 
 Jak zosta³o ju¿ wy¿ej wspomniane, indukcyjne bazy danych przechowuj¹ nie dane
 ale równie¿ wzorce. Mo¿na za³o¿yæ, ¿e zarówno dane, jak i wzorce stanowi¹ zbiory zbiorów.
@@ -71,4 +71,33 @@ Mechanizm, zgodnie z którym dokonuje siê nabywanie lub doskonalenie wiedzy,
 jest najczêœciej jednoznacznie wyznaczany przez metodê reprezentacji 
 wiedzy oraz postaæ informacji trenuj¹cej.
 
+\subsection{VINLEN}
+to system indukcyjnej bazy danych, rozwijany w
+\emph{George Mason University}~\cite{bib2}. Jest to klasyczna
+realizacja indukcyjnej bazy danych. Mechanizmy wnioskowania
+indukcyjnego s¹ zintegrowane ze standardowymi relacyjnymi
+operatorami bazodanowymi. Integracja ta opiera siê na nowych
+rodzajach operatorów zwanych operatorami generowania wiedzy
+\emph{KGO} (Knowledge Generation Operators). \emph{KGO} operuje na
+\emph{segmentach wiedzy} sk³adaj¹cych siê z~kombinacji jednej lub
+wiêcej tabel z relacyjnej bazy danych i~wiedzy przechowywanej
+w~bazie wiedzy (por. rysunek~\ref{fig:inddb}). \emph{KGO} przyjmuje
+na wyjœciu jeden lub wiêcej segment wiedzy, na podstawie którego
+generuje inny segment wiedzy. Podstawowym operatorem u¿ywanym w
+systemie jest AQ21, program do indukcyjnego tworzenia regu³ na
+podstawie danych.
+
+Indukcyjne bazy danych mog¹ byæ wspierane przez wyspecjalizowanych
+agentów (\emph{Scauts}), których zadaniem jest synteza
+i~zarz¹dzanie wiedz¹, która jest dostosowywana do wymagañ
+okreœlonego u¿ytkownika. System \emph{VINLEN} pozwala na tworzenie skryptów
+operuj¹cych na bazach danych, wiedzy i algorytmach uczenia
+maszynowego przy u¿yciu jêzyka \emph{KGL-1} (\emph{Knowledge
+Generation Language}).
+
+Cech¹ charakterystyczn¹ tak rozwijanego systemu bêdzie mo¿liwoœæ
+sk³adowania wiedzy w~relacyjnej bazie danych wraz z danymi,
+zadawanie zapytañ oraz manipulowanie wiedz¹ z~wykorzystaniem
+jêzyka \emph{KQL} lub przy u¿yciu funkcjonalnego, graficznego
+interfejsu u¿ytkownika.
 

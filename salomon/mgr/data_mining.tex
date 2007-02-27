@@ -1,0 +1,146 @@
+\section{Data mining}
+%http://www.thearling.com/text/dmwhite/dmwhite.htm
+
+\emph{Data mining}, czyli eksploracja lub dr¹¿enie danych to jeden z etapów
+odkrywania wiedzy zdanych. Technologia ta jest bardzo u¿yteczna dla wszystkich zainteresowanych
+przetwarzaniem informacji zawartych w ogromnych bazach danych, zwanymi
+\emph{hurtowniami danych}.
+
+Narzêdzia s³u¿¹ce do eksploracji danych pozwalaj¹ na przewidywanie przysz³ych
+trendów i zachowañ stanowi¹c nieocenion¹ pomoc przy podejmowaniu trudnych i
+czêsto niezwykle wa¿nych decyzji biznesowych. W odró¿nieniu od klasycznych
+systemów decyzyjnych, staraj¹cych siê wspomóc podjêcie decyzji poprzez
+znalezienie podobnych przypadków w istniej¹cych danych, narzêdzia te umo¿liwiaj¹
+wykrycie zale¿noœci pomiêdzy istniej¹cymi danymi, niejednokrotnie w
+obszarach, które mog³yby zostaæ pominiête przez ekspertów analizuj¹cych te dane.
+
+Wiele firm gromadzi dziœ ogromne iloœci informacji i przechowuje je w
+hurtowniach danych. Co bardzo wa¿ne z punktu widzenia biznesowego, techniki
+eksploracji danych mog¹ byæ zaimplementowane bardzo szybko, z wykorzystaniem
+istniej¹cego oprogramowania i sprzêtu, co w sposób znacz¹cy wp³ywa na lepsze 
+wykorzystanie istniej¹cych zasobów informacyjnych. 
+Ich zaimplementowanie na bardzo wydajnych maszynach gridowych daje mo¿liwoœæ
+uzyskania trafnych odpowiedzi na pytania, na które nie ma danych bezpoœredniej 
+odpowiedzi i by j¹ uzyskaæ trzeba dokonaæ na przyk³ad wnioskowania.
+
+Techniki data miningu stanowi¹ rezultat d³ugiego procesu badañ i poszukiwañ,
+zapocz¹tkowanego wraz z przechowywaniem pierwszych danych na komputerach.
+Proces ten obejmowa³ ci¹g³e ulepszenia technik sk³adowania danych, od coraz
+doskonalszych systemów bazodanowych po technologie pozwalaj¹ce u¿ytkownikowi na
+dostêp do danych w czasie niemal rzeczywistym. Data mining oznacza krok dalej --
+pozwala nie tylko na szybkie dostarczenie potrzebnych danych, ale tak¿e na
+uzyskanie z nich potrzebnych informacji, które czêsto nie s¹ zawarte
+bezpoœrednio w danych.
+
+Techniki te mog¹ byæ i s¹ wykorzystywane do profesjonalnych zastosowañ. 
+Dzieje siê tak, gdy¿ technologie, na których opiera siê data mining, 
+czyli efektywne struktury danych, pozwalaj¹ce na szybki dostêp do ogromnej iloœci danych, 
+równoleg³e przetwarzanie wieloprocesorowe czy wreszcie wydajne algorytmy s¹ ju¿
+wystarczaj¹co dojrza³e by mog³y byæ wykorzystane komercyjnie.
+
+Wykorzystanie data miningu u³atwia ³atwy dostêp do bardzo dobrych narzêdzi, jak
+choæby przedstawione poni¿ej \emph{Weka} (\ref{lab:weka}) i \emph{YALE}
+(\ref{lab:yale}).  % Commercial databases are growing at unprecedented rates. 
+% A recent META Group survey of data warehouse projects found that 19 
+% of respondents are beyond the 50 gigabyte level, while 59 
+% expect to be there by second quarter of 1996.1 
+% In some industries, such as retail, these numbers can be much larger. 
+% The accompanying need for improved computational engines can now be met in a cost-effective 
+% manner with parallel multiprocessor computer technology. 
+% Data mining algorithms embody techniques that have existed for at least 10 years, 
+% but have only recently been implemented as mature, reliable, 
+% understandable tools that consistently outperform older statistical methods.
+% 
+% In the evolution from business data to business information, 
+% each new step has built upon the previous one. 
+% For example, dynamic data access is critical for drill-through in data navigation applications, 
+% and the ability to store large databases is critical to data mining. 
+% From the user’s point of view, the four steps listed in 
+% Table 1 were revolutionary because they allowed new business questions to be answered 
+% accurately and quickly.
+
+
+\subsection{Weka}
+\label{lab:weka}
+
+\emph{Weka} to narzêdzie do prowadzenia eksperymentów
+zwi¹zanych z~uczeniem maszynowym stworzone w \emph{University of
+Waikato}~\cite{weka}. Narzêdzie to znajduje szerokie zastosowanie
+w dydaktyce i badaniach naukowych. Mo¿e równie¿ udostêpniaæ swoj¹
+funkcjonalnoœæ innym programom. Stanowi ono zbiór narzêdzi do
+zarz¹dzania danymi w ró¿norodnych formatach, algorytmów uczenia
+maszynowego i~oceniaj¹cych uzyskiwane rozwi¹zania a~tak¿e
+œrodowisko do porównywania ró¿nych algorytmów. Œrodowisko zapewnia
+przyjazny interfejs u¿ytkownika, co czyni je ³atwym
+w~wykorzystaniu.
+
+\emph{Weka} pozwala na wykorzystywanie ró¿norodnych Ÿróde³ danych,
+pocz¹wszy od plików tekstowych w wielu formatach, poprzez
+relacyjne bazy danych po dane umieszczone w Internecie. Dane te
+przetwarzane s¹ przez tzw. \emph{filtry}, które pozwalaj¹ na
+wyodrêbnienie z nich potrzebnych informacji i przedstawienie ich w
+czytelnej postaci.
+
+Najwiêksz¹ grup¹ algorytmów zaimplementowanych w programie
+\emph{Weka} s¹ algorytmy klasyfikuj¹ce. Wykorzystuj¹ one wiele
+form reprezentacji nauczonej wiedzy: od drzew i~regu³ decyzyjnych,
+przez maszyny wektorowe po sieci Bayesowskie.
+
+Inn¹ grup¹ algorytmów s¹ algorytmy grupuj¹ce (klastruj¹ce). Bazuj¹
+one na schematach \emph{k-Means}, \emph{EM}, \emph{Cobweb},
+\emph{X-means}, \emph{FarthestFirst}. Utworzone za ich pomoc¹
+klastry mog¹ byæ wizualizowane oraz porównywane do wzorcowych,
+jeœli takie s¹ do dyspozycji.
+
+System \emph{Weka} implementuje równie¿ popularny algorytm
+\emph{Apriori}, wykorzystywany do znajdowania regu³ asocjacyjnych.
+Dzia³a on tylko na danych dyskretnych i pozwala na identyfikacjê
+zale¿noœci statystycznych miêdzy ró¿nymi grupami atrybutów.
+
+\emph{Weka} dostarcza przyjazny graficzny interfejs u¿ytkownika,
+który jest bardzo u¿yteczny w praktyce.
+Pozwala on nie tylko na sprawne wczytywanie danych do systemu,
+ale tak¿e na ich wizualizacjê w formie czytelnych diagramów i~wykresów.
+
+Jedn¹ z ciekawszych funkcji systemu jest mo¿liwoœæ graficznego
+definiowania przep³ywu danych i sposobu ich przetwarzania. ród³a
+danych, filtry, klasyfikatory i algorytmy oceniaj¹ce mog¹ byæ
+³¹czone graficznie za pomoc¹ linii. W~ten sposób mo¿na okreœlaæ
+jaki ma byæ przep³yw danych w systemie. Konfiguracja konkretnych
+danych i metod ich przetwarzania mo¿e byæ zapisania i za³adowana
+ponownie do powtórnego wykorzystania.
+
+
+\subsection{YALE}
+\label{lab:yale}
+\emph{YALE} (Yet Another Learing Environment), podobnie jak
+opisywana powy¿ej \emph{Weka}, jest systemem do prowadzenia
+eksperymentów zwi¹zanych z uczeniem maszynowym.
+
+Jego g³ówn¹ zalet¹ jest bogaty zestaw operatorów, które
+umo¿liwiaj¹ tworzenie ,,³añcuchów'' z³o¿onych z ró¿nych problemów
+zwi¹zanych z~uczeniem. Dane, na których operuj¹ operatory s¹ dla
+nich ca³kowicie przeŸroczyste i przechowywane mog¹ byæ w
+ró¿norodnych formatach -- za odpowiednie transformacje pomiêdzy
+nimi odpowiada samo œrodowisko.
+
+Dziêki operatorom i mo¿liwoœci ich ³atwego ³¹czenia przy u¿yciu
+graficznego interfejsu u¿ytkownika, a tak¿e dziêki jêzykowi
+skryptowemu bazuj¹cemu na \emph{XML}, \emph{YALE} jest czêsto
+u¿ywane do prowadzenia badañ i~eksperymentów z ró¿norodnymi
+algorytmami uczenia maszynowego.
+
+\emph{YALE} dostarcza ponad 200 operatorów, jak choæby algorytmy
+klasyfikuj¹ce, asocjacyjne, klastruj¹ce, wyszukuj¹ce regu³y czy
+oparte na drzewach decyzyjnych. Dodatkowo mo¿liwe jest
+wykorzystanie wielu algorytmów dostarczanych przez œrodowisko
+\emph{Weka} w sposób analogiczny do operatorów wbudowanych. Przed
+przetworzeniem dane mog¹ byæ poddane dyskretyzacji, filtrowaniu
+czy normalizacji, a po zakoñczeniu obliczeñ odpowiedniej
+walidacji.
+
+\emph{YALE} pozwala na eksperymentowanie i~poszukiwanie najlepszego dla danego problemu
+po³¹czenia ró¿nych metod uczenia maszynowego. Dziêki modularnej strukturze operatorów
+mo¿liwa jest wymiana pojedynczych ogniw ,,³añcuchów'' obliczeñ w celu uzyskania
+najlepszego efektu. Dodatkowo ,,³añcuchy'' te mog¹ byæ zagnie¿d¿ane, tworz¹c skomplikowane
+drzewa operatorów.
