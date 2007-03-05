@@ -43,6 +43,41 @@ system wieloprocesorowy.
 \end{enumerate}
 
 
+\subsection{Architektura}
+\begin{enumerate}
+	\item Wykorzystanie gotowych algorytmów. W VINLENIE zosta³y czêœciowo 
+wykorzystane implementacje algorytmów przygotowanych do wczeœniejszych 
+projektów jak program Emerald (przypisek). Znajdziemy tam takie algorytmy jak 
+Abacuse, AQ czy Cluster. Czêœæ z tych implementacji jest bardzo nowatorska z 
+wielkimi mo¿liwoœciami. W Wece mo¿emy znaleŸæ jeszcze wiêksz¹ gamê dostêpnych 
+algorytmów. Dlatego te¿, nas system powinien charakteryzowaæ siê odpowiednia 
+architektur¹, która w ³atwy sposób pozwala na powtórne u¿ycie ju¿ 
+zaimplementowanych algorytmów. Wa¿nym aspektem jest dostêp do algorytmów Weki, 
+ale tak¿e do ewentualnego u¿ycia algorytmów z VINLENA, co jedna wymaga 
+zastosowania odpowiedniej licencji (link do odpowiedniego punktu. VINLEN zosta³ 
+napisany w jêzyku C++, zatem system powinnen wspieraæ równie¿ inne jêzyki 
+programowania a szczególnie wspomniany C++.
+	\item Jednym z podstawowych wymagañ stawianym naszemu systemowi, jest 
+komponentowa architektura. W celu poprawnego dzia³ania w wielkim rozproszonym 
+œrodowisku, platforma uruchomieniowa powinna byæ dobrze odseparowana od samych 
+algorytmów, co umo¿liwi na wspó³pracê w jednym œrodowisku ró¿nych wersji 
+systemu, a nawet ró¿nych jego implementacji! Budowa systemu powinna w jak 
+najwiêkszym stopniu wspieraæ mo¿liwoœæ powstania ró¿nych niezale¿nych 
+implementacji algorytmów uczenia maszynowego, dostarczanych przez ró¿nych 
+dostawców. Tutaj pojawia siê problem bezpieczeñstwa oraz zaufania do ró¿nych 
+implementacji. Naturalnym rozwi¹zaniem tego problemu wydajê siê zastosowanie 
+bezpiecznych jêzyków programowania, jak Java oraz jej systemu bezpieczeñstwa i 
+ograniczenia uprawnieñ. Kolejnym aspektem architektury jest sposób aktualizacji 
+algorytmów. Jeœli w przypadku samej platformy aktualizacja nie bêdzie 
+dokonywana czêsto to jednak w przypadku algorytmów mo¿e to nastêpowaæ bardzo 
+czêsto. Przyk³adowym zastosowaniem wymagaj¹cym czêstych aktualizacji jest 
+wynajmowanie mocy obliczeniowej innym instytucj¹. Mo¿na wyobraziæ sobie 
+sytuacje, w której na wydajnej maszynie zainstalowany jest Salomon (mo¿na 
+podawaæ tutaj nazwê?) Wykonuje on obliczenia na zlecenie, co w oczywisty sposób 
+wymaga³oby pobrania nie tylko parametrów, czy danych, ale równie¿ samych 
+algorytmów. Oba referencyjne systemy nie spe³niaj¹ wymaganych przez nas 
+kryteriów.
+\end{enumerate}
 
 
 
