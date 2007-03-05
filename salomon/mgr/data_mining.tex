@@ -1,4 +1,5 @@
 \section{Data mining}
+\label{lab:data_mining}
 %http://www.thearling.com/text/dmwhite/dmwhite.htm
 
 \emph{Data mining}, czyli eksploracja lub dr¹¿enie danych to jeden z etapów
@@ -56,109 +57,37 @@ nowego produktu. Techniki data miningu w oparciu o dane historyczne na temat
 wczeœniejszych kampanii promocyjnych identyfikuj¹ grupê odbiorców, którzy zapewni¹
 maksymalny zwrot poniesionych nak³adów inwestycyjnych.
 
-% Automated discovery of previously unknown patterns. 
-% 
-% Data mining tools sweep through databases and identify previously 
-% hidden patterns in one step. An example of pattern discovery is the analysis 
-% of retail sales data to identify seemingly unrelated products that are often purchased together. 
-% Other pattern discovery problems include detecting fraudulent credit card 
-% transactions and identifying anomalous data that could represent data entry keying errors.
-% 
-% 
-% Data mining techniques can yield the benefits of automation on existing software 
-% and hardware platforms, and can be implemented on new systems as existing platforms 
-% are upgraded and new products developed. When data mining tools are implemented on 
-% high performance parallel processing systems, they can analyze massive databases in minutes. 
-% Faster processing means that users can automatically experiment with more models to understand 
-% complex data. High speed makes it practical for users to analyze huge quantities of data. 
-% Larger databases, in turn, yield improved predictions.
+Techniki te s¹ tak¿e u¿yteczne do odkrywania niezidentyfikowanych wczeœniej
+wzorców i regularnoœci w danych. Wspó³czesne narzêdzia mog¹ odkrywaæ takie
+regularnoœci nie tylko szybko, ale, co wa¿niejsze, automatycznie. Przyk³adem
+mo¿e byæ automatyczne wykrywanie po³aczeñ miêdzy produktami, które, mimo i¿ nie
+wydaj¹ siê byæ powi¹zane, czêsto s¹ kupowane razem. Takie informacje mog¹ byæ
+wykorzystane do planowania kampanii reklamowych.
 
-%TODO: jest sekcja w tym dokumencie o narzedziach
-Wykorzystanie data miningu u³atwia ³atwy dostêp do bardzo dobrych narzêdzi, jak
-choæby przedstawione poni¿ej \emph{Weka} (\ref{lab:weka}) i \emph{YALE}
-(\ref{lab:yale}).
+Wsród najpowszechniej wykorzystywanych technik data miningu s¹:
 
-\subsection{Weka}
-\label{lab:weka}
+\begin{itemize}
+	\item Sieci neuronowe \\
+  	S¹ to nielinearne modele przewiduj¹ce, które ucz¹ siê poprzez trening. Ich
+  	struktura i dzia³anie przypomina prawdziwe, wystêpuj¹ce u ¿ywych organizmów
+  	po³¹czenia miêdzy neuronami w uk³adadzie nerwowym.
 
-\emph{Weka} to narzêdzie do prowadzenia eksperymentów
-zwi¹zanych z~uczeniem maszynowym stworzone w \emph{University of
-Waikato}~\cite{weka}. Narzêdzie to znajduje szerokie zastosowanie
-w dydaktyce i badaniach naukowych. Mo¿e równie¿ udostêpniaæ swoj¹
-funkcjonalnoœæ innym programom. Stanowi ono zbiór narzêdzi do
-zarz¹dzania danymi w ró¿norodnych formatach, algorytmów uczenia
-maszynowego i~oceniaj¹cych uzyskiwane rozwi¹zania a~tak¿e
-œrodowisko do porównywania ró¿nych algorytmów. Œrodowisko zapewnia
-przyjazny interfejs u¿ytkownika, co czyni je ³atwym
-w~wykorzystaniu.
+  	\item Drzewa decyzyjne (\ref{lab:dec_trees}) \\
+  	S¹ to struktury o kszta³cie drzewa. Reprezentuj¹ zbiory decyzji,
+  	które generuj¹ regu³y klasyfikuj¹ce zbiory danych.  
+  
+  	\item Algorytmy genetyczne \\
+  	S¹ to techniki optymalizacyjne, które u¿ywaja technik takich jak mutacja czy
+  	naturalna selekcja. S¹ wzorowane na wystepuj¹cych w naturze procesach ewolucyjnych.
+\end{itemize}
 
-\emph{Weka} pozwala na wykorzystywanie ró¿norodnych Ÿróde³ danych,
-pocz¹wszy od plików tekstowych w wielu formatach, poprzez
-relacyjne bazy danych po dane umieszczone w Internecie. Dane te
-przetwarzane s¹ przez tzw. \emph{filtry}, które pozwalaj¹ na
-wyodrêbnienie z nich potrzebnych informacji i przedstawienie ich w
-czytelnej postaci.
+Te, a tak¿e inne techniki s¹ wykorzystywane od ponad dekady poprzez ró¿ne specjalizowane
+narzêdzia. Narzêdzia te jednak najczeœciej mog³y pracowaæ ze stosunkowo
+niewielkimi iloœciami danych. Obecnie rozwój narzêdzi do dr¹¿enia danych zmierza
+w kierunku ich integracji z ogromnymi systemami bazodanowymi i hurtowniami
+danych. 
 
-Najwiêksz¹ grup¹ algorytmów zaimplementowanych w programie
-\emph{Weka} s¹ algorytmy klasyfikuj¹ce. Wykorzystuj¹ one wiele
-form reprezentacji nauczonej wiedzy: od drzew i~regu³ decyzyjnych,
-przez maszyny wektorowe po sieci Bayesowskie.
+\emph{Salomon} na obecnym etapie jego rozwoju pozwala na uruchamianie algorytmów
+wykorzystuj¹cych drzewa decyzyjne, dlatego te¿ im chcielibyœmy poœwiêciæ nieco
+wiêcej miejsca.
 
-Inn¹ grup¹ algorytmów s¹ algorytmy grupuj¹ce (klastruj¹ce). Bazuj¹
-one na schematach \emph{k-Means}, \emph{EM}, \emph{Cobweb},
-\emph{X-means}, \emph{FarthestFirst}. Utworzone za ich pomoc¹
-klastry mog¹ byæ wizualizowane oraz porównywane do wzorcowych,
-jeœli takie s¹ do dyspozycji.
-
-System \emph{Weka} implementuje równie¿ popularny algorytm
-\emph{Apriori}, wykorzystywany do znajdowania regu³ asocjacyjnych.
-Dzia³a on tylko na danych dyskretnych i pozwala na identyfikacjê
-zale¿noœci statystycznych miêdzy ró¿nymi grupami atrybutów.
-
-\emph{Weka} dostarcza przyjazny graficzny interfejs u¿ytkownika,
-który jest bardzo u¿yteczny w praktyce.
-Pozwala on nie tylko na sprawne wczytywanie danych do systemu,
-ale tak¿e na ich wizualizacjê w formie czytelnych diagramów i~wykresów.
-
-Jedn¹ z ciekawszych funkcji systemu jest mo¿liwoœæ graficznego
-definiowania przep³ywu danych i sposobu ich przetwarzania. ród³a
-danych, filtry, klasyfikatory i algorytmy oceniaj¹ce mog¹ byæ
-³¹czone graficznie za pomoc¹ linii. W~ten sposób mo¿na okreœlaæ
-jaki ma byæ przep³yw danych w systemie. Konfiguracja konkretnych
-danych i metod ich przetwarzania mo¿e byæ zapisania i za³adowana
-ponownie do powtórnego wykorzystania.
-
-
-\subsection{YALE}
-\label{lab:yale}
-\emph{YALE} (Yet Another Learing Environment), podobnie jak
-opisywana powy¿ej \emph{Weka}, jest systemem do prowadzenia
-eksperymentów zwi¹zanych z uczeniem maszynowym.
-
-Jego g³ówn¹ zalet¹ jest bogaty zestaw operatorów, które
-umo¿liwiaj¹ tworzenie ,,³añcuchów'' z³o¿onych z ró¿nych problemów
-zwi¹zanych z~uczeniem. Dane, na których operuj¹ operatory s¹ dla
-nich ca³kowicie przeŸroczyste i przechowywane mog¹ byæ w
-ró¿norodnych formatach -- za odpowiednie transformacje pomiêdzy
-nimi odpowiada samo œrodowisko.
-
-Dziêki operatorom i mo¿liwoœci ich ³atwego ³¹czenia przy u¿yciu
-graficznego interfejsu u¿ytkownika, a tak¿e dziêki jêzykowi
-skryptowemu bazuj¹cemu na \emph{XML}, \emph{YALE} jest czêsto
-u¿ywane do prowadzenia badañ i~eksperymentów z ró¿norodnymi
-algorytmami uczenia maszynowego.
-
-\emph{YALE} dostarcza ponad 200 operatorów, jak choæby algorytmy
-klasyfikuj¹ce, asocjacyjne, klastruj¹ce, wyszukuj¹ce regu³y czy
-oparte na drzewach decyzyjnych. Dodatkowo mo¿liwe jest
-wykorzystanie wielu algorytmów dostarczanych przez œrodowisko
-\emph{Weka} w sposób analogiczny do operatorów wbudowanych. Przed
-przetworzeniem dane mog¹ byæ poddane dyskretyzacji, filtrowaniu
-czy normalizacji, a po zakoñczeniu obliczeñ odpowiedniej
-walidacji.
-
-\emph{YALE} pozwala na eksperymentowanie i~poszukiwanie najlepszego dla danego problemu
-po³¹czenia ró¿nych metod uczenia maszynowego. Dziêki modularnej strukturze operatorów
-mo¿liwa jest wymiana pojedynczych ogniw ,,³añcuchów'' obliczeñ w celu uzyskania
-najlepszego efektu. Dodatkowo ,,³añcuchy'' te mog¹ byæ zagnie¿d¿ane, tworz¹c skomplikowane
-drzewa operatorów.
