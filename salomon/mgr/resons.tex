@@ -80,6 +80,52 @@ kryteriów.
 \end{enumerate}
 
 
+\subsection{Jeszcze nie znam tytuly}
+
+W odró¿nieniu od innych systemów, szczególny nacisk chcemy po³o¿yæ na 
+platformê, a nie na same algorytmy. Jak ju¿ wczeœniej zosta³o powiedziane, 
+wa¿ne jest, aby da³o siê wykorzystaæ gotowe implementacje algorytmów machine 
+learning. W zwi¹zku z tym bardzo wa¿nymi aspektami s¹: proste API (z ang. 
+Application program interface) oraz licencja.
+
+\begin{enumerate}
+\item \item Osoby, które zajmuj¹ siê machine learning, niekoniecznie musz¹, byæ 
+specjalistami od jêzyków programowania jak przyk³adowo Java, dlatego 
+niezmiernie wa¿ne, jest, aby platforma dostarcza³a bardzo prostego API i 
+ukrywa³a przed twórc¹ wtyczek takie aspekty jak zapisywanie parametrów 
+wejœciowych oraz wyników. Platforma powinna zawieraæ efektywne, ale zarazem 
+proste narzêdzia do dokonywania takich zadañ. Kolejnym aspektem, który mo¿e 
+stwarzaæ problemy, a który mo¿na ujednoliciæ jest kwestia komunikacji pomiêdzy 
+ró¿nymi algorytmami (wtyczkami). I w tym przypadku ca³a odpowiedzialnoœæ za 
+komunikacje powinna spoczywaæ na platformie. Dziêki takiemu podejœciu, mo¿liwe 
+jest u¿ycie obliczeñ równoleg³ych i rozproszonych, bez dodatkowych wymagañ 
+stawianych wtyczk¹. Inna u¿yteczn¹ w³aœciwoœci¹, która nale¿y rozwa¿yæ jest 
+umo¿liwienie tworzenia wtyczek za pomoc¹ jêzyków skryptowych. Jest to 
+szczególnie po¿yteczna w³aœciwoœæ w przypadku kiedy, pracujemy nad danych 
+algorytmem i dokonujemy eksperymentów a przez co potrzebuje czêsto modyfikowaæ 
+wtyczkê. Czêsto pomijanym problem przy tworzeniu aplikacji w ogóle, jest 
+pierwszy kontakt z ni¹. Chcielibyœmy, aby ka¿dy nowy u¿ytkownik naszego 
+systemu, nie zosta³ zniechêcony ju¿ na samym pocz¹tku, dlatego nale¿y zwróciæ 
+szczególn¹ uwagê, aby nasza aplikacja by³a prosta w obs³udze z ang. User 
+friendly zarówno dla twórcy wtyczek jak i osoby wykonuj¹cych eksperymentów z 
+wykorzystaniem gotowych wtyczek. System powinien byæ dostarczany z przyk³adowym 
+zestawem wtyczek, które pozwol¹ na u¿ycie i przetestowanie ka¿dego z aspektów 
+platformy. 
+
+\item VINLEN to system komercyjny, dostarczany bez kodu Ÿród³owego, 
+dlatego jego wykorzystanie jest utrudnione zarówno jako platformy dla w³asnych 
+algorytmów jak i  jego algorytmów. Z racji braku kodu Ÿród³owego nie s¹ mo¿liwe 
+ewentualne modyfikacje do naszych potrzeb. Weka dostarczana jest na licencji 
+GPL, jest licencja open source, jednak równie¿ stwarza pewne problemy. W 
+przypadku tej licencji niemo¿liwe jest u¿ycie aplikacji w innym system o 
+zamkniêtym kodzie Ÿród³owym. Chcielibyœmy, aby mo¿liwe by³o wykorzystanie 
+naszego systemu w zamkniêtych, komercyjnych projektach a zarazem chcielibyœmy, 
+aby u¿yta przez na licencja by³a zgodna z GPL. Zgodnoœæ licencji jest wymagana 
+do ewentualnego u¿ycia algorytmów Weki w naszym systemie. Po wstêpnej analizie 
+dostêpnych licencji, jedn¹ z nich, która spe³nia nasze wymagania jest licencja 
+LGPL (wstawiæ przypis i odnoœniki)
+\end{enumerate}
+
 
 %II. Salomon
 %1. Napisaæ postulaty - dlaczego piszemy Salomona:
