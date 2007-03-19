@@ -127,11 +127,71 @@ LGPL (wstawiæ przypis i odnoœniki)
 \end{enumerate}
 
 \subsection{Wiedza}
-Jak wczeœniej by³o napisane, system powinien dostarczaæ pewnego wspólnego API. W tym punkcie chcielibyœmy szczególnie zwróciæ uwagê na API pozwalaj¹ce na dokonywanie operacji na wiedzy oraz danych. Takie interfejs w znaczny sposób uproœci³by proces tworzenia wtyczek a dodatkowo pozwoli³by na stworzenie wydajnego i dobrze przetestowanego API. Kolejnym wa¿nym aspektem, jest komunikacja. Posiadanie jednego formatu zapisu danych i wiedzy umo¿liwia komunikacje pomiêdzy ró¿nymi wtyczkami czy podsystemami. Odizolowanie algorytmów (wtyczek) od zapisy/odczytu danych pozwala równie¿ zapewniæ odpowiedni poziom bezpieczeñstwa. Przyk³adowo system powinien posiadaæ API pozwalaj¹ce na tworzenie, manipulacje, odczyt i zapis drzew decyzyjnych, dziêki czemu ró¿ne aspekty pracy na drzewach decyzyjnych mo¿na by by³o umieœciæ w osobnych wtyczkach niekoniecznie dostarczanych przez tego samego dostawce, a przede wszystkim praca nad jedn¹ czêœci¹ (np. Prezentacj¹ drzew) nie wymaga³oby wiedzy na temat innych wtyczek. 
+
+
+Wiedza Jak wczeœniej by³o napisane, system powinien dostarczaæ pewnego 
+wspólnego API. W tym punkcie chcielibyœmy szczególnie zwróciæ uwagê na API 
+pozwalaj¹ce na dokonywanie operacji na wiedzy oraz danych. Takie interfejs w 
+znaczny sposób uproœci³by proces tworzenia wtyczek a dodatkowo pozwoli³by na 
+stworzenie wydajnego i dobrze przetestowanego API. Kolejnym wa¿nym aspektem, 
+jest komunikacja. Posiadanie jednego formatu zapisu danych i wiedzy umo¿liwia 
+komunikacje pomiêdzy ró¿nymi wtyczkami czy podsystemami. Odizolowanie 
+algorytmów (wtyczek) od zapisy/odczytu danych pozwala równie¿ zapewniæ 
+odpowiedni poziom bezpieczeñstwa. Przyk³adowo system powinien posiadaæ API 
+pozwalaj¹ce na tworzenie, manipulacje, odczyt i zapis drzew decyzyjnych, dziêki 
+czemu ró¿ne aspekty pracy na drzewach decyzyjnych mo¿na by by³o umieœciæ w 
+osobnych wtyczkach niekoniecznie dostarczanych przez tego samego dostawce, a 
+przede wszystkim praca nad jedn¹ czêœci¹ (np. Prezentacj¹ drzew) nie wymaga³oby 
+wiedzy na temat innych wtyczek.
 
 \begin{enumerate}
- \item Dataset. Wiêkszoœæ algorytmów machine learning wymaga danych wejœciowych. Rozró¿niamy dane trenuj¹ce, które s¹ wykorzystywane do uczenia algorytmu, oraz dane testuj¹ce. Zbiór danych testuj¹cych wykorzystywany jest do oceny wyników algorytmu. Oba zbiory zazwyczaj stanowi¹ losowy podzbiór dostêpnych danych.
+ \item Dataset. Wiêkszoœæ algorytmów machine learning wymaga danych wejœciowych.
+ Rozró¿niamy dane trenuj¹ce, które s¹ wykorzystywane do uczenia algorytmu, oraz 
+dane testuj¹ce. Zbiór danych testuj¹cych wykorzystywany jest do oceny wyników 
+algorytmu. Oba zbiory zazwyczaj stanowi¹ losowy podzbiór dostêpnych danych. W 
+znanych nam systemach u¿ywan¹ s¹ jednowymiarowe zbiory trenuj¹ce (jedna tabela, 
+bez relacji). Taki model pasuje do wiêkszoœci algorytmów ucz¹cych, jednak 
+istnieje pewne ryzyko utraty danych, które nios¹ z sob¹ relacje, dlatego 
+chcielibyœmy aby nasz system tworzy³ i operowa³ na wielowymiarowych zbiorach 
+trenuj¹cych. Z punktu widzenie algorytmu struktura takiego zbioru nie powinna 
+odbiegaæ od wejœciowej bazy danych. Jedyna ró¿nica powinna polegaæ na iloœci 
+dostêpnych danych. Takie te¿ jest pierwsze i najbardziej naturalne zrozumienie 
+zbioru trenuj¹cego, jako podzbioru danych o niezmienionej strukturze. 
+Przyk³adowo w Wece zosta³ zastosowany inny model, w którym data set jest 
+podzbiorem atrybutów. My jednak chcielibyœmy zamieniæ kolejnoœæ tzn. Umieœciæ 
+krok tworzenie podzbioru przed tworzeniem atrybutów w procesie uczenia 
+algorytmu. Kolejnym wymaganiem stawianym naszemu systemowi jest sposób opisu 
+takich zbiorów. Chcielibyœmy, aby zapis data setu nie wymaga³ kopiowania danych 
+z zewnêtrznej bazy danych a jedynie definiowa³ przepis na utworzenie takowego 
+(np. W postaci zapytania zbioru warunków) Wa¿ne jest, aby dostêpne by³y 
+operacje na zbiorach jak suma czy przeciêcie.  Przyk³adowo chcielibyœmy 
+zdefiniowaæ zbiór trenuj¹cy sk³adaj¹cy siê z mê¿czyzn w pewnym przedziale 
+wiekowym oraz inny, który zawiera³by kobiety w tym przydziale a do algorytmu 
+przes³aæ sumê tych zbiorów. Wa¿ne jest równie¿, aby sposób definicji pozwala³ 
+u¿ytkownikowi na manipulacje na ju¿ gotowych zbiorze (np. Wygenerowanym przez 
+system, albo przez algorytm klastruj¹cy) 
+
+	\item Niestety wiêkszoœæ algorytmów wymaga 
+na wejœciu czêœciowo obrobionych danych. Musimy podaæ jakiego typu jest dany 
+danych wejœciowych. Czy mamy do czynienia z napisem, liczb¹ czy mo¿e 
+wyliczeniem a w przypadku wyliczeñ musimy podaæ zbiór mo¿liwych wartoœci. Mo¿na 
+równie¿ dokonaæ normalizacji pewnych wartoœci a co najwa¿niejsze w wiêkszoœci 
+przypadków wymagana jest równie¿ zmiana struktury danych.  W wiêkszoœci baz 
+danych mamy do czynienia z danymi wielowymiarowymi, które nale¿y 
+przetransformowaæ do postaci jednowymiarowej. Wynik takiej transformacji 
+„surowych” danych z bazy danych do danych wejœciowych dla algorytmu nazywamy 
+atrybutami. Dla u¿ytkownika proces stworzenia atrybutów z wszystkich danych 
+zgromadzonych w zewnêtrzne bazie danych a z danych z data setu powinien 
+wygl¹daæ dok³adnie tak samo.
 \end{enumerate} 
+
+% \subsection{Wiedza}
+% Jak wczeœniej by³o napisane, system powinien dostarczaæ pewnego wspólnego API. W tym punkcie chcielibyœmy szczególnie zwróciæ uwagê na API pozwalaj¹ce na dokonywanie operacji na wiedzy oraz danych. Takie interfejs w znaczny sposób uproœci³by proces tworzenia wtyczek a dodatkowo pozwoli³by na stworzenie wydajnego i dobrze przetestowanego API. Kolejnym wa¿nym aspektem, jest komunikacja. Posiadanie jednego formatu zapisu danych i wiedzy umo¿liwia komunikacje pomiêdzy ró¿nymi wtyczkami czy podsystemami. Odizolowanie algorytmów (wtyczek) od zapisy/odczytu danych pozwala równie¿ zapewniæ odpowiedni poziom bezpieczeñstwa. Przyk³adowo system powinien posiadaæ API pozwalaj¹ce na tworzenie, manipulacje, odczyt i zapis drzew decyzyjnych, dziêki czemu ró¿ne aspekty pracy na drzewach decyzyjnych mo¿na by by³o umieœciæ w osobnych wtyczkach niekoniecznie dostarczanych przez tego samego dostawce, a przede wszystkim praca nad jedn¹ czêœci¹ (np. Prezentacj¹ drzew) nie wymaga³oby wiedzy na temat innych wtyczek. 
+% 
+% \begin{enumerate}
+%  \item Dataset. Wiêkszoœæ algorytmów machine learning wymaga danych wejœciowych. Rozró¿niamy dane trenuj¹ce, które s¹ wykorzystywane do uczenia algorytmu, oraz dane testuj¹ce. Zbiór danych testuj¹cych wykorzystywany jest do oceny wyników algorytmu. Oba zbiory zazwyczaj stanowi¹ losowy podzbiór dostêpnych danych.
+% \end{enumerate} 
+
 
 
 %II. Salomon
@@ -193,7 +253,7 @@ Jak wczeœniej by³o napisane, system powinien dostarczaæ pewnego wspólnego API. W
 % Jedna reprezentacja wiedzy
 
 \subsection{Eksperymenty i doœwiadczenia}
-aa
+TODO
 %1. Rozproszenie
 %2. Wykorzystanie gotowych algorytmow (vinlen wszystko sam pisze)
 %3. Komponentowa architektura
