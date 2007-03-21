@@ -1,6 +1,6 @@
 \section{Funkcjonalnoœæ}
 
-Ca³a funkcjonalnoœæ \emph{Salomona} podporz¹dkowana jest tworzeniu zadañ. Operacje podstawowe, takie jak np. tworzenie projektów czy definiowanie wtyczek s³u¿¹ jedynie stworzeniu œrodowiska, w którym mog¹ byæ wykonywane zadania. Z kolei operacje administracyjne pozwalaj¹ na zaawansowane zarz¹dzanie platform¹ i mog¹ byæ u¿yteczne dla u¿ytkowników bardzo dobrze znaj¹cych system.
+Ca³a funkcjonalnoœæ \emph{Salomona} podporz¹dkowana jest tworzeniu zadañ. Operacje podstawowe, takie jak np. tworzenie projektów czy definiowanie wtyczek s³u¿¹ jedynie stworzeniu œrodowiska, w którym mog¹ byæ wykonywane zadania. Z kolei operacje administracyjne pozwalaj¹ na zaawansowane zarz¹dzanie platform¹ i mog¹ byæ u¿yteczne dla u¿ytkowników bardzo dobrze znaj¹cych wewnêtrzn¹ strukturê systemu.
 
 
 \subsection{Operacje podstawowe}
@@ -13,9 +13,9 @@ Mo¿na na nim wykonaæ nastêpuj¹ce operacje:
 \begin{itemize}
 	\item Utworzenie nowego
 		
-	Zadanie to wymaga konfiguracji, w szczególnoœci wskazania lokacji bazy danych.
+	Zadanie to wymaga konfiguracji, w szczególnoœci wskazania lokacji bazy danych i innych parametrów po³¹czenia.
 		
-	\item Otworzenie istniej¹cego
+	\item Edycja istniej¹cego
 	
 	System pozwala na wybór aktualnego \emph{Solutiona}. Mo¿na to zrobiæ przy uruchamianiu programu, kiedy to trzeba albo wskazaæ istniej¹cy \emph{Solution} albo utworzyæ nowy, b¹dŸ w dowolnym innym momencie, poprzez wybór odpowiedniej opcji z menu. Tylko w ten sposób mo¿na zmieniæ parametry ju¿ istniej¹cego obiektu \emph{Solution}.	
 
@@ -60,24 +60,7 @@ Wtyczki zawieraj¹ algorytmy, które mog¹ byæ wykonywane przez platformê w ramach 
 		
 			Pozwala na usuniêcie wtyczki z systemu.
 					
-	\end{itemize}	
-
-\subsection{Administracja}
-
-\emph{Salomon} dostarcza narzêdzi u³atwiaj¹ce administrowanie danymi zgromadzonymi w systemie -- mo¿liwe jest przegl¹danie wszystkich zapisanych w bazie danych obiektów, a zaawansowani u¿ytkownicy mog¹ wykonaæ dowolne operacje bezpoœrednio na bazie danych za pomoc¹ \emph{SQLConsole}.
-	
-	\begin{itemize}
-            
-		\item Przegl¹danie obiektów w systemie
-		
-		W celach administracyjnych mo¿liwe jest przegl¹danie obiektów w taki sposób, w jaki zapisane s¹ w bazie danych.
-			
-		\item Zaawansowane operacje
-		
-		Do bardziej zaawansowanych operacji na bazie danych przeznaczona jest specjalna konsola (\emph{SQLConsole}), która pozwala na wykonanie dowolnych operacji na bazie danych.
-		
-	\end{itemize}	
-
+	\end{itemize}
 
 
 \subsection{Operacje na zadaniach}
@@ -120,3 +103,19 @@ Obecnie obs³ugiwane s¹ nastêpuj¹ce operacje na zadanich:
         
         Ka¿de wtyczka, której algorytm przetwarzany jest w ramach zadania, sama specyfikuje jak bêdzie prezentowaæ swoje wyniki. Zdaniem platformy jest jedynie zapewnienie mo¿liwoœci wyœwietlenia zwróconych przez wtyczkê danych.
 		\end{itemize}
+
+\subsection{Administracja}
+
+\emph{Salomon} dostarcza narzêdzi u³atwiaj¹ce administrowanie danymi zgromadzonymi w systemie -- mo¿liwe jest przegl¹danie wszystkich zapisanych w bazie danych obiektów, a zaawansowani u¿ytkownicy mog¹ wykonaæ dowolne operacje bezpoœrednio na bazie danych za pomoc¹ \emph{SQLConsole}.
+	
+	\begin{itemize}
+            
+		\item Przegl¹danie obiektów w systemie
+		
+		W celach administracyjnych mo¿liwe jest przegl¹danie obiektów w taki sposób, w jaki zapisane s¹ w bazie danych oraz na ich usuniêcie.
+			
+		\item Zaawansowane operacje
+		
+		Do bardziej zaawansowanych operacji na bazie danych przeznaczona jest specjalna konsola (\emph{SQLConsole}), która pozwala na wykonanie dowolnych operacji na bazie danych.
+		
+	\end{itemize}	

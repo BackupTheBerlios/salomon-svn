@@ -6,23 +6,39 @@ Bardzo wa¿nym mechanizmem Salomona jest mo¿liwoœæ tworzenia powi¹zañ miêdzy posz
 
 Mechanim tworzenia zmiennych œrodowiskowych opiera siê na tym samym modelu co tworzenie ustawieñ i rezultatów dla zadañ. Mo¿liwoœæ tworzenia zmiennych œrodowiskowych przez wtyczki mo¿e rodziæ wiele problemów z zapewnieniem kompatybilnoœci miêdzy ró¿nymi wersjami wtyczek, komunikuj¹cych siê ze sob¹, dlatego te¿ aby unikn¹æ takich problemów, ka¿da wtyczka zmuszona bêdzie dostarczyæ opis zmiennych, które mo¿e tworzyæ.
 
-Mechanizm serjalizacji opiera siê na agregacji typów prostych i innych typów z³o¿onych. Za pomoc¹ takich elementów, programista mo¿e stworzyæ hierarchiczne struktury danych. Wprowadzenie takiego mechanizmu podyktowane jest potrzeb¹ ukrycia przed programist¹ sposobu zapisu danych w bazie lub w pliku. W obecnej wersji Salomona, twórca wtyczki musi dostarczyæ mechanizm serializacji oraz deserializacji ustawieñ i rezultatów zadañ do napisu -- taki mechanizm niesie za sob¹ niebezpieczeñstwo niepoprawnoœci oraz nieefektywnoœci implementacji. Dostarczenie spójnego modelu serializacji danych pozwala na niewidoczny dla wtyczek sposób podmiany implementacji na bardziej efektywn¹ itp. Mechanizm ten mo¿e okazaæ siê równie¿ po¿yteczny po dodaniu do Salomona mo¿liwoœci definiowania zadañ w pliku (np. XML). Serializacja danych mo¿e odbywaæ siê do wielu formatów np. XML, CSV, tabel w bazie danych itp.
+Mechanizm serializacji opiera siê na agregacji typów prostych i innych typów z³o¿onych. Za pomoc¹ takich elementów, programista mo¿e stworzyæ hierarchiczne struktury danych. Wprowadzenie takiego mechanizmu podyktowane jest potrzeb¹ ukrycia przed programist¹ sposobu zapisu danych w bazie lub w pliku. Dostarczenie spójnego modelu serializacji danych pozwala na niewidoczny dla wtyczek sposób podmiany implementacji na bardziej efektywn¹ itp. Mechanizm ten mo¿e okazaæ siê równie¿ po¿yteczny po dodaniu do Salomona mo¿liwoœci definiowania zadañ w pliku (np. XML). Serializacja danych mo¿e odbywaæ siê do wielu formatów np. XML, CSV, tabel w bazie danych itp.
 
 \input{salomon/tasks}
 
 \subsection{Podstawowe pojêcia}
 
 \paragraph{Kontroler}
-Kontroler to jedna instancja Salomona pracuj¹ca w okreœlonym trybie: lokalnym, jako serwer lub klient. 
+Kontroler to jedna instancja Salomona pracuj¹ca w okreœlonym trybie: lokalnym, jako serwer lub klient.
+W obecnej wersji Salomon mo¿e pracowaæ tylko w trybie lokalnym.
 
 \paragraph{Menad¿er} 
 Klasy maj¹ce w nazwie s³owo \emph{Manager} pe³ni¹ szczególn¹ funkcjê - najczêœciej odpowiadaj¹ za zarz¹dzanie innymi klasami, z regu³y tymi, które stanowi¹ resztê nazwy (np. \emph{PluginManger} zarz¹dza pluginami, \emph{ProjectManger} - projektami). G³ównym zadaniem menad¿erów jest odseparowanie wtyczek od operacji bezpoœrednio na danych.
+Dostarczaj¹ one zestawu metod pozwalaj¹cych na wygodne zarz¹dzanie obiektami, ich tworzenie, modyfikowanie czy usuwanie.
 
 \paragraph{Solution} 
-Terminem tym okreœlamy strukturê grupuj¹c¹ projekty. Dotycz¹ one tej samej bazy z rzeczywistymi danymi.
+Terminem tym okreœlamy strukturê grupuj¹c¹ projekty.
+W obrêbie jednego obiektu \emph{Solution} zgrupowane s¹ projekty, które operuj¹ na tym samym zewnêtrznym Ÿródle danych.
+W obecnej wersji s¹ to zewnêrzne bazy danych. Obiekt ten przechowuje informacje niezbêdne do uzyskania dostêpu do danych,
+a wiêc parametry po³¹czenia i lokalizacjê bazy danych.
 
 \paragraph{Projekt}
-W ramach projektów zapisywana jest konfiguracja systemu przed wykonaniem kolejki zadañ. Zapisywana jest lista zadañ do wykonania, ich ustawienia oraz wtyczki, które maj¹ byæ u¿yte do ich wykonania.
+W ramach projektów zapisywana jest konfiguracja systemu przed wykonaniem grupy zadañ.
+Zadania te grupowane s¹ w formie grafu skierowanego acyklicznego.
+Struktura taka opisuje zestaw zadañ, które musz¹ zostaæ wykonane w okreœlonej kolejnoœci
+aby uzyskaæ zamierzony efekt. Przyk³adowo, aby stworzyæ i wyœwietliæ drzewo decyzyjne,
+mo¿na zdefiniowaæ zadania dla poszczególnych kroków, a wiêc wybrania zbioru danych, zdefiniowania zbioru atrybutów,
+skonfigurowania algorytmu tworz¹cego drzewo, czy wreszcie jego wizualizacji.
+Projekty mog¹ byæ u¿yte wielokrotnie dla ró¿nych danych i ró¿nej konfiguracji zadañ. 
+
+\paragraph{Zadanie}
+Zadanie to podstawowa jednostka obliczeniowa.
+Zawiera algorytm, który ma zostaæ wykonany oraz jego ustawienia.
+Algorytm dostarczany jest w formie wtyczki. Szerszy opis zadañ znajduje siê w rozdziale \ref{lab:tasks}.
 
 \paragraph{Wtyczka (plugin))}
 Jest to zewnêtrzny program odpowiedzialny za wykonanie konkretnego zadania. Nie jest integraln¹ czêœci¹ systemu, w razie koniecznoœci jest pobierany z okreœlonej lokalizacji i przekazywane jest mu konkretne zadanie do wykonania.
@@ -33,3 +49,5 @@ Stanowi podstawê komunikacji pomiêdzy poszczególnymi zadaniami
 
 \paragraph{Zmienna œrodowiskowa}
 S³u¿y do przekazywania informacji miêdzy kolejnymi zadaniami.
+
+%TODO: Agent
