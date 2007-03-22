@@ -18,11 +18,11 @@ zadania. Odpowiada za komunikacje miêdzy innymi instancjami \emph{Salomona}.
 
 Za poszczególne zadania odpowiadaj¹ odpowiednie menad¿ery.
 Menad¿ery nie s¹ dostêpne bezpoœrednio z platformy, ale
-przekazywane s¹ wtyczk¹ poprzez klasê \emph{IDataEngine}. Dotyczy
-to tylko klasy \emph{IDataSetManager} i \emph{IRuleSetManager},
-pozosta³e nie s¹ dostêpne dla wtyczek. Plugin, zale¿nie od
-potrzeb, pobiera z niego potrzebny mu menad¿er i za jego
-poœrednictwem wykonuje operacje na bazie danych.
+przekazywane s¹ wtyczkom poprzez klasê \emph{IDataEngine}.
+Dotyczy to tylko klas \emph{IDataSetManager}, \emph{IAttributeSetManager}
+i \emph{ITreeManager}, pozosta³e nie s¹ dostêpne dla wtyczek.
+Plugin, zale¿nie od potrzeb, pobiera z niego potrzebny mu menad¿er i za jego
+poœrednictwem zarz¹dza zbiorem danych, atrybutów lub drzewem decyzyjnym.
 
 \subsubsection{IManagerEngine}
 
@@ -32,7 +32,7 @@ Wszystkie menad¿ery, którmi zarz¹dza maj¹ analogiczn¹ funkcjonalnoœæ -- ka¿dy z
 nich pozwala na stworzenie nowego obiektu, którym zarz¹dza (nie ma innej
 mo¿liwoœci ich stworzenia, ni¿ przez metody udostêpniane przez menad¿era), jego
 zesk³adowanie w bazie danych, zwrócenie wszystkich zarz¹dzanych obiektów, czy
-te¿ pojedynczego, bazuj¹c na unikalnym identyfikatorze.
+te¿ pojedynczego, bazuj¹c na unikalnym identyfikatorze oraz usuniêcie konkretnego obiektu.
 
 \paragraph{ISolutionManager}
 
@@ -43,17 +43,23 @@ modyfikacjê aktualnego, za³adowanie wczeœniej stworzonego lub zwrócenie wszystki
 \paragraph{IProjectManager}
 
 Zarz¹dza projektami. Pozwala na utworzenie nowego
-projektu, zapisanie bie¿¹cego do bazy danych oraz na za³adowanie z bazy.
+projektu, modyfikacje lub usuniêcie istniej¹cego oraz wylistowanie
+wszystkich projektów z bie¿¹cego Solutiona.
 
 \paragraph{IPluginManager}
 
 Zarz¹dza pluginami. Pozwala na zapisanie informacji o nowym pluginie 
 (jego nazwa, lokalizacja) oraz na pobranie listy dostêpnych pluginów.
+Wtyczki mog¹ byæ ³adowane ze zdalnej lokalizacji, a wiêc zadaniem tego
+manad¿era jest tak¿e zarz¹dzanie pobieraniem i buforowaniem wtyczek pobranych
+z zewnêtrznych Ÿródel.
 
 \paragraph{ITaskManager}
 
-Zarz¹dza zadaniami. Jego zadaniem jest nie tylko umo¿liwienie utworzenia 
-lub edycji istniej¹cych zadañ, ale tak¿e nadzorowanie ich uruchamiania.
+Zarz¹dza zadaniami. Jego zadaniem jest nie tylko umo¿liwienie wykonywania na nich standardowych operacji
+zwi¹zanych z ich tworzeniem, edycj¹ czy usuwaniem.
+Odpowiada tak¿e za proces przygotowania zadañ do wykonania, czyli ich poprawn¹ konfiguracjê i powi¹zanie ze sob¹,
+czy reszcie ich wykonanie i zapisanie informacji o przebiegu ich przetwarzania.
 
 \subsubsection{IDataEngine}
 
@@ -62,7 +68,7 @@ Za pomoc¹ pobieranych z niego menad¿erów (\emph{IDataSetManager},\emph{IAttribut
 \emph{ITreeManager} w przysz³oœci \emph{IRuleSetManager} i inne) 
 wtyczki mog¹ operowaæ na danych znajduj¹cych siê w bazie.
 
-\paragraph{DBManager}
+\paragraph{IDBManager}
 
 Odpowiada za po³¹czenie z baz¹ danych. Dostarcza metody
 zapewniaj¹ce dostêp do danych przechowywanych w bazie. Swoj¹

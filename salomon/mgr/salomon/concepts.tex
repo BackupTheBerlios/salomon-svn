@@ -41,7 +41,15 @@ Zawiera algorytm, który ma zostaæ wykonany oraz jego ustawienia.
 Algorytm dostarczany jest w formie wtyczki. Szerszy opis zadañ znajduje siê w rozdziale \ref{lab:tasks}.
 
 \paragraph{Wtyczka (plugin))}
-Jest to zewnêtrzny program odpowiedzialny za wykonanie konkretnego zadania. Nie jest integraln¹ czêœci¹ systemu, w razie koniecznoœci jest pobierany z okreœlonej lokalizacji i przekazywane jest mu konkretne zadanie do wykonania.
+Jest to zewnêtrzny program odpowiedzialny za wykonanie konkretnego zadania.
+Mo¿e zawieraæ algorytm obliczeniowy, ale nie tylko -- wtyczki mog¹ te¿ s³u¿yæ
+np. do definiowania nowych zbiorów danych czy do wyœwietlania drzew decyzyjnych
+w formie graficznej. Ka¿da wtyczka mo¿e byæ skonfigurowana przed wykonaniem jej 
+g³ównego zadania. Za obs³ugê konfiguracji odpowiada platforma, twórca wtyczki musi
+jedynie dostarczyæ komponentów pozwalaj¹cych na skonfigurowanie ustawieñ wtyczki
+z poziomu graficznego interfejsu u¿ytkownika.
+Wtyczki nie s¹ integraln¹ czêœci¹ systemu. W razie koniecznoœci mog¹ byæ pobierane 
+z okreœlonej zdalnej lokalizacji.
 
 \paragraph{Œrodowisko}
 Miejsce w którym przechowywane s¹ zmienne œrodowiskowe.
