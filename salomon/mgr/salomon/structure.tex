@@ -67,13 +67,23 @@ Obiekt implementuj¹cy ten interfejs przekazywany jest wtyczkom podczas ich wykon
 Za pomoc¹ pobieranych z niego menad¿erów (\emph{IDataSetManager},\emph{IAttributeManager}, 
 \emph{ITreeManager} w przysz³oœci \emph{IRuleSetManager} i inne) 
 wtyczki mog¹ operowaæ na danych znajduj¹cych siê w bazie.
+Udostêpnienie wtyczkom jedynie interfejsów do operawania na danych pozwala
+na ukrycie sposobu sk³adowania danych przed twórcami wtyczek i ich uniezale¿nienie siê
+od implementacji. W obecnej wersji dane przechowywane s¹ w relacyjnej bazie danych, ale nic nie stoi 
+na przeszkodzie, by w przysz³oœci przechowywaæ je w inny sposób, np. w plikach tekstowych o ustalonym formacie
+czy bazie LDAP. Twórcy wtyczek nie musz¹ troszczyæ siê o to, jak dane s¹ przechowywane, gdy¿ implementacja
+interfejsów dostarczona jest przez platformê.
+Co wiêcej, raz napisane wtyczki bêd¹ dzia³aæ tak¿e z nowszymi jej wersjami,
+pod warunkiem zachowania dotychczasowych interfejsów.
 
-\paragraph{IDBManager}
+\paragraph{DBManager}
 
 Odpowiada za po³¹czenie z baz¹ danych. Dostarcza metody
 zapewniaj¹ce dostêp do danych przechowywanych w bazie. Swoj¹
 funkcjonalnoœæ udostêpnia odpowiednim menad¿erom, wtyczki nie maj¹ do niego
 bezpoœredniego dostêpu.
+Udostêpnia obiekt implmentuj¹cy interfejs \emph{IMetaData}, dziêki któremu
+wtyczki mog¹ pobraæ informacje o strukturze danych ucz¹cych i trenuj¹cych.
 
 \paragraph{IDataSetManager}
 
@@ -111,8 +121,7 @@ wtyczkami i zadaniami.
 
 Zadaniem tego kontrolera jest dostarczenie interfejsu do
 zarz¹dzania zdalnymi kontrolerami (\emph{ServantController}). 
-Po dodaniu warstwy \emph{Solution} kontroler ten musi zostaæ zmodyfikowany, 
-co planowane jest w nastêpnej wersji systemu.
+W obecnej wersji systemu jest on niezaimplemenetowany.
 
 \paragraph{ServantController}
 
@@ -120,7 +129,7 @@ Zadaniem tego kontrolera jest odszukanie g³ównego kontrolera
 (\emph{MasterController}), zarejestrowanie siê i udostêpnianie mu
 swoich us³ug. Ta wersja kontrolera nie posiada GUI, zarz¹dzanie
 nim odbywa siê za pomoc¹ klasy \emph{MasterController}.
-Podobnie jak w przypadku klasy \emph{MasterController}, kontroler ten musi zostaæ zmodyfikowany.
+Podobnie jak w przypadku klasy \emph{MasterController}, kontroler ten dopiero bêdzie zaimplementowany.
 
 %\paragraph{WinSalomon}
 
