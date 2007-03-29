@@ -1,5 +1,123 @@
 \section{Powody powstania Salomona}
 
+%Do czego ma byc to system?
+%Istnieja inne...
+
+%1. Struktura rozdzialu 2-giego powinna wygladac tak:
+%- do czego ma byc system? (krotko, kilka zdan)
+%- jaki ma byc? Czyli te akapity z wymaganiami, ale w innej kolejnosci:
+%* ergonomia (prosty, przyjazny interfejs, API)
+%* wlasny  sposob reprezentacji wiedzy (m.in. datasety wielowymiarowe)
+%* wykorzystanie gotowych algorytmow (np. z Weki) i arch. komponentowa
+%* rownoleglosc i rozproszenie
+%* bezpieczenstwo
+%* licencja
+ 
+%Na koniec dochodzimy do wniosku, ze system powinien miec np. architekture komponenowa, napisany w Javie czy cos takiego.
+ 
+%Kazdy z tych punkcikow oznaczonych '*' powinien miec mniej wiecej taka strukture:
+%- jakiej cechy zadamy? (czyli np. "Jednym z postawowych zalozen stawianych systemowi jest prosty i przyjazny interfejs uzytkownika...")
+%- dlaczego? ("Przyjazny interfejs ulatwia uzycie aplikacji zwlaszcza mniej doswiadczonym uzytkownikom...")
+%- ewentualnie w zestawieniu z istniejacymi systami (Weka ma fajny, Vinlen niewygodny czy cos takiego)
+
+%-gui
+Jednym z podstawowych za³o¿eñ stawianych systemowi jest prosty i przyjazny interfejs u¿ytkownika.
+Czêsto cech¹ decyduj¹c¹ o rozpoczêciu u¿ywania danej aplikacji jest pierwszy kontakt z nia.
+Dlatego wa¿ne jest, aby graficzny interfejs u¿ytkownika
+u³atwia³ u¿ycie aplikacji mniej doœwiadczonym u¿ytkownikom i aby nowy u¿ytkownik naszego 
+systemu nie zosta³ zniechêcony ju¿ na samym pocz¹tku.
+Nale¿y zatem zwróciæ uwagê, by aplikacja by³a prosta w obs³udze zarówno dla twórcy wtyczek
+jak i osoby wykonuj¹cej eksperymenty z wykorzystaniem gotowych wtyczek.
+System powinien te¿ byæ dostarczany z przyk³adowym zestawem wtyczek i danych, 
+które pozwol¹ na ³atwe u¿ycie i przetestowanie ka¿dego z aspektów platformy.
+
+%-api
+Oprócz przyjaznego graficznego interfejsu u¿ytkownika platforma powinna
+tak¿e dostarczaæ prostego i dobrze zdefiniowanego \emph{API}.
+Pozwoli to na ukrycie przed twórcami wtyczek takich aspektów implementacyjnych
+jak sposób reprezentacji drzew decyzyjnych czy zapis parametrów wejœciowych i rezultatów wykonania zadañ.
+Wynika to z tego, ¿e osoby, które zajmuj¹ siê tworzeniem wtyczek 
+nie powinny musieæ braæ pod uwagê sposobu implementacji
+platformy, czyli np. przechowywania i dostêpu do danych czy kwesti komunikacji
+miêdzy poszczególnymi zadaniami.
+
+Inn¹ u¿yteczn¹ w³aœciwoœci¹, któr¹ nale¿y rozwa¿yæ jest 
+umo¿liwienie tworzenia wtyczek za pomoc¹ jêzyków skryptowych. Jest to 
+szczególnie po¿yteczna w³aœciwoœæ np. w przypadku tworzenia nowego algorytmu.
+W takiej sytuacji u¿yteczna jest mo¿liwoœæ szybkiego wprowadzania zmian
+i natychmiastowego przetestowania zachowania algorytmu bez konicznoœci
+prze³adowywania ca³ej wtyczki.
+
+Wyspecyfikowanie dobrze zdefiniowanych interfejsów pozwalaj¹cych na manipulowanie wiedz¹
+pozwoli na znaczne uproszczenie procesu tworzenia wtyczek, a dodatkowo pozwoli na 
+stworzenie wydajnego i dobrze przetestowanego API.
+Z kolei ukrycie sposobu zapisu danych i wiedzy umo¿liwi ³atwiejsz¹ 
+komunikacje pomiêdzy ró¿nymi wtyczkami czy podsystemami. Odizolowanie 
+algorytmów (wtyczek) od zapisu/odczytu danych pozwoli równie¿ zapewniæ 
+odpowiedni poziom bezpieczeñstwa. Przyk³adowo system powinien posiadaæ API 
+pozwalaj¹ce na tworzenie, manipulacje, odczyt i zapis drzew decyzyjnych, dziêki 
+czemu ró¿ne aspekty pracy na drzewach decyzyjnych mo¿na by by³o umieœciæ w 
+osobnych wtyczkach, niekoniecznie dostarczanych przez tego samego dostawce. 
+Jednak przede wszystkim praca nad jedn¹ czêœci¹ (np. prezentacj¹ drzew) nie wymaga³oby 
+wiedzy na temat innych wtyczek.
+
+% - wiedza TODO:
+
+Wiêkszoœæ algorytmów machine learning wymaga danych wejœciowych.
+Rozró¿niamy dane trenuj¹ce, które s¹ wykorzystywane do uczenia algorytmu oraz 
+dane testuj¹ce. Zbiór danych testuj¹cych wykorzystywany jest do oceny wyników 
+algorytmu. Oba zbiory zazwyczaj stanowi¹ losowy podzbiór dostêpnych danych. W 
+znanych nam systemach u¿ywan¹ s¹ jednowymiarowe zbiory trenuj¹ce (jedna tabela, 
+bez powi¹zañ z innymi). Taki model pasuje do wiêkszoœci algorytmów ucz¹cych, jednak 
+istnieje pewne ryzyko utraty danych, które nios¹ z sob¹ relacje, dlatego 
+chcielibyœmy, aby nasz system tworzy³ i operowa³ na wielowymiarowych zbiorach 
+trenuj¹cych. Z punktu widzenie algorytmu struktura takiego zbioru nie powinna 
+odbiegaæ od wejœciowej bazy danych. Jedyna ró¿nica powinna polegaæ na iloœci 
+dostêpnych danych. Takie te¿ jest pierwsze i najbardziej naturalne zrozumienie 
+zbioru trenuj¹cego, jako podzbioru danych o niezmienionej strukturze. 
+Przyk³adowo w Wece zosta³ zastosowany inny model, w którym data set jest 
+podzbiorem atrybutów. My jednak chcielibyœmy zamieniæ kolejnoœæ tzn. umieœciæ 
+krok tworzenie podzbioru przed tworzeniem atrybutów w procesie uczenia 
+algorytmu. Kolejnym wymaganiem stawianym naszemu systemowi jest sposób opisu 
+takich zbiorów. Chcielibyœmy, aby zapis data setu nie wymaga³ kopiowania danych 
+z zewnêtrznej bazy danych, a jedynie definiowa³ przepis na utworzenie takowego 
+(np. w postaci zapytania, stanowi¹cego zbiór warunków). Wa¿ne jest, aby dostêpne by³y 
+operacje na zbiorach, takie jak suma czy przeciêcie. Przyk³adowo chcielibyœmy 
+zdefiniowaæ zbiór trenuj¹cy sk³adaj¹cy siê z mê¿czyzn w pewnym przedziale 
+wiekowym oraz inny, który zawiera³by kobiety w tym przydziale, a do algorytmu 
+przes³aæ sumê tych zbiorów. Wa¿ne jest równie¿, aby sposób definicji pozwala³ 
+u¿ytkownikowi na manipulacje na ju¿ gotowym zbiorze (np. wygenerowanym przez 
+system, albo przez algorytm klastruj¹cy). 
+
+Niestety wiêkszoœæ algorytmów wymaga 
+na wejœciu czêœciowo obrobionych danych. Musimy podaæ jakiego typu jest dany 
+danych wejœciowych. Czy mamy do czynienia z napisem, liczb¹ czy mo¿e 
+wyliczeniem, a w przypadku wyliczeñ musimy podaæ zbiór mo¿liwych wartoœci. Mo¿na 
+równie¿ dokonaæ normalizacji pewnych wartoœci, a co najwa¿niejsze, w wiêkszoœci 
+przypadków wymagana jest równie¿ zmiana struktury danych.  W wiêkszoœci baz 
+danych mamy do czynienia z danymi wielowymiarowymi, które nale¿y 
+przetransformowaæ do postaci jednowymiarowej. Wynik takiej transformacji 
+,,surowych'' danych z bazy do danych wejœciowych dla algorytmu nazywamy 
+atrybutami. Dla u¿ytkownika proces stworzenia atrybutów z wszystkich danych 
+zgromadzonych w zewnêtrzne bazie danych i z danych z data setu powinien 
+wygl¹daæ dok³adnie tak samo.
+
+% TODO: gdzie to?
+%W odró¿nieniu od innych systemów, szczególny nacisk chcemy po³o¿yæ na 
+%platformê, a nie na same algorytmy. Jak ju¿ wczeœniej zosta³o powiedziane, 
+%wa¿ne jest, aby da³o siê wykorzystaæ gotowe implementacje algorytmów machine 
+%learning. W zwi¹zku z tym bardzo wa¿nymi aspektami s¹: proste API (z ang. 
+%Application Program Interface) oraz licencja (link do dalszej czesci?).
+
+\begin{enumerate}
+\item Platforma powinna zawieraæ efektywne, ale zarazem 
+proste narzêdzia do dokonywania takich zadañ. Kolejnym aspektem, który mo¿e 
+stwarzaæ problemy, a który mo¿na ujednoliciæ jest kwestia komunikacji pomiêdzy 
+ró¿nymi algorytmami (wtyczkami). I w tym przypadku ca³a odpowiedzialnoœæ za 
+komunikacje powinna spoczywaæ na platformie. Dziêki takiemu podejœciu, mo¿liwe 
+jest u¿ycie obliczeñ równoleg³ych i rozproszonych, bez dodatkowych wymagañ 
+stawianych wtyczkom. 
+
 Po przeanalizowaniu obecnych narzêdzi do uczenia maszynowego stwierdziliœmy, ¿e 
 dostêpne systemu tego typu posiadaj¹ pewne ograniczenia, które chcielibyœmy 
 wyeliminowaæ. Po zapoznaniu z wieloma narzêdzami doszliœmy do wniosku, ¿e 
@@ -80,37 +198,6 @@ kryteriów.
 \end{enumerate}
 
 
-\subsection{Jeszcze nie znam tytulu}
-
-W odró¿nieniu od innych systemów, szczególny nacisk chcemy po³o¿yæ na 
-platformê, a nie na same algorytmy. Jak ju¿ wczeœniej zosta³o powiedziane, 
-wa¿ne jest, aby da³o siê wykorzystaæ gotowe implementacje algorytmów machine 
-learning. W zwi¹zku z tym bardzo wa¿nymi aspektami s¹: proste API (z ang. 
-Application Program Interface) oraz licencja.
-
-\begin{enumerate}
-\item Osoby, które zajmuj¹ siê machine learning, niekoniecznie musz¹, byæ 
-specjalistami od jêzyków programowania, dlatego 
-niezmiernie wa¿ne jest, aby platforma dostarcza³a bardzo prostego API i 
-ukrywa³a przed twórc¹ wtyczek takie aspekty jak zapisywanie parametrów 
-wejœciowych oraz wyników. Platforma powinna zawieraæ efektywne, ale zarazem 
-proste narzêdzia do dokonywania takich zadañ. Kolejnym aspektem, który mo¿e 
-stwarzaæ problemy, a który mo¿na ujednoliciæ jest kwestia komunikacji pomiêdzy 
-ró¿nymi algorytmami (wtyczkami). I w tym przypadku ca³a odpowiedzialnoœæ za 
-komunikacje powinna spoczywaæ na platformie. Dziêki takiemu podejœciu, mo¿liwe 
-jest u¿ycie obliczeñ równoleg³ych i rozproszonych, bez dodatkowych wymagañ 
-stawianych wtyczkom. Inn¹ u¿yteczn¹ w³aœciwoœci¹, któr¹ nale¿y rozwa¿yæ jest 
-umo¿liwienie tworzenia wtyczek za pomoc¹ jêzyków skryptowych. Jest to 
-szczególnie po¿yteczna w³aœciwoœæ w przypadku, kiedy pracujemy nad danym 
-algorytmem i dokonujemy eksperymentów, a przez co potrzebujemy czêsto modyfikowaæ 
-wtyczkê. Czêsto pomijanym problem przy tworzeniu aplikacji w ogóle, jest 
-pierwszy kontakt z ni¹. Chcielibyœmy, aby ka¿dy nowy u¿ytkownik naszego 
-systemu, nie zosta³ zniechêcony ju¿ na samym pocz¹tku, dlatego nale¿y zwróciæ 
-szczególn¹ uwagê, aby nasza aplikacja by³a prosta w obs³udze (z ang. \emph{user 
-friendly}) zarówno dla twórcy wtyczek jak i osoby wykonuj¹cej eksperymenty z 
-wykorzystaniem gotowych wtyczek. System powinien byæ dostarczany z przyk³adowym 
-zestawem wtyczek, które pozwol¹ na u¿ycie i przetestowanie ka¿dego z aspektów 
-platformy. 
 
 \item VINLEN to system komercyjny, dostarczany bez kodu Ÿród³owego, 
 dlatego jego wykorzystanie jest utrudnione zarówno jako platformy dla w³asnych 
@@ -128,63 +215,7 @@ LGPL (wstawiæ przypis i odnoœniki)
 
 \subsection{Wiedza}
 
-Jak wczeœniej by³o napisane, system powinien dostarczaæ pewnego 
-wspólnego API. W tym punkcie chcielibyœmy szczególnie zwróciæ uwagê na API 
-pozwalaj¹ce na dokonywanie operacji na wiedzy oraz danych. Taki interfejs w 
-znaczny sposób uproœci³by proces tworzenia wtyczek, a dodatkowo pozwoli³by na 
-stworzenie wydajnego i dobrze przetestowanego API. Kolejnym wa¿nym aspektem, 
-jest komunikacja. Posiadanie jednego formatu zapisu danych i wiedzy umo¿liwia 
-komunikacje pomiêdzy ró¿nymi wtyczkami czy podsystemami. Odizolowanie 
-algorytmów (wtyczek) od zapisu/odczytu danych pozwala równie¿ zapewniæ 
-odpowiedni poziom bezpieczeñstwa. Przyk³adowo system powinien posiadaæ API 
-pozwalaj¹ce na tworzenie, manipulacje, odczyt i zapis drzew decyzyjnych, dziêki 
-czemu ró¿ne aspekty pracy na drzewach decyzyjnych mo¿na by by³o umieœciæ w 
-osobnych wtyczkach, niekoniecznie dostarczanych przez tego samego dostawce. 
-Jednak przede wszystkim praca nad jedn¹ czêœci¹ (np. prezentacj¹ drzew) nie wymaga³oby 
-wiedzy na temat innych wtyczek.
 
-Wiêkszoœæ algorytmów machine learning wymaga danych wejœciowych.
-Rozró¿niamy dane trenuj¹ce, które s¹ wykorzystywane do uczenia algorytmu oraz 
-dane testuj¹ce. Zbiór danych testuj¹cych wykorzystywany jest do oceny wyników 
-algorytmu. Oba zbiory zazwyczaj stanowi¹ losowy podzbiór dostêpnych danych. W 
-znanych nam systemach u¿ywan¹ s¹ jednowymiarowe zbiory trenuj¹ce (jedna tabela, 
-bez powi¹zañ z innymi). Taki model pasuje do wiêkszoœci algorytmów ucz¹cych, jednak 
-istnieje pewne ryzyko utraty danych, które nios¹ z sob¹ relacje, dlatego 
-chcielibyœmy, aby nasz system tworzy³ i operowa³ na wielowymiarowych zbiorach 
-trenuj¹cych. Z punktu widzenie algorytmu struktura takiego zbioru nie powinna 
-odbiegaæ od wejœciowej bazy danych. Jedyna ró¿nica powinna polegaæ na iloœci 
-dostêpnych danych. Takie te¿ jest pierwsze i najbardziej naturalne zrozumienie 
-zbioru trenuj¹cego, jako podzbioru danych o niezmienionej strukturze. 
-Przyk³adowo w Wece zosta³ zastosowany inny model, w którym data set jest 
-podzbiorem atrybutów. My jednak chcielibyœmy zamieniæ kolejnoœæ tzn. umieœciæ 
-krok tworzenie podzbioru przed tworzeniem atrybutów w procesie uczenia 
-algorytmu. Kolejnym wymaganiem stawianym naszemu systemowi jest sposób opisu 
-takich zbiorów. Chcielibyœmy, aby zapis data setu nie wymaga³ kopiowania danych 
-z zewnêtrznej bazy danych, a jedynie definiowa³ przepis na utworzenie takowego 
-(np. w postaci zapytania, stanowi¹cego zbiór warunków). Wa¿ne jest, aby dostêpne by³y 
-operacje na zbiorach, takie jak suma czy przeciêcie. Przyk³adowo chcielibyœmy 
-zdefiniowaæ zbiór trenuj¹cy sk³adaj¹cy siê z mê¿czyzn w pewnym przedziale 
-wiekowym oraz inny, który zawiera³by kobiety w tym przydziale, a do algorytmu 
-przes³aæ sumê tych zbiorów. Wa¿ne jest równie¿, aby sposób definicji pozwala³ 
-u¿ytkownikowi na manipulacje na ju¿ gotowym zbiorze (np. wygenerowanym przez 
-system, albo przez algorytm klastruj¹cy). 
-
-Niestety wiêkszoœæ algorytmów wymaga 
-na wejœciu czêœciowo obrobionych danych. Musimy podaæ jakiego typu jest dany 
-danych wejœciowych. Czy mamy do czynienia z napisem, liczb¹ czy mo¿e 
-wyliczeniem, a w przypadku wyliczeñ musimy podaæ zbiór mo¿liwych wartoœci. Mo¿na 
-równie¿ dokonaæ normalizacji pewnych wartoœci, a co najwa¿niejsze, w wiêkszoœci 
-przypadków wymagana jest równie¿ zmiana struktury danych.  W wiêkszoœci baz 
-danych mamy do czynienia z danymi wielowymiarowymi, które nale¿y 
-przetransformowaæ do postaci jednowymiarowej. Wynik takiej transformacji 
-,,surowych'' danych z bazy do danych wejœciowych dla algorytmu nazywamy 
-atrybutami. Dla u¿ytkownika proces stworzenia atrybutów z wszystkich danych 
-zgromadzonych w zewnêtrzne bazie danych i z danych z data setu powinien 
-wygl¹daæ dok³adnie tak samo.
-
-% \subsection{Wiedza}
-% Jak wczeœniej by³o napisane, system powinien dostarczaæ pewnego wspólnego API. W tym punkcie chcielibyœmy szczególnie zwróciæ uwagê na API pozwalaj¹ce na dokonywanie operacji na wiedzy oraz danych. Takie interfejs w znaczny sposób uproœci³by proces tworzenia wtyczek a dodatkowo pozwoli³by na stworzenie wydajnego i dobrze przetestowanego API. Kolejnym wa¿nym aspektem, jest komunikacja. Posiadanie jednego formatu zapisu danych i wiedzy umo¿liwia komunikacje pomiêdzy ró¿nymi wtyczkami czy podsystemami. Odizolowanie algorytmów (wtyczek) od zapisy/odczytu danych pozwala równie¿ zapewniæ odpowiedni poziom bezpieczeñstwa. Przyk³adowo system powinien posiadaæ API pozwalaj¹ce na tworzenie, manipulacje, odczyt i zapis drzew decyzyjnych, dziêki czemu ró¿ne aspekty pracy na drzewach decyzyjnych mo¿na by by³o umieœciæ w osobnych wtyczkach niekoniecznie dostarczanych przez tego samego dostawce, a przede wszystkim praca nad jedn¹ czêœci¹ (np. Prezentacj¹ drzew) nie wymaga³oby wiedzy na temat innych wtyczek. 
-% 
 % \begin{enumerate}
 %  \item Dataset. Wiêkszoœæ algorytmów machine learning wymaga danych wejœciowych. Rozró¿niamy dane trenuj¹ce, które s¹ wykorzystywane do uczenia algorytmu, oraz dane testuj¹ce. Zbiór danych testuj¹cych wykorzystywany jest do oceny wyników algorytmu. Oba zbiory zazwyczaj stanowi¹ losowy podzbiór dostêpnych danych.
 % \end{enumerate} 
@@ -239,18 +270,7 @@ wygl¹daæ dok³adnie tak samo.
 % zyskamy dostêp do jej bogatej biblioteki gotowych algorytmów. Vinlen korzysta z
 % w³asnych implementancji algorytmów, z których czêœæ powsta³a na uniwersytecie !!!!!.
 
-% Komponentowa oraz otwarta architektura
-% 
-% API
-% 
-% Otwarta licencja
-% 
-% Podejœcie do datasetów i atrybutów
-% 
-% Jedna reprezentacja wiedzy
-
-\subsection{Eksperymenty i doœwiadczenia}
-TODO
+%TODO
 %1. Rozproszenie
 %2. Wykorzystanie gotowych algorytmow (vinlen wszystko sam pisze)
 %3. Komponentowa architektura
