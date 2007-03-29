@@ -22,6 +22,7 @@
 
 %-gui
 Jednym z podstawowych za³o¿eñ stawianych systemowi jest prosty i przyjazny interfejs u¿ytkownika.
+
 Czêsto cech¹ decyduj¹c¹ o rozpoczêciu u¿ywania danej aplikacji jest pierwszy kontakt z nia.
 Dlatego wa¿ne jest, aby graficzny interfejs u¿ytkownika
 u³atwia³ u¿ycie aplikacji mniej doœwiadczonym u¿ytkownikom i aby nowy u¿ytkownik naszego 
@@ -51,8 +52,9 @@ prze³adowywania ca³ej wtyczki.
 Wyspecyfikowanie dobrze zdefiniowanych interfejsów pozwalaj¹cych na manipulowanie wiedz¹
 pozwoli na znaczne uproszczenie procesu tworzenia wtyczek, a dodatkowo pozwoli na 
 stworzenie wydajnego i dobrze przetestowanego API.
+
 Z kolei ukrycie sposobu zapisu danych i wiedzy umo¿liwi ³atwiejsz¹ 
-komunikacje pomiêdzy ró¿nymi wtyczkami czy podsystemami. Odizolowanie 
+komunikacjê pomiêdzy ró¿nymi wtyczkami czy podsystemami. Odizolowanie 
 algorytmów (wtyczek) od zapisu/odczytu danych pozwoli równie¿ zapewniæ 
 odpowiedni poziom bezpieczeñstwa. Przyk³adowo system powinien posiadaæ API 
 pozwalaj¹ce na tworzenie, manipulacje, odczyt i zapis drzew decyzyjnych, dziêki 
@@ -61,46 +63,46 @@ osobnych wtyczkach, niekoniecznie dostarczanych przez tego samego dostawce.
 Jednak przede wszystkim praca nad jedn¹ czêœci¹ (np. prezentacj¹ drzew) nie wymaga³oby 
 wiedzy na temat innych wtyczek.
 
-% - wiedza TODO:
-
+% - wiedza
+System wspomagaj¹cy procesy machine learningu, jakim ma byæ nasza aplikacja,
+powinien odznaczaæ siê spójnym i przejrzystym, a jednoczeœnie wydajnym sposobem reprezentacji wiedzy.
 Wiêkszoœæ algorytmów machine learning wymaga danych wejœciowych.
 Rozró¿niamy dane trenuj¹ce, które s¹ wykorzystywane do uczenia algorytmu oraz 
 dane testuj¹ce. Zbiór danych testuj¹cych wykorzystywany jest do oceny wyników 
-algorytmu. Oba zbiory zazwyczaj stanowi¹ losowy podzbiór dostêpnych danych. W 
-znanych nam systemach u¿ywan¹ s¹ jednowymiarowe zbiory trenuj¹ce (jedna tabela, 
+algorytmu. Oba zbiory zazwyczaj stanowi¹ losowy podzbiór dostêpnych danych.
+
+W znanych nam systemach u¿ywan¹ s¹ jednowymiarowe zbiory trenuj¹ce (jedna tabela, 
 bez powi¹zañ z innymi). Taki model pasuje do wiêkszoœci algorytmów ucz¹cych, jednak 
-istnieje pewne ryzyko utraty danych, które nios¹ z sob¹ relacje, dlatego 
-chcielibyœmy, aby nasz system tworzy³ i operowa³ na wielowymiarowych zbiorach 
+istnieje pewne ryzyko utraty danych, które nios¹ z sob¹ relacje miêdzy danymi. 
+Dlatego chcielibyœmy, aby nasz system tworzy³ i operowa³ na wielowymiarowych zbiorach 
 trenuj¹cych. Z punktu widzenie algorytmu struktura takiego zbioru nie powinna 
 odbiegaæ od wejœciowej bazy danych. Jedyna ró¿nica powinna polegaæ na iloœci 
 dostêpnych danych. Takie te¿ jest pierwsze i najbardziej naturalne zrozumienie 
-zbioru trenuj¹cego, jako podzbioru danych o niezmienionej strukturze. 
-Przyk³adowo w Wece zosta³ zastosowany inny model, w którym data set jest 
-podzbiorem atrybutów. My jednak chcielibyœmy zamieniæ kolejnoœæ tzn. umieœciæ 
-krok tworzenie podzbioru przed tworzeniem atrybutów w procesie uczenia 
-algorytmu. Kolejnym wymaganiem stawianym naszemu systemowi jest sposób opisu 
-takich zbiorów. Chcielibyœmy, aby zapis data setu nie wymaga³ kopiowania danych 
-z zewnêtrznej bazy danych, a jedynie definiowa³ przepis na utworzenie takowego 
-(np. w postaci zapytania, stanowi¹cego zbiór warunków). Wa¿ne jest, aby dostêpne by³y 
-operacje na zbiorach, takie jak suma czy przeciêcie. Przyk³adowo chcielibyœmy 
-zdefiniowaæ zbiór trenuj¹cy sk³adaj¹cy siê z mê¿czyzn w pewnym przedziale 
-wiekowym oraz inny, który zawiera³by kobiety w tym przydziale, a do algorytmu 
-przes³aæ sumê tych zbiorów. Wa¿ne jest równie¿, aby sposób definicji pozwala³ 
-u¿ytkownikowi na manipulacje na ju¿ gotowym zbiorze (np. wygenerowanym przez 
-system, albo przez algorytm klastruj¹cy). 
+zbioru trenuj¹cego, jako podzbioru danych o niezmienionej strukturze.
 
-Niestety wiêkszoœæ algorytmów wymaga 
-na wejœciu czêœciowo obrobionych danych. Musimy podaæ jakiego typu jest dany 
-danych wejœciowych. Czy mamy do czynienia z napisem, liczb¹ czy mo¿e 
-wyliczeniem, a w przypadku wyliczeñ musimy podaæ zbiór mo¿liwych wartoœci. Mo¿na 
-równie¿ dokonaæ normalizacji pewnych wartoœci, a co najwa¿niejsze, w wiêkszoœci 
-przypadków wymagana jest równie¿ zmiana struktury danych.  W wiêkszoœci baz 
-danych mamy do czynienia z danymi wielowymiarowymi, które nale¿y 
-przetransformowaæ do postaci jednowymiarowej. Wynik takiej transformacji 
-,,surowych'' danych z bazy do danych wejœciowych dla algorytmu nazywamy 
-atrybutami. Dla u¿ytkownika proces stworzenia atrybutów z wszystkich danych 
-zgromadzonych w zewnêtrzne bazie danych i z danych z data setu powinien 
-wygl¹daæ dok³adnie tak samo.
+Nasz system powinien tworzyæ podzbiór danych przed utworzeniem atrybutów.
+Jest to podejœcie ró¿ne o tego, które stosuje siê w innych aplikacjach.
+Przyk³adowo w Wece zbiór danych jest pozdbiorem zbioru atrybutów. 
+W naszym podejœciu zbiór danych nie bêdzie wymaga³ kopiowania danych 
+z zewnêtrznego Ÿród³¹, a jedynie definiowa³ przepis na utworzenie takowego 
+(np. w postaci zapytania, stanowi¹cego zbiór warunków).
+Z kolej zbiór atrybutów stanowiæ bêdzie opis transformacji oryginalnych danych
+na dane wejœciowe do algorytmów ucz¹cych. Wyró¿nienie wartwy atrybutów jest konieczne,
+gdy¿ wiêkszoœæ algorytmów wymaga na wejœciu przetworzonia danych.
+Przetworzenie polega g³ównie na okreœleniu typu danego atrybutu, czyli np. czy jest to atrybut wejœciowy
+czy wyjœciowy oraz jakiego jest rodzaju (napisowy, liczbowy, wyliczeniowy).
+
+Rozwi¹zanie przyjête w naszym systemie zapewnia szereg korzyœci. Atrybuty budowane na zbiorach danych umo¿liwi¹
+zachowanie oryginalnej, czêsto wielowymiarowej struktury oryginalnych danych i zwi¹zków miêdzy nimi.
+Zastosowanie warstwy poœredniej miêdzy atrybutami a danymi, w postaci zbiorów danych, ma te¿ inne zalety.
+Poniewa¿ zbiory danych stanowi¹ jedynie opis, w jakis sposób oryginalne dane mog¹ zostaæ wydobyte
+i jak maj¹ byæ interpretowane, pozwala to na przechowywanie tych danych w zewnêtrznych Ÿród³ach.
+Dziêki temu nie trzeba ich kopiowaæ do bazy, na której maj¹ byæ wykonywane algorytmy,
+co wi¹¿e siê z nie tylko z ich bezpieczeñstwem, ale tak¿e pozwala algorytmom na pracê z zawsze aktualnymi
+danymi bez koniecznoœci dodatkowej synchronizacji miêdzy Ÿród³ami danych, a aplikacj¹, która z nich korzysta.
+Nie bez znaczenia jest te¿ fakt, ¿e przechowuj¹c dane w zewnêtrznych Ÿród³ach danych
+i unikaj¹c koniecznoœci ich kopiowania mo¿na oszczêdziæ sporo przestrzeni dyskowej,
+co mo¿e mieæ du¿e znaczenie przy pracy z ogromnymi zestawami danych.
 
 % TODO: gdzie to?
 %W odró¿nieniu od innych systemów, szczególny nacisk chcemy po³o¿yæ na 
@@ -109,9 +111,8 @@ wygl¹daæ dok³adnie tak samo.
 %learning. W zwi¹zku z tym bardzo wa¿nymi aspektami s¹: proste API (z ang. 
 %Application Program Interface) oraz licencja (link do dalszej czesci?).
 
-\begin{enumerate}
-\item Platforma powinna zawieraæ efektywne, ale zarazem 
-proste narzêdzia do dokonywania takich zadañ. Kolejnym aspektem, który mo¿e 
+% - TODO:
+ Kolejnym aspektem, który mo¿e 
 stwarzaæ problemy, a który mo¿na ujednoliciæ jest kwestia komunikacji pomiêdzy 
 ró¿nymi algorytmami (wtyczkami). I w tym przypadku ca³a odpowiedzialnoœæ za 
 komunikacje powinna spoczywaæ na platformie. Dziêki takiemu podejœciu, mo¿liwe 
