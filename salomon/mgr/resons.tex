@@ -216,6 +216,23 @@ dostêpnych licencji, jedn¹ z nich, która spe³nia nasze, wymagania jest licencja
 LGPL (wstawiæ przypis i odnoœniki)
 \end{enumerate}
 
+System powinien reagowaæ na zmiany w œrodowisku, w którym zosta³ zainstalowany. 
+Przyk³adowo, kiedy pojawiaj¹ siê nowe dany w zewnêtrznej bazie danych, nale¿y 
+przetestowaæ aktualnie zgromadzon¹ wiedzê na nowych danych lub dokonaæ nowych 
+obliczeñ. Jednym z innych wymagañ jest praca w rozproszonym œrodowisku i w tym 
+przypadku ka¿dy z agentów mo¿e niezale¿nie wygenerowaæ now¹ wiedze, po czym 
+nowa wiedza powinna zostaæ rozdystrybuowana do pozosta³ych agentów. Takie 
+podejœcie pozwala na bez obs³ugow¹ prace systemu. System sam powinien 
+podejmowaæ akacje w wyniku pewnych zdarzeñ w jego œrodowisku. Vinlen posiada 
+wsparcie dla agentów (zwanych tam skautami). Agenci w tym œrodowisku to 
+integralna czêœæ tego produktu. Weka nie posiada wsparcia dla takich 
+mechanizmów. Stanowi ona raczej narzêdzie do przeprowadzania akademickich 
+eksperymentów na algorytmach ni¿ narzêdzie do zastosowañ biznesowych, 
+zainstalowane w œrodowisku produkcyjnym. Wa¿ne, aby system posiada³ cechy, 
+które umo¿liwi¹ jego zastosowanie zarówno rozwi¹zaniach biznesowych jak i 
+akademickich.
+
+
 %II. Salomon
 %1. Napisaæ postulaty - dlaczego piszemy Salomona:
 %Funkcje:
