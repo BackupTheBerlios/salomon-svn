@@ -20,9 +20,10 @@
 %- dlaczego? ("Przyjazny interfejs ulatwia uzycie aplikacji zwlaszcza mniej doswiadczonym uzytkownikom...")
 %- ewentualnie w zestawieniu z istniejacymi systami (Weka ma fajny, Vinlen niewygodny czy cos takiego)
 
+%TODO: Powody powstawnia systemu
+
 %-gui
 Jednym z podstawowych za³o¿eñ stawianych systemowi jest prosty i przyjazny interfejs u¿ytkownika.
-
 Czêsto cech¹ decyduj¹c¹ o rozpoczêciu u¿ywania danej aplikacji jest pierwszy kontakt z nia.
 Dlatego wa¿ne jest, aby graficzny interfejs u¿ytkownika
 u³atwia³ u¿ycie aplikacji mniej doœwiadczonym u¿ytkownikom i aby nowy u¿ytkownik naszego 
@@ -117,6 +118,12 @@ odpowiedzialnoœci za zapewnienie komunikacji miêdzy poszczególnymi wtyczkami
 mo¿liwe bêdzie np. zastosowanie obliczeñ równoleg³ych i rozproszonych, 
 bez dodatkowych wymagañ stawianych wtyczkom.
 
+Przeniesienie ciê¿aru obliczeñ z plaftormy do wtyczek poci¹ga za sob¹ koniecznoœæ
+zapewnienia przez platformê mechanizmów aktualizacji wtyczek. Mog¹ byæ one umieszczane
+w zdalnych lokalizacjach, tak wiêc platforma powinna posiadaæ mechanizmy kontroluj¹ce
+wersje u¿ywanych wtyczek i w razie potrzeby aktualizuj¹ce je
+w sposób mo¿liwie wygodny dla u¿ytkownika.
+
 % gotowe algorytmy
 Architektura komponentowa i niezale¿noœæ pomiêdzy poszczególnymi wtyczkami 
 umo¿liwi wykorzystanie gotowych algorytmów. W VINLENIE zosta³y czêœciowo 
@@ -125,29 +132,33 @@ projektów jak np. program Emerald (przypisek). Znajdziemy tam takie algorytmy ja
 Abacuse, AQ czy Cluster. Czêœæ z tych implementacji jest bardzo nowatorska i dysponuje 
 wielkimi mo¿liwoœciami. W Wece mo¿emy znaleŸæ jeszcze wiêksz¹ gamê dostêpnych 
 algorytmów. Dlatego te¿ nasz system powinien charakteryzowaæ siê odpowiednia 
-architektur¹, która w ³atwy sposób pozwala na powtórne u¿ycie ju¿ 
+architektur¹, która w ³atwy sposób pozwoli na powtórne u¿ycie ju¿ 
 zaimplementowanych algorytmów.
-W przypadku u¿ycia algorytmów pochodz¹cych z ró¿nych, nie zawsze pewnych Ÿróde³
+
+W przypadku u¿ycia algorytmów pochodz¹cych z ró¿nych, nie zawsze pewnych, Ÿróde³
 pojawia siê problem bezpieczeñstwa oraz zaufania do ró¿nych 
 implementacji. Naturalnym rozwi¹zaniem tego problemu wydajê siê zastosowanie 
 bezpiecznych jêzyków programowania, takich jak Java wraz z jej systemem bezpieczeñstwa
 i ograniczenia uprawnieñ.
 
-% - agenty (TODO:)
+% - agenty
 System powinien reagowaæ na zmiany w œrodowisku, w którym zosta³ zainstalowany. 
 Przyk³adowo, kiedy pojawiaj¹ siê nowe dane w zewnêtrznej bazie danych, nale¿y 
 przetestowaæ aktualnie zgromadzon¹ wiedzê na nowych danych lub dokonaæ nowych 
-obliczeñ. Jednym z innych wymagañ jest praca w rozproszonym œrodowisku i w tym 
-przypadku ka¿dy z agentów mo¿e niezale¿nie wygenerowaæ now¹ wiedze, po czym 
-nowa wiedza powinna zostaæ rozdystrybuowana do pozosta³ych agentów. Takie 
-podejœcie pozwala na bezobs³ugow¹ prace systemu. System sam powinien 
-podejmowaæ akacje w wyniku pewnych zdarzeñ w jego œrodowisku. Vinlen posiada 
-wsparcie dla agentów (zwanych tam skautami). Agenci w tym œrodowisku to 
-integralna czêœæ tego produktu. Weka nie posiada wsparcia dla takich 
-mechanizmów. Stanowi ona raczej narzêdzie do przeprowadzania akademickich 
-eksperymentów na algorytmach ni¿ narzêdzie do zastosowañ biznesowych, 
-zainstalowane w œrodowisku produkcyjnym. Wa¿ne, aby system posiada³ cechy, 
-które umo¿liwi¹ jego zastosowanie zarówno rozwi¹zaniach biznesowych jak i 
+obliczeñ. Wymaganie to realizowaæ bêd¹ tzw. agenty (link do opisu w dok.).
+Poniewa¿ system bêdzie móg³ pracowaæ w œrodowisku rozproszonym, 
+ka¿dy z agentów pracuj¹cych na ró¿nych maszynach mo¿e niezale¿nie wygenerowaæ now¹ wiedze, 
+po czym wiedza ta powinna zostaæ rozdystrybuowana do pozosta³ych agentów.
+Takie podejœcie pozwala na bezobs³ugow¹ prace systemu. System sam powinien 
+podejmowaæ akacje w wyniku pewnych zdarzeñ w jego œrodowisku. 
+Idea agentów zosta³a zaczerpniêta z Vinlena, który posiada 
+wsparcie analogicznych mechanizmów, zwanych tam skautami.
+Stanowi¹cych one integraln¹ czêœæ tego systemu.
+Weka nie posiada wsparcia dla takich mechanizmów.
+Jest ona bardziej narzêdziem do przeprowadzania akademickich 
+eksperymentów na algorytmach ni¿ narzêdziem do zastosowañ biznesowych, 
+zainstalowane w œrodowisku produkcyjnym. Nasz system powinien posiadaæ cechy, 
+które umo¿liwi¹ jego zastosowanie zarówno w rozwi¹zaniach biznesowych jak i 
 akademickich.
 
 % - rownoleglosc i rozproszenie
@@ -199,13 +210,6 @@ zaj¹æ siê administrator.
 %wymaga³oby pobrania nie tylko parametrów, czy danych, ale równie¿ samych 
 %algorytmów. Oba referencyjne systemy nie spe³niaj¹ wymaganych przez nas 
 %kryteriów.
-
-% TODO: to gdzie?
-%W odró¿nieniu od innych systemów, szczególny nacisk chcemy po³o¿yæ na 
-%platformê, a nie na same algorytmy. Jak ju¿ wczeœniej zosta³o powiedziane, 
-%wa¿ne jest, aby da³o siê wykorzystaæ gotowe implementacje algorytmów machine 
-%learning. W zwi¹zku z tym bardzo wa¿nymi aspektami s¹: proste API (z ang. 
-%Application Program Interface) oraz licencja (link do dalszej czesci?).
 
 % -- Licencja
 Istotn¹ cech¹ wp³ywaj¹c¹ na popularnoœæ aplikacji jest sposób ich licencjonowania,
@@ -268,15 +272,6 @@ LGPL (wstawiæ przypis i odnoœniki).
 % przemawiaj¹ce za rozproszeniem to lepsze wykorzystanie zasobów (klasteryzacja)
 % oraz dostêp do rozproszonych danych oraz wiedzy.
 % 
-% Vinlen jest rozwijany na uniwersytecie TUTAJ WSTAWIÆ NAZWÊ jako zamkniêty
-% produkt. My jednak postanowiliœmy udostêpniæ nasz system na otwartej licencji
-% \emph{LGPL}, która pozwala u¿ywanie go jako biblioteki w komercyjnych
-% produktach. Jednak w takim przypadku nie mo¿na wykorzystaæ integracji z Weka z
-% racji na jej licencjê (GNU). Weka dostarcza implementacji wielu popularnych
-% algorytmów uczenia maszynowego, dlatego te¿ stwierdziliœmy, ¿e zamiast
-% dostarczenia w³asnej implementacji dostarczymy integracji z Wek¹, przez co
-% zyskamy dostêp do jej bogatej biblioteki gotowych algorytmów. Vinlen korzysta z
-% w³asnych implementancji algorytmów, z których czêœæ powsta³a na uniwersytecie !!!!!.
 
 %TODO
 %1. Rozproszenie
