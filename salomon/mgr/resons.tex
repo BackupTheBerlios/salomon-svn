@@ -104,125 +104,43 @@ Nie bez znaczenia jest te¿ fakt, ¿e przechowuj¹c dane w zewnêtrznych Ÿród³ach da
 i unikaj¹c koniecznoœci ich kopiowania mo¿na oszczêdziæ sporo przestrzeni dyskowej,
 co mo¿e mieæ du¿e znaczenie przy pracy z ogromnymi zestawami danych.
 
-% TODO: gdzie to?
-%W odró¿nieniu od innych systemów, szczególny nacisk chcemy po³o¿yæ na 
-%platformê, a nie na same algorytmy. Jak ju¿ wczeœniej zosta³o powiedziane, 
-%wa¿ne jest, aby da³o siê wykorzystaæ gotowe implementacje algorytmów machine 
-%learning. W zwi¹zku z tym bardzo wa¿nymi aspektami s¹: proste API (z ang. 
-%Application Program Interface) oraz licencja (link do dalszej czesci?).
-
-% - TODO:
-% wywalic do architetkury - komponentowosc
- Kolejnym aspektem, który mo¿e 
-stwarzaæ problemy, a który mo¿na ujednoliciæ jest kwestia komunikacji pomiêdzy 
-ró¿nymi algorytmami (wtyczkami). I w tym przypadku ca³a odpowiedzialnoœæ za 
-komunikacje powinna spoczywaæ na platformie. Dziêki takiemu podejœciu, mo¿liwe 
-jest u¿ycie obliczeñ równoleg³ych i rozproszonych, bez dodatkowych wymagañ 
-stawianych wtyczkom. 
-
-% to moze pod koniec, we wnioskach do tego rozdzialu (jesli wogole to dawac)
-Po przeanalizowaniu obecnych narzêdzi do uczenia maszynowego stwierdziliœmy, ¿e 
-dostêpne systemu tego typu posiadaj¹ pewne ograniczenia, które chcielibyœmy 
-wyeliminowaæ. Po zapoznaniu z wieloma narzêdzami doszliœmy do wniosku, ¿e 
-najbli¿ej naszych wymagañ s¹ dwie aplikacje: VINLEN oraz Weka. Dlatego 
-omawiaj¹c nasze wymagania, bêdziemy nawi¹zywaæ do tych dwóch aplikacji. Równie¿ 
-dlatego, ¿e chcielibyœmy, tworz¹c nasz¹ aplikacje, wzorowaæ siê na tych dwóch 
-programach.
-
-\subsection{Funkcjonalne}
-
-\begin{enumerate}
-	\item Postanowiliœmy, ¿e nasza aplikacja powinna posiadaæ 
-mo¿liwoœæ pracy w œrodowisku rozproszonym. W dobie rozpowszechniania siê 
-technologi gridowych, klastrów stwierdziliœmy, ¿e to bardzo wa¿ny aspekt takiej 
-aplikacji. Dzia³anie w œrodowisku heterogenicznym pozwala nie tylko na lepsze 
-wykorzystanie zasobów sprzêtowych, ale równie¿ na dostêp do wielu Ÿróde³ danych 
-przy zapewnieniu bezpieczeñstwach tych danych. Rozproszone instancje powinny 
-wymieniaæ jak najmniejsza iloœæ informacji. W celu zapewnianiu bezpieczeñstwa 
-danych, aplikacja nie powinna wysy³aæ samych danych, ale wy³¹cznie wiedze. 
-Nale¿y za³o¿yæ ograniczone zaufanie do instancji pracuj¹cych w œrodowisku, 
-dlatego ka¿de Ÿród³o danych powinno byæ zabezpieczone. 
-	\item Bezpieczeñstwo, 
-czêœciowo omówione wy¿ej jest wa¿nym aspektem systemu tego typu. W 
-zastosowaniach komercyjnych system mo¿e mieæ dostêp do kluczowych danych 
-przedsiêbiorstwa czy instytucji. Model bezpieczeñstwa komunikacji miêdzy 
-ró¿nymi instancjami, chcielibyœmy oprzeæ na obecnie dostêpnych metodach ochrony 
-jak np. VPN (Virtual Private Network). Ochron¹ warstwy komunikacji powinien 
-zaj¹æ siê administrator. Zak³adamy, ¿e nasz system bêdzie zainstalowany w 
-bezpiecznym œrodowisku. 
-	\item Obliczenia równoleg³e. Ten aspekt aplikacji zosta³ 
-czêœciowo umówiony wy¿ej. W tym punkcie chcielibyœmy zaznaczyæ, ¿e równoleg³e 
-obliczenia powinny byæ równie¿ dostêpne w ramach pojedynczej instancji systemu. 
-Po przeanalizowaniu dostêpnych metod zrównolegniania aplikacji doszliœmy do 
-wniosku, ¿e w naszym przypadku w³aœciwym i najprostszym modelem jest napsianie 
-aplikacji pracuj¹cych w oparciu o w¹tki i przeniesienie ciê¿aru zrownolegniania 
-na inne mechanizmy jak klasteryzcja itp. Obecnie na rynku znajduj¹ siê systemu 
-pozowalaj¹ce na zrównoleglenie aplikacji wielow¹tkowej w sposób przeŸroczysty 
-dla u¿ytkownika jak i dla aplikacji. Œwietnym przyk³adem takiej aplikacji jest 
-np. MOSIX (http://www.mosix.org/), który z klastrów linuxowych x86 tworzy 
-system wieloprocesorowy.   
-\end{enumerate}
-
-
-\subsection{Architektura}
-\begin{enumerate}
-	\item Wykorzystanie gotowych algorytmów. W VINLENIE zosta³y czêœciowo 
-wykorzystane implementacje algorytmów przygotowanych do wczeœniejszych 
-projektów jak program Emerald (przypisek). Znajdziemy tam takie algorytmy jak 
-Abacuse, AQ czy Cluster. Czêœæ z tych implementacji jest bardzo nowatorska z 
-wielkimi mo¿liwoœciami. W Wece mo¿emy znaleŸæ jeszcze wiêksz¹ gamê dostêpnych 
-algorytmów. Dlatego te¿, nas system powinien charakteryzowaæ siê odpowiednia 
-architektur¹, która w ³atwy sposób pozwala na powtórne u¿ycie ju¿ 
-zaimplementowanych algorytmów. Wa¿nym aspektem jest dostêp do algorytmów Weki, 
-ale tak¿e do ewentualnego u¿ycia algorytmów z VINLENA, co jedna wymaga 
-zastosowania odpowiedniej licencji (link do odpowiedniego punktu. VINLEN zosta³ 
-napisany w jêzyku C++, zatem system powinnen wspieraæ równie¿ inne jêzyki 
-programowania a szczególnie wspomniany C++.
-	\item Jednym z podstawowych wymagañ stawianym naszemu systemowi, jest 
-komponentowa architektura. W celu poprawnego dzia³ania w wielkim rozproszonym 
+% - architektura komponentowa
+Jednym z podstawowych wymagañ stawianym naszemu systemowi, jest architektura komponentowa.
+W celu poprawnego dzia³ania w wielkim rozproszonym 
 œrodowisku, platforma uruchomieniowa powinna byæ dobrze odseparowana od samych 
-algorytmów, co umo¿liwi na wspó³pracê w jednym œrodowisku ró¿nych wersji 
-systemu, a nawet ró¿nych jego implementacji! Budowa systemu powinna w jak 
+algorytmów, co umo¿liwi wspó³pracê w jednym œrodowisku ró¿nych wersji 
+systemu, a nawet ró¿nych jego implementacji. Budowa systemu powinna w jak 
 najwiêkszym stopniu wspieraæ mo¿liwoœæ powstania ró¿nych niezale¿nych 
 implementacji algorytmów uczenia maszynowego, dostarczanych przez ró¿nych 
-dostawców. Tutaj pojawia siê problem bezpieczeñstwa oraz zaufania do ró¿nych 
+dostawców. Dziêki odseparowaniu wtyczek od plaftormy i przeniesieniu na ni¹ 
+odpowiedzialnoœci za zapewnienie komunikacji miêdzy poszczególnymi wtyczkami
+mo¿liwe bêdzie np. zastosowanie obliczeñ równoleg³ych i rozproszonych, 
+bez dodatkowych wymagañ stawianych wtyczkom.
+
+% gotowe algorytmy
+Architektura komponentowa i niezale¿noœæ pomiêdzy poszczególnymi wtyczkami 
+umo¿liwi wykorzystanie gotowych algorytmów. W VINLENIE zosta³y czêœciowo 
+wykorzystane implementacje algorytmów przygotowanych do wczeœniejszych 
+projektów jak np. program Emerald (przypisek). Znajdziemy tam takie algorytmy jak 
+Abacuse, AQ czy Cluster. Czêœæ z tych implementacji jest bardzo nowatorska i dysponuje 
+wielkimi mo¿liwoœciami. W Wece mo¿emy znaleŸæ jeszcze wiêksz¹ gamê dostêpnych 
+algorytmów. Dlatego te¿ nasz system powinien charakteryzowaæ siê odpowiednia 
+architektur¹, która w ³atwy sposób pozwala na powtórne u¿ycie ju¿ 
+zaimplementowanych algorytmów.
+W przypadku u¿ycia algorytmów pochodz¹cych z ró¿nych, nie zawsze pewnych Ÿróde³
+pojawia siê problem bezpieczeñstwa oraz zaufania do ró¿nych 
 implementacji. Naturalnym rozwi¹zaniem tego problemu wydajê siê zastosowanie 
-bezpiecznych jêzyków programowania, jak Java oraz jej systemu bezpieczeñstwa i 
-ograniczenia uprawnieñ. Kolejnym aspektem architektury jest sposób aktualizacji 
-algorytmów. Jeœli w przypadku samej platformy aktualizacja nie bêdzie 
-dokonywana czêsto to jednak w przypadku algorytmów mo¿e to nastêpowaæ bardzo 
-czêsto. Przyk³adowym zastosowaniem wymagaj¹cym czêstych aktualizacji jest 
-wynajmowanie mocy obliczeniowej innym instytucj¹. Mo¿na wyobraziæ sobie 
-sytuacje, w której na wydajnej maszynie zainstalowany jest Salomon (mo¿na 
-podawaæ tutaj nazwê?) Wykonuje on obliczenia na zlecenie, co w oczywisty sposób 
-wymaga³oby pobrania nie tylko parametrów, czy danych, ale równie¿ samych 
-algorytmów. Oba referencyjne systemy nie spe³niaj¹ wymaganych przez nas 
-kryteriów.
-\end{enumerate}
+bezpiecznych jêzyków programowania, takich jak Java wraz z jej systemem bezpieczeñstwa
+i ograniczenia uprawnieñ.
 
-
-
-\item VINLEN to system komercyjny, dostarczany bez kodu Ÿród³owego, 
-dlatego jego wykorzystanie jest utrudnione zarówno jako platformy dla w³asnych 
-algorytmów jak i jego algorytmów. Z racji braku kodu Ÿród³owego nie s¹ mo¿liwe 
-ewentualne modyfikacje i dostosowania do naszych potrzeb. Weka dostarczana jest na licencji 
-GPL, która jest licencj¹ open source, jednak równie¿ stwarza pewne problemy. 
-W przypadku tej licencji niemo¿liwe jest u¿ycie aplikacji w innym systemie o 
-zamkniêtym kodzie Ÿród³owym. Chcielibyœmy, aby mo¿liwe by³o wykorzystanie 
-naszego systemu w zamkniêtych, komercyjnych projektach, a zarazem chcielibyœmy, 
-aby u¿yta przez na licencja by³a zgodna z GPL. Zgodnoœæ licencji jest wymagana 
-do ewentualnego u¿ycia algorytmów Weki w naszym systemie. Po wstêpnej analizie 
-dostêpnych licencji, jedn¹ z nich, która spe³nia nasze, wymagania jest licencja 
-LGPL (wstawiæ przypis i odnoœniki)
-\end{enumerate}
-
+% - agenty (TODO:)
 System powinien reagowaæ na zmiany w œrodowisku, w którym zosta³ zainstalowany. 
-Przyk³adowo, kiedy pojawiaj¹ siê nowe dany w zewnêtrznej bazie danych, nale¿y 
+Przyk³adowo, kiedy pojawiaj¹ siê nowe dane w zewnêtrznej bazie danych, nale¿y 
 przetestowaæ aktualnie zgromadzon¹ wiedzê na nowych danych lub dokonaæ nowych 
 obliczeñ. Jednym z innych wymagañ jest praca w rozproszonym œrodowisku i w tym 
 przypadku ka¿dy z agentów mo¿e niezale¿nie wygenerowaæ now¹ wiedze, po czym 
 nowa wiedza powinna zostaæ rozdystrybuowana do pozosta³ych agentów. Takie 
-podejœcie pozwala na bez obs³ugow¹ prace systemu. System sam powinien 
+podejœcie pozwala na bezobs³ugow¹ prace systemu. System sam powinien 
 podejmowaæ akacje w wyniku pewnych zdarzeñ w jego œrodowisku. Vinlen posiada 
 wsparcie dla agentów (zwanych tam skautami). Agenci w tym œrodowisku to 
 integralna czêœæ tego produktu. Weka nie posiada wsparcia dla takich 
@@ -232,6 +150,90 @@ zainstalowane w œrodowisku produkcyjnym. Wa¿ne, aby system posiada³ cechy,
 które umo¿liwi¹ jego zastosowanie zarówno rozwi¹zaniach biznesowych jak i 
 akademickich.
 
+% - rownoleglosc i rozproszenie
+System, który mo¿e wykonywaæ skomplikowane i d³ugotrwa³e obliczenia powinien
+mieæ mo¿liwoœæ ich rozpraszania.
+W dobie rozpowszechniania siê technologi gridowych i klastrowych aplikacje powinny
+móc korzystaæ z mo¿liwoœci, jakie te technologie udostêpniaj¹.
+Dzia³anie w œrodowisku heterogenicznym pozwala nie tylko na lepsze 
+wykorzystanie zasobów sprzêtowych, ale równie¿ na dostêp do wielu Ÿróde³ danych 
+przy zapewnieniu bezpieczeñstwach tych danych. Rozproszone instancje powinny 
+wymieniaæ jak najmniejsz¹ iloœæ informacji, by nie obci¹¿aæ namiernie zasobów komunikacyjnych.
+
+Nasz system powinien tak¿e umo¿liwiaæ zrównoleglanie niektórych obliczeñ.
+Taka mo¿liwoœæ powinna byæ dostêpna ramach pojedynczej instancji systemu,
+co powinno byæ uwzglêdnione w jego architekturze.
+W naszym przypadku w³aœciwym i najprostszym modelem jest napisanie 
+aplikacji pracuj¹cych w oparciu o w¹tki i przeniesienie ciê¿aru zrownolegniania 
+na inne mechanizmy, takie jak klasteryzcja itp. Obecnie na rynku znajduj¹ siê systemy
+pozowalaj¹ce na zrównoleglenie aplikacji wielow¹tkowej w sposób przeŸroczysty 
+dla u¿ytkownika jak i dla aplikacji. Œwietnym przyk³adem takiej aplikacji jest 
+np. MOSIX (http://www.mosix.org/), który z klastrów linuxowych x86 tworzy 
+system wieloprocesorowy.
+
+W celu zapewnianiu bezpieczeñstwa danych, aplikacja nie powinna wysy³aæ samych danych,
+ale wy³¹cznie wiedzê. Nale¿y równie¿ za³o¿yæ ograniczone zaufanie do instancji 
+pracuj¹cych w nieznanym œrodowisku, dlatego ka¿de Ÿród³o danych powinno byæ zabezpieczone.
+W zastosowaniach komercyjnych system mo¿e mieæ dostêp do kluczowych danych 
+przedsiêbiorstwa czy instytucji. Model bezpieczeñstwa komunikacji miêdzy 
+ró¿nymi instancjami, chcielibyœmy oprzeæ na obecnie dostêpnych metodach ochrony 
+jak np. VPN (Virtual Private Network). Zak³adamy, ¿e nasz system bêdzie zainstalowany w 
+bezpiecznym œrodowisku, dlatego ochron¹ warstwy komunikacji powinien 
+zaj¹æ siê administrator.
+
+% TODO: to gdzie? (do wykorzystania algorytmow?)
+%Wa¿nym aspektem jest dostêp do algorytmów Weki, 
+%ale tak¿e do ewentualnego u¿ycia algorytmów z VINLENA, co jedna wymaga 
+%zastosowania odpowiedniej licencji (link do odpowiedniego punktu. VINLEN zosta³ 
+%napisany w jêzyku C++, zatem system powinnen wspieraæ równie¿ inne jêzyki 
+%programowania a szczególnie wspomniany C++.
+
+% TODO - to gdzie?
+%Kolejnym aspektem architektury jest sposób aktualizacji 
+%algorytmów. Jeœli w przypadku samej platformy aktualizacja nie bêdzie 
+%dokonywana czêsto to jednak w przypadku algorytmów mo¿e to nastêpowaæ bardzo 
+%czêsto. Przyk³adowym zastosowaniem wymagaj¹cym czêstych aktualizacji jest 
+%wynajmowanie mocy obliczeniowej innym instytucjom. Mo¿na wyobraziæ sobie 
+%sytuacje, w której nasz system zainstalowany jest na wydajnej maszynie, np. klastrze.
+%Wykonuje on obliczenia na zlecenie, co w oczywisty sposób 
+%wymaga³oby pobrania nie tylko parametrów, czy danych, ale równie¿ samych 
+%algorytmów. Oba referencyjne systemy nie spe³niaj¹ wymaganych przez nas 
+%kryteriów.
+
+% TODO: to gdzie?
+%W odró¿nieniu od innych systemów, szczególny nacisk chcemy po³o¿yæ na 
+%platformê, a nie na same algorytmy. Jak ju¿ wczeœniej zosta³o powiedziane, 
+%wa¿ne jest, aby da³o siê wykorzystaæ gotowe implementacje algorytmów machine 
+%learning. W zwi¹zku z tym bardzo wa¿nymi aspektami s¹: proste API (z ang. 
+%Application Program Interface) oraz licencja (link do dalszej czesci?).
+
+% -- Licencja
+Istotn¹ cech¹ wp³ywaj¹c¹ na popularnoœæ aplikacji jest sposób ich licencjonowania,
+dlatego nasz system powininen byæ dostêpny na licencji, która umo¿liwiaæ bêdzie jego
+powszechne u¿ywanie.
+VINLEN to system komercyjny, dostarczany bez kodu Ÿród³owego, 
+dlatego jego wykorzystanie jest utrudnione zarówno jako platformy dla w³asnych 
+algorytmów jak i jego algorytmów. Z racji braku kodu Ÿród³owego nie s¹ mo¿liwe 
+ewentualne modyfikacje i dostosowania do naszych potrzeb.
+Weka dostarczana jest na licencji GPL, która jest licencj¹ open source, jednak równie¿ stwarza pewne problemy. 
+W przypadku tej licencji niemo¿liwe jest u¿ycie aplikacji w innym systemie o 
+zamkniêtym kodzie Ÿród³owym.
+Licencja, na której bêdzie dostêpny nasz system powinna umo¿liwiaæ wykorzystanie 
+go w zamkniêtych, komercyjnych projektach, a zarazem po¿¹dan¹ cech¹ jest to, 
+aby by³a zgodna z GPL. Zgodnoœæ licencji jest wymagana do ewentualnego u¿ycia 
+algorytmów Weki w naszym systemie. Po wstêpnej analizie dostêpnych licencji, 
+jedn¹ z tych, która spe³nia nasze, wymagania jest licencja 
+LGPL (wstawiæ przypis i odnoœniki).
+
+% to moze pod koniec, we wnioskach do tego rozdzialu (jesli wogole to dawac)
+% TODO - to gdzie?
+%Po przeanalizowaniu obecnych narzêdzi do uczenia maszynowego stwierdziliœmy, ¿e 
+%dostêpne systemu tego typu posiadaj¹ pewne ograniczenia, które chcielibyœmy 
+%wyeliminowaæ. Po zapoznaniu z wieloma narzêdzami doszliœmy do wniosku, ¿e 
+%najbli¿ej naszych wymagañ s¹ dwie aplikacje: VINLEN oraz Weka. Dlatego 
+%omawiaj¹c nasze wymagania, bêdziemy nawi¹zywaæ do tych dwóch aplikacji. Równie¿ 
+%dlatego, ¿e chcielibyœmy, tworz¹c nasz¹ aplikacje, wzorowaæ siê na tych dwóch 
+%programach.  
 
 %II. Salomon
 %1. Napisaæ postulaty - dlaczego piszemy Salomona:
