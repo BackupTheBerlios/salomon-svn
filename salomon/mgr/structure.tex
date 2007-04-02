@@ -1,5 +1,54 @@
 \section{Struktura systemu}
 
+Salomon sk³ada siê z dwóch zasadniczych czêœci (Rys \ref{fig:Achitecture}). Pierwsz¹ z nich
+stanowi platforma. Tworz¹ j¹:
+\begin{itemize}
+	\item silnik, którego zadaniem jest zarz¹dzanie i~uruchamianie
+zadañ
+	\item magazyn s³u¿¹cy do przechowywania wiedzy
+\end{itemize}
+
+Druga czêœæ to zbiór wtyczek, dostarczaj¹cych logikê potrzebn¹ do skonfigurowania, wykonania i~wyœwietlenia rezultatów
+zadania. System jest otwarty - oznacza to, ¿e jego funkcjonalnoœæ mo¿e byæ w ³atwy sposób rozszerzana poprzez dostarczenie nowych wtyczek.
+
+\begin{figure}[H]
+	\centering
+		\includegraphics[width=0.90\textwidth]{img/salomon/concept/architecture.png}
+	\caption{Architektura systemu}
+	\label{fig:Achitecture}
+\end{figure}
+
+
+\pagebreak
+Podstawowe za³o¿enia projektowe:
+\begin{itemize}
+    \item ca³a funkcjonalnoœæ w pluginach. J¹dro systemu ma byæ jak najmniejsze.
+    Jego zadaniem jest stworzenie œrodowiska do realizacji logiki dostarczanej we wtyczkach
+    \item otwarta~architektura. Wprowadzenie warstwy poœredniej pomiêdzy baz¹ danych~a wtyczkami.
+    Jej zadaniem jest ukrycie sposobu organizacji danych przez
+    wtyczkami. Otwartoœæ~architektury polega na mo¿liwoœci rozszerzenia tej warstwy
+    \item niezale¿noœæ od platformy. System ma byæ niezale¿ny od platformy, mo¿liwie ³atwo przenaszalny.
+    Poszczególne czêœci systemu mog¹ byæ uruchamiane na ró¿nych
+    platformach.
+    \item mo¿liwoœæ wykorzystywania rezultatów poprzednich zadañ przez kolejne
+    \item ³atwa~adaptacja funkcjonalnoœci zawartej w \emph{Vinlenie}.
+    Projekt powsta³ jako platforma uruchomieniowa dla logiki zaimplementowanej w programie \emph{Vinlen},
+    tworzonego pod kierownictwem prof. Ryszarda Michalskiego.    
+\end{itemize}
+
+
+Salomon ma na celu wyeliminowanie ograniczeñ oryginalnego
+\emph{Vinlena} poprzez wprowadzenie:
+
+\begin{itemize}
+    \item kolejkowania zadañ
+    \item rozproszenia
+    \item równoleg³oœci
+    \item rozszerzalnoœci (mechanizm wtyczek)
+    \item przenoœnoœci (\emph{Java},\emph{Firebird})
+\end{itemize}
+
+
 System zosta³ podzielony na 3 g³ówne czêœci: platformê, kontrolery
 i~pluginy.
 
@@ -17,6 +66,14 @@ zadania. Odpowiada za komunikacje miêdzy innymi instancjami \emph{Salomona}.
 \end{figure}
 
 Za poszczególne zadania odpowiadaj¹ odpowiednie menad¿ery.
+
+Klasy maj¹ce w nazwie s³owo \emph{Manager} pe³ni¹ szczególn¹ funkcjê 
+-- najczêœciej odpowiadaj¹ za zarz¹dzanie innymi klasami, z regu³y tymi, 
+które stanowi¹ resztê nazwy (np. \emph{PluginManger} zarz¹dza pluginami, \emph{ProjectManger} - projektami).
+G³ównym zadaniem menad¿erów jest odseparowanie wtyczek od operacji bezpoœrednio na danych.
+Dostarczaj¹ one zestawu metod pozwalaj¹cych na wygodne zarz¹dzanie obiektami,
+ich tworzenie, modyfikowanie czy usuwanie.
+
 Menad¿ery nie s¹ dostêpne bezpoœrednio z platformy, ale
 przekazywane s¹ wtyczkom poprzez klasê \emph{IDataEngine}.
 Dotyczy to tylko klas \emph{IDataSetManager}, \emph{IAttributeSetManager}
@@ -130,10 +187,6 @@ Zadaniem tego kontrolera jest odszukanie g³ównego kontrolera
 swoich us³ug. Ta wersja kontrolera nie posiada GUI, zarz¹dzanie
 nim odbywa siê za pomoc¹ klasy \emph{MasterController}.
 Podobnie jak w przypadku klasy \emph{MasterController}, kontroler ten dopiero bêdzie zaimplementowany.
-
-%\paragraph{WinSalomon}
-
-%\input{winsalomon}
 
 \subsection{Wtyczki}
 

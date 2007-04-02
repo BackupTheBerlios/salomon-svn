@@ -2,12 +2,17 @@
 
 Ca³a funkcjonalnoœæ \emph{Salomona} podporz¹dkowana jest tworzeniu zadañ. Operacje podstawowe, takie jak np. tworzenie projektów czy definiowanie wtyczek s³u¿¹ jedynie stworzeniu œrodowiska, w którym mog¹ byæ wykonywane zadania. Z kolei operacje administracyjne pozwalaj¹ na zaawansowane zarz¹dzanie platform¹ i mog¹ byæ u¿yteczne dla u¿ytkowników bardzo dobrze znaj¹cych wewnêtrzn¹ strukturê systemu.
 
-
 \subsection{Operacje podstawowe}
 
 \subsubsection{Operacje na obiekcie Solution}
 
-Terminem \emph{Solution} okreœlamy obiekt grupuj¹cy kilka projektów. 
+Terminem tym okreœlamy strukturê grupuj¹c¹ projekty.
+W obrêbie jednego obiektu \emph{Solution} zgrupowane s¹ projekty, 
+które operuj¹ na tym samym zewnêtrznym Ÿródle danych.
+W obecnej wersji s¹ to zewnêrzne bazy danych. Obiekt ten przechowuje 
+informacje niezbêdne do uzyskania dostêpu do danych,
+a wiêc parametry po³¹czenia i lokalizacjê bazy danych.
+
 Mo¿na na nim wykonaæ nastêpuj¹ce operacje:
 
 \begin{itemize}
@@ -24,6 +29,13 @@ Mo¿na na nim wykonaæ nastêpuj¹ce operacje:
 \subsubsection{Operacje na projektach}
 
 Projekty s³u¿¹ do grupowania zadañ w obrêbie tego samego obiektu \emph{Solution}.			
+W ramach projektów zapisywana jest konfiguracja systemu przed wykonaniem grupy zadañ.
+Zadania te grupowane s¹ w formie grafu skierowanego acyklicznego.
+Struktura taka opisuje zestaw zadañ, które musz¹ zostaæ wykonane w okreœlonej kolejnoœci
+aby uzyskaæ zamierzony efekt. Przyk³adowo, aby stworzyæ i wyœwietliæ drzewo decyzyjne,
+mo¿na zdefiniowaæ zadania dla poszczególnych kroków, a wiêc wybrania zbioru danych, zdefiniowania zbioru atrybutów,
+skonfigurowania algorytmu tworz¹cego drzewo, czy wreszcie jego wizualizacji.
+Projekty mog¹ byæ u¿yte wielokrotnie dla ró¿nych danych i ró¿nej konfiguracji zadañ. 
 
 Operacje na projekcie:		
 	\begin{itemize}	
@@ -44,7 +56,17 @@ Operacje na projekcie:
 	
 \subsubsection{Operacje na wtyczkach}
 
-Wtyczki zawieraj¹ algorytmy, które mog¹ byæ wykonywane przez platformê w ramach poszczególnych zadañ. S¹ one podstawowymi komponentami, które rozszerzaj¹ mo¿liwoœci systemu.
+Wtyczka to zewnêtrzny program odpowiedzialny za wykonanie konkretnego zadania.
+Mo¿e zawieraæ algorytm obliczeniowy, ale nie tylko -- wtyczki mog¹ te¿ s³u¿yæ
+np. do definiowania nowych zbiorów danych czy do wyœwietlania drzew decyzyjnych
+w formie graficznej. Ka¿da wtyczka mo¿e byæ skonfigurowana przed wykonaniem jej 
+g³ównego zadania. Za obs³ugê konfiguracji odpowiada platforma, twórca wtyczki musi
+jedynie dostarczyæ komponentów pozwalaj¹cych na skonfigurowanie ustawieñ wtyczki
+z poziomu graficznego interfejsu u¿ytkownika.
+Wtyczki nie s¹ integraln¹ czêœci¹ systemu. W razie koniecznoœci mog¹ byæ pobierane 
+z okreœlonej zdalnej lokalizacji.
+Wtyczki zawieraj¹ algorytmy, które mog¹ byæ wykonywane przez platformê w ramach poszczególnych zadañ.
+S¹ one podstawowymi komponentami, które rozszerzaj¹ mo¿liwoœci systemu.
 
 	\begin{itemize}
 	
@@ -66,6 +88,10 @@ Wtyczki zawieraj¹ algorytmy, które mog¹ byæ wykonywane przez platformê w ramach 
 \subsection{Operacje na zadaniach}
 
 Definiowanie zadañ do wykonania nale¿y do podstawowych funkcji systemu, dlatego w obecnej wersji ich definiowanie i konfigurowanie zosta³o znacznie rozbudowane.
+
+Zadanie to podstawowa jednostka obliczeniowa.
+Zawiera algorytm, który ma zostaæ wykonany oraz jego ustawienia.
+Algorytm dostarczany jest w formie wtyczki. Szerszy opis zadañ znajduje siê w rozdziale \ref{lab:tasks}.
 
 Pierwsze wersje \emph{Salomona} pozwala³y jedynie na definiowanie liniowej listy zadañ.
 Dlatego, aby umo¿liwiæ tworzenie bardziej zaawansowanych struktur zadañ zosta³ stworzony nowy komponent oparty o bibliotekê \emph{Jung}.
