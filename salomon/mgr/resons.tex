@@ -20,7 +20,16 @@
 %- dlaczego? ("Przyjazny interfejs ulatwia uzycie aplikacji zwlaszcza mniej doswiadczonym uzytkownikom...")
 %- ewentualnie w zestawieniu z istniejacymi systami (Weka ma fajny, Vinlen niewygodny czy cos takiego)
 
-%TODO: Powody powstawnia systemu
+%TODO: Powody powstania systemu
+Celem tego projektu jest stworzenie przyjaznego œrodowiska pozwalaj¹cego na odkrywanie i przechowywanie wiedzy
+oraz uruchamianie ró¿nych algorytmów machine learningu.
+
+Na rynku dostêpne s¹ ró¿ne narzêdzia wspomagaj¹ce prowadzenie obliczeñ zwi¹zanych
+z zagadnieniami uczenia maszynowego, jak choæby wy¿ej Weka (\ref{lab:weka} ) i Vinlen (\ref{lab:vinlen}).
+Analiza ich mo¿liwoœci prowadzi do stwierdzenia, ¿e posiadaj¹ one pewne ograniczenia,
+utrudniaj¹ce ich wykorzystanie do pewnych zastosowañ.
+Formu³owane poni¿ej wymagania stawiane naszej aplikacji stanowi¹ czêsto odpowiedŸ
+na ograniczenia Weki i Vinlena.
 
 %-gui
 Jednym z podstawowych za³o¿eñ stawianych systemowi jest prosty i przyjazny interfejs u¿ytkownika.
@@ -126,7 +135,7 @@ w sposób mo¿liwie wygodny dla u¿ytkownika.
 
 % gotowe algorytmy
 Architektura komponentowa i niezale¿noœæ pomiêdzy poszczególnymi wtyczkami 
-umo¿liwi wykorzystanie gotowych algorytmów. W VINLENIE zosta³y czêœciowo 
+umo¿liwi wykorzystanie gotowych algorytmów. W Vinlenie zosta³y czêœciowo 
 wykorzystane implementacje algorytmów przygotowanych do wczeœniejszych 
 projektów jak np. program Emerald (przypisek). Znajdziemy tam takie algorytmy jak 
 Abacuse, AQ czy Cluster. Czêœæ z tych implementacji jest bardzo nowatorska i dysponuje 
@@ -229,15 +238,18 @@ algorytmów Weki w naszym systemie. Po wstêpnej analizie dostêpnych licencji,
 jedn¹ z tych, która spe³nia nasze, wymagania jest licencja 
 LGPL (wstawiæ przypis i odnoœniki).
 
-% to moze pod koniec, we wnioskach do tego rozdzialu (jesli wogole to dawac)
-% TODO - to gdzie?
-%Po przeanalizowaniu obecnych narzêdzi do uczenia maszynowego stwierdziliœmy, ¿e 
-%dostêpne systemu tego typu posiadaj¹ pewne ograniczenia, które chcielibyœmy 
-%wyeliminowaæ. Po zapoznaniu z wieloma narzêdzami doszliœmy do wniosku, ¿e 
-%najbli¿ej naszych wymagañ s¹ dwie aplikacje: VINLEN oraz Weka. Dlatego 
-%omawiaj¹c nasze wymagania, bêdziemy nawi¹zywaæ do tych dwóch aplikacji. Równie¿ 
-%dlatego, ¿e chcielibyœmy, tworz¹c nasz¹ aplikacje, wzorowaæ siê na tych dwóch 
-%programach.  
+Podsumowanie powy¿szych wymagañ prowadzi do stwierdzenia,
+¿e nasz system powinien cechowaæ siê architekturê komponentow¹, 
+a jego funkcjonalnoœæ powinna byæ ³atwo rozszerzalna, dziêki dobrze zdefiniowanemu \emph{API}. 
+Rozszerzalnoœæ ta bêdzie zapewniona poprzez zewnêtrzne komponenty pochodz¹ce od ró¿nych dostawców, tzw. \emph{wtyczki}.
+Dziêki temu mo¿liwe bêdzie wykorzystanie gotowych i sprawdzonych algorytmów.
+Jego architektura powinna wspieraæ wykorzystanie mo¿liwoœci maszyn wieloprocesorowych  
+oraz klastrów st¹d koniecznoœæ zapewnienia prowadzenia obliczeñ w œrodowisku rozproszonym.
+To poci¹ga za sob¹ u¿ycie jêzyka programowania wspieraj¹cego tworzenie wielow¹tkowych aplikacji
+rozproszonych np. jêzyka \emph{Java}.
+Jedn¹ z cech wp³ywaj¹cych na jego u¿ytecznoœæ powinien byæ tak¿e przyjazny
+i intuicyjny graficzny interfejs u¿ytkownika oraz udostêpnienie go na licencji
+pozwalaj¹cej na jak najszersze jego u¿ytkowanie, jak¹ jest licencja LGPL.
 
 %II. Salomon
 %1. Napisaæ postulaty - dlaczego piszemy Salomona:
