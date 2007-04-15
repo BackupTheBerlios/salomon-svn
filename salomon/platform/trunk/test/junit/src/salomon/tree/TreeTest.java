@@ -260,7 +260,7 @@ public class TreeTest extends TestCase
         IProjectManager projectManager = solution.getProjectManager();
         IProject project = projectManager.createProject();
         ProjectInfo projectInfo = (ProjectInfo) project.getInfo();
-        projectInfo.setName("Tree testing project");
+        projectInfo.setName("Tree testing project " + System.currentTimeMillis());
         projectInfo.setInfo("The tree testing project creating automaticly");
         projectManager.saveProject(false);
 
