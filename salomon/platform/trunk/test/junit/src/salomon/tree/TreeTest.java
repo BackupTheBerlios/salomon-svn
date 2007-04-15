@@ -57,20 +57,14 @@ import salomon.plugin.ISettings;
 public class TreeTest extends TestCase
 {
     private static final String TESTED_DATA_SET_NAME = "testedDataSet";
-
     private static final String TESTED_ATTRIBUTE_SET_NAME = "testedAttributeSet";
-
     private static final String TESTED_TREE_NAME = "testedTree";
-
     private static final String SOLUTION_NAME = "Example";
-
     private static final String RAND_DATASET_PLUGIN = "Random dataset creator";
-
     private static final String ATTR_SET_PLUGIN = "Attributeset creator";
-
     private static final String WEKA_TREE_GENERATOR_PLUGIN = "Weka tree generator";
-
     private static final String TREE_VIS_PLUGIN = "Tree vis";
+    private static final String TESTED_PROJECT_NAME = "Tree testing project";
 
     public void testCreate() throws PlatformException
     {
@@ -104,6 +98,13 @@ public class TreeTest extends TestCase
         IDataSetManager dataSetManager = solution.getDataEngine().getDataSetManager();
         IAttributeManager attributeManager = solution.getDataEngine().getAttributeManager();
         ITreeManager treeManager = solution.getDataEngine().getTreeManager();
+        IProjectManager projectManager = solution.getProjectManager();
+
+        IProject project = TestObjectFactory.getProject(TESTED_PROJECT_NAME);
+        if (project != null) {
+            projectManager.removeProject(project);
+        }
+
 
         // removing tested objects if already exist
         ITree tree = treeManager.getTree(TESTED_TREE_NAME);
@@ -260,7 +261,7 @@ public class TreeTest extends TestCase
         IProjectManager projectManager = solution.getProjectManager();
         IProject project = projectManager.createProject();
         ProjectInfo projectInfo = (ProjectInfo) project.getInfo();
-        projectInfo.setName("Tree testing project " + System.currentTimeMillis());
+        projectInfo.setName(TESTED_PROJECT_NAME);
         projectInfo.setInfo("The tree testing project creating automaticly");
         projectManager.saveProject(false);
 

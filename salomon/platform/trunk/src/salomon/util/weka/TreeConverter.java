@@ -113,14 +113,14 @@ public final class TreeConverter
         // read first line
         _reader.readLine();
         String line = _reader.readLine();
-        if (line.trim().equals("}")) {
+        if ("}".equals(line.trim())) {
             return;
         }
         _tree.setRootNode(parseNode(line));
         List<String> edges = new ArrayList<String>();
         while (true) {
             line = _reader.readLine();
-            if (line.trim().equals("}")) {
+            if ("}".equals(line.trim())) {
                 break;
             }
 
@@ -167,6 +167,7 @@ public final class TreeConverter
         for (String val : values) {
             if (label.contains(val)) {
                 result = val;
+                break;
             }
         }
 

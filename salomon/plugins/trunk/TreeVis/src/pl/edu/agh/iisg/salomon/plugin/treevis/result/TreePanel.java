@@ -30,9 +30,12 @@ import salomon.platform.data.tree.ITree;
 import salomon.platform.data.tree.ITreeEdge;
 import salomon.platform.data.tree.ITreeNode;
 
+import edu.uci.ics.jung.graph.ArchetypeEdge;
+import edu.uci.ics.jung.graph.ArchetypeVertex;
 import edu.uci.ics.jung.graph.decorators.*;
 import edu.uci.ics.jung.graph.impl.DirectedSparseEdge;
 import edu.uci.ics.jung.graph.impl.SparseTree;
+import edu.uci.ics.jung.utils.UserDataContainer;
 import edu.uci.ics.jung.visualization.*;
 import edu.uci.ics.jung.visualization.contrib.TreeLayout;
 import edu.uci.ics.jung.visualization.control.*;
@@ -61,11 +64,26 @@ public class TreePanel extends JPanel
         pr.setGraphLabelRenderer(new DefaultGraphLabelRenderer(Color.cyan, Color.cyan));
 
         pr.setVertexShapeFunction(new EllipseVertexShapeFunction());
+        pr.setVertexStringer(new VertexStringer()
+        {
+            public String getLabel(ArchetypeVertex v)
+            {
+                return v.toString();
+            }
+        });
+        pr.setEdgeStringer(new EdgeStringer()
+        {
+            public String getLabel(ArchetypeEdge e)
+            {
+                return (String) e.getUserDatum("edgeValue");
+            }
+        });
 
         Layout layout = new TreeLayout(graph);
 
         vv = new VisualizationViewer(layout, pr, new Dimension(400, 400));
         vv.setPickSupport(new ShapePickSupport());
+
         pr.setEdgeShapeFunction(new EdgeShape.QuadCurve());
         vv.setBackground(Color.white);
 
@@ -120,7 +138,9 @@ public class TreePanel extends JPanel
             ITreeNode childNode = childrenEdge.getChildNode();
             TreeNodeVertex childVertex = new TreeNodeVertex(childNode);
             graph.addVertex(childVertex);
-            graph.addEdge(new DirectedSparseEdge(parentVertex, childVertex));
+            DirectedSparseEdge edge = new DirectedSparseEdge(parentVertex, childVertex);
+            edge.setUserDatum("edgeValue", childrenEdge.getValue(), new UserDataContainer.CopyAction.Clone());
+            graph.addEdge(edge);
             createVertices(childNode, childVertex);
         }
     }

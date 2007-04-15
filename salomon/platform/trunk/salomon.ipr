@@ -16,6 +16,13 @@
       <maximumHeapSize value="128" />
       <properties />
     </buildFile>
+    <buildFile url="file://$PROJECT_DIR$/../../plugins/trunk/TreeVis/build.xml">
+      <additionalClassPath />
+      <antReference projectDefault="true" />
+      <customJdkName value="" />
+      <maximumHeapSize value="128" />
+      <properties />
+    </buildFile>
   </component>
   <component name="BuildJarProjectSettings">
     <option name="BUILD_JARS_ON_MAKE" value="false" />
@@ -1042,7 +1049,7 @@
       <module fileurl="file://$PROJECT_DIR$/platform.iml" filepath="$PROJECT_DIR$/platform.iml" />
     </modules>
   </component>
-  <component name="ProjectRootManager" version="2" assert-keyword="true" jdk-15="true" project-jdk-name="1.5" project-jdk-type="JavaSDK" />
+  <component name="ProjectRootManager" version="2" assert-keyword="true" jdk-15="true" project-jdk-name="1.6" project-jdk-type="JavaSDK" />
   <component name="ProjectRunConfigurationManager" />
   <component name="RmicSettings">
     <option name="IS_EANABLED" value="false" />
@@ -1102,7 +1109,26 @@
     <Base>
       <setting name="state" value="1" />
     </Base>
-    <LanguageOptions name="JAVA">
+    <LanguageOptions name="$TEMPLATE$">
+      <option name="templateOptions">
+        <value>
+          <option name="block" value="true" />
+          <option name="separateBefore" value="false" />
+          <option name="separateAfter" value="false" />
+          <option name="prefixLines" value="true" />
+          <option name="lenBefore" value="80" />
+          <option name="lenAfter" value="80" />
+          <option name="box" value="false" />
+        </value>
+      </option>
+      <option name="notice" value="&#10;Copyright (C) 2006 Salomon Team&#10;&#10;This file is part of Salomon.&#10;&#10;Salomon is free software; you can redistribute it and/or&#10;modify it under the terms of the GNU Lesser General Public&#10;License as published by the Free Software Foundation; either&#10;version 2.1 of the License, or (at your option) any later version.&#10;&#10;Salomon is distributed in the hope that it will be useful,&#10;but WITHOUT ANY WARRANTY; without even the implied warranty of&#10;MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU&#10;Lesser General Public License for more details.&#10;&#10;You should have received a copy of the GNU Lesser General Public&#10;License along with ${project_name}; if not, write to the Free Software&#10;Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA&#10;" />
+      <option name="keyword" value="Copyright" />
+      <option name="fileTypeOverride" value="4" />
+      <option name="relativeBefore" value="true" />
+      <option name="addBlankAfter" value="true" />
+      <option name="fileLocation" value="1" />
+    </LanguageOptions>
+    <LanguageOptions name="JSP">
       <option name="templateOptions">
         <value>
           <option name="block" value="true" />
@@ -1140,7 +1166,26 @@
       <option name="addBlankAfter" value="true" />
       <option name="fileLocation" value="1" />
     </LanguageOptions>
-    <LanguageOptions name="JSP">
+    <LanguageOptions name="CSS">
+      <option name="templateOptions">
+        <value>
+          <option name="block" value="true" />
+          <option name="separateBefore" value="false" />
+          <option name="separateAfter" value="false" />
+          <option name="prefixLines" value="true" />
+          <option name="lenBefore" value="80" />
+          <option name="lenAfter" value="80" />
+          <option name="box" value="false" />
+        </value>
+      </option>
+      <option name="notice" value="Copyright (c) $today.year, Your Corporation. All Rights Reserved." />
+      <option name="keyword" value="Copyright" />
+      <option name="fileTypeOverride" value="2" />
+      <option name="relativeBefore" value="true" />
+      <option name="addBlankAfter" value="true" />
+      <option name="fileLocation" value="1" />
+    </LanguageOptions>
+    <LanguageOptions name="JAVA">
       <option name="templateOptions">
         <value>
           <option name="block" value="true" />
@@ -1193,44 +1238,6 @@
       <option name="notice" value="Copyright (c) $today.year, Your Corporation. All Rights Reserved." />
       <option name="keyword" value="Copyright" />
       <option name="fileTypeOverride" value="2" />
-      <option name="relativeBefore" value="true" />
-      <option name="addBlankAfter" value="true" />
-      <option name="fileLocation" value="1" />
-    </LanguageOptions>
-    <LanguageOptions name="CSS">
-      <option name="templateOptions">
-        <value>
-          <option name="block" value="true" />
-          <option name="separateBefore" value="false" />
-          <option name="separateAfter" value="false" />
-          <option name="prefixLines" value="true" />
-          <option name="lenBefore" value="80" />
-          <option name="lenAfter" value="80" />
-          <option name="box" value="false" />
-        </value>
-      </option>
-      <option name="notice" value="Copyright (c) $today.year, Your Corporation. All Rights Reserved." />
-      <option name="keyword" value="Copyright" />
-      <option name="fileTypeOverride" value="2" />
-      <option name="relativeBefore" value="true" />
-      <option name="addBlankAfter" value="true" />
-      <option name="fileLocation" value="1" />
-    </LanguageOptions>
-    <LanguageOptions name="$TEMPLATE$">
-      <option name="templateOptions">
-        <value>
-          <option name="block" value="true" />
-          <option name="separateBefore" value="false" />
-          <option name="separateAfter" value="false" />
-          <option name="prefixLines" value="true" />
-          <option name="lenBefore" value="80" />
-          <option name="lenAfter" value="80" />
-          <option name="box" value="false" />
-        </value>
-      </option>
-      <option name="notice" value="&#10;Copyright (C) 2006 Salomon Team&#10;&#10;This file is part of Salomon.&#10;&#10;Salomon is free software; you can redistribute it and/or&#10;modify it under the terms of the GNU Lesser General Public&#10;License as published by the Free Software Foundation; either&#10;version 2.1 of the License, or (at your option) any later version.&#10;&#10;Salomon is distributed in the hope that it will be useful,&#10;but WITHOUT ANY WARRANTY; without even the implied warranty of&#10;MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU&#10;Lesser General Public License for more details.&#10;&#10;You should have received a copy of the GNU Lesser General Public&#10;License along with ${project_name}; if not, write to the Free Software&#10;Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA&#10;" />
-      <option name="keyword" value="Copyright" />
-      <option name="fileTypeOverride" value="4" />
       <option name="relativeBefore" value="true" />
       <option name="addBlankAfter" value="true" />
       <option name="fileLocation" value="1" />
