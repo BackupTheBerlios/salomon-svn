@@ -152,7 +152,7 @@ public class TreeTest extends TestCase
         SimpleStruct settings = new SimpleStruct();
         settings.setField("dataSetName", TESTED_DATA_SET_NAME);
         SimpleStruct deffinitions = new SimpleStruct();
-        deffinitions.setField("rowCount", 10);
+        deffinitions.setField("rowCount", 20);
         deffinitions.setField("tableName", "CONTACT_LENSES");
         settings.setField("definitions", new IObject[]{deffinitions});
 

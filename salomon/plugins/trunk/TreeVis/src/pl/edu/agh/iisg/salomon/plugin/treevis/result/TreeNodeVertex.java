@@ -44,7 +44,11 @@ public class TreeNodeVertex  extends DirectedSparseVertex
     @Override
     public String toString()
     {
-        return _node.getAttributeDescription().getName();
+        if (_node.isLeaf()) {
+            return _node.getAttributeDescription().getName() + "=" + _node.getLeafValue();
+        } else {
+            return _node.getAttributeDescription().getName();
+        }
     }
 
 }
