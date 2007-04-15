@@ -1,5 +1,49 @@
 \section{Opis eksperymentu}
 
+Celem eksperymentu jest zademonstrowanie mo¿liwoœci platformy jako œrodowiska,
+które nadzoruje obliczenia uczenia maszynowego w oparciu o dostarczone wtyczki.
+
+Przyk³adowe zadanie obliczeniowe ma na celu utworzenie drzewa decyzyjnego
+w oparciu o zbiór atrybutów. Atrybuty te definiuj¹ w jaki sposób interpretowany
+ma byæ zbiór danych testowych. Zbiór danych budowany jest w oparciu o dane
+przechowywane w zewnêtrznym Ÿródle danych.
+
+Model obliczeñ, który wspiera plaftorma zak³ada du¿¹ granulacjê zadañ.
+Powy¿sze zadanie obliczeniowe mog³oby byæ wykonane przez pojedyncz¹ wtyczkê,
+która na wejœciu wymaga³aby zdefiniowania zbioru danych i atrybutów,
+a na wyjœciu zaprezentowa³aby wygenerowane drzewo.
+Taka wtyczka by³aby jednak dosyæ skomplikowana i jej wykorzystanie ograniczone
+by³oby tylko do tego typu zadañ.
+Podzielenie ca³ego zadania na mniejsze etapy i wykonanie ka¿dego z nich przez
+osobn¹ wtyczkê pozwala nie tylko na wielokrotne wykorzystanie wtyczek do ró¿nych
+celów, ale tak¿e na wymianê wtyczek odpowiedzialnych za poszczególne
+etapy (np. zmianê algorytmu generuj¹cego drzewo decyzyjne).
+
+Podzia³ eksperymentu na etapy zaprezentowany zosta³ na rysunku (TODO: ref).
+
+%TODO: zrobic taki rysunek
+
+Poszczególne etapy eksperymentu to:
+\begin{enumerate}
+	\item Zdefiniowanie zbioru danych. \\
+	Celem tego etapu jest wygenerowanie zbioru danych w oparciu
+	o podane przez u¿ytkownika kryteria. Zbiór danych wykorzystuje
+	dane przechowywane w zewnêtrznym Ÿródle danych.
+	\item Zdefiniowanie zbioru atrybutów. \\
+	Po wygenerowaniu zbioru danych tworzony jest zbiór atrybutów,
+	na których dzia³a algorytm buduj¹cy drzewo decyzyjne.
+	\item Wygenerowanie drzewa decyzyjnego. \\
+	Etap ten ma za zadanie wygenerowaæ drzewo decyzyjne na podstawie
+	utworzonego wczeœniej zbioru atrybutów.
+	\item Wizualizacja drzewa decyzjnego. \\
+	Poprzedni etap tylko tworzy i zapisuje drzewo decyzyjne, 
+	które mo¿e zostaæ wykorzystane w dowolny sposób.
+	Ten etap eksperymentu jedynie prezentuje u¿ytkownikowi wygenerowane
+	wczeœniej drzewo w postaci graficznej.
+\end{enumerate}
+
+\section{U¿yte wtyczki}
+
 % 1. Ogolny opis eksperymentu
 % - cel
 % - poszczegolne kroki 
@@ -10,3 +54,4 @@
 % - screen z przebiegu
 % - opis wynikow (z narysowaniem drzewa)
 % - udalo sie zrealizowac cele (uzycie roznych wtyczek i skonfigurowanie ich tak, by uzyskac jakis tam wynik)
+
