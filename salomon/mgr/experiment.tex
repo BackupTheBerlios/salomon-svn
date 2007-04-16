@@ -44,13 +44,39 @@ Poszczególne etapy eksperymentu to:
 
 \section{U¿yte wtyczki}
 
-% 1. Ogolny opis eksperymentu
-% - cel
-% - poszczegolne kroki 
-% 2. Uzyte wtyczki
-% - opis poszczegolnych wtyczek
-% - opis ich konfiguracji (screen shoty :-)
-% 3. Wyniki eksperymentu
+\subsection{Definiowanie zbioru danych}
+
+Testowy zbiór danych definiowany jest za pomoc¹ wtyczki \emph{RandomDataSetCreator}.
+Wtyczka ta pozwala na wygenerowanie losowego zbioru danych.
+Konfiguracja wtyczki polega na wybraniu tabel z zewnêtrznego Ÿród³a danych,
+na którym bazowaæ ma zbiór danych oraz okreœlenia, ile wierszy z poszczególnych
+tabel ma zostaæ do³¹czone do testowego zbioru danych.
+
+%TODO: screenshot z konfiguracja
+
+Prostota u¿ycia tej wtyczki okupiona zosta³a niewielkimi jej mo¿liwoœciami.
+Du¿o wiêksze mo¿liwoœci konfiguracyjne zapewnia wtyczka \emph{DataSetCreator}.
+Posiada ona podobny graficzny interfejs u¿ytkownika, ale pozwala na du¿o dok³adniejsze
+okreœlenie warunków, jakie spe³niaæ maj¹ dane, które trafi¹ do testowego zbioru danych.
+
+%TODO: screen z konf.
+
+Dodatkow¹ jej zalet¹ jest to, ¿e wtyczka ta w znacznie wiêkszym stopniu ni¿ \emph{RandomDataSetCreator}
+uwzglêdnia zmiany w Ÿródle danych. Pierwsza wtyczka reaguje tylko na zmianê poszczególnych
+kolumn w wylosowanych do zbioru danych rekordach, nie mo¿e siê jednak zmieniæ ich iloœæ.
+Wtyczka \emph{DataSetCreator} uruchamiana wielokrotnie z t¹ sam¹ konfiguracj¹
+mo¿e pracowaæ na ró¿nej iloœci danych, zale¿nie od tego, ile rekordów spe³nia
+zadane kryteria.
+Pozwala to na przeprowadzanie ekperymentów na zmieniaj¹cych siê danych i przyk³adowo
+na obserwacjê, jak iloœæ danych wp³ywa na dok³adnoœæ obliczeñ.
+
+\subsection{Definiowanie zbioru atrybutów}
+
+\subsection{Generowanie drzewa decyzyjnego}
+
+\subsection{Wizualizacja drzewa decyzjnego}
+
+\section{Wyniki eksperymentu}
 % - screen z przebiegu
 % - opis wynikow (z narysowaniem drzewa)
 % - udalo sie zrealizowac cele (uzycie roznych wtyczek i skonfigurowanie ich tak, by uzyskac jakis tam wynik)

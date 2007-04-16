@@ -2,7 +2,7 @@
 System zosta³ podzielony na 3 g³ówne czêœci: platformê, kontrolery
 i~pluginy.
 
-\subsection{Platforma}
+\section{Platforma}
 
 Dostarcza podstawowej funkcjonalnoœci  umo¿liwiaj¹cej pracê ca³ego
 systemu,  ³aduje odpowiedni kontroler, wczytuje wtyczki, uruchamia
@@ -31,7 +31,7 @@ i \emph{ITreeManager}, pozosta³e nie s¹ dostêpne dla wtyczek.
 Plugin, zale¿nie od potrzeb, pobiera z niego potrzebny mu menad¿er i za jego
 poœrednictwem zarz¹dza zbiorem danych, atrybutów lub drzewem decyzyjnym.
 
-\subsubsection{IManagerEngine}
+\subsection{IManagerEngine}
 
 Zarz¹dza pozosta³ymi menad¿erami. Utrzymuje jedn¹ instancjê ka¿dego z nich 
 i udostêpnia je pozosta³ym klasom z platformy.
@@ -68,7 +68,7 @@ zwi¹zanych z ich tworzeniem, edycj¹ czy usuwaniem.
 Odpowiada tak¿e za proces przygotowania zadañ do wykonania, czyli ich poprawn¹ konfiguracjê i powi¹zanie ze sob¹,
 czy reszcie ich wykonanie i zapisanie informacji o przebiegu ich przetwarzania.
 
-\subsubsection{IDataEngine}
+\subsection{IDataEngine}
 
 Obiekt implementuj¹cy ten interfejs przekazywany jest wtyczkom podczas ich wykonania.
 Za pomoc¹ pobieranych z niego menad¿erów (\emph{IDataSetManager},\emph{IAttributeManager}, 
@@ -108,7 +108,7 @@ atrybutów oraz pozwala na operowanie na nich.
 Zarz¹dza drzewami decyzyjnymi. Umo¿liwia ich tworzenie (ale nie generowanie ich
 struktury, tym zajmuj¹ siê pluginy) oraz operowanie na nich.
 
-\subsection{Kontrolery}
+\section{Kontrolery}
 
 Kontrolery odpowiadaj¹ za interakcjê
 systemu z otoczeniem. W zale¿noœci od konfiguracji systemu przy
@@ -138,7 +138,7 @@ swoich us³ug. Ta wersja kontrolera nie posiada GUI, zarz¹dzanie
 nim odbywa siê za pomoc¹ klasy \emph{MasterController}.
 Podobnie jak w przypadku klasy \emph{MasterController}, kontroler ten dopiero bêdzie zaimplementowany.
 
-\subsection{Wtyczki}
+\section{Wtyczki}
 
 G³ówna funkcjonalnoœæ zosta³a  przeniesiona
 do wtyczek, zadaniem systemu jest tylko zarz¹dzanie ich
