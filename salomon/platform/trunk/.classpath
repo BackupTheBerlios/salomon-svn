@@ -2,7 +2,7 @@
 <classpath>
 	<classpathentry excluding="**/.svn/*" kind="src" path="src"/>
 	<classpathentry kind="src" output="test/junit/bin" path="test/junit/src"/>
-	<classpathentry kind="lib" path="lib/firebirdsql.jar" sourcepath="C:/Program Files/Java/jdk1.5/src.zip"/>
+	<classpathentry kind="lib" path="lib/firebirdsql.jar"/>
 	<classpathentry kind="lib" path="lib/mini-j2ee.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="lib/log4j-1.2.8.jar"/>
@@ -19,6 +19,6 @@
 	<classpathentry kind="lib" path="lib/binding.jar"/>
 	<classpathentry kind="lib" path="lib/validation.jar"/>
 	<classpathentry kind="lib" path="lib/weka.jar"/>
-	<classpathentry kind="lib" path="lib/commons-cli.jar" sourcepath="D:/tmp/cli-1.0-src.zip"/>
+	<classpathentry kind="lib" path="lib/commons-cli.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
