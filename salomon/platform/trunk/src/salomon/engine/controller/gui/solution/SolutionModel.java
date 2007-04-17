@@ -26,7 +26,7 @@ import com.jgoodies.binding.beans.Model;
 /**
  * 
  */
-class SolutionModel extends Model
+public class SolutionModel extends Model
 {
     public static final String PROPERTYNAME_SOLUTION_NAME = "solutionName";
 

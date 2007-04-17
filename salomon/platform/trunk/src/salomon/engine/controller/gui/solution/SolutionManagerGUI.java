@@ -439,7 +439,7 @@ public final class SolutionManagerGUI
     private JPanel createSolutionPanel()
     {
         FormLayout layout = new FormLayout(
-                "left:pref, 3dlu, right:100dlu, 3dlu, right:20dlu", "");
+                "left:pref, 3dlu, 100dlu:grow, 3dlu, right:20dlu", "");
         DefaultFormBuilder builder = new DefaultFormBuilder(layout);
         builder.setDefaultDialogBorder();
         builder.appendSeparator("Solution data");
