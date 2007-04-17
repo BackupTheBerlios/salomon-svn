@@ -295,7 +295,7 @@ public final class ProjectManagerGUI
     private void initComponents()
     {
         _settingsDialog = new SettingsDialog(_parent,
-                Messages.getString("TIT_PLUGIN_SETTINGS"));
+                Messages.getString("TIT_EDIT_PROJECT"));
         _settingsDialog.setSeparator("Project settings");
 
         // project settings panel
