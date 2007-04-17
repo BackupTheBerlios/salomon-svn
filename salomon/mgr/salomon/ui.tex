@@ -2,7 +2,7 @@
 
 \subsection{Zarz¹dzanie obiektami Solution}
 
-Uruchomienie programu rozpoczyna siê od wyboru lub zdefiniowaniu odpowiedniego obiektu \emph{Solution}.
+Uruchomienie programu rozpoczyna siê od wyboru lub zdefiniowaniu odpowiedniego obiektu \emph{Solution} (\ref{lab:solution}).
 Okreœla on po³o¿enie bazy danych, na której operowaæ bêd¹ wtyczki. Bez jego okreœlenia praca z systemem nie jest mo¿liwa.
 
 \begin{figure}[H]
@@ -24,11 +24,14 @@ Po wybraniu przycisku \emph{New} pojawia siê okno do definiowania nowego obiektu
 Tworzenie i edycja aktualnego obiektu \emph{Solution} mo¿liwa jest tak¿e za pomoc¹ odpowiednich opcji z menu \emph{Solutions} oraz za pomoc¹ przycisków na toolbarze.
 
 Po wybraniu obiektu \emph{Solution} pokazuje siê g³ówne okno programu. 
-Po lewej stronie znajduje siê lista dostêpnych wtyczek, po prawej jest panel do definiowania zadañ.
+Po lewej stronie znajduje siê lista dostêpnych wtyczek, 
+centraln¹ czêœæ okna programu zajmuje panel, s³u¿¹cy do zarz¹dzania zadaniami.
 Na górze umieszczony jest toolbar do szybkiego wykonywania operacji na obiekcie \emph{Solution}.
-Wiêkszoœæ opcji dostêpna jest z menu lub menu kontekstowych dostêpnych na po klikniêciu prawym przyciskiem myszy na panelu z wtyczkami lub zadaniami.
+Wiêkszoœæ opcji dostêpna jest z menu lub menu kontekstowych dostêpnych po klikniêciu
+prawym przyciskiem myszy na panelu z wtyczkami lub zadaniami.
 
-Na dole okna, w pasku statusu, wyœwietlane s¹ informacje o aktualnie wybranym obiekcie \emph{Solution} i projekcie.
+Na dole okna, w pasku statusu, wyœwietlane s¹ informacje o aktualnie wybranym
+obiekcie \emph{Solution}, projekcie oraz aktualnie wykonywanym zadaniu.
 
 \begin{figure}[H]
 	\centering
@@ -39,7 +42,9 @@ Na dole okna, w pasku statusu, wyœwietlane s¹ informacje o aktualnie wybranym ob
 
 \subsection{Zarz¹dzanie projektami}
 
-Projekty s¹ obiektami grupuj¹cymi zadania. Umo¿liwiaj¹ zdefiniowanie zadañ, które nastêpnie mog¹ zostaæ zapisane wraz z konfiguracj¹, a póŸniej za³adowanie ponownie.
+Projekty (\ref{lab:project}) s¹ obiektami grupuj¹cymi zadania.
+Umo¿liwiaj¹ zdefiniowanie zadañ, które nastêpnie mog¹ zostaæ zapisane wraz z konfiguracj¹,
+a póŸniej za³adowanie ponownie.
 
 Nowy projekt tworzony jest automatycznie po uruchomieniu programu. Domyœlnie nie ma on ¿adnej nazwy, co mo¿e zostaæ zmodyfikowane poprzez opcjê \emph{Solutions} $\rightarrow$ \emph{Projects} $\rightarrow$ \emph{Edit}. Po jej wybraniu mo¿liwa jest zmiana podstawowych w³aœciwoœci projektu, czyli jego nazwy i informacji dodatkowych.
 
@@ -65,7 +70,7 @@ Projekt zostanie za³adowany wraz z zadaniami, które zosta³y w nim zdefiniowane o
 
 \subsection{Zarz¹dzanie wtyczkami}
 
-Lista wtyczek tworzona jest na podstawie odpowiednich wpisów w bazie danych. 
+Lista wtyczek (\ref{lab:plugin}) tworzona jest na podstawie odpowiednich wpisów w bazie danych. 
 Mo¿na j¹ jednak  modyfikowaæ -- dodawaæ, usuwaæ lub modyfikowaæ dane wtyczki. 
 S³u¿¹ do tego odpowiednie opcje z menu kontekstowego wywo³ywanego dla wtyczek. 
 
@@ -80,10 +85,10 @@ Aby dodaæ now¹ wtyczkê nale¿y wybraæ opcjê \emph{Add plugin}. Po jej wybraniu po
 
 Lokalizacja pliku mo¿e byæ lokalna lub zdalna, podawana w postaci \emph{URL-a}. To, w jaki sposób interpretowana jest lokalizacja zale¿y od zaznaczenia \emph{File} lub \emph{URL}. Prawid³owe zdefiniowanie lokalizacji jest konieczne, by wtyczka mog³a zostaæ poprawnie za³adowana.
 
-
 \subsection{Zarz¹dzanie zadaniami}
 
-Zadania reprezentowane s¹ w formie grafu -- poszczególne wêz³y odpowiadaj¹ zadaniom a krawêdzie je ³¹cz¹ce okreœlaj¹ kolejnoœæ ich wykonania.
+Zadania (\ref{lab:task}) reprezentowane s¹ w formie grafu -- poszczególne wêz³y odpowiadaj¹ zadaniom,
+a krawêdzie je ³¹cz¹ce okreœlaj¹ kolejnoœæ ich wykonania.
 
 W obecnej wersji systemu zaimplementowane jest jedynie liniowe przetwarzanie zadañ, w przysz³oœci nie bêdzie ju¿ tego ograniczenia i kolejnoœæ wykonywania zadañ bêdzie mog³a byæ dowolna, zadania bêd¹ mog³y tak¿e byæ wykonywane równolegle.
 
@@ -107,8 +112,25 @@ Po jej wybraniu pojawia siê okno umo¿liwiaj¹ce konfiguracjê wtyczki. Wygl¹d tego
 	\label{fig:show_settings}
 \end{figure}
 
-Po skonfigurowaniu zadañ mo¿na uruchomiæ ich przetwarzanie. S³u¿y do tego przycisk ze strza³k¹ z prawej strony panelu konfiguracyjnego zadañ. Po przetworzeniu zadañ mo¿na obejrzeæ rezultaty ich wykonania. S³u¿y do tego opcja \emph{Show Result} z menu kontekstowego dla ka¿dego zadania. Podobnie jak w przypadku ustawieñ, tak¿e i wygl¹d tego okna zale¿y od danej wtyczki.
+Po skonfigurowaniu zadañ mo¿na uruchomiæ ich przetwarzanie. 
+S³u¿y do tego przycisk \emph{Start} na górze panelu z zadaniami.
+Przetwarzanie zadañ mo¿e byæ chwilowo wstrzymane (przycisk \emph{Pause})
+lub ca³kowicie zatrzymane za pomoc¹ przycisku \emph{Stop}.
+Obok przycisków steruj¹cych wykonaniem zadañ znajduje siê pasek
+informuj¹cy o postêpie wykonania poszczególnych zadañ.
 
+%TODO: screen shot z przetwarzania zadan
+
+Zadania przetwarzane s¹ niezale¿nie od tego, czy któreœ z poprzednich 
+zadañ zakoñczy³o siê niepowodzeniem. W przypadku poprawnego przetworzenia
+wszystkich zadañ pasek postêpu ma kolor zielony,
+gdy przetwarzanie któregoœ z nich zakoñczy siê b³êdêm,
+pasek zmienia kolor na czerwony i obok niego wyœwietlana jest informacja
+o iloœci nieprawid³owo zakoñczonych zadañ.
+
+Po przetworzeniu zadañ mo¿na obejrzeæ rezultaty ich wykonania.
+S³u¿y do tego opcja \emph{Show Result} z menu kontekstowego dla ka¿dego zadania.
+Podobnie jak w przypadku ustawieñ, tak¿e i wygl¹d tego okna zale¿y od danej wtyczki.
 
 \subsection{Administracyjne}
 
@@ -125,12 +147,21 @@ Wybór jednej z opcji z menu \emph{Tools} $\rightarrow$ \emph{<nazwa obiektu>} po
 	\label{fig:search}
 \end{figure}
 
+Korzystaj¹c z tego okna mo¿na tak¿e usuwaæ obiekty z bazy. S³u¿y do tego przycisk \emph{Remove}.
+Usuniêcie poszczególnych obiektów wi¹¿e siê z usuniêciem tak¿e obiektów powi¹zanych,
+przyk³adowo usuniêcie projektu powoduje usuniêcie wszystkich zadañ do niego przypisanych. 
+
 \subsubsection{SQL Console}
 
 Do bardziej zaawansowanych operacji s³u¿y opcja \emph{Tools} $\rightarrow$ \emph{SQL Console}.
-Po jej wybraniu pojawia siê konsola, w której mo¿liwe jest wprowadzanie dowolnych zapytañ oraz operacji w jêzyku \emph{SQL}. Po wprowadzeniu zapytania jego wykonanie nastêpuje po nacœniêciu przycisku \emph{Execute} lub kombinacji klawiszy \emph{Alt} $+$ \emph{Enter}.
+Po jej wybraniu pojawia siê konsola, w której mo¿liwe jest wprowadzanie
+dowolnych zapytañ oraz operacji w jêzyku \emph{SQL}. 
+Konsola oferuje podœwietlanie sk³adni \emph{SQL}, co u³atwia tworzenie poprawnych sk³adniowo zapytañ
+Po wprowadzeniu zapytania jego wykonanie nastêpuje po nacœniêciu przycisku \emph{Execute}.
 
-Konsola obs³uguje transakcje (przyciski \emph{Commit} i \emph{Rollback}), zachowuje tak¿e historiê ostatnio wykonanych operacji, po której mo¿na poruszaæ siê za pomoc¹ przycisków przedstawiaj¹cych strza³ki.
+Konsola obs³uguje transakcje (przyciski \emph{Commit} i \emph{Rollback}),
+zachowuje tak¿e historiê ostatnio wykonanych operacji, 
+po której mo¿na poruszaæ siê za pomoc¹ przycisków przedstawiaj¹cych strza³ki.
 
 \begin{figure}[H]
 	\centering

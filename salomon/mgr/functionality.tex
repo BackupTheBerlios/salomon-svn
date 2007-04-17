@@ -5,8 +5,9 @@ Ca³a funkcjonalnoœæ \emph{Salomona} podporz¹dkowana jest tworzeniu zadañ. Operac
 \subsection{Operacje podstawowe}
 
 \subsubsection{Operacje na obiekcie Solution}
+\label{lab:solution}
 
-Terminem tym okreœlamy strukturê grupuj¹c¹ projekty.
+Terminem \textbf{Solution} okreœlamy strukturê grupuj¹c¹ projekty.
 W obrêbie jednego obiektu \emph{Solution} zgrupowane s¹ projekty, 
 które operuj¹ na tym samym zewnêtrznym Ÿródle danych.
 W obecnej wersji s¹ to zewnêrzne bazy danych. Obiekt ten przechowuje 
@@ -27,8 +28,9 @@ Mo¿na na nim wykonaæ nastêpuj¹ce operacje:
 \end{itemize}
 
 \subsubsection{Operacje na projektach}
+\label{lab:project}
 
-Projekty s³u¿¹ do grupowania zadañ w obrêbie tego samego obiektu \emph{Solution}.			
+\textbf{Projekty} s³u¿¹ do grupowania zadañ w obrêbie tego samego obiektu \emph{Solution}.			
 W ramach projektów zapisywana jest konfiguracja systemu przed wykonaniem grupy zadañ.
 Zadania te grupowane s¹ w formie grafu skierowanego acyklicznego.
 Struktura taka opisuje zestaw zadañ, które musz¹ zostaæ wykonane w okreœlonej kolejnoœci
@@ -55,8 +57,8 @@ Operacje na projekcie:
 	\end{itemize}
 	
 \subsubsection{Operacje na wtyczkach}
-
-Wtyczka to zewnêtrzny program odpowiedzialny za wykonanie konkretnego zadania.
+\label{lab:plugin}
+\emph{Wtyczka} to zewnêtrzny program odpowiedzialny za wykonanie konkretnego zadania.
 Mo¿e zawieraæ algorytm obliczeniowy, ale nie tylko -- wtyczki mog¹ te¿ s³u¿yæ
 np. do definiowania nowych zbiorów danych czy do wyœwietlania drzew decyzyjnych
 w formie graficznej. Ka¿da wtyczka mo¿e byæ skonfigurowana przed wykonaniem jej 
@@ -86,10 +88,10 @@ S¹ one podstawowymi komponentami, które rozszerzaj¹ mo¿liwoœci systemu.
 
 
 \subsection{Operacje na zadaniach}
-
+\label{lab:task}
 Definiowanie zadañ do wykonania nale¿y do podstawowych funkcji systemu, dlatego w obecnej wersji ich definiowanie i konfigurowanie zosta³o znacznie rozbudowane.
 
-Zadanie to podstawowa jednostka obliczeniowa.
+\textbf{Zadanie} to podstawowa jednostka obliczeniowa.
 Zawiera algorytm, który ma zostaæ wykonany oraz jego ustawienia.
 Algorytm dostarczany jest w formie wtyczki. Szerszy opis zadañ znajduje siê w rozdziale \ref{lab:tasks}.
 
