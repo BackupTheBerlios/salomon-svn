@@ -109,9 +109,76 @@ odpowiadaj¹cego podanej konfiguracji.
 
 \subsection{Generowanie drzewa decyzyjnego}
 
+Do generacji drzew decyzyjnych wykorzystane algorytmy dostarczane wraz z 
+\emph{Weka}. W tym celu w ramach platformy zosta³ napisany modu³ dostarczaj¹cy wsparcie dla 
+Weki oraz wtyczka, która korzystaj¹c z tego modu³u pozwala na wybór algorytmu, 
+uruchomienie go i zapisanie wyniku w formacie \emph{Salomona}. \emph{Salomon} posiada w³asne 
+\emph{API} przeznaczone do operacji na drzewach. S³u¿y do tego g³ównie interfejs 
+\emph{ITreeManager}.(zapis, odczyt, modyfikacja itd.). Modu³ wspieraj¹cy Weke ma za 
+zadanie nie tylko t³umaczyæ drzewa decyzyjne do wewnêtrznego formatu Salomona, 
+ale równie¿ konwertowaæ atrybuty z formatu \emph{Salomona} do postaci zgodnej z \emph{Weka}. 
+\emph{Weka} dostarczana jest jako dodatkowy plik 'weka.jar'. \emph{Weka} posiada bardziej 
+restrykcyjn¹ licencje (\emph{GPL}), co powoduje, i¿ Salomon dystrybuowany wraz z 
+integracj¹ musi byæ wykorzystywany zgodnie z zasadami tej licencji.
 
+Dla celów eksperymentu zosta³a napisana wtyczka \emph{WekaTreeGenerator}, która 
+korzystaj¹c z wczeœniej omówionego modu³u integracji w \emph{Weka}, generuje drzewo 
+decyzyjne i zapisuje go do bazy.
+
+Konfiguracja sk³ada siê z:
+\begin{enumerate}
+  \item wyboru algorytmu –- w eksperymencie zosta³ u¿yty algorytm \emph{J48}
+  \item wybór atrybutów -- opis danych
+  \item danych wejœciowych dla algorytmu
+  \item nazwy pod która zostanie zapisane nowo utworzone drzewo decyzyjne
+\end{enumerate}
+
+\begin{figure}[H]
+	\centering
+		\includegraphics[scale=0.60]{img/experiment/tree_generator_settings.png}
+	\caption{Konfiguracja generacji drzewa decyzyjnego}
+	\label{fig:tree_generator_settings}
+\end{figure}
+
+Wtyczka korzystaj¹c z danych trenuj¹cych (\emph{DataSet}) oraz opisu atrybutów 
+(\emph{AttributeSet}) transformuje dane (\emph{DataSet}) z wejœciowej bazy dany do postaci 
+zrozumia³ej przez algorytm. Na koñcu wyniki uruchomienia Weki przekszta³cany 
+jest do wewnêtrznej reprezentacji drzewa decyzyjnego, u¿ywanego przez \emph{Salomona}.
+
+\emph{Weka} zwraca drzewo w formie tekstowej. Opis ten mo¿na zobaczyæ w otwieraj¹c 
+okno rezultatu dla omawianej wtyczki (rys)
+
+\begin{figure}[H]
+	\centering
+		\includegraphics[scale=0.60]{img/experiment/tree_generator_results.png}
+	\caption{Konfiguracja losowego zbioru danych}
+	\label{fig:tree_generator_results}
+\end{figure}
 
 \subsection{Wizualizacja drzewa decyzjnego}
+Ostatnim etapem eksperymentu jest wizualizacja nowo powsta³ego drzewa. W tym 
+celu zosta³a napisana wtyczka \emph{TreeVis}, która tworzy graficzn¹ reprezentacje 
+drzewa decyzyjnego. W ustawianiach dla wtyczki podajemy nazwê drzewa,  które 
+chcemy z wizualizowaæ. Po uruchomieniu mo¿emy obejrzeæ drzewo w postaci grafu. 
+Do wizualizacji zosta³a u¿yta biblioteka (\emph{Jung}). Przy ka¿dym wêŸle drzewa 
+wyœwietlana jest nazwa atrybutu. Na ka¿dej z krawêdzi przypisana jest wartoœæ 
+atrybutu rodzica, która powoduje przejœcie do wêz³a potomnego. Dla liœci drzewa 
+oprócz nazwy atrybutu wyœwietlana jest równie¿ jego wartoœæ.
+
+\begin{figure}[H]
+	\centering
+		\includegraphics[scale=0.60]{img/experiment/tree_vis_settings.png}
+	\caption{Konfiguracja wtyczki wizualizuj¹cej drzewo decyzyjne}
+	\label{fig:tree_vis_settings}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+		\includegraphics[scale=0.60]{img/experiment/tree_vis_results.png}
+	\caption{Wizualizacja drzewa decyzyjnego}
+	\label{fig:tree_vis_results}
+\end{figure}
+
 
 \section{Wyniki eksperymentu}
 % - screen z przebiegu
