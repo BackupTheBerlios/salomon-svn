@@ -174,6 +174,10 @@ public final class ActionManager
      */
     private SolutionManagerGUI _solutionManagerGUI;
 
+    private StartAgentsAction _startAgentsAction;
+
+    private StopAgentsAction _stopAgentsAction;
+
     private SwitchPluginLocationTypeAction _switchPluginLocationTypeAction;
 
     /**
@@ -500,6 +504,30 @@ public final class ActionManager
             _saveSolutionAction = new SaveSolutionAction(_solutionManagerGUI);
         }
         return _saveSolutionAction;
+    }
+
+    /**
+     * Returns the startAgentsAction.
+     * @return The startAgentsAction
+     */
+    public final StartAgentsAction getStartAgentsAction()
+    {
+        if (_startAgentsAction == null) {
+            _startAgentsAction = new StartAgentsAction(_projectManagerGUI);
+        }
+        return _startAgentsAction;
+    }
+
+    /**
+     * Returns the stopAgentsAction.
+     * @return The stopAgentsAction
+     */
+    public final StopAgentsAction getStopAgentsAction()
+    {
+        if (_stopAgentsAction == null) {
+            _stopAgentsAction = new StopAgentsAction(_projectManagerGUI);
+        }
+        return _stopAgentsAction;
     }
 
     /**

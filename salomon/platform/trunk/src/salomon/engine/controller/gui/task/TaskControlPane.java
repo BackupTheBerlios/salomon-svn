@@ -177,17 +177,23 @@ public final class TaskControlPane
 
         private Color _errorForegroundColor = Color.RED;
 
-        private String _failureMsg = "Failures: ";
+        private static final String _failureMsg = "Failures: ";
+
+        private static final String _totalRunMsg = "Total runs: ";
 
         private int _failuresCount;
 
         private JLabel _lblFailures;
+
+        private JLabel _lblTotalRunNumbers;
 
         private DefaultFormBuilder _processBuilder;
 
         private JProgressBar _progressBar;
 
         private int _taskCount;
+
+        private int _totalRunNumber;
 
         public TaskProcessPane()
         {
@@ -233,11 +239,14 @@ public final class TaskControlPane
             _progressBar.setString("0/" + _taskCount);
 
             _lblFailures.setText(_failureMsg + _failuresCount);
+            _lblTotalRunNumbers.setText(_totalRunMsg + _totalRunNumber);
         }
 
         public void tasksProcessed()
         {
+            ++_totalRunNumber;
             _taskControlButtons.setState(ProcessState.STOPPED);
+            _lblTotalRunNumbers.setText(_totalRunMsg + _totalRunNumber);            
         }
 
         public void taskStarted(TaskEvent event)
@@ -257,6 +266,7 @@ public final class TaskControlPane
             _progressBar.setStringPainted(true);
             _progressBar.setString("");
             _lblFailures = new JLabel(_failureMsg + 0);
+            _lblTotalRunNumbers = new JLabel(_totalRunMsg + 0);
         }
 
         private void initGUI()
@@ -267,6 +277,7 @@ public final class TaskControlPane
             _processBuilder.setDefaultDialogBorder();
             _processBuilder.append(_progressBar);
             _processBuilder.append(_lblFailures);
+            _processBuilder.append(_lblTotalRunNumbers);
         }
 
         private void updateProgressBar()

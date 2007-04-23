@@ -21,14 +21,17 @@
 
 package salomon.engine.agent;
 
-import salomon.engine.project.IProject;
+import org.apache.log4j.Logger;
 
+import salomon.engine.project.IProject;
 
 /**
  * 
  */
 public final class DataIncreaseAgent extends AbstractAgent
 {
+    private static final Logger LOGGER = Logger.getLogger(DataIncreaseAgent.class);
+
     public DataIncreaseAgent(AgentInfo agentInfo)
     {
         super(agentInfo);
@@ -39,8 +42,12 @@ public final class DataIncreaseAgent extends AbstractAgent
      */
     public void start(IProject project)
     {
-        throw new UnsupportedOperationException(
-                "Method DataIncreaseAgent.start() not implemented yet!");
+        try {
+            Thread.sleep(10000);
+            project.start();
+        } catch (InterruptedException e) {
+            LOGGER.fatal("", e);
+        }
     }
 
     /**

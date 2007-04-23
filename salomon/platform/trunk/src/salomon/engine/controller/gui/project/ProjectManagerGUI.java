@@ -58,6 +58,7 @@ import salomon.util.gui.validation.IComponentFactory;
 import salomon.util.gui.validation.IValidationModel;
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
+import com.jgoodies.forms.factories.ButtonBarFactory;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.validation.ValidationResultModel;
 
@@ -74,7 +75,11 @@ public final class ProjectManagerGUI
 
     private JButton _btnConfigureAgents;
 
+    private JButton _btnStartAgents;
+
     private JCheckBox _chkAgentsEnabled;
+
+    private Modes _currentMode;
 
     /**
      * 
@@ -105,8 +110,6 @@ public final class ProjectManagerGUI
     private JTextField _txtProjectLastMod;
 
     private JTextField _txtProjectName;
-
-    private Modes _currentMode;
 
     /**
      */
@@ -273,8 +276,10 @@ public final class ProjectManagerGUI
         builder.append(_txtProjectLastMod, 3);
 
         builder.appendSeparator("Agent configuration");
-        builder.append(_chkAgentsEnabled);
-        builder.append(_btnConfigureAgents, 3);
+        JPanel agentsRunning = ButtonBarFactory.buildAddRemoveBar(
+                _btnStartAgents, _btnStopAgents);
+        builder.append(_btnConfigureAgents);
+        builder.append(agentsRunning, 3);
 
         builder.appendSeparator("Project info");
         builder.append(new JScrollPane(_txtProjectInfo), 5);
@@ -327,6 +332,8 @@ public final class ProjectManagerGUI
         }
     }
 
+    private JButton _btnStopAgents;
+
     private void initComponents()
     {
         _projectSettingsDialog = new SettingsDialog(_parent,
@@ -347,9 +354,25 @@ public final class ProjectManagerGUI
         _btnConfigureAgents.setText("Configure agents");
         _btnConfigureAgents.setToolTipText("Save project before configuring agents");
 
+        _btnStartAgents = new JButton(_actionManager.getStartAgentsAction());
+        _btnStartAgents.setText("Start agents");
+
+        _btnStopAgents = new JButton(_actionManager.getStopAgentsAction());
+        _btnStopAgents.setText("Stop agents");
+
         _chkAgentsEnabled = new JCheckBox("Agents enabled");
         _txtProjectInfo = new JTextArea(3, 10);
 
+    }
+
+    public void startProjectAgents()
+    {
+        LOGGER.info("ProjectManagerGUI.startProjectAgents()");
+    }
+
+    public void stopProjectAgents()
+    {
+        LOGGER.info("ProjectManagerGUI.stopProjectAgents()");
     }
 
     private void saveProject(Project project, boolean forceNew)

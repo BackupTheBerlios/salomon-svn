@@ -21,6 +21,8 @@
 
 package salomon.engine.project;
 
+import org.apache.log4j.Logger;
+
 import salomon.engine.agent.AgentInfo;
 import salomon.engine.agent.IAgentManager;
 import salomon.engine.agentconfig.AgentConfig;
@@ -37,6 +39,12 @@ import salomon.platform.exception.PlatformException;
  */
 public final class Project implements IProject
 {
+    private static final Logger LOGGER = Logger.getLogger(Project.class);
+
+    private IAgentConfigManager _agentConfigManager;
+
+    private IAgentManager _agentManager;
+
     /**
      * 
      * @uml.property name="_projectInfo"
@@ -44,18 +52,14 @@ public final class Project implements IProject
      */
     private ProjectInfo _projectInfo;
 
+    private IProjectManager _projectManager;
+
     /**
      * 
      * @uml.property name="_taskManager"
      * @uml.associationEnd multiplicity="(0 1)"
      */
     private ITaskManager _taskManager;
-
-    private IProjectManager _projectManager;
-
-    private IAgentConfigManager _agentConfigManager;
-
-    private IAgentManager _agentManager;
 
     protected Project(IManagerEngine managerEngine, DBManager manager)
             throws PlatformException
@@ -67,26 +71,10 @@ public final class Project implements IProject
         _projectInfo = new ProjectInfo(manager);
     }
 
-    public ProjectInfo getInfo()
-    {
-        return _projectInfo;
-    }
-
-    public IProjectManager getProjectManager() throws PlatformException
-    {
-        //FIXME: change it after implementing cascade model
-        return _projectManager;
-    }
-
     public void addAgentConfig(IAgentConfig agentConfig)
     {
-        ((AgentConfig)agentConfig).setProject(this);
+        ((AgentConfig) agentConfig).setProject(this);
         _agentConfigManager.addAgentConfig(agentConfig);
-    }
-
-    public void removeAgentConfig(IAgentConfig agentConfig)
-    {
-        _agentConfigManager.removeAgentConfig(agentConfig);
     }
 
     /**
@@ -100,10 +88,21 @@ public final class Project implements IProject
                 AgentConfigInfo agentConfigInfo = (AgentConfigInfo) agentConfigs[i].getInfo();
                 AgentInfo agentInfo = (AgentInfo) _agentManager.getAgent(
                         agentConfigInfo.getAgentId()).getInfo();
-                ((AgentConfig)agentConfigs[i]).setAgent(_agentManager.createAgent(agentInfo));
+                ((AgentConfig) agentConfigs[i]).setAgent(_agentManager.createAgent(agentInfo));
             }
         }
         return agentConfigs;
+    }
+
+    public ProjectInfo getInfo()
+    {
+        return _projectInfo;
+    }
+
+    public IProjectManager getProjectManager() throws PlatformException
+    {
+        //FIXME: change it after implementing cascade model
+        return _projectManager;
     }
 
     /**
@@ -114,14 +113,20 @@ public final class Project implements IProject
         return _taskManager;
     }
 
-    @Override
-    public String toString()
+    public void removeAgentConfig(IAgentConfig agentConfig)
     {
-        return _projectInfo.toString();
+        _agentConfigManager.removeAgentConfig(agentConfig);
     }
 
     public void start()
     {
-        throw new UnsupportedOperationException("Method Project.start() not implemented yet!");
+        LOGGER.info("Project.start()");
+        _taskManager.getRunner().start();
+    }
+
+    @Override
+    public String toString()
+    {
+        return _projectInfo.toString();
     }
 }
