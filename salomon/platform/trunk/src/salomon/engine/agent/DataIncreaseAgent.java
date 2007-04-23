@@ -21,7 +21,8 @@
 
 package salomon.engine.agent;
 
-import salomon.engine.agentconfig.IAgentConfigManager;
+import salomon.engine.project.IProject;
+
 
 /**
  * 
@@ -34,9 +35,9 @@ public final class DataIncreaseAgent extends AbstractAgent
     }
 
     /**
-     * @see salomon.engine.agent.IAgent#start()
+     * @see salomon.engine.agent.IAgent#start(IProject)
      */
-    public void start()
+    public void start(IProject project)
     {
         throw new UnsupportedOperationException(
                 "Method DataIncreaseAgent.start() not implemented yet!");

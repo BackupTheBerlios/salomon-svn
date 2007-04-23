@@ -22,13 +22,14 @@
 
 package salomon.engine.agent;
 
+import salomon.engine.project.IProject;
 import salomon.platform.IInfo;
 
 public interface IAgent
 {    
     IInfo getInfo();
 
-    void start();
+    void start(IProject project);
 
     void stop();
 }

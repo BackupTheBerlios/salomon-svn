@@ -74,4 +74,6 @@ public interface IProject
      * @param agentConfig
      */
     void removeAgentConfig(IAgentConfig agentConfig);
+    
+    void start();
 }

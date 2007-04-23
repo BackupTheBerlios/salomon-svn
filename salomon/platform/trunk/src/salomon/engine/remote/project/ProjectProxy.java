@@ -189,4 +189,9 @@ public final class ProjectProxy implements IProject
         return _remoteProject;
     }
 
+    public void start()
+    {
+        throw new UnsupportedOperationException("Method ProjectProxy.start() not implemented yet!");
+    }
+
 }

@@ -119,4 +119,9 @@ public final class Project implements IProject
     {
         return _projectInfo.toString();
     }
+
+    public void start()
+    {
+        throw new UnsupportedOperationException("Method Project.start() not implemented yet!");
+    }
 }

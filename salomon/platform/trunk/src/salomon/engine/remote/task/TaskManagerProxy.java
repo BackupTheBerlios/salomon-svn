@@ -212,7 +212,7 @@ public final class TaskManagerProxy implements ITaskManager
     }
 
     /**
-     * @see ITaskManager#start()
+     * @see ITaskManager#start(IProject)
      */
     public void start() throws PlatformException
     {
