@@ -39,6 +39,7 @@ import javax.swing.JTextField;
 import org.apache.log4j.Logger;
 
 import salomon.engine.Messages;
+import salomon.engine.agentconfig.IAgentConfig;
 import salomon.engine.controller.gui.ControllerFrame;
 import salomon.engine.controller.gui.agentconfig.AgentConfigManagerGUI;
 import salomon.engine.controller.gui.common.action.ActionManager;
@@ -76,6 +77,8 @@ public final class ProjectManagerGUI
     private JButton _btnConfigureAgents;
 
     private JButton _btnStartAgents;
+
+    private JButton _btnStopAgents;
 
     private JCheckBox _chkAgentsEnabled;
 
@@ -233,6 +236,40 @@ public final class ProjectManagerGUI
         _parent = parent;
     }
 
+    private Thread _agentsRunner;
+
+    public void startProjectAgents()
+    {
+        LOGGER.info("ProjectManagerGUI.startProjectAgents()");
+        final IProject project = _projectManager.getCurrentProject();
+        final IAgentConfig[] agentConfigs = project.getAgentConfigs();
+
+        _agentsRunner = new Thread() {
+            public void run()
+            {
+                for (IAgentConfig config : agentConfigs) {
+                    config.getAgent().start(project);
+                }
+            }
+        };
+        _agentsRunner.start();
+    }
+
+    public void stopProjectAgents()
+    {
+        LOGGER.info("ProjectManagerGUI.stopProjectAgents()");
+        if (_agentsRunner != null) {
+            final IProject project = _projectManager.getCurrentProject();
+            final IAgentConfig[] agentConfigs = project.getAgentConfigs();
+
+            for (IAgentConfig config : agentConfigs) {
+                config.getAgent().stop();
+            }
+            _agentsRunner.interrupt();
+            _agentsRunner = null;
+        }
+    }
+
     public void viewProjects()
     {
         if (_projectViewerFrame == null) {
@@ -332,8 +369,6 @@ public final class ProjectManagerGUI
         }
     }
 
-    private JButton _btnStopAgents;
-
     private void initComponents()
     {
         _projectSettingsDialog = new SettingsDialog(_parent,
@@ -363,16 +398,6 @@ public final class ProjectManagerGUI
         _chkAgentsEnabled = new JCheckBox("Agents enabled");
         _txtProjectInfo = new JTextArea(3, 10);
 
-    }
-
-    public void startProjectAgents()
-    {
-        LOGGER.info("ProjectManagerGUI.startProjectAgents()");
-    }
-
-    public void stopProjectAgents()
-    {
-        LOGGER.info("ProjectManagerGUI.stopProjectAgents()");
     }
 
     private void saveProject(Project project, boolean forceNew)

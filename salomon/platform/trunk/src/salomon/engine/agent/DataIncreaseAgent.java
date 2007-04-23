@@ -42,9 +42,12 @@ public final class DataIncreaseAgent extends AbstractAgent
      */
     public void start(IProject project)
     {
+        LOGGER.info("DataIncreaseAgent.start()");
         try {
-            Thread.sleep(10000);
-            project.start();
+            for (int i = 0; i < 10; ++i) {
+                Thread.sleep(5000);
+                project.start();
+            }
         } catch (InterruptedException e) {
             LOGGER.fatal("", e);
         }
@@ -55,8 +58,7 @@ public final class DataIncreaseAgent extends AbstractAgent
      */
     public void stop()
     {
-        throw new UnsupportedOperationException(
-                "Method DataIncreaseAgent.stop() not implemented yet!");
+        LOGGER.info("DataIncreaseAgent.stop()");
     }
 
     @Override
