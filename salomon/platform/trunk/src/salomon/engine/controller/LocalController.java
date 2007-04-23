@@ -48,6 +48,7 @@ import salomon.engine.Starter;
 import salomon.engine.controller.gui.ControllerFrame;
 import salomon.engine.controller.gui.ControllerPanel;
 import salomon.engine.controller.gui.IControllerPanel;
+import salomon.engine.controller.gui.agentconfig.AgentConfigManagerGUI;
 import salomon.engine.controller.gui.common.AboutPanel;
 import salomon.engine.controller.gui.common.SplashScreen;
 import salomon.engine.controller.gui.common.action.ActionManager;
@@ -108,6 +109,8 @@ public final class LocalController implements IController
      * @uml.associationEnd multiplicity="(0 1)"
      */
     private PluginManagerGUI _pluginMangerGUI;
+
+    private AgentConfigManagerGUI _agentConfigManagerGUI;
 
     /**
      * 
@@ -229,7 +232,7 @@ public final class LocalController implements IController
      * @see salomon.engine.controller.gui.IControllerPanel#start(salomon.engine.platform.IManagerEngine)
      */
     public void start() throws PlatformException
-    {        
+    {
         SplashScreen.show();
         _managerEngine = new ManagerEngine();
         // TODO: add cascade model support (?)
@@ -243,6 +246,10 @@ public final class LocalController implements IController
                     _managerEngine.getPluginManager());
             _pluginMangerGUI = new PluginManagerGUI(
                     _managerEngine.getPluginManager());
+            _agentConfigManagerGUI = new AgentConfigManagerGUI(
+                    _managerEngine.getAgentManager(),
+                    _managerEngine.getAgentConfigManager());
+
         } catch (PlatformException e) {
             LOGGER.fatal("", e); //$NON-NLS-1$
             Utils.showErrorMessage(Messages.getString("ERR_CANNOT_SHOW_GUI")); //$NON-NLS-1$
@@ -250,7 +257,8 @@ public final class LocalController implements IController
         }
 
         _actionManager = new ActionManager(_solutionManagerGUI,
-                _projectManagerGUI, _taskManagerGUI, _pluginMangerGUI);
+                _projectManagerGUI, _taskManagerGUI, _pluginMangerGUI,
+                _agentConfigManagerGUI);
 
         _guiMenu = new LocalGUIMenu(_actionManager);
         ControllerFrame frame = new ControllerFrame();
@@ -258,18 +266,20 @@ public final class LocalController implements IController
         _projectManagerGUI.setParent(frame);
         _pluginMangerGUI.setParent(frame);
         _taskManagerGUI.setParent(frame);
+        _agentConfigManagerGUI.setParent(frame);
 
         _solutionManagerGUI.setActionManager(_actionManager);
+        _projectManagerGUI.setActionManager(_actionManager);
         _pluginMangerGUI.setActionManager(_actionManager);
         _taskManagerGUI.setActionManager(_actionManager);
-//        _projectManagerGUI.setTaskManagerGUI(_taskManagerGUI);
+        _agentConfigManagerGUI.setActionManager(_actionManager);
 
         frame.setContentPane(getJContentPane());
         frame.setJMenuBar(getJMenuBar());
         frame.setJToolBar(getToolBar());
         frame.setControllerPanel(_contentPane);
         Utils.setParent(frame);
-        
+
         // initializing solution frame before hiding splash screen
         _solutionManagerGUI.initSolutionFrame();
         SplashScreen.hide();

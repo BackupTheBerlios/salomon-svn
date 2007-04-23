@@ -21,6 +21,8 @@
 
 package salomon.engine.agentconfig;
 
+import salomon.engine.project.IProject;
+
 /**
  * 
  */
@@ -29,10 +31,8 @@ public interface IAgentConfigManager
     void addAgentConfig(IAgentConfig config);
 
     IAgentConfig createAgentConfig();
-
-    IAgentConfig getAgentConfig(int configId);
     
-    IAgentConfig[] getAgentConfigs(int projectId);
+    IAgentConfig[] getAgentConfigs(IProject project);
 
     boolean removeAgentConfig(IAgentConfig config);
 }

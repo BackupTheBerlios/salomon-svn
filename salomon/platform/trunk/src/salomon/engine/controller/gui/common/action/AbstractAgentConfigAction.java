@@ -19,21 +19,25 @@
  * 
  */
 
-package salomon.engine.agentconfig;
+package salomon.engine.controller.gui.common.action;
 
-import salomon.engine.agent.IAgent;
-import salomon.platform.IInfo;
-import salomon.platform.serialization.IObject;
+import javax.swing.AbstractAction;
 
+import salomon.engine.controller.gui.agentconfig.AgentConfigManagerGUI;
 
 /**
  * 
  */
-public interface IAgentConfig
+public abstract class AbstractAgentConfigAction extends AbstractAction
 {
-    IAgent getAgent();
-    
-    IInfo getInfo();
-    
-    IObject getConfig();
+    protected AgentConfigManagerGUI _agentConfigManagerGUI;
+
+    /**
+     * @param agentConfigManagerGUI
+     */
+    public AbstractAgentConfigAction(AgentConfigManagerGUI agentConfigManagerGUI)
+    {
+        _agentConfigManagerGUI = agentConfigManagerGUI;
+    }
+
 }

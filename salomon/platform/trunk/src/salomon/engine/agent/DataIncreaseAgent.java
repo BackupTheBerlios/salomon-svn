@@ -21,9 +21,6 @@
 
 package salomon.engine.agent;
 
-import java.awt.Component;
-
-import salomon.engine.agentconfig.IAgentConfig;
 import salomon.engine.agentconfig.IAgentConfigManager;
 
 /**
@@ -31,24 +28,9 @@ import salomon.engine.agentconfig.IAgentConfigManager;
  */
 public final class DataIncreaseAgent extends AbstractAgent
 {
-    public DataIncreaseAgent(IAgentConfigManager agentConfigManager,
-            AgentInfo agentInfo)
+    public DataIncreaseAgent(AgentInfo agentInfo)
     {
-        super(agentConfigManager, agentInfo);
-    }
-
-    public IAgentConfig getAgentConfig()
-    {
-        return _agentConfig;
-    }
-
-    /**
-     * @see salomon.engine.agent.IAgent#getConfigurationComponent()
-     */
-    public Component getConfigurationComponent()
-    {
-        throw new UnsupportedOperationException(
-                "Method DataIncreaseAgent.getConfigurationComponent() not implemented yet!");
+        super(agentInfo);
     }
 
     /**

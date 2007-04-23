@@ -30,6 +30,7 @@ import java.beans.PropertyChangeListener;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import salomon.util.gui.Utils;
@@ -126,13 +127,17 @@ public final class SettingsDialog
     {
         FormLayout layout = new FormLayout(
                 "left:default:grow, 10dlu, left:default:grow",
-                "fill:max(22dlu;p), 10dlu, fill:default");
+                "fill:max(22dlu;p):grow, 10dlu, fill:default");
 
         DefaultFormBuilder builder = new DefaultFormBuilder(layout);
         builder.setDefaultDialogBorder();
 
         if (_validationComponent != null) {
             builder.append(_validationComponent, 3);
+        } else {
+            // fix: if _validationComponent is not set, sth need to be added
+            // to keep layout unaffected
+            builder.append(new JLabel(""), 3);
         }
         builder.appendSeparator(_separator);
         builder.append(_settingsComponent, 3);

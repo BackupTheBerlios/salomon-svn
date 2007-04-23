@@ -21,11 +21,8 @@
 
 package salomon.engine.project;
 
-import salomon.engine.agent.IAgent;
-import salomon.engine.agent.IAgentManager;
 import salomon.engine.agentconfig.IAgentConfig;
 import salomon.engine.task.ITaskManager;
-
 import salomon.platform.IInfo;
 import salomon.platform.exception.PlatformException;
 
@@ -35,9 +32,31 @@ import salomon.platform.exception.PlatformException;
 public interface IProject
 {
     /**
+     * Adds a new agent to listen to database events.
+     * 
+     * @param agentConfig
+     */
+    void addAgentConfig(IAgentConfig agentConfig);
+
+    /**
+     * Returns all agents registered for a project or null if no agents are attached.
+     * 
+     * @return array of agents attached to given project or null if no agents are attached.
+     */
+    IAgentConfig[] getAgentConfigs();
+
+    /**
      * @return Returns the info.
      */
     IInfo getInfo() throws PlatformException;
+
+    /**
+     * Returns ProjectManager managing this project.
+     *
+     * @return
+     * @throws PlatformException
+     */
+    IProjectManager getProjectManager() throws PlatformException;
 
     /**
      * Returns the TaskManager.
@@ -50,31 +69,9 @@ public interface IProject
     ITaskManager getTaskManager() throws PlatformException;
 
     /**
-     * Returns ProjectManager managing this project.
-     *
-     * @return
-     * @throws PlatformException
-     */
-    IProjectManager getProjectManager() throws PlatformException;
-
-    /**
-     * Adds a new agent to listen to database events.
-     * 
-     * @param agentConfig
-     */
-    void addAgentConfig(IAgentConfig agentConfig);
-
-    /**
      * Removes given agent.
      * 
      * @param agentConfig
      */
     void removeAgentConfig(IAgentConfig agentConfig);
-
-    /**
-     * Returns all agents registered for a project or null if no agents are attached.
-     * 
-     * @return array of agents attached to given project or null if no agents are attached.
-     */
-    IAgent[] getAgents();
 }

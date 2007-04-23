@@ -68,20 +68,10 @@ public class AgentConfigManagerTest extends TestCase
         TestObjectFactory.getDbManager().commit();
     }
 
-    public void testGetAgentConfig() throws Exception
-    {
-        LOGGER.info("AgentConfigManagerTest.testGetAgentConfig()");
-        IAgentConfig[] configs = _agentConfigManager.getAgentConfigs(_project.getInfo().getId());
-        assertTrue(configs.length > 0);
-
-        IAgentConfig agentConfig = _agentConfigManager.getAgentConfig(configs[0].getInfo().getId());
-        LOGGER.debug("config: " + agentConfig);
-    }
-
     public void testGetAgentConfigs() throws Exception
     {
         LOGGER.info("AgentConfigManagerTest.testGetAgentConfigs()");
-        IAgentConfig[] configs = _agentConfigManager.getAgentConfigs(_project.getInfo().getId());
+        IAgentConfig[] configs = _agentConfigManager.getAgentConfigs(_project);
         for (IAgentConfig config : configs) {
             LOGGER.debug("config: " + config);
         }
@@ -100,9 +90,9 @@ public class AgentConfigManagerTest extends TestCase
     private AgentConfig createAgentConfig()
     {
         AgentConfig agentConfig = (AgentConfig) _agentConfigManager.createAgentConfig();
+        agentConfig.setAgent(_agent);
+        agentConfig.setProject(_project);
         AgentConfigInfo info = (AgentConfigInfo) agentConfig.getInfo();
-        info.setAgentId(_agent.getInfo().getId());
-        info.setProjectId(_project.getInfo().getId());
 
         SimpleStruct configuration = new SimpleStruct();
         configuration.setField("treshold", 15);

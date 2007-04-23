@@ -21,7 +21,9 @@
 
 package salomon.engine.agentconfig;
 
+import salomon.engine.agent.IAgent;
 import salomon.engine.database.DBManager;
+import salomon.engine.project.IProject;
 import salomon.platform.IInfo;
 import salomon.platform.serialization.IObject;
 
@@ -30,13 +32,26 @@ import salomon.platform.serialization.IObject;
  */
 public final class AgentConfig implements IAgentConfig
 {
+    private IAgent _agent;
+
     private AgentConfigInfo _agentConfigInfo;
 
     private IObject _config;
 
+    private IProject _project;
+
     protected AgentConfig(DBManager dbManager)
     {
         _agentConfigInfo = new AgentConfigInfo(dbManager);
+    }
+
+    /**
+     * Returns the agent.
+     * @return The agent
+     */
+    public final IAgent getAgent()
+    {
+        return _agent;
     }
 
     /**
@@ -58,12 +73,41 @@ public final class AgentConfig implements IAgentConfig
     }
 
     /**
+     * Returns the project.
+     * @return The project
+     */
+    public final IProject getProject()
+    {
+        return _project;
+    }
+
+    /**
+     * Set the value of agent field.
+     * @param agent The agent to set
+     */
+    public final void setAgent(IAgent agent)
+    {
+        _agent = agent;
+        _agentConfigInfo.setAgentId(_agent.getInfo().getId());
+    }
+
+    /**
      * Set the value of config field.
      * @param config The config to set
      */
     public final void setConfig(IObject config)
     {
         _config = config;
+    }
+
+    /**
+     * Set the value of project field.
+     * @param project The project to set
+     */
+    public final void setProject(IProject project)
+    {
+        _project = project;
+        _agentConfigInfo.setProjectId(_project.getInfo().getId());
     }
 
     @Override

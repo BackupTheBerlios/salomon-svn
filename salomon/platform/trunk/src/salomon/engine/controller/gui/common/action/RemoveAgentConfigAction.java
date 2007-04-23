@@ -19,21 +19,26 @@
  * 
  */
 
-package salomon.engine.agentconfig;
+package salomon.engine.controller.gui.common.action;
 
-import salomon.engine.agent.IAgent;
-import salomon.platform.IInfo;
-import salomon.platform.serialization.IObject;
+import java.awt.event.ActionEvent;
 
+import salomon.engine.controller.gui.agentconfig.AgentConfigManagerGUI;
 
 /**
  * 
  */
-public interface IAgentConfig
+public class RemoveAgentConfigAction extends AbstractAgentConfigAction
 {
-    IAgent getAgent();
-    
-    IInfo getInfo();
-    
-    IObject getConfig();
+
+    public RemoveAgentConfigAction(AgentConfigManagerGUI agentConfigManagerGUI)
+    {
+        super(agentConfigManagerGUI);
+    }
+
+    public void actionPerformed(ActionEvent e)
+    {
+        _agentConfigManagerGUI.removeAgentConfig();
+    }
+
 }

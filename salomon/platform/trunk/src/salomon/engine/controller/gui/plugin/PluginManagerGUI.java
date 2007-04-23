@@ -496,7 +496,7 @@ public final class PluginManagerGUI
         {
             if (e.isPopupTrigger()) {
                 JList list = (JList) e.getSource();
-                _selectedItem = list.locationToIndex(e.getPoint());
+                _selectedItem = list.getSelectedIndex();
                 if (_selectedItem >= 0) {
                     getPluginPopup().show(e.getComponent(), e.getX(), e.getY());
                 } else {

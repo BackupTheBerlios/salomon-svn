@@ -111,7 +111,7 @@ public final class ControllerFrame extends JFrame
     private void initialize()
     {
         getContentPane().setLayout(new BorderLayout());
-        this.setSize(600, 500);
+        this.setSize(800, 600);
         //
         // center frame
         //

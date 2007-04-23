@@ -21,6 +21,7 @@
 
 package salomon.engine.controller.gui.common.action;
 
+import salomon.engine.controller.gui.agentconfig.AgentConfigManagerGUI;
 import salomon.engine.controller.gui.plugin.PluginManagerGUI;
 import salomon.engine.controller.gui.project.ProjectManagerGUI;
 import salomon.engine.controller.gui.solution.SolutionManagerGUI;
@@ -34,6 +35,8 @@ import salomon.engine.task.ITask;
 public final class ActionManager
 {
 
+    private AddAgentConfigAction _addAgentConfigAction;
+
     /**
      * 
      * @uml.property name="_addPluginAction"
@@ -41,7 +44,11 @@ public final class ActionManager
      */
     private AddPluginAction _addPluginAction;
 
+    private AgentConfigManagerGUI _agentConfigManagerGUI;
+
     private ChoosePluginFileAction _choosePluginFileAction;
+
+    private ConfigureProjectAgentsAction _configureProjectAgentsAction;
 
     /**
      * @uml.property name="_editProjectAction"
@@ -112,6 +119,8 @@ public final class ActionManager
      */
     private ProjectManagerGUI _projectManagerGUI;
 
+    private RemoveAgentConfigAction _removeAgentConfigAction;
+
     private RemoveAllTasksAction _removeAllTasksAction;
 
     /**
@@ -134,6 +143,8 @@ public final class ActionManager
      * @uml.associationEnd multiplicity="(0 1)"
      */
     private RunTaskAction _runTaskAction;
+
+    private SaveAsProjectAction _saveAsProjectAction;
 
     /**
      * 
@@ -200,22 +211,6 @@ public final class ActionManager
      */
     private ViewTaskAction _viewTaskAction;
 
-    private SaveAsProjectAction _saveAsProjectAction;
-
-    /**
-     * Sets object used to create actions.
-     * 
-     * @param taskManagerGUI
-     * @param projectManagerGUI
-     */
-    public ActionManager(ProjectManagerGUI projectManagerGUI,
-            GraphTaskManagerGUI taskManagerGUI, PluginManagerGUI pluginMangerGUI)
-    {
-        _projectManagerGUI = projectManagerGUI;
-        _taskManagerGUI = taskManagerGUI;
-        _pluginManagerGUI = pluginMangerGUI;
-    }
-
     /**
      * Sets object used to create actions.
      * @param solutionManagerGUI
@@ -231,6 +226,40 @@ public final class ActionManager
         _projectManagerGUI = projectManagerGUI;
         _taskManagerGUI = taskManagerGUI;
         _pluginManagerGUI = pluginMangerGUI;
+    }
+
+    /**
+     * Sets object used to create actions.
+     * @param solutionManagerGUI 
+     * 
+     * @param taskManagerGUI
+     * @param projectManagerGUI
+     * @param configManagerGUI 
+     */
+    public ActionManager(SolutionManagerGUI solutionManagerGUI,
+            ProjectManagerGUI projectManagerGUI,
+            GraphTaskManagerGUI taskManagerGUI,
+            PluginManagerGUI pluginMangerGUI,
+            AgentConfigManagerGUI agentConfigManagerGUI)
+    {
+        _solutionManagerGUI = solutionManagerGUI;
+        _projectManagerGUI = projectManagerGUI;
+        _taskManagerGUI = taskManagerGUI;
+        _pluginManagerGUI = pluginMangerGUI;
+        _agentConfigManagerGUI = agentConfigManagerGUI;
+    }
+
+    /**
+     * Returns the addAgentConfigAction.
+     * @return The addAgentConfigAction
+     */
+    public final AddAgentConfigAction getAddAgentConfigAction()
+    {
+        if (_addAgentConfigAction == null) {
+            _addAgentConfigAction = new AddAgentConfigAction(
+                    _agentConfigManagerGUI);
+        }
+        return _addAgentConfigAction;
     }
 
     /**
@@ -253,6 +282,19 @@ public final class ActionManager
                     _pluginManagerGUI);
         }
         return _choosePluginFileAction;
+    }
+
+    /**
+     * Returns the configureProjectAgentsAction.
+     * @return The configureProjectAgentsAction
+     */
+    public final ConfigureProjectAgentsAction getConfigureProjectAgentsAction()
+    {
+        if (_configureProjectAgentsAction == null) {
+            _configureProjectAgentsAction = new ConfigureProjectAgentsAction(
+                    _projectManagerGUI, _agentConfigManagerGUI);
+        }
+        return _configureProjectAgentsAction;
     }
 
     /**
@@ -353,6 +395,19 @@ public final class ActionManager
         return _openSolutionAction;
     }
 
+    /**
+     * Returns the removeAgentConfigAction.
+     * @return The removeAgentConfigAction
+     */
+    public final RemoveAgentConfigAction getRemoveAgentConfigAction()
+    {
+        if (_removeAgentConfigAction == null) {
+            _removeAgentConfigAction = new RemoveAgentConfigAction(
+                    _agentConfigManagerGUI);
+        }
+        return _removeAgentConfigAction;
+    }
+
     public RemoveAllTasksAction getRemoveAllTasksAction()
     {
         if (_removeAllTasksAction == null) {
@@ -396,6 +451,19 @@ public final class ActionManager
     }
 
     /**
+     * Returns an instance of SaveAsProjectAction.
+     * 
+     * @return an instance of SaveAsProjectAction.
+     */
+    public SaveAsProjectAction getSaveAsProjectAction()
+    {
+        if (_saveAsProjectAction == null) {
+            _saveAsProjectAction = new SaveAsProjectAction(_projectManagerGUI);
+        }
+        return _saveAsProjectAction;
+    }
+
+    /**
      * Returns an instance of SavePluginAction.
      * 
      * @return an instance of SavePluginAction.
@@ -421,19 +489,6 @@ public final class ActionManager
         return _saveProjectAction;
     }
 
-    /**
-     * Returns an instance of SaveAsProjectAction.
-     * 
-     * @return an instance of SaveAsProjectAction.
-     */
-    public SaveAsProjectAction getSaveAsProjectAction()
-    {
-        if (_saveAsProjectAction == null) {
-            _saveAsProjectAction = new SaveAsProjectAction(_projectManagerGUI);
-        }
-        return _saveAsProjectAction;
-    }    
-    
     /**
      * Returns an instance of SaveSolutionAction.
      * 
@@ -492,5 +547,4 @@ public final class ActionManager
         }
         return _viewTaskAction;
     }
-
 }

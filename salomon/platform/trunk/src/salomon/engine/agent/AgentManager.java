@@ -40,14 +40,10 @@ public final class AgentManager implements IAgentManager
 {
     static final Logger LOGGER = Logger.getLogger(AgentManager.class);
 
-    private IAgentConfigManager _agentConfigManager;
-
     private DBManager _dbManager;
 
-    public AgentManager(IAgentConfigManager agentConfigManager,
-            DBManager dbManager)
+    public AgentManager(DBManager dbManager)
     {
-        _agentConfigManager = agentConfigManager;
         _dbManager = dbManager;
     }
 
@@ -63,10 +59,8 @@ public final class AgentManager implements IAgentManager
         IAgent agent = null;
         try {
             Class agentClass = Class.forName(((AgentInfo) agentInfo).getAgentClass());
-            Constructor constructor = agentClass.getConstructor(new Class[]{
-                    IAgentConfigManager.class, AgentInfo.class});
-            agent = (IAgent) constructor.newInstance(_agentConfigManager,
-                    agentInfo);
+            Constructor constructor = agentClass.getConstructor(new Class[]{AgentInfo.class});
+            agent = (IAgent) constructor.newInstance(agentInfo);
         } catch (Exception e) {
             LOGGER.fatal("", e);
             throw new PlatformException(e.getLocalizedMessage());

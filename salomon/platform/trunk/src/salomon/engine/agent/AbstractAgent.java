@@ -21,9 +21,6 @@
 
 package salomon.engine.agent;
 
-import salomon.engine.agentconfig.AgentConfigManager;
-import salomon.engine.agentconfig.IAgentConfig;
-import salomon.engine.agentconfig.IAgentConfigManager;
 import salomon.platform.IInfo;
 
 /**
@@ -31,38 +28,16 @@ import salomon.platform.IInfo;
  */
 public abstract class AbstractAgent implements IAgent
 {
-    protected IAgentConfig _agentConfig;
-
-    // FIXME: unnecessary?
-    protected AgentConfigManager _agentConfigManager;
-
     protected AgentInfo _agentInfo;
 
     /**
      * @param agentInfo
      */
-    public AbstractAgent(IAgentConfigManager agentConfigManager,
-            AgentInfo agentInfo)
+    public AbstractAgent(AgentInfo agentInfo)
     {
         _agentInfo = agentInfo;
     }
 
-    /**
-     * Set the value of agentConfig field.
-     * @param agentConfig The agentConfig to set
-     */
-    public final void setAgentConfig(IAgentConfig agentConfig)
-    {
-        _agentConfig = agentConfig;
-    }
-
-    /**
-     * @see salomon.engine.agent.IAgent#getAgentConfig()
-     */
-    public IAgentConfig getAgentConfig()
-    {
-        return _agentConfig;
-    }
 
     /**
      * @see salomon.engine.agent.IAgent#getInfo()

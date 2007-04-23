@@ -27,6 +27,7 @@ import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
 
+import salomon.engine.agentconfig.IAgentConfig;
 import salomon.engine.database.DBManager;
 import salomon.engine.database.queries.SQLDelete;
 import salomon.engine.database.queries.SQLSelect;
@@ -192,7 +193,7 @@ public final class ProjectManager implements IProjectManager
 
             // loading tasks
             _managerEngine.getTasksManager().getTasks();
-
+            
         } catch (Exception e) {
             LOGGER.fatal("", e);
             throw new DBException(e.getLocalizedMessage());

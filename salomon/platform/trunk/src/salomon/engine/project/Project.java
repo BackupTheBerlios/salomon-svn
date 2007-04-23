@@ -21,10 +21,9 @@
 
 package salomon.engine.project;
 
-import salomon.engine.agent.AbstractAgent;
 import salomon.engine.agent.AgentInfo;
-import salomon.engine.agent.IAgent;
 import salomon.engine.agent.IAgentManager;
+import salomon.engine.agentconfig.AgentConfig;
 import salomon.engine.agentconfig.AgentConfigInfo;
 import salomon.engine.agentconfig.IAgentConfig;
 import salomon.engine.agentconfig.IAgentConfigManager;
@@ -81,6 +80,7 @@ public final class Project implements IProject
 
     public void addAgentConfig(IAgentConfig agentConfig)
     {
+        ((AgentConfig)agentConfig).setProject(this);
         _agentConfigManager.addAgentConfig(agentConfig);
     }
 
@@ -92,21 +92,18 @@ public final class Project implements IProject
     /**
      * @see salomon.engine.project.IProject#getAgents()
      */
-    public IAgent[] getAgents()
+    public IAgentConfig[] getAgentConfigs()
     {
-        IAgent[] agents = null;
-        IAgentConfig[] agentConfigs = _agentConfigManager.getAgentConfigs(_projectInfo.getId());
+        IAgentConfig[] agentConfigs = _agentConfigManager.getAgentConfigs(this);
         if (agentConfigs != null && agentConfigs.length > 0) {
-            agents = new IAgent[agentConfigs.length];
             for (int i = 0; i < agentConfigs.length; ++i) {
                 AgentConfigInfo agentConfigInfo = (AgentConfigInfo) agentConfigs[i].getInfo();
                 AgentInfo agentInfo = (AgentInfo) _agentManager.getAgent(
                         agentConfigInfo.getAgentId()).getInfo();
-                agents[i] = _agentManager.createAgent(agentInfo);
-                ((AbstractAgent) agents[i]).setAgentConfig(agentConfigs[i]);
+                ((AgentConfig)agentConfigs[i]).setAgent(_agentManager.createAgent(agentInfo));
             }
         }
-        return agents;
+        return agentConfigs;
     }
 
     /**

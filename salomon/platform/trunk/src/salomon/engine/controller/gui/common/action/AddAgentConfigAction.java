@@ -19,21 +19,29 @@
  * 
  */
 
-package salomon.engine.agentconfig;
+package salomon.engine.controller.gui.common.action;
 
-import salomon.engine.agent.IAgent;
-import salomon.platform.IInfo;
-import salomon.platform.serialization.IObject;
+import java.awt.event.ActionEvent;
 
+import salomon.engine.controller.gui.agentconfig.AgentConfigManagerGUI;
 
 /**
  * 
  */
-public interface IAgentConfig
+public final class AddAgentConfigAction extends AbstractAgentConfigAction
 {
-    IAgent getAgent();
-    
-    IInfo getInfo();
-    
-    IObject getConfig();
+
+    public AddAgentConfigAction(AgentConfigManagerGUI agentConfigManagerGUI)
+    {
+        super(agentConfigManagerGUI);
+    }
+
+    /**
+     * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+     */
+    public void actionPerformed(ActionEvent e)
+    {
+        _agentConfigManagerGUI.addAgentConfig();
+    }
+
 }

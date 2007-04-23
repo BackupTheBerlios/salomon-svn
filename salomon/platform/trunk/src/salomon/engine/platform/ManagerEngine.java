@@ -106,7 +106,7 @@ public final class ManagerEngine implements IManagerEngine
         _taskManager = new TaskManager(this, _dbManager);
         _pluginManager = new PluginManager(_dbManager);
         _agentConfigManager = new AgentConfigManager(_dbManager);
-        _agentManager = new AgentManager(_agentConfigManager, _dbManager);
+        _agentManager = new AgentManager(_dbManager);
     }
 
     public IAgentConfigManager getAgentConfigManager()

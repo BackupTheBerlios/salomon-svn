@@ -26,6 +26,8 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -38,6 +40,8 @@ import org.apache.log4j.Logger;
 
 import salomon.engine.Messages;
 import salomon.engine.controller.gui.ControllerFrame;
+import salomon.engine.controller.gui.agentconfig.AgentConfigManagerGUI;
+import salomon.engine.controller.gui.common.action.ActionManager;
 import salomon.engine.controller.gui.task.SettingsDialog;
 import salomon.engine.plugin.PlatformUtil;
 import salomon.engine.project.IProject;
@@ -64,6 +68,14 @@ public final class ProjectManagerGUI
 {
     private static final Logger LOGGER = Logger.getLogger(ProjectManagerGUI.class);
 
+    private ActionManager _actionManager;
+
+    private SettingsDialog _agentSettingDialog;
+
+    private JButton _btnConfigureAgents;
+
+    private JCheckBox _chkAgentsEnabled;
+
     /**
      * 
      * @uml.property name="_parent"
@@ -82,9 +94,9 @@ public final class ProjectManagerGUI
      */
     private ProjectManager _projectManager;
 
-    private JFrame _projectViewerFrame;
+    private SettingsDialog _projectSettingsDialog;
 
-    private SettingsDialog _settingsDialog;
+    private JFrame _projectViewerFrame;
 
     private JTextField _txtProjectCrDate;
 
@@ -94,13 +106,14 @@ public final class ProjectManagerGUI
 
     private JTextField _txtProjectName;
 
+    private Modes _currentMode;
+
     /**
      */
     public ProjectManagerGUI(IProjectManager projectManager)
     {
         _projectManager = (ProjectManager) projectManager;
         _projectListeners = new LinkedList<ProjectListener>();
-        initComponents();
     }
 
     public void addProjectListener(ProjectListener listener)
@@ -108,12 +121,24 @@ public final class ProjectManagerGUI
         _projectListeners.add(listener);
     }
 
+    public void configureProjectAgents(
+            AgentConfigManagerGUI agentConfigManagerGUI)
+    {
+        LOGGER.info("ProjectManagerGUI.configureAgents()");
+        agentConfigManagerGUI.setProject(_projectManager.getCurrentProject());
+        _agentSettingDialog.setSettingsComponent(agentConfigManagerGUI.getAgentListPanel());
+
+        if (_agentSettingDialog.showSettingsDialog()) {
+            LOGGER.debug("Updating agent configuration");
+        }
+    }
+
     public void editProject()
     {
-
         try {
             Project project = (Project) _projectManager.getCurrentProject();
 
+            _currentMode = Modes.EDIT;
             // saving project
             this.saveProject(project, false);
 
@@ -141,6 +166,7 @@ public final class ProjectManagerGUI
         try {
             Project project = (Project) _projectManager.createProject();
 
+            _currentMode = Modes.ADD;
             // saving project
             this.saveProject(project, false);
 
@@ -189,6 +215,11 @@ public final class ProjectManagerGUI
             LOGGER.fatal("", e);
             Utils.showErrorMessage(Messages.getString("ERR_CANNOT_SAVE_PROJECT"));
         }
+    }
+
+    public void setActionManager(ActionManager actionManager)
+    {
+        _actionManager = actionManager;
     }
 
     /**
@@ -240,6 +271,10 @@ public final class ProjectManagerGUI
         builder.append(_txtProjectCrDate, 3);
         builder.append("Last mod. date");
         builder.append(_txtProjectLastMod, 3);
+
+        builder.appendSeparator("Agent configuration");
+        builder.append(_chkAgentsEnabled);
+        builder.append(_btnConfigureAgents, 3);
 
         builder.appendSeparator("Project info");
         builder.append(new JScrollPane(_txtProjectInfo), 5);
@@ -294,9 +329,9 @@ public final class ProjectManagerGUI
 
     private void initComponents()
     {
-        _settingsDialog = new SettingsDialog(_parent,
+        _projectSettingsDialog = new SettingsDialog(_parent,
                 Messages.getString("TIT_EDIT_PROJECT"));
-        _settingsDialog.setSeparator("Project settings");
+        _projectSettingsDialog.setSeparator("Project settings");
 
         // project settings panel
         _txtProjectCrDate = new JTextField();
@@ -304,6 +339,15 @@ public final class ProjectManagerGUI
         _txtProjectLastMod = new JTextField();
         _txtProjectLastMod.setEnabled(false);
 
+        _agentSettingDialog = new SettingsDialog(_parent, "Configure agents");
+        _agentSettingDialog.setSeparator("Agent configuration");
+
+        _btnConfigureAgents = new JButton(
+                _actionManager.getConfigureProjectAgentsAction());
+        _btnConfigureAgents.setText("Configure agents");
+        _btnConfigureAgents.setToolTipText("Save project before configuring agents");
+
+        _chkAgentsEnabled = new JCheckBox("Agents enabled");
         _txtProjectInfo = new JTextArea(3, 10);
 
     }
@@ -316,6 +360,13 @@ public final class ProjectManagerGUI
             Utils.showInfoMessage(Messages.getString("TT_PROJECT_SAVED"));
             _parent.refreshGui();
         }
+    }
+
+    private void setControls(Modes mode)
+    {
+        boolean enabled = (mode == Modes.EDIT);
+        _chkAgentsEnabled.setEnabled(enabled);
+        _btnConfigureAgents.setEnabled(enabled);
     }
 
     /**
@@ -331,6 +382,8 @@ public final class ProjectManagerGUI
         Project project = (Project) iProject;
 
         if (_pnlProjectProperties == null) {
+            initComponents();
+
             // validation
             ProjectModel model = new ProjectModel();
             ProjectValidator projectValidator = new ProjectValidator(model,
@@ -347,9 +400,12 @@ public final class ProjectManagerGUI
             _pnlProjectProperties = createProjectPanel();
 
             // setting component for dialog
-            _settingsDialog.setSettingsComponent(_pnlProjectProperties);
-            _settingsDialog.setValidationModel(resultModel);
+            _projectSettingsDialog.setSettingsComponent(_pnlProjectProperties);
+            _projectSettingsDialog.setValidationModel(resultModel);
         }
+
+        // setting the controls mode appropriately
+        setControls(_currentMode);
 
         String name = project.getInfo().getName();
         String info = project.getInfo().getInfo();
@@ -369,7 +425,7 @@ public final class ProjectManagerGUI
         _txtProjectCrDate.setText(scdate == null ? "" : scdate);
         _txtProjectLastMod.setText(slmdate == null ? "" : slmdate);
 
-        if (_settingsDialog.showSettingsDialog()) {
+        if (_projectSettingsDialog.showSettingsDialog()) {
             project.getInfo().setName(_txtProjectName.getText());
             project.getInfo().setInfo(_txtProjectInfo.getText());
             approved = true;
@@ -396,5 +452,9 @@ public final class ProjectManagerGUI
         }
 
         return projectID;
+    }
+
+    private enum Modes {
+        ADD, EDIT
     }
 }

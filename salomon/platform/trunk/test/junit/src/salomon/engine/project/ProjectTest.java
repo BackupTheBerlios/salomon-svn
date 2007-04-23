@@ -28,6 +28,8 @@ import org.apache.log4j.PropertyConfigurator;
 
 import salomon.TestObjectFactory;
 import salomon.engine.agent.IAgent;
+import salomon.engine.agentconfig.AgentConfig;
+import salomon.engine.agentconfig.IAgentConfig;
 import salomon.plugin.DescriptionTest;
 
 public class ProjectTest extends TestCase
@@ -51,16 +53,32 @@ public class ProjectTest extends TestCase
         LOGGER.info("ProjectTest.testGetAgents()");
         IProject[] projects = _projectManager.getProjects();
         for (IProject project : projects) {
-            IAgent[] agents = project.getAgents();
+            IAgentConfig[] agents = project.getAgentConfigs();
             if (agents != null) {
-                for (IAgent agent : agents) {
-                    LOGGER.debug("agent: " + agent);
-                    LOGGER.debug("config: " + agent.getAgentConfig());
+                for (IAgentConfig agent : agents) {
+                    LOGGER.debug("config: " + agent);
+                    LOGGER.debug("agent: " + agent.getAgent());
                 }
             } else {
                 LOGGER.debug("No agents for project: " + project.getInfo());
             }
         }
+    }
+
+    public void testAddAgent() throws Exception
+    {
+        LOGGER.info("ProjectTest.testAddAgent()");
+        IProject project = _projectManager.createProject();
+        ((Project) project).getInfo().setName(
+                "Test agent project " + System.currentTimeMillis());
+
+        IAgentConfig agentConfig = TestObjectFactory.getManagerEngine().getAgentConfigManager().createAgentConfig();
+        IAgent agent = TestObjectFactory.getManagerEngine().getAgentManager().getAgents()[0];
+        ((AgentConfig)agentConfig).setAgent(agent);
+                
+        _projectManager.addProject(project);
+        // project must be saved before adding agents
+        project.addAgentConfig(agentConfig);
     }
 
     private static Logger LOGGER = Logger.getLogger(DescriptionTest.class);
