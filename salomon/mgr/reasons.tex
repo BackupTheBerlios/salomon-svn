@@ -32,7 +32,7 @@ Formu³owane poni¿ej wymagania stanowi¹ czêsto odpowiedŸ na ograniczenia Weki i V
 
 %-gui
 Jednym z podstawowych za³o¿eñ stawianych systemowi jest prosty i przyjazny \textbf{interfejs u¿ytkownika}.
-Czêsto cech¹ decyduj¹c¹ o rozpoczêciu u¿ywania danej aplikacji jest pierwszy kontakt z nia.
+Czêsto cech¹ decyduj¹c¹ o rozpoczêciu u¿ywania danej aplikacji jest pierwszy kontakt z ni¹.
 Dlatego wa¿ne jest, aby graficzny interfejs u¿ytkownika
 u³atwia³ u¿ycie aplikacji mniej doœwiadczonym u¿ytkownikom i aby nowy u¿ytkownik 
 systemu nie zosta³ zniechêcony ju¿ na samym pocz¹tku.
@@ -49,14 +49,14 @@ Pozwoli to na ukrycie przed twórcami wtyczek takich aspektów implementacyjnych
 jak sposób reprezentacji drzew decyzyjnych czy zapis parametrów wejœciowych i rezultatów wykonania zadañ.
 Wynika to z tego, ¿e osoby, które zajmuj¹ siê tworzeniem wtyczek 
 nie powinny musieæ braæ pod uwagê sposobu implementacji
-platformy, czyli np. przechowywania i dostêpu do danych czy kwesti komunikacji
+platformy, czyli np. przechowywania i dostêpu do danych czy kwestii komunikacji
 miêdzy poszczególnymi zadaniami.
 
 Inn¹ u¿yteczn¹ w³aœciwoœci¹, któr¹ nale¿y rozwa¿yæ jest 
 umo¿liwienie tworzenia wtyczek za pomoc¹ \textbf{jêzyków skryptowych}. Jest to 
 szczególnie po¿yteczna w³aœciwoœæ np. w przypadku tworzenia nowego algorytmu.
 W takiej sytuacji u¿yteczna jest mo¿liwoœæ szybkiego wprowadzania zmian
-i natychmiastowego przetestowania zachowania algorytmu bez konicznoœci
+i natychmiastowego przetestowania zachowania algorytmu bez koniecznoœci
 prze³adowywania ca³ej wtyczki.
 
 Wyspecyfikowanie dobrze zdefiniowanych interfejsów pozwalaj¹cych na manipulowanie wiedz¹
@@ -93,20 +93,20 @@ zbioru trenuj¹cego, jako podzbioru danych o niezmienionej strukturze.
 
 System powinien tworzyæ podzbiór danych przed utworzeniem atrybutów.
 Jest to podejœcie ró¿ne o tego, które stosuje siê w innych aplikacjach.
-Przyk³adowo w Wece zbiór danych jest pozdbiorem zbioru atrybutów. 
+Przyk³adowo w Wece zbiór danych jest podzbiorem zbioru atrybutów. 
 W proponowanym podejœciu zbiór danych nie bêdzie wymaga³ kopiowania danych 
-z zewnêtrznego Ÿród³¹, a jedynie definiowa³ przepis na utworzenie takowego 
+z zewnêtrznego Ÿród³a, a jedynie definiowa³ przepis na utworzenie takowego 
 (np. w postaci zapytania, stanowi¹cego zbiór warunków).
 Z kolej zbiór atrybutów stanowiæ bêdzie opis transformacji oryginalnych danych
-na dane wejœciowe do algorytmów ucz¹cych. Wyró¿nienie wartwy atrybutów jest konieczne,
-gdy¿ wiêkszoœæ algorytmów wymaga na wejœciu przetworzonia danych.
+na dane wejœciowe do algorytmów ucz¹cych. Wyró¿nienie warstwy atrybutów jest konieczne,
+gdy¿ wiêkszoœæ algorytmów wymaga na wejœciu przetworzonych danych.
 Przetworzenie polega g³ównie na okreœleniu typu danego atrybutu, czyli np. czy jest to atrybut wejœciowy
 czy wyjœciowy oraz jakiego jest rodzaju (napisowy, liczbowy, wyliczeniowy).
 
 Rozwi¹zanie przyjête w systemie zapewnia szereg korzyœci. Atrybuty budowane na zbiorach danych umo¿liwi¹
 zachowanie oryginalnej, czêsto wielowymiarowej struktury oryginalnych danych i zwi¹zków miêdzy nimi.
 Zastosowanie warstwy poœredniej miêdzy atrybutami a danymi, w postaci zbiorów danych, ma te¿ inne zalety.
-Poniewa¿ zbiory danych stanowi¹ jedynie opis, w jakis sposób oryginalne dane mog¹ zostaæ wydobyte
+Poniewa¿ zbiory danych stanowi¹ jedynie opis, w jakiœ sposób oryginalne dane mog¹ zostaæ wydobyte
 i jak maj¹ byæ interpretowane, pozwala to na przechowywanie tych danych w zewnêtrznych Ÿród³ach.
 Dziêki temu nie trzeba ich kopiowaæ do bazy, na której maj¹ byæ wykonywane algorytmy,
 co wi¹¿e siê z nie tylko z ich bezpieczeñstwem, ale tak¿e pozwala algorytmom na pracê z zawsze aktualnymi
@@ -123,12 +123,12 @@ algorytmów, co umo¿liwi wspó³pracê w jednym œrodowisku ró¿nych wersji
 systemu, a nawet ró¿nych jego implementacji. Budowa systemu powinna w jak 
 najwiêkszym stopniu wspieraæ mo¿liwoœæ powstania ró¿nych niezale¿nych 
 implementacji algorytmów uczenia maszynowego, dostarczanych przez ró¿nych 
-dostawców. Dziêki odseparowaniu wtyczek od plaftormy i przeniesieniu na ni¹ 
+dostawców. Dziêki odseparowaniu wtyczek od platformy i przeniesieniu na ni¹ 
 odpowiedzialnoœci za zapewnienie komunikacji miêdzy poszczególnymi wtyczkami
 mo¿liwe bêdzie np. zastosowanie obliczeñ równoleg³ych i rozproszonych, 
 bez dodatkowych wymagañ stawianych wtyczkom.
 
-Przeniesienie ciê¿aru obliczeñ z plaftormy do wtyczek poci¹ga za sob¹ koniecznoœæ
+Przeniesienie ciê¿aru obliczeñ z platformy do wtyczek poci¹ga za sob¹ koniecznoœæ
 zapewnienia przez platformê mechanizmów aktualizacji wtyczek. Mog¹ byæ one umieszczane
 w zdalnych lokalizacjach, tak wiêc platforma powinna posiadaæ mechanizmy kontroluj¹ce
 wersje u¿ywanych wtyczek i w razie potrzeby aktualizuj¹ce je
@@ -174,20 +174,20 @@ akademickich.
 % - rownoleglosc i rozproszenie
 System, który mo¿e wykonywaæ skomplikowane i d³ugotrwa³e obliczenia powinien
 mieæ mo¿liwoœæ ich \textbf{rozpraszania}.
-W dobie rozpowszechniania siê technologi gridowych i klastrowych aplikacje powinny
+W dobie rozpowszechniania siê technologii gridowych i klastrowych aplikacje powinny
 móc korzystaæ z mo¿liwoœci, jakie te technologie udostêpniaj¹.
 Dzia³anie w œrodowisku heterogenicznym pozwala nie tylko na lepsze 
 wykorzystanie zasobów sprzêtowych, ale równie¿ na dostêp do wielu Ÿróde³ danych 
 przy zapewnieniu bezpieczeñstwach tych danych. Rozproszone instancje powinny 
-wymieniaæ jak najmniejsz¹ iloœæ informacji, by nie obci¹¿aæ namiernie zasobów komunikacyjnych.
+wymieniaæ jak najmniejsz¹ iloœæ informacji, by nie obci¹¿aæ nadmiernie zasobów komunikacyjnych.
 
-Istotna wydaje siê tak¿e potrzeba zepewnienia mo¿liwoœci \textbf{zrównoleglenia} niektórych obliczeñ.
+Istotna wydaje siê tak¿e potrzeba zapewnienia mo¿liwoœci \textbf{zrównoleglenia} niektórych obliczeñ.
 Taka mo¿liwoœæ powinna byæ dostêpna ramach pojedynczej instancji systemu,
 co powinno byæ uwzglêdnione w jego architekturze.
 W naszym przypadku w³aœciwym i najprostszym modelem jest napisanie 
 aplikacji pracuj¹cych w oparciu o w¹tki i przeniesienie ciê¿aru zrownolegniania 
 na inne mechanizmy, takie jak klasteryzcja itp. Obecnie na rynku znajduj¹ siê systemy
-pozowalaj¹ce na zrównoleglenie aplikacji wielow¹tkowej w sposób przeŸroczysty 
+pozwalaj¹ce na zrównoleglenie aplikacji wielow¹tkowej w sposób przeŸroczysty 
 dla u¿ytkownika jak i dla aplikacji. Œwietnym przyk³adem takiej aplikacji jest 
 np. MOSIX (http://www.mosix.org/), który z klastrów linuxowych x86 tworzy 
 system wieloprocesorowy.

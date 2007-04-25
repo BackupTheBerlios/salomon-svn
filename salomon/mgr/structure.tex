@@ -35,7 +35,7 @@ poœrednictwem zarz¹dza zbiorem danych, atrybutów lub drzewem decyzyjnym.
 
 Zarz¹dza pozosta³ymi menad¿erami. Utrzymuje jedn¹ instancjê ka¿dego z nich 
 i udostêpnia je pozosta³ym klasom z platformy.
-Wszystkie menad¿ery, którmi zarz¹dza maj¹ analogiczn¹ funkcjonalnoœæ -- ka¿dy z
+Wszystkie menad¿ery, którymi zarz¹dza maj¹ analogiczn¹ funkcjonalnoœæ -- ka¿dy z
 nich pozwala na stworzenie nowego obiektu, którym zarz¹dza (nie ma innej
 mo¿liwoœci ich stworzenia, ni¿ przez metody udostêpniane przez menad¿era), jego
 zesk³adowanie w bazie danych, zwrócenie wszystkich zarz¹dzanych obiektów, czy
@@ -59,7 +59,7 @@ Zarz¹dza pluginami. Pozwala na zapisanie informacji o nowym pluginie
 (jego nazwa, lokalizacja) oraz na pobranie listy dostêpnych pluginów.
 Wtyczki mog¹ byæ ³adowane ze zdalnej lokalizacji, a wiêc zadaniem tego
 manad¿era jest tak¿e zarz¹dzanie pobieraniem i buforowaniem wtyczek pobranych
-z zewnêtrznych Ÿródel.
+z zewnêtrznych Ÿróde³.
 
 \paragraph{ITaskManager}
 
@@ -74,7 +74,7 @@ Obiekt implementuj¹cy ten interfejs przekazywany jest wtyczkom podczas ich wykon
 Za pomoc¹ pobieranych z niego menad¿erów (\emph{IDataSetManager},\emph{IAttributeManager}, 
 \emph{ITreeManager} w przysz³oœci \emph{IRuleSetManager} i inne) 
 wtyczki mog¹ operowaæ na danych znajduj¹cych siê w bazie.
-Udostêpnienie wtyczkom jedynie interfejsów do operawania na danych pozwala
+Udostêpnienie wtyczkom jedynie interfejsów do operowania na danych pozwala
 na ukrycie sposobu sk³adowania danych przed twórcami wtyczek i ich uniezale¿nienie siê
 od implementacji. W obecnej wersji dane przechowywane s¹ w relacyjnej bazie danych, ale nic nie stoi 
 na przeszkodzie, by w przysz³oœci przechowywaæ je w inny sposób, np. w plikach tekstowych o ustalonym formacie
@@ -89,7 +89,7 @@ Odpowiada za po³¹czenie z baz¹ danych. Dostarcza metody
 zapewniaj¹ce dostêp do danych przechowywanych w bazie. Swoj¹
 funkcjonalnoœæ udostêpnia odpowiednim menad¿erom, wtyczki nie maj¹ do niego
 bezpoœredniego dostêpu.
-Udostêpnia obiekt implmentuj¹cy interfejs \emph{IMetaData}, dziêki któremu
+Udostêpnia obiekt implementuj¹cy interfejs \emph{IMetaData}, dziêki któremu
 wtyczki mog¹ pobraæ informacje o strukturze danych ucz¹cych i trenuj¹cych.
 
 \paragraph{IDataSetManager}
@@ -128,7 +128,7 @@ wtyczkami i zadaniami.
 
 Zadaniem tego kontrolera jest dostarczenie interfejsu do
 zarz¹dzania zdalnymi kontrolerami (\emph{ServantController}). 
-W obecnej wersji systemu jest on niezaimplemenetowany.
+W obecnej wersji systemu jest on nie zaimplementowany.
 
 \paragraph{ServantController}
 
