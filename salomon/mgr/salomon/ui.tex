@@ -166,7 +166,7 @@ Do bardziej zaawansowanych operacji s³u¿y opcja \emph{Tools} $\rightarrow$ \emph
 Po jej wybraniu pojawia siê konsola, w której mo¿liwe jest wprowadzanie
 dowolnych zapytañ oraz operacji w jêzyku \emph{SQL}. 
 Konsola oferuje podœwietlanie sk³adni \emph{SQL}, co u³atwia tworzenie poprawnych sk³adniowo zapytañ
-Po wprowadzeniu zapytania jego wykonanie nastêpuje po nacœniêciu przycisku \emph{Execute}.
+Po wprowadzeniu zapytania jego wykonanie nastêpuje po naciœniêciu przycisku \emph{Execute}.
 
 Konsola obs³uguje transakcje (przyciski \emph{Commit} i \emph{Rollback}),
 zachowuje tak¿e historiê ostatnio wykonanych operacji, 
@@ -180,3 +180,36 @@ po której mo¿na poruszaæ siê za pomoc¹ przycisków przedstawiaj¹cych strza³ki.
 \end{figure}
 
 
+\subsubsection{Java Editor}
+Kolejnym narzêdziem u³atwiaj¹cym codzienna pracê w systemie jest \emph{Java Editor} \ref{fig:javaeditor}.
+Dostarcza on funkcjonalnoœci, która pozwala na uruchomiê skryptu napisane jêzyku \emph{Dynami Java},
+który jest niewielk¹ modyfikacj¹ jêzyka Java dostosowan¹ do u¿ycia jako jêzyk skryptowy.
+\footnote{DynamicJava to interpreter kodu JavaTM \href{http://koala.ilog.fr/djava/}{{http://koala.ilog.fr/djava/}}}.
+Przyk³adowo skrypt poni¿ej wyœwietli liczbê
+drzew decyzyjnych zdefiniowanych w aktualnie otwartym ,,Solution''.
+
+\begin{lstlisting}
+solutionManager = managerEngine.getSolutionManager();
+solution = solutionManager.getCurrentSolution();
+dataEngine = solution.getDataEngine();
+treeManager = dataEngine.getTreeManager();
+trees = treeManager.getAll();
+System.out.println("Trees number: " + trees.length);
+\end{lstlisting}
+
+
+\begin{figure}[H]
+	\centering
+		\includegraphics[width=0.90\textwidth]{img/salomon/screenshot/java_editor.png}
+	\caption{Java Editor}
+	\label{fig:javaeditor}
+\end{figure}
+
+Dziêki takiemu narzêdziu mo¿emy nie tylko sprawdziæ aktualny stan systemu
+(iloœæ drzew itp.), ale tak¿e mo¿emy go dowolnie modyfikowaæ.
+Kolejnym zastosowaniem jest mo¿liwoœæ testowania wtyczek. 
+
+W oparciu o t¹ funkcjonalnoœæ zosta³a równie¿ napisana wtyczka \emph{PluginDebugger},
+która uruchamia skrypty. Przyk³adowo, jeœli w naszym projekcie potrzebujemy
+pomiêdzy poszczególnymi zadaniami dokonaæ prostych modyfikacji jak np. filtrowanie wiedzy,
+mo¿e  u¿yæ opisane wtyczki oraz prostego skryptu.
