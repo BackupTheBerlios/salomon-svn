@@ -239,7 +239,8 @@ classifier.buildClassifier(instances);
 \end{lstlisting}
 \end{framed}
 
-Ostatni etap to konwersja drzewa decyzyjnego do postaci Salomona oraz zapisanie go w wewnêtrznej bazie danych. 
+Ostatni etap to konwersja drzewa decyzyjnego do postaci Salomona oraz zapisanie go w wewnêtrznej bazie danych.
+\begin{framed} 
 \begin{lstlisting}
 // konwersja drzewa do postaci Salomona
 TreeConverter.convert(tree, attributeSet, (Drawable) classifier);
@@ -247,6 +248,8 @@ treeManager.add(tree);
 result.setOutput(classifier.toString());
 result.setSuccessful(true);
 \end{lstlisting}
+\end{framed}
+
 
 
 \begin{figure}[H]
