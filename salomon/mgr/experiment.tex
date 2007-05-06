@@ -1,7 +1,7 @@
 \section{Opis eksperymentu}
 
 Celem eksperymentu jest zademonstrowanie mo¿liwoœci platformy jako œrodowiska,
-które nadzoruje obliczenia uczenia maszynowego w oparciu o dostarczone wtyczki.
+które nadzoruje obliczenia uczenia maszynowego oraz u³atwia proces tworzenia algorytmów (w postaci wtyczek) %w oparciu o dostarczone wtyczki.
 
 Przyk³adowe zadanie obliczeniowe ma na celu utworzenie drzewa decyzyjnego
 w oparciu o zbiór atrybutów. Atrybuty te definiuj¹ w jaki sposób interpretowany
@@ -146,6 +146,46 @@ s¹ do wewnêtrznej reprezentacji drzewa decyzyjnego obs³ugiwanej przez system.
 
 \emph{Weka} generuje drzewo w formie tekstowej. Opis ten mo¿na zobaczyæ w otwieraj¹c 
 okno rezultatu dla omawianej wtyczki (Rys \ref{fig:tree_generator_results})
+
+Wykorzystuj¹c aktulane mo¿liwoœci platformy, napisanie takiej wtyczki,
+jest wyj¹tkowo proste. Czêœæ kodu Ÿród³owego wtyczki, zosta³ przedstawiony poni¿ej. 
+
+W pierwszym etapie pobieramy ustawienia, takie jak dane trenuj¹ce, atrybuty itp.
+\begin{lstlisting}
+WekaTreeGeneratorSettings treeSettings = (WekaTreeGeneratorSettings) settings;
+String attributeSetName = treeSettings.getAttributeSetName();
+IAttributeManager attributeManager = engine.getAttributeManager();
+IAttributeSet attributeSet = attributeManager.getAttributeSet(attributeSetName);
+
+String dataSetName = treeSettings.getDataSetName();
+IDataSetManager dataSetManager = engine.getDataSetManager();
+IDataSet dataSet = dataSetManager.getDataSet(dataSetName);
+\end{lstlisting}
+
+W³aœciwy etap sk³ada siê z dwóch czêœci; konwersji danych trenuj¹cych do postaci Weki oraz generacji drzewa decyzyjnego. 
+\begin{lstlisting}
+IAttributeData attributeData = attributeSet.selectAttributeData(dataSet);
+String treeName = treeSettings.getTreeName();
+Instances instances = AttributeConverter.toWeka(attributeData, treeName);
+
+String algorithmName = treeSettings.getAlgorithmName();
+Classifier classifier = Classifier.forName("weka.classifiers.trees." + algorithmName, null);
+
+ITreeManager treeManager = engine.getTreeManager();
+ITree tree = treeManager.createTree(attributeSet);
+tree.setName(treeName);
+classifier.buildClassifier(instances);
+
+\end{lstlisting}
+
+Ostatni etap to konwersja drzewa decyzyjnego do postaci Salomona oraz zapisanie go w wewnêtrznej bazie danych. 
+\begin{lstlisting}
+TreeConverter.convert(tree, attributeSet, (Drawable) classifier);
+treeManager.add(tree);
+result.setOutput(classifier.toString());
+result.setSuccessful(true);
+\end{lstlisting}
+
 
 \begin{figure}[H]
 	\centering
