@@ -180,14 +180,14 @@ po której mo¿na poruszaæ siê za pomoc¹ przycisków przedstawiaj¹cych strza³ki.
 \end{figure}
 
 
-\subsubsection{Java Editor}
-Kolejnym narzêdziem u³atwiaj¹cym codzienna pracê w systemie jest \emph{Java Editor} \ref{fig:javaeditor}.
-Dostarcza on funkcjonalnoœci, która pozwala na uruchomiê skryptu napisane jêzyku \emph{Dynami Java},
-który jest niewielk¹ modyfikacj¹ jêzyka Java dostosowan¹ do u¿ycia jako jêzyk skryptowy.
-\footnote{DynamicJava to interpreter kodu JavaTM \href{http://koala.ilog.fr/djava/}{{http://koala.ilog.fr/djava/}}}.
-Przyk³adowo skrypt poni¿ej wyœwietli liczbê
-drzew decyzyjnych zdefiniowanych w aktualnie otwartym ,,Solution''.
+\subsubsection{Edytor skryptów}
 
+Dla zaawansowanych u¿ytkowników i twórców wtyczek przygotowane zosta³o narzêdzie
+\emph{Java Editor}~\ref{fig:javaeditor}.
+Dostarcza on funkcjonalnoœci, która pozwala na uruchomiê skryptu napisane w jêzyku \emph{Dynami Java}\footnote{DynamicJava to interpreter kodu JavaTM \href{http://koala.ilog.fr/djava/}{{http://koala.ilog.fr/djava/}}}., który jest niewielk¹ modyfikacj¹ jêzyka Java dostosowan¹ do u¿ycia jako jêzyk skryptowy.
+
+Przyk³adowo skrypt poni¿ej wyœwietli liczbê drzew decyzyjnych zdefiniowanych w aktualnie otwartym obiekcie Solution.
+%
 \begin{lstlisting}
 solutionManager = managerEngine.getSolutionManager();
 solution = solutionManager.getCurrentSolution();
@@ -205,11 +205,11 @@ System.out.println("Trees number: " + trees.length);
 	\label{fig:javaeditor}
 \end{figure}
 
-Dziêki takiemu narzêdziu mo¿emy nie tylko sprawdziæ aktualny stan systemu
-(iloœæ drzew itp.), ale tak¿e mo¿emy go dowolnie modyfikowaæ.
-Kolejnym zastosowaniem jest mo¿liwoœæ testowania wtyczek. 
+Dziêki takiemu narzêdziu mo¿na nie tylko sprawdziæ aktualny stan systemu
+(iloœæ drzew itp.), ale tak¿e mo¿na go dowolnie modyfikowaæ korzystaj¹c z udostêpnionych przez platformê interfejsów (\ref{lab:platform-interfaces)).
+Innym u¿ytecznym zastosowaniem tego narzêdzia jest mo¿liwoœæ ³atwego testowania wtyczek. Wtyczki mog¹ korzystaj¹ z interfejsów platformy, wiêc wykorzystuj¹c  to narzêdzie mo¿na sprawdziæ, jak bêdzie zachowywaæ siê wtyczka na dzia³aj¹cym systemie. Mo¿liwe jest tak¿e ³atwe testowanie zmian w algorytmie wtyczki bez koniecznoœci jej ka¿dorazowego wdra¿ania w systemie.
 
-W oparciu o t¹ funkcjonalnoœæ zosta³a równie¿ napisana wtyczka \emph{PluginDebugger},
-która uruchamia skrypty. Przyk³adowo, jeœli w naszym projekcie potrzebujemy
-pomiêdzy poszczególnymi zadaniami dokonaæ prostych modyfikacji jak np. filtrowanie wiedzy,
-mo¿e  u¿yæ opisane wtyczki oraz prostego skryptu.
+%W oparciu o t¹ funkcjonalnoœæ zosta³a równie¿ napisana wtyczka \emph{PluginDebugger},
+%która uruchamia skrypty. Przyk³adowo, jeœli w naszym projekcie potrzebujemy
+%pomiêdzy poszczególnymi zadaniami dokonaæ prostych modyfikacji jak np. filtrowanie wiedzy,
+%mo¿e  u¿yæ opisane wtyczki oraz prostego skryptu.
