@@ -64,6 +64,8 @@ Du¿o wiêksze mo¿liwoœci konfiguracyjne zapewnia wtyczka \emph{DataSetCreator}.
 Posiada ona podobny graficzny interfejs u¿ytkownika, ale pozwala na du¿o dok³adniejsze
 okreœlenie warunków, jakie spe³niaæ maj¹ dane, które trafi¹ do testowego zbioru danych (Rys \ref{fig:data_set_settings}).
 
+
+
 \begin{figure}[!hb]
 	\centering
 		\includegraphics[scale=0.50]{img/experiment/dataset_settings.png}
@@ -82,6 +84,32 @@ na obserwacjê, jak iloœæ danych wp³ywa na dok³adnoœæ obliczeñ.
 
 Wynikiem pracy obu wtyczek jest zbiór danych, którego definicja sk³adowana jest
 w wewnêtrznej bazie systemu.
+
+Poni¿ej fragment kodu, który u¿ywaj¹c warunków wyspecyfikowanych przez u¿ytkownika tworzy nowy zbiór danych.
+\begin{framed}
+\begin{lstlisting}
+String[] strConds = cSettings.getConditions();
+
+// stworzenie warunków dla nowego zbioru danych
+ICondition[] conditions = new ICondition[strConds.length];
+int i = 0;
+for (String cond : strConds) {
+	if (cond != null) {
+		// stworzenie pojedynczego warunku 
+		conditions[i++] = dataSetManager.createCondition(cond);
+	}
+}
+
+// pobranie g³ównego zbioru
+IDataSet mainDataSet = dataSetManager.getMainDataSet();
+// stworzenie podzbioru na podstawie podanych warunków 
+IDataSet subSet = mainDataSet.createSubset(conditions);
+subSet.setName(dataSetName);
+// zapisanie nowego zbioru danych do bazy
+dataSetManager.add(subSet);
+\end{lstlisting}
+\end{framed}
+
 
 \subsection{Definiowanie zbioru atrybutów}
 Algorytmy generowania drzew decyzyjnych pracuj¹ na specjalnie
@@ -106,6 +134,31 @@ czy wyjœciowym (okreœlaj¹cym decyzjê).
 
 Efektem uruchomienia wtyczki jest utworzenie i zesk³adowanie zbioru atrybutów,
 odpowiadaj¹cego podanej konfiguracji.
+
+Poni¿szy fragment kodu demonstruje prostotê tworzenia zbioru atrybutów.  
+\begin{framed}
+\begin{lstlisting}
+IAttributeManager attributeSetManager = dataEngine.getAttributeManager();
+Description[] strDesc = cSettings.getDescriptions();
+IAttributeDescription[] descriptions = new IAttributeDescription[strDesc.length];
+int i = 0;
+// stworzenie listy atrybutów
+for (Description desc : strDesc) {
+	if (desc != null) {
+		// stworzenie pojedyñczego opisu atrybutu
+		descriptions[i++] = attributeSetManager.createAttributeDescription(
+      	desc.getAttributeName(), desc.getTableName(),
+         desc.getColumnName(), desc.getType(),
+			"Y".equals(desc.getIsOutput()));
+	}
+}
+
+// stworzenie zbioru atrybutów            
+IAttributeSet attributeSet = attributeSetManager.createAttributeSet(descriptions);
+attributeSet.setName(cSettings.getAttributeSetName());
+attributeSetManager.add(attributeSet);
+\end{lstlisting}
+\end{framed}
 
 \subsection{Generowanie drzewa decyzyjnego}
 
@@ -147,10 +200,11 @@ s¹ do wewnêtrznej reprezentacji drzewa decyzyjnego obs³ugiwanej przez system.
 \emph{Weka} generuje drzewo w formie tekstowej. Opis ten mo¿na zobaczyæ w otwieraj¹c 
 okno rezultatu dla omawianej wtyczki (Rys \ref{fig:tree_generator_results})
 
-Wykorzystuj¹c aktulane mo¿liwoœci platformy, napisanie takiej wtyczki,
+Wykorzystuj¹c aktualne mo¿liwoœci platformy, napisanie takiej wtyczki,
 jest wyj¹tkowo proste. Czêœæ kodu Ÿród³owego wtyczki, zosta³ przedstawiony poni¿ej. 
 
 W pierwszym etapie pobieramy ustawienia, takie jak dane trenuj¹ce, atrybuty itp.
+\begin{framed}
 \begin{lstlisting}
 WekaTreeGeneratorSettings treeSettings = (WekaTreeGeneratorSettings) settings;
 String attributeSetName = treeSettings.getAttributeSetName();
@@ -160,26 +214,34 @@ IAttributeSet attributeSet = attributeManager.getAttributeSet(attributeSetName);
 String dataSetName = treeSettings.getDataSetName();
 IDataSetManager dataSetManager = engine.getDataSetManager();
 IDataSet dataSet = dataSetManager.getDataSet(dataSetName);
+String treeName = treeSettings.getTreeName();
+String algorithmName = treeSettings.getAlgorithmName();
 \end{lstlisting}
+\end{framed}
 
 W³aœciwy etap sk³ada siê z dwóch czêœci; konwersji danych trenuj¹cych do postaci Weki oraz generacji drzewa decyzyjnego. 
+\begin{framed}
 \begin{lstlisting}
+// konwersja danych trenuj¹cych do atrybutów
 IAttributeData attributeData = attributeSet.selectAttributeData(dataSet);
-String treeName = treeSettings.getTreeName();
+// konwersja atrybutów do postaci Weki
 Instances instances = AttributeConverter.toWeka(attributeData, treeName);
 
-String algorithmName = treeSettings.getAlgorithmName();
+// pobranie algorytmu tworzenia drzewa decyzyjnego
 Classifier classifier = Classifier.forName("weka.classifiers.trees." + algorithmName, null);
 
 ITreeManager treeManager = engine.getTreeManager();
+// stworzenie pustego drzewa
 ITree tree = treeManager.createTree(attributeSet);
 tree.setName(treeName);
+// zbudowanie drzewa korzystaj¹c z Weki
 classifier.buildClassifier(instances);
-
 \end{lstlisting}
+\end{framed}
 
 Ostatni etap to konwersja drzewa decyzyjnego do postaci Salomona oraz zapisanie go w wewnêtrznej bazie danych. 
 \begin{lstlisting}
+// konwersja drzewa do postaci Salomona
 TreeConverter.convert(tree, attributeSet, (Drawable) classifier);
 treeManager.add(tree);
 result.setOutput(classifier.toString());
@@ -194,7 +256,7 @@ result.setSuccessful(true);
 	\label{fig:tree_generator_results}
 \end{figure}
 
-\subsection{Wizualizacja drzewa decyzjnego}
+\subsection{Wizualizacja drzewa decyzyjnego}
 
 Ostatnim etapem eksperymentu jest wizualizacja nowo powsta³ego drzewa. W tym 
 celu zosta³a napisana wtyczka \emph{TreeVis}, która tworzy graficzn¹ reprezentacjê
