@@ -2,48 +2,44 @@
 
 System, dziêki swej elastycznej architekturze, pozwala u¿ytkownikowi na 
 rozszerzanie jego mo¿liwoœci poprzez definiowanie przez niego w³asnych 
-pluginów. Ca³a funkcjonalnoœæ zwi¹zana z przetwarzaniem pluginów, 
-konfigurowaniem ich, prezentacj¹ wyników ich dzia³ania oraz komunikacj¹ przez 
+wtyczek. Ca³a funkcjonalnoœæ zwi¹zana z ich konfiguracj¹, przetwarzaniem, prezentacj¹ wyników dzia³ania oraz komunikacj¹ przez 
 sieæ ukryta jest przed twórc¹ wtyczki i nie musi byæ brana pod uwagê przy jego 
 projektowaniu i implementacji. Jedyne, co musi on zrobiæ to zaimplementowaæ 
 opisane poni¿ej interfejsy. By system móg³ skorzystaæ z nowych wtyczek nale¿y 
-podaæ ich lokalizacje, umo¿liwiaj¹c systemowi tym samym œci¹gniêcie i 
-za³adowanie wtyczki. Obecna wersja systemu obs³uguje tylko pluginy w postaci 
+podaæ ich lokalizacje, umo¿liwiaj¹c systemowi tym samym pobranie i 
+za³adowanie wtyczki. Obecna wersja systemu obs³uguje tylko wtyczki w postaci 
 archiwów jar.
 
-Poni¿ej zamieszczony jest schemat przyk³adowego pluginu:
+%Poni¿ej zamieszczony jest schemat przyk³adowego pluginu:
 
-\begin{figure}[!hb] \centering 
-\includegraphics[scale=0.40]{img/salomon/uml/average_price_plugin.jpg}
-	\caption{Przyk³adowy plugin}
-	\label{fig:AveragePricePlugin}
-\end{figure}
+%\begin{figure}[!hb] \centering 
+%\includegraphics[scale=0.40]{img/salomon/uml/average_price_plugin.jpg}
+%	\caption{Przyk³adowy plugin}
+%	\label{fig:AveragePricePlugin}
+%\end{figure}
 
-Klasy zaznaczone na zielono i rozpoczynaj¹ce siê od liter \emph{AP} to 
-przyk³adowe implementacje interfejsów plugniów (kolor ¿ó³ty).
+%Klasy zaznaczone na zielono i rozpoczynaj¹ce siê od liter \emph{AP} to 
+%przyk³adowe implementacje interfejsów plugniów (kolor ¿ó³ty).
 
 \subsection{Interfejsy pluginów}
 
-Ka¿da wtyczka aby móg³a byæ przetwarzana przez system, musi implementowaæ 
+Ka¿da wtyczka aby mog³a byæ przetwarzana przez system, musi implementowaæ 
 nastêpuj¹ce \mbox{interfejsy:}
 
 \subsubsection{IPlugin}
 
 \subsubsection{IDataPlugin}
 	\begin{itemize}
-		\item \emph{doJob()} - metoda wykonuje g³ówne zadanie pluginu. Przyjmuje na 
-wejœciu:
+		\item \emph{doJob()} - metoda wykonuje g³ówne zadanie wtyczki. Jej parametrami s¹:
 		\begin{itemize}
-          \item \emph{IDataEngin}, za pomoc¹ którego plugin mo¿e operowaæ na 
+          \item \emph{IDataEngin}, za pomoc¹ którego wtyczka mo¿e operowaæ na 
           danych i wiedzy.
           \item \emph{IEnvironment} to interfejs umo¿liwiaj¹cy komunikacje 
           pomiêdzy poszczególnymi zadaniami
-          \item \emph{ISettings} konfiguracja wejœciowa pluginu
+          \item \emph{ISettings} konfiguracja wejœciowa wtyczki
         \end{itemize}  
     \end{itemize}
     
-    
-
 \subsubsection{IGraphicPlugin}
 \begin{itemize}
 	\item \emph{getSettingComponent()} - zwraca obiekt implementuj¹cy interfejs 
@@ -57,8 +53,8 @@ wejœciu:
 	\item \emph{getComponent(ISettings settings)} - zwraca graficzny komponent 
 s³u¿¹cy do edycji ustawieñ pluginu. Jest on wype³niany wartoœciami przekazanymi 
 w obiekcie \emph{ISettings}.
-	\item \emph{getSettings()} - zwraca ustawienia pluginu.
-	\item \emph{getDefaultSettings()} - zwraca domyœlne ustawienia pluginu. 
+	\item \emph{getSettings()} - zwraca ustawienia wtyczki.
+	\item \emph{getDefaultSettings()} - zwraca domyœlne ustawienia wtyczki. 
 Wykorzystywane, gdy u¿ytkownik nie wprowadzi³ w³asnych ustawieñ.
 \end{itemize}    
 
@@ -70,9 +66,8 @@ obiektu  \emph{IResult} zwróconego wczeœniej przez metodê \emph{doJob()}.
 	\item  \emph{getDefaultResult()} - zwraca domyœlny rezultat wykonania wtyczki.
 \end{itemize}
 
-\subsubsection{IObject} To interfejs zapewniaj¹cy persystêcje takich obiektów 
-jak ustawienia, rezultat pluginu, czy obiekty wykorzystywane do komunikacji 
-miêdzy wtyczkami.
+\subsubsection{IObject} To interfejs zapewniaj¹cy persystencjê takich obiektów 
+jak ustawienia, rezultat wykonania wtyczki, czy obiekty wykorzystywane do komunikacji miêdzy wtyczkami.
 
 \subsubsection{ISettings}Implementowany przez obiekt reprezentuj¹cy ustawienia 
 wtyczki.
@@ -84,4 +79,25 @@ wtyczki.
 dzia³ania wtyczki.
 \begin{itemize}
 	\item \emph{init(IObject o)} - metoda inicjalizuje obiekt klasy
-\end{itemize}   
+\end{itemize}  
+
+%WSTAWIÆ TO W JAKIEŒ MIEJSCE!!!
+%
+%\paragraph{Persystencja danych}
+%Z racji na rozproszony charakter aplikacji, oraz na wielkoœæ obliczeñ.
+%Wa¿nym aspektem platformy jest zapewnienie uniwersalnego i wydajnego
+%mechanizmu persysteñcji danych. W przypadku wewnêtrznych struktur danych,
+%jak zapis drzewa decyzyjnego, czy atrybutów, zadaniem tym zajmuj¹ siê
+%odpowiednie menadzêry. W przypadku jednak persystencji danych u¿ytkownika,
+%takich jak ustawienia wtyczek, czy ich rezultaty zadaniem tym zajmujê siê
+%modu³ persysteñcji, udostêpniaj¹cy odpowiedni \emph{API}. Dodatkowo mechanizm
+%ten jest wykorzystywany do persystencji danych wykorzystywanych w komunikacji miêdzy kolejnymi zadaniami (WSTAWIÆ LINKA DO OPISU ENV.)
+%
+%Kod poni¿ej tworzy strukturê, z jednym polem o nazwie ,,myField'' oraz przypisuje do niego wartoœæ ,,my settings''.
+%
+%\begin{lstlisting}
+%SimpleStruct struct = new SimpleStruct();
+%struct.setField("myField", "my settings");
+%\end{lstlisting}
+%
+%WSTAWIÆ UML? 

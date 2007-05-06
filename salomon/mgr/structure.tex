@@ -177,26 +177,4 @@ bazie danych i \emph{ISettings}, reprezentuj¹cy ustawienia
 wtyczki. Zwracany jest obiekt klasy \emph{IResult}, stanowi¹cy
 rezultat wykonania zadania.
 
-\section{Za³o¿enia projektowe}
-WSTAWIÆ TO W JAKIEŒ MIEJSCE!!!
-
-\paragraph{Persystencja danych}
-Z racji na rozproszony charakter aplikacji, oraz na wielkoœæ obliczeñ.
-Wa¿nym aspektem platformy jest zapewnienie uniwersalnego i wydajnego
-mechanizmu persysteñcji danych. W przypadku wewnêtrznych struktur danych,
-jak zapis drzewa decyzyjnego, czy atrybutów, zadaniem tym zajmuj¹ siê
-odpowiednie menadzêry. W przypadku jednak persystencji danych u¿ytkownika,
-takich jak ustawienia wtyczek, czy ich rezultaty zadaniem tym zajmujê siê
-modu³ persysteñcji, udostêpniaj¹cy odpowiedni \emph{API}. Dodatkowo mechanizm
-ten jest wykorzystywany do persystencji danych wykorzystywanych w komunikacji miêdzy kolejnymi zadaniami (WSTAWIÆ LINKA DO OPISU ENV.)
-
-Kod poni¿ej tworzy strukturê, z jednym polem o nazwie ,,myField'' oraz przypisuje do niego wartoœæ ,,my settings''.
-
-\begin{lstlisting}
-SimpleStruct struct = new SimpleStruct();
-struct.setField("myField", "my settings");
-\end{lstlisting}
-
-WSTAWIÆ UML?
-
 %Programista ma do dyspozycji typy proste, typ tablicowy, oraz struktury.
