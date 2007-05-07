@@ -70,6 +70,7 @@ Odpowiada tak¿e za proces przygotowania zadañ do wykonania, czyli ich poprawn¹ k
 czy reszcie ich wykonanie i zapisanie informacji o przebiegu ich przetwarzania.
 
 \subsection{IDataEngine}
+\label{lab:data_engine}
 
 Obiekt implementuj¹cy ten interfejs przekazywany jest wtyczkom podczas ich wykonania.
 Za pomoc¹ pobieranych z niego menad¿erów (\emph{IDataSetManager},\emph{IAttributeManager}, 
@@ -139,42 +140,33 @@ swoich us³ug. Ta wersja kontrolera nie posiada GUI, zarz¹dzanie
 nim odbywa siê za pomoc¹ klasy \emph{MasterController}.
 Podobnie jak w przypadku klasy \emph{MasterController}, kontroler ten dopiero bêdzie zaimplementowany.
 
-\section{Wtyczki}
 
-G³ówna funkcjonalnoœæ zosta³a  przeniesiona
-do wtyczek, zadaniem systemu jest tylko zarz¹dzanie ich
-wykonaniem. Dziêki takiemu podejœciu system jest ³atwo skalowalny
-i rozszerzalny o nowe mo¿liwoœci. Ka¿da z wtyczek musi
-implementowaæ nastêpuj¹ce interfejsy:
+%G³ówna funkcjonalnoœæ zosta³a  przeniesiona
+%do wtyczek, zadaniem systemu jest tylko zarz¹dzanie ich
+%wykonaniem. Dziêki takiemu podejœciu system jest ³atwo skalowalny
+%i rozszerzalny o nowe mo¿liwoœci. Ka¿da z wtyczek musi
+%implementowaæ nastêpuj¹ce interfejsy:
+%
+%Poni¿y diagram \ref{fig:plugin_uml} przedstawia podstawowe interfejsy
+%potrzebne do implementacji w³asnej wtyczki. Kolorem ¿ó³tym zaznaczone
+%zosta³y interfejsy zwi¹zane z graficzn¹ czêœci¹ wtyczki. Kolorem niebieskim
+%interfejs, który zwi¹zany jest z algorytmem wtyczki. 
 
-Poni¿y diagram \ref{fig:plugin_uml} przedstawia podstawowe interfejsy
-potrzebne do implementacji w³asnej wtyczki. Kolorem ¿ó³tym zaznaczone
-zosta³y interfejsy zwi¹zane z graficzn¹ czêœci¹ wtyczki. Kolorem niebieskim
-interfejs, który zwi¹zany jest z algorytmem wtyczki. 
-
-\begin{figure}[H]
-	\centering
-		\includegraphics[width=0.90\textwidth]{img/salomon/uml/plugin.png}
-	\caption{Interfejsy wtyczki}
-	\label{fig:plugin_uml}
-\end{figure}
-
-
-\paragraph{IGraphicPlugin}
-
-Pozwala pobraæ parametry od u¿ytkownika, które nastêpnie zostan¹
-przekazane do wtyczek  przed ich wykonaniem. Zawiera dwie metody:
-\emph{getSettingsPanel()}  i \emph{getResultPanel()}.  Pierwsza z
-metod zwraca panel s³u¿¹cy do konfiguracji pluginu, druga -- panel,
-na którym prezentowane s¹ wyniki jego dzia³ania.
-
-\paragraph{IDataPlugin}
-
-Posiada tylko jedn¹ metodê \emph{doJob()}. Przyjmuje ona jako
-parametry obiekt klasy \emph{Environment}, reprezentuj¹cy aktualny
-stan systemu; \emph{IDataEngine}, który umo¿liwia operowanie na
-bazie danych i \emph{ISettings}, reprezentuj¹cy ustawienia
-wtyczki. Zwracany jest obiekt klasy \emph{IResult}, stanowi¹cy
-rezultat wykonania zadania.
+%\paragraph{IGraphicPlugin}
+%
+%Pozwala pobraæ parametry od u¿ytkownika, które nastêpnie zostan¹
+%przekazane do wtyczek  przed ich wykonaniem. Zawiera dwie metody:
+%\emph{getSettingsPanel()}  i \emph{getResultPanel()}.  Pierwsza z
+%metod zwraca panel s³u¿¹cy do konfiguracji pluginu, druga -- panel,
+%na którym prezentowane s¹ wyniki jego dzia³ania.
+%
+%\paragraph{IDataPlugin}
+%
+%Posiada tylko jedn¹ metodê \emph{doJob()}. Przyjmuje ona jako
+%parametry obiekt klasy \emph{Environment}, reprezentuj¹cy aktualny
+%stan systemu; \emph{IDataEngine}, który umo¿liwia operowanie na
+%bazie danych i \emph{ISettings}, reprezentuj¹cy ustawienia
+%wtyczki. Zwracany jest obiekt klasy \emph{IResult}, stanowi¹cy
+%rezultat wykonania zadania.
 
 %Programista ma do dyspozycji typy proste, typ tablicowy, oraz struktury.
