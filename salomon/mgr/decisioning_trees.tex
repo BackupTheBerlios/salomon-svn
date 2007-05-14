@@ -1,43 +1,34 @@
-\section{Drzewa decyzyjne}
+\section{Problemy klasyfikacyjne i algorytmy wykorzystuj¹ce drzewa decyzyjne}
+
+%An Introduction to Classification and Regression Tree (CART) Analysis
+%Roger J. Lewis, M.D., Ph.D.
+%Department of Emergency Medicine
+%Harbor-UCLA Medical Center
+%Torrance, California, page 2-3
+
+Rozwi¹zywanie zagadnieñ klasyfikacyjnych to jedno z zastosowañ algorytmów uczenia maszynowego. Zadania klasyfikacyjne polegaj¹ na okreœleniu wartoœci jednego z atrybutów danych (zwanego atrybutem \emph{decyzyjnym}) na podstawie wartoœci innych atrybutów i pewnych danych historycznych. Dane historyczne pe³ni¹ rolê danych trenuj¹cych -- algorytm ,,uczy siê'' jakie wartoœci przyjmuje atrybut, którego wartoœæ ma byæ predykowana, w zale¿noœci od wartoœci pozosta³ych atrybutów. Do sprawdzenia poprawnoœci predykcji mo¿e zostaæ wykorzystany zbiór danych testuj¹cych, dla którego znana wartoœæ atrybutu decyzyjnego porównywana jest z wartoœci¹ uzyskan¹ w wyniku dzia³ania algorytmu.
+
+\subsection{Drzewa decyzyjne}
 \label{lab:dec_trees}
 
-%System na obecnym etapie jego rozwoju pozwala na uruchamianie algorytmów
-%wykorzystuj¹cych drzewa decyzyjne, dlatego te¿ im chcielibyœmy poœwiêciæ nieco
-%wiêcej miejsca.
+Jednym z przyk³adów reprezentacji wiedzy uzyskanej
+za pomoc¹ algorytmów uczenia maszynowego s¹ drzewa decyzyjne.
 
-% http://www.dbmsmag.com/9807m05.html
-% When a businessperson needs to make a decision based on several factors, a
-% decision tree can help identify which factors to consider and how each factor
-% has historically been associated with different outcomes of the decision. For
-% example, in our credit risk case study (See the sidebar Predicting Credit Risk),
-% we have data for each applicantýs debt, income, and marital status. A decision
-% tree creates a model as either a graphical tree or a set of text rules that can
-% predict (classify) each applicant as a good or bad credit risk.
+Przyk³adami takich algorytmów s¹ \emph{ID3} i \emph{C4.5}, wprowadzone  przez \emph{J. Ross Quinlan'a} do tworzenia na podstawie danych indukcyjnych modeli klasyfikuj¹cych, zwanych  drzewami decyzyjnymi.
 
-%Kiedy biznesmen potrzebuje podj¹æ decyzje bazuj¹c na kilku wspó³czynnikach,
-%drzewa decyzyjne mog¹ pomoc w wybraniu odpowiednich wspó³czynników oraz 
-%opowiedzieæ jak dany wspó³czynnik w przesz³oœci wp³ywa³ na decyzje.
-%Przyk³adowo, podczas obliczania ryzyka kredytowego, posiadamy dla ka¿dego
-%potencjalnego kredytobiorcy dane o jego kredytach, przychodach oraz jego
-%statusie materialnym. Drzewa decyzyjne tworz¹ zarówno drzewo w postaci
-%graficznej, jak zbiór regu³ tekstowych, dziêki którym mo¿emy okreœliæ,
-%czy dana aplikacja jest obarczona du¿ym lub ma³ym ryzykiem kredytowym.
+Jako wejœcie otrzymuj¹ one zbiór rekordów o jednakowej strukturze, sk³adaj¹cy siê z pewnej liczby par atrybut-wartoœæ. Jeden z tych atrybutów reprezentuje
+tzw. kategoriê rekordu, jest te¿ okreœlany mianem atrybutu decyzyjnego.
 
-% A decision tree is a model that is both predictive and descriptive. It is called
-% a decision tree because the resulting model is presented in the form of a tree
-% structure. (See Figure 1.) The visual presentation makes the decision tree model
-% very easy to understand and assimilate. As a result, the decision tree has
-% become a very popular data mining technique. Decision trees are most commonly
-% used for classification (predicting what group a case belongs to), but can also
-% be used for regression (predicting a specific value).
+Celem algorytmów jest stworzenie drzewa, które na podstawie wartoœci
+pozosta³ych atrybutów okreœli wartoœæ atrybutu decyzyjnego.
+Zwykle atrybut decyzyjny przyjmuje wartoœci logiczne \emph{(prawda, fa³sz)}, 
+\emph{(sukces/pora¿ka)} lub podobne. W ka¿dym przypadku jedna z wartoœci
+atrybutu oznacza pora¿kê.
 
-Drzewa decyzyjne to jeden z przyk³adów reprezentacji wiedzy uzyskanej
-za pomoc¹ algorytmów uczenia maszynowego.
-
-Nazywane s¹ drzewami, poniewa¿ prezentowane s¹ w formie
-struktury drzewiastej~\ref{fig:sample_tree}. Graficzna reprezentacja powoduje,
+Drzewa decyzyjne zawdziêczaj¹ sw¹ nazwê temu, ¿e prezentowane s¹ w formie
+struktury drzewiastej (Rys \ref{fig:sample_tree}). Graficzna reprezentacja powoduje,
 ¿e zrozumienie go, czy te¿ porównanie z innym drzewem jest proste nawet dla cz³owieka. 
-Drzewa decyzyjne sta³y siê bardzo popularne w technikach eksploracji danych (\ref{lab:data_mining}). 
+Drzewa decyzyjne sta³y siê bardzo popularne w technikach eksploracji danych (szerzej opisanych w rozdziale \ref{lab:data_mining}). 
 S¹ one najpowszechniej u¿ywane do klasyfikacji (predykuj¹ do której grupy nale¿y dany przypadek), lecz mog¹ byæ równie¿ u¿ywane przy regresji (predykuj¹ wartoœæ).
 
 % The decision tree method encompasses a number of specific algorithms, including

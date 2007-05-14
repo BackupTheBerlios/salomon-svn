@@ -1,20 +1,5 @@
 
-\emph{ID3} i \emph{C4.5} to algorytmy wprowadzone przez \emph{J. Ross Quinlan'a}
-do tworzenia na podstawie danych indukcyjnych modeli klasyfikuj¹cych, zwanych tak¿e
-drzewami decyzyjnymi. 
-
-Jako wejœcie otrzymuj¹ one zbiór rekordów o jednakowej strukturze, sk³adaj¹cy siê
-z pewnej liczby par atrybut-wartoœæ. Jeden z tych atrybutów reprezentuje
-tzw. kategoriê rekordu, jest te¿ okreœlany mianem atrybutu decyzyjnego.
-
-Celem algorytmów jest stworzenie drzewa, które na podstawie wartoœci
-pozosta³ych atrybutów okreœli wartoœæ atrybutu decyzyjnego.
-Zwykle atrybut decyzyjny przyjmuje wartoœci logiczne \emph{(prawda, fa³sz)}, 
-\emph{(sukces/pora¿ka)} lub podobne. W ka¿dym przypadku jedna z wartoœci
-atrybutu oznacza pora¿kê.
-
-
-\paragraph{Algorytm ID3}
+\subsubsection{Algorytm ID3}
 
 %http://www.cise.ufl.edu/~ddd/cap6635/Fall-97/Short-papers/2.htm
 Algorytm \emph{ID3} tworzy drzewo decyzyjne na podstawie zbioru danych przyk³adowych.
@@ -91,14 +76,14 @@ wartoœci atrybutów daj¹ ró¿n¹ decyzjê, to algorytm ten daje zawsze poprawne
 wyniki.
 
 Posiada on jednak kilka ograniczeñ -- nie radzi sobie z ci¹g³ymi dziedzinami
-atrybutów oraz z niepe³nymi danymi (rekordami wype³nionymi tylko czêœciwo)
+atrybutów oraz z niepe³nymi danymi (rekordami wype³nionymi tylko czêœciowo)
 a tak¿e drzewo przez niego generowane ma przewa¿nie du¿y rozmiar.
 Algorytm ten nie jest tak¿e odporny na zaburzenia danych wejœciowych 
 (ha³asu) -- w takim przypadku mo¿e on prowadziæ do wyst¹pienia wysokiego
 wspó³czynnika b³êdów na danych testowych.
 
 
-\paragraph{Algorytm C4.5}
+\subsubsection{Algorytm C4.5}
 
 Algorytm \emph{C4.5} jest jednym z najpopularniejszych algorytmów budowy drzew
 decyzyjnych. Stworzony zosta³ przez \emph{Quinlan'a} na bazie metody \emph{ID3}
