@@ -21,15 +21,16 @@
 
 package salomon.engine.controller.gui.agentconfig;
 
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.ByteArrayOutputStream;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
@@ -43,14 +44,20 @@ import org.apache.log4j.Logger;
 import salomon.engine.agent.AgentManager;
 import salomon.engine.agent.IAgent;
 import salomon.engine.agent.IAgentManager;
+import salomon.engine.agent.IConfigComponent;
 import salomon.engine.agentconfig.AgentConfig;
+import salomon.engine.agentconfig.AgentConfigInfo;
 import salomon.engine.agentconfig.AgentConfigManager;
 import salomon.engine.agentconfig.IAgentConfig;
 import salomon.engine.agentconfig.IAgentConfigManager;
 import salomon.engine.controller.gui.ControllerFrame;
 import salomon.engine.controller.gui.common.action.ActionManager;
+import salomon.engine.controller.gui.task.SettingsDialog;
+import salomon.engine.platform.serialization.XMLSerializer;
 import salomon.engine.project.IProject;
+import salomon.platform.serialization.IObject;
 import salomon.util.gui.Utils;
+import salomon.util.serialization.SimpleStruct;
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.factories.ButtonBarFactory;
@@ -122,6 +129,26 @@ public class AgentConfigManagerGUI
         }
     }
 
+    public void configureAgent()
+    {
+        LOGGER.info("AgentConfigManagerGUI.configureAgent()");
+        IAgentConfig agentConfig = (IAgentConfig) _agentsList.getSelectedValue();
+
+        IConfigComponent configComponent = agentConfig.getAgent().getConfigComponent();
+        Component component = configComponent.getComponent();
+        SettingsDialog dialog = new SettingsDialog(_parent, "Configure agent");
+        dialog.setSettingsComponent(component);
+        if (dialog.showSettingsDialog()) {
+            IObject config = configComponent.getConfig();
+            LOGGER.debug("config: " + config);
+            if (config != null) {
+                ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                XMLSerializer.serialize((SimpleStruct) config, bos);
+                ((AgentConfigInfo) agentConfig.getInfo()).setConfiguration(bos.toString());
+            }
+        }
+    }
+
     public JPanel getAgentListPanel()
     {
         if (_agentListPanel == null) {
@@ -145,6 +172,15 @@ public class AgentConfigManagerGUI
             IAgentConfig config = (IAgentConfig) _agentsList.getSelectedValue();
             _agentConfigManager.removeAgentConfig(config);
             _agentsModel.removeElement(config);
+        }
+    }
+
+    public void saveAgents()
+    {
+        AgentConfig[] configs = new AgentConfig[_agentsModel.getSize()];
+        _agentsModel.copyInto(configs);
+        for (AgentConfig config : configs) {
+            config.getInfo().save();
         }
     }
 
@@ -230,8 +266,6 @@ public class AgentConfigManagerGUI
         builder.setDefaultDialogBorder();
 
         builder.appendSeparator("Agent data");
-        // TODO: store it in DB        
-        builder.append("Agent config", new JTextField());
         builder.append(_cmbAgents, 3);
 
         // TODO: store in DB
@@ -256,7 +290,8 @@ public class AgentConfigManagerGUI
         _removeAgentConfig = new JButton(
                 _actionManager.getRemoveAgentConfigAction());
         _removeAgentConfig.setText("Remove");
-        _configureAgent = new JButton("Configure");
+        _configureAgent = new JButton(_actionManager.getConfigureAgentAction());
+        _configureAgent.setText("Configure");
     }
 
     private final class PopupListener extends MouseAdapter

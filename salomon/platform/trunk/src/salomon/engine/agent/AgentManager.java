@@ -27,7 +27,6 @@ import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
 
-import salomon.engine.agentconfig.IAgentConfigManager;
 import salomon.engine.database.DBManager;
 import salomon.engine.database.queries.SQLSelect;
 import salomon.platform.IInfo;

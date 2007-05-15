@@ -21,6 +21,7 @@
 
 package salomon.engine.agentconfig;
 
+import salomon.engine.agent.AbstractAgent;
 import salomon.engine.agent.IAgent;
 import salomon.engine.database.DBManager;
 import salomon.engine.project.IProject;
@@ -88,6 +89,7 @@ public final class AgentConfig implements IAgentConfig
     public final void setAgent(IAgent agent)
     {
         _agent = agent;
+        ((AbstractAgent) _agent).setAgentConfig(this);
         _agentConfigInfo.setAgentId(_agent.getInfo().getId());
     }
 

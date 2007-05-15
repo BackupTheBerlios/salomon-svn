@@ -48,6 +48,8 @@ public final class ActionManager
 
     private ChoosePluginFileAction _choosePluginFileAction;
 
+    private ConfigureAgentAction _configureAgentAction;
+
     private ConfigureProjectAgentsAction _configureProjectAgentsAction;
 
     /**
@@ -286,6 +288,19 @@ public final class ActionManager
                     _pluginManagerGUI);
         }
         return _choosePluginFileAction;
+    }
+
+    /**
+     * Returns the configureAgentAction.
+     * @return The configureAgentAction
+     */
+    public final ConfigureAgentAction getConfigureAgentAction()
+    {
+        if (_configureAgentAction == null) {
+            _configureAgentAction = new ConfigureAgentAction(
+                    _agentConfigManagerGUI);
+        }
+        return _configureAgentAction;
     }
 
     /**

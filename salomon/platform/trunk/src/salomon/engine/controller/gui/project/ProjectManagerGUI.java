@@ -135,7 +135,7 @@ public final class ProjectManagerGUI
         _agentSettingDialog.setSettingsComponent(agentConfigManagerGUI.getAgentListPanel());
 
         if (_agentSettingDialog.showSettingsDialog()) {
-            LOGGER.debug("Updating agent configuration");
+            agentConfigManagerGUI.saveAgents();
         }
     }
 

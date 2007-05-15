@@ -1,6 +1,5 @@
 /*
- *
- * Copyright (C) 2006 Salomon Team
+ * Copyright (C) 2007 Salomon Team
  *
  * This file is part of Salomon.
  *
@@ -15,27 +14,34 @@
  * Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public
- * License along with ${project_name}; if not, write to the Free Software
+ * License along with Salomon; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
+ * 
  */
 
-package salomon.engine.agent;
+package salomon.engine.controller.gui.common.action;
 
-import salomon.engine.agentconfig.IAgentConfig;
-import salomon.engine.project.IProject;
-import salomon.platform.IInfo;
+import java.awt.event.ActionEvent;
 
-public interface IAgent
+import salomon.engine.controller.gui.agentconfig.AgentConfigManagerGUI;
+
+/**
+ * 
+ */
+public final class ConfigureAgentAction extends AbstractAgentConfigAction
 {
-    IInfo getInfo();
 
-    void start(IProject project);
+    public ConfigureAgentAction(AgentConfigManagerGUI agentConfigManagerGUI)
+    {
+        super(agentConfigManagerGUI);
+    }
 
-    void stop();
-    
-    IAgentConfig getAgentConfig();
-
-    IConfigComponent getConfigComponent();
+    /**
+     * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+     */
+    public void actionPerformed(ActionEvent e)
+    {
+        _agentConfigManagerGUI.configureAgent();
+    }
 
 }

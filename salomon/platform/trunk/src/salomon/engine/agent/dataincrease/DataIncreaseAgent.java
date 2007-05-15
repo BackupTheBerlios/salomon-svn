@@ -19,22 +19,41 @@
  * 
  */
 
-package salomon.engine.agent;
+package salomon.engine.agent.dataincrease;
+
+import java.io.ByteArrayInputStream;
 
 import org.apache.log4j.Logger;
 
+import salomon.engine.agent.AbstractAgent;
+import salomon.engine.agent.AgentInfo;
+import salomon.engine.agent.IConfigComponent;
+import salomon.engine.agentconfig.AgentConfigInfo;
+import salomon.engine.platform.serialization.XMLSerializer;
 import salomon.engine.project.IProject;
+import salomon.platform.serialization.IInteger;
+import salomon.platform.serialization.IStruct;
 
 /**
  * 
  */
 public final class DataIncreaseAgent extends AbstractAgent
 {
+    static final String TRESHOLD = "treshold";
+
     private static final Logger LOGGER = Logger.getLogger(DataIncreaseAgent.class);
+
+    private ConfigComponent _configComponent;
 
     public DataIncreaseAgent(AgentInfo agentInfo)
     {
         super(agentInfo);
+        _configComponent = new ConfigComponent();
+    }
+
+    public IConfigComponent getConfigComponent()
+    {
+        return _configComponent;
     }
 
     /**
@@ -43,14 +62,22 @@ public final class DataIncreaseAgent extends AbstractAgent
     public void start(IProject project)
     {
         LOGGER.info("DataIncreaseAgent.start()");
-        try {
-            for (int i = 0; i < 10; ++i) {
-                Thread.sleep(5000);
-                project.start();
-            }
-        } catch (InterruptedException e) {
-            LOGGER.fatal("", e);
-        }
+        String configuration = ((AgentConfigInfo) _agentConfig.getInfo()).getConfiguration();
+        //FIXME: it should be IStruct
+        ByteArrayInputStream bis = new ByteArrayInputStream(
+                configuration.getBytes());
+
+        IStruct struct = XMLSerializer.deserialize(bis);
+        IInteger threshold = (IInteger) struct.getField(TRESHOLD);
+        LOGGER.debug("threshold: " + threshold);
+        //        try {
+        //            for (int i = 0; i < 10; ++i) {
+        //                Thread.sleep(5000);
+        //                project.start();
+        //            }
+        //        } catch (InterruptedException e) {
+        //            LOGGER.fatal("", e);
+        //        }
     }
 
     /**

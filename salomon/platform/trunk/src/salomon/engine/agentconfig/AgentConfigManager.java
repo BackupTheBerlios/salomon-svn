@@ -28,6 +28,9 @@ import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
 
+import salomon.engine.agent.AgentManager;
+import salomon.engine.agent.IAgent;
+import salomon.engine.agent.IAgentManager;
 import salomon.engine.database.DBManager;
 import salomon.engine.database.queries.SQLDelete;
 import salomon.engine.database.queries.SQLSelect;
@@ -46,9 +49,12 @@ public class AgentConfigManager implements IAgentConfigManager
 
     private DBManager _dbManager;
 
-    public AgentConfigManager(DBManager dbManager)
+    private AgentManager _agentManager;
+    
+    public AgentConfigManager(DBManager dbManager, IAgentManager agentManager)
     {
         _dbManager = dbManager;
+        _agentManager = (AgentManager) agentManager;
     }
 
     /**
@@ -120,7 +126,10 @@ public class AgentConfigManager implements IAgentConfigManager
                 AgentConfig agentConfig = (AgentConfig) this.createAgentConfig();
                 AgentConfigInfo agentConfigInfo = (AgentConfigInfo) agentConfig.getInfo();
                 agentConfigInfo.load(resultSet);
-
+                // setting agent
+                IAgent agent = _agentManager.getAgent(agentConfigInfo.getAgentId());
+                agentConfig.setAgent(agent);                
+                
                 // parsing agent configuration
                 String configuration = agentConfigInfo.getConfiguration();
                 if (configuration != null && !"".equals(configuration)) {
