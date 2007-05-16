@@ -82,16 +82,7 @@ public final class Project implements IProject
      */
     public IAgentConfig[] getAgentConfigs()
     {
-        IAgentConfig[] agentConfigs = _agentConfigManager.getAgentConfigs(this);
-        if (agentConfigs != null && agentConfigs.length > 0) {
-            for (int i = 0; i < agentConfigs.length; ++i) {
-                AgentConfigInfo agentConfigInfo = (AgentConfigInfo) agentConfigs[i].getInfo();
-                AgentInfo agentInfo = (AgentInfo) _agentManager.getAgent(
-                        agentConfigInfo.getAgentId()).getInfo();
-                ((AgentConfig) agentConfigs[i]).setAgent(_agentManager.createAgent(agentInfo));
-            }
-        }
-        return agentConfigs;
+        return _agentConfigManager.getAgentConfigs(this);
     }
 
     public ProjectInfo getInfo()

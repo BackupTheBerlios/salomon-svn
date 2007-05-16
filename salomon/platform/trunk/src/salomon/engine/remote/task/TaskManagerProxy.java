@@ -31,6 +31,7 @@ import salomon.engine.project.IProject;
 import salomon.engine.task.ITask;
 import salomon.engine.task.ITaskManager;
 import salomon.engine.task.ITaskRunner;
+import salomon.platform.IDataEngine;
 import salomon.platform.exception.PlatformException;
 
 /**

@@ -21,7 +21,6 @@
 
 package salomon.engine.agent;
 
-import salomon.engine.agentconfig.AgentConfig;
 import salomon.engine.agentconfig.IAgentConfig;
 import salomon.platform.IInfo;
 

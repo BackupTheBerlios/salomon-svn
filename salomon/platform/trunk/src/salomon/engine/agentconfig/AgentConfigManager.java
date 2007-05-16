@@ -24,7 +24,8 @@ package salomon.engine.agentconfig;
 import java.io.ByteArrayInputStream;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 
@@ -47,14 +48,26 @@ public class AgentConfigManager implements IAgentConfigManager
 {
     private static final Logger LOGGER = Logger.getLogger(AgentConfigManager.class);
 
-    private DBManager _dbManager;
+    /**
+     * Cache for agents configuration.
+     * It's needed to avoid recreating new agents classes.
+     */
+    private List<IAgentConfig> _agentConfigs;
 
     private AgentManager _agentManager;
-    
+
+    /**
+     * FIXME: ugly but quick
+     */
+    private boolean _configFetched = false;
+
+    private DBManager _dbManager;
+
     public AgentConfigManager(DBManager dbManager, IAgentManager agentManager)
     {
         _dbManager = dbManager;
         _agentManager = (AgentManager) agentManager;
+        _agentConfigs = new LinkedList<IAgentConfig>();
     }
 
     /**
@@ -64,6 +77,7 @@ public class AgentConfigManager implements IAgentConfigManager
     {
         try {
             config.getInfo().save();
+            _agentConfigs.add(config);
             _dbManager.commit();
         } catch (Exception e) {
             LOGGER.fatal("", e);
@@ -81,7 +95,11 @@ public class AgentConfigManager implements IAgentConfigManager
      */
     public IAgentConfig[] getAgentConfigs(IProject project)
     {
-        return getAgentConfigs(project, -1);
+        if (!_configFetched) {
+            _agentConfigs = getAgentConfigs(project, -1);
+            _configFetched = true;
+        }
+        return _agentConfigs.toArray(new IAgentConfig[_agentConfigs.size()]);
     }
 
     /**
@@ -95,6 +113,7 @@ public class AgentConfigManager implements IAgentConfigManager
         boolean success = false;
         try {
             _dbManager.delete(delete);
+            _agentConfigs.remove(config);
             _dbManager.commit();
             success = true;
         } catch (SQLException e) {
@@ -105,7 +124,7 @@ public class AgentConfigManager implements IAgentConfigManager
         return success;
     }
 
-    private IAgentConfig[] getAgentConfigs(IProject project, int configId)
+    private List<IAgentConfig> getAgentConfigs(IProject project, int configId)
     {
         SQLSelect select = new SQLSelect();
         select.addTable(AgentConfigInfo.TABLE_NAME);
@@ -118,8 +137,6 @@ public class AgentConfigManager implements IAgentConfigManager
         }
 
         ResultSet resultSet = null;
-        ArrayList<IAgentConfig> agentConfigArrayList = new ArrayList<IAgentConfig>();
-
         try {
             resultSet = _dbManager.select(select);
             while (resultSet.next()) {
@@ -128,8 +145,8 @@ public class AgentConfigManager implements IAgentConfigManager
                 agentConfigInfo.load(resultSet);
                 // setting agent
                 IAgent agent = _agentManager.getAgent(agentConfigInfo.getAgentId());
-                agentConfig.setAgent(agent);                
-                
+                agentConfig.setAgent(agent);
+
                 // parsing agent configuration
                 String configuration = agentConfigInfo.getConfiguration();
                 if (configuration != null && !"".equals(configuration)) {
@@ -138,7 +155,7 @@ public class AgentConfigManager implements IAgentConfigManager
                     IObject config = XMLSerializer.deserialize(bis);
                     agentConfig.setConfig(config);
                 }
-                agentConfigArrayList.add(agentConfig);
+                _agentConfigs.add(agentConfig);
             }
             _dbManager.closeResultSet(resultSet);
         } catch (Exception e) {
@@ -146,10 +163,7 @@ public class AgentConfigManager implements IAgentConfigManager
             throw new DBException(e.getLocalizedMessage());
         }
 
-        IAgentConfig[] agentConfigArray = new IAgentConfig[agentConfigArrayList.size()];
-        agentConfigArray = agentConfigArrayList.toArray(agentConfigArray);
-
-        return agentConfigArray;
+        return _agentConfigs;
     }
 
 }

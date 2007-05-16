@@ -52,6 +52,7 @@ import salomon.engine.project.ProjectInfo;
 import salomon.engine.project.ProjectManager;
 import salomon.engine.project.event.ProjectEvent;
 import salomon.engine.project.event.ProjectListener;
+import salomon.platform.IDataEngine;
 import salomon.platform.exception.PlatformException;
 import salomon.util.gui.DBDataTable;
 import salomon.util.gui.Utils;
@@ -243,7 +244,7 @@ public final class ProjectManagerGUI
         LOGGER.info("ProjectManagerGUI.startProjectAgents()");
         final IProject project = _projectManager.getCurrentProject();
         final IAgentConfig[] agentConfigs = project.getAgentConfigs();
-
+        
         _agentsRunner = new Thread() {
             public void run()
             {
@@ -265,6 +266,7 @@ public final class ProjectManagerGUI
             for (IAgentConfig config : agentConfigs) {
                 config.getAgent().stop();
             }
+            LOGGER.debug("Interrupting the agent processing thread");
             _agentsRunner.interrupt();
             _agentsRunner = null;
         }

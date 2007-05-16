@@ -64,13 +64,26 @@ public class DBManagerTest extends TestCase
 
         DBMetaData metaData = _manager.getMetaData();
         ITable table = metaData.getTables()[0];
-        String[] values = metaData.getDistinctValues(table.getColumns()[2]);
+        String[] values = metaData.getDistinctValues(table.getColumns()[1]);
 
         for (String value : values) {
             LOGGER.info(value);
         }
     }
 
+    public void testGetCount() throws Exception
+    {
+        LOGGER.info("DBManagerTest.testGetCount()");
+        _manager.connect("", DB_PATH, DB_USER, DB_PASSWORD);
+
+        DBMetaData metaData = _manager.getMetaData();
+        ITable[] tables = metaData.getTables();
+        
+        for(ITable table : tables) {
+            LOGGER.info(table.getName() + ": " + metaData.getCount(table));
+        }
+    }
+    
     public void testGetMetaData() throws Exception
     {
         LOGGER.info("DBManagerTest.testGetMetaData()");

@@ -59,6 +59,7 @@ import salomon.engine.controller.gui.task.GraphTaskManagerGUI;
 import salomon.engine.database.DBManager;
 import salomon.engine.platform.IManagerEngine;
 import salomon.engine.platform.ManagerEngine;
+import salomon.platform.IDataEngine;
 import salomon.platform.exception.PlatformException;
 import salomon.util.gui.Utils;
 import salomon.util.gui.editor.JavaEditorFrame;

@@ -73,7 +73,7 @@ public final class DBMetaData implements IMetaData
             while (resultSet.next()) {
                 valuesList.add(resultSet.getObject(1).toString());
             }
-            
+
             // filling values array            
             values = valuesList.toArray(new String[valuesList.size()]);
 
@@ -91,6 +91,44 @@ public final class DBMetaData implements IMetaData
             }
         }
         return values;
+    }
+
+    /**
+     * FIXME: temporary solution - for agents only
+     * 
+     * Returns rows count for specified table
+     * 
+     * @param table
+     * @return
+     */
+    public int getCount(ITable table) throws DBException
+    {
+        SQLSelect select = new SQLSelect();
+        select.addTable(table.getName());
+        select.addColumn("count(*)");
+
+        ResultSet resultSet = null;
+        int rowCount = 0;
+        try {
+            resultSet = _manager.select(select);
+            if (resultSet.next()) {
+                rowCount = resultSet.getInt(1);
+            }
+
+        } catch (SQLException e) {
+            LOGGER.fatal("", e);
+            throw new DBException(e.getLocalizedMessage());
+        } finally {
+            if (resultSet != null) {
+                try {
+                    _manager.closeResultSet(resultSet);
+                } catch (SQLException e) {
+                    LOGGER.fatal("", e);
+                    throw new DBException(e.getLocalizedMessage());
+                }
+            }
+        }
+        return rowCount;
     }
 
     /**

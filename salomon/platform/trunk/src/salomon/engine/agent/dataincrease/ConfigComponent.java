@@ -29,6 +29,7 @@ import javax.swing.JTextField;
 import org.apache.log4j.Logger;
 
 import salomon.engine.agent.IConfigComponent;
+import salomon.platform.serialization.IInteger;
 import salomon.platform.serialization.IObject;
 import salomon.platform.serialization.IStruct;
 import salomon.util.serialization.SimpleInteger;
@@ -61,6 +62,7 @@ public class ConfigComponent implements IConfigComponent
     {
         return _configComponent;
     }
+
     /**
      * @see salomon.engine.agent.IConfigComponent#getConfig()
      */
@@ -75,6 +77,12 @@ public class ConfigComponent implements IConfigComponent
                     Integer.parseInt(strConfig)));
         }
         return config;
+    }
+
+    public void update(IStruct object)
+    {
+        IInteger treshold = (IInteger) object.getField(DataIncreaseAgent.TRESHOLD);
+        _txtTreshold.setText("" + treshold.getValue());
     }
 
     private void buildPanel()
