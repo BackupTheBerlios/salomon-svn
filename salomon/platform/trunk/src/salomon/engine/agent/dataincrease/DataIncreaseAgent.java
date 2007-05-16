@@ -92,7 +92,6 @@ public final class DataIncreaseAgent extends AbstractAgent
             } catch (InterruptedException e) {
                 LOGGER.info("Thread interrupted");
             }
-            LOGGER.debug(super.toString() + " " + _stopped);
         }
     }
 
@@ -103,7 +102,6 @@ public final class DataIncreaseAgent extends AbstractAgent
     {
         LOGGER.info("DataIncreaseAgent.stop()");
         _stopped = true;
-        LOGGER.debug(super.toString() + " " + _stopped);
     }
 
     @Override
