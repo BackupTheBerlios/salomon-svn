@@ -172,3 +172,25 @@ Podobnie jak w przypadku klasy \emph{MasterController}, kontroler ten dopiero bê
 %Programista ma do dyspozycji typy proste, typ tablicowy, oraz struktury.
 
 \section{Agenci}
+Agenci odpowiadaj¹ za obs³ugê zdarzeñ zachodz¹cych w œrodowisku.
+W reakcji na zdarzenie uruchamiaj¹ odpowiedni¹ akcje na projekcie.
+Zazwyczaj jest to przeliczenie ca³ego projektu. Agent mo¿e wp³ywaæ
+na sposób wykonania projektu, przez odpowiednie ustawienie zmiennych
+w œrodowisku (\emph{IEnvironment}).
+
+Zdarzenie mo¿e, byæ zewnêtrzne takie jak przyk³adowo pojawienie siê nowych
+danych w œrodowisku (zmiana w zewnêtrznej bazie danych). Rozró¿niamy te¿
+zdarzenie wewnêtrzne, które zachodzi kiedy w wyniku pracy innego agenta
+w systemie pojawi³a siê nowa wiedza. Ostatnim rodzajem zdarzenia jest
+zdarzenie niezale¿ne, jakim jest zdarzenie zegarowe.
+
+Interfejsem definiuj¹cym agenta jest \emph{IAgent} . Podstawowymi metodami
+w nim zawartymi s¹:
+
+\begin{itemize}
+	\item \emph{void start(IProject project)} -- za pomoc¹ tej metody uruchamiany jest agent 
+		\item \emph{void stop()} -- metoda ta s³u¿y do zatrzymania pracy agenta 
+		\item \emph{IConfigComponent getConfigComponent();} -- zwraca komponent
+pozwalaj¹cy u¿ytkownikowi na skonfigurowanie agenta
+
+\end{itemize}
