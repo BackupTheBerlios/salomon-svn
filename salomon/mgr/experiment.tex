@@ -8,6 +8,9 @@ w oparciu o zbiór atrybutów. Atrybuty te definiuj¹ w jaki sposób interpretowany
 ma byæ zbiór danych testowych. Zbiór danych budowany jest w oparciu o dane
 przechowywane w zewnêtrznym Ÿródle danych.
 
+% powyzsze zdanie jest bez sensu, poprawic i dodac ze celem jest takze
+% reagowanie na zdarzenia w postaci pojawiania sie nowych danych
+
 Model obliczeñ, który wspiera platforma zak³ada du¿¹ granulacjê zadañ.
 Powy¿sze zadanie obliczeniowe mog³oby byæ wykonane przez pojedyncz¹ wtyczkê,
 która na wejœciu wymaga³aby zdefiniowania zbioru danych i atrybutów,
@@ -286,6 +289,19 @@ oprócz nazwy atrybutu wyœwietlana jest równie¿ jego wartoœæ.
 	\caption{Wizualizacja drzewa decyzyjnego}
 	\label{fig:tree_vis_results}
 \end{figure}
+
+\section{Obs³uga zewnêtrznych zdarzeñ}
+Ostatnim etapem eksperymentu jest obs³uga zdarzeñ ze œrodowiska.
+W tym przypadku jest to pojawienie siê nowych danych w zewnêtrznej bazie danych.
+W przypadku wyst¹pienia takiego zdarzenia ca³y projekt powinien zostaæ
+przeliczony, wynikiem czego powinno byæ wygenerowanie nowego drzewa decyzyjnego.
+
+Elementem systemu pozwalaj¹cym na obs³ugê zdarzeñ s¹ agenci.
+W tym celu zosta³ napisany agent \emph{DataIncreaseAgent}, który
+okresowo sprawdza bazê danych w celu wykrycia dostêpnoœci nowych danych.
+Jeœli iloœæ nowych danych przekroczy pewien próg projekt jest przeliczany na
+nowo.
+
 
 \section{Wyniki eksperymentu}
 % - screen z przebiegu
