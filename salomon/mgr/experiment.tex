@@ -42,9 +42,9 @@ Poszczególne etapy eksperymentu to:
 	wczeœniej drzewo w postaci graficznej.
 \end{enumerate}
 
-\section{Wykorzystane wtyczki}
+W dalszej czêœci rozdzia³u zaprezentowano wtyczki, które zosta³y u¿yte do realizacji poszczególnych etapów eksperymentu.
 
-\subsection{Definiowanie zbioru danych}
+\section{Definiowanie zbioru danych}
 
 Testowy zbiór danych definiowany jest za pomoc¹ wtyczki \emph{RandomDataSetCreator}.
 Wtyczka ta pozwala na wygenerowanie losowego zbioru danych.
@@ -111,7 +111,7 @@ dataSetManager.add(subSet);
 \end{framed}
 
 
-\subsection{Definiowanie zbioru atrybutów}
+\section{Definiowanie zbioru atrybutów}
 Algorytmy generowania drzew decyzyjnych pracuj¹ na specjalnie
 przygotowanych danych -- atrybutach. Atrybuty okreœlaj¹ pewne cechy 
 danych wejœciowych i w przyjêtym w systemie podejœciu (\ref{lab:knowledge})
@@ -160,7 +160,7 @@ attributeSetManager.add(attributeSet);
 \end{lstlisting}
 \end{framed}
 
-\subsection{Generowanie drzewa decyzyjnego}
+\section{Generowanie drzewa decyzyjnego}
 
 Do generacji drzew decyzyjnych wykorzystywane s¹ algorytmy dostarczane wraz z 
 \emph{Wek¹}. W tym celu w ramach platformy zosta³ napisany modu³ dostarczaj¹cy wsparcie dla 
@@ -259,7 +259,7 @@ result.setSuccessful(true);
 	\label{fig:tree_generator_results}
 \end{figure}
 
-\subsection{Wizualizacja drzewa decyzyjnego}
+\section{Wizualizacja drzewa decyzyjnego}
 
 Ostatnim etapem eksperymentu jest wizualizacja nowo powsta³ego drzewa. W tym 
 celu zosta³a napisana wtyczka \emph{TreeVis}, która tworzy graficzn¹ reprezentacjê
