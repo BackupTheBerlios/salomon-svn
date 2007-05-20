@@ -22,6 +22,7 @@
 package salomon.engine.agentconfig;
 
 import salomon.engine.agent.AbstractAgent;
+import salomon.engine.agent.AgentInfo;
 import salomon.engine.agent.IAgent;
 import salomon.engine.database.DBManager;
 import salomon.engine.project.IProject;
@@ -115,6 +116,6 @@ public final class AgentConfig implements IAgentConfig
     @Override
     public String toString()
     {
-        return _agentConfigInfo.toString();
+        return ((AgentInfo) _agent.getInfo()).getName();
     }
 }

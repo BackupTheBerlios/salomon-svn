@@ -67,4 +67,9 @@ public abstract class AbstractAgent implements IAgent
         _agentConfig = agentConfig;
     }
 
+    @Override
+    public String toString()
+    {
+        return (_agentInfo == null ? "" : _agentInfo.toString());
+    }
 }

@@ -104,12 +104,6 @@ public final class DataIncreaseAgent extends AbstractAgent
         _stopped = true;
     }
 
-    @Override
-    public String toString()
-    {
-        return _agentInfo.toString();
-    }
-
     private int getAllRowsCount(IDataEngine dataEngine)
     {
         LOGGER.info("DataIncreaseAgent.getAllRowsCount()");
@@ -126,10 +120,11 @@ public final class DataIncreaseAgent extends AbstractAgent
     private void updateConfigComponent()
     {
         String strConfig = ((AgentConfigInfo) _agentConfig.getInfo()).getConfiguration();
-        ByteArrayInputStream bis = new ByteArrayInputStream(
-                strConfig.getBytes());
-        IStruct struct = XMLSerializer.deserialize(bis);
-        _configComponent.update(struct);
+        if (strConfig != null && strConfig.trim().length() > 0) {
+            ByteArrayInputStream bis = new ByteArrayInputStream(
+                    strConfig.getBytes());
+            IStruct struct = XMLSerializer.deserialize(bis);
+            _configComponent.update(struct);
+        }
     }
-
 }
