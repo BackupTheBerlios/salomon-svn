@@ -309,9 +309,9 @@
 \def\promotor#1{\gdef\@promotor{#1}}
 \def\@promotor{\ClassError{mgragh}{Brak promotora pracy!}\@ehc}
 \def\nralbumu#1{\gdef\@nralbumu{#1}}
-\def\@nralbumu{\ClassError{mgragh}{Brak numeru albumu!}\@ehc}
+%\def\@nralbumu{\ClassError{mgragh}{Brak numeru albumu!}\@ehc}
 \def\slowakluczowe#1{\gdef\@slowakluczowe{#1}}
-\def\@slowakluczowe{\ClassError{mgragh}{Brak slow kluczowych!}\@ehc}
+%\def\@slowakluczowe{\ClassError{mgragh}{Brak slow kluczowych!}\@ehc}
 \def\keywords#1{\gdef\@keywords{#1}}
 \def\@keywords{\ClassError{mgragh}{Il n'y a pas de mots-cles! (keywords)}\@ehc}
 \def\wydzial#1{\gdef\@wydzial{#1}}
@@ -362,13 +362,16 @@
 		\vfill
 		\noindent\begin{tabular}[b]{@{}p{\mgr@tit@dim}@{\ }l@{}}
       {\mgr@otheri@font\hfill Kierunek:} & {\mgr@otheri@font \@kierunek} \\
-			{\mgr@otheri@font\hfill Specjalno\m@s\m@c:}& \@specjalnosc
-    \end{tabular}\hfill\mbox{}\par\vspace*{\baselineskip}
-		\noindent\begin{tabular}[b]{@{}p{\mgr@tit@dim}@{\ }l@{}}
-      {\mgr@other@font\hfill Nr albumu:}& {\mgr@other@font\@nralbumu} 
-    \end{tabular}\hfill
+	   {\mgr@otheri@font\hfill Specjalno\m@s\m@c:}& \@specjalnosc
+    \end{tabular}\hfill%\mbox{}
+	\par\vspace*{\baselineskip}
+		\noindent%\begin{tabular}[b]{@{}p{\mgr@tit@dim}@{\ }l@{}}
+      %{\mgr@other@font\hfill Nr albumu:}& {\mgr@other@font\@nralbumu} 
+    %\end{tabular}
+	\hfill
+	\hfill
     \begin{tabular}[b]{@{}l@{}} 
-      Promotor \\[\smallskipamount]
+      Promotor: \\[\smallskipamount]
       {\mgr@other@font\@promotor}
     \end{tabular}\par 
 	 	\vspace*{2.75\baselineskip}	
