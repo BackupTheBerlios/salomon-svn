@@ -291,16 +291,24 @@ oprócz nazwy atrybutu wyœwietlana jest równie¿ jego wartoœæ.
 \end{figure}
 
 \section{Obs³uga zewnêtrznych zdarzeñ}
-Ostatnim etapem eksperymentu jest obs³uga zdarzeñ ze œrodowiska.
-W tym przypadku jest to pojawienie siê nowych danych w zewnêtrznej bazie danych.
-W przypadku wyst¹pienia takiego zdarzenia ca³y projekt powinien zostaæ
-przeliczony, wynikiem czego powinno byæ wygenerowanie nowego drzewa decyzyjnego.
+Celem kolejnego eksperymentu, jest zademonstrowanie dzia³ania agentów.
+W tym celu zosta³ wykorzystany agent, który w reakcji na pojawienie siê nowych danych w zewnêtrznej bazie danych uruchamia wszystkie zadania zdefiniowane
+w projekcie.
 
-Elementem systemu pozwalaj¹cym na obs³ugê zdarzeñ s¹ agenci.
-W tym celu zosta³ napisany agent \emph{DataIncreaseAgent}, który
-okresowo sprawdza bazê danych w celu wykrycia dostêpnoœci nowych danych.
-Jeœli iloœæ nowych danych przekroczy pewien próg projekt jest przeliczany na
-nowo.
+Eksperyment ten zosta³ przeprowadzony z wykorzystanie projektu zdefiniowanego
+w ramach wczeœniejszego eksperymentu. Przy pierwszym otwarciu projektu
+zosta³o wygenerowane drzewo decyzyjne rys. WSTAWIÆ! Nastêpnie za 
+Za pomoc¹ zewnêtrznego po³¹czenia do bazy danych zosta³y dodane do niej
+nowe rekordy. Po przekroczeniu zdefiniowanego procentowego progu zdefiniowanego
+w konfiguracji agenta ref... Zadania zosta³y uruchomione po raz
+kolejny w oparciu o nowe dane, czego wynikiem by³o nowe drzewo decyzyjne rys.
+
+
+%Elementem systemu pozwalaj¹cym na obs³ugê zdarzeñ s¹ agenci.
+%W tym celu zosta³ napisany agent \emph{DataIncreaseAgent}, który
+%okresowo sprawdza bazê danych w celu wykrycia dostêpnoœci nowych danych.
+%Jeœli iloœæ nowych danych przekroczy pewien próg projekt jest przeliczany na
+%nowo.
 
 
 \section{Wyniki eksperymentu}
