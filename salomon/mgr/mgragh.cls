@@ -512,28 +512,6 @@
 \renewcommand*\l@subsubsection{\mw@tocline{3}{3.25em}{\mgr@subsubsectocwd}}
 \renewcommand*\l@paragraph{\mw@tocline{4}{10em}{5em}}
 \renewcommand*\l@subparagraph{\mw@tocline{5}{12em}{6em}}
-%-------------- Przedefiniowanie bibliografii ----------------%
-\renewenvironment{thebibliography}[1]{%
-	\def\chaptermark##1{\@mkboth{\mgr@head@style ##1}{\mgr@head@style ##1}}
- \chapter*{\bibname}%
-      \setcounter{mgr@fin@pom}{\value{page}}
-      \list{\@biblabel{\@arabic\c@enumiv}}%
-					{ \mgrafterthisheadother[\thepage]{\bibname}
-					  \settowidth\labelwidth{\@biblabel{#1}}%
-            \leftmargin\labelwidth
-            \advance\leftmargin\labelsep
-            \@openbib@code
-            \usecounter{enumiv}%
-            \let\p@enumiv\@empty
-            \renewcommand\theenumiv{\@arabic\c@enumiv}%
-            \secondarysize}%
-      \sloppy
-      \sfcode`\.\@m}
-     {\ifthenelse{\value{mgr@fin@pom} = \value{page}}{}{\thispagestyle{mgrclos}}
-		  \def\@noitemerr
-       {\@latex@warning{Empty `thebibliography' environment}}%
-      \endlist}
-\let\@openbib@code\@empty
 %-------------- Przedefiniowanie indeksu ----------------%
 \renewenvironment{theindex}{%
 	\def\chaptermark##1{\@mkboth{\mgr@head@style ##1}{\mgr@head@style ##1}}
