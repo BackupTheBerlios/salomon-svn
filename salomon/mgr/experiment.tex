@@ -141,15 +141,17 @@ odpowiadaj¹cego podanej konfiguracji.
 Poni¿szy fragment kodu demonstruje prostotê tworzenia zbioru atrybutów.  
 \begin{framed}
 \begin{lstlisting}
-IAttributeManager attributeSetManager = dataEngine.getAttributeManager();
+IAttributeManager attrManager = dataEngine.getAttributeManager();
 Description[] strDesc = cSettings.getDescriptions();
-IAttributeDescription[] descriptions = new IAttributeDescription[strDesc.length];
+IAttributeDescription[] descs =
+  new IAttributeDescription[strDesc.length];
+
 int i = 0;
 // stworzenie listy atrybutów
 for (Description desc : strDesc) {
 	if (desc != null) {
 		// stworzenie pojedyñczego opisu atrybutu
-		descriptions[i++] = attributeSetManager.createAttributeDescription(
+		descs[i++] = attrManager.createAttributeDescription(
       	desc.getAttributeName(), desc.getTableName(),
          desc.getColumnName(), desc.getType(),
 			"Y".equals(desc.getIsOutput()));
@@ -157,9 +159,9 @@ for (Description desc : strDesc) {
 }
 
 // stworzenie zbioru atrybutów            
-IAttributeSet attributeSet = attributeSetManager.createAttributeSet(descriptions);
-attributeSet.setName(cSettings.getAttributeSetName());
-attributeSetManager.add(attributeSet);
+IAttributeSet attrSet = attrManager.createAttributeSet(descs);
+attrSet.setName(cSettings.getAttributeSetName());
+attrManager.add(attrSet);
 \end{lstlisting}
 \end{framed}
 
@@ -208,11 +210,13 @@ jest wyj¹tkowo proste. Czêœæ kodu Ÿród³owego wtyczki, zosta³ przedstawiony poni¿
 
 W pierwszym etapie pobieramy ustawienia, takie jak dane trenuj¹ce, atrybuty itp.
 \begin{framed}
-\begin{lstlisting}
-WekaTreeGeneratorSettings treeSettings = (WekaTreeGeneratorSettings) settings;
+\begin{lstlisting}[postbreak=\space, breakindent=5pt, breaklines]
+WekaTreeGeneratorSettings treeSettings =
+  (WekaTreeGeneratorSettings) settings;
 String attributeSetName = treeSettings.getAttributeSetName();
 IAttributeManager attributeManager = engine.getAttributeManager();
-IAttributeSet attributeSet = attributeManager.getAttributeSet(attributeSetName);
+IAttributeSet attributeSet =
+  attributeManager.getAttributeSet(attributeSetName);
 
 String dataSetName = treeSettings.getDataSetName();
 IDataSetManager dataSetManager = engine.getDataSetManager();
@@ -226,12 +230,16 @@ W³aœciwy etap sk³ada siê z dwóch czêœci; konwersji danych trenuj¹cych do postaci
 \begin{framed}
 \begin{lstlisting}
 // konwersja danych trenuj¹cych do atrybutów
-IAttributeData attributeData = attributeSet.selectAttributeData(dataSet);
+IAttributeData attributeData =
+  attributeSet.selectAttributeData(dataSet);
 // konwersja atrybutów do postaci Weki
-Instances instances = AttributeConverter.toWeka(attributeData, treeName);
+Instances instances =
+  AttributeConverter.toWeka(attributeData, treeName);
 
 // pobranie algorytmu tworzenia drzewa decyzyjnego
-Classifier classifier = Classifier.forName("weka.classifiers.trees." + algorithmName, null);
+Classifier classifier =
+  Classifier.forName("weka.classifiers.trees."
+    + algorithmName, null);
 
 ITreeManager treeManager = engine.getTreeManager();
 // stworzenie pustego drzewa
