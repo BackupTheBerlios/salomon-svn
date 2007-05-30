@@ -444,6 +444,16 @@
  {\par\mbox{}\vspace{-\baselineskip}
   \ifthenelse{\value{mgr@fin@pom} = \value{page}}{}{\thispagestyle{mgrclos}}%
   \gdef\chaptermark##1{\@mkboth{\mgr@head@style\chaptername\ \thechapter.\  ##1}{}}}
+%-------------- Wstep/Wprowadzenie ----------------%
+\newenvironment{podsumowanie}[1][Podsumowanie]
+ { \def\chaptermark##1{\@mkboth{\mgr@head@style ##1}{\mgr@head@style ##1}}
+   \if@twoside\ifthenelse{\isodd{\value{page}}}{\newpage\mbox{}\thispagestyle{empty}}{}\else\fi
+   \chapter*{#1}%
+	 \setcounter{mgr@fin@pom}{\value{page}}
+	 \mgrafterthisheadother[\thepage]{#1}}
+ {\par\mbox{}\vspace{-\baselineskip}
+  \ifthenelse{\value{mgr@fin@pom} = \value{page}}{}{\thispagestyle{mgrclos}}%
+  \gdef\chaptermark##1{\@mkboth{\mgr@head@style\chaptername\ \thechapter.\  ##1}{}}}
 %-------------- Spis tresci ----------------%
 \newcommand{\mgrtocfont}{\secondarysize}
    %------- Wyglad calosci --------%
