@@ -213,16 +213,23 @@ W pierwszym etapie pobieramy ustawienia, takie jak dane trenuj¹ce, atrybuty itp.
 \begin{lstlisting}[postbreak=\space, breakindent=5pt, breaklines]
 WekaTreeGeneratorSettings treeSettings =
   (WekaTreeGeneratorSettings) settings;
+
+// pobranie atrybutów zdefiniowanych w ustawieniach
 String attributeSetName = treeSettings.getAttributeSetName();
 IAttributeManager attributeManager = engine.getAttributeManager();
 IAttributeSet attributeSet =
   attributeManager.getAttributeSet(attributeSetName);
 
+// pobranie zbioru danych zdefiniowanych w ustawieniach
 String dataSetName = treeSettings.getDataSetName();
 IDataSetManager dataSetManager = engine.getDataSetManager();
 IDataSet dataSet = dataSetManager.getDataSet(dataSetName);
-String treeName = treeSettings.getTreeName();
+
+// pobranie nazwy algorytmu
 String algorithmName = treeSettings.getAlgorithmName();
+
+// pobranie nazwy dla wynikowego drzewa
+String treeName = treeSettings.getTreeName();
 \end{lstlisting}
 \end{framed}
 
