@@ -1,11 +1,10 @@
 
 \section{Algorytmy ucz¹ce siê}
-% Mitchel (1-2)
 Próby opracowania algorytmów ucz¹cych by³y podejmowane od momentu
 wynalezienia komputerów. Doskonalenie metod tworzenia programów, które mog¹ automatycznie ulepszaæ siê bazuj¹c na doœwiadczeniu, ma ogromny wp³yw na ró¿ne dziedziny ¿ycia. 
 Dziœ mo¿liwe jest ju¿ tworzenie programów ucz¹cych siê na podstawie danych z kartotek medycznych, jaki rodzaj leczenia jest najbardziej efektywny dla nowych chorób. Mo¿na te¿ projektowaæ algorytmy automatycznie steruj¹ce domami, które optymalizuj¹ koszty zu¿ycia energii na podstawie wzorców zachowañ poszczególnych mieszkañców, czy stworzyæ osobistego asystenta, który uczy siê na podstawie rozwijaj¹cych siê zainteresowañ u¿ytkowników, w jakiej kolejnoœci prezentowaæ codzienne wiadomoœci z porannej gazety.
 Pe³niejsze zrozumienie w jaki sposób projektowaæ programy ucz¹ce siê nie tylko znacznie poszerzy³oby kr¹g u¿ytkowników komputerów, ale tak¿e mog³oby prowadziæ
-do lepszego zrozumienia ludzkich zdolnoœci uczenia siê.
+do lepszego zrozumienia ludzkich zdolnoœci uczenia siê \cite{mitchell}.
 
 Wspó³czesne algorytmy ucz¹ce nie mog¹ siê równaæ z ludzkimi zdolnoœciami uczenia siê,
 jednak s¹ one bardzo u¿yteczne do rozwi¹zywania pewnych typów problemów.
@@ -24,39 +23,6 @@ Jak widaæ na podstawie powy¿szych przyk³adów, mo¿liwoœci praktycznego wykorzysta
 algorytmów uczenia maszynowego jest wiele. Powoduje to, ¿e dziedzina ta stale siê
 rozwija i nieuchronnie zaczyna pe³niæ coraz bardziej znacz¹c¹ rolê wœród technik komputerowych.
 
-%Cichosz (35-36)
-%Próby opracowania algorytmów ucz¹cych siê nie wynikaj¹ z chêci wyeliminowania
-%projektantów z procesów analizy i projektowania systemów komputerowych, a wiêc
-%klasycznych zagadnieñ in¿ynierii oprogramowania. Nie mog¹ one bowiem byæ
-%alternatyw¹ dla tradycyjnych metodologii tworzenia oprogramowania. Cele, jakie
-%stawiaj¹ sobie twórcy algorytmów ucz¹cych siê wynikaj¹ ze z³o¿onoœci niektórych
-%zagadnieñ algorytmicznych -- próbuj¹ oni w³aœnie za ich pomoc¹ opisaæ te
-%problemy, dla których opracowanie poprawnych i pe³nych algorytmów klasycznych
-%jest bardzo trudne lub wrêcz niemo¿liwe.
-%
-%Program ucz¹cy mo¿na wyobraziæ sobie jako abstrakcyjny, ,,parametryzowalny''
-%algorytm wykonania zadania. Proces uczenia polega na dobraniu, na podstawie
-%historycznych wartoœci tych ,,parametrów'', takich wartoœci, by rozwi¹zanie
-%spe³nia³o za³o¿enia projektanta. 
-%
-%,,Parametry'' te mo¿na traktowaæ jako pewnego rodzaju \emph{wiedzê}.
-%Nie s¹ one podawane do algorytmu w sposób bezpoœredni (a jeœli nawet s¹ podawane
-%ich pocz¹tkowe wartoœci, to s¹ one najczêœciej dalekie od oczekiwanych), ale
-%odkrywane s¹ przez sam algorytm podczas procesu uczenia siê.
-%Z tego te¿ powodu s¹ one traktowane jako wiedza niepewna i mog¹ca wymagaæ weryfikacji.	
-%
-%Wiedza ta mo¿e okreœlaæ zarówno sekwencje operacji, które program ma wykonaæ
-%podczas rozwi¹zywania danego problemu, jak i wybór spoœród ró¿nych wariantów
-%mo¿liwych do podjêcia w danym momencie decyzji.
-%
-%Wiedza, która okreœla strategie osi¹gania celów nazywana jest
-%\emph{proceduraln¹}, natomiast taka, która opisuje obiekty i zwi¹zki miêdzy nimi
-%-- \emph{deklaratywn¹}.
-%
-%Algorytmy pozyskiwania i doskonalenia zdobytej wiedzy nazywane s¹
-%\emph{algorytmami uczenia maszynowego}. 
-
-%Troche przykladow
 \subsection{Metody reprezentacji wiedzy}
 
 % Cichosz 41-42
@@ -131,33 +97,7 @@ pozwalaj¹c¹ na ocenê uzyskanej wiedzy. W tym przypadku informacja ta nie
 ma charakteru instrukta¿owego, ale pozwala na otrzymanej wartoœciowanie wiedzy
 poprzez przypisanie jej liczbowych wspó³czynników zwanych \emph{wzmocnieniami}.
 Pozwala to na ocenê dotychczasowego przebiegu procesu uczenia siê i dobieranie
-jego parametrów tak, by uzyskiwana by³a wiedza zbli¿ona do tej z najwy¿szymi wspó³czynnikami. 
-
-%\subsection{Metody uczenia siê}
-%
-%% Cichosz 44
-%Informacja trenuj¹ca stanowi dla algorytmu ucz¹cego siê podstawê, któr¹
-%wykrzystuje do nabywania nowej wiedzy lub do udoskonalenia ju¿ posiadanej.
-%Reprezentacja tej wiedzy oraz sposób jej wykorzystania najczeœciej
-%podporz¹dkowany jest zadaniu, do realizacji którego ma zostaæ u¿yta.
-%Mechanizm odkrywania nowej lub ulepszania ju¿ posiadanej wiedzy z regu³y mocno
-%zale¿y od sposobu jej reprezentacji oraz postaci informacji trenuj¹cej.
-%
-%Z regu³y do realizacji konkretnego mechanizmu zdobywania wiedzy mog¹ byæ u¿yte
-%ró¿norodne algorytmy.
-%Najbardziej popularn¹ metod¹ uczenia siê jest \emph{indukcja}. Polega ona na
-%wnioskowaniu na podstawie posiadanej, konkretnej, informacji trenuj¹cej. Ma ona
-%na celu celu uzyskania wiedzy ogólnej za pomoc¹ uogólnienia informacji
-%trenuj¹cej na pozosta³e przypadki.
-%
-%Oprócz metod indukcyjnych, wyró¿nia siê tak¿e mechanizmy \emph{uczenia
-%nieindukcyjnego}. Metody te maja na celu nie tyle wnioskowanie, ile raczej 
-%wyjaœnianie -- informacja trenuj¹ca nie jest uogólniania, lecz wykorzystywana
-%jest do konkretyzacji ju¿ zdobytej przez algorytm ucz¹cy siê wiedzy.
-%% Add reference here - uczenie ze wzmocnieniem
-%Do metod tych zalicza siê tak¿e stosowane przy uczeniu ze wzmocnieniem
-%wartoœciowanie zdobytej wiedzy pozwalaj¹ce na lepsze wyselekcjonowanie
-%po¿ytecznej wiedzy.
+jego parametrów tak, by uzyskiwana by³a wiedza zbli¿ona do tej z najwy¿szymi wspó³czynnikami \cite{cichosz}. 
 
 %Cichosz 45 - glowne dzialy uczenia maszynowego
 \subsection{G³ówne nurty uczenia maszynowego}
@@ -240,33 +180,6 @@ bezza³ogowymi. Wymagany stopieñ autonomii tych systemów jest niemo¿liwy do
 uzyskania bez wyposa¿enia ich w mo¿liwoœæ adaptacji, czyli przystosowania siê do
 zmieniaj¹cych siê warunków. Systemy posiadaj¹ce zdolnoœæ adaptacji mog¹ byæ
 u¿ywane w nieprzewidywalnym œrodowisku lub wielu podobnych œrodowiskach.
-
-%% moze zrobic: data mining i inne zastosowania?
-%\subsubsection{Inteligentne maszyny}
-%
-%- inteligentne sterowanie
-%- brzmi jak science-fiction
-%- intelig. sterowane budyntki
-%- systemy w samochodach - wspomagaj¹ce kierowcê (pomagaj¹ w prowadzeniu auta,
-% staraj¹ siê na podstawie warunków oceniæ, czy kierowca dobrze robi, nawet
-% awaryjnie zahamowaæ, lub przygotowaæ siê do nieuniknionego zderzenia --
-% napinacze pasów, usztywnienie oparcia itp.)
-% Dostosowanie sie do stylu jazdy kierowcy (skrzynie przewiduj¹ce nastêpny ruch kierowcy
-% - w Ferrari Enzo :-)
-% - robociki - l¹downiki kosmiczne, robociki graj¹ce w pilke, gry - inteligentni
-% przeciwnicy, nie tylko w prostych grach (szachy) ale bardziej z³o¿onych grach
-% strategicznych. (z³o¿onoœæ i zmiennoœæ œrodowisk, w których dzia³aj¹) 
-% 	
-%\subsubsection{In¿ynieria oprogramowania TODO:}
-%
-%- inteligentne interfejsy u¿ytkownika (adaptuj¹ce siê do u¿ytkownika, domyœlnie
-%wype³niaj¹ce siê pola, wykonywanie tych samych sekwencji poleceñ)
-%
-%- projektowanie systemów - np. do estymowania kosztów nowego projektu na
-%podstawie analizy danych historycznych dotycz¹cych podobnych projektów
-%(czasoch³onnoœæ, ile ludzi w poszczególnych okresach) - pozwala na
-%efektywniejsze zaplanowanie a wiec na mniejsze ryzyko niedotrzymania terminów
-%albo klapy biznesowej
 
 \input{data_mining}
 
