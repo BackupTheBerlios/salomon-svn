@@ -7,6 +7,7 @@
 \headheight 16pt
 \linespread{1.2}
 
+\usepackage[usenames]{color}
 \usepackage{float}
 \usepackage[cp1250]{inputenc}  % opcja latin2 dla Linuxa lub cp1250 dla Windows
 \usepackage{margins}
@@ -20,9 +21,13 @@
 \usepackage{graphics}
 \usepackage{listings}
 %pakiet do listowania kodów Ÿród³owych
+
+\definecolor{ListingCommentsColor}{rgb}{0,0.5,0}
+\definecolor{ListingStringsColor}{rgb}{0,0,0.5}
+
 \lstset{language=java,frame=none,keywordstyle=\color{blue},
-	stringstyle=\color{green},basicstyle=\small,
-	commentstyle=\color{green},tabsize=2,breaklines,
+	stringstyle=\color{ListingStringsColor},basicstyle=\small,
+	commentstyle=\color{ListingCommentsColor},tabsize=2,breaklines,
 	breakautoindent=true}
 %pakiet do grupowania m.in listingów na jednej stronie
 \usepackage{framed}
