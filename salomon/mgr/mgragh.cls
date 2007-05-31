@@ -386,11 +386,11 @@
     \begin{center} 
 			{\large\bfseries O{\m@s}wiadczenie autora}\par\bigskip
     \end{center}
-    {\itshape Ja, ni{\m@z}ej podpisan{\m@k} \@author\ o{\m@s}wiadczam, {\m@z}e praca 
-		 ta zosta{\m@l}a napisana samodzielnie i~wykorzystywa{\m@l}a (poza zdobyt{\m@a} na studiach
+    {\itshape My, ni{\m@z}ej podpisani \@author\ o{\m@s}wiadczamy, {\m@z}e praca 
+		 ta zosta{\m@l}a napisana samodzielnie i~wykorzystywane zosta{\m@l}y (poza zdobyt{\m@a} na studiach
 		 wiedz{\m@a}) jedynie wyniki prac zamieszczonych w~spisie literatury.}\par
 	  \vspace{3\baselineskip}
-	  \hfill\parbox{15em}{{\small\dotfill}\\[-.3ex] \centerline{\footnotesize(Podpis autora)}}\par
+	  \hfill\parbox{15em}{{\small\dotfill}\\[-.3ex] \centerline{\footnotesize(Podpisy autor{\m@o}w)}}\par
     \vspace{4\baselineskip}
 	  \begin{center} 
       {\large\bfseries O{\m@s}wiadczenie promotora}\par\bigskip

@@ -1,26 +1,26 @@
 \section{Indukcyjne bazy danych}
 
-% przetlumaczone z pdf-a
-Indukcyjne bazy danych œciœle integruj¹ bazy danych z koncepcj¹ \emph{data mining}~(\ref{lab:data_mining}).
-G³ówn¹ ich ideê stanowi to, ¿e zarówno dane jak i wzorce s¹ przetwarzane 
-w ten sam sposób, a indukcyjny jêzyk zapytañ pozwala u¿ytkownikowi 
-na zadawanie zapytañ i manipulacjê danymi wzorcami.
+% przetlumaczone z~pdf-a
+Indukcyjne bazy danych œciœle integruj¹ bazy danych z~koncepcj¹ \emph{data mining}~(\ref{lab:data_mining}).
+G³ówn¹ ich ideê stanowi to, ¿e zarówno dane jak i~wzorce s¹ przetwarzane 
+w ten sam sposób, a~indukcyjny jêzyk zapytañ pozwala u¿ytkownikowi 
+na zadawanie zapytañ i~manipulacjê danymi wzorcami.
 
 Od pocz¹tku istnienia idei data miningu zdawano sobie sprawê,
 ¿e proces ich przetwarzania powinien byæ wspierany przez technologiê baz danych.
 W ostatnich latach idea ta zosta³a sformalizowana jako koncepcja
 \emph{indukcyjnych baz danych}.
 
-%cytat z artykulu
-Integracja technologii baz danych z nowoczesnymi metodami
+%cytat z~artykulu
+Integracja technologii baz danych z~nowoczesnymi metodami
 indukcyjnego generowania wiedzy jest naturalnym kierunkiem rozwoju
 systemów bazodanowych. Systemy nazywane indukcyjnymi bazami
-danych potrafi¹ odpowiedzieæ nie tylko na pytania, dla których
-odpowiedŸ znajduje siê w bazie danych, ale równie¿ na pytania,
-które wymagaj¹ zsyntetyzowania i zastosowania wiedzy,
-wygenerowanej przez indukcyjne wnioskowanie z faktów z bazy danych
+danych potrafi¹ odpowiedzieæ nie tylko na~pytania, dla których
+odpowiedŸ znajduje siê w~bazie danych, ale równie¿ na~pytania,
+które wymagaj¹ zsyntetyzowania i~zastosowania wiedzy,
+wygenerowanej przez indukcyjne wnioskowanie z~faktów z~bazy danych
 i wczeœniejszej wiedzy~\cite{knowledge_disc}. Schemat typowej indukcyjnej
-bazy danych przedstawiony jest na rysunku~\ref{fig:inddb}.
+bazy danych przedstawiony jest na~rysunku~\ref{fig:inddb}.
 
 \begin{figure}[!ht]
      \centering
@@ -30,74 +30,74 @@ bazy danych przedstawiony jest na rysunku~\ref{fig:inddb}.
 \end{figure}
 
 Jak zosta³o ju¿ wy¿ej wspomniane, indukcyjne bazy danych przechowuj¹ nie dane
-ale równie¿ wzorce. Mo¿na za³o¿yæ, ¿e zarówno dane, jak i wzorce stanowi¹ zbiory zbiorów.
-To za³o¿enie wynika z analogii do tradycyjnych, relacyjnych baz danych. 
-Relacyjna baza danych zawiera zbiór relacji, które to stanowi¹ zbiory \emph{tupli}, 
+ale równie¿ wzorce. Mo¿na za³o¿yæ, ¿e zarówno dane, jak i~wzorce stanowi¹ zbiory zbiorów.
+To za³o¿enie wynika z~analogii do~tradycyjnych, relacyjnych baz danych. 
+Relacyjna baza danych zawiera zbiór relacji, które to~stanowi¹ zbiory \emph{tupli}, 
 a wiêc mo¿na powiedzieæ, ze stanowi zbiór zbiorów.
 
 W przypadku baz indukcyjnych rozró¿nia siê natomiast zbiór trenuj¹cy od testuj¹cego, 
 zbiór poprawnie zaklasyfikowanych przyk³adów od zaklasyfikowanych b³êdnie itp.
  
-To samo, co tyczy siê danych, odnosi siê równie¿ do wzorców.
+To samo, co tyczy siê danych, odnosi siê równie¿ do~wzorców.
 I rzeczywiœcie -- podczas procesu przetwarzania wiedzy mo¿na pracowaæ 
-na ró¿nych zbiorach wzorców.  Zbiory te mog¹ odnosiæ siê do odmiennych hipotez 
-stworzonych na podstawie ró¿nych zbiorów danych,
+na ró¿nych zbiorach wzorców.  Zbiory te mog¹ odnosiæ siê do~odmiennych hipotez 
+stworzonych na~podstawie ró¿nych zbiorów danych,
 czy ró¿nych ustawieñ parametrów algorytmów je tworz¹cych.
 
 %jezyk (z pdf-a)
-Jednym z zasadniczych powodów, które przyczyni³y siê do sukcesu relacyjnych baz danych
+Jednym z~zasadniczych powodów, które przyczyni³y siê do~sukcesu relacyjnych baz danych
 jest opracowanie uniwersalnego jêzyka zapytañ, który podobnie jak sama algebra relacyjna
 dostarcza du¿ych mo¿liwoœci przy jego relatywnej prostocie.
 
-Podobnymi cechami powinien wyró¿niaæ siê jêzyk zapytañ do indukcyjnych baz danych.
+Podobnymi cechami powinien wyró¿niaæ siê jêzyk zapytañ do~indukcyjnych baz danych.
 
-Rezultatem zapytania wykonanego w takim jêzyku jest albo zbiór wzorców, albo zbiór danych.
-Jest to tak zwana \emph{w³asnoœæ zamkniêcia} (\emph{ ang. closure property}).
-Stanowi ona analogiê do rezultatów zapytania do relacyjnych baz danych, gdzie jest nim zawsze relacja.
-Rozró¿nianie miêdzy zbiorami wzorców i zbiorami danych powoduje, ¿e potrzebne s¹ dwa rodzaje zapytañ:
-te które generuj¹ zbiory wzorców i zbiory danych. Zapytania do jednoczeœnie obu typów zbiorów nazywane
+Rezultatem zapytania wykonanego w~takim jêzyku jest albo zbiór wzorców, albo zbiór danych.
+Jest to~tak zwana \emph{w³asnoœæ zamkniêcia} (\emph{ ang. closure property}).
+Stanowi ona analogiê do~rezultatów zapytania do~relacyjnych baz danych, gdzie jest nim zawsze relacja.
+Rozró¿nianie miêdzy zbiorami wzorców i~zbiorami danych powoduje, ¿e potrzebne s¹ dwa rodzaje zapytañ:
+te które generuj¹ zbiory wzorców i~zbiory danych. Zapytania do~jednoczeœnie obu typów zbiorów nazywane
 s¹ czasami \emph{zapytaniami krzy¿uj¹cymi} (\emph{ang. cross-over operations}).
 
-%dodawanie/usuwanie data setow, patternow? (patternow trudniej, nie wiem dokladnie jak, olac na razie)
+%dodawanie/usuwanie data setow, patternow? (patternow trudniej, nie wiem dokladnie jak, olac na~razie)
 
 %wnioskowanie
-% z pdf-a
-Teoria indukcyjnych baz danych mo¿e byæ u¿yteczna tylko w przypadku,
-gdy oferuje mo¿liwoœæ wnioskowania z danych i zgromadzonej wiedzy.
+% z~pdf-a
+Teoria indukcyjnych baz danych mo¿e byæ u¿yteczna tylko w~przypadku,
+gdy oferuje mo¿liwoœæ wnioskowania z~danych i~zgromadzonej wiedzy.
 Na podstawie otrzymanej informacji trenuj¹cej indukcyjna baza danych generuje now¹ lub 
-ulepsza wczeœniej posiadan¹ wiedzê, w pewien ustalony sposób reprezentowan¹ 
-i przeznaczon¹ do wykorzystania przy wykonywaniu okreœlonego zadania.
-Mechanizm, zgodnie z którym dokonuje siê nabywanie lub doskonalenie wiedzy, 
+ulepsza wczeœniej posiadan¹ wiedzê, w~pewien ustalony sposób reprezentowan¹ 
+i przeznaczon¹ do~wykorzystania przy wykonywaniu okreœlonego zadania.
+Mechanizm, zgodnie z~którym dokonuje siê nabywanie lub doskonalenie wiedzy, 
 jest najczêœciej jednoznacznie wyznaczany przez metodê reprezentacji 
 wiedzy oraz postaæ informacji trenuj¹cej \cite{ind_databases}.
 
 \subsection{VINLEN}
 \label{lab:vinlen}
 to system indukcyjnej bazy danych, rozwijany w
-\emph{George Mason University}. Jest to klasyczna
+\emph{George Mason University}. Jest to~klasyczna
 realizacja indukcyjnej bazy danych. Mechanizmy wnioskowania
 indukcyjnego s¹ zintegrowane ze standardowymi relacyjnymi
-operatorami bazodanowymi. Integracja ta opiera siê na nowych
+operatorami bazodanowymi. Integracja ta opiera siê na~nowych
 rodzajach operatorów zwanych operatorami generowania wiedzy
 \emph{KGO} (Knowledge Generation Operators). \emph{KGO} operuje na
 \emph{segmentach wiedzy} sk³adaj¹cych siê z~kombinacji jednej lub
-wiêcej tabel z relacyjnej bazy danych i~wiedzy przechowywanej
+wiêcej tabel z~relacyjnej bazy danych i~wiedzy przechowywanej
 w~bazie wiedzy (por. rysunek~\ref{fig:inddb}). \emph{KGO} przyjmuje
-na wyjœciu jeden lub wiêcej segment wiedzy, na podstawie którego
+na wyjœciu jeden lub wiêcej segment wiedzy, na~podstawie którego
 generuje inny segment wiedzy. Podstawowym operatorem u¿ywanym w
-systemie jest AQ21, program do indukcyjnego tworzenia regu³ na
+systemie jest AQ21, program do~indukcyjnego tworzenia regu³ na
 podstawie danych.
 
 Indukcyjne bazy danych mog¹ byæ wspierane przez wyspecjalizowanych
 agentów (\emph{Scauts}), których zadaniem jest synteza
-i~zarz¹dzanie wiedz¹, która jest dostosowywana do wymagañ
-okreœlonego u¿ytkownika. System \emph{VINLEN} pozwala na tworzenie skryptów
-operuj¹cych na bazach danych, wiedzy i algorytmach uczenia
+i~zarz¹dzanie wiedz¹, która jest dostosowywana do~wymagañ
+okreœlonego u¿ytkownika. System \emph{VINLEN} pozwala na~tworzenie skryptów
+operuj¹cych na~bazach danych, wiedzy i~algorytmach uczenia
 maszynowego przy u¿yciu jêzyka \emph{KGL-1} (\emph{Knowledge
 Generation Language}).
 
 Cech¹ charakterystyczn¹ tak rozwijanego systemu bêdzie mo¿liwoœæ
-sk³adowania wiedzy w~relacyjnej bazie danych wraz z danymi,
+sk³adowania wiedzy w~relacyjnej bazie danych wraz z~danymi,
 zadawanie zapytañ oraz manipulowanie wiedz¹ z~wykorzystaniem
 jêzyka \emph{KQL} lub przy u¿yciu funkcjonalnego, graficznego
 interfejsu u¿ytkownika \cite{vinlen}.

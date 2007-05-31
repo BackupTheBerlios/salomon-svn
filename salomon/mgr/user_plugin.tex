@@ -1,20 +1,20 @@
 \section{Wtyczki}
 
-System, dziêki swej elastycznej architekturze, pozwala u¿ytkownikowi na 
+System, dziêki swej elastycznej architekturze, pozwala u¿ytkownikowi na~
 rozszerzanie jego mo¿liwoœci poprzez definiowanie przez niego w³asnych 
 wtyczek. Dziêki takiemu podejœciu system jest ³atwo skalowalny
-i rozszerzalny o nowe mo¿liwoœci. 
+i rozszerzalny o~nowe mo¿liwoœci. 
 
-Ca³a funkcjonalnoœæ zwi¹zana z konfiguracj¹  przetwarzaniem, prezentacj¹ wyników dzia³ania oraz komunikacj¹ przez sieæ ukryta jest przed twórc¹ wtyczki i nie musi byæ brana pod uwagê przy jego projektowaniu i implementacji. Jedyne, co musi on zrobiæ to zaimplementowaæ opisane poni¿ej interfejsy.
-By system móg³ skorzystaæ z nowych wtyczek nale¿y 
-podaæ ich lokalizacje, umo¿liwiaj¹c systemowi tym samym pobranie i 
-za³adowanie wtyczki. Obecna wersja systemu obs³uguje tylko wtyczki w postaci 
+Ca³a funkcjonalnoœæ zwi¹zana z~konfiguracj¹  przetwarzaniem, prezentacj¹ wyników dzia³ania oraz komunikacj¹ przez sieæ ukryta jest przed twórc¹ wtyczki i~nie musi byæ brana pod uwagê przy jego projektowaniu i~implementacji. Jedyne, co musi on zrobiæ to~zaimplementowaæ opisane poni¿ej interfejsy.
+By system móg³ skorzystaæ z~nowych wtyczek nale¿y 
+podaæ ich lokalizacje, umo¿liwiaj¹c systemowi tym samym pobranie i~
+za³adowanie wtyczki. Obecna wersja systemu obs³uguje tylko wtyczki w~postaci 
 archiwów jar.
 
 Poni¿y diagram (Rys. \ref{fig:plugin_uml}) przedstawia podstawowe interfejsy
-potrzebne do implementacji w³asnej wtyczki. Kolorem ¿ó³tym zaznaczone
-zosta³y interfejsy zwi¹zane z graficzn¹ czêœci¹ wtyczki. Kolorem niebieskim
-interfejs, który zwi¹zany jest z algorytmem wtyczki. 
+potrzebne do~implementacji w³asnej wtyczki. Kolorem ¿ó³tym zaznaczone
+zosta³y interfejsy zwi¹zane z~graficzn¹ czêœci¹ wtyczki. Kolorem niebieskim
+interfejs, który zwi¹zany jest z~algorytmem wtyczki. 
 
 \begin{figure}[H]
 	\centering
@@ -25,23 +25,23 @@ interfejs, który zwi¹zany jest z algorytmem wtyczki.
 
 \subsection{IPlugin}
 
-Jest to g³ówny interfejs implementowany przez wszystkie wtyczki. Stanowi po³¹czenie interfejsów \emph{IDataPlugin}~(\ref{lab:data_plugin}) i \emph{IGraphicPlugin}~(\ref{lab:graphic_plugin}).
+Jest to~g³ówny interfejs implementowany przez wszystkie wtyczki. Stanowi po³¹czenie interfejsów \emph{IDataPlugin}~(\ref{lab:data_plugin}) i~\emph{IGraphicPlugin}~(\ref{lab:graphic_plugin}).
  
 \subsection{IDataPlugin}
 \label{lab:data_plugin}
 
-Interfejs ten definiuje tylko jedn¹ metodê \emph{doJob()}, która jest uruchamiana podczas przetwarzania danej wtyczki i stanowi jej g³ówne zadanie obliczeniowe. Jej parametry to:
+Interfejs ten definiuje tylko jedn¹ metodê \emph{doJob()}, która jest uruchamiana podczas przetwarzania danej wtyczki i~stanowi jej g³ówne zadanie obliczeniowe. Jej parametry to:
 
 \begin{itemize}
-	\item \emph{IDataEngin}~(\ref{lab:data_engine}) -- obiekt ten dostarcza interfejsów pozwalaj¹cych na operowanie na danych i wiedzy (np. ITreeManager)
- 	\item \emph{IEnvironment} to interfejs umo¿liwiaj¹cy komunikacje 
+	\item \emph{IDataEngin}~(\ref{lab:data_engine}) -- obiekt ten dostarcza interfejsów pozwalaj¹cych na~operowanie na~danych i~wiedzy (np. ITreeManager)
+ 	\item \emph{IEnvironment} to~interfejs umo¿liwiaj¹cy komunikacje 
           pomiêdzy poszczególnymi zadaniami
 	\item \emph{ISettings} reprezentujê konfiguracja wejœciowa wtyczki
 \end{itemize}  
     
 \subsection{IGraphicPlugin}
 \label{lab:graphic_plugin}
-Interfejs ten okreœla sposób, w jaki wtyczka mo¿e byæ konfigurowana przez u¿ytkownika oraz jak maj¹ byæ prezentowane wyniki obliczeñ. 
+Interfejs ten okreœla sposób, w~jaki wtyczka mo¿e byæ konfigurowana przez u¿ytkownika oraz jak maj¹ byæ prezentowane wyniki obliczeñ. 
 \begin{itemize}
 	\item \emph{getSettingComponent()} -- zwraca obiekt implementuj¹cy interfejs 
 		\emph{ISettingComponent}~(\ref{lab:setting_component})
@@ -53,7 +53,7 @@ Interfejs ten okreœla sposób, w jaki wtyczka mo¿e byæ konfigurowana przez u¿ytko
 \label{lab:setting_component}
 \begin{itemize}
 	\item \emph{getComponent(ISettings settings)} -- zwraca graficzny komponent 
-s³u¿¹cy do edycji ustawieñ wtyczki. Jest on wype³niany wartoœciami przekazanymi 
+s³u¿¹cy do~edycji ustawieñ wtyczki. Jest on wype³niany wartoœciami przekazanymi 
 w obiekcie \emph{ISettings}.
 	\item \emph{getSettings()} -- zwraca ustawienia wtyczki.
 	\item \emph{getDefaultSettings()} -- zwraca domyœlne ustawienia wtyczki. 
@@ -64,13 +64,13 @@ Wykorzystywane, gdy u¿ytkownik nie wprowadzi³ w³asnych ustawieñ.
 \label{lab:result_component}
 \begin{itemize}
 	\item \emph{getComponent(IResult result)} -- zwraca graficzny komponent 
-wyœwietlaj¹cy rezultat wykonania wtyczki. Wype³niany jest on na podstawie 
+wyœwietlaj¹cy rezultat wykonania wtyczki. Wype³niany jest on na~podstawie 
 obiektu  \emph{IResult} zwróconego wczeœniej przez metodê \emph{doJob()}.
 	\item  \emph{getDefaultResult()} -- zwraca domyœlny rezultat wykonania wtyczki.
 \end{itemize}
 
-\subsection{IObject} To interfejs zapewniaj¹cy persystencjê takich obiektów 
-jak ustawienia, rezultat wykonania wtyczki, czy obiekty wykorzystywane do komunikacji miêdzy wtyczkami.
+\subsection{IObject} To~interfejs zapewniaj¹cy persystencjê takich obiektów 
+jak ustawienia, rezultat wykonania wtyczki, czy obiekty wykorzystywane do~komunikacji miêdzy wtyczkami.
 
 \subsection{ISettings}Implementowany przez obiekt reprezentuj¹cy ustawienia 
 wtyczki.
@@ -84,19 +84,19 @@ dzia³ania wtyczki.
 	\item \emph{init(IObject o)} - metoda inicjalizuje obiekt klasy
 \end{itemize}  
 
-%WSTAWIÆ TO W JAKIEŒ MIEJSCE!!!
+%WSTAWIÆ TO W~JAKIEŒ MIEJSCE!!!
 %
 %\paragraph{Persystencja danych}
-%Z racji na rozproszony charakter aplikacji, oraz na wielkoœæ obliczeñ.
-%Wa¿nym aspektem platformy jest zapewnienie uniwersalnego i wydajnego
-%mechanizmu persysteñcji danych. W przypadku wewnêtrznych struktur danych,
+%Z racji na~rozproszony charakter aplikacji, oraz na~wielkoœæ obliczeñ.
+%Wa¿nym aspektem platformy jest zapewnienie uniwersalnego i~wydajnego
+%mechanizmu persysteñcji danych. W~przypadku wewnêtrznych struktur danych,
 %jak zapis drzewa decyzyjnego, czy atrybutów, zadaniem tym zajmuj¹ siê
-%odpowiednie menadzêry. W przypadku jednak persystencji danych u¿ytkownika,
+%odpowiednie menadzêry. W~przypadku jednak persystencji danych u¿ytkownika,
 %takich jak ustawienia wtyczek, czy ich rezultaty zadaniem tym zajmujê siê
 %modu³ persysteñcji, udostêpniaj¹cy odpowiedni \emph{API}. Dodatkowo mechanizm
-%ten jest wykorzystywany do persystencji danych wykorzystywanych w komunikacji miêdzy kolejnymi zadaniami (WSTAWIÆ LINKA DO OPISU ENV.)
+%ten jest wykorzystywany do~persystencji danych wykorzystywanych w~komunikacji miêdzy kolejnymi zadaniami (WSTAWIÆ LINKA DO OPISU ENV.)
 %
-%Kod poni¿ej tworzy strukturê, z jednym polem o nazwie ,,myField'' oraz przypisuje do niego wartoœæ ,,my settings''.
+%Kod poni¿ej tworzy strukturê, z~jednym polem o~nazwie ,,myField'' oraz przypisuje do~niego wartoœæ ,,my settings''.
 %
 %\begin{lstlisting}
 %SimpleStruct struct = new SimpleStruct();

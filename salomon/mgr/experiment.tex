@@ -2,59 +2,59 @@
 \label{lab:experiment}
 
 Celem eksperymentu jest zademonstrowanie mo¿liwoœci platformy jako œrodowiska,
-które nadzoruje obliczenia uczenia maszynowego oraz u³atwia proces tworzenia algorytmów (w postaci wtyczek). %w oparciu o dostarczone wtyczki.
+które nadzoruje obliczenia uczenia maszynowego oraz u³atwia proces tworzenia algorytmów (w postaci wtyczek). %w oparciu o~dostarczone wtyczki.
 
-Przyk³adowe zadanie obliczeniowe ma na celu utworzenie drzewa decyzyjnego
-w oparciu o zbiór atrybutów. Atrybuty te definiuj¹ w jaki sposób interpretowany
-ma byæ zbiór danych testowych. Zbiór danych budowany jest w oparciu o dane
-przechowywane w zewnêtrznym Ÿródle danych.
+Przyk³adowe zadanie obliczeniowe ma na~celu utworzenie drzewa decyzyjnego
+w oparciu o~zbiór atrybutów. Atrybuty te definiuj¹ w~jaki sposób interpretowany
+ma byæ zbiór danych testowych. Zbiór danych budowany jest w~oparciu o~dane
+przechowywane w~zewnêtrznym Ÿródle danych.
 
-% powyzsze zdanie jest bez sensu, poprawic i dodac ze celem jest takze
-% reagowanie na zdarzenia w postaci pojawiania sie nowych danych
+% powyzsze zdanie jest bez sensu, poprawic i~dodac ze celem jest takze
+% reagowanie na~zdarzenia w~postaci pojawiania sie nowych danych
 
 Model obliczeñ, który wspiera platforma zak³ada du¿¹ granulacjê zadañ.
 Powy¿sze zadanie obliczeniowe mog³oby byæ wykonane przez pojedyncz¹ wtyczkê,
-która na wejœciu wymaga³aby zdefiniowania zbioru danych i atrybutów,
-a na wyjœciu zaprezentowa³aby wygenerowane drzewo.
-Taka wtyczka by³aby jednak dosyæ skomplikowana i jej wykorzystanie ograniczone
-by³oby tylko do tego typu zadañ.
-Podzielenie ca³ego zadania na mniejsze etapy i wykonanie ka¿dego z nich przez
-osobn¹ wtyczkê pozwala nie tylko na wielokrotne wykorzystanie wtyczek do ró¿nych
-celów, ale tak¿e na wymianê wtyczek odpowiedzialnych za poszczególne
+która na~wejœciu wymaga³aby zdefiniowania zbioru danych i~atrybutów,
+a na~wyjœciu zaprezentowa³aby wygenerowane drzewo.
+Taka wtyczka by³aby jednak dosyæ skomplikowana i~jej wykorzystanie ograniczone
+by³oby tylko do~tego typu zadañ.
+Podzielenie ca³ego zadania na~mniejsze etapy i~wykonanie ka¿dego z~nich przez
+osobn¹ wtyczkê pozwala nie tylko na~wielokrotne wykorzystanie wtyczek do~ró¿nych
+celów, ale tak¿e na~wymianê wtyczek odpowiedzialnych za~poszczególne
 etapy (np. zmianê algorytmu generuj¹cego drzewo decyzyjne).
 
-%Podzia³ eksperymentu na etapy zaprezentowany zosta³ na rysunku (TODO: ref).
+%Podzia³ eksperymentu na~etapy zaprezentowany zosta³ na~rysunku (TODO: ref).
 
 %TODO: zrobic taki rysunek
 
 Poszczególne etapy eksperymentu to:
 \begin{enumerate}
 	\item Zdefiniowanie zbioru danych. \\
-	Celem tego etapu jest wygenerowanie zbioru danych w oparciu
+	Celem tego etapu jest wygenerowanie zbioru danych w~oparciu
 	o podane przez u¿ytkownika kryteria. Zbiór danych wykorzystuje
-	dane przechowywane w zewnêtrznym Ÿródle danych.
+	dane przechowywane w~zewnêtrznym Ÿródle danych.
 	\item Zdefiniowanie zbioru atrybutów. \\
 	Po wygenerowaniu zbioru danych tworzony jest zbiór atrybutów,
 	na których dzia³a algorytm buduj¹cy drzewo decyzyjne.
 	\item Wygenerowanie drzewa decyzyjnego. \\
-	Etap ten ma za zadanie wygenerowaæ drzewo decyzyjne na podstawie
+	Etap ten ma za~zadanie wygenerowaæ drzewo decyzyjne na~podstawie
 	utworzonego wczeœniej zbioru atrybutów.
 	\item Wizualizacja drzewa decyzyjnego. \\
-	Poprzedni etap tylko tworzy i zapisuje drzewo decyzyjne, 
-	które mo¿e zostaæ wykorzystane w dowolny sposób.
+	Poprzedni etap tylko tworzy i~zapisuje drzewo decyzyjne, 
+	które mo¿e zostaæ wykorzystane w~dowolny sposób.
 	Ten etap eksperymentu jedynie prezentuje u¿ytkownikowi wygenerowane
-	wczeœniej drzewo w postaci graficznej.
+	wczeœniej drzewo w~postaci graficznej.
 \end{enumerate}
 
-W dalszej czêœci rozdzia³u zaprezentowano wtyczki, które zosta³y u¿yte do realizacji poszczególnych etapów eksperymentu.
+W dalszej czêœci rozdzia³u zaprezentowano wtyczki, które zosta³y u¿yte do~realizacji poszczególnych etapów eksperymentu.
 
 \section{Definiowanie zbioru danych}
 
-Testowy zbiór danych definiowany jest za pomoc¹ wtyczki \emph{RandomDataSetCreator}.
-Wtyczka ta pozwala na wygenerowanie losowego zbioru danych.
-Konfiguracja wtyczki polega na wybraniu tabel z zewnêtrznego Ÿród³a danych,
-na którym bazowaæ ma zbiór danych oraz okreœlenia, ile wierszy z poszczególnych
-tabel ma zostaæ do³¹czone do testowego zbioru danych (Rys \ref{fig:random_data_set_settings}).
+Testowy zbiór danych definiowany jest za~pomoc¹ wtyczki \emph{RandomDataSetCreator}.
+Wtyczka ta pozwala na~wygenerowanie losowego zbioru danych.
+Konfiguracja wtyczki polega na~wybraniu tabel z~zewnêtrznego Ÿród³a danych,
+na którym bazowaæ ma zbiór danych oraz okreœlenia, ile wierszy z~poszczególnych
+tabel ma zostaæ do³¹czone do~testowego zbioru danych (Rys \ref{fig:random_data_set_settings}).
 
 \begin{figure}[H]
 	\centering
@@ -65,8 +65,8 @@ tabel ma zostaæ do³¹czone do testowego zbioru danych (Rys \ref{fig:random_data_s
 
 Prostota u¿ycia tej wtyczki okupiona zosta³a niewielkimi jej mo¿liwoœciami.
 Du¿o wiêksze mo¿liwoœci konfiguracyjne zapewnia wtyczka \emph{DataSetCreator}.
-Posiada ona podobny graficzny interfejs u¿ytkownika, ale pozwala na du¿o dok³adniejsze
-okreœlenie warunków, jakie spe³niaæ maj¹ dane, które trafi¹ do testowego zbioru danych (Rys \ref{fig:data_set_settings}).
+Posiada ona podobny graficzny interfejs u¿ytkownika, ale pozwala na~du¿o dok³adniejsze
+okreœlenie warunków, jakie spe³niaæ maj¹ dane, które trafi¹ do~testowego zbioru danych (Rys \ref{fig:data_set_settings}).
 
 
 
@@ -77,14 +77,14 @@ okreœlenie warunków, jakie spe³niaæ maj¹ dane, które trafi¹ do testowego zbioru 
 	\label{fig:data_set_settings}
 \end{figure}
 
-Dodatkow¹ jej zalet¹ jest to, ¿e wtyczka ta w znacznie wiêkszym stopniu ni¿ \emph{RandomDataSetCreator}
-uwzglêdnia zmiany w Ÿródle danych. Pierwsza wtyczka reaguje tylko na zmianê poszczególnych
-kolumn w wylosowanych do zbioru danych rekordach, nie mo¿e siê jednak zmieniæ ich iloœæ.
-Wtyczka \emph{DataSetCreator} uruchamiana wielokrotnie z t¹ sam¹ konfiguracj¹
-mo¿e pracowaæ na ró¿nej iloœci danych, zale¿nie od tego, ile rekordów spe³nia
-zadane kryteria w momencie jej uruchomienia.
-Pozwala to na przeprowadzanie eksperymentów na zmieniaj¹cych siê danych i przyk³adowo
-na obserwacjê, jak iloœæ danych wp³ywa na dok³adnoœæ obliczeñ.
+Dodatkow¹ jej zalet¹ jest to, ¿e wtyczka ta w~znacznie wiêkszym stopniu ni¿ \emph{RandomDataSetCreator}
+uwzglêdnia zmiany w~Ÿródle danych. Pierwsza wtyczka reaguje tylko na~zmianê poszczególnych
+kolumn w~wylosowanych do~zbioru danych rekordach, nie mo¿e siê jednak zmieniæ ich iloœæ.
+Wtyczka \emph{DataSetCreator} uruchamiana wielokrotnie z~t¹ sam¹ konfiguracj¹
+mo¿e pracowaæ na~ró¿nej iloœci danych, zale¿nie od tego, ile rekordów spe³nia
+zadane kryteria w~momencie jej uruchomienia.
+Pozwala to~na przeprowadzanie eksperymentów na~zmieniaj¹cych siê danych i~przyk³adowo
+na obserwacjê, jak iloœæ danych wp³ywa na~dok³adnoœæ obliczeñ.
 
 Wynikiem pracy obu wtyczek jest zbiór danych, którego definicja sk³adowana jest
 w wewnêtrznej bazie systemu.
@@ -96,7 +96,7 @@ String[] strConds = cSettings.getConditions();
 
 // stworzenie warunków dla nowego zbioru danych
 ICondition[] conditions = new ICondition[strConds.length];
-int i = 0;
+int i~= 0;
 for (String cond : strConds) {
 	if (cond != null) {
 		// stworzenie pojedynczego warunku 
@@ -106,21 +106,21 @@ for (String cond : strConds) {
 
 // pobranie g³ównego zbioru
 IDataSet mainDataSet = dataSetManager.getMainDataSet();
-// stworzenie podzbioru na podstawie podanych warunków 
+// stworzenie podzbioru na~podstawie podanych warunków 
 IDataSet subSet = mainDataSet.createSubset(conditions);
 subSet.setName(dataSetName);
-// zapisanie nowego zbioru danych do bazy
+// zapisanie nowego zbioru danych do~bazy
 dataSetManager.add(subSet);
 \end{lstlisting}
 \end{framed}
 
 
 \section{Definiowanie zbioru atrybutów}
-Algorytmy generowania drzew decyzyjnych pracuj¹ na specjalnie
+Algorytmy generowania drzew decyzyjnych pracuj¹ na~specjalnie
 przygotowanych danych -- atrybutach. Atrybuty okreœlaj¹ pewne cechy 
-danych wejœciowych i w przyjêtym w systemie podejœciu (\ref{lab:knowledge})
-bazuj¹ na zbiorach danych. St¹d wtyczka tworz¹ca zbiór atrybutów -- \emph{AttribiteSetCreator},
-który s³u¿y do generowania drzewa decyzyjnego, operuje na tym samym Ÿródle danych,
+danych wejœciowych i~w przyjêtym w~systemie podejœciu (\ref{lab:knowledge})
+bazuj¹ na~zbiorach danych. St¹d wtyczka tworz¹ca zbiór atrybutów -- \emph{AttribiteSetCreator},
+który s³u¿y do~generowania drzewa decyzyjnego, operuje na~tym samym Ÿródle danych,
 co wtyczka tworz¹ca zbiór danych.
 
 \begin{figure}[H]
@@ -130,13 +130,13 @@ co wtyczka tworz¹ca zbiór danych.
 	\label{fig:attrset_settings}
 \end{figure}
 
-Wtyczka ta pozwala na okreœlenie, które cechy obiektów znajduj¹cych siê
+Wtyczka ta pozwala na~okreœlenie, które cechy obiektów znajduj¹cych siê
 w zbiorze danych, maj¹ byæ brane pod uwagê podczas budowy drzewa decyzyjnego.
 Nale¿y okreœliæ typ atrybutów (liczbowy, napisowy, wyliczeniowy) oraz to,
-czy dany atrybut jest atrybutem wejœciowym (wp³ywaj¹cym na decyzjê),
+czy dany atrybut jest atrybutem wejœciowym (wp³ywaj¹cym na~decyzjê),
 czy wyjœciowym (okreœlaj¹cym decyzjê).
 
-Efektem uruchomienia wtyczki jest utworzenie i zesk³adowanie zbioru atrybutów,
+Efektem uruchomienia wtyczki jest utworzenie i~zesk³adowanie zbioru atrybutów,
 odpowiadaj¹cego podanej konfiguracji.
 
 Poni¿szy fragment kodu demonstruje prostotê tworzenia zbioru atrybutów.  
@@ -147,7 +147,7 @@ Description[] strDesc = cSettings.getDescriptions();
 IAttributeDescription[] descs =
   new IAttributeDescription[strDesc.length];
 
-int i = 0;
+int i~= 0;
 // stworzenie listy atrybutów
 for (Description desc : strDesc) {
 	if (desc != null) {
@@ -168,26 +168,26 @@ attrManager.add(attrSet);
 
 \section{Generowanie drzewa decyzyjnego}
 
-Do generacji drzew decyzyjnych wykorzystywane s¹ algorytmy dostarczane wraz z 
-\emph{Wek¹}. W tym celu w ramach platformy zosta³ napisany modu³ dostarczaj¹cy wsparcie dla 
-Weki oraz wtyczka, która, korzystaj¹c z tego modu³u, pozwala na wybór algorytmu, 
-uruchomienie go i zapisanie wyniku w formacie obs³ugiwanym przez system.
-System dostarcza w³asne \emph{API} przeznaczone do operacji na drzewach. S³u¿y do tego g³ównie interfejs 
+Do generacji drzew decyzyjnych wykorzystywane s¹ algorytmy dostarczane wraz z~
+\emph{Wek¹}. W~tym celu w~ramach platformy zosta³ napisany modu³ dostarczaj¹cy wsparcie dla 
+Weki oraz wtyczka, która, korzystaj¹c z~tego modu³u, pozwala na~wybór algorytmu, 
+uruchomienie go i~zapisanie wyniku w~formacie obs³ugiwanym przez system.
+System dostarcza w³asne \emph{API} przeznaczone do~operacji na~drzewach. S³u¿y do~tego g³ównie interfejs 
 \emph{ITreeManager}, który obs³ugujê zapis, odczyt, modyfikacjê itd.
-Modu³ wspieraj¹cy Weke ma za zadanie nie tylko t³umaczyæ drzewa decyzyjne do formatu u¿ywanego przez system, 
-ale równie¿ konwertowaæ atrybuty z tego formatu do postaci zgodnej z \emph{Wek¹}. 
+Modu³ wspieraj¹cy Weke ma za~zadanie nie tylko t³umaczyæ drzewa decyzyjne do~formatu u¿ywanego przez system, 
+ale równie¿ konwertowaæ atrybuty z~tego formatu do~postaci zgodnej z~\emph{Wek¹}. 
 \emph{Weka} dostarczana jest jako dodatkowy plik \emph{weka.jar}. \emph{Weka} posiada bardziej 
-restrykcyjn¹ licencjê (\emph{GPL}), co powoduje, i¿ Salomon dystrybuowany wraz z 
-integracj¹ musi byæ wykorzystywany zgodnie z zasadami tej licencji.
+restrykcyjn¹ licencjê (\emph{GPL}), co powoduje, i¿ Salomon dystrybuowany wraz z~
+integracj¹ musi byæ wykorzystywany zgodnie z~zasadami tej licencji.
 
 Dla celów eksperymentu zosta³a napisana wtyczka \emph{WekaTreeGenerator}, która 
-korzystaj¹c z wy¿ej omówionego modu³u integracji w \emph{Wek¹}, generuje drzewo 
-decyzyjne i zapisuje je do bazy.
+korzystaj¹c z~wy¿ej omówionego modu³u integracji w~\emph{Wek¹}, generuje drzewo 
+decyzyjne i~zapisuje je do~bazy.
 
 Konfiguracja wtyczki sk³ada siê z:
 \begin{enumerate}
-  \item wyboru algorytmu –- w eksperymencie zosta³ u¿yty algorytm \emph{J48}
-  \item okreœlenia zbioru atrybutów i zbioru danych
+  \item wyboru algorytmu –- w~eksperymencie zosta³ u¿yty algorytm \emph{J48}
+  \item okreœlenia zbioru atrybutów i~zbioru danych
   \item okreœlenia nazwy pod która zostanie zapisane nowo utworzone drzewo decyzyjne
 \end{enumerate}
 
@@ -198,12 +198,12 @@ Konfiguracja wtyczki sk³ada siê z:
 	\label{fig:tree_generator_settings}
 \end{figure}
 
-Wtyczka korzystaj¹c z danych trenuj¹cych (\emph{DataSet}) oraz opisu atrybutów 
-(\emph{AttributeSet}) transformuje dane (\emph{DataSet}) z wejœciowej bazy dany do postaci 
-zrozumia³ej przez algorytm. Na koñcu wyniki uruchomienia Weki przekszta³cane 
-s¹ do wewnêtrznej reprezentacji drzewa decyzyjnego obs³ugiwanej przez system.
+Wtyczka korzystaj¹c z~danych trenuj¹cych (\emph{DataSet}) oraz opisu atrybutów 
+(\emph{AttributeSet}) transformuje dane (\emph{DataSet}) z~wejœciowej bazy dany do~postaci 
+zrozumia³ej przez algorytm. Na~koñcu wyniki uruchomienia Weki przekszta³cane 
+s¹ do~wewnêtrznej reprezentacji drzewa decyzyjnego obs³ugiwanej przez system.
 
-\emph{Weka} generuje drzewo w formie tekstowej. Opis ten mo¿na zobaczyæ w otwieraj¹c 
+\emph{Weka} generuje drzewo w~formie tekstowej. Opis ten mo¿na zobaczyæ w~otwieraj¹c 
 okno rezultatu dla omawianej wtyczki (Rys \ref{fig:tree_generator_results})
 
 Wykorzystuj¹c aktualne mo¿liwoœci platformy, napisanie takiej wtyczki,
@@ -215,13 +215,13 @@ W pierwszym etapie pobieramy ustawienia, takie jak dane trenuj¹ce, atrybuty itp.
 WekaTreeGeneratorSettings treeSettings =
   (WekaTreeGeneratorSettings) settings;
 
-// pobranie atrybutów zdefiniowanych w ustawieniach
+// pobranie atrybutów zdefiniowanych w~ustawieniach
 String attributeSetName = treeSettings.getAttributeSetName();
 IAttributeManager attributeManager = engine.getAttributeManager();
 IAttributeSet attributeSet =
   attributeManager.getAttributeSet(attributeSetName);
 
-// pobranie zbioru danych zdefiniowanych w ustawieniach
+// pobranie zbioru danych zdefiniowanych w~ustawieniach
 String dataSetName = treeSettings.getDataSetName();
 IDataSetManager dataSetManager = engine.getDataSetManager();
 IDataSet dataSet = dataSetManager.getDataSet(dataSetName);
@@ -234,13 +234,13 @@ String treeName = treeSettings.getTreeName();
 \end{lstlisting}
 \end{framed}
 
-W³aœciwy etap sk³ada siê z dwóch czêœci; konwersji danych trenuj¹cych do postaci Weki oraz generacji drzewa decyzyjnego. 
+W³aœciwy etap sk³ada siê z~dwóch czêœci; konwersji danych trenuj¹cych do~postaci Weki oraz generacji drzewa decyzyjnego. 
 \begin{framed}
 \begin{lstlisting}
-// konwersja danych trenuj¹cych do atrybutów
+// konwersja danych trenuj¹cych do~atrybutów
 IAttributeData attributeData =
   attributeSet.selectAttributeData(dataSet);
-// konwersja atrybutów do postaci Weki
+// konwersja atrybutów do~postaci Weki
 Instances instances =
   AttributeConverter.toWeka(attributeData, treeName);
 
@@ -253,15 +253,15 @@ ITreeManager treeManager = engine.getTreeManager();
 // stworzenie pustego drzewa
 ITree tree = treeManager.createTree(attributeSet);
 tree.setName(treeName);
-// zbudowanie drzewa korzystaj¹c z Weki
+// zbudowanie drzewa korzystaj¹c z~Weki
 classifier.buildClassifier(instances);
 \end{lstlisting}
 \end{framed}
 
-Ostatni etap to konwersja drzewa decyzyjnego do postaci Salomona oraz zapisanie go w wewnêtrznej bazie danych.
+Ostatni etap to~konwersja drzewa decyzyjnego do~postaci Salomona oraz zapisanie go w~wewnêtrznej bazie danych.
 \begin{framed} 
 \begin{lstlisting}
-// konwersja drzewa do postaci Salomona
+// konwersja drzewa do~postaci Salomona
 TreeConverter.convert(tree, attributeSet, (Drawable) classifier);
 treeManager.add(tree);
 result.setOutput(classifier.toString());
@@ -280,10 +280,10 @@ result.setSuccessful(true);
 
 \section{Wizualizacja drzewa decyzyjnego}
 
-Ostatnim etapem eksperymentu jest wizualizacja nowo powsta³ego drzewa. W tym 
+Ostatnim etapem eksperymentu jest wizualizacja nowo powsta³ego drzewa. W~tym 
 celu zosta³a napisana wtyczka \emph{TreeVis}, która tworzy graficzn¹ reprezentacjê
-drzewa decyzyjnego. W ustawianiach dla wtyczki podajemy nazwê drzewa,  które 
-chcemy z wizualizowaæ (Rys \ref{fig:tree_vis_settings}). Po uruchomieniu mo¿emy obejrzeæ drzewo w postaci grafu.
+drzewa decyzyjnego. W~ustawianiach dla wtyczki podajemy nazwê drzewa,  które 
+chcemy z~wizualizowaæ (Rys \ref{fig:tree_vis_settings}). Po uruchomieniu mo¿emy obejrzeæ drzewo w~postaci grafu.
 
 \begin{figure}[H]
 	\centering
@@ -292,11 +292,11 @@ chcemy z wizualizowaæ (Rys \ref{fig:tree_vis_settings}). Po uruchomieniu mo¿emy 
 	\label{fig:tree_vis_settings}
 \end{figure}
 
-Drzewo wyœwietlane jest w formie grafu (Rys \ref{fig:tree_vis_results}), 
+Drzewo wyœwietlane jest w~formie grafu (Rys \ref{fig:tree_vis_results}), 
 z wykorzystaniem biblioteki (\emph{Jung}). 
 Przy ka¿dym wêŸle drzewa wyœwietlana jest nazwa atrybutu. 
-Na ka¿dej z krawêdzi przypisana jest wartoœæ 
-atrybutu rodzica, która powoduje przejœcie do wêz³a potomnego. Dla liœci drzewa 
+Na ka¿dej z~krawêdzi przypisana jest wartoœæ 
+atrybutu rodzica, która powoduje przejœcie do~wêz³a potomnego. Dla liœci drzewa 
 oprócz nazwy atrybutu wyœwietlana jest równie¿ jego wartoœæ.
 
 \begin{figure}[H]
@@ -309,10 +309,10 @@ oprócz nazwy atrybutu wyœwietlana jest równie¿ jego wartoœæ.
 \section{Obs³uga zewnêtrznych zdarzeñ}
 
 Celem kolejnego eksperymentu jest zademonstrowanie dzia³ania agentów.
-W tym celu zosta³ wykorzystany agent, który w reakcji na pojawienie siê nowych danych w zewnêtrznej bazie danych uruchamia wszystkie zadania zdefiniowane
-w projekcie. Agent ten okresowo sprawdza iloœæ danych w zewnêtrznej bazie danych i porównuje j¹ z iloœci¹ zapamiêtan¹ podczas jego  uruchomienia. Jeœli iloœæ nowych danych przekroczy zdefiniowany w konfiguracji agenta wspó³czynnik, uruchamiane s¹ wszystkie zadania zdefiniowane w ramach danego projektu.
+W tym celu zosta³ wykorzystany agent, który w~reakcji na~pojawienie siê nowych danych w~zewnêtrznej bazie danych uruchamia wszystkie zadania zdefiniowane
+w projekcie. Agent ten okresowo sprawdza iloœæ danych w~zewnêtrznej bazie danych i~porównuje j¹ z~iloœci¹ zapamiêtan¹ podczas jego  uruchomienia. Jeœli iloœæ nowych danych przekroczy zdefiniowany w~konfiguracji agenta wspó³czynnik, uruchamiane s¹ wszystkie zadania zdefiniowane w~ramach danego projektu.
 
-Eksperyment ten zosta³ przeprowadzony z wykorzystanie projektu zademonstrowanego w rozdziale \ref{lab:experiment}. Przy pierwszym uruchomieniu projektu wygenerowane zosta³o drzewo decyzyjne (Rys. \ref{fig:agent_tree1}). 
+Eksperyment ten zosta³ przeprowadzony z~wykorzystanie projektu zademonstrowanego w~rozdziale \ref{lab:experiment}. Przy pierwszym uruchomieniu projektu wygenerowane zosta³o drzewo decyzyjne (Rys. \ref{fig:agent_tree1}). 
 
 \begin{figure}[H]
 	\centering
@@ -321,8 +321,8 @@ Eksperyment ten zosta³ przeprowadzony z wykorzystanie projektu zademonstrowanego
 	\label{fig:agent_tree1}
 \end{figure}
 
-Nastêpnie uruchomiony zosta³ agent nas³uchuj¹cy na zmiany w danych i za pomoc¹ zewnêtrznego po³¹czenia do bazy danych zosta³y dodane do niej nowe rekordy.
-Po przekroczeniu zdefiniowanej w konfiguracji agenta iloœci nowych danych, zadania w obrêbie projektu zosta³y automatycznie przeliczone ponownie, o czym œwiadczy zmieniony licznik uruchomieñ projektu. Zosta³y one uruchomione po raz kolejny w oparciu o nowe dane, czego wynikiem by³o nowe drzewo decyzyjne (Rys. \ref{fig:agent_tree2})
+Nastêpnie uruchomiony zosta³ agent nas³uchuj¹cy na~zmiany w~danych i~za pomoc¹ zewnêtrznego po³¹czenia do~bazy danych zosta³y dodane do~niej nowe rekordy.
+Po przekroczeniu zdefiniowanej w~konfiguracji agenta iloœci nowych danych, zadania w~obrêbie projektu zosta³y automatycznie przeliczone ponownie, o~czym œwiadczy zmieniony licznik uruchomieñ projektu. Zosta³y one uruchomione po raz kolejny w~oparciu o~nowe dane, czego wynikiem by³o nowe drzewo decyzyjne (Rys. \ref{fig:agent_tree2})
 
 \begin{figure}[H]
 	\centering
@@ -333,8 +333,8 @@ Po przekroczeniu zdefiniowanej w konfiguracji agenta iloœci nowych danych, zadan
 
 
 %\section{Wyniki eksperymentu}
-% - screen z przebiegu
+% - screen z~przebiegu
 % - opis wynikow (z narysowaniem drzewa)
-% - udalo sie zrealizowac cele (uzycie roznych wtyczek i skonfigurowanie ich tak, by uzyskac jakis tam wynik)
+% - udalo sie zrealizowac cele (uzycie roznych wtyczek i~skonfigurowanie ich tak, by uzyskac jakis tam wynik)
 
 
