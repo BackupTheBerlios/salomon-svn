@@ -1,18 +1,18 @@
 \section{Koncepcja systemu}
 
-Salomon \cite{salomon} to~system do~wydobywania wiedzy z~danych zgodnie z~metodologi¹ \emph{Knowlege Mining}.
-Odkrywanie wiedzy to~proces iteracyjny, podzielony na~etapy. Etapy te mog¹ tworzyæ cykle. \\
+Salomon \cite{salomon} to~system do wydobywania wiedzy z~danych zgodnie z~metodologi¹ \emph{Knowlege Mining}.
+Odkrywanie wiedzy to~proces iteracyjny, podzielony na etapy. Etapy te mog¹ tworzyæ cykle. \\
 W ka¿dym tym etapie wiedza jest poddawana obróbce. 
 Na ka¿dym takim etapie proces odkrywania mo¿e byæ ukierunkowany zgodnie
 z wymaganiami u¿ytkownika. Ka¿dy etap tworzy odrêbn¹ ca³oœæ. 
 Czêœæ etapów jest roz³¹czna, zatem mog¹ byæ wykonywane wspó³bie¿nie. 
-Architektura Salomona pozwala na~rozproszone, a~co za~tym idzie 
--- zrównoleglenie wykonywania takich roz³¹cznych etapów oraz na~synchronizacjê ich wyników.
+Architektura Salomona pozwala na rozproszone, a~co za tym idzie 
+-- zrównoleglenie wykonywania takich roz³¹cznych etapów oraz na synchronizacjê ich wyników.
 
 Jednym z~istotnych atutów systemu jest mo¿liwoœæ elastycznego definiowania
 przebiegu pracy systemu w~kategoriach tzw.\ \emph{zada\'n}.
 Ekstrakcja wiedzy to~proces, który mo¿e
-byæ podzielony na~etapy -- w~ka¿dym etapie wiedza jest poddawana
+byæ podzielony na etapy -- w~ka¿dym etapie wiedza jest poddawana
 pewnej obróbce (np. dyskretyzowane s¹ atrybuty, tworzone s¹
 regu³y, wiedza jest testowana). Poniewa¿ ka¿dy etap tworzy odrêbn¹
 ca³oœæ, a~czêœæ etapów jest od siebie niezale¿na, zatem mog¹ byæ
@@ -26,7 +26,7 @@ z=(a, p, we, wy)
 $$
 gdzie:
 \begin{itemize}
-    \item $a$ jest algorytmem, dostarczanym do~systemu w~postaci komponentu --
+    \item $a$ jest algorytmem, dostarczanym do systemu w~postaci komponentu --
     wtyczki,
     \item $p$ reprezentuje parametry algorytmu,
     \item $we$ i~$wy$ oznaczaj¹ odpowiednio informacje wejœciowe i
@@ -48,57 +48,57 @@ zdefiniowany program mo¿e byæ ³atwo prezentowany u¿ytkownikowi w~postaci
 graficznej. 
 
 \label{lab:agents}
-W systemie mo¿na definiowaæ agentów, którzy reaguj¹ na~zmiany w~danych i/lub
+W systemie mo¿na definiowaæ agentów, którzy reaguj¹ na zmiany w~danych i/lub
 wiedzy. Obecnie jest jedynym rodzajem zdarzenia, który mo¿e wywo³aæ akcje
 jest pojawienie siê nowych danych w~systemie. Jednak w~przysz³oœci istnieje
 mo¿liwoœæ dodania kolejnych rodzajów zdarzeñ takich jak np. wygenerowanie
-wiedzy przez innego agenta. W~reakcji na~wyst¹pienie zdarzenia system
-wykonuje zdefiniowany program, za~pomoc¹ którego mo¿na przyk³adowo sprawdziæ poprawnoœæ aktualnej zgromadzonej wiedzy na~nowych danych, czy wygenerowaæ now¹.
-% (np.\ na~dodanie nowego rekordu do~danych treningowych, czy
+wiedzy przez innego agenta. W~reakcji na wyst¹pienie zdarzenia system
+wykonuje zdefiniowany program, za pomoc¹ którego mo¿na przyk³adowo sprawdziæ poprawnoœæ aktualnej zgromadzonej wiedzy na nowych danych, czy wygenerowaæ now¹.
+% (np.\ na dodanie nowego rekordu do danych treningowych, czy
 %wygenerowanie wiedzy przez innego agenta).
 %W~systemie bêdzie mo¿na tak¿e
-%definiowaæ agentów, którzy reagowaæ bêd¹ na~zmiany w~danych i/lub wiedzy
-%(np.\ na~dodanie nowego rekordu do~danych treningowych, czy
+%definiowaæ agentów, którzy reagowaæ bêd¹ na zmiany w~danych i/lub wiedzy
+%(np.\ na dodanie nowego rekordu do danych treningowych, czy
 %wygenerowanie wiedzy przez innego agenta).
 
 
 %W~systemie bêdzie mo¿na tak¿e
-%definiowaæ agentów, którzy reagowaæ bêd¹ na~zmiany w~danych i/lub wiedzy
-%(np.\ na~dodanie nowego rekordu do~danych treningowych, czy
+%definiowaæ agentów, którzy reagowaæ bêd¹ na zmiany w~danych i/lub wiedzy
+%(np.\ na dodanie nowego rekordu do danych treningowych, czy
 %wygenerowanie wiedzy przez innego agenta).
 
 Bardzo wa¿nym mechanizmem Salomona jest mo¿liwoœæ tworzenia powi¹zañ 
 miêdzy poszczególnymi zadaniami. 
 Wynik jednego zadania mo¿e pos³u¿yæ jako wejœcie nastêpnego. 
 Salomon w~tym celu dostarcza œrodowisko. Wtyczka w~trakcie wykonywania zadania 
-oprócz dostêpu  do~menad¿erów posiada równie¿ dostêp do~œrodowiska, 
+oprócz dostêpu  do menad¿erów posiada równie¿ dostêp do œrodowiska, 
 z którego mo¿e pobraæ wartoœci zmiennych œrodowiskowych. 
-Dane œrodowisko tworzone jest na~pocz¹tku wykonania listy zadañ 
-i przekazywane jest kolejno do~nastêpnego zadania. 
+Dane œrodowisko tworzone jest na pocz¹tku wykonania listy zadañ 
+i przekazywane jest kolejno do nastêpnego zadania. 
 Wtyczka w~trakcie pracy mo¿e modyfikowaæ œrodowisko poprzez dodawanie, 
 usuwanie oraz edycjê poszczególnych zmiennych. W~ten sposób poszczególne 
 zadania mog¹ miêdzy sob¹ przekazywaæ informacje. Zmienne œrodowiskowe, 
-podobnie jak ustawienia i~rezultaty zadañ, s¹ persystentne, a~co za~tym 
+podobnie jak ustawienia i~rezultaty zadañ, s¹ persystentne, a~co za tym 
 idzie potrzebny jest mechanizm serializacji i~deserializacji.
 
-Mechanizm tworzenia zmiennych œrodowiskowych opiera siê na~tym samym modelu
+Mechanizm tworzenia zmiennych œrodowiskowych opiera siê na tym samym modelu
 co tworzenie ustawieñ i~rezultatów dla zadañ. Mo¿liwoœæ tworzenia zmiennych
 œrodowiskowych przez wtyczki mo¿e rodziæ wiele problemów z~zapewnieniem 
 kompatybilnoœci miêdzy ró¿nymi wersjami wtyczek, komunikuj¹cych siê ze sob¹, 
 dlatego te¿ aby unikn¹æ takich problemów, ka¿da wtyczka zmuszona bêdzie 
 dostarczyæ opis zmiennych, które mo¿e tworzyæ.
 
-% TODO: przeniesc do~implementacji -- dodac cos o~serializacji
-%Mechanizm serializacji opiera siê na~agregacji typów prostych 
+% TODO: przeniesc do implementacji -- dodac cos o~serializacji
+%Mechanizm serializacji opiera siê na agregacji typów prostych 
 %i innych typów z³o¿onych. Za~pomoc¹ takich elementów, 
 %programista mo¿e stworzyæ hierarchiczne struktury danych.
 %Wprowadzenie takiego mechanizmu podyktowane jest potrzeb¹ ukrycia
 %przed programist¹ sposobu zapisu danych w~bazie lub w~pliku. 
-%Dostarczenie spójnego modelu serializacji danych pozwala na~
-%niewidoczny dla wtyczek sposób podmiany implementacji na~bardziej 
+%Dostarczenie spójnego modelu serializacji danych pozwala na 
+%niewidoczny dla wtyczek sposób podmiany implementacji na bardziej 
 %efektywn¹ itp. Mechanizm ten mo¿e okazaæ siê równie¿ po¿yteczny 
-%po dodaniu do~Salomona mo¿liwoœci definiowania zadañ w~pliku (np. XML).
-%Serializacja danych mo¿e odbywaæ siê do~wielu formatów 
+%po dodaniu do Salomona mo¿liwoœci definiowania zadañ w~pliku (np. XML).
+%Serializacja danych mo¿e odbywaæ siê do wielu formatów 
 %np. XML, CSV, tabel w~bazie danych itp.
 
 Na wejœciu lub wyjœciu ka¿dego zadania mog¹ pojawiæ siê dane (w przypadku algorytmów, które
@@ -108,7 +108,7 @@ dokonuj¹ selekcji/segregacji danych), wiedza lub obie te rzeczy naraz (Rys \ref{
 	\item \begin{math} dane \Rightarrow  dane \end{math} - najczêœciej taki przypadek zdarza siê kiedy chcemy stworzyæ
 	zbiory treningowe lub zbiory testuj¹ce
 	\item \begin{math} dane \Rightarrow wiedza \end{math} - typowy przyk³ad wyszukiwania wiedzy: dostajemy dane, uzyskujemy wiedzê
-	\item \begin{math} wiedza + dane \Rightarrow  dane \end{math} - przypadek taki zachodzi kiedy chcemy wykorzystaæ zgromadzon¹ wiedzê na~dostarczonych danych
+	\item \begin{math} wiedza + dane \Rightarrow  dane \end{math} - przypadek taki zachodzi kiedy chcemy wykorzystaæ zgromadzon¹ wiedzê na dostarczonych danych
 	\item wiedza \begin{math}\Rightarrow \end{math} wiedza
 \end{itemize}
 

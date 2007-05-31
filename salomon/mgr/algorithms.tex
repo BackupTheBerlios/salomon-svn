@@ -2,16 +2,16 @@
 \subsubsection{Algorytm ID3}
 
 %http://www.cise.ufl.edu/~ddd/cap6635/Fall-97/Short-papers/2.htm
-Algorytm \emph{ID3} tworzy drzewo decyzyjne na~podstawie zbioru danych przyk³adowych.
-Utworzone w~ten sposób drzewo u¿ywane jest do~póŸniejszego klasyfikowania
+Algorytm \emph{ID3} tworzy drzewo decyzyjne na podstawie zbioru danych przyk³adowych.
+Utworzone w~ten sposób drzewo u¿ywane jest do póŸniejszego klasyfikowania
 zbiorów zawieraj¹cych podobne dane.
 
 Ka¿dy liœæ drzewa odpowiada podjêtej decyzji (czyli wartoœci atrybutu
 decyzyjnego), natomiast wêz³y reprezentuj¹ testy wartoœci pozosta³ych
-atrybutów, wp³ywaj¹cych na~decyzjê.
+atrybutów, wp³ywaj¹cych na decyzjê.
 
 Algorytm \emph{ID3} przedstawiony zosta³ przez \emph{J. Ross Quinlan'a} w~roku
-1975. Bazuje on na~algorytmie \emph{CLS (ang. Concept Learning System)}, który w
+1975. Bazuje on na algorytmie \emph{CLS (ang. Concept Learning System)}, który w
 uproszczeniu dzia³a nastêpuj¹co:
 
 \begin{enumerate}
@@ -20,7 +20,7 @@ uproszczeniu dzia³a nastêpuj¹co:
   wszystkie s¹ negatywne, tworzony jest wêze³ oznaczaj¹cy pora¿kê i~algorytm siê
   koñczy. W~przeciwnym przypadku wybierany jest jeden z~atrybutów
   (nie decyzyjnych) i~tworzony jest wêze³ decyzyjny.
-  \item Zbiór trenuj¹cy dzielony jest na~podzbiory wzglêdem wartoœci wybranego w
+  \item Zbiór trenuj¹cy dzielony jest na podzbiory wzglêdem wartoœci wybranego w
   kroku 1 atrybutu.
   \item Algorytm dzia³a rekurencyjnie dla ka¿dego z~podzbiorów utworzonych w
   kroku 2. O~wyborze atrybutu, wzglêdem którego dokonywany jest podzia³ na
@@ -31,18 +31,18 @@ uproszczeniu dzia³a nastêpuj¹co:
 wyboru atrybutu, wzglêdem którego dokonywany jest podzia³ zbioru.
 Spoœród wszystkich atrybutów nie decyzyjnych w~ka¿dym przebiegu algorytmu
 wybierany jest ten, który w~najlepszy sposób rozdzieli zbiór trenuj¹cy.
-Jest to~przyk³ad algorytmu zach³annego, za~ka¿dym razem wybierany jest bowiem
+Jest to~przyk³ad algorytmu zach³annego, za ka¿dym razem wybierany jest bowiem
 najlepszy w~danym momencie atrybut.
 
 Decyzja o~tym, który atrybut jest najlepszy w~danym przebiegu algorytmu
-podejmowana jest na~podstawie tzn. \emph{miary informacji} w~zbiorze.
-Mierzy ona, jak dobrze dany atrybut dzieli zbiór trenuj¹cy na~klasy docelowe.
+podejmowana jest na podstawie tzn. \emph{miary informacji} w~zbiorze.
+Mierzy ona, jak dobrze dany atrybut dzieli zbiór trenuj¹cy na klasy docelowe.
 Atrybut z~najwiêksz¹ miar¹ informacji, czyli taki, który jest najbardziej
 przydatny z~punktu widzenia klasyfikacji, jest wybierany.
 
 %http://www.dcs.napier.ac.uk/~peter/vldb/dm/node11.html
 
-Teoria informacji udziela odpowiedzi na~pytanie, który z~atrybutów jest
+Teoria informacji udziela odpowiedzi na pytanie, który z~atrybutów jest
 najbardziej przydany. Przypuœæmy, ¿e atrybut decyzyjny $D$ przyjmuje wartoœci
 $d_1..d_n$, z~kolei aktualnie rozwa¿any atrybut $A$ wartoœci $a_1..a_m$.
 
@@ -64,7 +64,7 @@ wartoœci atrybutu aj.
 	p(\frac{d_i}{a_j})log_{2}p(\frac{d_i}{a_j}) 
 \]
 
-oznacza entropiê atrybutu $A$ w~stosunku do~atrybutu decyzyjnego $D$.
+oznacza entropiê atrybutu $A$ w~stosunku do atrybutu decyzyjnego $D$.
 
 Wyra¿enie to~okreœla stopieñ niepewnoœci informacji -- im wy¿sza entropia, tym
 mniej pewna jest wartoœæ atrybutu decyzyjnego. Oznacza to, ¿e im atrybut ma
@@ -78,21 +78,21 @@ wyniki.
 Posiada on jednak kilka ograniczeñ -- nie radzi sobie z~ci¹g³ymi dziedzinami
 atrybutów oraz z~niepe³nymi danymi (rekordami wype³nionymi tylko czêœciowo)
 a tak¿e drzewo przez niego generowane ma przewa¿nie du¿y rozmiar.
-Algorytm ten nie jest tak¿e odporny na~zaburzenia danych wejœciowych 
-(ha³asu) -- w~takim przypadku mo¿e on prowadziæ do~wyst¹pienia wysokiego
-wspó³czynnika b³êdów na~danych testowych.
+Algorytm ten nie jest tak¿e odporny na zaburzenia danych wejœciowych 
+(ha³asu) -- w~takim przypadku mo¿e on prowadziæ do wyst¹pienia wysokiego
+wspó³czynnika b³êdów na danych testowych.
 
 
 \subsubsection{Algorytm C4.5}
 
 Algorytm \emph{C4.5} jest jednym z~najpopularniejszych algorytmów budowy drzew
-decyzyjnych. Stworzony zosta³ przez \emph{Quinlan'a} na~bazie metody \emph{ID3}
+decyzyjnych. Stworzony zosta³ przez \emph{Quinlan'a} na bazie metody \emph{ID3}
 i w~zamyœle mia³ usuwaæ ograniczenia swego poprzednika.
 
 W czasie budowy drzewa decyzyjnego algorytm \emph{ID3} nie radzi sobie z
 przypadkiem, gdy zbiór danych zawiera niekompletne informacje, czyli gdy rekordy maj¹ nieznan¹ wartoœæ dla pewnych
 atrybutów. Algorytm \emph{C4.5} potrafi obs³u¿yæ ten przypadek -- w~takiej
-sytuacji miara informacji obliczana jest na~podstawie atrybutów, dla których
+sytuacji miara informacji obliczana jest na podstawie atrybutów, dla których
 wartoœæ jest zdefiniowana. Podczas przetwarzania przez tak utworzone drzewo zbioru testuj¹cego, mo¿liwe
 jest sklasyfikowanie rekordów z~nieznan¹ wartoœci¹ pewnych atrybutów poprzez
 wyliczenie prawdopodobieñstwa mo¿liwych wyników.
@@ -100,26 +100,26 @@ wyliczenie prawdopodobieñstwa mo¿liwych wyników.
 Kolejnym ograniczeniem algorytmu \emph{ID3} jest mo¿liwoœæ obs³ugi tylko
 atrybutów o~wartoœciach dyskretnych. Algorytm \emph{C4.5} radzi sobie tak¿e z
 atrybutami przyjmuj¹cymi ci¹g³e wartoœci. W~takim przypadku przedzia³ wartoœci
-przyjmowany przez dany atrybut $A$ dzielony jest na~podprzedzia³y w~nastêpuj¹cy
+przyjmowany przez dany atrybut $A$ dzielony jest na podprzedzia³y w~nastêpuj¹cy
 sposób: 
 
 \begin{itemize}
   \item wartoœci atrybutu $A$ szeregowane s¹ rosn¹co ($a_1..a_m$)
-  \item dla ka¿dej z~wartoœci zbiór rekordów dzielony jest na~takie, dla których
+  \item dla ka¿dej z~wartoœci zbiór rekordów dzielony jest na takie, dla których
   wartoœæ atrybutu $A$ jest mniejsza b¹dŸ równa $a_i$ i~wiêksza od $a_i$
   \item dla ka¿dego takiego podzia³u wyliczana jest miara informacji i~wybierany
 jest najbardziej optymalny z~nich (dla którego miara informacji jest najwiêksza)
 \end{itemize}
 
-Drzewo decyzyjne utworzone za~pomoc¹ algorytmu \emph{ID3} mo¿e byæ dosyæ
+Drzewo decyzyjne utworzone za pomoc¹ algorytmu \emph{ID3} mo¿e byæ dosyæ
 z³o¿one i~mieæ mocno zró¿nicowane pod wzglêdem d³ugoœci ga³êzie, co, wraz z
-brakiem odpornoœci na~ha³as w~danych wejœciowych, prowadzi do~dosyæ wysokiego
+brakiem odpornoœci na ha³as w~danych wejœciowych, prowadzi do dosyæ wysokiego
 poziomu b³êdów dla rzeczywistych danych.
 
 Jednym z~udoskonaleñ tego algorytmu wprowadzonym przez algorytm \emph{C4.5} jest
-przycinanie ga³êzi drzewa. Polega ono na~zast¹pieniu ca³ego poddrzewa pojedynczym
-liœciem. Decyzja o~zast¹pieniu poddrzewa dokonywana jest na~podstawie porównania
-wyników obliczeñ algorytmu heurystycznego dokonywanych na~danym poddrzewie i~na liœciu.
+przycinanie ga³êzi drzewa. Polega ono na zast¹pieniu ca³ego poddrzewa pojedynczym
+liœciem. Decyzja o~zast¹pieniu poddrzewa dokonywana jest na podstawie porównania
+wyników obliczeñ algorytmu heurystycznego dokonywanych na danym poddrzewie i~na liœciu.
 
 Dziêki przycinaniu uzyskuje siê wiêksz¹ generalizacjê oceny nowych przypadków.
 

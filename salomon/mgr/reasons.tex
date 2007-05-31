@@ -4,7 +4,7 @@
 %Istnieja inne...
 
 %1. Struktura rozdzialu 2-giego powinna wygladac tak:
-%- do~czego ma byc system? (krotko, kilka zdan)
+%- do czego ma byc system? (krotko, kilka zdan)
 %- jaki ma byc? Czyli te akapity z~wymaganiami, ale w~innej kolejnosci:
 %* ergonomia (prosty, przyjazny interfejs, API)
 %* wlasny  sposob reprezentacji wiedzy (m.in. datasety wielowymiarowe)
@@ -13,7 +13,7 @@
 %* bezpieczenstwo
 %* licencja
  
-%Na koniec dochodzimy do~wniosku, ze system powinien miec np. architekture komponenowa, napisany w~Javie czy cos takiego.
+%Na koniec dochodzimy do wniosku, ze system powinien miec np. architekture komponenowa, napisany w~Javie czy cos takiego.
  
 %Kazdy z~tych punkcikow oznaczonych '*' powinien miec mniej wiecej taka strukture:
 %- jakiej cechy zadamy? (czyli np. "Jednym z~postawowych zalozen stawianych systemowi jest prosty i~przyjazny interfejs uzytkownika...")
@@ -21,25 +21,25 @@
 %- ewentualnie w~zestawieniu z~istniejacymi systami (Weka ma fajny, Vinlen niewygodny czy cos takiego)
 
 %TODO: Powody powstania systemu
-Koncepcja zak³ada stworzenie przyjaznego œrodowiska pozwalaj¹cego na~odkrywanie i~przechowywanie wiedzy
+Koncepcja zak³ada stworzenie przyjaznego œrodowiska pozwalaj¹cego na odkrywanie i~przechowywanie wiedzy
 oraz uruchamianie ró¿nych algorytmów machine learningu.
 
 Na rynku dostêpne s¹ ró¿ne narzêdzia wspomagaj¹ce prowadzenie obliczeñ zwi¹zanych
 z zagadnieniami uczenia maszynowego, jak choæby wy¿ej Weka (\ref{lab:weka} ) i~Vinlen (\ref{lab:vinlen}).
-Analiza ich mo¿liwoœci prowadzi do~stwierdzenia, ¿e posiadaj¹ one pewne ograniczenia,
-utrudniaj¹ce ich wykorzystanie do~pewnych zastosowañ.
-Formu³owane poni¿ej wymagania stanowi¹ czêsto odpowiedŸ na~ograniczenia Weki i~Vinlena.
+Analiza ich mo¿liwoœci prowadzi do stwierdzenia, ¿e posiadaj¹ one pewne ograniczenia,
+utrudniaj¹ce ich wykorzystanie do pewnych zastosowañ.
+Formu³owane poni¿ej wymagania stanowi¹ czêsto odpowiedŸ na ograniczenia Weki i~Vinlena.
 
 %-gui
 Jednym z~podstawowych za³o¿eñ stawianych systemowi jest prosty i~przyjazny \textbf{interfejs u¿ytkownika}.
 Czêsto cech¹ decyduj¹c¹ o~rozpoczêciu u¿ywania danej aplikacji jest pierwszy kontakt z~ni¹.
 Dlatego wa¿ne jest, aby graficzny interfejs u¿ytkownika
 u³atwia³ u¿ycie aplikacji mniej doœwiadczonym u¿ytkownikom i~aby nowy u¿ytkownik 
-systemu nie zosta³ zniechêcony ju¿ na~samym pocz¹tku.
+systemu nie zosta³ zniechêcony ju¿ na samym pocz¹tku.
 Nale¿y zatem zwróciæ uwagê, by aplikacja by³a prosta w~obs³udze zarówno dla twórcy wtyczek
 jak i~osoby wykonuj¹cej eksperymenty z~wykorzystaniem gotowych wtyczek.
 System powinien te¿ byæ dostarczany z~przyk³adowym zestawem wtyczek i~danych, 
-które pozwol¹ na~³atwe u¿ycie i~przetestowanie ka¿dego z~aspektów platformy.
+które pozwol¹ na ³atwe u¿ycie i~przetestowanie ka¿dego z~aspektów platformy.
 
 %-api
 Oprócz przyjaznego graficznego interfejsu u¿ytkownika platforma powinna
@@ -49,45 +49,45 @@ Pozwoli to~na ukrycie przed twórcami wtyczek takich aspektów implementacyjnych
 jak sposób reprezentacji drzew decyzyjnych czy zapis parametrów wejœciowych i~rezultatów wykonania zadañ.
 Wynika to~z~tego, ¿e osoby, które zajmuj¹ siê tworzeniem wtyczek 
 nie powinny musieæ braæ pod uwagê sposobu implementacji
-platformy, czyli np. przechowywania i~dostêpu do~danych czy kwestii komunikacji
+platformy, czyli np. przechowywania i~dostêpu do danych czy kwestii komunikacji
 miêdzy poszczególnymi zadaniami.
 
 Inn¹ u¿yteczn¹ w³aœciwoœci¹, któr¹ nale¿y rozwa¿yæ jest 
-umo¿liwienie tworzenia wtyczek za~pomoc¹ \textbf{jêzyków skryptowych}. Jest to~
+umo¿liwienie tworzenia wtyczek za pomoc¹ \textbf{jêzyków skryptowych}. Jest to~
 szczególnie po¿yteczna w³aœciwoœæ np. w~przypadku tworzenia nowego algorytmu.
 W takiej sytuacji u¿yteczna jest mo¿liwoœæ szybkiego wprowadzania zmian
 i natychmiastowego przetestowania zachowania algorytmu bez koniecznoœci
 prze³adowywania ca³ej wtyczki.
 
-Wyspecyfikowanie dobrze zdefiniowanych interfejsów pozwalaj¹cych na~manipulowanie wiedz¹
-pozwoli na~znaczne uproszczenie procesu tworzenia wtyczek, a~dodatkowo pozwoli na~
+Wyspecyfikowanie dobrze zdefiniowanych interfejsów pozwalaj¹cych na manipulowanie wiedz¹
+pozwoli na znaczne uproszczenie procesu tworzenia wtyczek, a~dodatkowo pozwoli na 
 stworzenie wydajnego i~dobrze przetestowanego API.
 
 Z kolei ukrycie sposobu zapisu danych i~wiedzy umo¿liwi \textbf{³atwiejsz¹ 
 komunikacjê} pomiêdzy ró¿nymi wtyczkami czy podsystemami. Odizolowanie 
 algorytmów (wtyczek) od zapisu/odczytu danych pozwoli równie¿ zapewniæ 
 odpowiedni poziom bezpieczeñstwa. Przyk³adowo system powinien posiadaæ API 
-pozwalaj¹ce na~tworzenie, manipulacje, odczyt i~zapis drzew decyzyjnych, dziêki 
-czemu ró¿ne aspekty pracy na~drzewach decyzyjnych mo¿na by by³o umieœciæ w~
+pozwalaj¹ce na tworzenie, manipulacje, odczyt i~zapis drzew decyzyjnych, dziêki 
+czemu ró¿ne aspekty pracy na drzewach decyzyjnych mo¿na by by³o umieœciæ w~
 osobnych wtyczkach, niekoniecznie dostarczanych przez tego samego dostawce. 
 Jednak przede wszystkim praca nad jedn¹ czêœci¹ (np. prezentacj¹ drzew) nie wymaga³oby 
-wiedzy na~temat innych wtyczek.
+wiedzy na temat innych wtyczek.
 
 % - wiedza
 \label{lab:knowledge}
 System wspomagaj¹cy procesy machine learningu,
 powinien odznaczaæ siê spójnym i~przejrzystym, a~jednoczeœnie wydajnym sposobem \textbf{reprezentacji wiedzy}.
 Wiêkszoœæ algorytmów machine learning wymaga danych wejœciowych.
-Rozró¿niamy dane trenuj¹ce, które s¹ wykorzystywane do~uczenia algorytmu oraz 
-dane testuj¹ce. Zbiór danych testuj¹cych wykorzystywany jest do~oceny wyników 
+Rozró¿niamy dane trenuj¹ce, które s¹ wykorzystywane do uczenia algorytmu oraz 
+dane testuj¹ce. Zbiór danych testuj¹cych wykorzystywany jest do oceny wyników 
 algorytmu. Oba zbiory zazwyczaj stanowi¹ losowy podzbiór dostêpnych danych.
 
 W znanych nam systemach u¿ywan¹ s¹ jednowymiarowe zbiory trenuj¹ce (jedna tabela, 
-bez powi¹zañ z~innymi). Taki model pasuje do~wiêkszoœci algorytmów ucz¹cych, jednak 
+bez powi¹zañ z~innymi). Taki model pasuje do wiêkszoœci algorytmów ucz¹cych, jednak 
 istnieje pewne ryzyko utraty danych, które nios¹ z~sob¹ relacje miêdzy danymi. 
-Dlatego chcielibyœmy, aby system tworzy³ i~operowa³ na~wielowymiarowych zbiorach 
+Dlatego chcielibyœmy, aby system tworzy³ i~operowa³ na wielowymiarowych zbiorach 
 trenuj¹cych. Z~punktu widzenie algorytmu struktura takiego zbioru nie powinna 
-odbiegaæ od wejœciowej bazy danych. Jedyna ró¿nica powinna polegaæ na~iloœci 
+odbiegaæ od wejœciowej bazy danych. Jedyna ró¿nica powinna polegaæ na iloœci 
 dostêpnych danych. Takie te¿ jest pierwsze i~najbardziej naturalne zrozumienie 
 zbioru trenuj¹cego, jako podzbioru danych o~niezmienionej strukturze.
 
@@ -95,21 +95,21 @@ System powinien tworzyæ podzbiór danych przed utworzeniem atrybutów.
 Jest to~podejœcie ró¿ne o~tego, które stosuje siê w~innych aplikacjach.
 Przyk³adowo w~Wece zbiór danych jest podzbiorem zbioru atrybutów. 
 W proponowanym podejœciu zbiór danych nie bêdzie wymaga³ kopiowania danych 
-z zewnêtrznego Ÿród³a, a~jedynie definiowa³ przepis na~utworzenie takowego 
+z zewnêtrznego Ÿród³a, a~jedynie definiowa³ przepis na utworzenie takowego 
 (np. w~postaci zapytania, stanowi¹cego zbiór warunków).
 Z kolej zbiór atrybutów stanowiæ bêdzie opis transformacji oryginalnych danych
-na dane wejœciowe do~algorytmów ucz¹cych. Wyró¿nienie warstwy atrybutów jest konieczne,
-gdy¿ wiêkszoœæ algorytmów wymaga na~wejœciu przetworzonych danych.
-Przetworzenie polega g³ównie na~okreœleniu typu danego atrybutu, czyli np. czy jest to~atrybut wejœciowy
+na dane wejœciowe do algorytmów ucz¹cych. Wyró¿nienie warstwy atrybutów jest konieczne,
+gdy¿ wiêkszoœæ algorytmów wymaga na wejœciu przetworzonych danych.
+Przetworzenie polega g³ównie na okreœleniu typu danego atrybutu, czyli np. czy jest to~atrybut wejœciowy
 czy wyjœciowy oraz jakiego jest rodzaju (napisowy, liczbowy, wyliczeniowy).
 
-Rozwi¹zanie przyjête w~systemie zapewnia szereg korzyœci. Atrybuty budowane na~zbiorach danych umo¿liwi¹
+Rozwi¹zanie przyjête w~systemie zapewnia szereg korzyœci. Atrybuty budowane na zbiorach danych umo¿liwi¹
 zachowanie oryginalnej, czêsto wielowymiarowej struktury oryginalnych danych i~zwi¹zków miêdzy nimi.
 Zastosowanie warstwy poœredniej miêdzy atrybutami a~danymi, w~postaci zbiorów danych, ma te¿ inne zalety.
 Poniewa¿ zbiory danych stanowi¹ jedynie opis, w~jakiœ sposób oryginalne dane mog¹ zostaæ wydobyte
 i jak maj¹ byæ interpretowane, pozwala to~na przechowywanie tych danych w~zewnêtrznych Ÿród³ach.
-Dziêki temu nie trzeba ich kopiowaæ do~bazy, na~której maj¹ byæ wykonywane algorytmy,
-co wi¹¿e siê z~nie tylko z~ich bezpieczeñstwem, ale tak¿e pozwala algorytmom na~pracê z~zawsze aktualnymi
+Dziêki temu nie trzeba ich kopiowaæ do bazy, na której maj¹ byæ wykonywane algorytmy,
+co wi¹¿e siê z~nie tylko z~ich bezpieczeñstwem, ale tak¿e pozwala algorytmom na pracê z~zawsze aktualnymi
 danymi bez koniecznoœci dodatkowej synchronizacji miêdzy Ÿród³ami danych, a~aplikacj¹, która z~nich korzysta.
 Nie bez znaczenia jest te¿ fakt, ¿e przechowuj¹c dane w~zewnêtrznych Ÿród³ach danych
 i unikaj¹c koniecznoœci ich kopiowania mo¿na oszczêdziæ sporo przestrzeni dyskowej,
@@ -123,12 +123,12 @@ algorytmów, co umo¿liwi wspó³pracê w~jednym œrodowisku ró¿nych wersji
 systemu, a~nawet ró¿nych jego implementacji. Budowa systemu powinna w~jak 
 najwiêkszym stopniu wspieraæ mo¿liwoœæ powstania ró¿nych niezale¿nych 
 implementacji algorytmów uczenia maszynowego, dostarczanych przez ró¿nych 
-dostawców. Dziêki odseparowaniu wtyczek od platformy i~przeniesieniu na~ni¹ 
-odpowiedzialnoœci za~zapewnienie komunikacji miêdzy poszczególnymi wtyczkami
+dostawców. Dziêki odseparowaniu wtyczek od platformy i~przeniesieniu na ni¹ 
+odpowiedzialnoœci za zapewnienie komunikacji miêdzy poszczególnymi wtyczkami
 mo¿liwe bêdzie np. zastosowanie obliczeñ równoleg³ych i~rozproszonych, 
 bez dodatkowych wymagañ stawianych wtyczkom.
 
-Przeniesienie ciê¿aru obliczeñ z~platformy do~wtyczek poci¹ga za~sob¹ koniecznoœæ
+Przeniesienie ciê¿aru obliczeñ z~platformy do wtyczek poci¹ga za sob¹ koniecznoœæ
 zapewnienia przez platformê mechanizmów aktualizacji wtyczek. Mog¹ byæ one umieszczane
 w zdalnych lokalizacjach, tak wiêc platforma powinna posiadaæ mechanizmy kontroluj¹ce
 wersje u¿ywanych wtyczek i~w razie potrzeby aktualizuj¹ce je
@@ -137,36 +137,36 @@ w sposób mo¿liwie wygodny dla u¿ytkownika.
 % gotowe algorytmy
 Architektura komponentowa i~niezale¿noœæ pomiêdzy poszczególnymi wtyczkami 
 umo¿liwi \textbf{wykorzystanie gotowych algorytmów}. W~Vinlenie zosta³y czêœciowo 
-wykorzystane implementacje algorytmów przygotowanych do~wczeœniejszych 
+wykorzystane implementacje algorytmów przygotowanych do wczeœniejszych 
 projektów jak np. program Emerald (przypisek). Znajdziemy tam takie algorytmy jak 
 Abacuse, AQ czy Cluster. Czêœæ z~tych implementacji jest bardzo nowatorska i~dysponuje 
 wielkimi mo¿liwoœciami. W~Wece mo¿emy znaleŸæ jeszcze wiêksz¹ gamê dostêpnych 
 algorytmów. Dlatego te¿ system powinien charakteryzowaæ siê odpowiednia 
-architektur¹, która w~³atwy sposób pozwoli na~powtórne u¿ycie ju¿ 
+architektur¹, która w~³atwy sposób pozwoli na powtórne u¿ycie ju¿ 
 zaimplementowanych algorytmów.
 
 W przypadku u¿ycia algorytmów pochodz¹cych z~ró¿nych, nie zawsze pewnych, Ÿróde³
-pojawia siê problem bezpieczeñstwa oraz zaufania do~ró¿nych 
+pojawia siê problem bezpieczeñstwa oraz zaufania do ró¿nych 
 implementacji. Naturalnym rozwi¹zaniem tego problemu wydajê siê zastosowanie 
 bezpiecznych jêzyków programowania, takich jak Java wraz z~jej systemem bezpieczeñstwa
 i ograniczenia uprawnieñ.
 
 % - agenty
-System powinien reagowaæ na~zmiany w~œrodowisku, w~którym zosta³ zainstalowany. 
+System powinien reagowaæ na zmiany w~œrodowisku, w~którym zosta³ zainstalowany. 
 Przyk³adowo, kiedy pojawiaj¹ siê nowe dane w~zewnêtrznej bazie danych, nale¿y 
-przetestowaæ aktualnie zgromadzon¹ wiedzê na~nowych danych lub dokonaæ nowych 
-obliczeñ. Wymaganie to~realizowaæ bêd¹ tzw. \textbf{agenty} (link do~opisu w~dok.).
+przetestowaæ aktualnie zgromadzon¹ wiedzê na nowych danych lub dokonaæ nowych 
+obliczeñ. Wymaganie to~realizowaæ bêd¹ tzw. \textbf{agenty} (link do opisu w~dok.).
 Poniewa¿ system bêdzie móg³ pracowaæ w~œrodowisku rozproszonym, 
-ka¿dy z~agentów pracuj¹cych na~ró¿nych maszynach mo¿e niezale¿nie wygenerowaæ now¹ wiedze, 
-po czym wiedza ta powinna zostaæ rozdystrybuowana do~pozosta³ych agentów.
-Takie podejœcie pozwala na~bezobs³ugow¹ prace systemu. System sam powinien 
+ka¿dy z~agentów pracuj¹cych na ró¿nych maszynach mo¿e niezale¿nie wygenerowaæ now¹ wiedze, 
+po czym wiedza ta powinna zostaæ rozdystrybuowana do pozosta³ych agentów.
+Takie podejœcie pozwala na bezobs³ugow¹ prace systemu. System sam powinien 
 podejmowaæ akacje w~wyniku pewnych zdarzeñ w~jego œrodowisku. 
 Idea agentów zosta³a zaczerpniêta z~Vinlena, który posiada 
 wsparcie analogicznych mechanizmów, zwanych tam skautami.
 Stanowi¹cych one integraln¹ czêœæ tego systemu.
 Weka nie posiada wsparcia dla takich mechanizmów.
-Jest ona bardziej narzêdziem do~przeprowadzania akademickich 
-eksperymentów na~algorytmach ni¿ narzêdziem do~zastosowañ biznesowych, 
+Jest ona bardziej narzêdziem do przeprowadzania akademickich 
+eksperymentów na algorytmach ni¿ narzêdziem do zastosowañ biznesowych, 
 zainstalowane w~œrodowisku produkcyjnym. System powinien posiadaæ cechy, 
 które umo¿liwi¹ jego zastosowanie zarówno w~rozwi¹zaniach biznesowych jak i~
 akademickich.
@@ -176,8 +176,8 @@ System, który mo¿e wykonywaæ skomplikowane i~d³ugotrwa³e obliczenia powinien
 mieæ mo¿liwoœæ ich \textbf{rozpraszania}.
 W dobie rozpowszechniania siê technologii gridowych i~klastrowych aplikacje powinny
 móc korzystaæ z~mo¿liwoœci, jakie te technologie udostêpniaj¹.
-Dzia³anie w~œrodowisku heterogenicznym pozwala nie tylko na~lepsze 
-wykorzystanie zasobów sprzêtowych, ale równie¿ na~dostêp do~wielu Ÿróde³ danych 
+Dzia³anie w~œrodowisku heterogenicznym pozwala nie tylko na lepsze 
+wykorzystanie zasobów sprzêtowych, ale równie¿ na dostêp do wielu Ÿróde³ danych 
 przy zapewnieniu bezpieczeñstwach tych danych. Rozproszone instancje powinny 
 wymieniaæ jak najmniejsz¹ iloœæ informacji, by nie obci¹¿aæ nadmiernie zasobów komunikacyjnych.
 
@@ -186,26 +186,26 @@ Taka mo¿liwoœæ powinna byæ dostêpna ramach pojedynczej instancji systemu,
 co powinno byæ uwzglêdnione w~jego architekturze.
 W naszym przypadku w³aœciwym i~najprostszym modelem jest napisanie 
 aplikacji pracuj¹cych w~oparciu o~w¹tki i~przeniesienie ciê¿aru zrownolegniania 
-na inne mechanizmy, takie jak klasteryzcja itp. Obecnie na~rynku znajduj¹ siê systemy
-pozwalaj¹ce na~zrównoleglenie aplikacji wielow¹tkowej w~sposób przeŸroczysty 
+na inne mechanizmy, takie jak klasteryzcja itp. Obecnie na rynku znajduj¹ siê systemy
+pozwalaj¹ce na zrównoleglenie aplikacji wielow¹tkowej w~sposób przeŸroczysty 
 dla u¿ytkownika jak i~dla aplikacji. Œwietnym przyk³adem takiej aplikacji jest 
 np. MOSIX (http://www.mosix.org/), który z~klastrów linuxowych x86 tworzy 
 system wieloprocesorowy.
 
 W celu zapewnianiu \textbf{bezpieczeñstwa danych}, aplikacja nie powinna wysy³aæ samych danych,
-ale wy³¹cznie wiedzê. Nale¿y równie¿ za³o¿yæ ograniczone zaufanie do~instancji 
+ale wy³¹cznie wiedzê. Nale¿y równie¿ za³o¿yæ ograniczone zaufanie do instancji 
 pracuj¹cych w~nieznanym œrodowisku, dlatego ka¿de Ÿród³o danych powinno byæ zabezpieczone.
-W zastosowaniach komercyjnych system mo¿e mieæ dostêp do~kluczowych danych 
+W zastosowaniach komercyjnych system mo¿e mieæ dostêp do kluczowych danych 
 przedsiêbiorstwa czy instytucji. Model bezpieczeñstwa komunikacji miêdzy 
-ró¿nymi instancjami, chcielibyœmy oprzeæ na~obecnie dostêpnych metodach ochrony 
+ró¿nymi instancjami, chcielibyœmy oprzeæ na obecnie dostêpnych metodach ochrony 
 jak np. VPN (Virtual Private Network). Zak³adamy, ¿e system bêdzie zainstalowany w~
 bezpiecznym œrodowisku, dlatego ochron¹ warstwy komunikacji powinien 
 zaj¹æ siê administrator.
 
 % TODO: to~gdzie? (do wykorzystania algorytmow?)
-%Wa¿nym aspektem jest dostêp do~algorytmów Weki, 
-%ale tak¿e do~ewentualnego u¿ycia algorytmów z~VINLENA, co jedna wymaga 
-%zastosowania odpowiedniej licencji (link do~odpowiedniego punktu. VINLEN zosta³ 
+%Wa¿nym aspektem jest dostêp do algorytmów Weki, 
+%ale tak¿e do ewentualnego u¿ycia algorytmów z~VINLENA, co jedna wymaga 
+%zastosowania odpowiedniej licencji (link do odpowiedniego punktu. VINLEN zosta³ 
 %napisany w~jêzyku C++, zatem system powinnen wspieraæ równie¿ inne jêzyki 
 %programowania a~szczególnie wspomniany C++.
 
@@ -215,52 +215,52 @@ zaj¹æ siê administrator.
 %dokonywana czêsto to~jednak w~przypadku algorytmów mo¿e to~nastêpowaæ bardzo 
 %czêsto. Przyk³adowym zastosowaniem wymagaj¹cym czêstych aktualizacji jest 
 %wynajmowanie mocy obliczeniowej innym instytucjom. Mo¿na wyobraziæ sobie 
-%sytuacje, w~której nasz system zainstalowany jest na~wydajnej maszynie, np. klastrze.
-%Wykonuje on obliczenia na~zlecenie, co w~oczywisty sposób 
+%sytuacje, w~której nasz system zainstalowany jest na wydajnej maszynie, np. klastrze.
+%Wykonuje on obliczenia na zlecenie, co w~oczywisty sposób 
 %wymaga³oby pobrania nie tylko parametrów, czy danych, ale równie¿ samych 
 %algorytmów. Oba referencyjne systemy nie spe³niaj¹ wymaganych przez nas 
 %kryteriów.
 
 % -- Licencja
-Istotn¹ cech¹ wp³ywaj¹c¹ na~popularnoœæ aplikacji jest sposób ich \textbf{licencjonowania},
-dlatego system powininen byæ dostêpny na~licencji, która umo¿liwiaæ bêdzie jego
+Istotn¹ cech¹ wp³ywaj¹c¹ na popularnoœæ aplikacji jest sposób ich \textbf{licencjonowania},
+dlatego system powininen byæ dostêpny na licencji, która umo¿liwiaæ bêdzie jego
 powszechne u¿ywanie.
 Vinlen to~system komercyjny, dostarczany bez kodu Ÿród³owego, 
 dlatego jego wykorzystanie jest utrudnione zarówno jako platformy dla w³asnych 
 algorytmów jak i~jego algorytmów. Z~racji braku kodu Ÿród³owego nie s¹ mo¿liwe 
-ewentualne modyfikacje i~dostosowania do~naszych potrzeb.
-Weka dostarczana jest na~licencji \emph{GPL}\footnote{GNU General Public License 
--- jedna z~licencji wolnego oprogramowania, pozwala na~korzystanie z~programu w~dowolnym celu, 
+ewentualne modyfikacje i~dostosowania do naszych potrzeb.
+Weka dostarczana jest na licencji \emph{GPL}\footnote{GNU General Public License 
+-- jedna z~licencji wolnego oprogramowania, pozwala na korzystanie z~programu w~dowolnym celu, 
 badanie, w~jaki sposób program dzia³a i~modyfikowanie go, dystrybuowanie kopii, 
 ulepszania programu i~udostêpniania poprawek innym. 
 (\href{http://www.gnu.org/licenses/gpl.html}{http://www.gnu.org/licenses/gpl.html})}, 
 która jest licencj¹ open source, jednak równie¿ stwarza pewne problemy. 
 W przypadku tej licencji niemo¿liwe jest u¿ycie aplikacji w~innym systemie o~
 zamkniêtym kodzie Ÿród³owym.
-Licencja, na~której bêdzie dostêpny system powinna umo¿liwiaæ wykorzystanie 
+Licencja, na której bêdzie dostêpny system powinna umo¿liwiaæ wykorzystanie 
 go w~zamkniêtych, komercyjnych projektach, a~zarazem po¿¹dan¹ cech¹ jest to, 
-aby by³a zgodna z~GPL. Zgodnoœæ licencji jest wymagana do~ewentualnego u¿ycia 
+aby by³a zgodna z~GPL. Zgodnoœæ licencji jest wymagana do ewentualnego u¿ycia 
 algorytmów Weki w~systemie. Po wstêpnej analizie dostêpnych licencji, 
 jedn¹ z~tych, która spe³nia nasze, wymagania jest licencja 
 \emph{LGPL}\footnote{GNU Lesser General Public License 
 -- licencja wolnego oprogramowania, stanowi¹ca kompromis pomiêdzy GNU GPL a~licencjami liberalnymi.
-Nak³ada ograniczenia okreœlane jako \emph{copyleft} na~poszczególne pliki Ÿród³owe,
-ale nie na~ca³y program, pod warunkiem u¿ywania odpowiedniego mechanizmu bibliotek wspó³dzielonych 
+Nak³ada ograniczenia okreœlane jako \emph{copyleft} na poszczególne pliki Ÿród³owe,
+ale nie na ca³y program, pod warunkiem u¿ywania odpowiedniego mechanizmu bibliotek wspó³dzielonych 
 (ang. shared library) oraz przestrzegania pewnych dodatkowych ograniczeñ
 (\href{http://www.gnu.org/licenses/lgpl.html}{http://www.gnu.org/licenses/lgpl.html})}.
 
-Podsumowanie powy¿szych wymagañ prowadzi do~stwierdzenia,
+Podsumowanie powy¿szych wymagañ prowadzi do stwierdzenia,
 ¿e system powinien cechowaæ siê architekturê komponentow¹, 
 a jego funkcjonalnoœæ powinna byæ ³atwo rozszerzalna, dziêki dobrze zdefiniowanemu \emph{API}. 
 Rozszerzalnoœæ ta bêdzie zapewniona poprzez zewnêtrzne komponenty pochodz¹ce od ró¿nych dostawców, tzw. \emph{wtyczki}.
 Dziêki temu mo¿liwe bêdzie wykorzystanie gotowych i~sprawdzonych algorytmów.
 Jego architektura powinna wspieraæ wykorzystanie mo¿liwoœci maszyn wieloprocesorowych  
 oraz klastrów st¹d koniecznoœæ zapewnienia prowadzenia obliczeñ w~œrodowisku rozproszonym.
-To poci¹ga za~sob¹ u¿ycie jêzyka programowania wspieraj¹cego tworzenie wielow¹tkowych aplikacji
+To poci¹ga za sob¹ u¿ycie jêzyka programowania wspieraj¹cego tworzenie wielow¹tkowych aplikacji
 rozproszonych np. jêzyka \emph{Java}.
-Jedn¹ z~cech wp³ywaj¹cych na~jego u¿ytecznoœæ powinien byæ tak¿e przyjazny
-i intuicyjny graficzny interfejs u¿ytkownika oraz udostêpnienie go na~licencji
-pozwalaj¹cej na~jak najszersze jego u¿ytkowanie, jak¹ jest licencja LGPL.
+Jedn¹ z~cech wp³ywaj¹cych na jego u¿ytecznoœæ powinien byæ tak¿e przyjazny
+i intuicyjny graficzny interfejs u¿ytkownika oraz udostêpnienie go na licencji
+pozwalaj¹cej na jak najszersze jego u¿ytkowanie, jak¹ jest licencja LGPL.
 
 %II. Salomon
 %1. Napisaæ postulaty - dlaczego piszemy Salomona:
@@ -269,10 +269,10 @@ pozwalaj¹cej na~jak najszersze jego u¿ytkowanie, jak¹ jest licencja LGPL.
 %- wykorzystanie gotowych algorytmów
 %bezpieczeñstwo
 %- komponentowa architektura
-%- podejœcie do~data set i~attribute set
+%- podejœcie do data set i~attribute set
 %- jedna reprezentacja wiedzy dzielona pomiêdzy ro¿ne algorytmy
 %- przenoœnoœæ
-%- dostêp nie tylko do~wiedzy, ale tak¿e do~danych (indukcyjna baza danych)
+%- dostêp nie tylko do wiedzy, ale tak¿e do danych (indukcyjna baza danych)
 %Api i~licencja:
 %- proste API
 %- licencja
@@ -284,7 +284,7 @@ pozwalaj¹cej na~jak najszersze jego u¿ytkowanie, jak¹ jest licencja LGPL.
 %3. Komponentowa architektura
 %4. Proste API
 %5. Otwarta licencja
-%6. Podejscie do~datasetow i~atrybutow
+%6. Podejscie do datasetow i~atrybutow
 %7. Jedna reprezentacja wiedzy (w wece drzewa nie maja wpolnej reprezentacji przez co niezaleznie rozwijane algorytmy moga ze soba wspolpracowac
 
 %2. Uzasadnienie potrzeby stworzenia platformy
@@ -294,7 +294,7 @@ pozwalaj¹cej na~jak najszersze jego u¿ytkowanie, jak¹ jest licencja LGPL.
 %	* eksperymenty i~doswiadczenia (Weka itd.)
 %- z~tego ma wynikac koncepcja Salomona:
 %	* jako platformy laczacej te aspekty
-%	* odpowiedz na~ograniczenia np. Vinlena
+%	* odpowiedz na ograniczenia np. Vinlena
 %- przedstawic postulaty, ktore spelaniac ma platfroma
 %	* zalozenia koncepcyjne (np. koncepcja zadan)
 %	* zalozenia implementacyjne (przenosnosc, rownoleglosc itp).

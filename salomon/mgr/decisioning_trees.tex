@@ -6,7 +6,7 @@
 %Harbor-UCLA Medical Center
 %Torrance, California, page 2-3
 
-Rozwi¹zywanie zagadnieñ klasyfikacyjnych to~jedno z~zastosowañ algorytmów uczenia maszynowego. Zadania klasyfikacyjne polegaj¹ na~okreœleniu wartoœci jednego z~atrybutów danych (zwanego atrybutem \emph{decyzyjnym}) na~podstawie wartoœci innych atrybutów i~pewnych danych historycznych. Dane historyczne pe³ni¹ rolê danych trenuj¹cych -- algorytm ,,uczy siê'' jakie wartoœci przyjmuje atrybut, którego wartoœæ ma byæ predykowana, w~zale¿noœci od wartoœci pozosta³ych atrybutów. Do~sprawdzenia poprawnoœci predykcji mo¿e zostaæ wykorzystany zbiór danych testuj¹cych, dla którego znana wartoœæ atrybutu decyzyjnego porównywana jest z~wartoœci¹ uzyskan¹ w~wyniku dzia³ania algorytmu.
+Rozwi¹zywanie zagadnieñ klasyfikacyjnych to~jedno z~zastosowañ algorytmów uczenia maszynowego. Zadania klasyfikacyjne polegaj¹ na okreœleniu wartoœci jednego z~atrybutów danych (zwanego atrybutem \emph{decyzyjnym}) na podstawie wartoœci innych atrybutów i~pewnych danych historycznych. Dane historyczne pe³ni¹ rolê danych trenuj¹cych -- algorytm ,,uczy siê'' jakie wartoœci przyjmuje atrybut, którego wartoœæ ma byæ predykowana, w~zale¿noœci od wartoœci pozosta³ych atrybutów. Do~sprawdzenia poprawnoœci predykcji mo¿e zostaæ wykorzystany zbiór danych testuj¹cych, dla którego znana wartoœæ atrybutu decyzyjnego porównywana jest z~wartoœci¹ uzyskan¹ w~wyniku dzia³ania algorytmu.
 
 \subsection{Drzewa decyzyjne}
 \label{lab:dec_trees}
@@ -14,12 +14,12 @@ Rozwi¹zywanie zagadnieñ klasyfikacyjnych to~jedno z~zastosowañ algorytmów uczeni
 Jednym z~przyk³adów reprezentacji wiedzy uzyskanej
 za pomoc¹ algorytmów uczenia maszynowego s¹ drzewa decyzyjne.
 
-Przyk³adami takich algorytmów s¹ \emph{ID3} i~\emph{C4.5}, wprowadzone  przez \emph{J. Ross Quinlan'a} do~tworzenia na~podstawie danych indukcyjnych modeli klasyfikuj¹cych, zwanych  drzewami decyzyjnymi.
+Przyk³adami takich algorytmów s¹ \emph{ID3} i~\emph{C4.5}, wprowadzone  przez \emph{J. Ross Quinlan'a} do tworzenia na podstawie danych indukcyjnych modeli klasyfikuj¹cych, zwanych  drzewami decyzyjnymi.
 
 Jako wejœcie otrzymuj¹ one zbiór rekordów o~jednakowej strukturze, sk³adaj¹cy siê z~pewnej liczby par atrybut-wartoœæ. Jeden z~tych atrybutów reprezentuje
 tzw. kategoriê rekordu, jest te¿ okreœlany mianem atrybutu decyzyjnego.
 
-Celem algorytmów jest stworzenie drzewa, które na~podstawie wartoœci
+Celem algorytmów jest stworzenie drzewa, które na podstawie wartoœci
 pozosta³ych atrybutów okreœli wartoœæ atrybutu decyzyjnego.
 Zwykle atrybut decyzyjny przyjmuje wartoœci logiczne \emph{(prawda, fa³sz)}, 
 \emph{(sukces/pora¿ka)} lub podobne. W~ka¿dym przypadku jedna z~wartoœci
@@ -29,7 +29,7 @@ Drzewa decyzyjne zawdziêczaj¹ sw¹ nazwê temu, ¿e prezentowane s¹ w~formie
 struktury drzewiastej (Rys \ref{fig:sample_tree}). Graficzna reprezentacja powoduje,
 ¿e zrozumienie go, czy te¿ porównanie z~innym drzewem jest proste nawet dla cz³owieka. 
 Drzewa decyzyjne sta³y siê bardzo popularne w~technikach eksploracji danych (szerzej opisanych w~rozdziale \ref{lab:data_mining}). 
-S¹ one najpowszechniej u¿ywane do~klasyfikacji (predykuj¹ do~której grupy nale¿y dany przypadek), lecz mog¹ byæ równie¿ u¿ywane przy regresji (predykuj¹ wartoœæ).
+S¹ one najpowszechniej u¿ywane do klasyfikacji (predykuj¹ do której grupy nale¿y dany przypadek), lecz mog¹ byæ równie¿ u¿ywane przy regresji (predykuj¹ wartoœæ).
 
 % The decision tree method encompasses a~number of specific algorithms, including
 % Classification and Regression Trees (CART), Chi-squared Automatic Interaction
@@ -54,7 +54,7 @@ Mo¿na je równie¿ przedstawiaæ w~postaci regu³ tekstowych np.
 \emph{Jeœli Dochód = Wysoki i~Lata Pracy $>$ 5 Wtedy Ryzyko kredytowe = Ma³e}.
 \\
 \\
-Algorytmy drzew decyzyjnych s¹ bardzo podobne do~algorytmów indukcji regu³, które
+Algorytmy drzew decyzyjnych s¹ bardzo podobne do algorytmów indukcji regu³, które
 produkuj¹ zbiory regu³ bez drzew decyzyjnych.
 
 % The primary output of a~decision tree algorithm is the tree itself. The 
