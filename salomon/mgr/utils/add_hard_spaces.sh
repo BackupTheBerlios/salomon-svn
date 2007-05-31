@@ -5,7 +5,7 @@ f__usage()
     echo "Usage: $0 <dir>"
 }
  
-WORD_LIST="i w a z o to na do za I W A Z O To Na Do Za"
+WORD_LIST="i w a z o I W A Z O"
  
 ##############################  MAIN SCRIPT  ##################################
  
