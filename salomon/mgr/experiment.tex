@@ -1,7 +1,8 @@
 \section{Opis eksperymentu}
+\label{lab:experiment}
 
 Celem eksperymentu jest zademonstrowanie mo¿liwoœci platformy jako œrodowiska,
-które nadzoruje obliczenia uczenia maszynowego oraz u³atwia proces tworzenia algorytmów (w postaci wtyczek) %w oparciu o dostarczone wtyczki.
+które nadzoruje obliczenia uczenia maszynowego oraz u³atwia proces tworzenia algorytmów (w postaci wtyczek). %w oparciu o dostarczone wtyczki.
 
 Przyk³adowe zadanie obliczeniowe ma na celu utworzenie drzewa decyzyjnego
 w oparciu o zbiór atrybutów. Atrybuty te definiuj¹ w jaki sposób interpretowany
@@ -22,7 +23,7 @@ osobn¹ wtyczkê pozwala nie tylko na wielokrotne wykorzystanie wtyczek do ró¿nych
 celów, ale tak¿e na wymianê wtyczek odpowiedzialnych za poszczególne
 etapy (np. zmianê algorytmu generuj¹cego drzewo decyzyjne).
 
-Podzia³ eksperymentu na etapy zaprezentowany zosta³ na rysunku (TODO: ref).
+%Podzia³ eksperymentu na etapy zaprezentowany zosta³ na rysunku (TODO: ref).
 
 %TODO: zrobic taki rysunek
 
@@ -306,27 +307,32 @@ oprócz nazwy atrybutu wyœwietlana jest równie¿ jego wartoœæ.
 \end{figure}
 
 \section{Obs³uga zewnêtrznych zdarzeñ}
-Celem kolejnego eksperymentu, jest zademonstrowanie dzia³ania agentów.
+
+Celem kolejnego eksperymentu jest zademonstrowanie dzia³ania agentów.
 W tym celu zosta³ wykorzystany agent, który w reakcji na pojawienie siê nowych danych w zewnêtrznej bazie danych uruchamia wszystkie zadania zdefiniowane
-w projekcie.
+w projekcie. Agent ten okresowo sprawdza iloœæ danych w zewnêtrznej bazie danych i porównuje j¹ z iloœci¹ zapamiêtan¹ podczas jego  uruchomienia. Jeœli iloœæ nowych danych przekroczy zdefiniowany w konfiguracji agenta wspó³czynnik, uruchamiane s¹ wszystkie zadania zdefiniowane w ramach danego projektu.
 
-Eksperyment ten zosta³ przeprowadzony z wykorzystanie projektu zdefiniowanego
-w ramach wczeœniejszego eksperymentu. Przy pierwszym otwarciu projektu
-zosta³o wygenerowane drzewo decyzyjne rys. WSTAWIÆ! Nastêpnie za 
-Za pomoc¹ zewnêtrznego po³¹czenia do bazy danych zosta³y dodane do niej
-nowe rekordy. Po przekroczeniu zdefiniowanego procentowego progu zdefiniowanego
-w konfiguracji agenta ref... Zadania zosta³y uruchomione po raz
-kolejny w oparciu o nowe dane, czego wynikiem by³o nowe drzewo decyzyjne rys.
+Eksperyment ten zosta³ przeprowadzony z wykorzystanie projektu zademonstrowanego w rozdziale \ref{lab:experiment}. Przy pierwszym uruchomieniu projektu wygenerowane zosta³o drzewo decyzyjne (Rys. \ref{fig:agent_tree1}). 
+
+\begin{figure}[H]
+	\centering
+		\includegraphics[scale=0.40]{img/experiment/agent_tree1.png}
+	\caption{Drzewo decyzyjne po pierwszym uruchomieniu projektu.}
+	\label{fig:agent_tree1}
+\end{figure}
+
+Nastêpnie uruchomiony zosta³ agent nas³uchuj¹cy na zmiany w danych i za pomoc¹ zewnêtrznego po³¹czenia do bazy danych zosta³y dodane do niej nowe rekordy.
+Po przekroczeniu zdefiniowanej w konfiguracji agenta iloœci nowych danych, zadania w obrêbie projektu zosta³y automatycznie przeliczone ponownie, o czym œwiadczy zmieniony licznik uruchomieñ projektu. Zosta³y one uruchomione po raz kolejny w oparciu o nowe dane, czego wynikiem by³o nowe drzewo decyzyjne (Rys. \ref{fig:agent_tree2})
+
+\begin{figure}[H]
+	\centering
+		\includegraphics[scale=0.40]{img/experiment/agent_tree2.png}
+	\caption{Drzewo decyzyjne po automatycznym przeliczeniu projektu.}
+	\label{fig:agent_tree2}
+\end{figure}
 
 
-%Elementem systemu pozwalaj¹cym na obs³ugê zdarzeñ s¹ agenci.
-%W tym celu zosta³ napisany agent \emph{DataIncreaseAgent}, który
-%okresowo sprawdza bazê danych w celu wykrycia dostêpnoœci nowych danych.
-%Jeœli iloœæ nowych danych przekroczy pewien próg projekt jest przeliczany na
-%nowo.
-
-
-\section{Wyniki eksperymentu}
+%\section{Wyniki eksperymentu}
 % - screen z przebiegu
 % - opis wynikow (z narysowaniem drzewa)
 % - udalo sie zrealizowac cele (uzycie roznych wtyczek i skonfigurowanie ich tak, by uzyskac jakis tam wynik)
