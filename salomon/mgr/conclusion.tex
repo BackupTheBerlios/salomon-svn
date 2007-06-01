@@ -1,32 +1,14 @@
-Celem pracy by³o, omówienie, zaproponowanie architektury, oraz dostarczenie przyk³adowej implementacji indukcyjnej bazy danych jako platformy uczenia maszynowego. Dziêki przeprowadzony eksperymentom zosta³o dowiedzione, ¿e platforma Salomon stanowi wyj¹tkowo proste narzêdzie zarówno od strony procesu tworzenia wtyczek jaki zarz¹dzania i~uruchamia zadañ.
 
-W ramach pracy zaprojektowano oraz zrealizowano system bazuj¹cy na zaproponowanej architekturze. Z~postulatów zaproponowanych w~rozdziale wiele z nich uda³o siê
-zrealizowaæ. Salomon posiada komponentow¹ architekture, posiada równie¿ wyj¹tkowo prosty w osbs³udze interfejs u¿ytkownika wraz z takimi narzêdziami usprawniaj¹cymi prace jak \emph{SQL Console} i \emph{Java Editor}. Przeprowadzony eksperyment
-ilustruje prostote API dostarczanego dla twórców wtyczek. Na tle innych sytemów wyró¿nia siê inne podejœcie do zbioru danych, gdzie informacja o relacjach pomiêdzy ró¿nymi tabelami nie jest tracona. Dziêki integracji z Wek¹ u¿ytkownik ma dostêp do du¿ego zbioru gotowych algorytmów. 
-Kolejn¹ istotn¹ w³aœciwoœci¹ systemu jest reakcja na zdarzenia w systemi, czego dowodem
-jest przeprowadzony eksperyment.
+Celem pracy by³o zaproponowanie architektury oraz dostarczenie przyk³adowej implementacji indukcyjnej bazy danych jako platformy uczenia maszynowego.
+Dziêki przeprowadzonym eksperymentom zosta³o dowiedzione, ¿e platforma Salomon stanowi proste w~u¿yciu narzêdzie s³u¿¹ce do przeprowadzania obliczeñ zwi¹zanych z~uczeniem maszynowym, którego mo¿liwoœci mog¹ byæ w~³atwy sposób rozszerzane poprzez dostarczanie nowych wtyczek. 
 
-Zatem jak widaæ uda³o siê zrealizowaæ wiêkszoœæ z postawionych postulatów, jednak 
-bardzo istotnym sk³adnikiem platformy, który nie zosta³ zrealizowany w~ramach tej pracy jest obs³uga œrodowiska rozproszonego. Wsparcie dla rozproszenie i~zrównoleglenia obliczeñ jest najwa¿niejszym zadaniem w~planowanych dalszych pracach na rozwojem platformy. Dodatkowo w~ramach dalszych system zostanie rozszerzony poprzez dodanie wsparcia dla innych metod zapisu wiedzy takich jak regu³y, czy klastry.
+W ramach pracy zaprojektowano oraz zrealizowano system bazuj¹cy na zaproponowanej architekturze. Z~poœród postulatów zaproponowanych w~rozdziale \ref{lab:reasons} wiêkszoœæ uda³o siê zrealizowaæ.
+Wœród najwa¿niejszych z~nich jest to, ¿e Salomon oparty jest o~nowoczesn¹ architekturê komponentow¹, pozwalaj¹c¹ na ³atw¹ skalowalnoœæ i~rozszerzalnoœæ jego mo¿liwoœci. Z~kolei wyposa¿enie systemu w~prosty w~obs³udze graficzny interfejs u¿ytkownika ma korzystny wp³yw na komfort jego u¿ytkowania. 
+Przeprowadzony eksperyment ilustruje prostotê API dostarczanego dla twórców wtyczek i~³atwoœæ tworzenia nowych wtyczek. Na tle innych systemów Salomon wyró¿nia siê innym podejœciem do reprezentacji zbioru danych -- w~zaproponowanym rozwi¹zaniu informacje o~relacjach pomiêdzy ró¿nymi tabelami nie jest tracona, co pozwala na operowanie na wielowymiarowych zbiorach danych i~tym samym dok³adniej analizowaæ dane w~poszukiwaniu wiedzy.
+Dziêki integracji z~Wek¹ u¿ytkownik ma dostêp do du¿ego zbioru gotowych i~sprawdzonych algorytmów, które mog¹ byæ w~prosty sposób zaadoptowane do wspó³pracy z~systemem.
 
-
-
-
+Dalsze prace nad rozwojem systemu powinny koncentrowaæ siê dodaniu mo¿liwoœci pracy w~œrodowisku rozproszonym oraz obs³ugi kolejnych sposobów reprezentacji wiedzy. Wsparcie dla rozproszenia i~zrównoleglenia obliczeñ stanowiæ bêdzie naturalne wykorzystanie mo¿liwoœci, jakie daje komponentowa architektura systemu, a~obs³uga kolejnych sposobów reprezentacji wiedzy pozwoli u¿yæ go do rozwi¹zywania innych rodzajów problemów uczenia maszynowego, poszerzaj¹c tym samym zakres mo¿liwoœci wykorzystania systemu.
 
 %a) Celem pracy by³o, zrobiono, zrealizowano, zaproponowano
 %b) Najwa¿niejsze osi¹gniêcia. Nawi¹zaæ do rozdzia³u drugiego
 %c) Plany rozwoju
-
-%Celem pracy by³o, omówienie, zaproponowanie architektury,
-%oraz dostarczenie przyk³adowej implementacji indukcyjnej bazy
-%danych jako platformy uczenia maszynowego. 
-%
-%Dalsze prace nad rozwojem system Salomon powinny koncentrowaæ siê
-%na dodanie wsparcia dla pracy w~œrodowisku rozproszonym.
-
-
-
-
-%W pracy zaprezentowano system rozproszonych obliczen´ ewolucyjnych bazuja²cy
-%na stadnym modelu ewolucji. Koncepcj²e system oparto na analogiach do procesów zachodza
-%²cych w~populacjach organizmów zÿywych.
