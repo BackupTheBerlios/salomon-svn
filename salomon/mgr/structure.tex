@@ -1,114 +1,83 @@
-
-System zosta³ podzielony na 3 g³ówne czêœci: platformê, kontrolery
-i~pluginy.
+System, dziêki swej elastycznej architekturze, pozwala u¿ytkownikowi na 
+rozszerzanie jego mo¿liwoœci poprzez definiowanie przez niego w³asnych 
+wtyczek, pracuj¹cych w oparciu o interfejsy platformy. \\
+Poni¿ej przedstawiono wybrane aspekty implementacji tej architektury. 
 
 \section{Platforma}
 \label{lab:platform-interfaces}
 
-Dostarcza podstawowej funkcjonalnoœci  umo¿liwiaj¹cej pracê ca³ego
+Trzonem architektury systemu jest platforma, która
+dostarcza podstawowej funkcjonalnoœci  umo¿liwiaj¹cej pracê ca³ego
 systemu,  ³aduje odpowiedni kontroler, wczytuje wtyczki, uruchamia
 zadania. Odpowiada za komunikacje miêdzy innymi instancjami \emph{Salomona}.
 
 \begin{figure}[H]
 	\centering
 		\includegraphics[width=1.00\textwidth]{img/salomon/uml/manager_engine.png}
-	\caption{G³ówne klasy platformy}
+	\caption{G³ówne interfejsy platformy}
 	\label{fig:core}
 \end{figure}
 
-Za poszczególne zadania odpowiadaj¹ odpowiednie menad¿ery.
-
-Klasy maj¹ce w~nazwie s³owo \emph{Manager} pe³ni¹ szczególn¹ funkcjê 
--- najczêœciej odpowiadaj¹ za zarz¹dzanie innymi klasami, z~regu³y tymi, 
-które stanowi¹ resztê nazwy (np. \emph{PluginManger} zarz¹dza pluginami, \emph{ProjectManger} - projektami).
-G³ównym zadaniem menad¿erów jest odseparowanie wtyczek od operacji bezpoœrednio na danych.
+Interfejsy maj¹ce w~nazwie s³owo \emph{Manager} pe³ni¹ szczególn¹ funkcjê 
+-- najczêœciej odpowiadaj¹ za zarz¹dzanie innymi interfejsami, np. \emph{IPluginManger} zarz¹dza wtyczkami, \emph{IProjectManger} -- projektami.
 Dostarczaj¹ one zestawu metod pozwalaj¹cych na wygodne zarz¹dzanie obiektami,
-ich tworzenie, modyfikowanie czy usuwanie.
-
-Menad¿ery nie s¹ dostêpne bezpoœrednio z~platformy, ale
-przekazywane s¹ wtyczkom poprzez klasê \emph{IDataEngine}.
-Dotyczy to~tylko klas \emph{IDataSetManager}, \emph{IAttributeSetManager}
-i \emph{ITreeManager}, pozosta³e nie s¹ dostêpne dla wtyczek.
-Plugin, zale¿nie od potrzeb, pobiera z~niego potrzebny mu menad¿er i~za jego
-poœrednictwem zarz¹dza zbiorem danych, atrybutów lub drzewem decyzyjnym.
-
-\subsection{IManagerEngine}
-
-Zarz¹dza pozosta³ymi menad¿erami. Utrzymuje jedn¹ instancjê ka¿dego z~nich 
-i udostêpnia je pozosta³ym klasom z~platformy.
-Wszystkie menad¿ery, którymi zarz¹dza maj¹ analogiczn¹ funkcjonalnoœæ -- ka¿dy z
+ich tworzenie, modyfikowanie, czy usuwanie.
+Wszystkie menad¿ery maj¹ analogiczn¹ funkcjonalnoœæ -- ka¿dy z
 nich pozwala na stworzenie nowego obiektu, którym zarz¹dza (nie ma innej
 mo¿liwoœci ich stworzenia, ni¿ przez metody udostêpniane przez menad¿era), jego
 zesk³adowanie w~bazie danych, zwrócenie wszystkich zarz¹dzanych obiektów, czy
 te¿ pojedynczego, bazuj¹c na unikalnym identyfikatorze oraz usuniêcie konkretnego obiektu.
 
-\paragraph{ISolutionManager}
+Menad¿ery nie s¹ dostêpne bezpoœrednio z~platformy, ale
+przekazywane s¹ wtyczkom za pomoc¹ interfejsu \emph{IDataEngine}.
+Wtyczka, zale¿nie od potrzeb, pobiera za pomoc¹ tego interfejsu potrzebny jej menad¿er i~za jego
+poœrednictwem zarz¹dza zbiorem danych, atrybutów lub drzewem decyzyjnym.
 
-Zarz¹dza obiektami implementuj¹cymi interfejs \emph{ISolution}. 
-Dostarcza metod pozwalaj¹cych na utworzenie nowego obiektu \emph{ISolution},
-modyfikacjê aktualnego, za³adowanie wczeœniej stworzonego lub zwrócenie wszystkich obiektów \emph{ISolution}.
+\subsection{IManagerEngine}
 
-\paragraph{IProjectManager}
-
-Zarz¹dza projektami. Pozwala na utworzenie nowego
-projektu, modyfikacje lub usuniêcie istniej¹cego oraz wylistowanie
-wszystkich projektów z~bie¿¹cego Solutiona.
+Interfejs ten zapewnia dostêp do omówionych poni¿ej menad¿erów.
 
 \paragraph{IPluginManager}
 
-Zarz¹dza pluginami. Pozwala na zapisanie informacji o~nowym pluginie 
-(jego nazwa, lokalizacja) oraz na pobranie listy dostêpnych pluginów.
-Wtyczki mog¹ byæ ³adowane ze zdalnej lokalizacji, a~wiêc zadaniem tego
-manad¿era jest tak¿e zarz¹dzanie pobieraniem i~buforowaniem wtyczek pobranych
+Interfejs \emph{IPluginManager} zarz¹dza wtyczkami. Pozwala na zapisanie informacji o~nowej wtyczce
+(jej nazwie, lokalizacji) oraz na pobranie listy dostêpnych wtyczek.
+Mog¹ one byæ ³adowane ze zdalnej lokalizacji, a~wiêc zadaniem tego
+menad¿era jest tak¿e zarz¹dzanie pobieraniem i~buforowaniem wtyczek pobranych
 z zewnêtrznych Ÿróde³.
+
+\paragraph{ISolutionManager}
+
+\emph{ISolutionManager} zarz¹dza obiektami implementuj¹cymi interfejs \emph{ISolution}. TODO add ref!!!!!!!
+
+\paragraph{IProjectManager}
+
+Interfejs ten umo¿liwia zarz¹dzanie projektami zdefiniowanymi dla
+okreœlonego obiektu \emph{ISolution}.
 
 \paragraph{ITaskManager}
 
-Zarz¹dza zadaniami. Jego zadaniem jest nie tylko umo¿liwienie wykonywania na nich standardowych operacji
-zwi¹zanych z~ich tworzeniem, edycj¹ czy usuwaniem.
-Odpowiada tak¿e za proces przygotowania zadañ do wykonania, czyli ich poprawn¹ konfiguracjê i~powi¹zanie ze sob¹,
-czy reszcie ich wykonanie i~zapisanie informacji o~przebiegu ich przetwarzania.
+Interfejs ten dostarcza funkcjonalnoœci umo¿liwiaj¹cej zarz¹dzanie zadaniami dla konkretnego projektu. Oprócz standardowych operacji wspólnych dla wszystkich menad¿erów, jego zadaniem jest tak¿e zapewnienie poprawnej konfiguracji, nadzór
+nad wykonaniem oraz zachowanie informacji o przebiegu przetwarzania zadañ.
 
 \subsection{IDataEngine}
 \label{lab:data_engine}
 
 Obiekt implementuj¹cy ten interfejs przekazywany jest wtyczkom podczas ich wykonania.
-Za pomoc¹ pobieranych z~niego menad¿erów (\emph{IDataSetManager},\emph{IAttributeManager}, 
-\emph{ITreeManager} w~przysz³oœci \emph{IRuleSetManager} i~inne) 
+Za pomoc¹ pobieranych z~niego menad¿erów jak na przyk³ad \emph{IDataSetManager} 
+czy \emph{ITreeManager}
 wtyczki mog¹ operowaæ na danych znajduj¹cych siê w~bazie.
 Udostêpnienie wtyczkom jedynie interfejsów do operowania na danych pozwala
 na ukrycie sposobu sk³adowania danych przed twórcami wtyczek i~ich uniezale¿nienie siê
 od implementacji. W~obecnej wersji dane przechowywane s¹ w~relacyjnej bazie danych, ale nic nie stoi 
 na przeszkodzie, by w~przysz³oœci przechowywaæ je w~inny sposób, np. w~plikach tekstowych o~ustalonym formacie
-czy bazie LDAP. Twórcy wtyczek nie musz¹ troszczyæ siê o~to, jak dane s¹ przechowywane, gdy¿ implementacja
+czy bazie \emph{LDAP}. Twórcy wtyczek nie musz¹ troszczyæ siê o~to, jak dane s¹ przechowywane, gdy¿ implementacja
 interfejsów dostarczona jest przez platformê.
 Co wiêcej, raz napisane wtyczki bêd¹ dzia³aæ tak¿e z~nowszymi jej wersjami,
 pod warunkiem zachowania dotychczasowych interfejsów.
 
-\paragraph{DBManager}
-
-Odpowiada za po³¹czenie z~baz¹ danych. Dostarcza metody
-zapewniaj¹ce dostêp do danych przechowywanych w~bazie. Swoj¹
-funkcjonalnoœæ udostêpnia odpowiednim menad¿erom, wtyczki nie maj¹ do niego
-bezpoœredniego dostêpu.
-Udostêpnia obiekt implementuj¹cy interfejs \emph{IMetaData}, dziêki któremu
-wtyczki mog¹ pobraæ informacje o~strukturze danych ucz¹cych i~trenuj¹cych.
-
-\paragraph{IDataSetManager}
-
-Zarz¹dza zbiorami danych. Pozwala tworzyæ nowe podzbiory danych na
-podstawie zawartych w~bazie informacji oraz umo¿liwia operowanie
-na nich.
-
-\paragraph{IAttributeManager}
-
-Zarz¹dza atrybutami. Pozwala tworzyæ nowe atrybuty i~organizowaæ je w~zbiory
-atrybutów oraz pozwala na operowanie na nich.
-
-\paragraph{ITreeManager}
-
-Zarz¹dza drzewami decyzyjnymi. Umo¿liwia ich tworzenie (ale nie generowanie ich
-struktury, tym zajmuj¹ siê pluginy) oraz operowanie na nich.
+W obecnej wersji wtyczki mog¹ operowaæ na zbiorach danych, atrybutach oraz 
+drzewach decyzyjnych odpowiednio za pomoc¹ interfejsów \emph{IDataSetManager},
+\emph{IAttributeManager} i \emph{ITreeManager}. TODO Add ref!!!!!!!!
 
 \section{Kontrolery}
 
@@ -119,18 +88,13 @@ na danych poprzez wspólny interfejs, a~co za tym idzie, dane
 utworzone poprzez jeden z~nich s¹ dostêpne pomiêdzy kolejnymi
 uruchomieniami programu dla pozosta³ych kontrolerów.
 
-\paragraph{LocalController}
-
-Jest najprostszym kontrolerem. Zarz¹dza zadaniami wykonywanymi na lokalnym komputerze. S¹ one
-wykonywane sekwencyjnie. Zadaniem tego kontrolera jest dostarczenie
+Podstawowym kontrolerem jest \emph{LocalController}. Zarz¹dza on zadaniami wykonywanymi na lokalnym komputerze. Zadaniem tego kontrolera jest dostarczenie
 interfejsu u¿ytkownika, pozwalaj¹cego na zarz¹dzanie projektami,
 wtyczkami i~zadaniami.
 
-\paragraph{MasterController}
-
-Zadaniem tego kontrolera jest dostarczenie interfejsu do
-zarz¹dzania zdalnymi kontrolerami (\emph{ServantController}). 
-W obecnej wersji systemu jest on nie zaimplementowany.
+Dla potrzeb przetwarzania rozproszonego zdefiniowane zosta³y \emph{MasterController}, którego zadaniem jest zarz¹dzanie us³ugami
+udostêpnianymi przez zdalne kontrolery (\emph{ServantController}). \\
+Obecna wersja systemu nie uwzglêdnia tych kontrolerów.
 
 \paragraph{ServantController}
 
@@ -140,37 +104,6 @@ swoich us³ug. Ta wersja kontrolera nie posiada GUI, zarz¹dzanie
 nim odbywa siê za pomoc¹ klasy \emph{MasterController}.
 Podobnie jak w~przypadku klasy \emph{MasterController}, kontroler ten dopiero bêdzie zaimplementowany.
 
-
-%G³ówna funkcjonalnoœæ zosta³a  przeniesiona
-%do wtyczek, zadaniem systemu jest tylko zarz¹dzanie ich
-%wykonaniem. Dziêki takiemu podejœciu system jest ³atwo skalowalny
-%i rozszerzalny o~nowe mo¿liwoœci. Ka¿da z~wtyczek musi
-%implementowaæ nastêpuj¹ce interfejsy:
-%
-%Poni¿y diagram \ref{fig:plugin_uml} przedstawia podstawowe interfejsy
-%potrzebne do implementacji w³asnej wtyczki. Kolorem ¿ó³tym zaznaczone
-%zosta³y interfejsy zwi¹zane z~graficzn¹ czêœci¹ wtyczki. Kolorem niebieskim
-%interfejs, który zwi¹zany jest z~algorytmem wtyczki. 
-
-%\paragraph{IGraphicPlugin}
-%
-%Pozwala pobraæ parametry od u¿ytkownika, które nastêpnie zostan¹
-%przekazane do wtyczek  przed ich wykonaniem. Zawiera dwie metody:
-%\emph{getSettingsPanel()}  i~\emph{getResultPanel()}.  Pierwsza z
-%metod zwraca panel s³u¿¹cy do konfiguracji pluginu, druga -- panel,
-%na którym prezentowane s¹ wyniki jego dzia³ania.
-%
-%\paragraph{IDataPlugin}
-%
-%Posiada tylko jedn¹ metodê \emph{doJob()}. Przyjmuje ona jako
-%parametry obiekt klasy \emph{Environment}, reprezentuj¹cy aktualny
-%stan systemu; \emph{IDataEngine}, który umo¿liwia operowanie na
-%bazie danych i~\emph{ISettings}, reprezentuj¹cy ustawienia
-%wtyczki. Zwracany jest obiekt klasy \emph{IResult}, stanowi¹cy
-%rezultat wykonania zadania.
-
-%Programista ma do dyspozycji typy proste, typ tablicowy, oraz struktury.
-
 \section{Agenci}
 % Poprawic stylistyke
 Agenci odpowiadaj¹ za obs³ugê zdarzeñ zachodz¹cych w~œrodowisku.
@@ -179,11 +112,11 @@ Zazwyczaj jest to~przeliczenie ca³ego projektu. Agent mo¿e wp³ywaæ
 na sposób wykonania projektu, przez odpowiednie ustawienie zmiennych
 w œrodowisku (\emph{IEnvironment}).
 
-Zdarzenie mo¿e byæ zewnêtrzne takie jak przyk³adowo pojawienie siê nowych
-danych w~œrodowisku (zmiana w~zewnêtrznej bazie danych). Rozró¿niamy te¿
-zdarzenie wewnêtrzne, które zachodzi kiedy w~wyniku pracy innego agenta
-w systemie pojawi³a siê nowa wiedza. Ostatnim rodzajem zdarzenia jest
-zdarzenie niezale¿ne, jakim jest zdarzenie zegarowe.
+Agenci mog¹ reagowaæ na ró¿ne zdarzenia, takie jak na przyk³ad
+uaktualnienie informacji w zewnêtrznym Ÿródle danych, czy te¿ pojawienie
+siê nowej wiedzy w wyniku pracy innego agenta. \\
+Oprócz reakcji na zdarzenia
+agenci mog¹ uaktywniaæ siê w okreœlonych odstêpach czasu. 
 
 Interfejsem definiuj¹cym agenta jest \emph{IAgent} . Podstawowymi metodami
 w nim zawartymi s¹:

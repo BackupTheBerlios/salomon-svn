@@ -1,6 +1,7 @@
-\section{Interfejs u¿ytkownika}
+Jedn¹ z podstawowych cech systemu jest przyjazny graficzny interfejs u¿ytkownika (\ref{lab:reasons}). \\
+Poni¿ej przedstawione zosta³y jego podstawowe elementy.
 
-\subsection{Zarz¹dzanie obiektami Solution}
+\section{Zarz¹dzanie obiektami Solution}
 
 Uruchomienie programu rozpoczyna siê od wyboru lub zdefiniowaniu odpowiedniego obiektu \emph{Solution} (\ref{lab:solution}).
 Okreœla on po³o¿enie bazy danych, na której operowaæ bêd¹ wtyczki. Bez jego okreœlenia praca z~systemem nie jest mo¿liwa.
@@ -8,7 +9,7 @@ Okreœla on po³o¿enie bazy danych, na której operowaæ bêd¹ wtyczki. Bez jego okre
 \begin{figure}[H]
 	\centering
 		\includegraphics[width=0.40\textwidth]{img/salomon/screenshot/choose_solution.png}
-	\caption{Wybór Solutiona przy uruchomieniu programu}
+	\caption{Wybór obiektu solution podczas uruchomieniu programu}
 	\label{fig:choose_solution}
 \end{figure}
 
@@ -21,16 +22,16 @@ Po wybraniu przycisku \emph{New} pojawia siê okno do definiowania nowego obiektu
 	\label{fig:edit_solution}
 \end{figure}
 
-Tworzenie i~edycja aktualnego obiektu \emph{Solution} mo¿liwa jest tak¿e za pomoc¹ odpowiednich opcji z~menu \emph{Solutions} oraz za pomoc¹ przycisków na toolbarze.
+Tworzenie i~edycja aktualnego obiektu \emph{Solution} mo¿liwa jest tak¿e za pomoc¹ odpowiednich opcji z~menu \emph{Solutions} oraz za pomoc¹ przycisków na pasku narzêdzi.
 
 Po wybraniu obiektu \emph{Solution} pokazuje siê g³ówne okno programu. 
 Po lewej stronie znajduje siê lista dostêpnych wtyczek, 
 centraln¹ czêœæ okna programu zajmuje panel, s³u¿¹cy do zarz¹dzania zadaniami.
-Na górze umieszczony jest toolbar do szybkiego wykonywania operacji na obiekcie \emph{Solution}.
+Na górze umieszczony jest pasek narzêdzi do szybkiego wykonywania operacji na obiekcie \emph{Solution}.
 Wiêkszoœæ opcji dostêpna jest z~menu lub menu kontekstowych dostêpnych po klikniêciu
 prawym przyciskiem myszy na panelu z~wtyczkami lub zadaniami.
 
-Na dole okna, w~pasku statusu, wyœwietlane s¹ informacje o~aktualnie wybranym
+Na dole okna, w~pasku stanu, wyœwietlane s¹ informacje o~aktualnie wybranym
 obiekcie \emph{Solution}, projekcie oraz aktualnie wykonywanym zadaniu.
 
 \begin{figure}[H]
@@ -40,10 +41,10 @@ obiekcie \emph{Solution}, projekcie oraz aktualnie wykonywanym zadaniu.
 	\label{fig:main_window}
 \end{figure}
 
-\subsection{Zarz¹dzanie projektami}
+\section{Zarz¹dzanie projektami}
 
-Projekty (\ref{lab:project}) s¹ obiektami grupuj¹cymi zadania.
-Umo¿liwiaj¹ zdefiniowanie zadañ, które nastêpnie mog¹ zostaæ zapisane wraz z~konfiguracj¹, a~póŸniej za³adowanie ponownie.
+Projekty (\ref{lab:project}) s¹ obiektami grupuj¹cymi zadania, które
+po zapisaniu wraz z konfiguracj¹ mog¹ zostaæ za³adowane i uruchomione ponownie.
 
 Nowy projekt tworzony jest automatycznie po uruchomieniu programu. Domyœlnie nie ma on ¿adnej nazwy, co mo¿e zostaæ zmodyfikowane poprzez opcjê \emph{Solutions} $\rightarrow$ \emph{Projects} $\rightarrow$ \emph{Edit}. Po jej wybraniu mo¿liwa jest zmiana podstawowych w³aœciwoœci projektu, czyli jego nazwy i~informacji dodatkowych.
 
@@ -65,7 +66,7 @@ Projekt zostanie za³adowany wraz z~zadaniami, które zosta³y w~nim zdefiniowane o
 	\label{fig:open_project}
 \end{figure}
 
-\subsubsection{Konfiguracja agentów}
+\subsection{Konfiguracja agentów}
 
 Do projektu mog¹ byæ przypisani agenci (\ref{lab:agents}), którzy reaguj¹ na zamiany w~danych, które s¹ przetwarzane w~ramach danego projektu.
 Konfiguracja agentów odbywa siê za pomoc¹ przycisku \emph{Configure agents}. Po jej wybraniu wyœwietlane jest okno z~list¹ aktualnie skonfigurowanych agentów, pozwala ono tak¿e na dodanie nowych agentów, modyfikacjê ich ustawieñ lub usuniêcie z~bie¿¹cego projektu (odpowiednio za pomoc¹ przycisków \emph{Add}, \emph{Configure} i~\emph{Remove}, Rys. \ref{fig:configure_agents}).
@@ -86,7 +87,7 @@ Konfiguracja ustawieñ poszczególnych agentów odbywa siê za pomoc¹ osobnego okien
 
 Po skonfigurowaniu agentów s¹ one gotowe do pracy, ale nie s¹ uruchamiane automatycznie. Do~ich uruchamiania i~zatrzymywania s³u¿¹ przyciski \emph{Start agents} i~\emph{Stop agents} na okienku z~konfiguracj¹ projektu (Rys. \ref{fig:edit_project}).
 
-\subsection{Zarz¹dzanie wtyczkami}
+\section{Zarz¹dzanie wtyczkami}
 
 Lista wtyczek (\ref{lab:plugin}) tworzona jest na podstawie odpowiednich wpisów w~bazie danych. 
 Mo¿na j¹ jednak  modyfikowaæ -- dodawaæ, usuwaæ lub modyfikowaæ dane wtyczki. 
@@ -107,7 +108,7 @@ pojawia siê lista z~mo¿liwymi do wybrania wtyczkami.
 Przy podawaniu lokalizacji w~postaci \emph{URL-a}, mo¿e byæ podana dowolna lokalizacja.
 Prawid³owe zdefiniowanie lokalizacji jest konieczne, by wtyczka mog³a zostaæ poprawnie za³adowana.
 
-\subsection{Zarz¹dzanie zadaniami}
+\section{Zarz¹dzanie zadaniami}
 
 Zadania (\ref{lab:task}) reprezentowane s¹ w~formie grafu -- poszczególne wêz³y odpowiadaj¹ zadaniom,
 a krawêdzie je ³¹cz¹ce okreœlaj¹ kolejnoœæ ich wykonania.
@@ -125,7 +126,7 @@ Zadanie mo¿e zostaæ utworzone poprzez jednokrotne klikniêcie na panelu z~zdaniam
 
 Po zdefiniowaniu zadania mo¿na skonfigurowaæ parametry algorytmu, który ma zostaæ wykonany w~ramach danego zadania.
 W tym celu nale¿y wybraæ z~menu kontekstowego wywo³anego na wêŸle reprezentuj¹cym dane zadanie opcjê \emph{Show Settings}.
-Po jej wybraniu pojawia siê okno umo¿liwiaj¹ce konfiguracjê wtyczki. Wygl¹d tego okna zale¿y od danej wtyczki i~od parametrów które mo¿na dla niej ustawiæ.
+Po jej wybraniu pojawia siê okno umo¿liwiaj¹ce konfiguracjê wtyczki. Wygl¹d tego okna zale¿y od danej wtyczki i~od parametrów, które mo¿na dla niej ustawiæ.
 
 \begin{figure}[H]
 	\centering
@@ -159,11 +160,11 @@ Po przetworzeniu zadañ mo¿na obejrzeæ rezultaty ich wykonania.
 S³u¿y do tego opcja \emph{Show Result} z~menu kontekstowego dla ka¿dego zadania.
 Podobnie jak w~przypadku ustawieñ, tak¿e i~wygl¹d tego okna zale¿y od danej wtyczki.
 
-\subsection{Administracyjne}
+\section{Administracyjne}
 
 Opcje w~menu administracyjnym pozwalaj¹ na przeprowadzenie zaawansowanych operacji.
 
-\subsubsection{Przegl¹danie obiektów}
+\subsection{Przegl¹danie obiektów}
 
 Wybór jednej z~opcji z~menu \emph{Tools} $\rightarrow$ \emph{<nazwa obiektu>} pozwala przegl¹danie poszczególnych obiektów w~takiej postaci, w~jakiej zapisane s¹ w~bazie danych. Po jej wybraniu pojawia siê okno umo¿liwiaj¹ce na wyszukiwanie poszczególnych obiektów w~oparciu o~filtry, ograniczaj¹ce liczbê zwracanych rezultatów. Podczas wyszukiwania mo¿na u¿ywaæ \emph{metaznaków} (\%).
 
@@ -178,7 +179,7 @@ Korzystaj¹c z~tego okna mo¿na tak¿e usuwaæ obiekty z~bazy. S³u¿y do tego przycis
 Usuniêcie poszczególnych obiektów wi¹¿e siê z~usuniêciem tak¿e obiektów powi¹zanych,
 przyk³adowo usuniêcie projektu powoduje usuniêcie wszystkich zadañ do niego przypisanych. 
 
-\subsubsection{SQL Console}
+\subsection{SQL Console}
 
 Do bardziej zaawansowanych operacji s³u¿y opcja \emph{Tools} $\rightarrow$ \emph{SQL Console}.
 Po jej wybraniu pojawia siê konsola, w~której mo¿liwe jest wprowadzanie
@@ -198,12 +199,12 @@ po której mo¿na poruszaæ siê za pomoc¹ przycisków przedstawiaj¹cych strza³ki.
 \end{figure}
 
 
-\subsubsection{Edytor skryptów}
+\subsection{Edytor skryptów}
 \label{lab:javaeditor}
 
 Dla zaawansowanych u¿ytkowników i~twórców wtyczek przygotowane zosta³o narzêdzie
 \emph{Java Editor}.
-Dostarcza on funkcjonalnoœci, która pozwala na uruchomiê skryptu napisanego w~jêzyku \emph{Dynami Java}\footnote{DynamicJava to~interpreter kodu JavaTM \href{http://koala.ilog.fr/djava/}{{http://koala.ilog.fr/djava/}}}, który jest niewielk¹ modyfikacj¹ jêzyka Java dostosowan¹ do u¿ycia jako jêzyk skryptowy.
+Dostarcza on funkcjonalnoœci, która pozwala na uruchomiê skryptu napisanego w~jêzyku \emph{Dynamic Java}\footnote{DynamicJava to~interpreter kodu \emph{JavaTM} \href{http://koala.ilog.fr/djava/}{{http://koala.ilog.fr/djava/}}}, który jest niewielk¹ modyfikacj¹ jêzyka Java dostosowan¹ do u¿ycia jako jêzyk skryptowy.
 
 Przyk³adowo skrypt poni¿ej wyœwietli liczbê drzew decyzyjnych zdefiniowanych w~aktualnie otwartym obiekcie Solution.
 %
