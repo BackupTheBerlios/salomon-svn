@@ -39,7 +39,7 @@ Interfejs ten zapewnia dostêp do omówionych poni¿ej menad¿erów.
 
 \paragraph{IPluginManager}
 
-Interfejs \emph{IPluginManager} zarz¹dza wtyczkami. Pozwala na zapisanie informacji o~nowej wtyczce
+Interfejs \emph{IPluginManager} zarz¹dza wtyczkami (\ref{lab:plugin}). Pozwala na zapisanie informacji o~nowej wtyczce
 (jej nazwie, lokalizacji) oraz na pobranie listy dostêpnych wtyczek.
 Mog¹ one byæ ³adowane ze zdalnej lokalizacji, a~wiêc zadaniem tego
 menad¿era jest tak¿e zarz¹dzanie pobieraniem i~buforowaniem wtyczek pobranych
@@ -47,17 +47,17 @@ z zewnêtrznych Ÿróde³.
 
 \paragraph{ISolutionManager}
 
-\emph{ISolutionManager} zarz¹dza obiektami implementuj¹cymi interfejs \emph{ISolution}. TODO add ref!!!!!!!
+\emph{ISolutionManager} zarz¹dza obiektami implementuj¹cymi interfejs \emph{ISolution} \ref{lab:solution}.
 
 \paragraph{IProjectManager}
 
 Interfejs ten umo¿liwia zarz¹dzanie projektami zdefiniowanymi dla
-okreœlonego obiektu \emph{ISolution}.
+okreœlonego obiektu \emph{ISolution} (\ref{lab:project}) .
 
 \paragraph{ITaskManager}
 
-Interfejs ten dostarcza funkcjonalnoœci umo¿liwiaj¹cej zarz¹dzanie zadaniami dla konkretnego projektu. Oprócz standardowych operacji wspólnych dla wszystkich menad¿erów, jego zadaniem jest tak¿e zapewnienie poprawnej konfiguracji, nadzór
-nad wykonaniem oraz zachowanie informacji o przebiegu przetwarzania zadañ.
+Interfejs ten dostarcza funkcjonalnoœci umo¿liwiaj¹cej zarz¹dzanie zadaniami (\ref{lab:tasks}) dla konkretnego projektu. Oprócz standardowych operacji wspólnych dla wszystkich menad¿erów, jego zadaniem jest tak¿e zapewnienie poprawnej konfiguracji, nadzór nad wykonaniem oraz zachowanie informacji
+o przebiegu przetwarzania zadañ.
 
 \subsection{IDataEngine}
 \label{lab:data_engine}
@@ -76,9 +76,8 @@ Co wiêcej, raz napisane wtyczki bêd¹ dzia³aæ tak¿e z~nowszymi jej wersjami,
 pod warunkiem zachowania dotychczasowych interfejsów.
 
 W obecnej wersji wtyczki mog¹ operowaæ na zbiorach danych, atrybutach oraz 
-drzewach decyzyjnych odpowiednio za pomoc¹ interfejsów \emph{IDataSetManager},
-\emph{IAttributeManager} i \emph{ITreeManager}. TODO Add ref!!!!!!!!
-
+drzewach decyzyjnych odpowiednio za pomoc¹ interfejsów \emph{IDataSetManager} (\ref{lab:datasets}), \emph{IAttributeManager} (\ref{lab:attributes}) i \emph{ITreeManager} (\ref{lab:trees}).
+ 
 \section{Kontrolery}
 
 Kontrolery odpowiadaj¹ za interakcjê
