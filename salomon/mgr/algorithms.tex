@@ -1,5 +1,5 @@
 
-\subsubsection{Algorytm ID3}
+\subsection{Algorytm ID3}
 
 %http://www.cise.ufl.edu/~ddd/cap6635/Fall-97/Short-papers/2.htm
 Algorytm \emph{ID3} tworzy drzewo decyzyjne na podstawie zbioru danych przyk³adowych.
@@ -46,8 +46,6 @@ Teoria informacji udziela odpowiedzi na pytanie, który z~atrybutów jest
 najbardziej przydany. Przypuœæmy, ¿e atrybut decyzyjny $D$ przyjmuje wartoœci
 $d_1..d_n$, z~kolei aktualnie rozwa¿any atrybut $A$ wartoœci $a_1..a_m$.
 
-Stosunek $p(\frac{d_i}{a_j})$ oznacza prawdopodobieñstwo, ¿e zachodzi $d_i$ pod warunkiem $a_j$.
-
 Teoria informacji definiuje pojêcie \emph{entropii}.
 
 \[
@@ -55,16 +53,15 @@ Teoria informacji definiuje pojêcie \emph{entropii}.
 \]
 
 Wyra¿enie to~okreœla entropiê wzglêdem atrybutu decyzyjnego D dla konkretnej
-wartoœci atrybutu aj. 
+wartoœci atrybutu $a_j$, gdzie $p(\frac{d_i}{a_j})$ oznacza prawdopodobieñstwo, ¿e zachodzi $d_i$ pod warunkiem $a_j$ 
 
-Œrednia entropia wyra¿ona wzorem:
+Œrednia entropia atrybutu $A$ wzglêdem atrybutu decyzyjnego $D$ wyra¿ona jest 
+wzorem:
 
 \[
 	E_{sr} = -\sum_{j=1}^{m} p(a_j) \sum_{i=1}^{n}
 	p(\frac{d_i}{a_j})log_{2}p(\frac{d_i}{a_j}) 
 \]
-
-oznacza entropiê atrybutu $A$ w~stosunku do atrybutu decyzyjnego $D$.
 
 Wyra¿enie to~okreœla stopieñ niepewnoœci informacji -- im wy¿sza entropia, tym
 mniej pewna jest wartoœæ atrybutu decyzyjnego. Oznacza to, ¿e im atrybut ma
@@ -76,14 +73,14 @@ wartoœci atrybutów daj¹ ró¿n¹ decyzjê, to~algorytm ten daje zawsze poprawne
 wyniki.
 
 Posiada on jednak kilka ograniczeñ -- nie radzi sobie z~ci¹g³ymi dziedzinami
-atrybutów oraz z~niepe³nymi danymi (rekordami wype³nionymi tylko czêœciowo)
+atrybutów oraz z~niepe³nymi danymi (rekordami wype³nionymi tylko czêœciowo),
 a tak¿e drzewo przez niego generowane ma przewa¿nie du¿y rozmiar.
 Algorytm ten nie jest tak¿e odporny na zaburzenia danych wejœciowych 
 (ha³asu) -- w~takim przypadku mo¿e on prowadziæ do wyst¹pienia wysokiego
 wspó³czynnika b³êdów na danych testowych.
 
 
-\subsubsection{Algorytm C4.5}
+\subsection{Algorytm C4.5}
 
 Algorytm \emph{C4.5} jest jednym z~najpopularniejszych algorytmów budowy drzew
 decyzyjnych. Stworzony zosta³ przez \emph{Quinlan'a} na bazie metody \emph{ID3}
