@@ -1,59 +1,38 @@
 \section{Indukcyjne bazy danych}
 
 % przetlumaczone z~pdf-a
-Indukcyjne bazy danych œciœle integruj¹ bazy danych z~koncepcj¹ \emph{data mining}~(\ref{lab:data_mining}).
-G³ówn¹ ich ideê stanowi to, ¿e zarówno dane jak i~wzorce s¹ przetwarzane 
+Koncepcja indukcyjnej bazy danych œciœle integruje za³o¿enia systamów bazodanowych z~ide¹ \emph{data mining}~(roz. \ref{lab:data_mining}).
+Opiera siê ona na spostrze¿eniu, ¿e zarówno dane jak i~wzorce przetwarzane s¹
 w ten sam sposób, a~indukcyjny jêzyk zapytañ pozwala u¿ytkownikowi 
-na zadawanie zapytañ i~manipulacjê danymi wzorcami.
-
-Od pocz¹tku istnienia idei data miningu zdawano sobie sprawê,
-¿e proces ich przetwarzania powinien byæ wspierany przez technologiê baz danych.
-W ostatnich latach idea ta zosta³a sformalizowana jako koncepcja
-\emph{indukcyjnych baz danych}.
+na zadawanie zapytañ i~manipulacjê danymi wzorcami \cite{ind_databases}.
+%Od pocz¹tku istnienia idei \emph{data mining} zdawano sobie sprawê,
+%¿e proces eksploracji danych powinien byæ wspierany przez technologiê baz %danych. W ostatnich latach idea ta zosta³a sformalizowana jako koncepcja
+%\emph{indukcyjnych baz danych}.
 
 %cytat z~artykulu
 Integracja technologii baz danych z~nowoczesnymi metodami
-indukcyjnego generowania wiedzy jest naturalnym kierunkiem rozwoju
-systemów bazodanowych. Systemy nazywane indukcyjnymi bazami
-danych potrafi¹ odpowiedzieæ nie tylko na pytania, dla których
-odpowiedŸ znajduje siê w~bazie danych, ale równie¿ na pytania,
+indukcyjnego generowania wiedzy prowadz¹ca do powstania koncepcji indukcyjnej bazy danych jest naturalnym kierunkiem rozwoju systemów bazodanowych.
+Systemy realizuj¹ce t¹ koncepcjê potrafi¹ odpowiedzieæ nie tylko na pytania, dla których odpowiedŸ znajduje siê w~bazie danych, ale równie¿ na pytania,
 które wymagaj¹ zsyntetyzowania i~zastosowania wiedzy,
-wygenerowanej przez indukcyjne wnioskowanie z~faktów z~bazy danych
+wygenerowanej przez indukcyjne wnioskowanie z~faktów, z~bazy danych
 i wczeœniejszej wiedzy~\cite{knowledge_disc}. Schemat typowej indukcyjnej
 bazy danych przedstawiony jest na rysunku~\ref{fig:inddb}.
 
 \begin{figure}[!ht]
      \centering
-         \includegraphics[width=0.90\textwidth]{img/knowledge_mining.png}
+         \includegraphics[width=0.70\textwidth]{img/knowledge_mining.png}
      \caption{Indukcyjna baza danych~\cite{ind_databases}}
      \label{fig:inddb}
 \end{figure}
-
-Jak zosta³o ju¿ wy¿ej wspomniane, indukcyjne bazy danych przechowuj¹ nie dane
-ale równie¿ wzorce. Mo¿na za³o¿yæ, ¿e zarówno dane, jak i~wzorce stanowi¹ zbiory zbiorów.
-To za³o¿enie wynika z~analogii do tradycyjnych, relacyjnych baz danych. 
-Relacyjna baza danych zawiera zbiór relacji, które to~stanowi¹ zbiory \emph{tupli}, 
-a wiêc mo¿na powiedzieæ, ze stanowi zbiór zbiorów.
-
-W przypadku baz indukcyjnych rozró¿nia siê natomiast zbiór trenuj¹cy od testuj¹cego, 
-zbiór poprawnie zaklasyfikowanych przyk³adów od zaklasyfikowanych b³êdnie itp.
- 
-To samo, co tyczy siê danych, odnosi siê równie¿ do wzorców.
-I rzeczywiœcie -- podczas procesu przetwarzania wiedzy mo¿na pracowaæ 
-na ró¿nych zbiorach wzorców.  Zbiory te mog¹ odnosiæ siê do odmiennych hipotez 
-stworzonych na podstawie ró¿nych zbiorów danych,
-czy ró¿nych ustawieñ parametrów algorytmów je tworz¹cych.
 
 %jezyk (z pdf-a)
 Jednym z~zasadniczych powodów, które przyczyni³y siê do sukcesu relacyjnych baz danych
 jest opracowanie uniwersalnego jêzyka zapytañ, który podobnie jak sama algebra relacyjna
 dostarcza du¿ych mo¿liwoœci przy jego relatywnej prostocie.
 
-Podobnymi cechami powinien wyró¿niaæ siê jêzyk zapytañ do indukcyjnych baz danych.
-
-Rezultatem zapytania wykonanego w~takim jêzyku jest albo zbiór wzorców, albo zbiór danych.
-Jest to~tak zwana \emph{w³asnoœæ zamkniêcia} (\emph{ ang. closure property}).
-Stanowi ona analogiê do rezultatów zapytania do relacyjnych baz danych, gdzie jest nim zawsze relacja.
+Podobnymi cechami powinien wyró¿niaæ siê jêzyk zapytañ do indukcyjnych baz danych. Rezultatem zapytania wykonanego w~takim jêzyku jest albo zbiór wzorców, albo zbiór danych.
+%Jest to~tak zwana \emph{w³asnoœæ zamkniêcia} (\emph{ ang. closure property}).
+%Stanowi ona analogiê do rezultatów zapytania do relacyjnych baz danych, gdzie jest nim zawsze relacja.
 Rozró¿nianie miêdzy zbiorami wzorców i~zbiorami danych powoduje, ¿e potrzebne s¹ dwa rodzaje zapytañ:
 te które generuj¹ zbiory wzorców i~zbiory danych. Zapytania do jednoczeœnie obu typów zbiorów nazywane
 s¹ czasami \emph{zapytaniami krzy¿uj¹cymi} (\emph{ang. cross-over operations}).
@@ -71,12 +50,9 @@ Mechanizm, zgodnie z~którym dokonuje siê nabywanie lub doskonalenie wiedzy,
 jest najczêœciej jednoznacznie wyznaczany przez metodê reprezentacji 
 wiedzy oraz postaæ informacji trenuj¹cej \cite{ind_databases}.
 
-\label{lab:vinlen}
-\emph{Vinlen}  \cite{vinlen} to system indukcyjnej bazy danych, rozwijany w
-\emph{George Mason University}. Jest pierwowzór systemu realizuj¹cego 
-koncepcjê indukcyjnej bazy danych. Mechanizmy wnioskowania
-indukcyjnego s¹ zintegrowane ze standardowymi relacyjnymi
-operatorami bazodanowymi. Integracja ta opiera siê na nowych
+Prekursorem systemów realizuj¹cych koncepcjê indukcyjnej bazy danych jest \emph{Vinlen} \cite{vinlen}, rozwijany w
+\emph{George Mason University}.
+Mechanizmy wnioskowania indukcyjnego s¹ w nim zintegrowane ze standardowymi relacyjnymi operatorami bazodanowymi. Integracja ta opiera siê na nowych
 rodzajach operatorów zwanych operatorami generowania wiedzy
 \emph{KGO} (Knowledge Generation Operators). \emph{KGO} operuje na
 \emph{segmentach wiedzy} sk³adaj¹cych siê z~kombinacji jednej lub
@@ -100,4 +76,5 @@ sk³adowania wiedzy w~relacyjnej bazie danych wraz z~danymi,
 zadawanie zapytañ oraz manipulowanie wiedz¹ z~wykorzystaniem
 jêzyka \emph{KQL} lub przy u¿yciu funkcjonalnego, graficznego
 interfejsu u¿ytkownika.
+
 
