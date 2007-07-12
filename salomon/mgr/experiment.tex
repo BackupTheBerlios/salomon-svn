@@ -1,12 +1,13 @@
-W poni¿szym rozdziale zaprezentowany zosta³ eksperyment, maj¹cy na celu  
-zademonstrowanie mo¿liwoœci platformy jako œrodowiska,
-które nadzoruje obliczenia uczenia maszynowego oraz u³atwia proces tworzenia algorytmów (w postaci wtyczek).
- 
-\section{Opis eksperymentu}
 \label{lab:experiment}
 
-Przyk³adowe zadanie obliczeniowe ma na celu utworzenie drzewa decyzyjnego
-w oparciu o~zbiór atrybutów. Atrybuty te definiuj¹ w~jaki sposób interpretowany
+W poni¿szym rozdziale zaprezentowane zosta³o przyk³adowe zastosowanie systemu. Ma on na celu zademonstrowanie mo¿liwoœci platformy jako œrodowiska,
+które nadzoruje obliczenia uczenia maszynowego oraz u³atwia proces tworzenia algorytmów (w postaci wtyczek). \\
+
+Przyk³adowe wykorzystanie systemu obejmuje zbudowanie oraz wizualizacjê drzewa decyzyjnego.
+ 
+\section{Opis obliczeñ}
+
+Zadanie obliczeniowe, demonstruj¹ce mo¿liwoœci systemu, ma na celu utworzenie drzewa decyzyjnego w oparciu o~zbiór atrybutów. Atrybuty te definiuj¹ w~jaki sposób interpretowany
 ma byæ zbiór danych testowych. Zbiór danych budowany jest w~oparciu o~dane
 przechowywane w~zewnêtrznym Ÿródle danych.
 
@@ -28,7 +29,7 @@ etapy (np. zmianê algorytmu generuj¹cego drzewo decyzyjne).
 
 %TODO: zrobic taki rysunek
 
-Poszczególne etapy eksperymentu to:
+Poszczególne etapy obliczeñ to:
 \begin{enumerate}
 	\item Zdefiniowanie zbioru danych. \\
 	Celem tego etapu jest wygenerowanie zbioru danych w~oparciu
@@ -43,11 +44,11 @@ Poszczególne etapy eksperymentu to:
 	\item Wizualizacja drzewa decyzyjnego. \\
 	Poprzedni etap tylko tworzy i~zapisuje drzewo decyzyjne, 
 	które mo¿e zostaæ wykorzystane w~dowolny sposób.
-	Ten etap eksperymentu jedynie prezentuje u¿ytkownikowi wygenerowane
+	Ten etap obliczeñ jedynie prezentuje u¿ytkownikowi wygenerowane
 	wczeœniej drzewo w~postaci graficznej.
 \end{enumerate}
 
-W dalszej czêœci rozdzia³u zaprezentowano wtyczki, które zosta³y u¿yte do realizacji poszczególnych etapów eksperymentu.
+W dalszej czêœci rozdzia³u zaprezentowano wtyczki, które zosta³y u¿yte do realizacji poszczególnych etapów obliczeñ.
 
 \section{Definiowanie zbioru danych}
 \label{lab:datasets}
@@ -85,8 +86,8 @@ kolumn w~wylosowanych do zbioru danych rekordach, nie mo¿e siê jednak zmieniæ ic
 Wtyczka \emph{DataSetCreator} uruchamiana wielokrotnie z~t¹ sam¹ konfiguracj¹
 mo¿e pracowaæ na ró¿nej iloœci danych, zale¿nie od tego, ile rekordów spe³nia
 zadane kryteria w~momencie jej uruchomienia.
-Pozwala to~na przeprowadzanie eksperymentów na zmieniaj¹cych siê danych i~przyk³adowo
-na obserwacjê, jak iloœæ danych wp³ywa na dok³adnoœæ obliczeñ.
+Pozwala to~na przeprowadzanie obliczeñ na zmieniaj¹cych siê danych i~przyk³adowo
+na obserwacjê, jak iloœæ danych wp³ywa na dok³adnoœæ uzyskiwanych wyników.
 
 Wynikiem pracy obu wtyczek jest zbiór danych, którego definicja sk³adowana jest
 w wewnêtrznej bazie systemu.
@@ -184,7 +185,7 @@ ale równie¿ konwertowaæ atrybuty z~tego formatu do postaci zgodnej z~\emph{Wek¹}
 restrykcyjn¹ licencjê (\emph{GPL}), co powoduje, i¿ Salomon dystrybuowany wraz z~
 integracj¹ musi byæ wykorzystywany zgodnie z~zasadami tej licencji.
 
-Dla celów eksperymentu zosta³a napisana wtyczka \emph{WekaTreeGenerator}, która 
+W celu zaprezentowania mo¿liwoœci wykorzystania systemu napisana zosta³a wtyczka \emph{WekaTreeGenerator}, która 
 korzystaj¹c z~wy¿ej omówionego modu³u integracji w~\emph{Wek¹}, generuje drzewo 
 decyzyjne i~zapisuje je do bazy.
 
@@ -284,7 +285,7 @@ result.setSuccessful(true);
 
 \section{Wizualizacja drzewa decyzyjnego}
 
-Ostatnim etapem eksperymentu jest wizualizacja nowo powsta³ego drzewa. W~tym 
+Ostatnim etapem obliczeñ jest wizualizacja nowo powsta³ego drzewa. W~tym 
 celu zosta³a napisana wtyczka \emph{TreeVis}, która tworzy graficzn¹ reprezentacjê
 drzewa decyzyjnego. W~ustawianiach dla wtyczki podajemy nazwê drzewa,  które 
 chcemy z~wizualizowaæ (Rys \ref{fig:tree_vis_settings}). Po uruchomieniu mo¿emy obejrzeæ drzewo w~postaci grafu.
@@ -312,11 +313,11 @@ oprócz nazwy atrybutu wyœwietlana jest równie¿ jego wartoœæ.
 
 \section{Obs³uga zewnêtrznych zdarzeñ}
 
-Celem kolejnego eksperymentu jest zademonstrowanie dzia³ania agentów.
+Celem kolejnego zadania obliczeniowego jest zademonstrowanie dzia³ania agentów.
 W tym celu zosta³ wykorzystany agent, który w~reakcji na pojawienie siê nowych danych w~zewnêtrznej bazie danych uruchamia wszystkie zadania zdefiniowane
 w projekcie. Agent ten okresowo sprawdza iloœæ danych w~zewnêtrznej bazie danych i~porównuje j¹ z~iloœci¹ zapamiêtan¹ podczas jego  uruchomienia. Jeœli iloœæ nowych danych przekroczy zdefiniowany w~konfiguracji agenta wspó³czynnik, uruchamiane s¹ wszystkie zadania zdefiniowane w~ramach danego projektu.
 
-Eksperyment ten zosta³ przeprowadzony z~wykorzystanie projektu zademonstrowanego w~rozdziale \ref{lab:experiment}. Przy pierwszym uruchomieniu projektu wygenerowane zosta³o drzewo decyzyjne (Rys. \ref{fig:agent_tree1}). 
+Do wykonania obliczeñ wykorzystany zosta³ projektu tworz¹cy drzewo decyzyjne opisany powy¿ej. Przy pierwszym uruchomieniu projektu wygenerowane zosta³o drzewo decyzyjne (Rys. \ref{fig:agent_tree1}). 
 
 \begin{figure}[H]
 	\centering
@@ -325,8 +326,10 @@ Eksperyment ten zosta³ przeprowadzony z~wykorzystanie projektu zademonstrowanego
 	\label{fig:agent_tree1}
 \end{figure}
 
-Nastêpnie uruchomiony zosta³ agent nas³uchuj¹cy na zmiany w~danych i~za pomoc¹ zewnêtrznego po³¹czenia do bazy danych zosta³y dodane do niej nowe rekordy.
-Po przekroczeniu zdefiniowanej w~konfiguracji agenta iloœci nowych danych, zadania w~obrêbie projektu zosta³y automatycznie przeliczone ponownie, o~czym œwiadczy zmieniony licznik uruchomieñ projektu. Zosta³y one uruchomione po raz kolejny w~oparciu o~nowe dane, czego wynikiem by³o nowe drzewo decyzyjne (Rys. \ref{fig:agent_tree2})
+Z chwil¹ uruchomienia projektu, agent z nim powi¹zany, rozpocz¹³ nas³uchiwanie  
+na zmiany w~danych, których dotyczy³y obliczenia.
+Wtedy za pomoc¹ zewnêtrznego po³¹czenia do bazy danych zosta³y dodane do niej nowe rekordy.
+Agent wykry³ te dane i po przekroczeniu zdefiniowanej w~jego konfiguracji iloœci nowych danych, po dodaniu których ma zareagowaæ, spowodowa³ ponowne przeliczenie zadañ w~obrêbie projektu. Œwiadczy o tym zmieniony licznik uruchomieñ projektu. Zosta³y one uruchomione po raz kolejny w~oparciu o~nowe dane, czego wynikiem by³o nowe drzewo decyzyjne (Rys. \ref{fig:agent_tree2})
 
 \begin{figure}[H]
 	\centering
@@ -334,11 +337,3 @@ Po przekroczeniu zdefiniowanej w~konfiguracji agenta iloœci nowych danych, zadan
 	\caption{Drzewo decyzyjne po automatycznym przeliczeniu projektu.}
 	\label{fig:agent_tree2}
 \end{figure}
-
-
-%\section{Wyniki eksperymentu}
-% - screen z~przebiegu
-% - opis wynikow (z narysowaniem drzewa)
-% - udalo sie zrealizowac cele (uzycie roznych wtyczek i~skonfigurowanie ich tak, by uzyskac jakis tam wynik)
-
-
