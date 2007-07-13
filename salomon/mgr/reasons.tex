@@ -1,3 +1,7 @@
+Przedstawione w poprzednim rozdziale narzêdzia wspomagaj¹ce prowadzenie obliczeñ zwi¹zanych z zagadnieniami uczenia maszynowego, jak choæby Weka (roz. \ref{lab:weka} ) i~Vinlen (roz. \ref{lab:vinlen}),  posiadaj¹ ograniczenia, które utrudniaj¹ ich wykorzystanie do pewnych zastosowañ.
+Zaproponowana poni¿ej koncepcja zak³ada stworzenie przyjaznego œrodowiska pozwalaj¹cego na odkrywanie i~przechowywanie wiedzy
+oraz uruchamianie ró¿nych algorytmów \emph{machine learning}. Jest ona rezultatem analizy wymagañ, stanowi¹cych odpowiedŸ na ograniczenia \emph{Weki} i~\emph{Vinlena}.
+
 \section{Analiza wymagañ}
 \label{lab:reasons}
 %Do czego ma byc to~system?
@@ -21,35 +25,30 @@
 %- ewentualnie w~zestawieniu z~istniejacymi systami (Weka ma fajny, Vinlen niewygodny czy cos takiego)
 
 %TODO: Powody powstania systemu
-Koncepcja zak³ada stworzenie przyjaznego œrodowiska pozwalaj¹cego na odkrywanie i~przechowywanie wiedzy
-oraz uruchamianie ró¿nych algorytmów machine learning.
 
-Na rynku dostêpne s¹ ró¿ne narzêdzia wspomagaj¹ce prowadzenie obliczeñ zwi¹zanych
-z zagadnieniami uczenia maszynowego, jak choæby wy¿ej Weka (\ref{lab:weka} ) i~Vinlen (\ref{lab:vinlen}).
-Analiza ich mo¿liwoœci prowadzi do stwierdzenia, ¿e posiadaj¹ one pewne ograniczenia,
-utrudniaj¹ce ich wykorzystanie do pewnych zastosowañ.
-Formu³owane poni¿ej wymagania stanowi¹ czêsto odpowiedŸ na ograniczenia Weki i~Vinlena.
+
+
 
 %-gui
-Jednym z~podstawowych za³o¿eñ stawianych systemowi jest prosty i~przyjazny \textbf{interfejs u¿ytkownika}.
+Jednym z~podstawowych za³o¿eñ stawianych aplikacj¹ wspomagaj¹cym proces uczenia maszynowego jest prosty i~przyjazny \textbf{interfejs u¿ytkownika}.
 Czêsto cech¹ decyduj¹c¹ o~rozpoczêciu u¿ywania danej aplikacji jest pierwszy kontakt z~ni¹.
 Dlatego wa¿ne jest, aby graficzny interfejs u¿ytkownika
 u³atwia³ u¿ycie aplikacji mniej doœwiadczonym u¿ytkownikom i~aby nowy u¿ytkownik 
 systemu nie zosta³ zniechêcony ju¿ na samym pocz¹tku.
 Nale¿y zatem zwróciæ uwagê, by aplikacja by³a prosta w~obs³udze zarówno dla twórcy wtyczek
-jak i~osoby wykonuj¹cej eksperymenty z~wykorzystaniem gotowych wtyczek.
-System powinien te¿ byæ dostarczany z~przyk³adowym zestawem wtyczek i~danych, 
-które pozwol¹ na ³atwe u¿ycie i~przetestowanie ka¿dego z~aspektów platformy.
+jak i~osoby wykonuj¹cej eksperymenty z~wykorzystaniem gotowych wtyczek. Z kolei
+dostarczenie przyk³adowego zestawu wtyczek i~danych, pozwoli
+na ³atwe u¿ycie i~przetestowanie ka¿dego z~aspektów platformy.
 
 %-api
-Oprócz przyjaznego graficznego interfejsu u¿ytkownika platforma powinna
-tak¿e dostarczaæ prostego i~dobrze zdefiniowanego \textbf{interfejsu programistycznego}
+Oprócz przyjaznego graficznego interfejsu u¿ytkownika istotne jest równie¿
+dostarczenie prostego i~dobrze zdefiniowanego \textbf{interfejsu programistycznego}
 (ang. Application Programming Interface, \emph{API}).
 Pozwoli to~na ukrycie przed twórcami wtyczek takich aspektów implementacyjnych
 jak sposób reprezentacji drzew decyzyjnych czy zapis parametrów wejœciowych i~rezultatów wykonania zadañ.
 Wynika to~z~tego, ¿e osoby, które zajmuj¹ siê tworzeniem wtyczek 
 nie powinny musieæ braæ pod uwagê sposobu implementacji
-platformy, czyli np. przechowywania i~dostêpu do danych czy kwestii komunikacji
+aplikacji, czyli np. przechowywania i~dostêpu do danych czy kwestii komunikacji
 miêdzy poszczególnymi zadaniami.
 
 Inn¹ u¿yteczn¹ w³aœciwoœci¹, któr¹ nale¿y rozwa¿yæ jest 
@@ -66,10 +65,8 @@ stworzenie wydajnego i~dobrze przetestowanego API.
 Z kolei ukrycie sposobu zapisu danych i~wiedzy umo¿liwi \textbf{³atwiejsz¹ 
 komunikacjê} pomiêdzy ró¿nymi wtyczkami czy podsystemami. Odizolowanie 
 algorytmów (wtyczek) od zapisu/odczytu danych pozwoli równie¿ zapewniæ 
-odpowiedni poziom bezpieczeñstwa. Przyk³adowo system powinien posiadaæ API 
-pozwalaj¹ce na tworzenie, manipulacje, odczyt i~zapis drzew decyzyjnych, dziêki 
-czemu ró¿ne aspekty pracy na drzewach decyzyjnych mo¿na by by³o umieœciæ w~
-osobnych wtyczkach, niekoniecznie dostarczanych przez tego samego dostawce. 
+odpowiedni poziom bezpieczeñstwa. Dostarczenie API 
+pozwalaj¹cego na tworzenie, manipulacje, odczyt i~zapis drzew decyzyjnych, umo¿liwi umieszczenie algorytmów odpowiadaj¹cych ró¿nym aspektom pracy na drzewach decyzyjnych w~osobnych wtyczkach, niekoniecznie dostarczanych przez tego samego dostawce. 
 Jednak przede wszystkim praca nad jedn¹ czêœci¹ (np. prezentacj¹ drzew) nie wymaga³oby 
 wiedzy na temat innych wtyczek.
 
@@ -82,28 +79,25 @@ Rozró¿niamy dane trenuj¹ce, które s¹ wykorzystywane do uczenia algorytmu oraz
 dane testuj¹ce. Zbiór danych testuj¹cych wykorzystywany jest do oceny wyników 
 algorytmu. Oba zbiory zazwyczaj stanowi¹ losowy podzbiór dostêpnych danych.
 
-W znanych nam systemach u¿ywan¹ s¹ jednowymiarowe zbiory trenuj¹ce (jedna tabela, 
-bez powi¹zañ z~innymi). Taki model pasuje do wiêkszoœci algorytmów ucz¹cych, jednak 
-istnieje pewne ryzyko utraty danych, które nios¹ z~sob¹ relacje miêdzy danymi. 
-Dlatego chcielibyœmy, aby system tworzy³ i~operowa³ na wielowymiarowych zbiorach 
+W zaprezentowanych w poprzednim rozdziale systemach u¿ywane s¹ jednowymiarowe zbiory trenuj¹ce (jedna tabela, bez powi¹zañ z~innymi). Taki model pasuje do
+wiêkszoœci algorytmów ucz¹cych, jednak 
+istnieje pewne ryzyko utraty danych, które nios¹ z~sob¹ relacje miêdzy danymi,
+dlatego wa¿na jest mo¿liwoœæ operowania na wielowymiarowych zbiorach 
 trenuj¹cych. Z~punktu widzenie algorytmu struktura takiego zbioru nie powinna 
 odbiegaæ od wejœciowej bazy danych. Jedyna ró¿nica powinna polegaæ na iloœci 
 dostêpnych danych. Takie te¿ jest pierwsze i~najbardziej naturalne zrozumienie 
 zbioru trenuj¹cego, jako podzbioru danych o~niezmienionej strukturze.
 
-System powinien tworzyæ podzbiór danych przed utworzeniem atrybutów.
-Jest to~podejœcie ró¿ne o~tego, które stosuje siê w~innych aplikacjach.
-Przyk³adowo w~Wece zbiór danych jest podzbiorem zbioru atrybutów. 
-W proponowanym podejœciu zbiór danych nie bêdzie wymaga³ kopiowania danych 
-z zewnêtrznego Ÿród³a, a~jedynie definiowa³ przepis na utworzenie takowego 
-(np. w~postaci zapytania, stanowi¹cego zbiór warunków).
-Z kolej zbiór atrybutów stanowiæ bêdzie opis transformacji oryginalnych danych
+W dostêpnych na rynku aplikacjach, przyk³adowo w~Wece, zbiór danych jest 
+podzbiorem zbioru atrybutów, co powoduje dodatkowe kopiowanie danych
+z~zewnêtrznego Ÿród³a. W celu unikniêcia tego dodatkowego narzutu zbiór danych, w~postaci zapytania stanowi¹cego zbiór warunków,
+powinien byæ utworzony przed zbiorem atrybutów.
+Zatem zbiór atrybutów stanowiæ bêdzie opis transformacji oryginalnych danych
 na dane wejœciowe do algorytmów ucz¹cych. Wyró¿nienie warstwy atrybutów jest konieczne,
 gdy¿ wiêkszoœæ algorytmów wymaga na wejœciu przetworzonych danych.
 Przetworzenie polega g³ównie na okreœleniu typu danego atrybutu, czyli np. czy jest to~atrybut wejœciowy
-czy wyjœciowy oraz jakiego jest rodzaju (napisowy, liczbowy, wyliczeniowy).
-
-Rozwi¹zanie przyjête w~systemie zapewnia szereg korzyœci. Atrybuty budowane na zbiorach danych umo¿liwi¹
+czy wyjœciowy oraz jakiego jest rodzaju (napisowy, liczbowy, wyliczeniowy). \\
+Powy¿sze rozwi¹zanie zapewnia szereg korzyœci. Atrybuty budowane na zbiorach danych umo¿liwi¹
 zachowanie oryginalnej, czêsto wielowymiarowej struktury oryginalnych danych i~zwi¹zków miêdzy nimi.
 Zastosowanie warstwy poœredniej miêdzy atrybutami a~danymi, w~postaci zbiorów danych, ma te¿ inne zalety.
 Poniewa¿ zbiory danych stanowi¹ jedynie opis, w~jakiœ sposób oryginalne dane mog¹ zostaæ wydobyte
@@ -130,7 +124,7 @@ bez dodatkowych wymagañ stawianych wtyczkom.
 
 Przeniesienie ciê¿aru obliczeñ z~platformy do wtyczek poci¹ga za sob¹ koniecznoœæ
 zapewnienia przez platformê mechanizmów aktualizacji wtyczek. Mog¹ byæ one umieszczane
-w zdalnych lokalizacjach, tak wiêc platforma powinna posiadaæ mechanizmy kontroluj¹ce
+w zdalnych lokalizacjach, tak wiêc system powinien posiadaæ mechanizmy kontroluj¹ce
 wersje u¿ywanych wtyczek i~w razie potrzeby aktualizuj¹ce je
 w sposób mo¿liwie wygodny dla u¿ytkownika.
 
@@ -152,7 +146,7 @@ bezpiecznych jêzyków programowania, takich jak Java wraz z~jej systemem bezpiecz
 i ograniczenia uprawnieñ.
 
 % - agenty
-System powinien reagowaæ na zmiany w~œrodowisku, w~którym zosta³ zainstalowany. 
+Systemy pracuj¹ce w rozproszonym œrodowisku powinny reagowaæ na zmiany w nim zachodz¹ce.
 Przyk³adowo, kiedy pojawiaj¹ siê nowe dane w~zewnêtrznej bazie danych, nale¿y 
 przetestowaæ aktualnie zgromadzon¹ wiedzê na nowych danych lub dokonaæ nowych 
 obliczeñ. Wymaganie to~realizowaæ bêd¹ tzw. \textbf{agenty}.
