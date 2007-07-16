@@ -1,11 +1,12 @@
-\section{Struktura systemu}
+\section{Proponowana struktura systemu}
 
-Salomon sk³ada siê z~dwóch zasadniczych czêœci (Rys \ref{fig:Achitecture}). Pierwsz¹ z~nich
+Proponowana struktura systemu zak³ada jego podzia³ na dwie zasadnicze
+czêœci (Rys. \ref{fig:Achitecture}). Pierwsz¹ z~nich
 stanowi platforma. Tworz¹ j¹:
 \begin{itemize}
-	\item silnik, którego zadaniem jest zarz¹dzanie i~uruchamianie
+	\item silnik (\emph{Salomon Core}), którego zadaniem jest zarz¹dzanie i~uruchamianie
 zadañ
-	\item magazyn s³u¿¹cy do przechowywania wiedzy
+	\item magazyn (\emph{Internal Database}) s³u¿¹cy do przechowywania wiedzy
 \end{itemize}
 
 Druga czêœæ to~zbiór wtyczek, dostarczaj¹cych logikê potrzebn¹ do skonfigurowania, wykonania i~wyœwietlenia rezultatów
@@ -20,30 +21,13 @@ zadania. System jest otwarty - oznacza to, ¿e jego funkcjonalnoœæ mo¿e byæ w~³at
 
 
 \pagebreak
-Podstawowe za³o¿enia projektowe:
-\begin{itemize}
-    \item ca³a funkcjonalnoœæ w~pluginach. J¹dro systemu ma byæ jak najmniejsze.
-    Jego zadaniem jest stworzenie œrodowiska do realizacji logiki dostarczanej we wtyczkach
-    \item otwarta~architektura. Wprowadzenie warstwy poœredniej pomiêdzy baz¹ danych~a wtyczkami.
-    Jej zadaniem jest ukrycie sposobu organizacji danych przez
-    wtyczkami. Otwartoœæ~architektury polega na mo¿liwoœci rozszerzenia tej warstwy
-    \item niezale¿noœæ od platformy. System ma byæ niezale¿ny od platformy, mo¿liwie ³atwo przenaszalny.
-    Poszczególne czêœci systemu mog¹ byæ uruchamiane na ró¿nych
-    platformach.
-    \item mo¿liwoœæ wykorzystywania rezultatów poprzednich zadañ przez kolejne
-    \item ³atwa~adaptacja funkcjonalnoœci zawartej w~\emph{Vinlenie}.
-    Projekt powsta³ jako platforma uruchomieniowa dla logiki zaimplementowanej w~programie \emph{Vinlen},
-    tworzonego pod kierownictwem prof. Ryszarda Michalskiego.    
-\end{itemize}
-
-
-Salomon ma na celu wyeliminowanie ograniczeñ oryginalnego
-\emph{Vinlena} poprzez wprowadzenie:
-
-\begin{itemize}
-    \item kolejkowania zadañ
-    \item rozproszenia
-    \item równoleg³oœci
-    \item rozszerzalnoœci (mechanizm wtyczek)
-    \item przenoœnoœci (\emph{Java},\emph{Firebird})
-\end{itemize}
+Jednym z podstawowych za³o¿eñ projektowych jest umieszczenie algorytmów
+\emph{machine learning} we~wtyczkach. J¹dro systemu ma byæ jak najmniejsze --
+Jego zadaniem jest stworzenie œrodowiska do realizacji logiki dostarczanej we wtyczkach. \\
+Z tego za³o¿enia wynika koniecznoœæ zastosowania otwartej, ³atwo
+rozszerzalnej architektury, umo¿liwiaj¹cej wprowadzenie warstwy poœredniej pomiêdzy baz¹ danych~a wtyczkami. Zadaniem tej warstwy jest ukrycie sposobu organizacji danych przed wtyczkami.\\
+W celu zapewnienia przenoœnoœci i ³atwego rozpraszania obliczeñ system powinien
+byæ niezale¿ny od platformy, co umo¿liwi uruchamianie jego poszczególnych czêœci
+w œrodowisku heterogenicznym. \\
+Dla uzyskania odpowiedniego poziomu skalowalnoœci wymagana jest dostatecznie du¿a granulacja procesu przetwarzania wiedzy, a zatem konieczne jest
+dostarczenie mechanizmu komunikacji pomiêdzy poszczególnymi etapami tego procesu.
