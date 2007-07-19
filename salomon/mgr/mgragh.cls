@@ -47,6 +47,7 @@
 \newcommand{\m@l}{\char170}
 \newcommand{\m@o}{\char243}
 \newcommand{\m@s}{\char177}
+\newcommand{\m@x}{\char185}
 \newcommand{\m@z}{\char187}
 \ifmgr@man\gdef\m@k{y}\else\gdef\m@k{a}\fi
 %---------------- Marginesy --------------------%
@@ -384,11 +385,9 @@
   \newpage\thispagestyle{empty}
     \vspace*{2\baselineskip}
     \begin{center} 
-			{\large\bfseries O{\m@s}wiadczenie autora}\par\bigskip
+			{\large\bfseries O{\m@s}wiadczenie autor{\m@o}w}\par\bigskip
     \end{center}
-    {\itshape My, ni{\m@z}ej podpisani \@author\ o{\m@s}wiadczamy, {\m@z}e praca 
-		 ta zosta{\m@l}a napisana samodzielnie i~wykorzystywane zosta{\m@l}y (poza zdobyt{\m@a} na studiach
-		 wiedz{\m@a}) jedynie wyniki prac zamieszczonych w~spisie literatury.}\par
+    {\itshape O{\m@s}wiadczamy, {\m@s}wiadomi odpowiedzialno{\m@s}ci karnej za po{\m@s}wiadczenie nieprawdy, {\m@z}e niniejsz{\m@a} prac{\m@e} dyplomow{\m@a} wykonali{\m@s}my osobi{\m@s}cie i samodzielnie (w zakresie wyszczeg{\m@o}lnionym we wst{\m@e}pie) i {\m@z}e nie korzystali{\m@s}my ze {\m@x}r{\m@o}de{\m@l} innych ni{\m@z} wymienione w pracy.}\par
 	  \vspace{3\baselineskip}
 	  \hfill\parbox{15em}{{\small\dotfill}\\[-.3ex] \centerline{\footnotesize(Podpisy autor{\m@o}w)}}\par
     \vspace{4\baselineskip}
