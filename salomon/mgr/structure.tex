@@ -1,15 +1,14 @@
-System, który jest realizacj¹ przedstawionej w poprzednim rozdziale koncepcji, dziêki swej elastycznej architekturze, pozwala u¿ytkownikowi na 
-rozszerzanie jego mo¿liwoœci poprzez definiowanie przez niego w³asnych 
-wtyczek, pracuj¹cych w oparciu o interfejsy platformy. \\
-Poni¿ej przedstawiono wybrane aspekty implementacji tej architektury. 
+
+Przedstawiona w poprzednim rozdziale koncepcja systemu pozwala na elastyczne rozszerzanie jego mo¿liwoœci dziêki zastosowaniu architektury komponentowej.
+Poni¿ej przedstawiono elementy adekwatnej implementacji. Jej  g³ówn¹ czêœæ stanowi platforma, której mo¿liwoœci mog¹ byæ rozszerzane za pomoc¹ wtyczek.
 
 \section{Platforma}
 \label{lab:platform-interfaces}
 
-Trzonem architektury systemu jest platforma, która
+Trzonem systemu jest platforma, która
 dostarcza podstawowej funkcjonalnoœci umo¿liwiaj¹cej pracê ca³ego
-systemu,  ³aduje odpowiedni kontroler, wczytuje wtyczki, uruchamia
-zadania. Odpowiada za komunikacje miêdzy innymi instancjami \emph{Salomona}.
+systemu, ³aduje odpowiedni kontroler, wczytuje wtyczki, uruchamia
+zadania. Odpowiada tak¿e za komunikacje miêdzy innymi instancjami \emph{Salomona}.
 
 \begin{figure}[H]
 	\centering
@@ -76,7 +75,7 @@ Co wiêcej, raz napisane wtyczki bêd¹ dzia³aæ tak¿e z~nowszymi jej wersjami,
 pod warunkiem zachowania dotychczasowych interfejsów.
 
 W obecnej wersji wtyczki mog¹ operowaæ na zbiorach danych, atrybutach oraz 
-drzewach decyzyjnych odpowiednio za pomoc¹ interfejsów \emph{IDataSetManager} (\ref{lab:datasets}), \emph{IAttributeManager} (\ref{lab:attributes}) i \emph{ITreeManager} (\ref{lab:trees}).
+drzewach decyzyjnych odpowiednio za pomoc¹ interfejsów \emph{IDataSetManager}, \emph{IAttributeManager} i \emph{ITreeManager}.
  
 \section{Kontrolery}
 
@@ -92,16 +91,8 @@ interfejsu u¿ytkownika, pozwalaj¹cego na zarz¹dzanie projektami,
 wtyczkami i~zadaniami.
 
 Dla potrzeb przetwarzania rozproszonego zdefiniowane zosta³y \emph{MasterController}, którego zadaniem jest zarz¹dzanie us³ugami
-udostêpnianymi przez zdalne kontrolery (\emph{ServantController}). \\
+udostêpnianymi przez zdalne kontrolery (\emph{ServantController}).
 Obecna wersja systemu nie uwzglêdnia tych kontrolerów.
-
-\paragraph{ServantController}
-
-Zadaniem tego kontrolera jest odszukanie g³ównego kontrolera
-(\emph{MasterController}), zarejestrowanie siê i~udostêpnianie mu
-swoich us³ug. Ta wersja kontrolera nie posiada GUI, zarz¹dzanie
-nim odbywa siê za pomoc¹ klasy \emph{MasterController}.
-Podobnie jak w~przypadku klasy \emph{MasterController}, kontroler ten dopiero bêdzie zaimplementowany.
 
 \section{Agenci}
 % Poprawic stylistyke
