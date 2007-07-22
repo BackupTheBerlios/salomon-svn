@@ -387,7 +387,7 @@
     \begin{center} 
 			{\large\bfseries O{\m@s}wiadczenie autor{\m@o}w}\par\bigskip
     \end{center}
-    {\itshape O{\m@s}wiadczamy, {\m@s}wiadomi odpowiedzialno{\m@s}ci karnej za po{\m@s}wiadczenie nieprawdy, {\m@z}e niniejsz{\m@a} prac{\m@e} dyplomow{\m@a} wykonali{\m@s}my osobi{\m@s}cie i samodzielnie (w zakresie wyszczeg{\m@o}lnionym we wst{\m@e}pie) i {\m@z}e nie korzystali{\m@s}my ze {\m@x}r{\m@o}de{\m@l} innych ni{\m@z} wymienione w pracy.}\par
+    {\itshape O{\m@s}wiadczamy, {\m@s}wiadomi odpowiedzialno{\m@s}ci karnej za po{\m@s}wiadczenie nieprawdy, {\m@z}e \hbox{niniejsz{\m@a}} prac{\m@e} dyplomow{\m@a} wykonali{\m@s}my osobi{\m@s}cie i samodzielnie (w zakresie \hbox{wyszczeg{\m@o}lnionym} we wst{\m@e}pie) i {\m@z}e nie korzystali{\m@s}my ze {\m@x}r{\m@o}de{\m@l} innych ni{\m@z} wymienione w pracy.}\par
 	  \vspace{3\baselineskip}
 	  \hfill\parbox{15em}{{\small\dotfill}\\[-.3ex] \centerline{\footnotesize(Podpisy autor{\m@o}w)}}\par
     \vspace{4\baselineskip}
