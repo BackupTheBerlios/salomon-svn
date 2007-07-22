@@ -5,7 +5,7 @@ które nadzoruje obliczenia uczenia maszynowego oraz u³atwia proces tworzenia alg
  
 \section{Opis problemu}
 
-Mo¿liwoœci systemu zostan¹ zaprezentowane na przyk³adzie budowy drzewa decyzyjnego w oparciu o~zbiór atrybutów. Atrybuty te definiuj¹ w~jaki sposób interpretowany
+Mo¿liwoœci systemu zostan¹ zaprezentowane na przyk³adzie budowy drzewa decyzyjnego w~oparciu o~zbiór atrybutów. Atrybuty te definiuj¹ w~jaki sposób interpretowany
 ma byæ zbiór danych testowych. Zbiór danych budowany jest w~oparciu o~dane
 przechowywane w~zewnêtrznym Ÿródle danych.
 
@@ -52,7 +52,7 @@ Testowy zbiór danych definiowany jest za pomoc¹ wtyczki \emph{RandomDataSetCreat
 Wtyczka ta pozwala na wygenerowanie losowego zbioru danych.
 Konfiguracja wtyczki polega na wybraniu tabel z~zewnêtrznego Ÿród³a danych,
 na którym bazowaæ ma zbiór danych oraz okreœlenia, ile wierszy z~poszczególnych
-tabel ma zostaæ do³¹czone do testowego zbioru danych (Rys \ref{fig:random_data_set_settings}).
+tabel ma zostaæ do³¹czone do testowego zbioru danych (rys. \ref{fig:random_data_set_settings}).
 
 \begin{figure}[H]
 	\centering
@@ -64,7 +64,7 @@ tabel ma zostaæ do³¹czone do testowego zbioru danych (Rys \ref{fig:random_data_s
 Prostota u¿ycia tej wtyczki okupiona zosta³a niewielkimi jej mo¿liwoœciami.
 Du¿o wiêksze mo¿liwoœci konfiguracyjne zapewnia wtyczka \emph{DataSetCreator}.
 Posiada ona podobny graficzny interfejs u¿ytkownika, ale pozwala na du¿o dok³adniejsze
-okreœlenie warunków, jakie spe³niaæ maj¹ dane, które trafi¹ do testowego zbioru danych (Rys \ref{fig:data_set_settings}).
+okreœlenie warunków, jakie spe³niaæ maj¹ dane, które trafi¹ do testowego zbioru danych (rys. \ref{fig:data_set_settings}).
 
 
 
@@ -117,7 +117,7 @@ dataSetManager.add(subSet);
 \label{lab:attributes}
 Algorytmy generowania drzew decyzyjnych pracuj¹ na specjalnie
 przygotowanych danych -- atrybutach. Atrybuty okreœlaj¹ pewne cechy 
-danych wejœciowych i~w przyjêtym w~systemie podejœciu (\ref{lab:knowledge})
+danych wejœciowych i~w przyjêtym w~systemie podejœciu (por. \ref{lab:knowledge})
 bazuj¹ na zbiorach danych. St¹d wtyczka tworz¹ca zbiór atrybutów -- \emph{AttribiteSetCreator},
 który s³u¿y do generowania drzewa decyzyjnego, operuje na tym samym Ÿródle danych,
 co wtyczka tworz¹ca zbiór danych.
@@ -204,7 +204,7 @@ zrozumia³ej przez algorytm. Na~koñcu wyniki uruchomienia Weki przekszta³cane
 s¹ do wewnêtrznej reprezentacji drzewa decyzyjnego obs³ugiwanej przez system.
 
 \emph{Weka} generuje drzewo w~formie tekstowej. Opis ten mo¿na zobaczyæ w~otwieraj¹c 
-okno rezultatu dla omawianej wtyczki (Rys \ref{fig:tree_generator_results})
+okno rezultatu dla omawianej wtyczki (rys. \ref{fig:tree_generator_results})
 
 Wykorzystuj¹c aktualne mo¿liwoœci platformy, napisanie takiej wtyczki,
 jest wyj¹tkowo proste. Czêœæ kodu Ÿród³owego wtyczki, zosta³ przedstawiony poni¿ej. 
@@ -283,7 +283,7 @@ result.setSuccessful(true);
 Ostatnim etapem obliczeñ jest wizualizacja nowo powsta³ego drzewa. W~tym 
 celu zosta³a napisana wtyczka \emph{TreeVis}, która tworzy graficzn¹ reprezentacjê
 drzewa decyzyjnego. W~ustawianiach dla wtyczki podajemy nazwê drzewa,  które 
-chcemy z~wizualizowaæ (Rys \ref{fig:tree_vis_settings}). Po uruchomieniu mo¿emy obejrzeæ drzewo w~postaci grafu.
+chcemy z~wizualizowaæ (rys. \ref{fig:tree_vis_settings}). Po uruchomieniu mo¿emy obejrzeæ drzewo w~postaci grafu.
 
 \begin{figure}[H]
 	\centering
@@ -292,7 +292,7 @@ chcemy z~wizualizowaæ (Rys \ref{fig:tree_vis_settings}). Po uruchomieniu mo¿emy 
 	\label{fig:tree_vis_settings}
 \end{figure}
 
-Drzewo wyœwietlane jest w~formie grafu (Rys \ref{fig:tree_vis_results}), 
+Drzewo wyœwietlane jest w~formie grafu (rys. \ref{fig:tree_vis_results}), 
 z wykorzystaniem biblioteki (\emph{Jung}). 
 Przy ka¿dym wêŸle drzewa wyœwietlana jest nazwa atrybutu. 
 Na ka¿dej z~krawêdzi przypisana jest wartoœæ 
@@ -321,10 +321,10 @@ Do wykonania obliczeñ wykorzystany zosta³ projekt tworz¹cy drzewo decyzyjne opis
 	\label{fig:agent_tree1}
 \end{figure}
 
-Z chwil¹ uruchomienia projektu, agent z nim powi¹zany, rozpocz¹³ nas³uchiwanie  
+Z chwil¹ uruchomienia projektu, agent z~nim powi¹zany, rozpocz¹³ nas³uchiwanie  
 na zmiany w~danych, których dotyczy³y obliczenia.
 Wtedy za pomoc¹ zewnêtrznego po³¹czenia do bazy danych zosta³y dodane do niej nowe rekordy.
-Agent wykry³ te dane i po przekroczeniu zdefiniowanej w~jego konfiguracji iloœci nowych danych, po dodaniu których ma zareagowaæ, spowodowa³ ponowne przeliczenie zadañ w~obrêbie projektu. Œwiadczy o tym zmieniony licznik uruchomieñ projektu. Zadania uruchomione zosta³y w~oparciu o~nowe dane, czego wynikiem by³o nowe drzewo decyzyjne (Rys. \ref{fig:agent_tree2})
+Agent wykry³ te dane i~po przekroczeniu zdefiniowanej w~jego konfiguracji iloœci nowych danych, po dodaniu których ma zareagowaæ, spowodowa³ ponowne przeliczenie zadañ w~obrêbie projektu. Œwiadczy o~tym zmieniony licznik uruchomieñ projektu. Zadania uruchomione zosta³y w~oparciu o~nowe dane, czego wynikiem by³o nowe drzewo decyzyjne (rys. \ref{fig:agent_tree2})
 
 \begin{figure}[H]
 	\centering

@@ -1,5 +1,5 @@
 
-Przedstawiona w poprzednim rozdziale koncepcja systemu pozwala na elastyczne rozszerzanie jego mo¿liwoœci dziêki zastosowaniu architektury komponentowej.
+Przedstawiona w~poprzednim rozdziale koncepcja systemu pozwala na elastyczne rozszerzanie jego mo¿liwoœci dziêki zastosowaniu architektury komponentowej.
 Poni¿ej przedstawiono elementy adekwatnej implementacji. Jej  g³ówn¹ czêœæ stanowi platforma, której mo¿liwoœci mog¹ byæ rozszerzane za pomoc¹ wtyczek.
 
 \section{Platforma}
@@ -38,7 +38,7 @@ Interfejs ten zapewnia dostêp do omówionych poni¿ej menad¿erów.
 
 \paragraph{IPluginManager}
 
-Interfejs \emph{IPluginManager} zarz¹dza wtyczkami (\ref{lab:plugin}). Pozwala na zapisanie informacji o~nowej wtyczce
+Interfejs \emph{IPluginManager} zarz¹dza wtyczkami (por. \ref{lab:plugin}). Pozwala na zapisanie informacji o~nowej wtyczce
 (jej nazwie, lokalizacji) oraz na pobranie listy dostêpnych wtyczek.
 Mog¹ one byæ ³adowane ze zdalnej lokalizacji, a~wiêc zadaniem tego
 menad¿era jest tak¿e zarz¹dzanie pobieraniem i~buforowaniem wtyczek pobranych
@@ -46,16 +46,16 @@ z zewnêtrznych Ÿróde³.
 
 \paragraph{ISolutionManager}
 
-\emph{ISolutionManager} zarz¹dza obiektami implementuj¹cymi interfejs \emph{ISolution} \ref{lab:solution}.
+\emph{ISolutionManager} zarz¹dza obiektami implementuj¹cymi interfejs \emph{ISolution} (por. \ref{lab:solution}).
 
 \paragraph{IProjectManager}
 
 Interfejs ten umo¿liwia zarz¹dzanie projektami zdefiniowanymi dla
-okreœlonego obiektu \emph{ISolution} (\ref{lab:project}) .
+okreœlonego obiektu \emph{ISolution} (por. \ref{lab:project}) .
 
 \paragraph{ITaskManager}
 
-Interfejs ten dostarcza funkcjonalnoœci umo¿liwiaj¹cej zarz¹dzanie zadaniami (\ref{lab:tasks}) dla konkretnego projektu. Oprócz standardowych operacji wspólnych dla wszystkich menad¿erów, jego zadaniem jest tak¿e zapewnienie poprawnej konfiguracji, nadzór nad wykonaniem oraz zachowanie informacji
+Interfejs ten dostarcza funkcjonalnoœci umo¿liwiaj¹cej zarz¹dzanie zadaniami (por. \ref{lab:tasks}) dla konkretnego projektu. Oprócz standardowych operacji wspólnych dla wszystkich menad¿erów, jego zadaniem jest tak¿e zapewnienie poprawnej konfiguracji, nadzór nad wykonaniem oraz zachowanie informacji
 o przebiegu przetwarzania zadañ.
 
 \subsection{IDataEngine}
@@ -75,7 +75,7 @@ Co wiêcej, raz napisane wtyczki bêd¹ dzia³aæ tak¿e z~nowszymi jej wersjami,
 pod warunkiem zachowania dotychczasowych interfejsów.
 
 W obecnej wersji wtyczki mog¹ operowaæ na zbiorach danych, atrybutach oraz 
-drzewach decyzyjnych odpowiednio za pomoc¹ interfejsów \emph{IDataSetManager}, \emph{IAttributeManager} i \emph{ITreeManager}.
+drzewach decyzyjnych odpowiednio za pomoc¹ interfejsów \emph{IDataSetManager}, \emph{IAttributeManager} i~\emph{ITreeManager}.
  
 \section{Kontrolery}
 
@@ -103,10 +103,10 @@ na sposób wykonania projektu, przez odpowiednie ustawienie zmiennych
 w œrodowisku (\emph{IEnvironment}).
 
 Agenci mog¹ reagowaæ na ró¿ne zdarzenia, takie jak na przyk³ad
-uaktualnienie informacji w zewnêtrznym Ÿródle danych, czy te¿ pojawienie
-siê nowej wiedzy w wyniku pracy innego agenta. \\
+uaktualnienie informacji w~zewnêtrznym Ÿródle danych, czy te¿ pojawienie
+siê nowej wiedzy w~wyniku pracy innego agenta. \\
 Oprócz reakcji na zdarzenia
-agenci mog¹ uaktywniaæ siê w okreœlonych odstêpach czasu. 
+agenci mog¹ uaktywniaæ siê w~okreœlonych odstêpach czasu. 
 
 Interfejsem definiuj¹cym agenta jest \emph{IAgent} . Podstawowymi metodami
 w nim zawartymi s¹:

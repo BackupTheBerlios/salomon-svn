@@ -1,7 +1,7 @@
 \section{Proponowana struktura systemu}
 
 Proponowana struktura systemu zak³ada jego podzia³ na dwie zasadnicze
-czêœci (Rys. \ref{fig:Achitecture}). Pierwsz¹ z~nich
+czêœci (rys. \ref{fig:Achitecture}). Pierwsz¹ z~nich
 stanowi platforma. Tworz¹ j¹:
 \begin{itemize}
 	\item silnik (\emph{Salomon Core}), którego zadaniem jest zarz¹dzanie i~uruchamianie
@@ -21,13 +21,13 @@ zadania. System jest otwarty - oznacza to, ¿e jego funkcjonalnoœæ mo¿e byæ w~³at
 
 
 \pagebreak
-Jednym z podstawowych za³o¿eñ projektowych jest umieszczenie algorytmów
+Jednym z~podstawowych za³o¿eñ projektowych jest umieszczenie algorytmów
 \emph{machine learning} we~wtyczkach. J¹dro systemu ma byæ jak najmniejsze --
 Jego zadaniem jest stworzenie œrodowiska do realizacji logiki dostarczanej we wtyczkach. \\
 Z tego za³o¿enia wynika koniecznoœæ zastosowania otwartej, ³atwo
 rozszerzalnej architektury, umo¿liwiaj¹cej wprowadzenie warstwy poœredniej pomiêdzy baz¹ danych~a wtyczkami. Zadaniem tej warstwy jest ukrycie sposobu organizacji danych przed wtyczkami.\\
-W celu zapewnienia przenoœnoœci i ³atwego rozpraszania obliczeñ system powinien
+W celu zapewnienia przenoœnoœci i~³atwego rozpraszania obliczeñ system powinien
 byæ niezale¿ny od platformy, co umo¿liwi uruchamianie jego poszczególnych czêœci
 w œrodowisku heterogenicznym. \\
-Dla uzyskania odpowiedniego poziomu skalowalnoœci wymagana jest dostatecznie du¿a granulacja procesu przetwarzania wiedzy, a zatem konieczne jest
+Dla uzyskania odpowiedniego poziomu skalowalnoœci wymagana jest dostatecznie du¿a granulacja procesu przetwarzania wiedzy, a~zatem konieczne jest
 dostarczenie mechanizmu komunikacji pomiêdzy poszczególnymi etapami tego procesu.

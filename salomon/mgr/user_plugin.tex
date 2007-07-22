@@ -7,7 +7,7 @@ podaæ ich lokalizacje, umo¿liwiaj¹c systemowi tym samym pobranie i~
 za³adowanie wtyczki. Obecna wersja systemu obs³uguje tylko wtyczki w~postaci 
 archiwów jar.
 
-Poni¿y diagram (Rys. \ref{fig:plugin_uml}) przedstawia podstawowe interfejsy
+Poni¿y diagram (rys. \ref{fig:plugin_uml}) przedstawia podstawowe interfejsy
 potrzebne do implementacji w³asnej wtyczki. Kolorem ¿ó³tym zaznaczone
 zosta³y interfejsy zwi¹zane z~graficzn¹ czêœci¹ wtyczki. Kolorem niebieskim
 interfejs, który zwi¹zany jest z~algorytmem wtyczki. 
@@ -27,7 +27,7 @@ Stanowi po³¹czenie interfejsów \emph{IDataPlugin} i~\emph{IGraphicPlugin}
 Interfejs ten definiuje tylko jedn¹ metodê \emph{doJob()}, która jest uruchamiana podczas przetwarzania danej wtyczki i~stanowi jej g³ówne zadanie obliczeniowe. Jej parametry to:
 
 \begin{itemize}
-	\item \emph{IDataEngin}~(\ref{lab:data_engine}) -- obiekt ten dostarcza interfejsów pozwalaj¹cych na operowanie na danych i~wiedzy (np. ITreeManager)
+	\item \emph{IDataEngin}~(por. \ref{lab:data_engine}) -- obiekt ten dostarcza interfejsów pozwalaj¹cych na operowanie na danych i~wiedzy (np. ITreeManager)
  	\item \emph{IEnvironment} to~interfejs umo¿liwiaj¹cy komunikacje 
           pomiêdzy poszczególnymi zadaniami
 	\item \emph{ISettings} reprezentujê konfiguracja wejœciowa wtyczki
@@ -60,8 +60,8 @@ obiektu  \emph{IResult} zwróconego wczeœniej przez metodê \emph{doJob()}.
 	\item  \emph{getDefaultResult()} -- zwraca domyœlny rezultat wykonania wtyczki.
 \end{itemize}
 
-Do komunikacji pomiêdzy wtyczkami a platform¹ wykorzystywane s¹
-interfejsy \emph{ISettings} i \emph{IResult}. Definiuj¹ one odpowiednio
+Do komunikacji pomiêdzy wtyczkami a~platform¹ wykorzystywane s¹
+interfejsy \emph{ISettings} i~\emph{IResult}. Definiuj¹ one odpowiednio
 konfiguracje oraz rezultat pracy wtyczki.
 
 %WSTAWIÆ TO W~JAKIEŒ MIEJSCE!!!
