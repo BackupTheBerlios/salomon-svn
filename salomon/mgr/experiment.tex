@@ -1,7 +1,7 @@
 \label{lab:experiment}
 
 W poni¿szym rozdziale zaprezentowane zosta³o przyk³adowe zastosowanie systemu. Ma on na celu zademonstrowanie mo¿liwoœci platformy jako œrodowiska,
-które nadzoruje obliczenia uczenia maszynowego oraz u³atwia proces tworzenia algorytmów (w postaci wtyczek). Przyk³adowe wykorzystanie systemu obejmuje zbudowanie oraz wizualizacjê drzewa decyzyjnego na podstawie zbioru danych ucz¹cych.
+które nadzoruje obliczenia uczenia maszynowego oraz u³atwia proces tworzenia algorytmów (w~postaci wtyczek). Przyk³adowe wykorzystanie systemu obejmuje zbudowanie oraz wizualizacjê drzewa decyzyjnego na podstawie zbioru danych ucz¹cych.
  
 \section{Opis problemu}
 
@@ -94,7 +94,7 @@ String[] strConds = cSettings.getConditions();
 
 // stworzenie warunków dla nowego zbioru danych
 ICondition[] conditions = new ICondition[strConds.length];
-int i~= 0;
+int i = 0;
 for (String cond : strConds) {
 	if (cond != null) {
 		// stworzenie pojedynczego warunku 
@@ -118,7 +118,7 @@ dataSetManager.add(subSet);
 Algorytmy generowania drzew decyzyjnych pracuj¹ na specjalnie
 przygotowanych danych -- atrybutach. Atrybuty okreœlaj¹ pewne cechy 
 danych wejœciowych i~w przyjêtym w~systemie podejœciu (por. \ref{lab:knowledge})
-bazuj¹ na zbiorach danych. St¹d wtyczka tworz¹ca zbiór atrybutów -- \emph{AttribiteSetCreator},
+bazuj¹ na zbiorach danych. St¹d wtyczka tworz¹ca zbiór atrybutów -- \emph{AttributeSetCreator},
 który s³u¿y do generowania drzewa decyzyjnego, operuje na tym samym Ÿródle danych,
 co wtyczka tworz¹ca zbiór danych.
 
@@ -146,7 +146,7 @@ Description[] strDesc = cSettings.getDescriptions();
 IAttributeDescription[] descs =
   new IAttributeDescription[strDesc.length];
 
-int i~= 0;
+int i = 0;
 // stworzenie listy atrybutów
 for (Description desc : strDesc) {
 	if (desc != null) {
@@ -215,13 +215,13 @@ W pierwszym etapie pobieramy ustawienia, takie jak dane trenuj¹ce, atrybuty itp.
 WekaTreeGeneratorSettings treeSettings =
   (WekaTreeGeneratorSettings) settings;
 
-// pobranie atrybutów zdefiniowanych w~ustawieniach
+// pobranie atrybutów zdefiniowanych w ustawieniach
 String attributeSetName = treeSettings.getAttributeSetName();
 IAttributeManager attributeManager = engine.getAttributeManager();
 IAttributeSet attributeSet =
   attributeManager.getAttributeSet(attributeSetName);
 
-// pobranie zbioru danych zdefiniowanych w~ustawieniach
+// pobranie zbioru danych zdefiniowanych w ustawieniach
 String dataSetName = treeSettings.getDataSetName();
 IDataSetManager dataSetManager = engine.getDataSetManager();
 IDataSet dataSet = dataSetManager.getDataSet(dataSetName);
@@ -253,7 +253,7 @@ ITreeManager treeManager = engine.getTreeManager();
 // stworzenie pustego drzewa
 ITree tree = treeManager.createTree(attributeSet);
 tree.setName(treeName);
-// zbudowanie drzewa korzystaj¹c z~Weki
+// zbudowanie drzewa korzystaj¹c z Weki
 classifier.buildClassifier(instances);
 \end{lstlisting}
 \end{framed}
@@ -274,7 +274,7 @@ result.setSuccessful(true);
 \begin{figure}[H]
 	\centering
 		\includegraphics[scale=0.60]{img/experiment/tree_generator_results.png}
-	\caption{Konfiguracja losowego zbioru danych}
+	\caption{Rezultat pracy algorytmu}
 	\label{fig:tree_generator_results}
 \end{figure}
 
