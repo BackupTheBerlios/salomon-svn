@@ -168,7 +168,7 @@
     <target name="deploy"
             depends="copy_salomon, copy_plugins, 
 		copy_libs, copy_drivers, copy_data_base,
-		copy_res, copy_config, get_version" />
+		copy_res, copy_config" />
 
     <!-- Create zip file -->
     <target name="compress" depends="deploy">
