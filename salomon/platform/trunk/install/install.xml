@@ -106,11 +106,7 @@ Installation file for salomon project
 	<file src="../jaybird.dll" targetdir="$INSTALL_PATH"/>
 	    
 	<!-- configurations -->
-	<file src="../bin/messages.properties" targetdir="$INSTALL_PATH"/>
-	<file src="../src/version.properties" targetdir="$INSTALL_PATH"/>
-	<file src="../bin/config.properties" targetdir="$INSTALL_PATH"/>
-	<file src="../bin/resources.properties" targetdir="$INSTALL_PATH"/>
-        <file src="../bin/log.conf" targetdir="$INSTALL_PATH"/>
+	    <file src="../bin/log.conf" targetdir="$INSTALL_PATH"/>
         <file src="../bin/all.policy" targetdir="$INSTALL_PATH"/>
         <file src="../install/run.bat" targetdir="$INSTALL_PATH"/>
 	    

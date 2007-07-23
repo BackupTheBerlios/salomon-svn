@@ -98,7 +98,7 @@
             <manifest>
                 <attribute name="Main-Class" value="salomon.engine.Starter" />
                 <attribute name="Class-Path"
-                           value="${lib_dir}/firebirdsql.jar ${lib_dir}/log4j-1.2.8.jar ${lib_dir}/mini-j2ee.jar ${lib_dir}/colt.jar ${lib_dir}/commons-collections-3.1.jar ${lib_dir}/jung.jar ${lib_dir}/forms.jar ${lib_dir}/looks.jar ${lib_dir}/binding.jar ${lib_dir}/validation.jar ${lib_dir}/tablesorter.jar ${lib_dir}/jedit.jar ${lib_dir}/commons-cli.jar." />
+                           value="${lib_dir}/firebirdsql.jar ${lib_dir}/log4j-1.2.8.jar ${lib_dir}/mini-j2ee.jar ${lib_dir}/colt.jar ${lib_dir}/commons-collections-3.1.jar ${lib_dir}/jung.jar ${lib_dir}/forms.jar ${lib_dir}/looks.jar ${lib_dir}/binding.jar ${lib_dir}/validation.jar ${lib_dir}/tablesorter.jar ${lib_dir}/jedit.jar ${lib_dir}/commons-cli.jar ${lib_dir}/weka.jar ." />
             </manifest>
         </jar>
     </target>
@@ -168,7 +168,7 @@
     <target name="deploy"
             depends="copy_salomon, copy_plugins, 
 		copy_libs, copy_drivers, copy_data_base,
-		copy_res, copy_config, get_version" />
+		copy_res, copy_config" />
 
     <!-- Create zip file -->
     <target name="compress" depends="deploy">
