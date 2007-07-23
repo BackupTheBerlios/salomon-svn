@@ -21,7 +21,7 @@ Installation file for salomon project
         <appversion>1.0b</appversion>
         <authors>
             <author name="Krzysztof Rajda" email="krzycho@student.uci.agh.edu.pl"/>
-            <author name="Nikodem Jura" email="nico@icslab.agh.edu.pl"/>
+            <author name="Nikodem Jura" email="nikodem.jura@gmail.com"/>
         </authors>
         <javaversion>1.5</javaversion>
 	<url>http://developer.berlios.de/projects/salomon</url>
@@ -84,7 +84,8 @@ Installation file for salomon project
 	    
 	    <!-- external lib jars -->
 	    <file src="../lib/binding.jar" targetdir="$INSTALL_PATH/lib"/>
-       	<file src="../lib/colt.jar" targetdir="$INSTALL_PATH/lib"/>
+		<file src="../lib/colt.jar" targetdir="$INSTALL_PATH/lib"/>
+		<file src="../lib/commons-cli.jar" targetdir="$INSTALL_PATH/lib"/>
         <file src="../lib/commons-collections-3.1.jar" targetdir="$INSTALL_PATH/lib"/>
         <file src="../lib/dynamicjava.jar" targetdir="$INSTALL_PATH/lib"/>
         <file src="../lib/firebirdsql.jar" targetdir="$INSTALL_PATH/lib"/>
@@ -132,11 +133,12 @@ Installation file for salomon project
 	<description>The sample plugins</description>
 	<file src="../plugins/AttributeSetCreator.jar" targetdir="$INSTALL_PATH/plugins"/>
 	<file src="../plugins/DataSetCreator.jar" targetdir="$INSTALL_PATH/plugins"/>
+	<file src="../plugins/DataSetUnion.jar" targetdir="$INSTALL_PATH/plugins"/>
 	<file src="../plugins/DataSetVis.jar" targetdir="$INSTALL_PATH/plugins"/>
 	<file src="../plugins/PluginDebugger.jar" targetdir="$INSTALL_PATH/plugins"/>
 	<file src="../plugins/RandomDSCreator.jar" targetdir="$INSTALL_PATH/plugins"/>
 	<file src="../plugins/TreeEvaluator.jar" targetdir="$INSTALL_PATH/plugins"/>
-	<file src="../plugins/VisPlugin.jar" targetdir="$INSTALL_PATH/plugins"/>
+	<file src="../plugins/TreeVis.jar" targetdir="$INSTALL_PATH/plugins"/>
 	<file src="../plugins/WekaTreeGenerator.jar" targetdir="$INSTALL_PATH/plugins"/>
     </pack>
 
@@ -146,7 +148,7 @@ Installation file for salomon project
     	</pack>
 	<pack name="SampleDatabase" required="no">
 	    <description>The sources</description>
-	    <file src="../db/persons.gdb" targetdir="$INSTALL_PATH/db"/>
+	    <file src="../db/example.gdb" targetdir="$INSTALL_PATH/db"/>
 	</pack>
 </packs>
     
