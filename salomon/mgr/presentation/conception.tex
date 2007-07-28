@@ -1,23 +1,29 @@
-\section{Koncepcja platformy Salomon}
+\section{Za³o¿enia i koncepcja platformy}
 
-\subsection{Koncepcja}
 \frame{
-	\frametitle{Koncepcja}
-	\begin{itemize}
-		\item OdpowiedŸ na ograniczenia systemu \emph{VINLEN} i pokrewnych
-		\item Skalowalnoœæ jako jeden z g³ównych aspektów architektury
-		\item Mo¿liwoœæ rozpraszania obliczeñ dziêki rozbiciu procesu obliczeniowego na pojedyncze zadania
+	\frametitle{Analiza wymagañ}
+	\begin{itemize}		
+		\item Przyjazny interfejs u¿ytkownika
+		\item Dobrze zdefiniowany interfejs programistyczny
+		\item Odizolowanie algorytmów od szczegó³ów implementacyjnych plaftormy
+		\item Spójna reprezentacja wiedzy dla wszystkich algorytmów
+		\item Komponentowa architektura
+		\item Wykorzystanie gotowych implementacji algorytmów
+		\item Otwarta licencja \emph{(LGPL)}
 	\end{itemize}		
 }
 
-\subsection{G³ówne za³o¿enia}
 \frame{
 	\frametitle{G³ówne za³o¿enia}
 	\begin{itemize}
+			\item Koncepcja zadaniowoœci			
+			\begin{itemize}
+				\item Zadanie -- atomowa jednostka reprezentuj¹ca obliczenia
+				\item Tworzenie powi¹zañ miêdzy zadaniami
+			\end{itemize}
     	\item Budowa komponentowa
-    	\item Otwartoœæ
+    	\item Otwartoœæ architektury
     	\item Niezale¿noœæ od œrodowiska wdro¿enia
-    	\item Mo¿liwoœæ rozpraszania obliczeñ
     	\item Prostota u¿ytkowania
     \end{itemize}
 }
