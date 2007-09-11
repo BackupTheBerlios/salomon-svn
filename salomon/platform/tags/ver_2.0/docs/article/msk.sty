@@ -1,0 +1,536 @@
+% ----------------------------------------------------------------------------
+%
+% Plik:     mks.sty   [LaTeX Document style: MSK'2005 Users' Conference]
+%
+% U¿ycie:   \documentclass[11pt]{article}
+%           \usepackage{mks}      % w³¹czenie niniejszego stylu
+%           \usepackage{...}      % ewentualnie inne, konieczne pakiety
+%            ...
+%
+% Za³o¿enia:
+%  * sk³ad dwukolumnowy, rozmiary strony: 160x235mm (kolumna strony
+%    zawiera tekst zasadniczy --- bez nag³ówków ¿ywej paginy oraz
+%    numeracji stron)
+%  * jêzykiem publikacji mo¿e byæ zarówno jêzyk polski jak i angielski
+%    --- wybór jêzyka publikacji deklaruje siê poprzez wpisanie
+%    stosownego parametru przy wywo³aniu pakietu {mks}:
+%           \usepackage[pl]{msk}  -- jêzyk polski (domyœlnie)
+%           \usepackage[en]{msk}  -- jêzyk angielski
+%  * u¿yto konwencji nazewnictwa makr na podstawie stylu msk2001.sty
+%    jakie u¿ywany by³ wczeœniej (msk2001.sty 15-aug-01 prepared for
+%    MSK'2001 Users' Conference", autor: Pawel Topa), dokonuj¹c
+%    minimalnych modyfikacji
+%  * autor powinien przygotowaæ swój artyku³, na wzór wydawnictw typu
+%    ,,camera ready'' --- nale¿y zwróciæ uwagê na zalecenia jakie
+%    nak³ada Wydawca i Komitet Redakcyjny Konferencji
+%
+% Pakiety jakie wykorzystuje niniejszy styl, tj.:
+%   polski.sty
+%   ifthen.sty,
+%   exscale.sty,
+%   array.sty,
+%   qtimes.sty
+% --- s¹ pakietami rozpowszechnianymi w podstawowej dystrybucji LaTeX2e.
+% Pozosta³e (np amsmath.sty, amsthm.sty, amssymb.sty, graphicx.sty)
+% mog¹ byæ do³¹czone do pliku g³ównego, w zale¿noœci od potrzeb autora.
+% Wszystkie pakiety dostêpne s¹ poprzez Internetowe zasoby serwerów FTP,
+% m.in.:
+%   ftp://ftp.tex.ac.uk/tex-archive/macros/latex/required/
+%   ftp://ftp.pg.gda.pl/pub/TeX/macros/latex/required/
+%
+% Nale¿y pobraæ i zainstalowaæ pakiety z katalogów graphics/ i amslatex/.
+%
+% W przypadku artyku³ów, zawieraj¹cych fragmenty tekstu pisane
+% w jêzyku polskim, zachodzi uzasadnione przypuszczenie ;-) i¿ wyst¹pi¹
+% tam polskie diakrytyki. Celem prawid³owego tworzenia dokumentów
+% LaTeX-owych z u¿yciem polskich znaków (m.in. prawid³owe typograficznie
+% litery narodowe, odpowiednie znaki zgodne z polsk¹ tradycj¹ drukarsk¹),
+% konieczne jest w³¹czenie pakietu polski.sty oraz ewentualne doinstalowanie
+% polskich fontów TeX-owych Computer Modern. Dostêpnoœæ pakietu i fontôw
+% --- w archiwach jak wy¿ej, lub w dystrybucjach TeXLive.
+% Stosowny opis instalacji i prawid³owego u¿ycia, na stronach
+% internetowych WWW:
+%   http://www.gust.org.pl/DOC/platex.html
+%   http://www.mimuw.edu.pl/~wolinski/TeX.html
+%
+% ----------------------------------------------------------------------------
+%
+% Przyk³ad u¿ycia niniejszego pliku stylu:
+%
+%  \documentclass[11pt,a4paper,twocolumn]{article}
+%  \usepackage{tabularx}
+%  \usepackage{graphicsx}
+%  \usepackage[pl|en]{msk}
+%
+%   \begin{document}
+%
+%  \title{Tytu³ referatu}
+%  \author{Autor\inst{1}, Autor\inst{2}}
+%  \institute{Instytucja1, adres, e-mail Autora1
+%     \and
+%             Instytucja2, adres, e-mail Autora2
+%  }
+%
+%  \begin{abstract}
+%    Jak sama nazwa wskazuje... treœæ streszczenia.
+%  \end{abstract}
+%
+%  \section{...}
+%  \subsection{...}
+%  \subsubsection{...}
+%    Zasadniczy tekst referatu.
+%    ...
+%  \end{document}
+%
+% ----------------------------------------------------------------------------
+%
+% Autor:   Jacek Kmiecik     (jk@pretext.com.pl)
+%          preTeXt           http://www.pretext.com.pl,
+%                            http://www.kmiecik.com.pl
+%
+% Date:    v0.11  13.07 2005, dopasowa³ to specyfikacji: Jaros³aw Warzecha
+%
+% Copyright: ONT             http://www.ont.com.pl
+% ----------------------------------------------------------------------------
+
+\NeedsTeXFormat{LaTeX2e}%           LaTeX 2.09 can't be used (nor non-LaTeX)
+\def\fileversion{0.11}
+\def\filedate{2005/07/13}
+
+\ProvidesPackage {msk}%
+    [2005/07/13 v0.11 LaTeX style: MSK'2005 Users' Conference; (C) ONT]
+
+\RequirePackage{ifthen}
+\RequirePackage{exscale}
+\RequirePackage{array}
+\RequirePackage{qtimes}
+
+\newboolean{pl@language}
+\DeclareOption{pl}{\setboolean{pl@language}{true}}
+\DeclareOption{en}{\setboolean{pl@language}{false}}
+\ExecuteOptions{pl}
+\ProcessOptions
+
+\newboolean{inf@set}
+\setboolean{inf@set}{false}
+\DeclareOption{inf}{\setboolean{inf@set}{true}}
+\ProcessOptions
+
+\AtBeginDocument{%
+  \ifthenelse{\boolean{pl@language}}
+    {\RequirePackage[plmath]{polski}}
+    {\RequirePackage[nomathsymbols]{polski}
+     \selecthyphenation{english}
+     }
+  \InputIfFileExists{msk_jk.cfg}%
+    {\typeout{^^J \space[Lokala konfiguracja... MSK]^^J}}%
+    {\typeout{^^J \space[Publiczna konfiguracja... MSK]^^J}%
+     \let\@head@fik\@empty}%
+  \ifthenelse{\boolean{pl@language}}%
+   {%
+    \def\tablename           {Tabela}
+    \def\figurename          {Rys.}
+    \def\refname             {Literatura.}
+    \def\acknowledgementname {Podziêkowania.}
+    \def\abstractname        {Streszczenie.}
+   }
+   {%
+    \def\tablename           {Table}
+    \def\figurename          {Fig.}
+    \def\refname             {References.}
+    \def\acknowledgementname {Acknowledgements.}
+    \def\abstractname        {Abstract.}
+   }
+  \ifthenelse{\boolean{inf@set}}
+   {\pagestyle{MKSdraft}}
+   {\pagestyle{empty}}
+  }
+
+\setlength{\paperwidth}      {210mm}
+\setlength{\paperheight}     {297mm}
+\setlength{\textwidth}       {160mm}
+\setlength{\textheight}      {236mm}
+
+\setlength{\voffset}         {-.4mm}
+\setlength{\hoffset}         {-.4mm}
+
+\setlength{\topmargin}        {-8mm}
+\setlength{\headheight}        {8mm}
+\setlength{\headsep}           {5mm}
+\setlength{\topskip}           {0mm}
+\setlength{\footskip}       {25.5mm} % {27.5mm}
+
+\setlength{\columnsep}         {8mm}
+\setlength{\columnseprule}     {0pt}
+
+\setlength{\oddsidemargin}     {0mm}
+\setlength{\evensidemargin}    {0mm}
+\setlength{\marginparwidth}   {20mm}
+\setlength{\marginparsep}      {2mm}
+\setlength{\leftskip}          {0mm}
+\setlength{\rightskip}         {0mm}
+\setlength{\parskip}         {1.5pt plus1pt minus.75pt}
+\setlength{\parindent}        {14pt}
+\setlength{\leftmargini}      {\parindent}
+
+\renewcommand{\baselinestretch}{1.05}
+\widowpenalty 10000
+\clubpenalty  10000
+\sloppy
+\flushbottom
+
+%
+% Wzglêdnie lepsze po³o¿enie ,,float-ów'' na stronach...
+%
+\setcounter     {topnumber}              {3}   %% {2} --- orginal
+\renewcommand   {\topfraction}           {.9}  %% {.7}
+\setcounter     {bottomnumber}           {3}   %% {1}
+\renewcommand   {\bottomfraction}        {.3}  %% {.3}
+\setcounter     {totalnumber}            {5}   %% {3}
+\renewcommand   {\textfraction}          {.1}  %% {.2}
+\renewcommand   {\floatpagefraction}     {.75} %% {.5}
+\setcounter     {dbltopnumber}           {3}   %% {2}
+\renewcommand   {\dbltopfraction}        {.8}  %% {.7}
+\renewcommand   {\dblfloatpagefraction}  {.8}  %% {.5}
+
+\setlength{\footnotesep}       {7.7pt}
+\skip\footins                   9pt plus 4pt minus 2pt
+\setlength{\floatsep}         {12pt plus 2pt minus 2pt}
+\setlength{\textfloatsep}      {8mm plus 2pt minus 4pt}
+\setlength{\intextsep}         {8mm plus 2pt minus 2pt}
+\setlength{\dblfloatsep}      {12pt plus 2pt minus 2pt}
+\setlength{\dbltextfloatsep}  {20pt plus 2pt minus 4pt}
+\setlength{\@fptop}            {0pt plus 1fil}
+\setlength{\@fpsep}            {8pt plus 2fil}
+\setlength{\@fpbot}            {0pt plus 1fil}
+\setlength{\@dblfptop}         {0pt plus 1fil}
+\setlength{\@dblfpsep}         {8pt plus 2fil}
+\setlength{\@dblfpbot}         {0pt plus 1fil}
+
+\def\small{\@setsize\small{10.0pt}\xpt\@xpt}
+\def\large{\@setsize\large{11.0pt}\xipt\@xipt}
+\def\Large{\@setsize\Large{12.0pt}\xiipt\@xiipt}
+\def\LARGE{\@setsize\LARGE{14.0pt}\xivpt\@xivpt}
+
+
+\newcommand\paginefont{\normalfont\small\ttfamily}
+\newcommand{\h@rule}{\rule[11pt]{\textwidth}{.3pt}}
+
+\newcommand{\ps@MKSdraft}{%
+  \renewcommand{\@oddhead} {\@head@fik}% \@empty}%
+  \renewcommand{\@evenhead}{\@head@fik}% \@empty}%
+  \renewcommand{\@oddfoot} {\rlap{\makebox[\textwidth][r]{\bottompage}\llap{\h@rule}}}%
+  \renewcommand{\@evenfoot}{\rlap{\makebox[\textwidth][r]{\bottompage}\llap{\h@rule}}}%
+  }
+
+\newcommand\bottompage{\paginefont
+    \today\qquad{str.\space\thepage/\pageref{LastPage}}}
+
+\pagestyle{MKSdraft}
+          % {empty}
+          % {plain}
+
+% ---
+
+\skip\footins = 16pt plus 4pt minus 2pt
+\def\footnoterule{\kern-3\p@
+    \hrule \@width\textwidth \kern 2.6\p@} % kreseczka na ca³¹ szerokoœæ
+\renewcommand\@fnsymbol[1]{\ensuremath     % wiêcej gwiazdeczek...
+  {\ifcase#1\or*\or **\or *{*}*\or *{*}*{*}\or *{*}*{*}*\or
+   (6)\or (7)\or (8)\or (9)\else
+   \@ctrerr\fi}}
+
+
+% Tytu³, autorzy, afiliacje
+
+\newcounter{@inst}
+\newcounter{@przec}
+
+\def\institute#1{\gdef\@institute{#1}}
+
+\def\inst#1{\unskip%
+  \setcounter{@przec}{0}%
+  \@for\@x:=#1\do {%
+    \ifnum\c@@przec=0\relax \else ${}^,$\fi
+    \@ifundefined{r@\@x}%
+        {\unskip${}^{\@x}$}%
+        {\unskip${}^{\ref{\@x}}$}%
+    \addtocounter{@przec}{1}%
+   }%
+}
+
+\def\institutename{\par
+ \begingroup
+ \parskip\z@
+ \parindent\z@
+ \setcounter{@inst}{1}%
+ \def\and{\par\stepcounter{@inst}%
+   \noindent${}^{\the@inst}$\enspace\ignorespaces}%
+ \setbox0=\vbox{\def\thanks##1{}\@institute}%
+ \ifnum\c@@inst=1\relax
+ \else
+   \setcounter{footnote}{\c@@inst}%
+   \setcounter{@inst}{1}%
+   \def\@currentlabel{\the@inst}%
+  \noindent${}^{\the@inst}$\enspace
+ \fi
+ \ignorespaces
+ \@institute\par
+ \endgroup}
+
+\def\maketitle{\par
+ \begingroup
+ \def\thefootnote{\fnsymbol{footnote}}
+ \def\@makefnmark{\hb@xt@ 0pt{$^{\@thefnmark}$\hss}}
+ \if@twocolumn
+   \twocolumn[\@maketitle]
+ \else \newpage
+   \global\@topnum\z@ \@maketitle
+ \fi
+ \thispagestyle{empty}\@thanks
+ \endgroup
+ \setcounter{footnote}{0}%
+ \let\maketitle\relax
+ \let\@maketitle\relax
+ \gdef\@thanks{}\gdef\@author{}\gdef\@title{}\let\thanks\relax
+ }
+
+\def\@maketitle{\newpage
+ \null
+ \vspace*{11mm}
+ \begin{center}
+ \LARGE\bfseries \@title\par    \vspace{0.5em}
+ \Large \@author\par   \vspace{0.5em}
+ \normalfont
+ \small
+ \@ifundefined{@institute}{\relax}{\institutename}
+ \end{center}
+ \vspace*{1.5em}
+ \vbox{}
+ }
+
+\renewenvironment{abstract}{%
+ \normalsize\noindent\textbf{\abstractname}%
+ \slshape}%
+
+\newenvironment{acknowledgements}{%
+  \subsection*{\acknowledgementname}
+   \begin{itshape}\small\ignorespaces
+  }
+  {\end{itshape}}
+
+% ---
+
+\renewcommand\section{\@startsection
+  {section}{1}%
+           {\z@}%
+	   {-10pt \@plus -1ex \@minus -.2ex}%
+	   {-0.8em}
+	   {\normalfont\normalsize\bfseries\raggedright}}
+\renewcommand\subsection{\@startsection
+  {subsection}{2}%
+           {\z@}%
+           {-8pt\@plus -1ex \@minus -.2ex}%
+	   {-0.8em}
+           {\normalfont\normalsize\bfseries\raggedright}}
+\renewcommand\subsubsection{\@startsection
+  {subsubsection}{3}%
+           {\z@}%
+           {-6pt\@plus -1ex \@minus -.2ex}%
+	   {-0.8em}
+           {\normalfont\bfseries\raggedright}}
+
+\renewcommand\paragraph{\@startsection
+  {paragraph}{4}%
+           {\z@}%
+           {-1.75ex\@plus -1ex \@minus -.2ex}%
+	   {-0.8em}
+           {\normalfont\bfseries\normalsize}}
+\renewcommand\subparagraph{\@startsection
+  {subparagraph}{4}%
+           {\z@}%
+           {-1.25ex\@plus -1ex \@minus -.2ex}%
+	   {-0.8em}
+           {\normalfont\itshape\normalsize}}
+
+\setcounter{secnumdepth}{3}
+\def\@seccntformat#1{\csname the#1\endcsname.\hspace{.5em}}
+
+% ---
+
+\setlength  \labelsep  {.333em}
+\setlength  \labelwidth{\leftmargini}
+\addtolength\labelwidth{-\labelsep}
+\setlength\partopsep{0\p@}
+\@beginparpenalty -\@lowpenalty
+\@endparpenalty   -\@lowpenalty
+\@itempenalty     -\@lowpenalty
+\def\@listi{\leftmargin\leftmargini
+            \parsep  \z@
+            \topsep  \z@
+               plus .15\baselineskip
+               minus \z@
+            \itemsep \p@}
+\@listi
+\let\@listI\@listi
+\def\@listii {\leftmargin\leftmarginii
+              \labelwidth\leftmarginii
+              \advance\labelwidth-\labelsep
+              \topsep .20\baselineskip
+                plus  .15\baselineskip
+                minus \z@
+              \parsep  \z@
+              \itemsep \p@}
+\def\@listiii{\leftmargin\leftmarginiii
+              \labelwidth\leftmarginiii
+              \advance\labelwidth-\labelsep
+              \itemsep   \p@}
+
+\def\itemize{%
+ \ifnum \@itemdepth >\thr@@\@toodeep\else
+   \advance\@itemdepth\@ne
+   \edef\@itemitem{labelitem\romannumeral\the\@itemdepth}%
+   \expandafter\list
+     \csname\@itemitem\endcsname
+      {\def\makelabel##1{\hss\llap{\reset@font##1}}}%
+ \fi}
+
+\def\enumerate{%
+ \ifnum \@enumdepth >\thr@@\@toodeep\else
+   \advance\@enumdepth\@ne
+   \edef\@enumctr{enum\romannumeral\the\@enumdepth}%
+   \expandafter\list
+     \csname label\@enumctr\endcsname
+      {\usecounter\@enumctr%
+       \def\makelabel##1{\hss\llap{\reset@font##1}}}%
+ \fi}
+
+% ---
+
+\def\verbatim@font{\normalfont\small\ttfamily}
+
+% ---
+
+\newcommand\cap@lab@fnt{\normalfont\small\rmfamily\bfseries}
+\newcommand\cap@txt@fnt{\normalfont\small\rmfamily}
+
+\setlength\abovecaptionskip{6\p@}
+\setlength\belowcaptionskip{2\p@}
+
+\long\def\fig@makecaption#1#2{%
+  \setbox0\hbox{#2}%
+  \ifdim\wd0=\z@%
+      \let\cap@labeldelim\relax\else
+      \def\cap@labeldelim{.}\fi
+  \vskip\abovecaptionskip
+  \sbox\@tempboxa{%
+    {\cap@lab@fnt#1\cap@labeldelim}\nobreakspace{\cap@txt@fnt#2}}%
+  \ifdim \wd\@tempboxa >\hsize
+    \unhbox\@tempboxa\par
+  \else
+    \global \@minipagefalse
+    \hb@xt@\linewidth{\hfil\box\@tempboxa\hfil}%
+  \fi
+  \vskip\belowcaptionskip}
+
+\long\def\tab@makecaption#1#2{%
+  \setbox0\hbox{#2}%
+  \ifdim\wd0=\z@%
+      \let\cap@labeldelim\relax\else
+      \def\cap@labeldelim{.}\fi
+  \vskip\belowcaptionskip
+  \sbox\@tempboxa{%
+    {\cap@lab@fnt#1\cap@labeldelim}\nobreakspace{\cap@txt@fnt#2}}%
+  \ifdim \wd\@tempboxa >\hsize
+    \unhbox\@tempboxa\par
+  \else
+    \global \@minipagefalse
+    \hb@xt@\linewidth{\hfil\box\@tempboxa\hfil}%
+  \fi
+  \vskip\abovecaptionskip}
+
+\renewenvironment{figure}
+   {\let\@makecaption\fig@makecaption
+    \@float{figure}}
+   {\end@float}
+
+\renewenvironment{figure*}
+   {\let\@makecaption\fig@makecaption
+    \@dblfloat{figure}}
+   {\end@dblfloat}
+
+\renewenvironment{table}
+   {\let\@makecaption\tab@makecaption
+    \@float{table}}
+   {\end@float}
+
+\renewenvironment{table*}
+   {\let\@makecaption\tab@makecaption
+    \@dblfloat{table}}
+   {\end@dblfloat}
+
+\def\@floatboxreset {%
+    \reset@font
+    \normalsize
+    \@setminipage
+    \small
+  }
+
+% ---
+
+\renewenvironment{thebibliography}[1]
+  {\section*{\refname}%
+     \addtocontents{toc}{\protect\addvspace{4pt}\nobreak}
+     \addcontentsline{toc}{section}{\protect\numberline{}\refname}
+     \markboth{\bibname}{\bibname}
+   \list{\@biblabel{\@arabic\c@enumiv}}%
+        {\settowidth\labelwidth{\@biblabel{#1}}%
+         \leftmargin 1.0\labelwidth
+         \labelsep   0.5em%1.2\labelwidth
+         \itemindent 0pt
+         \itemsep 2pt plus 1pt
+         \advance\leftmargin\labelsep
+         \@openbib@code
+         \usecounter{enumiv}%
+         \let\p@enumiv\@empty
+         \renewcommand\theenumiv{\@arabic\c@enumiv}}%
+   \small
+   \sloppy
+   \clubpenalty4000
+   \@clubpenalty \clubpenalty
+   \widowpenalty4000%
+   \sfcode`\.\@m}
+  {\def\@noitemerr
+    {\@latex@warning{Empty `thebibliography' environment}}%
+   \endlist}
+
+% ---
+
+\let\todayPL\today
+\begingroup
+  \count@\time
+  \divide\count@ 60
+  \count2=-\count@
+  \multiply\count2 60
+  \advance\count2 \time
+  \global\edef\today{%
+    \the\year/\two@digits{\the\month}/\two@digits{\the\day};\space%
+      \two@digits{\the\count@}:\two@digits{\the\count2}}
+\endgroup
+
+\def\lastpage@makelabel{\addtocounter{page}{-1}%
+    \immediate\write\@auxout{\string
+        \newlabel{LastPage}{{}{\thepage}}}%
+    \addtocounter{page}{1}}
+\AtEndDocument{\clearpage\lastpage@makelabel}%
+
+\@ifundefined{eqref}{\let\eqref\EQref}{}
+\newcommand\EQref[1]{\bgroup\rmfamily\upshape(\ref{#1})\egroup}
+
+% ---
+
+\endinput
+
+
+% -*- TeX:PL -*-
+

@@ -1,0 +1,131 @@
+\documentclass[a4paper, 12pt]{article}
+%\usepackage[polish]{babel}
+\usepackage[cp1250]{inputenc}
+%\usepackage[latin2]{inputenc}
+%\usepackage{polski}
+\usepackage{amsfonts}
+\usepackage[T1]{fontenc}
+\usepackage[dvips]{graphicx}
+
+
+
+
+\pagestyle{headings}
+\textwidth      15.5cm
+\oddsidemargin    .1cm
+\evensidemargin   .1cm
+
+
+
+
+
+
+
+\begin{document}
+
+
+
+\thispagestyle{empty}
+
+\begin{minipage}{5cm}
+%\includegraphics[scale=0.3]{logo.eps}
+\end{minipage}
+\begin{minipage}{10cm}
+\begin{center}
+{\Large Salomon\\
+System przetwarzania wiedzy\\}
+\end{center}
+\end{minipage}
+
+
+\[\]
+\begin{flushright}
+{\Large \emph{Iteration Description for Construction -- 1.0\\
+Wersja 1.1}}
+
+\[\]
+
+
+
+\end{flushright}
+
+\vspace{7cm}
+
+\[\]
+
+
+
+\begin{center}
+
+\begin{tabular}{|p{3.5cm}|p{3.5cm}|p{3.5cm}|p{3.5cm}|}
+
+  \hline
+
+  Data & Wersja & Opis & Autor \\
+
+  \hline
+
+
+  20-12-2005 & 1.0 & Wersja pocz¹tkowa & Dominik Seweryn \\
+
+  \hline
+
+
+  27-12-2005 & 1.1 & Drobne poprawki & Dominik Seweryn \\
+
+
+  \hline
+
+\end{tabular}
+
+\end{center}
+
+
+\newpage
+
+
+
+\section{Zadania dla iteracji}
+\subsection{Implementacja algorytmu budowy drzew decyzyjnych} Drugim algorytmem o jaki rozbudowany ma zostaæ plugin odpowiadaj¹cy za konstrukcje drzew decyzyjnych jest C4.5. Jest to ulepszona wersja algorytmu ID3. Miêdzy innymi atrybuty ci¹g³e s¹ dyskretyzowane (zamiana na przedzia³y wartoœci),
+\subsection{Implementacja pluginu wnioskuj¹cego} Plugin ten na podstawie stworzonego drzewa, bêdzie przeprowadza³ klasyfikacje nowych danych i przypisywa³ je do ju¿ istniej¹cych grup.
+\subsection{Implementacja wizualizacji w postaci graficznej w pluginie wizualizacyjnym} Plugin odpowiadaj¹cy za wizualizacjê w obecnej iteracji bêdzie prezentowa³ wynik dzia³ania algorytmu (utworzone drzewo) z wykorzystaniem JTree umo¿liwiaj¹c obserwowanie drzewa na ró¿nych poziomach szczegó³owoœci.
+
+
+\section{Produkt iteracji}
+Cykl prowadz¹cy do wytworzenia wersji 1.0 rozwijanego rozszerzenia do platformy Salomon tak¿e i w
+tym przypadku nie przewiduje wyst¹pienia w poszczególnych fazach wiêcej, ni¿ jednej iteracji. W
+wyniku fazy Transition powinien powstaæ zupe³nie nowy plugin, umo¿liwiaj¹cy wnioskowanie na nowych
+danych z wykorzystaniem istniej¹cego drzewa decyzyjnego i decydowanie gdzie zakwalifikowaæ w³aœnie
+analizowane dane. Dodatkowo podczas iteracji zostan¹ rozbudowane dwa pluginy. Plugin buduj¹cy
+drzewa decyzyjne zostanie rozszerzony o nowy znacznie bardziej zaawansowany algorytm - C4.5. Plugin
+wizualizacyjny bêdzie prezentowa³ stworzone drzewa w formie graficznej (dotychczas by³a tylko forma
+tekstowa) umo¿liwiaj¹c, dziêki rozwijanym wêz³om, przegl¹danie na ró¿nych stopniach szczegó³owoœci.
+Niewielkiej modyfikacji ulegnie tak¿e plugin wczytuj¹cy dane - bêdzie umo¿liwia³ wybór przedzia³u
+wierszy z danymi na których bêdzie budowane drzewo. Pozosta³e rekordy bêd¹ mog³y byæ wykorzystane
+przy wnioskowaniu i w³aœnie na jego potrzeby jest ta modyfikacja.
+
+
+\section{Plan testów}
+Podobnie jak w poprzednim cyklu przy testowaniu bêdziemy korzystali z technologii jUnit. Niektóre
+testy, np. testy dzia³ania pluginu odpowiadaj¹cego za wizualizacje, bêd¹ te¿ przeprowadzane
+rêcznie.
+
+    Testy bêd¹ obejmowa³y sprawdzenie poprawnoœci:
+    \begin{itemize}
+        \item zaimplementowania algorytmów budowy drzew decyzyjnych.
+        \item dzia³ania poszczególnych klas, interfejsów, w tym tak¿e interfejsy szkieletowe (np. realizuj¹ce operacje dzia³ania na bazie danych).
+        \item dzia³ania pluginu realizuj¹cego budowê drzew decyzyjnych.
+        \item dzia³ania pluginu wizualizacyjnego.
+        \item dzia³ania pluginu wnioskuj¹cego.
+        \item dzia³ania ca³oœci zrealizowanej funkcjonalnoœci.
+    \end{itemize}
+
+
+
+\section{Efekt wykonania iteracji}
+W omawianej iteracji uda³o siê zrealizowaæ zgodnie z planem wszystkie zak³adane rozszerzenia
+istniej¹cych pluginów, natomiast nie uda³o siê stworzyæ pluginu wnioskuj¹cego. W zwi¹zku z tym jego
+realizacja zosta³a przeniesiona do cyklu trzeciego.
+
+
+\end{document}

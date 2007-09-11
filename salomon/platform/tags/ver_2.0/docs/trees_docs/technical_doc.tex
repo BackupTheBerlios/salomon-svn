@@ -1,0 +1,508 @@
+\documentclass[a4paper, 12pt]{article}
+%\usepackage[polish]{babel}
+\usepackage[cp1250]{inputenc}
+%\usepackage[latin2]{inputenc}
+%\usepackage{polski}
+\usepackage{amsfonts}
+\usepackage[T1]{fontenc}
+\usepackage[dvips]{graphicx}
+
+%\usepackage{pldoc}
+
+
+
+
+
+
+
+\pagestyle{headings}
+\textwidth      15.5cm
+\oddsidemargin    .1cm
+\evensidemargin   .1cm
+
+\begin{document}
+
+\thispagestyle{empty}
+
+\begin{minipage}{5cm}
+%\includegraphics[scale=0.3]{logo.eps}
+\end{minipage}
+\begin{minipage}{10cm}
+\begin{center}
+{\Large Salomon\\
+System przetwarzania wiedzy\\}
+\end{center}
+\end{minipage}
+
+\vspace*{0.5cm}
+
+\hrulefill
+
+\vspace*{1cm}
+
+
+\begin{flushright}
+{\Large \emph{Technical Documentation, ver 1.0} }
+\end{flushright}
+
+\vspace{7cm}
+
+\begin{flushleft}
+{ \Large Historia wersji }\[\]
+\begin{tabular}{|p{2.5cm}||p{1.5cm}|p{4.5cm}|p{5.5cm}|}
+  \hline
+  Data & Wersja & Opis & Autorzy \\
+  \hline \hline
+  17-09-2005 & 1.0 & Tech Doc & Przemys³aw Misiuda, Krzysztof Nadolski, £ukasz Ostatek, Dominik Seweryn\\
+  \hline
+\end{tabular}
+\end{flushleft}
+
+\[\]
+\newpage
+ \section{Wstêp}
+ Niniejszy dokument stanowi dokumentacjê techniczn¹ projektu rozbudowy platformy
+ Salomon o obs³ugê drzew decyzyjnych.
+
+ \subsection{Cel}
+ Dokument ten ma na celu przybli¿enie szczegó³ów technicznych
+ poszczególnych pluginów realizuj¹cych zadania kolejnych etapów
+ procesu tworzenia i prezentowania drzew decyzyjnych. Okreœla on
+ dok³adnie jakie parametry przyjmuj¹ pluginy, jakie s¹ na³o¿one na
+ nie ograniczenia i jak sprawdzana jest poprawnoœæ danych.
+
+\subsection{Referencje}
+Niniejsze opracowanie odwo³uje siê do za³o¿eñ okreœlonych w
+dokumencie:
+\begin{itemize}
+    \item Software Architecture Document
+\end{itemize}
+
+ \section{Pluginy}
+Wszystkie za³o¿enia opisane w dokumencie SAD nie uleg³y zmianie, a
+opisane ni¿ej pluginy spe³niaj¹ je.
+ \subsection{TreeDataLoader}
+ Plugin ten zawarty jest w pakiecie \texttt{pl.capitol.tree.plugins.dataloader}.
+Implementuje on wszystkie interfejsy wymagane (zgodnie z
+za³o¿eniami twórców) przez plugin dla platformy Salomon i jest
+pierwszym z grupy pluginów odpowiadaj¹ch za budowê drzew
+decyzyjnych. Jego rola sprowadza siê do wczytania dostepnych
+tabel, po wybraniu jednej, wczytywane s¹ jej kolumny. Gdy
+u¿ytkownik dokona wyboru ról dla kolumn informacje te przekazywane
+s¹ do kolejnych pluginów.
+
+\subsubsection{Opis implementacji}
+
+Klasa
+\texttt{pl.capitol.tree.plugins.dataloader.TreeDataLoaderSettingsPanel}
+– pobiera z obiektu implementuj¹cego interfejs
+\texttt{IDataEngine} informacje o tabelach (tablicê obiektów
+implementuj¹cych interfejs ITable) w aktualnej bazie danych za
+pomoca metody \texttt{listTable =
+dataEngine.getMetaData().getTables()} oraz wyœwietla je w oknie
+“Table”. Po wyborze ¿¹danej tabeli która pos³u¿y do budowy drzewa
+wczytywane s¹ dostêpne w niej kolumny za pomoc¹ metody
+\texttt{listTable[nr].getColumns()}, która zwraca tablicê obiektów
+implementuj¹cych IColumn. Wybrane ustawienia zwracane s¹ metod¹
+\texttt{getSettings()} jako obiekt implementuj¹cy ISettings.
+
+Zwracane wymienion¹ wy¿ej metod¹ ustawienia odczytywane s¹ w
+dalszej kolejnoœci w klasie
+pl.capitol.tree.plugins.dataloader.TreeDataLoaderPlugin, i
+umieszczanie w obiekcie implementuj¹cym IDataSource. Jego Id zaœ
+umieszczany jest w obiekcie implementuj¹cym IVariable – jako tak
+zwana zmienna œrodowiskowa, któr¹ mo¿e pobraæ nastêpny plugin i na
+tej podstawie zbudowaæ drzewo.
+
+\subsection{VeniTreeCreator}
+Plugin nale¿y do pakietu
+\texttt{pl.edu.agh.capitol.veniTreeCreator} i realizuje algorytm
+budowy drzew decyzyjnych. Ze wzgledu, i¿ jest to plugin bardziej
+rozbudowany ni¿ pozosta³e dwa jego opis ma nieco inn¹ formê i w
+sposób bardziej szczegó³owy opisuje poszczególne metody
+realizuj¹ce konkretne kroki algorytmu.
+
+\subsubsection{Opis implementacji}
+Klasa \texttt{VeniTreeCreator} - Plugin tworz¹cy drzewa decyzyjne
+na podstawie danych. Drzewa s¹ tworzone na bazie struktury
+IDataSource a zapisywane do ITree. Zaimplementowany algorytm
+tworzenia drzew to ID3.
+
+Metody:
+\begin{itemize}
+    \item doJob() - G³ówna metoda licz¹ca pluginu.
+
+    Parametry:
+    \begin{description}
+        \item[-] salomon.platform.IDataEngine eng
+        \item[-] salomon.platform.IEnvironment env
+        \item[-] salomon.plugin.ISettings settings
+    \end{description}
+    Zwraca: salomon.plugin.IResult
+
+    \item getDefaultErrorResult() - Rezultat zwracany w przypadku wyst¹pienia b³êdu
+
+    Parametry:
+    \begin{description}
+        \item[-] java.lang.String result
+    \end{description}
+    Zwraca: salomon.plugin.IResult
+
+    \item getIDataSourceFromEnv() - Metoda pomocnicza pobieraj¹ca IDataSource'a z IEnvironment'u
+
+    Parametry:
+    \begin{description}
+        \item[-] salomon.platform.IDataEngine eng
+        \item[-] salomon.platform.IEnvironment env
+    \end{description}
+    Zwraca: salomon.platform.data.tree.IDataSource
+
+    \item getResultComponent() - Zwraca komponent z rezultatem
+
+    Parametry: Brak
+
+    Zwraca: salomon.plugin.IResultComponent
+
+    \item getSettingComponent() - Zwraca komponent ustawieñ
+
+    Parametry: Brak
+
+    Zwraca: salomon.plugin.ISettingComponent
+
+    \item performCalculations() - Metoda uruchamiaj¹ce logikê tworzenia drzewa
+
+    Parametry:
+    \begin{description}
+        \item[-] salomon.platform.data.tree.IDataSource ds
+        \item[-] salomon.platform.IDataEngine eng
+    \end{description}
+    Zwraca: salomon.platform.data.tree.ITree
+
+\end{itemize}
+Klasa \texttt{DataItem} - Klasa bêd¹ca abstrakcj¹ elementu danych
+u¿ywanych do tworzenia drzewa - na wewnêtrzne potrzeby algorytmu
+ID3.
+
+Metody:
+
+\begin{itemize}
+    \item getAttributeAt() - Ustawia atrybuty DataItem o numerze indeks
+
+    Parametry:
+    \begin{description}
+        \item[-] index int
+    \end{description}
+    Zwraca: java.lang.String
+
+    \item getAttributes() - Pobiera atrybuty DataItem
+
+    Parametry: Brak
+
+    Zwraca: java.util.Vector<java.lang.String>
+
+    \item print() - Wypisuje dan¹ zmienn¹
+
+    Parametry: Nazwa zmiennej
+
+    Zwraca: void
+
+    \item pushAttribute() - Ustawia atrybuty DataItem na ostatniej pozycji
+
+    Parametry:
+    \begin{description}
+        \item[-] java.lang.String attrib
+    \end{description}
+    Zwraca: void
+
+    \item setName() - Ustawia nazwê DataItem'u
+
+    Parametry:
+    \begin{description}
+        \item[-] java.lang.String name
+    \end{description}
+    Zwraca: void
+
+    \item setObjective() - Ustawia wartoœæ zmiennej decyzyjnej
+
+    Parametry:
+    \begin{description}
+        \item[-] java.lang.String objective
+    \end{description}
+    Zwraca: void
+
+\end{itemize}
+Klasa \texttt{TreeConstructionTask} - Klasa bêd¹ca abstrakcj¹
+zadania tworzenia drzewa decyzyjnego.
+
+Metody:
+\begin{itemize}
+    \item anyAvailable() - Test logiczny czy jest mo¿liwe jeszcze rozwijanie wzglêdem jakiegokolwiek atrybutu.
+
+    Parametry: Brak
+
+    Zwraca: boolean
+
+    \item calculateAverageEntropy() - Metoda matematyczna obliczaj¹ca œredni¹ entropiê w drzewie wzgledem zadanego atrybutu
+
+    Parametry:
+    \begin{description}
+        \item[-] java.util.Vector<TreeItem> vt
+        \item[-] int attribute
+    \end{description}
+    Zwraca: double
+
+    \item createTree() - Metoda inicjalizuj¹ca tworzenie drzewa
+
+    Parametry: Brak
+
+    Zwraca: void
+
+    \item expandTree() - Metoda dokonuj¹ca rozwiniêcia wg zadanego atrybutu
+
+    Parametry:
+    \begin{description}
+        \item[-] int attribute
+    \end{description}
+
+    Zwraca: void
+
+    \item getBestAvailableAttribute() - Metoda wybieraj¹ca najlepszy dostêpny atrybut (ten który minimalizuje entropiê)
+
+    Parametry: Brak
+
+    Zwraca: int
+
+    \item getDistinctClasses() - Metoda pomocnicza dokonuj¹ca ekstrakcji roz³¹cznych klas atrybutów z danych
+
+    Parametry:
+    \begin{description}
+        \item[-] int attributeIndex
+    \end{description}
+    Zwraca: java.util.Vector<java.lang.String>
+
+    \item getDistinctClassesFromObjectives() - Metoda pomocnicza dokonuj¹ca ekstrakcji roz³¹cznych klas wartoœci z danych
+
+    Parametry: Brak
+
+    Zwraca: java.util.Vector<java.lang.String>
+
+    \item getLeafs() - Metoda pomocnicza zwracaj¹ca wszystkie liœcie drzewa
+
+    Parametry: Brak
+
+    Zwraca: java.util.Vector<TreeItem>
+
+    \item getValueOfProp() - Pobiera wartoœæ atrybutu prop dla elementu o
+    id id
+
+    Parametry:
+    \begin{description}
+        \item[-] java.lang.String id
+        \item[-] java.lang.String prop
+    \end{description}
+    Zwraca: java.lang.String
+
+    \item isAllHomogenous() - Pomocnicza metoda sprawdzaj¹ca czy wszystkie wêz³y s¹ homogeniczne
+
+    Parametry: Brak
+
+    Zwraca: boolean
+
+    \item loadFromDataSource() - Inicjalizuje zadanie tworzenia drzewa danymi z
+    IDataSource'u
+
+    Parametry:
+    \begin{description}
+        \item[-] salomon.platform.data.tree.IDataSource ds
+        \item[-] java.util.List<java.lang.Object[]> data
+    \end{description}
+    Zwraca: void
+
+    \item loadFromFile() - Deprecated
+
+    Parametry:
+    \begin{description}
+        \item[-] java.lang.String filename
+        \item[-] int objectiveIndex
+    \end{description}
+    Zwraca: void
+
+    \item print() - Metoda wypisuj¹ca dzewo decyzyjne
+
+    Parametry: Brak
+
+    Zwraca: void
+
+    \item printLeavesOnly() - Metoda wypisuj¹ca dzewo decyzyjne (tylko liœcie)
+
+    Parametry: Brak
+
+    Zwraca: void
+
+    \item returnResult() - Zwraca rezultat obliczeñ w postaci obiektu implementuj¹cego interfejs ITree
+
+    Parametry:
+    \begin{description}
+        \item[-] salomon.platform.data.tree.ITreeManager iTreeManager
+        \item[-] salomon.platform.data.tree.IDataSource ds
+    \end{description}
+    Zwraca: salomon.platform.data.tree.ITree
+
+    \item splitBy() - Metoda pomocnicza dokonuj¹ca rozwiniêcia pojedynczego elementu drzewa decyzyjnego
+
+    Parametry:
+    \begin{description}
+        \item[-] TreeItem ti
+        \item[-] int attribute
+    \end{description}
+    Zwraca: java.util.Vector<TreeItem>
+
+    \item splitBy() - Metoda pomocnicza dokonuje rozwiniêcia drzewa wg zadanego atrybutu
+
+    Parametry:
+    \begin{description}
+        \item[-] java.util.Vector<TreeItem> vt
+        \item[-] int attribute
+    \end{description}
+    Zwraca: java.util.Vector<TreeItem>
+
+\end{itemize}
+
+Klasa \texttt{TreeItem} -  Klasa reprezentuj¹ca wêze³ drzewa
+decyzyjnego
+
+Metody:
+\begin{itemize}
+    \item addToRoadMap() - Dodaje do wektora atrybutów nowy
+    atrybut
+
+    Parametry:
+    \begin{description}
+        \item[-] java.lang.String roadMap
+    \end{description}
+    Zwraca: void
+
+    \item calculateEntropy() - Metoda pomocnicza obliczaj¹ca entropiê wêz³a
+
+    Parametry:
+    \begin{description}
+        \item[-] java.util.Vector<java.lang.String> classes
+    \end{description}
+    Zwraca: double
+
+    \item draw() - Deprecated. Metoda pomocnicza "rysuj¹ca" wêze³
+
+    Parametry:
+    \begin{description}
+        \item[-] int wciecie
+    \end{description}
+    Zwraca: void
+
+    \item getElements() - pobiera elementy wêz³a
+
+    Parametry: Brak
+
+    Zwraca: java.util.Vector<DataItem>
+
+    \item getParent() - Pobiera ojca
+
+    Parametry: Brak
+
+    Zwraca: TreeItem
+
+    \item getRoadMap() - Pobiera œcie¿kê do ROOTa
+
+    Parametry: Brak
+
+    Zwraca: java.util.Vector<java.lang.String>
+
+    \item isHomogenous() - Test logiczny czy wszystkie elemeny wêz³a s¹ homogeniczne
+
+    Parametry: Brak
+
+    Zwraca: boolean
+
+    \item isLeaf() - Test logiczny czy wêze³ jest liœciem
+
+    Parametry: Brak
+
+    Zwraca: boolean
+
+    \item print() - Deprecated. Wypisuje wêze³
+
+    Parametry: Brak
+
+    Zwraca: void
+
+    \item setLeaf() - Ustawia wartoœæ logiczn¹ - czy wêze³ jest liœciem
+
+    Parametry:
+    \begin{description}
+        \item[-] boolean isLeaf
+    \end{description}
+    Zwraca: void
+
+    \item setParent() - Ustawia ojca
+
+    Parametry:
+    \begin{description}
+        \item[-] TreeItem parent
+    \end{description}
+    Zwraca: void
+
+    \item setRoadMap() - Ustawia wektor atrybutów wg których nastêpowa³ podzia³ w drodze do tego wêz³a
+
+    Parametry:
+    \begin{description}
+        \item[-] java.util.Vector<java.lang.String> roadMap
+    \end{description}
+    Zwraca: void
+
+    \item subTreeItem() - Metoda pomocnicza zwracaj¹ca elementy poddrzewa spe³niaj¹ce kryteria
+
+    Parametry:
+    \begin{description}
+        \item[-] int attribute
+        \item[-] java.lang.String value
+    \end{description}
+    Zwraca: void
+\end{itemize}
+
+
+ \subsection{TreeVisualisation}
+ Plugin ten zawarty jest w pakiecie pl.capitol.tree.plugins.test Implementuje
+on wszystkie interfejsy wymagane (zgodnie z za³o¿eniami twórców)
+przez plugin dla platformy Salomon.
+
+\subsubsection{Opis implementacji}
+Wyró¿niamy nastêpuj¹ce klasy:
+\begin{itemize}
+    \item \texttt{pl.capitol.tree.plugins.test.panels.VisSettingsPanel} jest to klasa
+rozszerzaj¹ca \texttt{JPanel}, u¿ywa ona trzech komponentów:
+    \begin{itemize}
+        \item texttt{Choice TreeChooser} -- jest to element który podczas inicjalizacji komponentu
+\texttt{VisSettingsPanel} wype³niony zostaje list¹ drzew dostêpnych w Solution,
+        \item \texttt{Button buton} jest to element typu przycisk przy pomocy którego mo¿emy usun¹æ drzewo z
+listy \texttt{TreeChooser}. Ma on zaimplementowan¹ klasê \texttt{MyActionListener implements
+ActionListener}, która to obs³uguje usuwanie drzewa,
+        \item \texttt{Checkbox checkbox} to element przy
+pomocy którego zostaje podjêta decyzja czy plugin ma dzia³aæ samodzielnie.
+    \end{itemize}
+W danej klasie jest zaimplementowana jeszcze jedna wa¿na metoda \texttt{ISettings getSettings()}
+która to pozwala na przekazanie ustawionych zmiennych w settings do elementu \texttt{VisPlugin}.
+
+    \item \texttt{pl.capitol.tree.plugins.test.panels.VisResultsPanel} jest to klasa rozszerzaj¹ca \texttt{JScrollPanel}.
+Wa¿niejsze z jej metod to \texttt{JTextArea getResultText(String alert)}, która pozwala umieœciæ
+informacje o tym jak nale¿y postêpowaæ aby wyœwietliæ drzewo w oknie Result. \texttt{drawTree(INode
+root, DefaultMutableTreeNode top)} jest metod¹ rekurencyjn¹ rysuj¹c¹ poddrzewo danego elementu w
+komponencie JTree. Istotn¹ metod¹ jest tak¿e \texttt{initialize()}, która podczas inicjalizacji
+panelu decyduje czy bêdzie wyœwietlony komunikat czy te¿ narysowane drzewo JTree w panelu Result.
+    \item \texttt{pl.capitol.tree.plugins.test.VisPlugin} implementuje jedn¹ istotn¹ metodê: \texttt{IResult doJob(IDataEngine
+eng, IEnvironment env, ISettings settings)} która to, pobiera ze zmiennej œrodowiskowej, lub te¿ z
+elementu pobranego z \texttt{VisSettingsPanel} id drzewa, które ma zostaæ wyœwietlone, po czym
+przekazuje ten identyfikator do \texttt{VisResultsPanel}.
+\end{itemize}
+
+\newpage
+
+\end{document}

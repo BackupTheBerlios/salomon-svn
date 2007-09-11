@@ -1,0 +1,169 @@
+\documentclass[a4paper, 12pt]{article}
+%\usepackage[polish]{babel}
+\usepackage[cp1250]{inputenc}
+%\usepackage[latin2]{inputenc}
+%\usepackage{polski}
+\usepackage{indentfirst}
+\usepackage{amsfonts}
+\usepackage[T1]{fontenc}
+\usepackage[dvips]{graphicx}
+
+%\usepackage{pldoc}
+
+\pagestyle{headings} \textwidth      15.5cm \oddsidemargin    .1cm
+\evensidemargin   .1cm
+
+\begin{document}
+
+\thispagestyle{empty}
+
+\begin{minipage}{5cm}
+%\includegraphics[scale=0.3]{logo.eps}
+\end{minipage}
+\begin{minipage}{10cm}
+\begin{center}
+{\Large Salomon\\
+System przetwarzania wiedzy\\}
+\end{center}
+\end{minipage}
+
+\vspace*{0.5cm}
+
+\hrulefill
+
+\vspace*{1cm}
+
+
+\begin{flushright}
+{\Large \emph{User's Manual, ver 1.1} }
+\end{flushright}
+
+\vspace{7cm}
+
+\begin{flushleft}
+{ \Large Historia wersji }\[\]
+\begin{tabular}{|p{2.5cm}||p{1.5cm}|p{4.5cm}|p{5.5cm}|}
+  \hline
+  Data & Wersja & Opis & Autorzy \\
+  \hline  \hline
+  17-09-2005 & 1.0 & User's Manual & Przemys³aw Misiuda, Krzysztof Nadolski, Mateusz Nowakowski, £ukasz Ostatek, Dominik Seweryn, Tomasz W¹sala\\
+ \hline  
+  20-12-2005 & 1.1 & Rozdzia³ TreeConclude & Mateusz Nowakowski\\  
+  \hline
+\end{tabular}
+\end{flushleft}
+
+\[\]
+\newpage
+ \section{Wstêp}
+ Niniejszy dokument stanowi dokumentacjê u¿ytkownika pomocn¹ przy wykorzystaniu platformy
+ Salomon do tworzenia drzew decyzyjnych.
+
+ \subsection{Cel}
+ Dokument ten powsta³ jako prosta instrukcja obs³ugi
+ poszczególnych pluginów realizuj¹cych zadania kolejnych etapów
+ procesu tworzenia i prezentowania drzew decyzyjnych. Wskazuje
+ jakie opcje oferuje ka¿dy plugin i jak ich u¿ywaæ oraz jakie nale¿y wykonaæ kroki aby uzyskaæ
+ po¿¹dany efekt w postaci drzewa decyzyjnego.
+
+ \section{Pluginy}
+ \subsection{TreeDataLoader}
+ Jest to pierwszy z pluginów tworz¹cych drzewa decyzyjne. S³u¿y do wybierania z bazy danych informacji
+potrzebnych do stworzenia drzewa. U¿ytkownik na pocz¹tku wybiera
+tabelê na podstawie której bêdzie tworzone drzewo decyzyjne.
+Nastêpnie kolumnê wzglêdem której tworzone bêdzie drzewo decyzyjne
+(decisioned column) oraz kolumny które maj¹ byæ brane pod uwagê
+przy tworzeniu drzewa (decisioning
+ columns).
+
+ Aby dokonaæ wyboru w/w tabeli i kolumn nale¿y:
+ \begin{itemize}
+ \item za³adowaæ plugin
+ \item dodaæ plugin do tasków
+ \item klikn¹æ prawym przyciskiem na plugin (w oknie tasków) i wybraæ
+„Settings” \item w oknie „Table” wybraæ ¿¹dan¹ tabelê – wtedy w
+oknach „Decisioned column” oraz „Decioning columns” pojawi siê
+lista dostêpnych kolumn, zaœ w polach "Range to" iloœæ wierszy w danej tabeli
+ \item wybraæ jedn¹ kolumnê w „Decisioned kolumn” - lista kolumn w oknie „Decioning columns” powinna siê zmiejszyæ o wybran¹ kolumnê
+\item wybraæ dowoln¹ iloœæ w
+oknie „Decioning columns” (przy u¿yciu klawisza „Ctrl”)
+\item podaæ zakres wierszy danej tabeli (pola "Range from" i "Range to") które maj¹ zostaæ u¿yte w algorytmie obliczeniowym 
+ \item klikn¹æ „OK”.
+ \end{itemize}
+
+\subsection{VeniTreeCreator}
+Jeœli chodzi o drugi w kolejnoœci plugin - realizuj¹cy algorytm
+budowy drzew decyzyjnych - to uruchamia siê go podobnie jak plugin
+pierwszy. Ze wzgledu na swój charakter plugin ten nie podejmuje
+interakcji z u¿ytkownikiem. Otrzymuje on od poprzedniego pluginu
+informacje na podstawie jakiej tabeli i w jaki sposób ma zbudowaæ
+drzewo decyzyjne, a po skoñczeniu swej pracy przekazuje jej efekty
+do kolejnego tym razem wizualizacyjnego pluginu.
+ 
+\subsection{C45TreeCreator}
+Alternatyw¹ dla opisanego powy¿ej pluginu algorytmicznego 
+implementuj¹cego zasadê dzia³ania algorytmu ID3 jest plugin 
+C45TreeCreator implemnetuj¹cy algorytm C4.5. W ustawieniach tego 
+pluinu mo¿na podaæ poziom ufnoœci na jakim bêdzie dzia³a³ ten plugin. 
+Wartoœæ ta oznacza minimalny odsetek elementów znajduj¹cych siê w 
+wêŸle drzewa aby wêze³ ten zosta³ uznany za homogeniczny i nie 
+rozwijany dalej. Sensowne wartoœci dla tego parametru s¹ z przedzia³u
+(0,5;1>. Dodatkow¹ cech¹ tego algorytmu jest, ¿e potrafi on dla 
+atrybutów ci¹g³ych operowaæ na ich zakresach zamiast na dyskretnych 
+wartoœciach. Przyk³adowo zamiast tworzyæ osobne wêz³y dla wartoœci
+atrybutu ci¹g³ego wynosz¹cych 1,2,3,4,5,6 mo¿e np. stworzyæ dwa wêz³y
+dla wartoœci <=2 i >2. U podstaw algorytm tworzy drzewa korzystaj¹c z 
+obliczanego dla ka¿dego atrybutu wspó³czynnika GainRatio. U¿ycie tego
+wspó³czynnika zamiast u¿ywanej w algorytmie ID3 entropii redukuje 
+niekorzystny wp³yw atrybutów posiadaj¹cych wiele dopuszczalnych 
+wartoœci. Dodatkowo GainRatio jest wyliczane tylko na danych, dla 
+których wartoœæ danego atrybutu jest okreœlona. W ten sposób 
+redukowana jest u³omnoœæ algorytmu ID3, który to algorytm wymaga³,
+aby wartoœci wszystkich atrybutów dla wszystkich elementów danych 
+by³y okreœlone.
+
+\subsection{TreeVisualisation}
+Jest to trzeci z grupy pluginów odpowiadajacych za tworzenie drzew
+decyzyjnych. Uruchamia siê go analogicznie jak poprzednie pluginy.
+S³u¿y do prezentacji graficznej utworzonych drzew. W pierwszej
+iteracji zosta³ on napisany jako bardzo prymitywny i nie ma
+mo¿liwoœci wyboru ustawieñ pluginu. Aby obejrzeæ drzewo nale¿y
+uruchomiæ plugin, a nastêpnie klikn¹æ na Result. Po naciœniêciu
+Result w okienku tekstowym pojawi siê drzewo w postaci wypisanego
+stringu. Gdzie mamy najpierw korzeñ drzewa, a póŸniej zestawienia
+rodzic, krawêdŸ, potomek. Kolejne poziomy s¹ oddzielone znakiem
+"/", natomiast poszczególne wêz³y na poziomie s¹ oddzielone
+znakiem "\#".
+
+Plugin mo¿e dzia³aæ w dwóch trybach.
+\begin{enumerate}
+    \item   Jeœli chcemy aby dzia³a³ razem z innymi pluginami i
+wyœwietli³ drzewo stworzone przez nie, nie trzeba nic zmieniac w jego ustawieniach, wystarczy
+odpowiednio poustawiaæ wczeœniejsze pluginy i klikn¹æ Run. W oknie Result pluginu pojawi siê okno
+stworzone przez wczeœniej wybrane pluginy.
+    \item   Jeœli chcemy aby plugin dzia³a³ samodzielnie,
+wchodzimy do panelu Settings. W panelu mamy mo¿liwoœæ skasowania ju¿ istniej¹cego drzewa. Wystarczy
+wybraæ istniej¹ce drzewo z listy i wcisn¹æ przycisk Usuñ drzewo. Drzewo zostanie skasowane. Drug¹
+funkcj¹, któr¹ mo¿na wykorzystaæ w pluginie dzia³aj¹cym samodzielnie jest rysowanie drzewa
+wybranego z listy, aby to zrobiæ nale¿y wybraæ interesuj¹ce nas drzewo z listy, zaznaczyæ checkbox
+Dzia³aj samodzielnie. Nastêpnie nale¿y klikn¹æ przycisk Run, wejœæ do okna Result gdzie pojawi siê
+interesuj¹ce nas drzewo w postaci JTree. Jeœli zrobimy coœ niezgodnie z instrukcj¹ w oknie Result
+pojawi siê komunikat z informacj¹ jak nale¿y post¹piæ z pluginem aby wyœwietliæ drzewo.
+\end{enumerate}
+
+\subsection{TreeConclude}
+Plugin s³u¿y do zweryfikowania drzewa tj. sprawdzenia czy na innych danych opisuj¹cych t¹ sam¹ rzeczywistoœæ drzewo zwraca prawid³owe rezultaty. 
+\\
+Plugin uruchamia siê analogicznie jak pozosta³e. Podobnie jak plugin wizualizacyjny mo¿e pracowaæw dwóch trybach: samodzielnie lub wspó³dzia³aj¹c z innymi pluginami. Tryb pracy okreœla siê w oknie ustawieñ.
+\subsubsection{Okno ustawieñ}
+Okno ustawieñ definiuje drzewo, które bêdzie testowane, natomiast danymi testowymi s¹ pozosta³e wiersze w tabeli ¿ród³a danych, które nie uczestniczy³y w definiowaniu drzewa np. je¿eli drzewo by³o zbudowane za pomoca wierszy 2-8, a tabela zawiera 14 wierszy wówczas test bêdzie przeprowadzony na wierszach: 1,9-14.
+\\
+W oknie ustawieñ okreœla siê za pomoc¹ checkbox`a \textit{Pracuj samodzielnie} tryb pracy. Domyœlnym ustawieniem jest wspó³dzia³anie z poprzednimi pluginami tj. obecnoœci w œrodkowisku Salomona wygenerowanego drzewa przez plugin algorytmiczny. W przypadku ustawienia pracy samodzielnej nale¿y okreœliæ za pomoc¹ listy wyboru \textit{Wybierz drzewo} interesuj¹ce nas drzewo. \\
+Po wybraniu konkretnego drzewa w oknie pokazuj¹ siê niektóre w³aœciwoœci drzewa tj. jego nazwa, opis, definicja ¿ród³a danych na podstawie którego drzewo powsta³o. Po wybraniu drzewa do testów, nale¿y klikn¹æ \textit{OK} w celu zatwierdzenia.
+
+\subsubsection{Okno rezultatów}
+Okno wyników przedstawia wynik testu tzn. nazwê drzewa, iloœæ wierszy na których przeprowadzono test, iloœæ testów pozytywnych, procent zgodnoœci drzewa oraz listê wierszy, których wynik nie jest zgodny z definicj¹ drzewa. Lista zawiera kolumny: nr wiersza, wynik skonstruowany za pomoc¹ drzewa,  spodziewany wynik tj. taki jaki by³ w bazie danych, oraz kolumny decyzyjne.
+
+ \newpage
+
+\end{document}

@@ -1,0 +1,220 @@
+\documentclass[a4paper]{article}
+\usepackage[polish]{babel}
+\usepackage[cp1250]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[dvips]{graphicx}
+\usepackage{colortbl}
+
+\pagestyle{headings}
+\textwidth      15.5cm
+\oddsidemargin    .1cm
+\evensidemargin   .1cm
+
+\begin{document}
+
+\thispagestyle{empty}
+
+\begin{minipage}{5cm}
+\includegraphics[scale=0.7]{salomon.eps}
+\end{minipage}
+\begin{minipage}{10cm}
+\begin{center}
+{\Large Salomon\\
+System przetwarzania wiedzy\\}
+\end{center}
+\end{minipage}
+
+\vspace*{0.5cm}
+
+\hrulefill
+
+\vspace*{1cm}
+
+
+\begin{flushright}
+{\Large \emph{Software Development Plan, ver 1.2} }
+\end{flushright}
+
+%\vspace{7cm}
+
+\begin{flushleft}
+{ \Large Historia wersji }\[\]
+\begin{tabular}{|p{2.5cm}||p{1.5cm}|p{6cm}|p{3.5cm}|}
+  \hline
+  Data & Wersja & Opis & Autor \\
+  \hline \hline
+  26.10.2005 & 1.0 & utworzenie & \emph{Leszek Grzanka}\\
+  \hline
+  27.10.2005 & 1.1 & poprawki kilku punktów & \emph{Nikodem Jura}\\
+  \hline
+  18.01.2006 & 1.2 & uaktualnienie harmonogramu & \emph{Leszek Grzanka}\\
+  \hline  
+\end{tabular}
+\end{flushleft}
+
+\newpage
+
+\section{Wstêp}
+Celem planu konstrukcji oprogramowania jest wyznaczenie ról poszczególnych cz³onków zespo³u oraz harmonogramu pracy.
+Przypisanie ról pozwoli wyegzekwowaæ brakuj¹ce elementy systemu od osób za nie odpowiedzialnych oraz zlecenie poprawek w wypadku, gdyby jakiœ element jakieœ elementy nie dzia³a³y zgodnie z dokumentacj¹.
+Stworzenie harmonogramu pozwoli oceniæ postêp prac i odpowiedzieæ na pytanie, czy koñcowy termin realizacji projektu jest osi¹galny.
+
+\section{Organizacja projektu}
+
+	\begin{flushleft}
+		\begin{tabular}{|l|l|}
+  		\hline
+  		Osoba & Rola wg. RUP \\
+  		\hline \hline
+  		Analyst & Krzysztof Rajda \\
+  		\hline
+  		Project Manager & Nikodem Jura\\
+  		\hline
+  		Process Engineer & Leszek Grzanka\\
+  		\hline
+  		Architect & Krzysztof Rajda\\
+  		\hline
+  		Developer & all \\
+  		\hline
+  		Tester & Jakub Ga³kowski \\
+  		\hline\documentclass[a4paper]{article}
+\usepackage[polish]{babel}
+\usepackage[cp1250]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[dvips]{graphicx}
+
+\pagestyle{headings}
+\textwidth      15.5cm
+\oddsidemargin    .1cm
+\evensidemargin   .1cm
+
+\begin{document}
+
+\thispagestyle{empty}
+
+\begin{minipage}{5cm}
+\includegraphics[scale=0.7]{salomon.eps}
+\end{minipage}
+\begin{minipage}{10cm}
+\begin{center}
+{\Large Salomon\\
+System przetwarzania wiedzy\\}
+\end{center}
+\end{minipage}
+
+\vspace*{0.5cm}
+
+\hrulefill
+
+\vspace*{1cm}
+
+
+\begin{flushright}
+{\Large \emph{Iteration Description --- C2, ver 1.0} }
+\end{flushright}
+
+
+
+\begin{flushleft}
+{ \Large Historia wersji }\[\]
+\begin{tabular}{|p{2.5cm}||p{1.5cm}|p{6cm}|p{3.5cm}|}
+  \hline
+  Data & Wersja & Opis & Autor \\
+  \hline \hline
+  18.01.2006 & 1.0 & utworzenie & \emph{Leszek Grzanka}\\
+  \hline
+\end{tabular}
+\end{flushleft}
+
+\newpage
+
+
+\section{Zadania dla iteracji } 
+
+Rozbudowa interfejsu u¿ytkownika umo¿liwiaj¹c¹ zarz¹dzanie warstw¹ \emph{Solution}, w szczególnoœci: rozbudowa procesu dodawania i wyboru aktualnego obiektu Solution.
+
+Poprawienie ergonomii pracy poprzez rozbudowê mo¿liwoœci przegl¹dania obiektów poszczególnych warstw, uporz¹dkowanie menu i przycisków.
+
+\section{Produkt iteracji} 
+Ulepszone GUI platformy, realizuj¹ce wymagania stawiane przed nim w tej iteracji.
+
+
+\section{Plan testów} 
+Wykonanie odpowiednich akcji na interfejsie graficznym. Subiektywna ocena ergonomii, oraz intuicyjnoœci obs³ugi.
+
+
+\section{Efekt wykonania iteracji}
+
+Efektem by³o:
+\begin{itemize}
+	\item dodanie do GUI odpowiedniej funkcjonalnoœci,
+	\item projekt i wykonanie odpowiedniej obs³ugi zdarzeñ,
+	\item naprawienie kilku b³êdów zg³oszonych przez u¿ytkowników
+\end{itemize}
+
+
+\end{document}
+
+
+		\end{tabular}
+	\end{flushleft}
+
+
+\section{Terminarz projektu}
+\subsection{Podzia³ projektu na fazy i iteracje}
+	\begin{flushleft}
+		\begin{tabular}{|l|l|p{3cm}|p{4cm}|p{3cm}|}
+  		\hline
+  		Faza & Iteracja & G³ówne cele & Produkty & Planowe rozpoczêcie/zakoñczenie \\
+  		\hline
+  		Inception &  I1 & Zapoznanie z mo¿liwoœciami rozbudowy & Vision i SDP & 27.10.2005 \\
+  		\hline
+  		Eleboration & E1 & Budowa prototypowych rozwi¹zañ & Dokument SAD i prototypy metod & 15.11.2005 \\
+  		\hline
+  		Construction & C1 & Implementacja datasetów & Engine umo¿liwiaj¹cy obs³ugê datasetów & 15.12.2005 \\
+  		\hline
+  		Construction & C2 & Poprawienie ergonomii aplikacji & Rozbudowane GUI &  20.12.2005\\
+  		\hline
+		Construction & C3 & Budowa kompletnej dokumentacji & Podrêczniki, strona WWW &  15.01.2005\\
+  		\hline
+  		Transition & T1 & Dostarczenie finalnej wersji, prezentacja w sieci & Wersja standalone &  30.01.2006\\
+  		\hline
+		\end{tabular}
+	\end{flushleft}
+	
+ 	
+ \begin{itemize}
+ 	\item[E1] 	
+ 	\begin{itemize}
+		\item stworzenie projektu i wstêpnej wersji obs³ugi datasetów
+%		\item ???
+ 	\end{itemize}
+ 	\item[C1]	
+ 	\begin{itemize}
+		\item implementacja datasetów
+		\item specyfikacja interfejsów dla atrybutów 
+%		\item ???
+ 	\end{itemize}
+ 	\item[C2] 	
+ 	\begin{itemize}
+ 		\item rozbudowa interfejsu u¿ytkownika umo¿liwiaj¹ca zarz¹dzanie warstw¹ \emph{Solution}
+ 		\item poprawienie ergonomii pracy poprzez rozbudowê mo¿liwoœci przegl¹dania obiektów poszczególnych warstw, uporz¹dkowanie menu i przycisków
+ 	\end{itemize}
+ 	\item[C3] 	
+ 	\begin{itemize}
+ 		\item uzupe³nienie dokumentacji, 
+ 		\item utworzenie podrêcznika
+ 		\item utworzenie strony WWW dla projektu
+%		\item ???
+ 	\end{itemize}
+ \end{itemize}
+
+\section{Plan akceptacji produktu}
+Akceptacja produktu bêdzie kilkuetapowa:
+\begin{itemize}
+	\item przedstawienie klientowi do akceptacji produktu fazy \emph{Elaboration}
+	\item wszystkie testy jednostkowe bezb³êdne
+	\item testy ca³oœciowe bezb³êdne
+\end{itemize}
+
+\end{document}

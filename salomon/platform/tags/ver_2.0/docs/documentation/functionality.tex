@@ -1,0 +1,122 @@
+\section{Funkcjonalnoœæ}
+
+Ca³a funkcjonalnoœæ \emph{Salomona} podporz¹dkowana jest tworzeniu zadañ. Operacje podstawowe, takie jak np. tworzenie projektów czy definiowanie wtyczek s³u¿¹ jedynie stworzeniu œrodowiska, w którym mog¹ byæ wykonywane zadania. Z kolei operacje administracyjne pozwalaj¹ na zaawansowane zarz¹dzanie platform¹ i mog¹ byæ u¿yteczne dla u¿ytkowników bardzo dobrze znaj¹cych system.
+
+
+\subsection{Operacje podstawowe}
+
+\subsubsection{Operacje na obiekcie Solution}
+
+Terminem \emph{Solution} okreœlamy obiekt grupuj¹cy kilka projektów. 
+Mo¿na na nim wykonaæ nastêpuj¹ce operacje:
+
+\begin{itemize}
+	\item Utworzenie nowego
+		
+	Zadanie to wymaga konfiguracji, w szczególnoœci wskazania lokacji bazy danych.
+		
+	\item Otworzenie istniej¹cego
+	
+	System pozwala na wybór aktualnego \emph{Solutiona}. Mo¿na to zrobiæ przy uruchamianiu programu, kiedy to trzeba albo wskazaæ istniej¹cy \emph{Solution} albo utworzyæ nowy, b¹dŸ w dowolnym innym momencie, poprzez wybór odpowiedniej opcji z menu. Tylko w ten sposób mo¿na zmieniæ parametry ju¿ istniej¹cego obiektu \emph{Solution}.	
+
+\end{itemize}
+
+\subsubsection{Operacje na projektach}
+
+Projekty s³u¿¹ do grupowania zadañ w obrêbie tego samego obiektu \emph{Solution}.			
+
+Operacje na projekcie:		
+	\begin{itemize}	
+		\item Utworzenie projektu
+		
+		Nowy projekt tworzony jest automatycznie podczas uruchomienia systemu. Mo¿na te¿ wymusiæ utworzenie nowego projektu poprzez wybór odpowiedniej opcji z menu.
+		
+		\item Edycja bie¿¹cego projektu
+		
+		Operacja ta pozwala na zmianê podstawowych informacji o projekcie, a wiêc jego nazwy i dodatkowych informacji.
+			
+		\item Uruchomienie projektu
+		
+        Akcja ta powoduje wykonanie zadañ zgromadzonych w tym projekcie. Wykonanie tej akcji wymaga wczeœniejszej konfiguracji w postaci specyfikacji listy zadañ do wykonania oraz ich indywidualnej konfiguracji.
+        
+        
+	\end{itemize}
+	
+\subsubsection{Operacje na wtyczkach}
+
+Wtyczki zawieraj¹ algorytmy, które mog¹ byæ wykonywane przez platformê w ramach poszczególnych zadañ. S¹ one podstawowymi komponentami, które rozszerzaj¹ mo¿liwoœci systemu.
+
+	\begin{itemize}
+	
+		\item Dodanie
+		
+			Operacja ta pozwala na zdefiniowanie nowej wtyczki poprzez wskazanie odpowiedniego pliku j¹ reprezentuj¹cego.
+		
+		\item Edycja
+		
+			Za pomoc¹ tej operacji mo¿na zmieniaæ nazwê i opis wczeœniej zdefiniowanej wtyczki.
+		
+		\item Usuniêcie
+		
+			Pozwala na usuniêcie wtyczki z systemu.
+					
+	\end{itemize}	
+
+\subsection{Administracja}
+
+\emph{Salomon} dostarcza narzêdzi u³atwiaj¹ce administrowanie danymi zgromadzonymi w systemie -- mo¿liwe jest przegl¹danie wszystkich zapisanych w bazie danych obiektów, a zaawansowani u¿ytkownicy mog¹ wykonaæ dowolne operacje bezpoœrednio na bazie danych za pomoc¹ \emph{SQLConsole}.
+	
+	\begin{itemize}
+            
+		\item Przegl¹danie obiektów w systemie
+		
+		W celach administracyjnych mo¿liwe jest przegl¹danie obiektów w taki sposób, w jaki zapisane s¹ w bazie danych.
+			
+		\item Zaawansowane operacje
+		
+		Do bardziej zaawansowanych operacji na bazie danych przeznaczona jest specjalna konsola (\emph{SQLConsole}), która pozwala na wykonanie dowolnych operacji na bazie danych.
+		
+	\end{itemize}	
+
+
+
+\subsection{Operacje na zadaniach}
+
+Definiowanie zadañ do wykonania nale¿y do podstawowych funkcji systemu, dlatego w obecnej wersji ich definiowanie i konfigurowanie zosta³o znacznie rozbudowane.
+
+Pierwsze wersje \emph{Salomona} pozwala³y jedynie na definiowanie liniowej listy zadañ.
+Dlatego, aby umo¿liwiæ tworzenie bardziej zaawansowanych struktur zadañ zosta³ stworzony nowy komponent oparty o bibliotekê \emph{Jung}.
+Zadania reprezentowane w nim s¹ jako wêz³y w grafie skierowanym acyklicznym. Krawêdzie reprezentuj¹ przep³yw sterowania (wiedzy/danych).
+
+Aby dane zadanie mog³o byæ wykonane wszystkie zadania od których zale¿y musz¹ byæ wykonane wczeœniej.
+W obecnej wersji acyklicznoœæ grafu jest wymagana, aby zapewniæ, ¿e wykonanie programu siê zakoñczy.
+W kolejnych wersjach planowane jest umo¿liwienie dodawania warunków na krawêdzie, a tym samym
+mo¿liwoœci tworzenia cykli, które zostan¹ przerwane, jeœli zostanie spe³niony odpowiedni warunek.
+
+Obecnie obs³ugiwane s¹ nastêpuj¹ce operacje na zadanich:
+
+		\begin{itemize}
+			\item Dodanie
+			
+			Dodanie zadania polega na zdefiniowaniu jego nazwy i wskazaniu wtyczki, która zawiera odpowiedni algorytm.
+			
+			\item Usuniêcie
+			
+            Akcja usuwa aktualnie zaznaczone zadnie.             
+            
+            \item Okreœlanie kolejnoœci wykonania
+            
+            Zadania wykonywane s¹ tak, jak zosta³y po³¹czone krawêdziami. Strza³ki na krawêdziach okreœlaj¹ kolejne zadania do wykonania. Wêz³y grafu, które reprezentuj¹ poszczególne zadania mog¹ byæ w dowolny sposób przemieszczane oraz ³¹czone.
+            
+        \item Definiowanie ustawieñ zadania
+        
+        Ka¿de zadanie mo¿e byæ skonfigurowane przed wykonaniem. Sposób konfiguracji zale¿y od poszczególnych wtyczek i to one dostarczaj¹ komponenty pozwalaj¹ce na skonfigurowanie danej wtyczki.
+        
+        \item Uruchomienie zadañ
+        
+        Po zdefiniowaniu kolejnoœci wykonania zadañ mo¿na je uruchomiæ -- zadania zostan¹ przetworzone, a ich wyniki zapisane w bazie danych.
+        
+  		\item Przegl¹danie rezultatów
+        
+        Ka¿de wtyczka, której algorytm przetwarzany jest w ramach zadania, sama specyfikuje jak bêdzie prezentowaæ swoje wyniki. Zdaniem platformy jest jedynie zapewnienie mo¿liwoœci wyœwietlenia zwróconych przez wtyczkê danych.
+		\end{itemize}

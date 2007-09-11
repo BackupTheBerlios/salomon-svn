@@ -1,0 +1,26 @@
+\section{Uruchomienie}
+Do uruchomienia programu konieczne jest zainstalowanie w systemie \emph{Java Runtime Environment} , w wersji \emph{5.0}. Jeœli program ma dzia³aæ z wykorzystaniem niezale¿nego serwera bazy danych \emph{Firebird}, to nale¿y zainstalowaæ dodatkowo bazê \emph{Firebird}.
+
+Program dostarczany jest z przyk³adow¹ baz¹ danych w której zdefiniowane s¹ odpowiednie tabele i lokalizacje wtyczek oraz z przyk³adowymi wtyczkami. 
+Dla u¿ytkowników, którzy chc¹ stworzyæ w³asn¹ bazê danych w katalogu db umieszczony zosta³ skrypt, tworz¹cy tabele niezbêdne do pracy programu i uruchomienia dostarczonych pluginów (crebas.sql).
+
+\subsection{Plik konfiguracyjny}
+G³ównym plikiem konfiguracyjnym programu jest config.properties.
+Zawiera on nastêpuj¹ce klucze:
+
+\begin{itemize}
+\item \emph{HOSTNAME} - identyfikator sieciowy komputera, na którym zainstalowana jest baza danych. Uwzglêdniany jest tylko w przypadku, gdy program ³¹czy siê z baz¹ danych przy u¿yciu serwera \emph{Firebird}.
+
+\item \emph{DB\_PATH} - lokalizacja bazy danych. Gdy program dzia³a z serwerem \emph{Firebird} jest to lokalizacja bezwzglêdna, w przeciwnym przypadku - wzglêdem katalogu instalacyjnego.
+
+\item \emph{USER} - nazwa u¿ytkownika, który loguje siê do bazy
+
+\item \emph{PASSWD} - has³o u¿ytkownika
+
+\item \emph{EMBEDDED} - okreœla, sposób po³¹czenia z baz¹ danych
+\subitem \emph{N} - z wykorzystaniem serwera
+\subitem \emph{Y} - przy u¿yciu dll-a
+
+\end{itemize}
+
+Pozosta³e wartoœci nie powinny byæ modyfikowane przez u¿ytkownika.

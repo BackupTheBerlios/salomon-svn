@@ -1,0 +1,276 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{float}
+\usepackage[polish]{babel}
+\usepackage[cp1250]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[dvips]{graphicx}
+\usepackage{indentfirst}
+\usepackage[urlcolor=blue, colorlinks=true, bookmarks=true, bookmarksnumbered=true]{hyperref}
+\usepackage{fancyvrb}
+\usepackage{times}
+\usepackage{epsfig}
+\usepackage{color}
+
+\usepackage{fancyhdr} 
+\pagestyle{fancy} 
+
+\pagestyle{headings}
+
+\begin{document}
+
+\thispagestyle{empty}
+
+\begin{minipage}{5cm}
+\includegraphics[scale=0.3]{logo.eps}
+\end{minipage}
+\begin{minipage}{10cm}
+\begin{center}
+{\Large Salomon\\
+System przetwarzania wiedzy}
+\end{center}
+\end{minipage}
+
+%\vspace*{0.5cm}
+
+\hrulefill
+
+%\vspace*{1cm}
+
+
+\begin{flushright}
+{\Large \emph{User Guide, ver 1.1}}
+\end{flushright}
+
+\vspace{7cm}
+
+\begin{flushleft}
+{ \Large Historia wersji }\[\]
+\begin{tabular}{|p{3.5cm}||p{3.5cm}|p{3.5cm}|p{3.5cm}|}
+  \hline
+  Data & Wersja & Opis & Autor \\
+  \hline \hline
+  24.09.2005 & 1.0 & utworzenie & \emph{Leszek Grzanka}\\
+  \hline
+  26.09.2005 & 1.1 & drobne korekty & \emph{Nikodem Jura}\\
+  \hline
+  &&&\\
+  \hline
+\end{tabular}
+\end{flushleft}
+
+\[\] \[\] \[\] \[\] \[\] \[\] \[\] \[\] \[\]
+
+\newpage
+
+
+\section{Wstêp}
+Salomon to system do wydobywania wiedzy z danych zgodnie z metodologi¹ \emph{Knowlege Mining}.
+Odkrywanie wiedzy to proces iteracyjny, podzielony na etapy. 
+W ka¿dym tym etapie wiedza jest poddawana obróbce. Na ka¿dym takim etapie proces odkrywania mo¿e byæ ukierunkowany zgodnie z wymaganiami u¿ytkownika.  
+Ka¿dy etap reprezentowany jest przez zadanie, które mo¿na interpretowaæ jako jedn¹ fazê wykonania pewnego algorytmu.
+Zadanie takie wykonywane jest za pomoc¹ wtyczek, które mo¿na dowolnie do³¹czaæ do aplikacji. 
+Zbiór zadañ i wtyczek umo¿liwiaj¹cych ich wykonanie stanowi jeden projekt.
+Wspóln¹ dla kilku projektów konfiguracjê przechowuje odpowiedni obiekt Solution.
+
+
+Niniejszy dokument stanowi dokumentacjê u¿ytkownika pomocn¹ przy u¿ytkowaniu platformy Salomon.
+
+\section{Wprowadzenie} 
+Praca z interfejsem graficznym Salomona rozpoczyna siê od wybrania odpowiedniego Solution`a. Umo¿liwia to startowe okno wyboru. Nastêpnie u¿ytkownik ma mo¿liwoœæ pracowania w g³ównym oknie Salomona, mog¹c wykonywaæ operacje na dostêpnych w projekcie wtyczkach (pluginach).
+% tu praca z projektem, czyli opis ogolny
+
+% potem praca z programem, czyli przykladowe sciezki, rozbudowane
+Po uruchomieniu aplikacji u¿ytkownik powinien dokonaæ wyboru w³aœciwego obiektu Solution, wybieraj¹c jego nazwê z listy rozwijanej, po czym zaakceptowaæ wybór przyciskiem Open. Okno umo¿liwia tak¿e stworzenie nowego obiektu Solution (przycisk New), oraz zakoñczenie pracy z programem. Po otworzeniu obiektu Solution nastêpuje przejœcie do g³ównego okna aplikacji.
+
+\begin{figure}[H]
+	\centering
+	%\includegraphics[bb=0 0 99 43]{screenshots/solution_choose.png}
+	\includegraphics{screenshots/solution_choose.png}
+	\label{fig:solution_choose}
+	\caption{Pierwsze okno -- wybór obiektu Solution}
+\end{figure}
+
+
+\begin{figure}[H]
+	\centering
+	%\includegraphics[bb=0 0 236 196]{screenshots/salomon_main.png}
+	\includegraphics[width=0.9\textwidth]{screenshots/salomon_main.png}
+% salomon_main.png: 72.009dpi, width=8.32cm, height=6.91cm, bb=0 0 236 196
+	\caption{G³ówne okno aplikacji}
+\end{figure}
+
+G³ówne okno Salomona dzieli siê na dwie czêœci: po lewej wyœwietlona jest lista wtyczek (Pluginów) dostêpnych w systemie, oraz lista zadañ (Tasków) dla aktualnego projektu.
+
+Do uruchamiania poszczególnych funkcji programu s³u¿y menu, przyciski na pasku poni¿ej menu, przyciski umieszczone na g³ównym oknie aplikacji oraz menu kontekstowe, wywo³ywane z listy wtyczek i zadañ.
+
+Na dole ekranu znajduje siê belka statusu, która wyœwietla informacje o aktualnym projekcie i obiekcie \emph{Solution}.
+
+\subsection{Menu}
+
+Menu sk³ada siê z kilku pozycji:
+
+\subsubsection{Solution}
+
+Menu \emph{Solution} umo¿liwia zarz¹dzanie obiektem \emph{Solution}. Pozwala na tworzenie nowego (przycisk \emph{New}), edycjê aktualnego (\emph{Edit}) oraz otwarcie wczeœniej zapisanego (\emph{Open}). Z menu \emph{Solution} dostêpne jest podmenu \emph{Project}, które s³u¿y do wykonywania analogicznych operacji, ale dotycz¹cych projektu.
+W menu \emph{Solution} znajduje siê te¿ pozycja \emph{Exit}, która pozwala na zakoñczenie dzia³ania aplikacji.
+
+\begin{figure}[H]
+	\centering
+	%\includegraphics[bb=0 0 72 83]{screenshots/menu_solution.png}
+	\includegraphics{screenshots/menu_solution.png}
+% menu_solution.png: 97.9932dpi, width=1.87cm, height=2.15cm, bb=0 0 72 83
+	\caption{Menu Solution}
+\end{figure}
+
+\subsubsection{Tools}
+
+Menu to oferuje u¿yteczne narzêdzia, które pozwalaj¹ na zarz¹dzanie platform¹ -- wyszukiwarki poszczególnych typów obiektów oraz dostêp do konsoli, pozwalaj¹cej na wykonanie operacji \emph{SQL} bezpoœrednio na bazie danych.
+
+Wyszukiwarki wyposa¿one s¹ w zestaw filtrów, które pozwalaj¹ na ograniczenie iloœci wyœwietlanych obiektów.
+
+\begin{figure}[H]
+	\centering
+	%\includegraphics[bb=0 0 50 63]{screenshots/menu_tools.png}
+	\includegraphics{screenshots/menu_tools.png}	
+% menu_tools.png: 97.9932dpi, width=1.30cm, height=1.63cm, bb=0 0 50 63
+	\caption{Menu Tools}
+\end{figure}
+
+\subsubsection{Help}
+
+Menu Help umo¿liwia wyœwietlenie informacji o aplikacji Salomon.
+
+\begin{figure}[H]
+	\centering
+	%\includegraphics[bb=0 0 32 30]{screenshots/menu_help.png}
+	\includegraphics{screenshots/menu_help.png}	
+% menu_help.png: 97.9932dpi, width=0.83cm, height=0.78cm, bb=0 0 32 30
+	\caption{Zak³adka Help}
+\end{figure}
+
+Poni¿ej menu umieszczone s¹ przyciski, które pozwalaj¹ na tworzenie, otwarcie i edycjê obiektu \emph{Solution}.
+
+\subsection{Przyciski}
+
+\begin{itemize}
+	\item przyciski prawo-lewo -- umo¿liwiaj¹ dodawanie i usuwanie zadañ na podstawie wtyczek
+	\item przyciski góra-dó³ -- umo¿liwiaj¹ modyfikacje kolejnoœci wykonywania Zadañ
+	\item przycisk \emph{Run} -- 	umo¿liwia uruchomienie wykonywania Zadañ
+\end{itemize}
+
+\subsection{Menu kontekstowe}
+
+\begin{itemize}
+
+\item lista Wtyczek(Pluginów) \\
+Menu wywo³ywane z tej listy umo¿liwia dodawanie, edycjê i usuwanie Wtyczek. Wybór czynnoœci dostêpny jest poprzez zaznaczenie Wtyczki i wciœniêcie prawego klawisza myszy.
+
+\item lista Zadañ(Tasków) \\
+Menu kontekstowe dla listy zadañ umo¿liwia wykonywanie operacji na zadaniach.
+
+\end{itemize}
+
+
+\section{Zarz¹dzanie obiektami}
+Za pomoc¹ pozycji menu i odpowiednich przycisków aplikacja umo¿liwia tworzenie i edycjê obiektów Solution, oraz Projektów. 
+\begin{figure}[H]
+	\centering
+	%\includegraphics[bb=0 0 257 76]{screenshots/edit_solution.png}
+	\includegraphics[width=0.8\textwidth]{screenshots/edit_solution.png}
+% edit_solution.png: 97.9932dpi, width=6.66cm, height=1.97cm, bb=0 0 257 76
+	\caption{Edycja obiektów Solution}
+\end{figure}
+Parametry, które nale¿y w tym celu uzupe³niæ obejmuj¹: nazwê i opis obiektu, oraz parametry bazy danych (host,œcie¿ka,u¿ytkownik i has³o).
+
+W g³ównym oknie aplikacji jest mo¿liwoœæ dodawania/edycji/usuniêcia Wtyczki. Mo¿liwe jest to poprzez menu wywo³ywane prawym klawiszem myszki.
+\begin{figure}[H]
+	\centering
+	%\includegraphics[bb=0 0 236 197]{screenshots/action_plugin.png}
+	\includegraphics[width=0.8\textwidth]{screenshots/action_plugin.png}
+% action_plugin.png: 97.9932dpi, width=6.12cm, height=5.11cm, bb=0 0 236 197
+	\caption{Zarz¹dzanie wtyczkami}
+\end{figure}
+
+W przypadku dodawania/edycji konieczne jest podanie trzech parametrów wtyczki: nazwy,œcie¿ki i opisu:
+
+\begin{figure}[H]
+	\centering
+		%\includegraphics[bb=0 0 148 55]{screenshots/edit_plugin.png}
+		\includegraphics[width=0.8\textwidth]{screenshots/edit_plugin.png}
+% edit_plugin.png: 97.9932dpi, width=3.84cm, height=1.43cm, bb=0 0 148 55
+	\caption{Zarz¹dzanie wtyczkami}
+\end{figure}
+
+
+
+\section{Typowe zadania}
+
+\subsection{Uruchomienie przyk³adowego zadania}
+
+\begin{enumerate}
+	\item Uruchomienie aplikacji Salomon
+	\item Rozwiniêcie listy Solutionów i wybór jednego z nich
+	\item Klikniêcie przycisku Open
+	\item Wybór Wtyczki z listy po lewej stronie g³ównego okna
+	\item Przeniesienie Wtyczki na prawo poprzez klikniêcie przycisku ze strza³k¹ w prawo (znajduje siê pomiêdzy list¹ Wtyczek i Zadañ)
+	\item Klikniêcie przycisku Run
+\end{enumerate}
+
+\section{Zawansowane}
+	\subsection{Przeszukiwanie obiektów Solution}
+	\begin{figure}[H]
+		\centering
+		%\includegraphics[bb=0 0 249 113]{screenshots/search_solution.png}
+		\includegraphics[width=0.8\textwidth]{screenshots/search_solution.png}
+		%\includegraphics[width=0.8\textwidth]{screenshots/search_solution.png}	
+	% search_solution.png: 97.9932dpi, width=6.45cm, height=2.93cm, bb=0 0 249 113
+	\caption{Przeszukiwanie obiektów Solution}
+\end{figure}
+
+Okno to umo¿liwia wyœwietlenie informacji o obiektach Solution, poprzez zadanie zapytania do bazy danych. Mo¿liwe jest wybranie obiektów o wybranym identyfikatorze, nazwie, dacie, opisie.
+
+\subsection{Przeszukiwanie projektów}
+\begin{figure}[H]
+	\centering
+	%\includegraphics[bb=0 0 251 116]{screenshots/search_project.png}
+	\includegraphics[width=0.8\textwidth]{screenshots/search_project.png}
+% search_project.png: 97.9932dpi, width=6.51cm, height=3.01cm, bb=0 0 251 116
+	\caption{Przeszukiwanie projektów}
+\end{figure}
+
+Podobnie jak poprzednie, okno to umo¿liwia wyœwietlenie informacji o projektach, poprzez zadanie zapytania do bazy danych. Mo¿liwe jest wybranie obiektów o wybranym identyfikatorze, nazwie, opisie. 
+
+\subsection{Przeszukiwanie wtyczek}
+\begin{figure}[H]
+	\centering
+	%\includegraphics[bb=0 0 265 81]{screenshots/search_plugins.png}
+	\includegraphics[width=0.8\textwidth]{screenshots/search_plugins.png}
+% search_plugins.png: 97.9932dpi, width=6.87cm, height=2.10cm, bb=0 0 265 81
+	\caption{Przeszukiwanie wtyczek}
+\end{figure}
+
+Podobnie jak poprzednie, okno to umo¿liwia wyœwietlenie informacji o wtyczkach, poprzez zadanie zapytania do bazy danych. Mo¿liwe jest wybranie obiektów o wybranym identyfikatorze, nazwie, opisie i œcie¿ce.
+
+\subsection{Przeszukiwanie zadañ}
+\begin{figure}[H]
+	\centering
+	%\includegraphics[bb=0 0 362 101]{screenshots/search_tasks.png}
+	\includegraphics[width=0.8\textwidth]{screenshots/search_tasks.png}	
+% search_tasks.png: 97.9932dpi, width=9.38cm, height=2.62cm, bb=0 0 362 101
+	\caption{Przeszukiwanie zadañ}
+\end{figure}
+
+Podobnie jak poprzednie, okno to umo¿liwia wyœwietlenie informacji o zadaniach, poprzez zadanie zapytania do bazy danych. Mo¿liwe jest wybranie obiektów o wybranym identyfikatorze, nazwie, statusie, projekcie i wtyczce do których s¹ przypisane.
+
+\subsection{Konsola SQL}
+\begin{figure}[H]
+	\centering
+	%\includegraphics[bb=0 0 157 63]{screenshots/sql_console.png}
+	\includegraphics[width=0.8\textwidth]{screenshots/sql_console.png}
+% sql_console.png: 97.9932dpi, width=4.07cm, height=1.63cm, bb=0 0 157 63
+	\caption{Konsola SQL}
+\end{figure}
+
+Umo¿liwia zadanie bezpoœredniego zapytania do bazy.
+
+\end{document}

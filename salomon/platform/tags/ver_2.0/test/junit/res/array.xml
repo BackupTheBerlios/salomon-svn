@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<struct>
+	<string name="dataSetName" value="dataset"/>
+	<array name="array">
+		<string value="cond1"/>
+		<string value="cond2"/>
+		<string value="cond3"/>
+		<string value="cond4"/>
+	</array>
+</struct>

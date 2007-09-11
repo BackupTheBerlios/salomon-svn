@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AWTTestScript desc="Skrypt (D:\home\krzychu\dv\ks\test\abbot\salomon.xml) " forked="true">
+  <launch args="[]" class="salomon.engine.Starter" classpath="salomon.jar;.;lib\mini-j2ee.jar ;lib\log4j-1.2.8.jar ;lib\firebirdsql.jar " method="main" />
+  <wait args="Salomon" class="abbot.tester.ComponentTester" method="assertFrameShowing" />
+  <terminate />
+</AWTTestScript>
+

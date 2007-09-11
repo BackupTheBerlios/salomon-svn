@@ -1,0 +1,39 @@
+\subsection{Diagramy sekwencji}
+\subsubsection{Dodaj zadanie}
+                \begin{figure}[h]
+                \centering
+                \includegraphics[width=\textwidth]{img/uml/addseq.png}
+                \caption{Diagram sekwencji dla przypadku: dodaj zadanie}
+                \label{fig:singleton}
+                \end{figure}
+
+\begin{enumerate}
+	\item Wybieramy opcjê "`Dodaj zadanie"'
+	\item Z listy dostêpnych pluginów wybieramy jeden
+	\item Plugin zostaje za³adowany
+	\item Przypisujemy plugin do taska
+	\item Dodajemy task do listy
+\end{enumerate}
+                
+                
+                
+\subsubsection{Uruchom zadanie}                
+                \begin{figure}[h]
+                \centering
+                \includegraphics[width=\textwidth]{img/uml/runTaskseq.png}
+                \caption{Diagram sekwencji dla przypadku: uruchom zadanie}
+                \label{fig:singleton}
+                \end{figure}
+
+\begin{enumerate}
+	\item Wybieramy opcjê: "`Uruchom zadanie"'
+	\item TaskManager wysy³a do TaskEngine'u rozkaz uruchomienia zadania
+	\item Pobranie ustawieñ dla zadania
+	\item Task dostaje ustawienia startowe
+	\item Pobieramy plugin, który ma wykonaæ zadanie
+	\item Wykonujemy zadanie
+	\item Pobieramy wynik wykonania zadania
+	\item Wysy³amy wynik do odbiorcy
+\end{enumerate}
+
+\newpage

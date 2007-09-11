@@ -1,0 +1,81 @@
+\documentclass[a4paper]{article}
+\usepackage[polish]{babel}
+\usepackage[cp1250]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[dvips]{graphicx}
+
+\pagestyle{headings}
+\textwidth      15.5cm
+\oddsidemargin    .1cm
+\evensidemargin   .1cm
+
+\begin{document}
+
+\thispagestyle{empty}
+
+\begin{minipage}{5cm}
+\includegraphics[scale=0.7]{salomon.eps}
+\end{minipage}
+\begin{minipage}{10cm}
+\begin{center}
+{\Large Salomon\\
+System przetwarzania wiedzy\\}
+\end{center}
+\end{minipage}
+
+\vspace*{0.5cm}
+
+\hrulefill
+
+\vspace*{1cm}
+
+
+\begin{flushright}
+{\Large \emph{Iteration Description --- C1, ver 1.0} }
+\end{flushright}
+
+
+
+\begin{flushleft}
+{ \Large Historia wersji }\[\]
+\begin{tabular}{|p{2.5cm}||p{1.5cm}|p{6cm}|p{3.5cm}|}
+  \hline
+  Data & Wersja & Opis & Autor \\
+  \hline \hline
+  18.01.2006 & 1.0 & utworzenie & \emph{Leszek Grzanka}\\
+  \hline
+\end{tabular}
+\end{flushleft}
+
+\newpage
+
+
+\section{Zadania dla iteracji } 
+Implementacja interfejsów zwi¹zanych z obs³ug¹ \textit{datasetów}. Uaktualnienia bazy danych oraz skryptów tworz¹cych j¹ o struktury umo¿liwiaj¹ce przechowywanie zbiorów danych.
+
+Stabilizacja Salomona. Dostarczenie wersji realizuj¹cej wymagania stawiane przez grupê wspó³tworz¹c¹ Salomona. 
+
+Specyfikacja interfejsów dla atrybutów.
+
+
+\section{Produkt iteracji} 
+Stabilna wersja Salomona, zawieraj¹ca w pe³ni sprawn¹ obs³ugê \textit{datasetów}. 
+
+
+\section{Plan testów} 
+
+Utworzenie przyk³adowych zbiorów danych i testy podstawowych operacji, mo¿liwych do wykonania na nich.
+
+\section{Efekt wykonania iteracji}
+
+Efektem by³o:
+\begin{itemize}
+	\item zaprojektowanie interfejsów i zaimplementowanie klas je implementuj¹cych realizuj¹cych funkcjonalnoœæ zwi¹zan¹ z \textit{datasetami}, a opisan¹ w dokumentacji wczeœniejszych wersji platformy
+	\item rozbudowa bazy danych o tabele przechowuj¹c¹ informacjê o obiektach \textit{dataset} i \textit{dataset\_items}
+	\item zaprojektowanie interfejsów tycz¹cych siê \textit{atrybutów}
+\end{itemize}
+
+Ze wzglêdu na du¿o wy¿szy priorytet zadañ zwi¹zanych z \textit{datasetami} nie wykonano czêœci zadania zwi¹zanego z Wek¹.
+
+\end{document}
+

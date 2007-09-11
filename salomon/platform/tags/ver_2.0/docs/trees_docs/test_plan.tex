@@ -1,0 +1,101 @@
+\documentclass[a4paper, 12pt]{article}
+%\usepackage[polish]{babel}
+\usepackage[cp1250]{inputenc}
+%\usepackage[latin2]{inputenc}
+%\usepackage{polski}
+\usepackage{amsfonts}
+\usepackage[T1]{fontenc}
+\usepackage[dvips]{graphicx}
+
+%\usepackage{pldoc}
+
+
+
+
+
+
+
+\pagestyle{headings}
+\textwidth      15.5cm
+\oddsidemargin    .1cm
+\evensidemargin   .1cm
+
+\begin{document}
+
+\thispagestyle{empty}
+
+\begin{minipage}{5cm}
+%\includegraphics[scale=0.3]{logo.eps}
+\end{minipage}
+\begin{minipage}{10cm}
+\begin{center}
+{\Large Salomon\\
+System przetwarzania wiedzy\\}
+\end{center}
+\end{minipage}
+
+\vspace*{0.5cm}
+
+\hrulefill
+
+\vspace*{1cm}
+
+
+\begin{flushright}
+{\Large \emph{Test Plan, ver 1.1} }
+\end{flushright}
+
+\vspace{7cm}
+
+\begin{flushleft}
+{ \Large Historia wersji }\[\]
+\begin{tabular}{|p{2.5cm}||p{1.5cm}|p{6.5cm}|p{3.5cm}|}
+  \hline
+  Data & Wersja & Opis & Autorzy \\
+  \hline \hline
+  05-05-2005 & 1.0 & Pierwsza przymiarka do testów & Tomasz W¹sala\\
+  20-10-2005 & 1.1 & Plan testów do wersji 1.0 & Tomasz W¹sala\\
+  \hline
+\end{tabular}
+\end{flushleft}
+
+
+
+\[\]
+\newpage
+    \section{Wstêp}
+        \subsection{Cel dokumentu}
+            Dokument ma na celu przedstawienie podejœcia do testów implementacji drzew decyzyjnych an platformie Salomon. Dotyczy on wersji 1.0.
+    \section{Ogólny opis}
+        Przy wykonywaniu testów do wersji 1.0 bêdziemy korzystali z nastêpuj¹cych technologii:
+        
+        \begin{itemize}
+            \item jUnit
+            \item ewentualnie Abbot
+        \end{itemize}
+        Niektóre testy, np. testy dzia³ania pluginu obs³uguj¹cego wizualizacje, bêd¹ te¿ przeprowadzane rêcznie. 
+        Do testów zostan¹ przygotowane odpowiednie zestawy danych testowych w postaci nowej bazy danych z tabelkami zawieraj¹cymi dane wejœciowe dla pluginu wejœciowego.
+        Osoby odpowiedzialne za poszególne pluginy powinny wstêpnie je przetestowaæ w miarê swoich mo¿liwoœci.
+        
+        Nale¿y tutaj te¿ wspomnieæ, ¿e zosta³y stworzone dwie bugzille:
+        \begin{itemize}
+            \item http://kasatch.hopto.org/bugzilla/
+            \item http://ds12.agh.edu.pl/bugzilla/ 
+        \end{itemize}
+        Powsta³y dwie bugzille, poniewa¿ lokalizacja pierwszej nie zapewnia jej istnienia do koñca realizacji aktualnej fazy prac nad produktem.
+        Dostêp do bugzilli bêd¹ mieli wszyscy uczestnicy projektu, bêdzie to miejsce zg³aszania b³êdów wykrytych podczas testów.
+
+ \section{Plan testów}
+    Testy bêd¹ obejmowa³y sprawdzenie poprawnoœci:
+    \begin{itemize}
+        \item kontynuowanie sprawdzania poprawnoœci zrealizowanego algorytmu budowania drzew decyzyjnych
+        \item dzia³ania poszczególnych klas, interfejsów w tym bêd¹ zawarte interfejsy szkieletowe (np. realizuj¹ce operacje dzia³ania na bazie danych)
+        \item pluginu wejœciowego
+        \item dzia³ania pluginu realizuj¹cego budowê drzew decyzyjnych.
+        \item dzia³ania pluginu tworz¹cego wizualizacje
+        \item dzia³ania ca³oœci zrealizowanej funkcjonalnoœci
+        \item oraz kontynuowanie sprawdzania poprawnoœci zrealizowanego algorytmu budowania drzew decyzyjnych
+    \end{itemize}
+    
+    Zostan¹ napisane przypadki testowania, które zostan¹ z kolei pogrupowane dla poszczególnych klas oraz zostanie stworzony jeden test ca³oœciowy.
+\end{document}

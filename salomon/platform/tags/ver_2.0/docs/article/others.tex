@@ -1,0 +1,118 @@
+\section{Prace pokrewne}
+
+\subsection*{VINLEN}
+to system indukcyjnej bazy danych, rozwijany w
+\emph{George Mason University}~\cite{bib2}. Jest to klasyczna
+realizacja indukcyjnej bazy danych. Mechanizmy wnioskowania
+indukcyjnego s¹ zintegrowane ze standardowymi relacyjnymi
+operatorami bazodanowymi. Integracja ta opiera siê na nowych
+rodzajach operatorów zwanych operatorami generowania wiedzy
+\emph{KGO} (Knowledge Generation Operators). \emph{KGO} operuje na
+\emph{segmentach wiedzy} sk³adaj¹cych siê z~kombinacji jednej lub
+wiêcej tabel z relacyjnej bazy danych i~wiedzy przechowywanej
+w~bazie wiedzy (por. rysunek~\ref{fig:inddb}). \emph{KGO} przyjmuje
+na wyjœciu jeden lub wiêcej segment wiedzy, na podstawie którego
+generuje inny segment wiedzy. Podstawowym operatorem u¿ywanym w
+systemie jest AQ21, program do indukcyjnego tworzenia regu³ na
+podstawie danych.
+
+Indukcyjne bazy danych mog¹ byæ wspierane przez wyspecjalizowanych
+agentów (\emph{Scauts}), których zadaniem jest synteza
+i~zarz¹dzanie wiedz¹, która jest dostosowywana do wymagañ
+okreœlonego u¿ytkownika. System \emph{VINLEN} pozwala na tworzenie skryptów
+operuj¹cych na bazach danych, wiedzy i algorytmach uczenia
+maszynowego przy u¿yciu jêzyka \emph{KGL-1} (\emph{Knowledge
+Generation Language}).
+
+Cech¹ charakterystyczn¹ tak rozwijanego systemu bêdzie mo¿liwoœæ
+sk³adowania wiedzy w~relacyjnej bazie danych wraz z danymi,
+zadawanie zapytañ oraz manipulowanie wiedz¹ z~wykorzystaniem
+jêzyka \emph{KQL} lub przy u¿yciu funkcjonalnego, graficznego
+interfejsu u¿ytkownika.
+
+\subsection*{Weka}
+to narzêdzie do prowadzenia eksperymentów
+zwi¹zanych z~uczeniem maszynowym stworzone w \emph{Uniwersity of
+Waikato}~\cite{weka}. Narzêdzie to znajduje szerokie zastosowanie
+w dydaktyce i badaniach naukowych. Mo¿e równie¿ udostêpniaæ swoj¹
+funkcjonalnoœæ innym programom. Stanowi ono zbiór narzêdzi do
+zarz¹dzania danymi w ró¿norodnych formatach, algorytmów uczenia
+maszynowego i~oceniaj¹cych uzyskiwane rozwi¹zania a~tak¿e
+œrodowisko do porównywania ró¿nych algorytmów. Œrodowisko zapewnia
+przyjazny interfejs u¿ytkownika, co czyni je ³atwym
+w~wykorzystaniu.
+
+\emph{Weka} pozwala na wykorzystywanie ró¿norodnych Ÿróde³ danych,
+pocz¹wszy od plików tekstowych w wielu formatach, poprzez
+relacyjne bazy danych po dane umieszczone w Internecie. Dane te
+przetwarzane s¹ przez tzw. \emph{filtry}, które pozwalaj¹ na
+wyodrêbnienie z nich potrzebnych informacji i przedstawienie ich w
+czytelnej postaci.
+
+Najwiêksz¹ grup¹ algorytmów zaimplementowanych w programie
+\emph{Weka} s¹ algorytmy klasyfikuj¹ce. Wykorzystuj¹ one wiele
+form reprezentacji nauczonej wiedzy: od drzew i~regu³ decyzyjnych,
+przez maszyny wektorowe po sieci Bayesowskie.
+
+Inn¹ grup¹ algorytmów s¹ algorytmy grupuj¹ce (klastruj¹ce). Bazuj¹
+one na schematach \emph{k-Means}, \emph{EM}, \emph{Cobweb},
+\emph{X-means}, \emph{FarthestFirst}. Utworzone za ich pomoc¹
+klastry mog¹ byæ wizualizowane oraz porównywane do wzorcowych,
+jeœli takie s¹ do dyspozycji.
+
+System \emph{Weka} implementuje równie¿ popularny algorytm
+\emph{Apriori}, wykorzystywany do znajdowania regu³ asocjacyjnych.
+Dzia³a on tylko na danych dyskretnych i pozwala na identyfikacjê
+zale¿noœci statystycznych miêdzy ró¿nymi grupami atrybutów.
+
+\emph{Weka} dostarcza przyjazny graficzny interfejs u¿ytkownika,
+który jest bardzo u¿yteczny w praktyce.
+Pozwala on nie tylko na sprawne wczytywanie danych do systemu,
+ale tak¿e na ich wizualizacjê w formie czytelnych diagramów i~wykresów.
+
+Jedn¹ z ciekawszych funkcji systemu jest mo¿liwoœæ graficznego
+definiowania przep³ywu danych i sposobu ich przetwarzania. ród³a
+danych, filtry, klasyfikatory i algorytmy oceniaj¹ce mog¹ byæ
+³¹czone graficznie za pomoc¹ linii. W~ten sposób mo¿na okreœlaæ
+jaki ma byæ przep³yw danych w systemie. Konfiguracja konkretnych
+danych i metod ich przetwarzania mo¿e byæ zapisania i za³adowana
+ponownie do powtórnego wykorzystania.
+
+\subsection*{YALE}
+(Yet Another Learing Environment), podobnie jak
+opisywana powy¿ej \emph{Weka}, jest systemem do prowadzenia
+eksperymentów zwi¹zanych z uczeniem maszynowym.
+
+Jego g³ówn¹ zalet¹ jest bogaty zestaw operatorów, które
+umo¿liwiaj¹ tworzenie ,,³añcuchów'' z³o¿onych z ró¿nych problemów
+zwi¹zanych z~uczeniem. Dane, na których operuj¹ operatory s¹ dla
+nich ca³kowicie przeŸroczyste i przechowywane mog¹ byæ w
+ró¿norodnych formatach -- za odpowiednie transformacje pomiêdzy
+nimi odpowiada samo œrodowisko.
+
+Dziêki operatorom i mo¿liwoœci ich ³atwego ³¹czenia przy u¿yciu
+graficznego interfejsu u¿ytkownika, a tak¿e dziêki jêzykowi
+skryptowemu bazuj¹cemu na \emph{XML}, \emph{YALE} jest czêsto
+u¿ywane do prowadzenia badañ i~eksperymentów z ró¿norodnymi
+algorytmami uczenia maszynowego.
+
+\emph{YALE} dostarcza ponad 200 operatorów, jak choæby algorytmy
+klasyfikuj¹ce, asocjacyjne, klastruj¹ce, wyszukuj¹ce regu³y czy
+oparte na drzewach decyzyjnych. Dodatkowo mo¿liwe jest
+wykorzystanie wielu algorytmów dostarczanych przez œrodowisko
+\emph{Weka} w sposób analogiczny do operatorów wbudowanych. Przed
+przetworzeniem dane mog¹ byæ poddane dyskretyzacji, filtrowaniu
+czy normalizacji, a po zakoñczeniu obliczeñ odpowiedniej
+walidacji.
+
+\emph{YALE} pozwala na eksperymentowanie i~poszukiwanie najlepszego dla danego problemu
+po³¹czenia ró¿nych metod uczenia maszynowego. Dziêki modularnej strukturze operatorów
+mo¿liwa jest wymiana pojedynczych ogniw ,,³añcuchów'' obliczeñ w celu uzyskania
+najlepszego efektu. Dodatkowo ,,³añcuchy'' te mog¹ byæ zagnie¿d¿ane, tworz¹c skomplikowane
+drzewa operatorów.
+
+%Du¿e mo¿liwoœci tego œrodowiska mog¹ byæ dodatkowo rozszerzane
+%poprzez mechanizm wtyczek, dziêki którym mo¿liwe jest dodawanie
+%nowych operatorów i dostosowanie go do indywidualnych potrzeb.
+
+%\subsection{Able}

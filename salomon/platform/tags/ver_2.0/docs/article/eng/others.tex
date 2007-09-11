@@ -1,0 +1,225 @@
+%\section{Prace pokrewne}
+\section{Related Work}
+
+There are several commercial and non-commercial packages that
+provide machine learning facilities. Some of free environments are
+presented below.
+
+\subsection*{Weka}
+% to narzêdzie do prowadzenia eksperymentów
+% zwi±zanych z~uczeniem maszynowym stworzone w \emph{Uniwersity of
+% Waikato}~\cite{weka}. Narzêdzie to znajduje szerokie zastosowanie
+% w dydaktyce i badaniach naukowych.
+Weka is probably the most popular tool for making experiments
+related to machine learning. This system is made in
+\emph{Uniwersity of Waikato}~\cite{weka}.
+% Mo¿e równie¿ udostêpniaæ swoj±
+% funkcjonalno¶æ innym programom. Stanowi ono zbiór narzêdzi do
+% zarz±dzania danymi w ró¿norodnych formatach, algorytmów uczenia
+% maszynowego i~oceniaj±cych uzyskiwane rozwi±zania a~tak¿e
+% ¶rodowisko do porównywania ró¿nych algorytmów.
+% Œrodowisko zapewnia
+% przyjazny interfejs u¿ytkownika, co czyni je ³atwym
+% w~wykorzystaniu.
+It is a collection of tools for accessing data in different
+formats, machine learning algorithms and of algorithms for rating
+the answers. It also provides the environment for comparing
+different algorithms. A friendly, graphical user interface is
+developed, what makes it easy to use. Weka also provides API for
+other programs.
+
+
+% \emph{Weka} pozwala na wykorzystywanie ró¿norodnych Ÿróde³ danych,
+% pocz¹wszy od plików tekstowych w wielu formatach, poprzez
+% relacyjne bazy danych po dane umieszczone w Internecie.
+\emph{Weka} allows to use several types of data sources, like text
+files in many formats, relational databases or data in the
+Internet.
+% Dane te
+% przetwarzane s¹ przez tzw. \emph{filtry}, które pozwalaj¹ na
+% wyodrêbnienie z nich potrzebnych informacji i przedstawienie ich w
+% czytelnej postaci.
+These data are being processed through so-called \emph{filters},
+which allow to extract from them the needed information and
+deliver them in a desired form.
+
+% Najwiêksz¹ grup¹ algorytmów zaimplementowanych w programie
+% \emph{Weka} s¹ algorytmy klasyfikuj±ce. Wykorzystuj¹ one wiele
+% form reprezentacji nauczonej wiedzy: od drzew i regu³ decyzyjnych,
+% przez maszyny wektorowe po sieci Bayesowskie.
+The largest group of algorithms implemented in the \emph{Weka}
+program are classification algorithms. They use a lot of forms of
+knowledge representation, eg. decision trees, decision rules,
+support vector machines and Bayesian networks.
+
+% Inn¹ grup¹ algorytmów s¹ algorytmy grupuj¹ce (klastruj¹ce). Bazuj¹
+% one na schematach \emph{k-Means}, \emph{EM}, \emph{Cobweb},
+% \emph{X-means}, \emph{FarthestFirst}.
+Another group are the clustering algorithms. They are based on
+\emph{k-Means} diagrams, \emph{EM}, \emph{Cobweb}, \emph{X-means},
+\emph{FarthestFirst}.
+% Utworzone za ich pomoc¹
+% klastry mog¹ byæ wizualizowane oraz porównywane do wzorcowych,
+% jeœli takie s¹ do dyspozycji.
+Clusters created can be visualized and compared to patterns, if
+available.
+
+% System \emph{Weka} implementuje równie¿ popularny algorytm
+% \emph{Apriori}, wykorzystywany do znajdowania regu³ asocjacyjnych.
+The \emph{Weka} system also implements a popular \emph{Apriori} algorithm,
+used for finding associative rules.
+% Dzia³a on tylko na danych dyskretnych i pozwala na identyfikacjê
+% zale¿noœci statystycznych miêdzy ró¿nymi grupami atrybutów.
+It works only on discreet data and it allows to identify
+statistical relations between different groups of attributes.
+
+% \emph{Weka} dostarcza przyjazny graficzny interfejs u¿ytkownika,
+% który jest bardzo u¿yteczny w praktyce.
+\emph{Weka} provides the friendly graphical user interface which
+ is very useful in practice.
+% Pozwala on nie tylko na sprawne wczytywanie danych do systemu,
+% ale tak¿e na ich wizualizacjê w formie czytelnych diagramów i wykresów.
+It allows to prepare the data, set up experiments and visualize
+results using readable diagrams and graphs.
+
+% Jedn¹ z ciekawszych funkcji systemu jest mo¿liwoœæ graficznego
+% definiowania przep³ywu danych i sposobu ich przetwarzania.
+There is also a possibility of defining of the data and knowledge
+flow and transformations using graphs. Data sources, filters,
+classificators and rating algorithms, which are represented by
+nodes, can be linked with edges that define the flow.
+% W ten sposób mo¿na okreœlaæ
+% jaki ma byæ przep³yw danych w systemie. Konfiguracja konkretnych
+% danych i metod ich przetwarzania mo¿e byæ zapisania i za³adowana
+% ponownie do powtórnego wykorzystania.
+The configuration can be stored for repeatable usage.
+
+
+\subsection*{YALE}
+% (Yet Another Learing Environment), podobnie jak
+% opisywana powy¿ej \emph{Weka}, jest systemem do prowadzenia
+% eksperymentów zwi¹zanych z uczeniem maszynowym.
+Yet Another Learning Environment (\emph{YALE}), alike \emph{Weka}
+described above, is a system for performing machine learning
+experiments.
+
+% Jego g³ówn¹ zalet¹ jest bogaty zestaw operatorów, które
+% umo¿liwiaj¹ tworzenie ,,³añcuchów'' z³o¿onych z ró¿nych problemów
+% zwiazanych z uczeniem.
+A rich set of operators, which allow to create ''chains'' of
+operations is its main advantage.
+% Dane, na których operuj¹ operatory s¹ dla
+% nich ca³kowicie przeŸroczyste i przechowywane mog¹ byæ w
+% ró¿norodnych formatach -- za odpowiednie transformacje pomiêdzy
+% nimi odpowiada samo œrodowisko.
+The data layer, on which the operators work, is completely
+transparent. Data can be stored in various formats. The
+environment is responsible for the appropriate transformations.
+
+% Dziêki operatorom i mo¿liwoœci ich ³atwego ³¹czenia przy u¿yciu
+% graficznego interfejsu u¿ytkownika, a tak¿e dziêki jêzykowi
+% skryptowemu bazuj±cemu na \emph{XML}, \emph{YALE} jest czêsto
+% u¿ywane do prowadzenia badañ i eksperymentów z ró¿norodnymi
+% algorytmami uczenia maszynowego.
+
+% \emph{YALE} dostarcza ponad 200 operatorów, jak choæby algorytmy
+% klasyfikuj¹ce, asocjacyjne, klastruj¹ce, wyszukuj¹ce regu³y czy
+% oparte na drzewach decyzyjnych.
+\emph{YALE} provides over 200 operators for classification,
+finding associative rules, and clustering.
+% Dodatkowo mo¿liwe jest
+% wykorzystanie wielu algorytmów dostarczanych przez œrodowisko
+% \emph{Weka} w sposób analogiczny do operatorów wbudowanych. Przed
+% przetworzeniem dane mog± byæ poddane dyskretyzacji, filtrowaniu
+% czy normalizacji, a po zakoñczeniu obliczeñ odpowiedniej
+% walidacji.
+Additionally, it is possible to use many algorithms provided by
+\emph{Weka}. Before processing the data can be digitized, filtered
+or standardized, and after learning, the generated knowledge can
+be verified.
+
+% \emph{YALE} pozwala na eksperymentowanie i~poszukiwanie najlepszego dla danego problemu
+% po³±czenia ró¿nych metod uczenia maszynowego.
+\emph{YALE} helps in finding the best set of operators for the
+given problem.
+% Dziêki modularnej strukturze operatorów
+% mo¿liwa jest wymiana pojedynczych ogniw ,,³añcuchów'' obliczeñ w celu uzyskania
+% najlepszego efektu. Dodatkowo ,,³añcuchy'' te mog¹ byæ zagnie¿d¿ane, tworz¹c skomplikowane
+% drzewa operatorów.
+Thanks to the modular structure of operators, it is possible to
+replace isolated nodes of "chains" in order to obtain the best
+effect. Additionally, "chains" can be nested to create complex
+structures of operators.
+
+% !!!!!!!!!!!! to bylo zakomentowane - ma byc? !!!!
+%Du¿e mo¿liwoœci tego œrodowiska mog¹ byæ dodatkowo rozszerzane
+%poprzez mechanizm wtyczek, dziêki którym mo¿liwe jest dodawanie
+%nowych operatorów i dostosowanie go do indywidualnych potrzeb.
+
+The possibilities of this environment can extended by adding new,
+user-defined plug-ins. Such plug-ins can provide new operators,
+which are fit to the individual needs.
+
+Thanks to the operators and the possibility of their linking with
+the graphical user interface, thanks to the script language, which
+is based on \emph{XML}, \emph{YALE} is often used in a research.
+
+\subsection*{VINLEN}
+% to system indukcyjnej bazy danych, rozwijany w
+% \emph{George Mason University}~\cite{bib2}. Jest to klasyczna
+% realizacja indukcyjnej bazy danych.
+\emph{VINLEN} is being developed in the \emph{George Mason
+University}~\cite{bib2}. It is a classical example of an inductive
+database.
+% Mechanizmy wnioskowania
+% indukcyjnego s± zintegrowane ze standardowymi relacyjnymi
+% operatorami bazodanowymi. Integracja ta opiera siê na nowych
+% rodzajach operatorów zwanych operatorami generowania wiedzy
+% \emph{KGO} (Knowledge Generation Operators).
+The mechanisms of induction are integrated with a standard
+relational database operators. The integration is based on new
+kinds of operators, which are called \emph{KGO} (Knowledge
+Generation Operators).
+ \emph{KGO}
+%  operuje na
+% \emph{segmentach wiedzy} sk³adaj±cych siê z~kombinacji jednej lub
+% wiêcej tabel z relacyjnej bazy danych i~wiedzy przechowywanej
+% w~bazie wiedzy (por. rysunek~\ref{fig:inddb}). \emph{KGO} przyjmuje
+% na wyj¶ciu jeden lub wiêcej segment wiedzy, na podstawie którego
+% generuje inny segment wiedzy. Podstawowym operatorem u¿ywanym w
+% systemie jest AQ21, program do indukcyjnego tworzenia regu³ na
+% podstawie danych.
+operates on segments of knowledge, which consist of combination of
+one or more relational databases and knowledge stored in a
+knowledge base (see Fig.~\ref{fig:inddb}). \emph{KGO} takes as a
+input one or more segments of knowledge, which is used to generate
+other knowledge segment. Rule induction algorithm \emph{AQ21} is
+the main operator which is used in the system.
+
+%????program do indukcyjnego tworzenia regu³ na
+% podstawie danych.
+
+% Indukcyjne bazy danych mog¹ byæ wspierane przez wyspecjalizowanych
+% agentów (\emph{Scouts}), których zadaniem jest synteza
+% i~zarz±dzanie wiedz±, która jest dostosowywana do wymagañ
+% okreœlonego u¿ytkownika.
+Inductive databases can be supported by specialized agents
+(\emph{Scouts}), which are responsible for synthesis and
+management of the knowledge, in a way that is adapted to a
+specified user needs.
+% System \emph{VINLEN} pozwala na tworzenie skryptów
+% operuj±cych na bazach danych, wiedzy i algorytmach uczenia
+% maszynowego przy u¿yciu jêzyka \emph{KGL-1} (\emph{Knowledge
+% Generation Language}).
+Scouts are built using scripts, which operate on data and
+knowledge and can use machine learning algorithms. They are
+written in a \emph{Knowledge Generation Language} (\emph{KGL-1}).
+
+% Cech¹ charakterystyczn± tak rozwijanego systemu bêdzie mo¿liwo¶æ
+% sk³adowania wiedzy w~relacyjnej bazie danych wraz z danymi,
+% zadawanie zapytañ oraz manipulowanie wiedz± z~wykorzystaniem
+% jêzyka \emph{KQL} lub przy u¿yciu funkcjonalnego, graficznego
+% interfejsu u¿ytkownika.
+What is characteristic, generated knowledge is stored in a
+relational database together with the data. User have access to
+them via intuitive GUI and a script language.

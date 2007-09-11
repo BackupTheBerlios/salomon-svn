@@ -1,0 +1,15 @@
+\section{Dalszy rozwój systemu}
+\begin{itemize}
+\item Stworzenie automatycznych nocnych testów. Powinien zostaæ stworzony skrypt, który sprawdza czy danego dnia by³y jakieœ zmiany pod kontrol¹ wersji i w razie zmian przeprowadza proces budowania instalki i odpalania testów. Testowanie jednostkowe przeprowadzane bêdzie na Ÿród³ach, natomiast testowanie GUI na wersji zainstalowanej, ale z binariów skompilowanych z kontraktami (sprawdza³oby to instalator oraz kontrakty)
+\item Dodanie batchmode - stworzenie nowego kontrolera, który konfiguracjê oraz zadania wczytywa³by z plików xml.  Pozwoli³oby to na tworzenie zadañ dla Salomona przez inne programy poprzez generowanie odpowiedniego xml'a. Batchmode móg³by byæ równie¿ wykorzystywany do testów regresyjnych - sprawdzane by by³o czy dla danego pliku xml wynik jest zawsze ten sam 
+\item Podzielenie wtyczek na kategorie w hierarchii drzewiastej - drzewiasta hierarchia jest bardziej naturalna. (np. wtyczki to wyszukiwania klastrów, wtyczki do wyszukiwania regu³).
+\item Automatyczne rozmieszczanie zadañ pomiêdzy ró¿nych klientów. Tworzone zadana powinny byæ przedstawiane w sposób graficzny jako graf (acykliczny), gdzie ka¿dy wêze³ odpowiada³by pojedynczemu zadaniu. Podzia³ zadañ na hosty powinien byæ automatyczny i dynamiczny (tzn. optymalizowaæ siê w trakcie wykonania). Obecny interfejs \emph{ServerController} powinien byæ wykorzystywany do œledzenia wykonywania zadañ, na grafie ka¿dy wêze³ powinien zawieraæ informacje, na którym aktualnie kontrolerze zadanie siê wykonuje oraz jego status.
+\item Dodanie nowych menad¿erów (obs³uga ró¿nych typów wiedzy)
+\item Mechanizm dodawania/modyfikacji menad¿erów jako wtyczek (mechanizm ten nie musi byæ dynamiczny z racji ze nowe menad¿ery tworzone bêd¹ niezwykle rzadko)
+\item Dodanie nowych wtyczek
+\item Konfiguracja programu z poziomu interfejsu u¿ytkownika
+\item Statystyki: Iloœæ zadañ, iloœæ zadañ o danym statusie wykonania, statystyki dotycz¹ce ka¿dego typu danych przechowywanego w bazie (klastry, atrybuty, itp.). Statystyki powinny byæ tworzone per ka¿de odpalenie listy zadañ oraz w ca³ej historii, statystyki powinny byæ prezentowane w formie graficznej. Dziêki statystykom u¿ytkownik mia³by mo¿liwoœæ obserwowania zmian w zgromadzonej wiedzy.
+\item Dodanie wsparcia dla innych zewnêtrznych Ÿróde³ danych. 
+\item Stworzenie uniwersalnych komponentów do prezentacji wspieranych typów danych. Komponenty te wykorzystywane by³yby zarówno do prezentowania aktualnie zgromadzonej wiedzy jak równie¿ mog³yby byæ wykorzystywane przez wtyczki. Dziêki takiemu podejœciu warstwa prezentacji danych by³aby bardziej spójna.
+\item Dodanie mo¿liwoœci równoleg³ego wykonywania zadañ.
+\end{itemize}

@@ -1,0 +1,74 @@
+\documentclass[a4paper]{article}
+\usepackage[polish]{babel}
+\usepackage[cp1250]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[dvips]{graphicx}
+
+\pagestyle{headings}
+\textwidth      15.5cm
+\oddsidemargin    .1cm
+\evensidemargin   .1cm
+
+\begin{document}
+
+\thispagestyle{empty}
+
+\begin{minipage}{5cm}
+\includegraphics[scale=0.7]{salomon.eps}
+\end{minipage}
+\begin{minipage}{10cm}
+\begin{center}
+{\Large Salomon\\
+System przetwarzania wiedzy\\}
+\end{center}
+\end{minipage}
+
+\vspace*{0.5cm}
+
+\hrulefill
+
+\vspace*{1cm}
+
+
+\begin{flushright}
+{\Large \emph{Iteration Description --- E1, ver 1.0} }
+\end{flushright}
+
+
+
+\begin{flushleft}
+{ \Large Historia wersji }\[\]
+\begin{tabular}{|p{2.5cm}||p{1.5cm}|p{6cm}|p{3.5cm}|}
+  \hline
+  Data & Wersja & Opis & Autor \\
+  \hline \hline
+  29.09.2005 & 1.0 & utworzenie & \emph{Leszek Grzanka}\\
+  \hline
+  \hline
+\end{tabular}
+\end{flushleft}
+
+\newpage
+
+\section{Zadania dla iteracji} 
+
+Zaprojektowanie nowej warstwy -- \emph{Solution}, reprezentuj¹cej zewnêtrzne bazy danych. Platforma powinna byæ tak¿e rozbudowana o mo¿liwoœæ po³¹czenia z zewnêtrznymi bazami danych.
+
+\section{Produkt iteracji} 
+
+Dokument SAD zawieraj¹cy projekt warstwy \emph{Solution} oraz interfejsu umo¿liwiaj¹cego po³¹czenie z zewnêtrznymi bazami danych.
+
+\section{Plan testów} 
+
+\begin{itemize}
+
+\item Prezentacja projektu warstwy oraz pustych interfejsów.
+\item Konsultacja z drug¹ grup¹ pracuj¹c¹ nad Salomonem.
+
+\end{itemize}
+
+\section{Efekt wykonania iteracji}
+Efektem by³o opracowanie dokumentu SAD, zawieraj¹cego Use-case warstwy \textit{Solution}, model logiczny, implementacyjny oraz model danych. Wprowadzono tak¿e do kodu odpowiednie interfejsy z przeznaczeniem póŸniejszego zaimplementowania.
+
+\end{document}
+

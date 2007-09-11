@@ -1,0 +1,195 @@
+%\section{Koncepcja platformy \emph{Salomon}}
+\section{Idea of the \emph{Salomon} Platform}
+
+The proposed architecture of the Salomon platform is an answer to
+some limitations of \emph{VINLEN}. The process of gathering the
+knowledge from data is usually very complex – some algorithms
+require large amount of computations on considerably large amount
+of given data. This is why the efficiency problems appear and
+thus, during the designing  of the architecture of the system, its
+scalability was also one of more important aspects. We managed to
+achieve it, thanks to breaking the entire computational process
+into isolated \emph{tasks}. Such solution gives the possibility
+of distributed computations.
+
+%Proponowana architektura platfromy \emph{Salomon} jest odpowiedzi¹ na
+%pewne ograniczenia systemu \emph{VINLEN}. Proces pozyskiwania wiedzy z
+%danych jest zwykle bardzo z³o¿ony -- czêœæ algorytmów wymaga du¿ej
+%iloœci obliczeñ, kt\'ore przeprowadzane s¹ na sporej iloœci danych.
+%St¹d pojawiaj¹ siê problemy wydajnoœciowe i~dlatego te¿ jednym z
+%wa¿niejszych aspektów podczas projektowania architektury systemu by³a
+%jego skalowalnoœæ. Uda³o siê to osi¹gn¹æ dziêki rozbiciu ca³ego
+%procesu obliczeniowego na pojedyncze \emph{zadania}.  To z kolei
+%stworzy³o mo¿liwoœæ rozproszenia obliczeñ.
+
+\noindent
+Main assumptions of the platform are:
+
+\begin{description}
+    \item[Component-based design.]
+    %\emph{VINLEN} is a complete product, delivered together with different
+    %built-in algorithms.
+    \emph{Salomon} is an open
+platform which is supposed to provide a basis for other projects
+using machine learning components in the process of discovering
+the knowledge in data. Hence, the assumption, that platform – main
+module of the system – is as simple as possible. Providing the
+user-friendly environment was brought down to setting it for the
+realization of the functionality contained in components having
+the form of so-called plug-ins.
+
+    \item[Open platform.] The user has full freedom
+in adding new components (plug-ins) to the
+system.
+
+    \item[Independence from the runtime environment.]
+        Thanks to using portable tools, for example \emph{Java}, the system can be
+        started in any environment having the appropriate virtual machine.
+
+    \item[Possibility of calculation distribution.]
+        Thanks to component-based design and appropriate definition of tasks, the system is
+        able to work in the distributed, heterogeneous network environment.
+
+    \item[Simplicity and Intuitiveness]
+    GUI allows non-experienced users to use the platform.
+\end{description}
+
+
+%G³ówne za³o¿enia platformy to:
+%
+%\begin{description}
+%    \item[Budowa komponentowa.]
+%    \emph{VINLEN} to gotowy produkt, dostarczany wraz z wbudowanymi ró¿nymi algorytmami.
+%    \emph{Salomon} to otwarta platforma, która ma stanowiæ bazê podczas
+%    tworzenia produktów wykorzystuj¹cych ideê \emph{Machine Learning}
+%    w procesie odkrywania wiedzy z danych. St¹d za³o¿enie, ¿e platforma --
+%    g³ówny modu³ systemu -- jest tak prosta jak to mo¿liwe. Jej zadaniem
+%    jest dostarczenie przyjaznego œrodowiska do realizacji funkcjonalnoœci
+%    zawartej w komponentach maj¹cych postaæ tzw.\ wtyczek.
+%
+%    \item[Otwartoœæ.] U¿ytkownik ma pe³n¹ swobodê
+%    w~dodawaniu nowych komponentów (wtyczek) do systemu.
+%
+%    \item[Niezale¿noœæ od œrodowiska wdro¿enia.]
+%    Dziêki wykorzystaniu przenoœnych narzêdzi, przyk³adowo jêzyka \emph{Java},
+%    system mo¿e byæ uruchamiany w dowolnym systemie posiadaj¹cym odpowiedni¹ maszynê wirtualn¹.
+%
+%    \item[Mo¿liwoœæ rozpraszania obliczeñ.]
+%    Dziêki budowie komponentowej i odpowiedniemu definiowaniu zadañ, system umo¿liwia pracê w~rozproszonym,
+%    heterogenicznym œrodowisku sieciowym.
+%
+%    \item[Prostota u¿ytkowania.]
+%    £atwoœæ u¿ytkowania to jeden z fundamentów systemu
+%    \emph{VINLEN}. \emph{Salomon} stara siê równie¿ pod tym wzglêdem
+%    dorównaæ, a nawet przeœcign¹æ swojego protoplastê. Jako jedno z
+%    wa¿niejszych u³atwieñ przewidywane jest zast¹pienie jêzyka
+%    definiowania ,,skautów'' graficznym interfejsem w~postaci grafu
+%    przep³ywu wiedzy.
+%\end{description}
+
+\medskip
+System \emph{Salomon} consists of two main types of components: a
+platform and a set of plug-ins, providing the logic needed for
+configuring, executing and showing the results of execution. The
+platform consists of two elements: the engine and the data
+storage. The former one is responsible for managing and executing
+tasks and latter one stores the data and knowledge.
+
+The possibility of elastic definition of  the plan of the
+processing is one of the essential advantages of the system. Plan
+consists of linked \emph{tasks}. An extraction of the knowledge is
+a process which can be divided in stages; in every stage a data or
+a knowledge is processed (e.g. attributes are discretized, the
+rules are created, the knowledge is tested). Since every stage is
+isolated and some of the stages are independent, they can be
+processed simultaneously.
+
+
+%\medskip
+%System \emph{Salomon} sk³ada siê z dwóch zasadniczych czêœci.
+%Pierwsz¹ z nich stanowi platforma. Druga czêœæ to zbiór wtyczek,
+%dostarczaj¹cych logikê potrzebn¹ do skonfigurowania, wykonania i
+%wyœwietlenia rezultatów zadania.
+%Sama platforma sk³ada siê z~dwóch elementów: silnika, którego zadaniem
+%jest zarz¹dzanie i~uruchamianie zadañ, oraz magazynu, który s³u¿y
+%do przechowywania danych i wiedzy.
+%
+%Jednym z istotnych atutów systemu jest mo¿liwoœæ elastycznego definiowania
+%przebiegu pracy systemu w kategoriach tzw.\ \emph{zada\'n}.
+%Ekstrakcja wiedzy to proces, który mo¿e
+%byæ podzielony na etapy -- w ka¿dym etapie wiedza jest poddawana
+%pewnej obróbce (np. dyskretyzowane s¹ atrybuty, tworzone s¹
+%regu³y, wiedza jest testowana). Poniewa¿ ka¿dy etap tworzy odrêbn¹
+%ca³oœæ, a~czêœæ etapów jest od siebie niezale¿na, zatem mog¹ byæ
+%one wykonywane wspó³bie¿nie.
+
+
+
+A task is a basic individual representing calculations. It is
+defined as:
+$$
+z=(a, p, in, out)
+$$
+where:
+\begin{itemize}
+    \item $a$ is an algorithm, passed to the system in the form of a component –
+    plug-in,
+
+    \item $p$ represents parameters of the algorithm,
+    \item $in$ and $out$ are the input and output information of the algorithm.
+\end{itemize}
+
+Input and output can have a form of data (e.g. in the case of
+algorithms, which select data), a form of knowledge (e.g.
+generated rules) or of both data and knowledge (e.g. rules and
+exceptions for them).
+
+
+%Zadanie to podstawowa jednostka reprezentuj¹ca obliczenia.
+%Zdefiniowane jest ono jako:
+%$$
+%z=(a, p, we, wy)
+%$$
+%gdzie:
+%\begin{itemize}
+%    \item $a$ jest algorytmem, dostarczanym do systemu w postaci komponentu --
+%    wtyczki,
+%    \item $p$ reprezentuje parametry algorytmu,
+%    \item $we$ i $wy$ oznaczaj¹ odpowiednio informacje wejœciowe i
+%    wyjœciowe algorytmu.
+%\end{itemize}
+%Wejœcie i wyjœcie mo¿e mieæ postaæ danych (w~przypadku algorytmów,
+%które dokonuj¹ np. selekcji danych), wiedzy (np. wygenerowane
+%regu³y) lub danych i wiedzy naraz (np.\ regu³y i~wyj¹tki dla
+%nich).
+
+The output of one task can become an input to a number of
+consequent tasks. A task can be performed only if all the
+dependent tasks, which produce the input, have been finished.
+
+The plan (program) can be presented in the form of a directed
+graph (initial task should be marked). Every edge can have a
+condition assigned. A control will be passed only if the condition
+is valid. Program can be easily presented in a graphical form.
+
+What is also important, in the system it is possible to define
+components -- agents which are able to observe and react to
+changes in data and/or in the knowledge (e.g. to adding a new
+record to training data or generating the knowledge by a different
+agent) and execute appropriate actions (e.g. execute incremental
+learning).
+
+
+%Przewiduje siê, ¿e
+%wyjœcie jednego zadania mo¿e byæ wejœciem pewnej liczby nastêpnych
+%zadañ. Aby zadanie mog³o zostaæ wykonane, wszystkie zadania od
+%których zale¿y musz¹ byæ wykonane wczeœniej. Powi¹zane zadania
+%mog¹ byæ przedstawione w postaci grafu skierowanego. Taki graf z
+%zaznaczonym zadaniem pocz¹tkowym tworzy \emph{program}. Dodatkowo,
+%ka¿da krawêdŸ mo¿e mieæ przypisany warunek, który jest wymagany,
+%aby sterowanie zosta³o przekazane wzd³u¿ tej krawêdzi. Tak
+%zdefiniowany program mo¿e byæ ³atwo prezentowany u¿ytkownikowi w postaci
+%graficznej. W~systemie bêdzie mo¿na tak¿e
+%definiowaæ agentów, którzy reagowa\'c bêd¹ na zmiany w danych i/lub wiedzy
+%(np.\ na dodanie nowego rekordu do danych treningowych, czy
+%wygenerowanie wiedzy przez innego agenta).
