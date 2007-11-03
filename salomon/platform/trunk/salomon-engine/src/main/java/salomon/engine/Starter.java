@@ -22,7 +22,6 @@
 package salomon.engine;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.sql.SQLException;
 
 import javax.swing.UIManager;
@@ -38,11 +37,8 @@ import org.apache.log4j.PropertyConfigurator;
 import salomon.engine.controller.IController;
 import salomon.engine.controller.LibraryController;
 import salomon.engine.controller.LocalController;
-import salomon.engine.controller.MasterController;
-import salomon.engine.controller.ServantController;
 import salomon.engine.database.DBManager;
 import salomon.engine.platform.IManagerEngine;
-import salomon.engine.platform.ManagerEngine;
 import salomon.platform.exception.ConfigurationException;
 import salomon.platform.exception.PlatformException;
 import salomon.util.gui.Utils;
@@ -263,14 +259,7 @@ public final class Starter
             exit();
         }
     }
-
-    private void startClientImpl()
-    {
-        LOGGER.debug("starting ServantController");
-        _contoroller = new ServantController();
-        start();
-    }
-
+ 
     private LibraryController startLibraryImpl()
     {
         LOGGER.debug("starting MasterController");
@@ -284,13 +273,6 @@ public final class Starter
     {
         LOGGER.debug("starting LocalController");
         _contoroller = new LocalController();
-        start();
-    }
-
-    private void startServerImpl()
-    {
-        LOGGER.debug("starting MasterController");
-        _contoroller = new MasterController();
         start();
     }
 }
