@@ -2,16 +2,17 @@
   <classpathentry kind="src" path="src/main/java"/>
   <classpathentry kind="output" path="target/classes"/>
   <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-  <classpathentry kind="var" path="M2_REPO/jedit/jedit/1.0/jedit-1.0.jar"/>
-  <classpathentry kind="var" path="M2_REPO/jgoodies/looks/1.2.2/looks-1.2.2.jar"/>
-  <classpathentry kind="var" path="M2_REPO/dynamicjava/dynamicjava/1.0/dynamicjava-1.0.jar"/>
-  <classpathentry kind="var" path="M2_REPO/log4j/log4j/1.2.8/log4j-1.2.8.jar"/>
+  <classpathentry kind="var" path="M2_REPO/junit/junit/3.8.2/junit-3.8.2.jar"/>
+  <classpathentry kind="src" path="/salomon-platform"/>
+  <classpathentry kind="src" path="/salomon-util"/>
+  <classpathentry kind="var" path="M2_REPO/jgoodies/validation/1.1.1/validation-1.1.1.jar"/>
   <classpathentry kind="var" path="M2_REPO/jgoodies/binding/1.0/binding-1.0.jar"/>
   <classpathentry kind="var" path="M2_REPO/weka/weka/1.0/weka-1.0.jar"/>
-  <classpathentry kind="var" path="M2_REPO/jgoodies/validation/1.1.1/validation-1.1.1.jar"/>
-  <classpathentry kind="src" path="/salomon-platform"/>
+  <classpathentry kind="var" path="M2_REPO/log4j/log4j/1.2.8/log4j-1.2.8.jar"/>
   <classpathentry kind="var" path="M2_REPO/tablesorter/tablesorter/1.0/tablesorter-1.0.jar"/>
-  <classpathentry kind="src" path="/salomon-util"/>
+  <classpathentry kind="var" path="M2_REPO/jedit/jedit/1.0/jedit-1.0.jar"/>
+  <classpathentry kind="var" path="M2_REPO/springframework/spring/2.0.7/spring-2.0.7.jar"/>
+  <classpathentry kind="var" path="M2_REPO/jgoodies/looks/1.2.2/looks-1.2.2.jar"/>
+  <classpathentry kind="var" path="M2_REPO/dynamicjava/dynamicjava/1.0/dynamicjava-1.0.jar"/>
   <classpathentry kind="var" path="M2_REPO/jgoodies/forms/1.0.5/forms-1.0.5.jar"/>
-  <classpathentry kind="var" path="M2_REPO/junit/junit/3.8.2/junit-3.8.2.jar"/>
 </classpath>

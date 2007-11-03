@@ -73,6 +73,7 @@
 						<manifest>
 							<mainClass>salomon.Starter</mainClass>
 							<addClasspath>true</addClasspath>
+							<classpathPrefix>lib/</classpathPrefix>
 						</manifest>
 						<addMavenDescriptor>false</addMavenDescriptor>
 					</archive>
