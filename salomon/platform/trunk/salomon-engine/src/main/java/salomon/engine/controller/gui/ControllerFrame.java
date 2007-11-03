@@ -33,8 +33,8 @@ import javax.swing.JToolBar;
 
 import org.apache.log4j.Logger;
 
+import salomon.Starter;
 import salomon.engine.Messages;
-import salomon.engine.Starter;
 
 /**
  * Class represents main program frame. All components are put on its content

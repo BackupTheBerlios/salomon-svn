@@ -25,7 +25,7 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
 
-import salomon.engine.Starter;
+import salomon.Starter;
 
 /**
  * Class represents action fired while saving solution.

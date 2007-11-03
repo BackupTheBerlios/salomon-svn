@@ -40,11 +40,11 @@ import javax.swing.KeyStroke;
 
 import org.apache.log4j.Logger;
 
+import salomon.Starter;
 import salomon.engine.Config;
 import salomon.engine.Messages;
 import salomon.engine.Resources;
 import salomon.engine.SQLConsole;
-import salomon.engine.Starter;
 import salomon.engine.controller.gui.ControllerFrame;
 import salomon.engine.controller.gui.ControllerPanel;
 import salomon.engine.controller.gui.IControllerPanel;

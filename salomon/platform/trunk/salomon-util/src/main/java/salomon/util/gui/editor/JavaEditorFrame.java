@@ -30,8 +30,8 @@ import javax.swing.JFrame;
 import org.syntax.jedit.JEditTextArea;
 import org.syntax.jedit.TextAreaDefaults;
 
-import salomon.engine.Messages;
-import salomon.engine.platform.IManagerEngine;
+//import salomon.engine.Messages;
+//import salomon.engine.platform.IManagerEngine;
 import salomon.util.gui.Utils;
 import salomon.util.scripting.JavaRunner;
 
@@ -51,7 +51,8 @@ public final class JavaEditorFrame extends JFrame
 
     private JButton _runButton;
 
-    public JavaEditorFrame(IManagerEngine managerEngine)
+    //FIXME:
+    public JavaEditorFrame(Object managerEngine)//IManagerEngine managerEngine)
     {
         _javaRunner = new JavaRunner();
         _javaRunner.defineVariable("managerEngine", managerEngine);
@@ -75,10 +76,10 @@ public final class JavaEditorFrame extends JFrame
         initComponents();
 
         // input
-        builder.appendSeparator(Messages.getString("TT_JAVA_EDITOR_INPUT"));
+        builder.appendSeparator("FIXME:");//Messages.getString("TT_JAVA_EDITOR_INPUT"));
         builder.append(_javaEditorComponent);
         builder.append(ButtonBarFactory.buildCenteredBar(_runButton));
-        builder.appendSeparator(Messages.getString("TT_JAVA_EDITOR_OUTPUT"));
+        builder.appendSeparator("FIXME:");//Messages.getString("TT_JAVA_EDITOR_OUTPUT"));
         builder.append(_outputComponent);
         builder.append(ButtonBarFactory.buildCenteredBar(_clearButton));
 

@@ -35,7 +35,7 @@ import javax.swing.JOptionPane;
 
 import org.apache.log4j.Logger;
 
-import salomon.engine.Messages;
+//import salomon.engine.Messages;
 
 /**
  * Class supply some useful methods used in GUI. All public methods are static
@@ -248,13 +248,13 @@ public final class Utils
     private void showErrorMessageImpl(String msg)
     {
         JOptionPane.showMessageDialog(_parent, msg,
-                Messages.getString("TIT_ERROR"), JOptionPane.ERROR_MESSAGE);
+                "FIXME:", JOptionPane.ERROR_MESSAGE);
     }
 
     private void showInfoMessageImpl(String msg)
     {
         JOptionPane.showMessageDialog(_parent, msg,
-                Messages.getString("TIT_INFO"), JOptionPane.INFORMATION_MESSAGE);
+                "FIXME:", JOptionPane.INFORMATION_MESSAGE);
     }
 
     private boolean showQuestionMessageImpl(Component parent, String title,
@@ -274,7 +274,7 @@ public final class Utils
     private boolean showWarningMessageImpl(String msg)
     {
         int retVal = JOptionPane.showConfirmDialog(_parent, msg,
-                Messages.getString("TIT_WARN"), JOptionPane.YES_NO_OPTION,
+                "FIXME:", JOptionPane.YES_NO_OPTION,
                 JOptionPane.WARNING_MESSAGE);
 
         return (retVal == JOptionPane.YES_OPTION);

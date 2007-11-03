@@ -51,9 +51,9 @@ import javax.swing.JTextField;
 
 import org.apache.log4j.Logger;
 
+import salomon.Starter;
 import salomon.engine.Config;
 import salomon.engine.Messages;
-import salomon.engine.Starter;
 import salomon.engine.controller.gui.ControllerFrame;
 import salomon.engine.controller.gui.common.SearchFileFilter;
 import salomon.engine.controller.gui.common.TreeFileChooser;
