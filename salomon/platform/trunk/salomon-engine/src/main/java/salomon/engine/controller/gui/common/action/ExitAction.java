@@ -25,8 +25,6 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
 
-import salomon.Starter;
-
 /**
  * Class represents action fired while saving solution.
  *  
@@ -48,7 +46,8 @@ public final class ExitAction extends AbstractAction
      */
     public void actionPerformed(ActionEvent e)
     {
-        Starter.exit();
+        //FIXME: tarter.exit();
+        System.exit(0);
     }
 
 }

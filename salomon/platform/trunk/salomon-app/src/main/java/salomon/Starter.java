@@ -4,8 +4,6 @@ package salomon;
 import java.io.File;
 import java.sql.SQLException;
 
-import javax.swing.UIManager;
-
 import org.apache.commons.cli.BasicParser;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.HelpFormatter;
@@ -26,25 +24,22 @@ import salomon.platform.exception.ConfigurationException;
 import salomon.platform.exception.PlatformException;
 import salomon.util.gui.Utils;
 
-import com.jgoodies.looks.plastic.PlasticLookAndFeel;
-import com.jgoodies.looks.plastic.PlasticXPLookAndFeel;
-import com.jgoodies.looks.plastic.theme.ExperienceBlue;
-
 /**
  * Class starts application execution.
  */
 public final class Starter
 {
-    /**
-     * 
-     * @uml.property name="_instance"
-     * @uml.associationEnd multip private static final Logger LOGGER = Logger.getLogger(Starter.class);
+
+    private static final Logger LOGGER = Logger.getLogger(Starter.class);
+
+    private static Starter _instance;
 
     static {
         try {
-            PlasticLookAndFeel.setTabStyle(PlasticLookAndFeel.TAB_STYLE_METAL_VALUE);
-            PlasticLookAndFeel.setPlasticTheme(new ExperienceBlue());
-            UIManager.setLookAndFeel(new PlasticXPLookAndFeel());
+// FIXME:            
+//            PlasticLookAndFeel.setTabStyle(PlasticLookAndFeel.TAB_STYLE_METAL_VALUE);
+//            PlasticLookAndFeel.setPlasticTheme(new ExperienceBlue());
+//            UIManager.setLookAndFeel(new PlasticXPLookAndFeel());
         } catch (Exception e) {
             LOGGER.warn("Cannot set look&feel!", e); //$NON-NLS-1$
         }
@@ -63,6 +58,8 @@ public final class Starter
      * @uml.associationEnd multiplicity="(0 1)"
      */
     private IManagerEngine _managerEngine;
+
+    private Options _options;
 
     private Starter()
     {

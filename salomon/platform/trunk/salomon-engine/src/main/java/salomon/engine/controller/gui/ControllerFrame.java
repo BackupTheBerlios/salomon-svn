@@ -33,7 +33,6 @@ import javax.swing.JToolBar;
 
 import org.apache.log4j.Logger;
 
-import salomon.Starter;
 import salomon.engine.Messages;
 
 /**
@@ -102,7 +101,8 @@ public final class ControllerFrame extends JFrame
 
     private void exit()
     {
-        Starter.exit();
+        //FIXME: tarter.exit();
+        System.exit(0);
     }
 
     /**

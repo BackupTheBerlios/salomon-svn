@@ -40,7 +40,6 @@ import javax.swing.KeyStroke;
 
 import org.apache.log4j.Logger;
 
-import salomon.Starter;
 import salomon.engine.Config;
 import salomon.engine.Messages;
 import salomon.engine.Resources;
@@ -59,7 +58,6 @@ import salomon.engine.controller.gui.task.GraphTaskManagerGUI;
 import salomon.engine.database.DBManager;
 import salomon.engine.platform.IManagerEngine;
 import salomon.engine.platform.ManagerEngine;
-import salomon.platform.IDataEngine;
 import salomon.platform.exception.PlatformException;
 import salomon.util.gui.Utils;
 import salomon.util.gui.editor.JavaEditorFrame;
@@ -466,7 +464,8 @@ public final class LocalController implements IController
                 _itmExit.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e)
                     {
-                        Starter.exit();
+                        //FIXME: tarter.exit();
+                        System.exit(0);
                     }
                 });
             }

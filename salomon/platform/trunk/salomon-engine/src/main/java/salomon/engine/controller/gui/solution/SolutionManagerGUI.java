@@ -51,7 +51,6 @@ import javax.swing.JTextField;
 
 import org.apache.log4j.Logger;
 
-import salomon.Starter;
 import salomon.engine.Config;
 import salomon.engine.Messages;
 import salomon.engine.controller.gui.ControllerFrame;
@@ -278,7 +277,8 @@ public final class SolutionManagerGUI
             @Override
             public void windowClosing(WindowEvent e)
             {
-                Starter.exit();
+                //FIXME: tarter.exit();
+                System.exit(0);
             }
         });
 
