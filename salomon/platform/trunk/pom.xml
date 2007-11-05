@@ -1,0 +1,164 @@
+<project>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>salomon</groupId>
+  <artifactId>salomon</artifactId>
+  <name>Salomon</name>
+  <version>1.0.0-SNAPSHOT</version>
+  <description>Salomon Application</description>
+  <packaging>pom</packaging>
+
+  <!-- Developers -->
+  <developers>
+    <developer>
+      <id>nico</id>
+      <name>Nikodem Jura</name>
+      <email>nikodem.jura@gmail.com</email>
+      <roles>
+        <role>Architect</role>
+        <role>Developer</role>
+      </roles>
+    </developer> 
+  
+    <developer>
+      <id>krzycho</id>
+      <name>Krzysztof Rajda</name>
+	  <email>krzysztof@rajda.name</email>
+      <roles>
+        <role>Architect</role>
+        <role>Developer</role>
+      </roles>
+	</developer> 	
+  </developers>
+  
+  <!-- Licenses -->
+  <!--licenses>
+    <license>
+      <name>The Apache Software License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses-->
+
+  <repositories>
+    <repository>
+      <id>central</id>
+	  <url>http://repo1.maven.org/maven2</url>
+    </repository>
+  </repositories>
+ 
+  <dependencies>
+    <!--dependency>
+      <groupId>salomon</groupId>
+	  <artifactId>salomon-platform</artifactId>
+	  <version>1.0.0-SNAPSHOT</version>
+    </dependency>
+
+	<dependency>
+      <groupId>salomon</groupId>
+	  <artifactId>salomon-util</artifactId>
+	  <version>1.0.0-SNAPSHOT</version>
+    </dependency>
+
+	<dependency>
+      <groupId>salomon</groupId>
+	  <artifactId>salomon-plugin-api</artifactId>
+	  <version>1.0.0-SNAPSHOT</version>
+    </dependency>
+
+	<dependency>
+      <groupId>salomon</groupId>
+	  <artifactId>salomon-engine</artifactId>
+	  <version>1.0.0-SNAPSHOT</version>
+    </dependency-->
+	
+	<dependency>
+      <groupId>log4j</groupId>
+	  <artifactId>log4j</artifactId>
+	  <version>1.2.8</version>
+	</dependency>
+
+	<dependency>
+      <groupId>commons-logging</groupId>
+	  <artifactId>commons-logging</artifactId>
+	  <version>1.0.4</version>			
+	</dependency>
+	
+	<dependency>
+      <groupId>springframework</groupId>
+	  <artifactId>spring</artifactId>
+	  <version>2.0.7</version>			
+	</dependency>
+
+	<dependency>
+      <groupId>firebird</groupId>
+	  <artifactId>firebirdsql</artifactId>
+	  <version>1.0.0</version>			
+	</dependency>
+
+	<dependency>
+      <groupId>firebird</groupId>
+	  <artifactId>mini-j2ee</artifactId>
+	  <version>1.0.0</version>			
+	</dependency>
+	
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>[3.8.1,4.0)</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies> 
+
+ <!-- Sub Project Modules to Build -->
+  <modules>
+    <module>salomon-platform</module>
+	<module>salomon-engine</module>
+	<module>salomon-plugin-api</module>
+	<module>salomon-util</module>
+	<module>salomon-app</module>	
+  </modules> 
+  
+  <build>
+	<plugins>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>1.5</source>
+          <target>1.5</target>
+        </configuration>
+      </plugin>
+
+		<plugin>
+			<artifactId>maven-jar-plugin</artifactId>
+			<configuration>
+			<archive>
+				<addMavenDescriptor>false</addMavenDescriptor>
+			</archive>					
+			</configuration>
+		</plugin>
+		
+      <!--plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+        <version>2.0</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
+	</plugin-->
+
+	</plugins>
+	<resources>
+		<resource>
+			<directory>src/main/config</directory>
+			<filtering>true</filtering>
+		</resource>
+	</resources>	
+  </build>
+
+
+</project>
