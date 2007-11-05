@@ -10,14 +10,13 @@ import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.apache.log4j.Logger;
-import org.apache.log4j.PropertyConfigurator;
 
 import salomon.engine.Config;
 import salomon.engine.Messages;
 import salomon.engine.SQLConsole;
+import salomon.engine.SalomonEngineContext;
 import salomon.engine.controller.IController;
 import salomon.engine.controller.LibraryController;
-import salomon.engine.controller.LocalController;
 import salomon.engine.database.DBManager;
 import salomon.engine.platform.IManagerEngine;
 import salomon.platform.exception.ConfigurationException;
@@ -63,7 +62,7 @@ public final class Starter
 
     private Starter()
     {
-        PropertyConfigurator.configure("log.conf");
+        // empty body
     }
 
     /**
@@ -246,7 +245,7 @@ public final class Starter
     private void startLocalImpl()
     {
         LOGGER.debug("starting LocalController");
-        _contoroller = new LocalController();
+        _contoroller = (IController) SalomonEngineContext.getBean("localController");
         start();
     }
 }
