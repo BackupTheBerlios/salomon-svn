@@ -249,7 +249,7 @@ public final class ProjectManagerGUI
             public void run()
             {
                 for (IAgentConfig config : agentConfigs) {
-                    config.getAgent().start(project);
+                    config.getAgent().start();
                 }
             }
         };

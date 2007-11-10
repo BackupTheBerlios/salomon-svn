@@ -23,9 +23,9 @@ package salomon.engine.platform;
 
 import salomon.engine.agent.IAgentManager;
 import salomon.engine.agentconfig.IAgentConfigManager;
+import salomon.engine.domain.IDomainManager;
 import salomon.engine.plugin.IPluginManager;
 import salomon.engine.project.IProjectManager;
-import salomon.engine.solution.ISolutionManager;
 import salomon.engine.task.ITaskManager;
 
 import salomon.platform.exception.PlatformException;
@@ -47,7 +47,7 @@ public interface IManagerEngine
     IPluginManager getPluginManager() throws PlatformException;
 
     /**
-     * @deprecated Use {@link salomon.engine.solution.ISolution#getProjectManager()}
+     * @deprecated Use {@link salomon.engine.domain.IDomain#getProjectManager()}
      * 
      * Returns the ProjectManager.
      * @return The ProjectManager.
@@ -65,7 +65,7 @@ public interface IManagerEngine
      * @pre $none
      * @post $result != null
      */
-    ISolutionManager getSolutionManager() throws PlatformException;
+    IDomainManager getSolutionManager() throws PlatformException;
 
     /**
      * @deprecated Use {@link salomon.engine.project.IProject#getTaskManager()}

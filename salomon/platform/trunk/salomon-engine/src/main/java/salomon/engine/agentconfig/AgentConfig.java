@@ -91,7 +91,7 @@ public final class AgentConfig implements IAgentConfig
     {
         _agent = agent;
         ((AbstractAgent) _agent).setAgentConfig(this);
-        _agentConfigInfo.setAgentId(_agent.getInfo().getId());
+        _agentConfigInfo.setAgentId(((AbstractAgent) _agent).getInfo().getId());
     }
 
     /**
@@ -116,6 +116,7 @@ public final class AgentConfig implements IAgentConfig
     @Override
     public String toString()
     {
-        return ((AgentInfo) _agent.getInfo()).getName();
+        return ((AgentInfo) ((AbstractAgent) _agent).getInfo()).getName();
     }
+    
 }

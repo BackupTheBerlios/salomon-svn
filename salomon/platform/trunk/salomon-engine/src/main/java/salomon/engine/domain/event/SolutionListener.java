@@ -19,37 +19,16 @@
  * 
  */
 
-package salomon.engine.controller.gui.solution;
-
-import com.jgoodies.binding.beans.Model;
+package salomon.engine.domain.event;
 
 /**
  * 
  */
-public class SolutionModel extends Model
+public interface SolutionListener
 {
-    public static final String PROPERTYNAME_SOLUTION_NAME = "solutionName";
+    void solutionCreated(SolutionEvent event);
 
-    private String _solutionName;
+    void solutionOpened(SolutionEvent event);
 
-    /**
-     * Returns the solutionName.
-     * @return The solutionName
-     */
-    public String getSolutionName()
-    {
-        return _solutionName;
-    }
-
-    /**
-     * Set the value of solutionName field.
-     * @param solutionName The solutionName to set
-     */
-    public void setSolutionName(String solutionName)
-    {
-        String oldValue = getSolutionName();
-        _solutionName = solutionName;
-        firePropertyChange(PROPERTYNAME_SOLUTION_NAME, oldValue, solutionName);
-    }
-
+    void solutionModified(SolutionEvent event);
 }

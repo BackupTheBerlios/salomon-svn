@@ -35,9 +35,9 @@ import org.apache.log4j.Logger;
 
 import salomon.engine.Messages;
 import salomon.engine.controller.gui.common.statusbar.StatusBarManager;
+import salomon.engine.controller.gui.domain.SolutionManagerGUI;
 import salomon.engine.controller.gui.plugin.PluginManagerGUI;
 import salomon.engine.controller.gui.project.ProjectManagerGUI;
-import salomon.engine.controller.gui.solution.SolutionManagerGUI;
 import salomon.engine.controller.gui.task.GraphTaskManagerGUI;
 import salomon.engine.controller.gui.task.TaskControlPane;
 

@@ -3,7 +3,7 @@ package salomon.engine.controller.gui.common.action;
 
 import java.awt.event.ActionEvent;
 
-import salomon.engine.controller.gui.solution.SolutionManagerGUI;
+import salomon.engine.controller.gui.domain.SolutionManagerGUI;
 
 public class ViewSolutionAction extends AbstractSolutionAction
 {

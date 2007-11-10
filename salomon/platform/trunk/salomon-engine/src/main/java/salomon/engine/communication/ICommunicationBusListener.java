@@ -1,14 +1,14 @@
 /*
- * Copyright (C) 2004 Salomon Team
+ * Copyright (C) 2007 Salomon Team
  *
  * This file is part of Salomon.
  *
- * Salomon is free software; you can redistribute it and/or
+ * salomon-engine is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
  * version 2.1 of the License, or (at your option) any later version.
  *
- * Salomon is distributed in the hope that it will be useful,
+ * salomon-engine is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
@@ -19,22 +19,9 @@
  * 
  */
 
-package salomon.engine.solution;
+package salomon.engine.communication;
 
-import salomon.engine.project.IProjectManager;
-import salomon.platform.IDataEngine;
-import salomon.platform.IInfo;
-import salomon.platform.exception.PlatformException;
-
-/**
- * Represents a solution.
- * @see salomon.engine.solution.ISolutionManager
- */
-public interface ISolution
+public interface ICommunicationBusListener
 {
-    IInfo getInfo() throws PlatformException;
-
-    IDataEngine getDataEngine() throws PlatformException;
-
-    IProjectManager getProjectManager() throws PlatformException;
+    void onCommunicationEvent(ICommunicationEvent event);
 }

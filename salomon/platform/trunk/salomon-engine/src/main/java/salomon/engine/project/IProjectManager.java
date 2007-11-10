@@ -21,7 +21,8 @@
 
 package salomon.engine.project;
 
-import salomon.engine.solution.ISolution;
+import salomon.engine.domain.IDomain;
+
 import salomon.platform.exception.PlatformException;
 
 /**
@@ -64,7 +65,7 @@ public interface IProjectManager
      */
     IProject[] getProjects() throws PlatformException;
 
-    ISolution getSolution() throws PlatformException;
+    IDomain getDomain() throws PlatformException;
 
     boolean removeAll() throws PlatformException;
 

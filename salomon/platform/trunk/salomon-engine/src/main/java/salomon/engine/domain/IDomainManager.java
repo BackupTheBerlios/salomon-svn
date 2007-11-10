@@ -19,16 +19,16 @@
  * 
  */
 
-package salomon.engine.solution;
+package salomon.engine.domain;
 
 import salomon.platform.exception.PlatformException;
 
 /**
  * Manager of solutions.
  * 
- * @see salomon.engine.solution.ISolution
+ * @see salomon.engine.domain.IDomain
  */
-public interface ISolutionManager
+public interface IDomainManager
 {
     /**
      * Stores the solution in the database.
@@ -37,16 +37,16 @@ public interface ISolutionManager
      * @param solution The solution
      * @throws PlatformException
      */
-    void addSolution(ISolution solution) throws PlatformException;
+    void addSolution(IDomain solution) throws PlatformException;
 
     /**
      * Creates an empty solution, but doesn't add it to database.
      * Use <code>addSolution</code> method to store this solution in the database. 
-     * @see #addSolution(ISolution)
+     * @see #addSolution(IDomain)
      * @return The empty solution
      * @throws PlatformException
      */
-    ISolution createSolution() throws PlatformException;
+    IDomain createSolution() throws PlatformException;
 
     /**
      * Returns current solution.
@@ -54,7 +54,7 @@ public interface ISolutionManager
      * @return
      * @throws PlatformException
      */
-    ISolution getCurrentSolution() throws PlatformException;
+    IDomain getCurrentSolution() throws PlatformException;
 
     /**
      * Returns solution with given identifier.
@@ -63,7 +63,7 @@ public interface ISolutionManager
      * @return The solution
      * @throws PlatformException
      */
-    ISolution getSolution(int id) throws PlatformException;
+    IDomain getSolution(int id) throws PlatformException;
 
     /**
      * Returns all solutions.
@@ -71,5 +71,5 @@ public interface ISolutionManager
      * @return The array of all solutions
      * @throws PlatformException
      */
-    ISolution[] getSolutions() throws PlatformException;
+    IDomain[] getSolutions() throws PlatformException;
 }

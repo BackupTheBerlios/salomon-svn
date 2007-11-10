@@ -19,7 +19,7 @@
  * 
  */
 
-package salomon.engine.controller.gui.solution;
+package salomon.engine.controller.gui.domain;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -59,14 +59,14 @@ import salomon.engine.controller.gui.common.TreeFileChooser;
 import salomon.engine.controller.gui.common.action.ActionManager;
 import salomon.engine.controller.gui.task.SettingsDialog;
 import salomon.engine.database.ExternalDBManager;
+import salomon.engine.domain.IDomain;
+import salomon.engine.domain.IDomainManager;
+import salomon.engine.domain.Solution;
+import salomon.engine.domain.SolutionInfo;
+import salomon.engine.domain.SolutionManager;
+import salomon.engine.domain.event.SolutionEvent;
+import salomon.engine.domain.event.SolutionListener;
 import salomon.engine.plugin.PlatformUtil;
-import salomon.engine.solution.ISolution;
-import salomon.engine.solution.ISolutionManager;
-import salomon.engine.solution.Solution;
-import salomon.engine.solution.SolutionInfo;
-import salomon.engine.solution.SolutionManager;
-import salomon.engine.solution.event.SolutionEvent;
-import salomon.engine.solution.event.SolutionListener;
 import salomon.platform.exception.PlatformException;
 import salomon.util.gui.Utils;
 import salomon.util.gui.validation.IComponentFactory;
@@ -149,7 +149,7 @@ public final class SolutionManagerGUI
 
     /**
      */
-    public SolutionManagerGUI(ISolutionManager solutionManager)
+    public SolutionManagerGUI(IDomainManager solutionManager)
     {
         _solutionManager = (SolutionManager) solutionManager;
         _solutionListeners = new LinkedList<SolutionListener>();
@@ -163,7 +163,7 @@ public final class SolutionManagerGUI
 
     public void editSolution()
     {
-        ISolution solution = null;
+        IDomain solution = null;
         try {
             solution = _solutionManager.getCurrentSolution();
             setSolutionProperties(solution);
@@ -291,7 +291,7 @@ public final class SolutionManagerGUI
     public void newSolution()
     {
         try {
-            ISolution solution = _solutionManager.createSolution();
+            IDomain solution = _solutionManager.createSolution();
             if (setSolutionProperties(solution)) {
                 _solutionManager.addSolution(solution);
                 _solutions = (Solution[]) ((SolutionManager) _solutionManager).getSolutions();
@@ -546,7 +546,7 @@ public final class SolutionManagerGUI
      * @param solution
      * @throws PlatformException
      */
-    private boolean setSolutionProperties(ISolution iSolution)
+    private boolean setSolutionProperties(IDomain iSolution)
             throws PlatformException
     {
         boolean approved = false;

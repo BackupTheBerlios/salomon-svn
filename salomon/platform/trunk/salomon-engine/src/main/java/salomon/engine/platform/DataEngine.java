@@ -25,12 +25,13 @@ import java.sql.SQLException;
 
 import salomon.engine.database.DBManager;
 import salomon.engine.database.ExternalDBManager;
+import salomon.engine.domain.ShortSolutionInfo;
+
 import salomon.engine.platform.data.DBMetaData;
 import salomon.engine.platform.data.attribute.AttributeManager;
 import salomon.engine.platform.data.dataset.DataSetManager;
 import salomon.engine.platform.data.rule.RuleSetManager;
 import salomon.engine.platform.data.tree.TreeManager;
-import salomon.engine.solution.ShortSolutionInfo;
 import salomon.platform.IDataEngine;
 import salomon.platform.data.IMetaData;
 import salomon.platform.data.tree.ITreeManager;

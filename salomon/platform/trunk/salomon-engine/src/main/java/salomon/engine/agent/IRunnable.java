@@ -1,14 +1,14 @@
 /*
- * Copyright (C) 2006 Salomon Team
+ * Copyright (C) 2007 Salomon Team
  *
  * This file is part of Salomon.
  *
- * Salomon is free software; you can redistribute it and/or
+ * salomon-engine is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
  * version 2.1 of the License, or (at your option) any later version.
  *
- * Salomon is distributed in the hope that it will be useful,
+ * salomon-engine is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
@@ -19,16 +19,14 @@
  * 
  */
 
-package salomon.engine.solution.event;
+package salomon.engine.agent;
 
 /**
  * 
  */
-public interface SolutionListener
+public interface IRunnable
 {
-    void solutionCreated(SolutionEvent event);
+    void start();
 
-    void solutionOpened(SolutionEvent event);
-
-    void solutionModified(SolutionEvent event);
+    void stop();
 }

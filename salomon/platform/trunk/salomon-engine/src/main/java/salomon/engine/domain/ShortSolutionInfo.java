@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2006 Salomon Team
+ * Copyright (C) 2005 Salomon Team
  *
  * This file is part of Salomon.
  *
@@ -19,31 +19,19 @@
  * 
  */
 
-package salomon.engine.solution.event;
+package salomon.engine.domain;
 
-import salomon.engine.solution.SolutionInfo;
-
-/**
- * 
- */
-public final class SolutionEvent
+public final class ShortSolutionInfo
 {
-    private SolutionInfo _info;
+    private int _id;
 
-    /**
-     * @param info
-     */
-    public SolutionEvent(SolutionInfo info)
+    ShortSolutionInfo(int id)
     {
-        _info = info;
+        _id = id;
     }
 
-    /**
-     * Returns the info.
-     * @return The info
-     */
-    public SolutionInfo getInfo()
+    public int getId()
     {
-        return _info;
+        return _id;
     }
 }

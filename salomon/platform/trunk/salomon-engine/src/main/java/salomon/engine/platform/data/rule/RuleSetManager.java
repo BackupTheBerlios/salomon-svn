@@ -22,7 +22,8 @@
 package salomon.engine.platform.data.rule;
 
 import salomon.engine.database.DBManager;
-import salomon.engine.solution.ShortSolutionInfo;
+import salomon.engine.domain.ShortSolutionInfo;
+
 import salomon.platform.data.rule.IRuleSet;
 import salomon.platform.data.rule.IRuleSetManager;
 import salomon.platform.exception.PlatformException;

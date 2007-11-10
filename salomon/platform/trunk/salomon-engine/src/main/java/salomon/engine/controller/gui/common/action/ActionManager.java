@@ -22,9 +22,9 @@
 package salomon.engine.controller.gui.common.action;
 
 import salomon.engine.controller.gui.agentconfig.AgentConfigManagerGUI;
+import salomon.engine.controller.gui.domain.SolutionManagerGUI;
 import salomon.engine.controller.gui.plugin.PluginManagerGUI;
 import salomon.engine.controller.gui.project.ProjectManagerGUI;
-import salomon.engine.controller.gui.solution.SolutionManagerGUI;
 import salomon.engine.controller.gui.task.GraphTaskManagerGUI;
 import salomon.engine.task.ITask;
 

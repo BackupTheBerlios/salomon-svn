@@ -19,7 +19,7 @@
  * 
  */
 
-package salomon.engine.solution;
+package salomon.engine.domain;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -35,7 +35,7 @@ import salomon.platform.exception.DBException;
 import salomon.platform.exception.PlatformException;
 import salomon.plugin.IPlatformUtil;
 
-public final class SolutionManager implements ISolutionManager
+public final class SolutionManager implements IDomainManager
 {
 
     private static final Logger LOGGER = Logger.getLogger(SolutionManager.class);
@@ -45,7 +45,7 @@ public final class SolutionManager implements ISolutionManager
      * @uml.property name="_currentSolution"
      * @uml.associationEnd multiplicity="(0 1)"
      */
-    private ISolution _currentSolution;
+    private IDomain _currentSolution;
 
     /**
      * 
@@ -69,9 +69,9 @@ public final class SolutionManager implements ISolutionManager
 
     /**
      * @throws PlatformException 
-     * @see salomon.engine.solution.ISolutionManager#addSolution(salomon.platform.solution.ISolution)
+     * @see salomon.engine.domain.IDomainManager#addSolution(salomon.platform.solution.IDomain)
      */
-    public void addSolution(ISolution solution) throws PlatformException
+    public void addSolution(IDomain solution) throws PlatformException
     {
         try {
             SolutionInfo solutionInfo = (SolutionInfo) solution.getInfo();
@@ -89,11 +89,11 @@ public final class SolutionManager implements ISolutionManager
     }
 
     /**
-     * @see salomon.engine.solution.ISolutionManager#createSolution()
+     * @see salomon.engine.domain.IDomainManager#createSolution()
      */
-    public ISolution createSolution() throws PlatformException
+    public IDomain createSolution() throws PlatformException
     {
-        ISolution result = new Solution((ManagerEngine) _managerEngine,
+        IDomain result = new Solution((ManagerEngine) _managerEngine,
                 _dbManager);
         _currentSolution = result;
         return result;
@@ -113,7 +113,7 @@ public final class SolutionManager implements ISolutionManager
         return exists;
     }
 
-    public ISolution getCurrentSolution() throws PlatformException
+    public IDomain getCurrentSolution() throws PlatformException
     {
         return _currentSolution;
     }
@@ -130,11 +130,11 @@ public final class SolutionManager implements ISolutionManager
 
     /**
      * @throws PlatformException 
-     * @see salomon.engine.solution.ISolutionManager#getSolution(java.lang.String)
+     * @see salomon.engine.domain.IDomainManager#getSolution(java.lang.String)
      */
-    public ISolution getSolution(int id) throws PlatformException
+    public IDomain getSolution(int id) throws PlatformException
     {
-        ISolution solution = this.createSolution();
+        IDomain solution = this.createSolution();
         // loading plugin information
         // building query
         SQLSelect select = new SQLSelect();
@@ -167,9 +167,9 @@ public final class SolutionManager implements ISolutionManager
 
     /**
      * @throws PlatformException 
-     * @see salomon.engine.solution.ISolutionManager#getSolutions()
+     * @see salomon.engine.domain.IDomainManager#getSolutions()
      */
-    public ISolution[] getSolutions() throws PlatformException
+    public IDomain[] getSolutions() throws PlatformException
     {
 
         SQLSelect select = new SQLSelect();
@@ -177,12 +177,12 @@ public final class SolutionManager implements ISolutionManager
         // executing query
         ResultSet resultSet = null;
 
-        ArrayList<ISolution> solutionsArrayList = new ArrayList<ISolution>();
+        ArrayList<IDomain> solutionsArrayList = new ArrayList<IDomain>();
 
         try {
             resultSet = _dbManager.select(select);
             while (resultSet.next()) {
-                ISolution solution = this.createSolution();
+                IDomain solution = this.createSolution();
                 solution.getInfo().load(resultSet);
                 solutionsArrayList.add(solution);
             }

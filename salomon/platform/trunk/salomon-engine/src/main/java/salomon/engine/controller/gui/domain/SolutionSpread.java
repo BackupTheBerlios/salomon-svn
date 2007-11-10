@@ -19,7 +19,7 @@
  * 
  */
 
-package salomon.engine.controller.gui.solution;
+package salomon.engine.controller.gui.domain;
 
 import java.sql.SQLException;
 
@@ -29,7 +29,8 @@ import salomon.engine.controller.gui.common.spread.AbstractChildForm;
 import salomon.engine.controller.gui.common.spread.AbstractManagedSearchSpread;
 import salomon.engine.database.DBManager;
 import salomon.engine.database.queries.SQLDelete;
-import salomon.engine.solution.SolutionInfo;
+import salomon.engine.domain.SolutionInfo;
+
 import salomon.platform.exception.DBException;
 
 public class SolutionSpread extends AbstractManagedSearchSpread

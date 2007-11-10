@@ -28,13 +28,13 @@ import salomon.engine.agent.IAgentManager;
 import salomon.engine.agentconfig.AgentConfigManager;
 import salomon.engine.agentconfig.IAgentConfigManager;
 import salomon.engine.database.DBManager;
+import salomon.engine.domain.IDomainManager;
+import salomon.engine.domain.SolutionManager;
 import salomon.engine.plugin.IPluginManager;
 import salomon.engine.plugin.PlatformUtil;
 import salomon.engine.plugin.PluginManager;
 import salomon.engine.project.IProjectManager;
 import salomon.engine.project.ProjectManager;
-import salomon.engine.solution.ISolutionManager;
-import salomon.engine.solution.SolutionManager;
 import salomon.engine.task.ITaskManager;
 import salomon.engine.task.TaskManager;
 
@@ -82,7 +82,7 @@ public final class ManagerEngine implements IManagerEngine
      * @uml.property name="_solutionManager"
      * @uml.associationEnd multiplicity="(0 1)"
      */
-    private ISolutionManager _solutionManager;
+    private IDomainManager _solutionManager;
 
     /**
      * 
@@ -162,7 +162,7 @@ public final class ManagerEngine implements IManagerEngine
     /**
      * @see salomon.engine.platform.IManagerEngine#getSolutionManager()
      */
-    public ISolutionManager getSolutionManager()
+    public IDomainManager getSolutionManager()
     {
         return _solutionManager;
     }

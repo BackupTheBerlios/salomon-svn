@@ -23,7 +23,7 @@ package salomon.engine.controller.gui.common.action;
 
 import javax.swing.AbstractAction;
 
-import salomon.engine.controller.gui.solution.SolutionManagerGUI;
+import salomon.engine.controller.gui.domain.SolutionManagerGUI;
 
 /**
  * Represents abstract action caused while editing solutions.

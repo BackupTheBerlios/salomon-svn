@@ -21,10 +21,10 @@
 
 package salomon.engine.controller.gui.common.statusbar;
 
+import salomon.engine.domain.event.SolutionEvent;
+import salomon.engine.domain.event.SolutionListener;
 import salomon.engine.project.event.ProjectEvent;
 import salomon.engine.project.event.ProjectListener;
-import salomon.engine.solution.event.SolutionEvent;
-import salomon.engine.solution.event.SolutionListener;
 import salomon.engine.task.event.ITaskListener;
 import salomon.engine.task.event.TaskEvent;
 

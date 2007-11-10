@@ -31,7 +31,7 @@ import org.apache.log4j.Logger;
 import salomon.engine.database.DBManager;
 import salomon.engine.database.ExternalDBManager;
 import salomon.engine.database.queries.SQLSelect;
-import salomon.engine.solution.ShortSolutionInfo;
+import salomon.engine.domain.ShortSolutionInfo;
 
 import salomon.platform.data.IColumn;
 import salomon.platform.data.attribute.IAttributeManager;

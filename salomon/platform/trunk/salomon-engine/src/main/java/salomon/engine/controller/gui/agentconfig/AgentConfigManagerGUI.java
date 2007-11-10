@@ -134,7 +134,7 @@ public class AgentConfigManagerGUI
         LOGGER.info("AgentConfigManagerGUI.configureAgent()");
         IAgentConfig agentConfig = (IAgentConfig) _agentsList.getSelectedValue();
 
-        IConfigComponent configComponent = agentConfig.getAgent().getConfigComponent();
+        IConfigComponent configComponent = agentConfig.getAgent().getAgentDecisionComponent().getConfigurationComponent();
         Component component = configComponent.getComponent();
         SettingsDialog dialog = new SettingsDialog(_parent, "Configure agent");
         dialog.setSettingsComponent(component);

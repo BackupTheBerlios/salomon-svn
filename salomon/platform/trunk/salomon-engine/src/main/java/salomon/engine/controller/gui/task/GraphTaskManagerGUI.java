@@ -234,7 +234,7 @@ public final class GraphTaskManagerGUI
             plugin = task.getPlugin();
             IResultComponent resultComponent = plugin.getResultComponent();
             result = task.getResult();
-            IDataEngine dataEngine = _taskManager.getProject().getProjectManager().getSolution().getDataEngine();
+            IDataEngine dataEngine = _taskManager.getProject().getProjectManager().getDomain().getDataEngine();
             comp = resultComponent.getComponent(result, dataEngine);
         } catch (PlatformException e) {
             LOGGER.fatal("", e);
@@ -282,7 +282,7 @@ public final class GraphTaskManagerGUI
         IDataEngine dataEngine = null;
         Component taskSettingsComponent = null;
         try {
-            dataEngine = _taskManager.getProject().getProjectManager().getSolution().getDataEngine();
+            dataEngine = _taskManager.getProject().getProjectManager().getDomain().getDataEngine();
             taskSettingsComponent = settingComponent.getComponent(
                     inputSettings, dataEngine);
         } catch (PlatformException e) {

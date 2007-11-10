@@ -27,6 +27,8 @@ import org.apache.log4j.Logger;
 
 import salomon.engine.agent.AbstractAgent;
 import salomon.engine.agent.AgentInfo;
+import salomon.engine.agent.IAgentDecisionComponent;
+import salomon.engine.agent.IAgentProcessingComponent;
 import salomon.engine.agent.IConfigComponent;
 import salomon.engine.agentconfig.AgentConfigInfo;
 import salomon.engine.platform.data.DBMetaData;
@@ -73,7 +75,7 @@ public final class DataIncreaseAgent extends AbstractAgent
         LOGGER.info("DataIncreaseAgent.start()");
         updateConfigComponent();
         int treshold = ((IInteger) ((IStruct) _configComponent.getConfig()).getField(TRESHOLD)).getValue();
-        IDataEngine dataEngine = project.getProjectManager().getSolution().getDataEngine();
+        IDataEngine dataEngine = project.getProjectManager().getDomain().getDataEngine();
 
         int initialRowNo = getAllRowsCount(dataEngine);
         LOGGER.debug("Initial row no: " + initialRowNo);
@@ -126,5 +128,32 @@ public final class DataIncreaseAgent extends AbstractAgent
             IStruct struct = XMLSerializer.deserialize(bis);
             _configComponent.update(struct);
         }
+    }
+
+    public IAgentDecisionComponent getAgentDecisionComponent()
+    {
+        throw new UnsupportedOperationException("Method DataIncreaseAgent.getAgentDecisionComponent() not implemented yet!");
+    }
+
+    public IAgentProcessingComponent getAgentProcessingComponent()
+    {
+        throw new UnsupportedOperationException("Method DataIncreaseAgent.getAgentProcessingComponent() not implemented yet!");
+    }
+
+    public void setAgentDecisionComponent(
+            IAgentDecisionComponent agentDecisionComponent)
+    {
+        throw new UnsupportedOperationException("Method DataIncreaseAgent.setAgentDecisionComponent() not implemented yet!");
+    }
+
+    public void setAgentProcessingComponent(
+            IAgentProcessingComponent agentProcessingComponent)
+    {
+        throw new UnsupportedOperationException("Method DataIncreaseAgent.setAgentProcessingComponent() not implemented yet!");
+    }
+
+    public void start()
+    {
+        throw new UnsupportedOperationException("Method DataIncreaseAgent.start() not implemented yet!");
     }
 }

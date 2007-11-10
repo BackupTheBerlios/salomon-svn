@@ -19,12 +19,13 @@
  * 
  */
 
-package salomon.engine.controller.gui.solution;
+package salomon.engine.controller.gui.domain;
 
 import org.apache.log4j.Logger;
 
-import salomon.engine.solution.SolutionInfo;
-import salomon.engine.solution.SolutionManager;
+import salomon.engine.domain.SolutionInfo;
+import salomon.engine.domain.SolutionManager;
+
 import salomon.platform.exception.PlatformException;
 import salomon.util.gui.validation.IValidator;
 

@@ -19,7 +19,7 @@
  * 
  */
 
-package salomon.engine.solution;
+package salomon.engine.domain;
 
 import java.sql.SQLException;
 
@@ -33,7 +33,7 @@ import salomon.engine.project.IProjectManager;
 import salomon.platform.IDataEngine;
 import salomon.platform.exception.PlatformException;
 
-public final class Solution implements ISolution
+public final class Solution implements IDomain
 {
 
     /**
@@ -78,7 +78,7 @@ public final class Solution implements ISolution
     }
 
     /**
-     * @see salomon.engine.solution.ISolution#getDataEngine()
+     * @see salomon.engine.domain.IDomain#getDataEngine()
      */
     public IDataEngine getDataEngine() throws PlatformException
     {
@@ -96,7 +96,7 @@ public final class Solution implements ISolution
     }
 
     /**
-     * @see salomon.engine.solution.ISolution#getProjectManager()
+     * @see salomon.engine.domain.IDomain#getProjectManager()
      */
     public IProjectManager getProjectManager()
     {
