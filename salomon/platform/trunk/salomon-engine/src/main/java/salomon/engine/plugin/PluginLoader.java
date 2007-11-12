@@ -36,7 +36,6 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 
 import salomon.engine.Config;
-import salomon.engine.controller.gui.common.SearchFileFilter;
 import salomon.plugin.IPlugin;
 
 /**
@@ -115,7 +114,8 @@ public final class PluginLoader
         String fileName = tmpFileName.substring(tmpFileName.lastIndexOf("/") + 1);
         File dir = new File(Config.PLUGINS_DIR);
         LOGGER.info("looking for plugins in: " + dir.getAbsolutePath());
-        File[] plugins = dir.listFiles(new SearchFileFilter("jar", ""));
+        //FIXME:
+        File[] plugins = dir.listFiles(); //new SearchFileFilter("jar", ""));
         for (int i = 0; i < plugins.length; i++) {
             if (plugins[i].getName().equals(fileName)) {
                 LOGGER.info("found in cache: " + plugins[i]);
