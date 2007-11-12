@@ -19,7 +19,7 @@
 
 		<dependency>
 			<groupId>salomon</groupId>
-			<artifactId>salomon-engine</artifactId>
+			<artifactId>salomon-gui-controller</artifactId>
 			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
 

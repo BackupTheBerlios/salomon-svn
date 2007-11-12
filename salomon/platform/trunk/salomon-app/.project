@@ -3,9 +3,10 @@
   <comment>Salomon Application</comment>
   <projects>
     <project>salomon-plugin-api</project>
-    <project>salomon-platform</project>
-    <project>salomon-engine</project>
     <project>salomon-util</project>
+    <project>salomon-engine</project>
+    <project>salomon-gui-controller</project>
+    <project>salomon-platform</project>
   </projects>
   <buildSpec>
     <buildCommand>

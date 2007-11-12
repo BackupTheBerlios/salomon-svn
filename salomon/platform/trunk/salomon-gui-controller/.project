@@ -2,17 +2,21 @@
   <name>salomon-gui-controller</name>
   <comment>Salomon Application</comment>
   <projects>
-    <project>salomon-engine</project>
     <project>salomon-util</project>
-    <project>salomon-plugin-api</project>
     <project>salomon-platform</project>
+    <project>salomon-plugin-api</project>
+    <project>salomon-engine</project>
   </projects>
   <buildSpec>
     <buildCommand>
       <name>org.eclipse.jdt.core.javabuilder</name>
     </buildCommand>
+    <buildCommand>
+      <name>org.springframework.ide.eclipse.core.springbuilder</name>
+    </buildCommand>
   </buildSpec>
   <natures>
+    <nature>org.springframework.ide.eclipse.core.springnature</nature>
     <nature>org.eclipse.jdt.core.javanature</nature>
   </natures>
 </projectDescription>

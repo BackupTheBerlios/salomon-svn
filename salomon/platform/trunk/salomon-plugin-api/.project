@@ -2,8 +2,8 @@
   <name>salomon-plugin-api</name>
   <comment>Salomon Application</comment>
   <projects>
-    <project>salomon-util</project>
     <project>salomon-platform</project>
+    <project>salomon-util</project>
   </projects>
   <buildSpec>
     <buildCommand>

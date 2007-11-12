@@ -10,6 +10,7 @@ import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.apache.log4j.Logger;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import salomon.engine.Config;
 import salomon.engine.Messages;
@@ -245,7 +246,10 @@ public final class Starter
     private void startLocalImpl()
     {
         LOGGER.debug("starting LocalController");
-        _contoroller = (IController) SalomonEngineContext.getBean("localController");
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("SalomonEngineContext.xml");
+
+//        _contoroller = (IController) SalomonEngineContext.getBean("localController");
+        _contoroller = (IController) context.getBean("localController");
         start();
     }
 }
