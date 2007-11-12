@@ -4,8 +4,8 @@
   <projects>
     <project>salomon-util</project>
     <project>salomon-platform</project>
-    <project>salomon-plugin-api</project>
     <project>salomon-engine</project>
+    <project>salomon-plugin-api</project>
   </projects>
   <buildSpec>
     <buildCommand>

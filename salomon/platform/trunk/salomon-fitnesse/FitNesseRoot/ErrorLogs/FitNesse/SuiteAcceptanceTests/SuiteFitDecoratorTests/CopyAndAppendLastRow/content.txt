@@ -1,0 +1,4 @@
+|'''Date: '''|!-1:33:00 PM (CDT) on Saturday, May 19, 2007-!|
+|'''Command: '''|!-java -cp classes fit.FitServer BobsMacbook.local 8080 7-!|
+|'''Exit code: '''|!-0-!|
+|'''Time elapsed: '''|!-0.776 seconds-!|
