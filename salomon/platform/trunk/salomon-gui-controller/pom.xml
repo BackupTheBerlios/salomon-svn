@@ -6,8 +6,8 @@
 		<version>1.0.0-SNAPSHOT</version>
 	</parent>
 	<groupId>salomon</groupId>
-	<artifactId>salomon-gui-controler</artifactId>
-	<name>Salomon GUI Controler</name>
+	<artifactId>salomon-gui-controller</artifactId>
+	<name>Salomon GUI Controller</name>
 	<version>1.0.0-SNAPSHOT</version>
 
 	<dependencies>

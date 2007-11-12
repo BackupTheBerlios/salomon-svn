@@ -1,9 +1,9 @@
 <projectDescription>
-  <name>salomon-gui-controler</name>
+  <name>salomon-gui-controller</name>
   <comment>Salomon Application</comment>
   <projects>
-    <project>salomon-plugin-api</project>
     <project>salomon-util</project>
+    <project>salomon-plugin-api</project>
     <project>salomon-platform</project>
   </projects>
   <buildSpec>
