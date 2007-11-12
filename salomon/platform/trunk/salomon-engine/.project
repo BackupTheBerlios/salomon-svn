@@ -2,9 +2,9 @@
   <name>salomon-engine</name>
   <comment>Salomon Application</comment>
   <projects>
-    <project>salomon-plugin-api</project>
-    <project>salomon-platform</project>
     <project>salomon-util</project>
+    <project>salomon-platform</project>
+    <project>salomon-plugin-api</project>
   </projects>
   <buildSpec>
     <buildCommand>
