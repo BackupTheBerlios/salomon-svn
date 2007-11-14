@@ -39,43 +39,45 @@ import salomon.util.serialization.SimpleStruct;
  */
 public final class Task implements ITask
 {
-    /**
-     * 
-     * @uml.property name="_plugin"
-     * @uml.associationEnd multiplicity="(0 1)"
-     */
+    private static final Logger LOGGER = Logger.getLogger(Task.class);
+
     private ILocalPlugin _plugin;
 
-    /**
-     * 
-     * @uml.property name="_result"
-     * @uml.associationEnd multiplicity="(0 1)"
-     */
     private IResult _result;
 
-    /**
-     * 
-     * @uml.property name="_settings"
-     * @uml.associationEnd multiplicity="(0 1)"
-     */
     private ISettings _settings;
 
-    /**
-     * 
-     * @uml.property name="_taskInfo"
-     * @uml.associationEnd multiplicity="(0 1)"
-     */
-    private TaskInfo _taskInfo;
+    private int _taskNr;
+
+    private String _taskName;
+
+    private Long _taskId;
+
+    protected Task()
+    {
+
+    }
 
     protected Task(DBManager manager)
     {
-        _taskInfo = new TaskInfo(manager);
-        _taskInfo.setStatus(TaskInfo.ACTIVE);
+        //        _taskInfo = new TaskInfo(manager);
+        //        _taskInfo.setStatus(TaskInfo.ACTIVE);
+    }
+
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (obj instanceof Task) {
+            Task task = (Task) obj;
+            return _taskId.equals(task.getTaskId());
+        } else {
+            return false;
+        }
     }
 
     public TaskInfo getInfo() throws PlatformException
     {
-        return _taskInfo;
+        return null;
     }
 
     /**
@@ -107,12 +109,27 @@ public final class Task implements ITask
     }
 
     /**
+     * Returns the taskId.
+     * @return The taskId
+     */
+    public final Long getTaskId()
+    {
+        return _taskId;
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return _taskId.hashCode();
+    }
+
+    /**
      * @param plugin The plugin to set.
      */
     public void setPlugin(ILocalPlugin plugin) throws PlatformException
     {
         _plugin = plugin;
-        _taskInfo.setPluginID(plugin.getInfo().getId());
+        //        _taskInfo.setPluginID(plugin.getInfo().getId());
     }
 
     /**
@@ -124,12 +141,12 @@ public final class Task implements ITask
         _result = result;
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         XMLSerializer.serialize((SimpleStruct) _result, bos);
-        _taskInfo.setResult(bos.toString());
-        if (_result.isSuccessful()) {
-            _taskInfo.setStatus(TaskInfo.FINISHED);
-        } else {
-            _taskInfo.setStatus(TaskInfo.ERROR);
-        }
+        //        _taskInfo.setResult(bos.toString());
+        //        if (_result.isSuccessful()) {
+        //            _taskInfo.setStatus(TaskInfo.FINISHED);
+        //        } else {
+        //            _taskInfo.setStatus(TaskInfo.ERROR);
+        //        }
     }
 
     /**
@@ -141,7 +158,16 @@ public final class Task implements ITask
         _settings = settings;
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         XMLSerializer.serialize((SimpleStruct) _settings, bos);
-        _taskInfo.setSettings(bos.toString());
+        //        _taskInfo.setSettings(bos.toString());
+    }
+
+    /**
+     * Set the value of taskId field.
+     * @param taskId The taskId to set
+     */
+    public final void setTaskId(Long taskId)
+    {
+        _taskId = taskId;
     }
 
     /**
@@ -150,9 +176,42 @@ public final class Task implements ITask
     @Override
     public String toString()
     {
-        return _taskInfo.getName() + " [" + _plugin + "," + _settings + ","
-                + _result + "]";
+        return " [" + _plugin + "," + _settings + "," + _result + "]";
     }
 
-    private static final Logger LOGGER = Logger.getLogger(Task.class);
+    /**
+     * Returns the taskNr.
+     * @return The taskNr
+     */
+    public final int getTaskNr()
+    {
+        return _taskNr;
+    }
+
+    /**
+     * Set the value of taskNr field.
+     * @param taskNr The taskNr to set
+     */
+    public final void setTaskNr(int taskNr)
+    {
+        _taskNr = taskNr;
+    }
+
+    /**
+     * Returns the name.
+     * @return The name
+     */
+    public final String getTaskName()
+    {
+        return _taskName;
+    }
+
+    /**
+     * Set the value of name field.
+     * @param name The name to set
+     */
+    public final void setTaskName(String name)
+    {
+        _taskName = name;
+    }
 } // end Task

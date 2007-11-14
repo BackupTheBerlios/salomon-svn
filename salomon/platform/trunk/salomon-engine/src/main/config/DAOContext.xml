@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!-- ========================= GENERAL DEFINITIONS ========================= -->
+	<!-- Configurer that replaces ${...} placeholders with values from properties files -->
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>jdbc.properties</value>
+			</list>
+		</property>
+	</bean>
+
+	<!-- DAO objects go here -->
+	<bean id="taskDAOTarget" class="salomon.engine.task.TaskDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+
+	<!-- Transactional proxy for the primary business objects -->
+	<bean id="managerTemplate" abstract="true"
+		class="org.springframework.aop.framework.ProxyFactoryBean">
+		<property name="proxyTargetClass">
+			<value>false</value>
+		</property>
+		<property name="interceptorNames">
+			<value>transactionInterceptor</value>
+		</property>
+	</bean>
+
+	<bean id="taskDAO" parent="managerTemplate">
+		<property name="target">
+			<ref local="taskDAOTarget" />
+		</property>
+		<property name="proxyInterfaces">
+			<list>
+				<value>salomon.engine.task.ITaskDAO</value>
+			</list>
+		</property>
+	</bean>
+
+	<!-- TransactionInterceptor -->
+	<bean id="transactionInterceptor"
+		class="org.springframework.transaction.interceptor.TransactionInterceptor">
+		<property name="transactionManager">
+			<ref bean="transactionManager" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_SUPPORTS,readOnly</prop>
+				<prop key="save*">
+					PROPAGATION_REQUIRED,ISOLATION_SERIALIZABLE,timeout_60,-ApplicationException
+				</prop>
+				<prop key="remove*">
+					PROPAGATION_REQUIRED,ISOLATION_SERIALIZABLE,timeout_60,-ApplicationException
+				</prop>
+			</props>
+		</property>
+	</bean>
+
+	<!-- The JNDI DataSource for J2EE environments -->
+	<!--
+		<bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName"><value>java:comp/env/jdbc/beerdb</value></property>
+		</bean>
+	-->
+	<!-- The DBCP DataSource -->
+	<bean id="dataSource"
+		class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<property name="driverClassName">
+			<value>${jdbc.driverClassName}</value>
+		</property>
+		<property name="url">
+			<value>${jdbc.url}</value>
+		</property>
+		<property name="username">
+			<value>${jdbc.username}</value>
+		</property>
+		<property name="password">
+			<value>${jdbc.password}</value>
+		</property>
+	</bean>
+
+	<!-- Hibernate Session Factory Bean -->
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="mappingResources">
+			<list>
+				<value>hibernate-mapping.hbm.xml</value>
+			</list>
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">
+					org.hibernate.dialect.FirebirdDialect
+				</prop>
+				<!--<prop key="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</prop>-->
+				<prop key="hibernate.max_fetch_depth">3</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+			</props>
+		</property>
+		<property name="dataSource">
+			<ref local="dataSource" />
+		</property>
+	</bean>
+
+	<!-- The transactionmanager to use for regular non JTA datasource -->
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="dataSource">
+			<ref local="dataSource" />
+		</property>
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
+</beans>
