@@ -33,7 +33,7 @@ public final class TaskDAO extends HibernateDaoSupport implements ITaskDAO
     /**
      * @see salomon.engine.task.ITaskDAO#save(salomon.engine.task.Task)
      */
-    public void save(Task task)
+    public void save(ITask task)
     {
         getHibernateTemplate().saveOrUpdate(task);
     }
@@ -41,7 +41,7 @@ public final class TaskDAO extends HibernateDaoSupport implements ITaskDAO
     /**
      * @see salomon.engine.task.ITaskDAO#remove(salomon.engine.task.Task)
      */
-    public void remove(Task task)
+    public void remove(ITask task)
     {
         getHibernateTemplate().delete(task);
     }
@@ -50,7 +50,7 @@ public final class TaskDAO extends HibernateDaoSupport implements ITaskDAO
      * @see salomon.engine.task.ITaskDAO#getTasks()
      */
     @SuppressWarnings("unchecked")
-    public Task[] getTasks()
+    public ITask[] getTasks()
     {
         List list = getHibernateTemplate().find("from Task");
         return (Task[]) list.toArray(new Task[list.size()]);
@@ -59,21 +59,21 @@ public final class TaskDAO extends HibernateDaoSupport implements ITaskDAO
     /**
      * @see salomon.engine.task.ITaskDAO#getTask(java.lang.Long)
      */
-    public Task getTask(Long id)
+    public ITask getTask(Long id)
     {
         List list = getHibernateTemplate().find(
                 "from Task t where t.taskId = ?", new Long[]{id});
-        return (Task) (list.size() == 0 ? null : list.get(0));
+        return (ITask) (list.size() == 0 ? null : list.get(0));
 
     }
 
     /**
      * @see salomon.engine.task.ITaskDAO#getTask(java.lang.String)
      */
-    public Task getTask(String taskName)
+    public ITask getTask(String taskName)
     {
         List list = getHibernateTemplate().find(
                 "from Task t where t.taskName = ?", new String[]{taskName});
-        return (Task) (list.size() == 0 ? null : list.get(0));
+        return (ITask) (list.size() == 0 ? null : list.get(0));
     }
 }

@@ -56,12 +56,14 @@ public final class Task implements ITask
     // FIXME: remove it;
     private TaskInfo _taskInfo;
 
-    protected Task()
+    public Task()
     {
 
     }
 
-    protected Task(DBManager manager)
+    // FIXME: make it protected,
+    // it should be accessed via TaskManager
+    public Task(DBManager manager)
     {
         _taskInfo = new TaskInfo(manager);
         _taskInfo.setStatus(TaskInfo.ACTIVE);

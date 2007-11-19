@@ -23,13 +23,13 @@ package salomon.engine.task;
 
 public interface ITaskDAO
 {
-    void save(Task task);
+    void save(ITask task);
 
-    void remove(Task task);
+    void remove(ITask task);
 
-    Task[] getTasks();
+    ITask[] getTasks();
 
-    Task getTask(Long id);
+    ITask getTask(Long id);
 
-    Task getTask(String taskName);
+    ITask getTask(String taskName);
 }

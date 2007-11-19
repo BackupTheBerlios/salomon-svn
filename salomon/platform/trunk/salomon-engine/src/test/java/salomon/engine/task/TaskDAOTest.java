@@ -40,17 +40,17 @@ public class TaskDAOTest extends TestCase
         Task task = new Task(null);
         task.setTaskNr(1);
         taskDAO.save(task);
-        Task removedTask = taskDAO.getTask(task.getTaskId());
+        Task removedTask = (Task) taskDAO.getTask(task.getTaskId());
         assertNotNull(removedTask);
         
         taskDAO.remove(removedTask);
-        removedTask = taskDAO.getTask(task.getTaskId());
+        removedTask = (Task) taskDAO.getTask(task.getTaskId());
         assertNull(removedTask);
     }
 
     public void testGetTasks()
     {
-        Task[] tasks = taskDAO.getTasks();
+        Task[] tasks = (Task[]) taskDAO.getTasks();
         assertNotNull(tasks);
         assertTrue(tasks.length >= 1);
         for (Task task : tasks) {
@@ -63,7 +63,7 @@ public class TaskDAOTest extends TestCase
         Task task = new Task(null);
         task.setTaskNr(2);
         taskDAO.save(task);
-        Task newTask = taskDAO.getTask(task.getTaskId());
+        Task newTask = (Task) taskDAO.getTask(task.getTaskId());
         assertNotNull(newTask);
         assertEquals(2, newTask.getTaskNr());        
     }
@@ -73,7 +73,7 @@ public class TaskDAOTest extends TestCase
         Task task = new Task(null);
         task.setTaskName("test-task");
         taskDAO.save(task);
-        Task newTask = taskDAO.getTask(task.getTaskName());
+        Task newTask = (Task) taskDAO.getTask(task.getTaskName());
         assertNotNull(newTask);
         assertEquals("test-task", newTask.getTaskName());        
     }
