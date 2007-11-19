@@ -53,6 +53,9 @@ public final class Task implements ITask
 
     private Long _taskId;
 
+    // FIXME: remove it;
+    private TaskInfo _taskInfo;
+
     protected Task()
     {
 
@@ -60,8 +63,8 @@ public final class Task implements ITask
 
     protected Task(DBManager manager)
     {
-        //        _taskInfo = new TaskInfo(manager);
-        //        _taskInfo.setStatus(TaskInfo.ACTIVE);
+        _taskInfo = new TaskInfo(manager);
+        _taskInfo.setStatus(TaskInfo.ACTIVE);
     }
 
     @Override
@@ -77,7 +80,7 @@ public final class Task implements ITask
 
     public TaskInfo getInfo() throws PlatformException
     {
-        return null;
+        return _taskInfo;
     }
 
     /**
@@ -129,7 +132,7 @@ public final class Task implements ITask
     public void setPlugin(ILocalPlugin plugin) throws PlatformException
     {
         _plugin = plugin;
-        //        _taskInfo.setPluginID(plugin.getInfo().getId());
+        _taskInfo.setPluginID(plugin.getInfo().getId());
     }
 
     /**
@@ -141,12 +144,12 @@ public final class Task implements ITask
         _result = result;
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         XMLSerializer.serialize((SimpleStruct) _result, bos);
-        //        _taskInfo.setResult(bos.toString());
-        //        if (_result.isSuccessful()) {
-        //            _taskInfo.setStatus(TaskInfo.FINISHED);
-        //        } else {
-        //            _taskInfo.setStatus(TaskInfo.ERROR);
-        //        }
+        _taskInfo.setResult(bos.toString());
+        if (_result.isSuccessful()) {
+            _taskInfo.setStatus(TaskInfo.FINISHED);
+        } else {
+            _taskInfo.setStatus(TaskInfo.ERROR);
+        }
     }
 
     /**
@@ -158,7 +161,7 @@ public final class Task implements ITask
         _settings = settings;
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         XMLSerializer.serialize((SimpleStruct) _settings, bos);
-        //        _taskInfo.setSettings(bos.toString());
+        _taskInfo.setSettings(bos.toString());
     }
 
     /**
