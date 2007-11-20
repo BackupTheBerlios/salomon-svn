@@ -26,6 +26,12 @@
 		</property>
 	</bean>
 
+	<bean id="agentDecisionComponentDAOTarget" class="salomon.engine.agent.AgentDecisionComponentDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+
 	<!-- Transactional proxy for the primary business objects -->
 	<bean id="managerTemplate" abstract="true"
 		class="org.springframework.aop.framework.ProxyFactoryBean">
@@ -55,6 +61,17 @@
 		<property name="proxyInterfaces">
 			<list>
 				<value>salomon.engine.agent.IAgentProcessingComponentDAO</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="agentDecisionComponentDAO" parent="managerTemplate">
+		<property name="target">
+			<ref local="agentDecisionComponentDAOTarget" />
+		</property>
+		<property name="proxyInterfaces">
+			<list>
+				<value>salomon.engine.agent.IAgentDecisionComponentDAO</value>
 			</list>
 		</property>
 	</bean>

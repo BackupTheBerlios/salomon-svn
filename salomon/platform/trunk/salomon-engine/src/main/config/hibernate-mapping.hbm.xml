@@ -28,5 +28,12 @@
         <property name="componentName" column="COMPONENT_NAME"/>
     </class>
 
+    <class name="salomon.engine.agent.AgentDecisionComponent" table="DECISION_COMPONENTS">
+        <id name="componentId" column="COMPONENT_ID">
+			<generator class="native"/>
+        </id>        
+        <property name="componentName" column="COMPONENT_NAME"/>
+    </class>
+
 </hibernate-mapping>
 
