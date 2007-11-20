@@ -32,4 +32,6 @@ public interface IAgent extends IRunnable
     void setAgentProcessingComponent(IAgentProcessingComponent agentProcessingComponent);
     
     IAgentProcessingComponent getAgentProcessingComponent();
+    
+    String getAgentName();
 }

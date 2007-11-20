@@ -156,4 +156,9 @@ public final class DataIncreaseAgent extends AbstractAgent
     {
         throw new UnsupportedOperationException("Method DataIncreaseAgent.start() not implemented yet!");
     }
+
+    public String getAgentName()
+    {
+        throw new UnsupportedOperationException("Method DataIncreaseAgent.getName() not implemented yet!");
+    }
 }

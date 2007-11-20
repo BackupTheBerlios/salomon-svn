@@ -5,35 +5,55 @@
 
 <hibernate-mapping>
 
-    <class name="salomon.engine.task.Task" table="TASKS">
-        <id name="taskId" column="TASK_ID">
-			<generator class="native"/>
-        </id>
-        <property name="taskNr" column="TASK_NR"/>     	
-        <property name="taskName" column="TASK_NAME"/>
-    </class>
+	<class name="salomon.engine.task.Task" table="TASKS">
+		<id name="taskId" column="TASK_ID">
+			<generator class="native" />
+		</id>
+		<property name="taskNr" column="TASK_NR" />
+		<property name="taskName" column="TASK_NAME" />
+	</class>
 
-    <class name="salomon.engine.agent.AgentProcessingComponent" table="PROCESSING_COMPONENTS">
-        <id name="componentId" column="COMPONENT_ID">
-			<generator class="native"/>
-        </id>
-        <!--  many-to-one name="tasks" class="salomon.engine.task.Task" column="TASK_ID"/-->
-        <array name="tasks" table="TASKS" cascade="save-update"
-        	inverse="true">
-        	<key column="component_id" />
-        	<list-index column="task_Nr" />
-        	<one-to-many class="salomon.engine.task.Task" />
-        </array>
-        
-        <property name="componentName" column="COMPONENT_NAME"/>
-    </class>
+	<class name="salomon.engine.agent.AgentProcessingComponent"
+		table="PROCESSING_COMPONENTS">
+		<id name="componentId" column="COMPONENT_ID">
+			<generator class="native" />
+		</id>
+		<array name="tasks" table="TASKS" cascade="save-update"
+			inverse="true">
+			<key column="COMPONENT_ID" />
+			<list-index column="TASK_NR" />
+			<one-to-many class="salomon.engine.task.Task" />
+		</array>
 
-    <class name="salomon.engine.agent.AgentDecisionComponent" table="DECISION_COMPONENTS">
-        <id name="componentId" column="COMPONENT_ID">
-			<generator class="native"/>
-        </id>        
-        <property name="componentName" column="COMPONENT_NAME"/>
-    </class>
+		<property name="componentName" column="COMPONENT_NAME" />
+	</class>
+
+	<class name="salomon.engine.agent.AgentDecisionComponent"
+		table="DECISION_COMPONENTS">
+		<id name="componentId" column="COMPONENT_ID">
+			<generator class="native" />
+		</id>
+		<property name="componentName" column="COMPONENT_NAME" />
+	</class>
+
+	<class name="salomon.engine.agent.Agent" table="AGENTS">
+		<id name="agentId" column="AGENT_ID">
+			<generator class="native" />
+		</id>
+		<property name="agentName" column="AGENT_NAME" />
+		
+		<many-to-one name="agentProcessingComponent"
+			class="salomon.engine.agent.AgentProcessingComponent"
+			cascade="save-update"
+			lazy="false"
+			column="PROCESSING_COMPONENT_ID" unique="true" />
+			
+		<many-to-one name="agentDecisionComponent"
+			class="salomon.engine.agent.AgentDecisionComponent"
+			cascade="save-update"
+			lazy="false"
+			column="DECISION_COMPONENT_ID" unique="true" />
+	</class>
 
 </hibernate-mapping>
 
