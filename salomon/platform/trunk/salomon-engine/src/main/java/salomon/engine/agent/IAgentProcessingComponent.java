@@ -21,10 +21,23 @@
 
 package salomon.engine.agent;
 
+import salomon.engine.task.ITask;
+import salomon.engine.task.ITaskRunner;
+
 /**
  * 
  */
 public interface IAgentProcessingComponent
 {
+    void addTask(ITask task);
 
+    void removeTask(ITask task);
+
+    ITask[] getTasks();
+
+    ITask getTask(long taskId);
+
+    ITask getTask(String taskName);
+    
+    ITaskRunner getRunner();
 }

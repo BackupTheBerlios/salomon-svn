@@ -1,7 +1,7 @@
 /*
- * Copyright (C) 2007 Salomon Team
+ * Copyright (C) 2007 salomon-engine Team
  *
- * This file is part of Salomon.
+ * This file is part of salomon-engine.
  *
  * salomon-engine is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -14,19 +14,25 @@
  * Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public
- * License along with Salomon; if not, write to the Free Software
+ * License along with salomon-engine; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * 
  */
 
 package salomon.engine.agent;
 
-
-public interface IAgentDecisionComponent extends IRunnable
+/**
+ * 
+ */
+public interface IAgentProcessingComponentDAO
 {
-    IConfigComponent getConfigurationComponent();
-    
-    void setAgentProcessingComponent(IAgentProcessingComponent agentProcessingComponent);
-    
-    String getComponentName();
+    void save(IAgentProcessingComponent component);
+
+    void remove(IAgentProcessingComponent component);
+
+    IAgentProcessingComponent[] getAgentProcessingComponents();
+
+    IAgentProcessingComponent getAgentProcessingComponent(Long id);
+
+    IAgentProcessingComponent getAgentProcessingComponent(String componentName);
 }

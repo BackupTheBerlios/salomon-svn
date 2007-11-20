@@ -13,5 +13,20 @@
         <property name="taskName" column="TASK_NAME"/>
     </class>
 
+    <class name="salomon.engine.agent.AgentProcessingComponent" table="PROCESSING_COMPONENTS">
+        <id name="componentId" column="COMPONENT_ID">
+			<generator class="native"/>
+        </id>
+        <!--  many-to-one name="tasks" class="salomon.engine.task.Task" column="TASK_ID"/-->
+        <array name="tasks" table="TASKS" cascade="save-update"
+        	inverse="true">
+        	<key column="component_id" />
+        	<list-index column="task_Nr" />
+        	<one-to-many class="salomon.engine.task.Task" />
+        </array>
+        
+        <property name="componentName" column="COMPONENT_NAME"/>
+    </class>
+
 </hibernate-mapping>
 

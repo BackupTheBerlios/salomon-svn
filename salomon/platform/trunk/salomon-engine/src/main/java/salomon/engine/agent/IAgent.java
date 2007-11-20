@@ -22,9 +22,6 @@
 
 package salomon.engine.agent;
 
-import salomon.engine.agentconfig.IAgentConfig;
-import salomon.engine.project.IProject;
-import salomon.platform.IInfo;
 
 public interface IAgent extends IRunnable
 {    
