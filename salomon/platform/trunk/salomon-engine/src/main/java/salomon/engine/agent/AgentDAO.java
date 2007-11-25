@@ -25,9 +25,6 @@ import java.util.List;
 
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
-import salomon.engine.task.ITask;
-import salomon.engine.task.Task;
-
 /**
  * 
  */
