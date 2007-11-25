@@ -22,9 +22,12 @@
 package salomon.engine.agent;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
+import salomon.engine.project.IProject;
+import salomon.engine.project.Project;
 import salomon.engine.task.ITask;
 import salomon.engine.task.ITaskManager;
 import salomon.engine.task.ITaskRunner;
@@ -39,11 +42,14 @@ public class AgentProcessingComponent implements IAgentProcessingComponent
 
     private String _componentName;
 
-    private List<Task> _tasks;
+    private TaskComparator _taskComparator;
+
+    private List<Task> _taskList;
 
     protected AgentProcessingComponent()
     {
-        _tasks = new ArrayList<Task>();
+        _taskList = new ArrayList<Task>();
+        _taskComparator = new TaskComparator();
     }
 
     /**
@@ -51,7 +57,8 @@ public class AgentProcessingComponent implements IAgentProcessingComponent
      */
     public void addTask(ITask task)
     {
-        _tasks.add((Task) task);
+        ((Task) task).setAgentProcessingComponent(this);
+        _taskList.add((Task) task);
     }
 
     @Override
@@ -84,25 +91,38 @@ public class AgentProcessingComponent implements IAgentProcessingComponent
 
     public ITaskRunner getRunner()
     {
-        throw new UnsupportedOperationException("Method AgentProcessingComponent.getRunner() not implemented yet!");
+        throw new UnsupportedOperationException(
+                "Method AgentProcessingComponent.getRunner() not implemented yet!");
     }
 
     /**
      * @see salomon.engine.agent.IAgentProcessingComponent#getTask(long)
      */
-    public Task getTask(long taskId)
+    public ITask getTask(long taskId)
     {
-        throw new UnsupportedOperationException(
-                "Method AgentProcessingComponent.getTask() not implemented yet!");
+        ITask task = null;
+        for (Task t : _taskList) {
+            if (taskId == t.getTaskId()) {
+                task = t;
+                break;
+            }
+        }
+        return task;
     }
 
     /**
      * @see salomon.engine.agent.IAgentProcessingComponent#getTask(java.lang.String)
      */
-    public Task getTask(String taskName)
+    public ITask getTask(String taskName)
     {
-        throw new UnsupportedOperationException(
-                "Method AgentProcessingComponent.getTask() not implemented yet!");
+        ITask task = null;
+        for (Task t : _taskList) {
+            if (taskName.equals(t.getTaskName())) {
+                task = t;
+                break;
+            }
+        }
+        return task;
     }
 
     /**
@@ -119,7 +139,9 @@ public class AgentProcessingComponent implements IAgentProcessingComponent
      */
     public Task[] getTasks()
     {
-        return _tasks.toArray(new Task[_tasks.size()]);
+        // make sure the list of tasks is sorted
+        Collections.sort(_taskList, _taskComparator);
+        return _taskList.toArray(new Task[_taskList.size()]);
     }
 
     @Override
@@ -133,8 +155,7 @@ public class AgentProcessingComponent implements IAgentProcessingComponent
      */
     public void removeTask(ITask task)
     {
-        throw new UnsupportedOperationException(
-                "Method AgentProcessingComponent.removeTask() not implemented yet!");
+        _taskList.remove(task);
     }
 
     /**
@@ -156,21 +177,50 @@ public class AgentProcessingComponent implements IAgentProcessingComponent
     }
 
     /**
-     * Set the value of tasks field.
-     * @param tasks The tasks to set
+     * Returns the taskList.
+     * @return The taskList
      */
-    public void setTasks(Task[] tasks)
+    // used by Hibernate only
+    @SuppressWarnings("unused")
+    private List<Task> getTaskList()
     {
-        _tasks = Arrays.asList(tasks);
+        // make sure the list of tasks is sorted
+        Collections.sort(_taskList, _taskComparator);
+        return _taskList;
     }
 
     /**
      * Set the value of _componentId field.
      * @param _componentId The _componentId to set
      */
+    //  used by Hibernate only
     @SuppressWarnings("unused")
     private void setComponentId(Long componentId)
     {
         _componentId = componentId;
+    }
+
+    /**
+     * Set the value of tasks field.
+     * @param tasks The tasks to set
+     */
+    // used by Hibernate only
+    @SuppressWarnings("unused")
+    private void setTaskList(List<Task> tasks)
+    {
+        _taskList = tasks;
+    }
+
+    /**
+     * Comparator used to mantain the order of tasks in the collection.
+     */
+    private class TaskComparator implements Comparator<Task>
+    {
+        public int compare(Task task1, Task task2)
+        {
+            int task1Nr = task1.getTaskNr();
+            int task2Nr = task2.getTaskNr();
+            return (task1Nr < task2Nr ? -1 : (task1Nr == task2Nr ? 0 : 1));
+        }
     }
 }

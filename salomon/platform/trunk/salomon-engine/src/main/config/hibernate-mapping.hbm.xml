@@ -9,6 +9,10 @@
 		<id name="taskId" column="TASK_ID">
 			<generator class="native" />
 		</id>
+
+		<many-to-one name="agentProcessingComponent"
+			column="COMPONENT_ID" not-null="true" insert="true" update="true" />
+
 		<property name="taskNr" column="TASK_NR" />
 		<property name="taskName" column="TASK_NAME" />
 	</class>
@@ -18,12 +22,13 @@
 		<id name="componentId" column="COMPONENT_ID">
 			<generator class="native" />
 		</id>
-		<array name="tasks" table="TASKS" cascade="save-update"
-			inverse="true">
+		
+		<list name="taskList" table="TASKS" lazy="false"
+			cascade="save-update">
 			<key column="COMPONENT_ID" />
 			<list-index column="TASK_NR" />
 			<one-to-many class="salomon.engine.task.Task" />
-		</array>
+		</list>
 
 		<property name="componentName" column="COMPONENT_NAME" />
 	</class>
@@ -42,8 +47,9 @@
 		</id>
 		<property name="agentName" column="AGENT_NAME" />
 
-		<many-to-one name="project" class="salomon.engine.project.Project"
-			column="PROJECT_ID" not-null="true" />
+		<many-to-one name="project"
+			class="salomon.engine.project.Project" column="PROJECT_ID"
+			not-null="true" />
 
 		<many-to-one name="agentProcessingComponent"
 			class="salomon.engine.agent.AgentProcessingComponent"
@@ -63,8 +69,8 @@
 		<many-to-one name="domain" class="salomon.engine.domain.Domain"
 			column="DOMAIN_ID" not-null="true" />
 
-		<set name="agentSet" inverse="true" table="AGENTS"
-			lazy="false" cascade="all">
+		<set name="agentSet" inverse="true" table="AGENTS" lazy="false"
+			cascade="all">
 			<key column="PROJECT_ID" />
 			<one-to-many class="salomon.engine.agent.Agent" />
 		</set>

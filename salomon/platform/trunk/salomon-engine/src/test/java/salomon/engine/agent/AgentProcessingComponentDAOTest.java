@@ -25,6 +25,7 @@ import java.util.Arrays;
 
 import junit.framework.TestCase;
 import salomon.engine.DAOContext;
+import salomon.engine.task.ITask;
 import salomon.engine.task.Task;
 
 /**
@@ -39,11 +40,12 @@ public class AgentProcessingComponentDAOTest extends TestCase
      */
     public void testGetAgentProcessingComponents()
     {
+        AgentProcessingComponent comp = createComponent();
+        componentDAO.save(comp);
+
         IAgentProcessingComponent[] components = componentDAO.getAgentProcessingComponents();
         assertNotNull(components);
-        for (IAgentProcessingComponent comp : components) {
-            System.out.println(comp);
-        }        
+        assertTrue(components.length >= 1);
     }
 
     /**
@@ -51,13 +53,7 @@ public class AgentProcessingComponentDAOTest extends TestCase
      */
     public void testGetAgentProcessingComponentString()
     {
-        AgentProcessingComponent comp = new AgentProcessingComponent();
-        comp.setComponentName("Test-to-get");
-        Task task = new Task(null);
-        task.setTaskNr(1);
-        task.setTaskName("component-to-get-task");
-        comp.addTask(task);
-
+        AgentProcessingComponent comp = createComponent();
         componentDAO.save(comp);
 
         AgentProcessingComponent inserted = (AgentProcessingComponent) componentDAO.getAgentProcessingComponent(comp.getComponentName());
@@ -70,12 +66,8 @@ public class AgentProcessingComponentDAOTest extends TestCase
      */
     public void testRemove()
     {
-        AgentProcessingComponent comp = new AgentProcessingComponent();
-        comp.setComponentName("Test-to-remove");
-        Task task = new Task(null);
-        task.setTaskNr(1);
-        task.setTaskName("component-to-remove-task");
-        comp.addTask(task);
+        AgentProcessingComponent comp = createComponent();
+        comp.setComponentName("component-to-remove");
 
         componentDAO.save(comp);
         AgentProcessingComponent removed = (AgentProcessingComponent) componentDAO.getAgentProcessingComponent(comp.getComponentId());
@@ -91,18 +83,66 @@ public class AgentProcessingComponentDAOTest extends TestCase
      */
     public void testSave()
     {
+        AgentProcessingComponent comp = createComponent();
+        componentDAO.save(comp);
+
+        AgentProcessingComponent inserted = (AgentProcessingComponent) componentDAO.getAgentProcessingComponent(comp.getComponentId());
+        assertEquals(comp.getComponentName(), inserted.getComponentName());
+    }
+
+    public void testSaveWithAgents()
+    {
         AgentProcessingComponent comp = new AgentProcessingComponent();
         comp.setComponentName("Test-name");
-        Task task = new Task(null);
-        task.setTaskNr(1);
-        task.setTaskName("component-task");
-        comp.addTask(task);
+
+        // add tasks to Agent
+        Task task1 = new Task();
+        task1.setTaskName("task1");
+        task1.setTaskNr(2);
+
+        Task task2 = new Task();
+        task2.setTaskName("task2");
+        task2.setTaskNr(1);
+
+        Task task3 = new Task();
+        task3.setTaskName("task3");
+        task3.setTaskNr(0);
+
+        comp.addTask(task1);
+        comp.addTask(task2);
+        comp.addTask(task3);
 
         componentDAO.save(comp);
 
         AgentProcessingComponent inserted = (AgentProcessingComponent) componentDAO.getAgentProcessingComponent(comp.getComponentId());
         assertEquals(comp.getComponentName(), inserted.getComponentName());
-        Arrays.equals(comp.getTasks(), inserted.getTasks());
+        Task[] tasks = inserted.getTasks();
+        assertNotNull(tasks);
+        assertEquals(3, tasks.length);
+        // check the order of tasks
+        assertEquals("task3", tasks[0].getTaskName());
+        assertEquals("task2", tasks[1].getTaskName());
+        assertEquals("task1", tasks[2].getTaskName());
+
+        // test getting tasks by id
+        ITask insertedTask = inserted.getTask(task1.getTaskId());
+        assertNotNull(insertedTask);
+        assertEquals(task1.getTaskName(), insertedTask.getTaskName());
+
+        // test getting tasks by id
+        insertedTask = inserted.getTask(task1.getTaskName());
+        assertNotNull(insertedTask);
+        assertEquals(task1.getTaskName(), insertedTask.getTaskName());
     }
 
+    private AgentProcessingComponent createComponent()
+    {
+        AgentProcessingComponent comp = new AgentProcessingComponent();
+        comp.setComponentName("test-component");
+        Task task = new Task(null);
+        task.setTaskNr(1);
+        task.setTaskName("task");
+        comp.addTask(task);
+        return comp;
+    }
 }

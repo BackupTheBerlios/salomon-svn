@@ -81,5 +81,6 @@ public interface ITask
      * @uml.property name="settings"
      */
     void setSettings(ISettings settings) throws PlatformException;
-
+    
+    String getTaskName();
 }

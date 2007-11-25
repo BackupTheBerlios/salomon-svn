@@ -25,6 +25,7 @@ import java.io.ByteArrayOutputStream;
 
 import org.apache.log4j.Logger;
 
+import salomon.engine.agent.AgentProcessingComponent;
 import salomon.engine.database.DBManager;
 import salomon.engine.platform.serialization.XMLSerializer;
 import salomon.engine.plugin.ILocalPlugin;
@@ -40,6 +41,8 @@ import salomon.util.serialization.SimpleStruct;
 public final class Task implements ITask
 {
     private static final Logger LOGGER = Logger.getLogger(Task.class);
+
+    private AgentProcessingComponent _agentProcessingComponent;
 
     private ILocalPlugin _plugin;
 
@@ -78,6 +81,15 @@ public final class Task implements ITask
         } else {
             return false;
         }
+    }
+
+    /**
+     * Returns the agentProcessingComponent.
+     * @return The agentProcessingComponent
+     */
+    public AgentProcessingComponent getAgentProcessingComponent()
+    {
+        return _agentProcessingComponent;
     }
 
     public TaskInfo getInfo() throws PlatformException
@@ -144,6 +156,16 @@ public final class Task implements ITask
     public int hashCode()
     {
         return _taskId.hashCode();
+    }
+
+    /**
+     * Set the value of agentProcessingComponent field.
+     * @param agentProcessingComponent The agentProcessingComponent to set
+     */
+    public void setAgentProcessingComponent(
+            AgentProcessingComponent agentProcessingComponent)
+    {
+        _agentProcessingComponent = agentProcessingComponent;
     }
 
     /**

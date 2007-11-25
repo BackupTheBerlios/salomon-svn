@@ -32,7 +32,9 @@ public class TaskDAOTest extends TestCase
     {
         Task task = new Task(null);
         taskDAO.save(task);
-        System.out.println("Task inserted: " + task.getTaskId());
+        
+        ITask inserted = taskDAO.getTask(task.getTaskId());
+        assertNotNull(inserted);
     }
 
     public void testRemove()
@@ -53,19 +55,6 @@ public class TaskDAOTest extends TestCase
         Task[] tasks = (Task[]) taskDAO.getTasks();
         assertNotNull(tasks);
         assertTrue(tasks.length >= 1);
-        for (Task task : tasks) {
-            System.out.println(task);
-        }
-    }
-
-    public void testGetTaskLong()
-    {
-        Task task = new Task(null);
-        task.setTaskNr(2);
-        taskDAO.save(task);
-        Task newTask = (Task) taskDAO.getTask(task.getTaskId());
-        assertNotNull(newTask);
-        assertEquals(2, newTask.getTaskNr());        
     }
     
     public void testGetTaskString()
