@@ -21,9 +21,8 @@
 
 package salomon.engine.domain;
 
-import salomon.engine.project.IProjectManager;
+import salomon.engine.project.IProject;
 import salomon.platform.IDataEngine;
-import salomon.platform.IInfo;
 import salomon.platform.exception.PlatformException;
 
 /**
@@ -32,9 +31,17 @@ import salomon.platform.exception.PlatformException;
  */
 public interface IDomain
 {
-    IInfo getInfo() throws PlatformException;
+    void addProject(IProject agent);
 
     IDataEngine getDataEngine() throws PlatformException;
 
-    IProjectManager getProjectManager() throws PlatformException;
+    String getDomainName();
+
+    IProject getProject(long projectId);
+
+    IProject getProject(String projectName);
+
+    IProject[] getProjects();
+
+    void removeProject(IProject project);
 }

@@ -114,9 +114,10 @@ public final class ProjectManager implements IProjectManager
         _currentProject = new Project(_managerEngine, _dbManager);
         // FIXME - after cascade model adding, method _solution.getInfo().getSolutionID()
         // should be used instead
-        Solution solution = (Solution) _managerEngine.getSolutionManager().getCurrentSolution();
-        ((Project) _currentProject).getInfo().setSolutionID(
-                solution.getInfo().getId());
+        //FIXME:
+//        Solution solution = (Solution) _managerEngine.getSolutionManager().getCurrentSolution();
+//        ((Project) _currentProject).getInfo().setSolutionID(
+//                solution.getInfo().getId());
         return _currentProject;
     }
 
@@ -214,9 +215,10 @@ public final class ProjectManager implements IProjectManager
     {
         SQLSelect select = new SQLSelect();
         select.addTable(ProjectInfo.TABLE_NAME);
-        select.addCondition(
-                "solution_id =",
-                _managerEngine.getSolutionManager().getCurrentSolution().getInfo().getId());
+        //FIXME:
+//        select.addCondition(
+//                "solution_id =",
+//                _managerEngine.getSolutionManager().getCurrentSolution().getInfo().getId());
 
         ResultSet resultSet = null;
 
@@ -242,7 +244,10 @@ public final class ProjectManager implements IProjectManager
 
     public IDomain getDomain() throws PlatformException
     {
-        return _managerEngine.getSolutionManager().getCurrentSolution();
+//        return _managerEngine.getSolutionManager().getCurrentSolution();
+        //FIXME:
+        throw new UnsupportedOperationException(
+                "Method ProjectManager.getDomain() not implemented yet!");
     }
 
     public boolean removeAll() throws PlatformException

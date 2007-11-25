@@ -59,5 +59,12 @@
 		</id>
 		<property name="projectName" column="PROJECT_NAME" />
 	</class>
+	
+	<class name="salomon.engine.domain.Domain" table="DOMAINS">
+		<id name="domainId" column="DOMAIN_ID">
+			<generator class="native" />
+		</id>
+		<property name="domainName" column="DOMAIN_NAME" />
+	</class>	
 </hibernate-mapping>
 

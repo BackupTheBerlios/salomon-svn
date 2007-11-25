@@ -33,7 +33,8 @@ import salomon.engine.project.IProjectManager;
 import salomon.platform.IDataEngine;
 import salomon.platform.exception.PlatformException;
 
-public final class Solution implements IDomain
+//FIXME: merge with Domain
+public final class Solution 
 {
 
     /**
@@ -65,7 +66,7 @@ public final class Solution implements IDomain
     private SolutionInfo _solutionInfo;
 
     /**
-     * Constructor should be used only by createSolution() in SolutionManager.
+     * Constructor should be used only by createSolution() in DomainManager.
      *  
      * @param managerEngine
      * @throws PlatformException 

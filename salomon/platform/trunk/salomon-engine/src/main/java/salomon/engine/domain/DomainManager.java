@@ -35,17 +35,17 @@ import salomon.platform.exception.DBException;
 import salomon.platform.exception.PlatformException;
 import salomon.plugin.IPlatformUtil;
 
-public final class SolutionManager implements IDomainManager
+public final class DomainManager implements IDomainManager
 {
 
-    private static final Logger LOGGER = Logger.getLogger(SolutionManager.class);
+    private static final Logger LOGGER = Logger.getLogger(DomainManager.class);
 
     /**
      * 
      * @uml.property name="_currentSolution"
      * @uml.associationEnd multiplicity="(0 1)"
      */
-    private IDomain _currentSolution;
+    private IDomain _currentDomain;
 
     /**
      * 
@@ -61,7 +61,7 @@ public final class SolutionManager implements IDomainManager
      */
     private IManagerEngine _managerEngine;
 
-    public SolutionManager(IManagerEngine managerEngine, DBManager manager)
+    public DomainManager(IManagerEngine managerEngine, DBManager manager)
     {
         _managerEngine = managerEngine;
         _dbManager = manager;
@@ -69,42 +69,46 @@ public final class SolutionManager implements IDomainManager
 
     /**
      * @throws PlatformException 
-     * @see salomon.engine.domain.IDomainManager#addSolution(salomon.platform.solution.IDomain)
+     * @see salomon.engine.domain.IDomainManager#addDomain(salomon.platform.domain.IDomain)
      */
-    public void addSolution(IDomain solution) throws PlatformException
+    public void addDomain(IDomain domain) throws PlatformException
     {
         try {
-            SolutionInfo solutionInfo = (SolutionInfo) solution.getInfo();
-
-            // saving solution
-            solutionInfo.save();
-            _dbManager.commit();
+            //FIXME:
+//            DomainInfo domainInfo = (DomainInfo) domain.getInfo();
+//
+//            // saving domain
+//            domainInfo.save();
+//            _dbManager.commit();
 
         } catch (Exception e) {
             _dbManager.rollback();
             LOGGER.fatal("", e);
             throw new PlatformException(e.getLocalizedMessage());
         }
-        _currentSolution = solution;
+        _currentDomain = domain;
     }
 
     /**
-     * @see salomon.engine.domain.IDomainManager#createSolution()
+     * @see salomon.engine.domain.IDomainManager#createDomain()
      */
-    public IDomain createSolution() throws PlatformException
+    public IDomain createDomain() throws PlatformException
     {
-        IDomain result = new Solution((ManagerEngine) _managerEngine,
-                _dbManager);
-        _currentSolution = result;
-        return result;
+//        IDomain result = new Domain((ManagerEngine) _managerEngine,
+//                _dbManager);
+//        _currentDomain = result;
+//        return result;
+        //FIXME;
+        throw new UnsupportedOperationException(
+                "Method DomainManager.createDomain() not implemented yet!");
     }
 
-    public boolean exists(String solutionName)
+    public boolean exists(String domainName)
     {
         boolean exists = false;
         SQLSelect select = new SQLSelect();
-        select.addTable(SolutionInfo.TABLE_NAME);
-        select.addCondition("solution_name =", solutionName);
+//FIXME:        select.addTable(DomainInfo.TABLE_NAME);
+        select.addCondition("domain_name =", domainName);
         try {
             exists = _dbManager.existsSelect(select);
         } catch (SQLException e) {
@@ -113,9 +117,9 @@ public final class SolutionManager implements IDomainManager
         return exists;
     }
 
-    public IDomain getCurrentSolution() throws PlatformException
+    public IDomain getCurrentDomain() throws PlatformException
     {
-        return _currentSolution;
+        return _currentDomain;
     }
 
     public DBManager getDBManager()
@@ -130,22 +134,22 @@ public final class SolutionManager implements IDomainManager
 
     /**
      * @throws PlatformException 
-     * @see salomon.engine.domain.IDomainManager#getSolution(java.lang.String)
+     * @see salomon.engine.domain.IDomainManager#getDomain(java.lang.String)
      */
-    public IDomain getSolution(int id) throws PlatformException
+    public IDomain getDomain(int id) throws PlatformException
     {
-        IDomain solution = this.createSolution();
+        IDomain domain = this.createDomain();
         // loading plugin information
         // building query
         SQLSelect select = new SQLSelect();
-        select.addTable(SolutionInfo.TABLE_NAME);
-        select.addCondition("solution_id =", id);
+//FIXME:        select.addTable(DomainInfo.TABLE_NAME);
+        select.addCondition("domain_id =", id);
         ResultSet resultSet = null;
         try {
             resultSet = _dbManager.select(select);
             resultSet.next();
-            // loading solution
-            ((Solution) solution).getInfo().load(resultSet);
+            // loading domain
+            //FIXME:((Domain) domain).getInfo().load(resultSet);
 
             // one row should be found, if found more, the first is got
             if (resultSet.next()) {
@@ -157,44 +161,44 @@ public final class SolutionManager implements IDomainManager
             throw new DBException(e.getLocalizedMessage());
         }
 
-        LOGGER.debug("solution: " + solution);
-        LOGGER.info("Solution successfully loaded.");
+        LOGGER.debug("domain: " + domain);
+        LOGGER.info("Domain successfully loaded.");
 
-        // setting current solution
-        _currentSolution = solution;
-        return _currentSolution;
+        // setting current domain
+        _currentDomain = domain;
+        return _currentDomain;
     }
 
     /**
      * @throws PlatformException 
-     * @see salomon.engine.domain.IDomainManager#getSolutions()
+     * @see salomon.engine.domain.IDomainManager#getDomains()
      */
-    public IDomain[] getSolutions() throws PlatformException
+    public IDomain[] getDomains() throws PlatformException
     {
 
         SQLSelect select = new SQLSelect();
-        select.addTable(SolutionInfo.TABLE_NAME);
+        //FIXME: select.addTable(DomainInfo.TABLE_NAME);
         // executing query
         ResultSet resultSet = null;
 
-        ArrayList<IDomain> solutionsArrayList = new ArrayList<IDomain>();
+        ArrayList<IDomain> domainsArrayList = new ArrayList<IDomain>();
 
         try {
             resultSet = _dbManager.select(select);
             while (resultSet.next()) {
-                IDomain solution = this.createSolution();
-                solution.getInfo().load(resultSet);
-                solutionsArrayList.add(solution);
+                IDomain domain = this.createDomain();
+                //FIXME: domain.getInfo().load(resultSet);
+                domainsArrayList.add(domain);
             }
         } catch (Exception e) {
             LOGGER.fatal("", e);
             throw new DBException(e.getLocalizedMessage());
         }
 
-        Solution[] solutionsArray = new Solution[solutionsArrayList.size()];
+        Domain[] domainsArray = new Domain[domainsArrayList.size()];
 
-        solutionsArray = solutionsArrayList.toArray(solutionsArray);
-        return solutionsArray;
+        domainsArray = domainsArrayList.toArray(domainsArray);
+        return domainsArray;
     }
 
 }

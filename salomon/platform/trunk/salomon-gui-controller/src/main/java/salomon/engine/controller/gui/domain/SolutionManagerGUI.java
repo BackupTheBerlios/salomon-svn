@@ -63,7 +63,7 @@ import salomon.engine.domain.IDomain;
 import salomon.engine.domain.IDomainManager;
 import salomon.engine.domain.Solution;
 import salomon.engine.domain.SolutionInfo;
-import salomon.engine.domain.SolutionManager;
+import salomon.engine.domain.DomainManager;
 import salomon.engine.domain.event.SolutionEvent;
 import salomon.engine.domain.event.SolutionListener;
 import salomon.engine.plugin.PlatformUtil;
@@ -122,10 +122,10 @@ public final class SolutionManagerGUI
 
     /**
      * 
-     * @uml.property name="_solutionManager"
+     * @uml.property name="_domainManager"
      * @uml.associationEnd multiplicity="(0 1)"
      */
-    private SolutionManager _solutionManager;
+    private DomainManager _domainManager;
 
     private Solution[] _solutions;
 
@@ -151,7 +151,7 @@ public final class SolutionManagerGUI
      */
     public SolutionManagerGUI(IDomainManager solutionManager)
     {
-        _solutionManager = (SolutionManager) solutionManager;
+        _domainManager = (DomainManager) solutionManager;
         _solutionListeners = new LinkedList<SolutionListener>();
         initComponents();
     }
@@ -165,7 +165,7 @@ public final class SolutionManagerGUI
     {
         IDomain solution = null;
         try {
-            solution = _solutionManager.getCurrentSolution();
+            solution = _domainManager.getCurrentSolution();
             setSolutionProperties(solution);
 
             // informing listeners
@@ -233,9 +233,9 @@ public final class SolutionManagerGUI
      * Returns the solutionManager.
      * @return The solutionManager
      */
-    public SolutionManager getSolutionManager()
+    public DomainManager getSolutionManager()
     {
-        return _solutionManager;
+        return _domainManager;
     }
 
     public JPanel getSolutionsPanel()
@@ -291,10 +291,10 @@ public final class SolutionManagerGUI
     public void newSolution()
     {
         try {
-            IDomain solution = _solutionManager.createSolution();
+            IDomain solution = _domainManager.createSolution();
             if (setSolutionProperties(solution)) {
-                _solutionManager.addSolution(solution);
-                _solutions = (Solution[]) ((SolutionManager) _solutionManager).getSolutions();
+                _domainManager.addSolution(solution);
+                _solutions = (Solution[]) ((DomainManager) _domainManager).getSolutions();
                 _comboSolutionList.addItem(solution);
                 _comboSolutionList.setSelectedItem(solution);
                 _comboSolutionList.repaint();
@@ -336,7 +336,7 @@ public final class SolutionManagerGUI
             // FIXME - do it in better way
             Solution solution = null;
             try {
-                solution = (Solution) _solutionManager.getSolution(solutionID);
+                solution = (Solution) _domainManager.getSolution(solutionID);
                 // forcing connecting to external database
                 try {
                     solution.getDataEngine();
@@ -373,7 +373,7 @@ public final class SolutionManagerGUI
     public void saveSolution()
     {
         try {
-            Solution solution = (Solution) _solutionManager.getCurrentSolution();
+            Solution solution = (Solution) _domainManager.getCurrentSolution();
             // setting solution name if neccessary
             // TODO: remove this checking, make user to enter solution name
             // while
@@ -418,7 +418,7 @@ public final class SolutionManagerGUI
                     Messages.getString("TIT_SOLUTIONS"));
             _solutionViewerFrame.getContentPane().add(
                     new SolutionSpread(
-                            ((SolutionManager) _solutionManager).getDBManager()));
+                            ((DomainManager) _domainManager).getDBManager()));
             _solutionViewerFrame.pack();
         }
         _solutionViewerFrame.setLocation(Utils.getCenterLocation(_solutionViewerFrame));
@@ -487,7 +487,7 @@ public final class SolutionManagerGUI
     {
         if (_comboSolutionList == null) {
             try {
-                _solutions = (Solution[]) ((SolutionManager) _solutionManager).getSolutions();
+                _solutions = (Solution[]) ((DomainManager) _domainManager).getSolutions();
                 _comboSolutionList = new JComboBox(_solutions);
             } catch (Exception e) {
                 LOGGER.fatal("", e);
@@ -555,8 +555,8 @@ public final class SolutionManagerGUI
             // validation        
             SolutionModel solutionModel = new SolutionModel();
             SolutionValidator solutionValidator = new SolutionValidator(
-                    solutionModel, _solutionManager);
-            PlatformUtil platformUtil = (PlatformUtil) _solutionManager.getPlaftormUtil();
+                    solutionModel, _domainManager);
+            PlatformUtil platformUtil = (PlatformUtil) _domainManager.getPlaftormUtil();
             IValidationModel validationModel = platformUtil.getValidationModel(solutionValidator);
             IComponentFactory componentFactory = validationModel.getComponentFactory();
 
@@ -613,7 +613,7 @@ public final class SolutionManagerGUI
             solution.getInfo().setPath(_txtDBPath.getText());
             solution.getInfo().setUser(_txtUsername.getText());
             solution.getInfo().setPasswd(_txtPasswd.getText());
-            _solutionManager.addSolution(iSolution);
+            _domainManager.addSolution(iSolution);
             approved = true;
         }
         return approved;

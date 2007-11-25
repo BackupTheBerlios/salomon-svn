@@ -24,7 +24,7 @@ package salomon.engine.controller.gui.domain;
 import org.apache.log4j.Logger;
 
 import salomon.engine.domain.SolutionInfo;
-import salomon.engine.domain.SolutionManager;
+import salomon.engine.domain.DomainManager;
 
 import salomon.platform.exception.PlatformException;
 import salomon.util.gui.validation.IValidator;
@@ -41,19 +41,19 @@ public class SolutionValidator implements IValidator
     // keeps the old value
     private SolutionInfo _solutionInfo;
 
-    private SolutionManager _solutionManager;
+    private DomainManager _domainManager;
 
     private SolutionModel _solutionModel;
 
     /**
-     * @param solutionManager
+     * @param domainManager
      */
     public SolutionValidator(SolutionModel model,
-            SolutionManager solutionManager)
+            DomainManager domainManager)
     {
         _solutionModel = model;
-        _solutionManager = solutionManager;
-        _solutionInfo = (SolutionInfo) _solutionManager.getCurrentSolution().getInfo();
+        _domainManager = domainManager;
+        _solutionInfo = (SolutionInfo) _domainManager.getCurrentSolution().getInfo();
     }
 
     public Model getModel()
@@ -81,7 +81,7 @@ public class SolutionValidator implements IValidator
                 support.addError("Solution Name", "is mandatory");
             } else {
                 try {
-                    boolean exists = _solutionManager.exists(currentSolutioName);
+                    boolean exists = _domainManager.exists(currentSolutioName);
                     if (exists) {
                         support.addError("Solution Name", "already exists");
                     }

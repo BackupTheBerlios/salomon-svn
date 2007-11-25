@@ -24,52 +24,52 @@ package salomon.engine.domain;
 import salomon.platform.exception.PlatformException;
 
 /**
- * Manager of solutions.
+ * Manager of domains.
  * 
  * @see salomon.engine.domain.IDomain
  */
 public interface IDomainManager
 {
     /**
-     * Stores the solution in the database.
-     * @see #createSolution()
+     * Stores the domain in the database.
+     * @see #createDomain()
      * 
-     * @param solution The solution
+     * @param domain The domain
      * @throws PlatformException
      */
-    void addSolution(IDomain solution) throws PlatformException;
+    void addDomain(IDomain domain) throws PlatformException;
 
     /**
-     * Creates an empty solution, but doesn't add it to database.
-     * Use <code>addSolution</code> method to store this solution in the database. 
-     * @see #addSolution(IDomain)
-     * @return The empty solution
+     * Creates an empty domain, but doesn't add it to database.
+     * Use <code>addDomain</code> method to store this domain in the database. 
+     * @see #addDomain(IDomain)
+     * @return The empty domain
      * @throws PlatformException
      */
-    IDomain createSolution() throws PlatformException;
+    IDomain createDomain() throws PlatformException;
 
     /**
-     * Returns current solution.
+     * Returns current domain.
      * 
      * @return
      * @throws PlatformException
      */
-    IDomain getCurrentSolution() throws PlatformException;
+    IDomain getCurrentDomain() throws PlatformException;
 
     /**
-     * Returns solution with given identifier.
+     * Returns domain with given identifier.
      * 
-     * @param id identifier of solution
-     * @return The solution
+     * @param id identifier of domain
+     * @return The domain
      * @throws PlatformException
      */
-    IDomain getSolution(int id) throws PlatformException;
+    IDomain getDomain(int id) throws PlatformException;
 
     /**
-     * Returns all solutions.
+     * Returns all domains.
      * 
-     * @return The array of all solutions
+     * @return The array of all domains
      * @throws PlatformException
      */
-    IDomain[] getSolutions() throws PlatformException;
+    IDomain[] getDomains() throws PlatformException;
 }

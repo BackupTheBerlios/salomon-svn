@@ -29,7 +29,7 @@ import salomon.engine.agentconfig.AgentConfigManager;
 import salomon.engine.agentconfig.IAgentConfigManager;
 import salomon.engine.database.DBManager;
 import salomon.engine.domain.IDomainManager;
-import salomon.engine.domain.SolutionManager;
+import salomon.engine.domain.DomainManager;
 import salomon.engine.plugin.IPluginManager;
 import salomon.engine.plugin.PlatformUtil;
 import salomon.engine.plugin.PluginManager;
@@ -101,7 +101,7 @@ public final class ManagerEngine implements IManagerEngine
             throw new PlatformException(e.getLocalizedMessage());
         }
         _platformUtil = new PlatformUtil();
-        _solutionManager = new SolutionManager(this, _dbManager);
+        _solutionManager = new DomainManager(this, _dbManager);
         _projectManager = new ProjectManager(this, _dbManager);
         _taskManager = new TaskManager(this, _dbManager);
         _pluginManager = new PluginManager(_dbManager);

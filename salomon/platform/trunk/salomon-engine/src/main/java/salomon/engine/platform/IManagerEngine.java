@@ -59,8 +59,8 @@ public interface IManagerEngine
     IProjectManager getProjectManager() throws PlatformException;
 
     /**
-     * Returns the SolutionManager.
-     * @return The SolutionManager
+     * Returns the DomainManager.
+     * @return The DomainManager
      * 
      * @pre $none
      * @post $result != null

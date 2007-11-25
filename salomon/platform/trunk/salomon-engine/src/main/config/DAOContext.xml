@@ -44,6 +44,12 @@
 		</property>
 	</bean>
 
+	<bean id="domainDAOTarget" class="salomon.engine.domain.DomainDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	
 	<!-- Transactional proxy for the primary business objects -->
 	<bean id="daoTemplate" abstract="true"
 		class="org.springframework.aop.framework.ProxyFactoryBean">
@@ -106,6 +112,17 @@
 		<property name="proxyInterfaces">
 			<list>
 				<value>salomon.engine.project.IProjectDAO</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="domainDAO" parent="daoTemplate">
+		<property name="target">
+			<ref local="domainDAOTarget" />
+		</property>
+		<property name="proxyInterfaces">
+			<list>
+				<value>salomon.engine.domain.IDomainDAO</value>
 			</list>
 		</property>
 	</bean>
