@@ -42,6 +42,9 @@
 		</id>
 		<property name="agentName" column="AGENT_NAME" />
 
+		<many-to-one name="project" class="salomon.engine.project.Project"
+			column="PROJECT_ID" not-null="true" />
+
 		<many-to-one name="agentProcessingComponent"
 			class="salomon.engine.agent.AgentProcessingComponent"
 			cascade="save-update" lazy="false" column="PROCESSING_COMPONENT_ID"
@@ -57,7 +60,15 @@
 		<id name="projectId" column="PROJECT_ID">
 			<generator class="native" />
 		</id>
-		<many-to-one name="domain" class="salomon.engine.domain.Domain" column="DOMAIN_ID" not-null="true" />
+		<many-to-one name="domain" class="salomon.engine.domain.Domain"
+			column="DOMAIN_ID" not-null="true" />
+
+		<set name="agentSet" inverse="true" table="AGENTS"
+			lazy="false" cascade="all">
+			<key column="PROJECT_ID" />
+			<one-to-many class="salomon.engine.agent.Agent" />
+		</set>
+
 		<property name="projectName" column="PROJECT_NAME" />
 	</class>
 
@@ -66,15 +77,11 @@
 			<generator class="native" />
 		</id>
 
-		<!--set name="projects" inverse="true">
+		<set name="projectSet" inverse="true" table="PROJECTS"
+			lazy="false" cascade="all">
 			<key column="DOMAIN_ID" />
 			<one-to-many class="salomon.engine.project.Project" />
-		</set-->
-		<set name="projectSet" inverse="true" table="PROJECTS" lazy="false" cascade="all">
-    		<key column="DOMAIN_ID"/>
-    		<one-to-many class="salomon.engine.project.Project"/>
 		</set>
-		
 
 		<property name="domainName" column="DOMAIN_NAME" />
 	</class>

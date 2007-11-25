@@ -21,8 +21,12 @@
 
 package salomon.engine.project;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.apache.log4j.Logger;
 
+import salomon.engine.agent.Agent;
 import salomon.engine.agent.IAgent;
 import salomon.engine.agent.IAgentManager;
 import salomon.engine.agentconfig.AgentConfig;
@@ -45,9 +49,11 @@ public final class Project implements IProject
 
     private IAgentManager _agentManager;
 
-    private Long _projectId;
+    private Set<Agent> _agentSet;
 
     private Domain _domain;
+
+    private Long _projectId;
 
     /**
      * 
@@ -69,7 +75,7 @@ public final class Project implements IProject
 
     public Project()
     {
-        // to make DAO test running
+        _agentSet = new HashSet<Agent>();
     }
 
     protected Project(IManagerEngine managerEngine, DBManager manager)
@@ -82,10 +88,13 @@ public final class Project implements IProject
         _projectInfo = new ProjectInfo(manager);
     }
 
+    /**
+     * @see salomon.engine.project.IProject#addAgent(salomon.engine.agent.IAgent)
+     */
     public void addAgent(IAgent agent)
     {
-        throw new UnsupportedOperationException(
-                "Method Project.addAgent() not implemented yet!");
+        ((Agent) agent).setProject(this);
+        _agentSet.add((Agent) agent);
     }
 
     public void addAgentConfig(IAgentConfig agentConfig)
@@ -94,6 +103,9 @@ public final class Project implements IProject
         _agentConfigManager.addAgentConfig(agentConfig);
     }
 
+    /**
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
     @Override
     public boolean equals(Object obj)
     {
@@ -104,16 +116,34 @@ public final class Project implements IProject
         return false;
     }
 
+    /**
+     * @see salomon.engine.project.IProject#getAgent(long)
+     */
     public IAgent getAgent(long agentId)
     {
-        throw new UnsupportedOperationException(
-                "Method Project.getAgent() not implemented yet!");
+        IAgent agent = null;
+        for (Agent a : _agentSet) {
+            if (agentId == a.getAgentId()) {
+                agent = a;
+                break;
+            }
+        }
+        return agent;
     }
 
+    /**
+     * @see salomon.engine.project.IProject#getAgent(java.lang.String)
+     */
     public IAgent getAgent(String agentName)
     {
-        throw new UnsupportedOperationException(
-                "Method Project.getAgent() not implemented yet!");
+        IAgent agent = null;
+        for (Agent a : _agentSet) {
+            if (agentName.equals(a.getAgentName())) {
+                agent = a;
+                break;
+            }
+        }
+        return agent;
     }
 
     /**
@@ -124,10 +154,21 @@ public final class Project implements IProject
         return _agentConfigManager.getAgentConfigs(this);
     }
 
+    /**
+     * @see salomon.engine.project.IProject#getAgents()
+     */
     public IAgent[] getAgents()
     {
-        throw new UnsupportedOperationException(
-                "Method Project.getAgents() not implemented yet!");
+        return _agentSet.toArray(new Agent[_agentSet.size()]);
+    }
+
+    /**
+     * Returns the domain.
+     * @return The domain
+     */
+    public Domain getDomain()
+    {
+        return _domain;
     }
 
     public ProjectInfo getInfo()
@@ -175,13 +216,21 @@ public final class Project implements IProject
 
     public void removeAgent(IAgent agent)
     {
-        throw new UnsupportedOperationException(
-                "Method Project.removeAgent() not implemented yet!");
+        _agentSet.remove(agent);
     }
 
     public void removeAgentConfig(IAgentConfig agentConfig)
     {
         _agentConfigManager.removeAgentConfig(agentConfig);
+    }
+
+    /**
+     * Set the value of domain field.
+     * @param domain The domain to set
+     */
+    public void setDomain(Domain domain)
+    {
+        _domain = domain;
     }
 
     /**
@@ -206,31 +255,36 @@ public final class Project implements IProject
     }
 
     /**
+     * Returns the agentSet.
+     * @return The agentSet
+     */
+    // used by Hibernate only
+    @SuppressWarnings("unused")
+    private Set<Agent> getAgentSet()
+    {
+        return _agentSet;
+    }
+
+    /**
+     * Set the value of agentSet field.
+     * @param agentSet The agentSet to set
+     */
+    //  used by Hibernate only
+    @SuppressWarnings("unused")
+    private void setAgentSet(Set<Agent> agentSet)
+    {
+        _agentSet = agentSet;
+    }
+
+    /**
      * Set the value of projectId field.
      * @param projectId The projectId to set
      */
+    //  used by Hibernate only
     @SuppressWarnings("unused")
     private void setProjectId(Long projectId)
     {
         _projectId = projectId;
-    }
-
-    /**
-     * Returns the domain.
-     * @return The domain
-     */
-    public Domain getDomain()
-    {
-        return _domain;
-    }
-
-    /**
-     * Set the value of domain field.
-     * @param domain The domain to set
-     */
-    public void setDomain(Domain domain)
-    {
-        _domain = domain;
     }
 
 }

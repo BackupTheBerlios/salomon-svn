@@ -21,6 +21,8 @@
 
 package salomon.engine.agent;
 
+import salomon.engine.project.Project;
+
 /**
  * 
  */
@@ -33,6 +35,8 @@ public class Agent implements IAgent
     private String _agentName;
 
     private IAgentProcessingComponent _agentProcessingComponent;
+
+    private Project _project;
 
     @Override
     public boolean equals(Object obj)
@@ -77,10 +81,19 @@ public class Agent implements IAgent
         return _agentProcessingComponent;
     }
 
+    /**
+     * Returns the project.
+     * @return The project
+     */
+    public Project getProject()
+    {
+        return _project;
+    }
+
     @Override
     public int hashCode()
     {
-        return _agentId.hashCode();
+        return _agentId == null ? 0 : _agentId.hashCode();
     }
 
     /**
@@ -108,6 +121,15 @@ public class Agent implements IAgent
             IAgentProcessingComponent agentProcessingComponent)
     {
         _agentProcessingComponent = agentProcessingComponent;
+    }
+
+    /**
+     * Set the value of project field.
+     * @param project The project to set
+     */
+    public void setProject(Project project)
+    {
+        _project = project;
     }
 
     /**

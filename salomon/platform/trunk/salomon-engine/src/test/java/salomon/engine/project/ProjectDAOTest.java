@@ -21,8 +21,12 @@
 
 package salomon.engine.project;
 
-import salomon.engine.DAOContext;
 import junit.framework.TestCase;
+import salomon.engine.DAOContext;
+import salomon.engine.agent.Agent;
+import salomon.engine.agent.IAgent;
+import salomon.engine.domain.Domain;
+import salomon.engine.domain.IDomainDAO;
 
 /**
  * 
@@ -30,6 +34,8 @@ import junit.framework.TestCase;
 public class ProjectDAOTest extends TestCase
 {
     private IProjectDAO projectDAO = (IProjectDAO) DAOContext.getBean("projectDAO");
+    
+    private IDomainDAO domainDAO = (IDomainDAO) DAOContext.getBean("domainDAO");
 
     /**
      * Test method for {@link salomon.engine.project.ProjectDAO#getProject(java.lang.String)}.
@@ -85,10 +91,41 @@ public class ProjectDAOTest extends TestCase
         assertNotNull(inserted);
         assertEquals(project.getProjectName(), inserted.getProjectName());
     }
+    
+    public void testSaveWithAgents()
+    {
+        Project project = createProject();
+        project.setProjectName("test-save-with-agents");
+        Agent agent = new Agent();
+        agent.setAgentName("test-agent-for-project");
+        project.addAgent(agent);
+        projectDAO.save(project);
+
+        IProject inserted = projectDAO.getProject(project.getProjectId());
+        assertNotNull(inserted);
+        assertEquals(project.getProjectName(), inserted.getProjectName());
+        // test getting all agents
+        assertNotNull(inserted.getAgents());
+        assertTrue(inserted.getAgents().length >= 1);
+        assertEquals(agent.getAgentName(),
+                inserted.getAgents()[0].getAgentName());
+
+        // test getting particular agent (by id)
+        IAgent insertedAgent = inserted.getAgent(agent.getAgentId());
+        assertNotNull(insertedAgent);
+        assertEquals(agent.getAgentName(), insertedAgent.getAgentName());
+        // test getting particular agent (by name)
+        insertedAgent = inserted.getAgent(agent.getAgentName());
+        assertNotNull(insertedAgent);
+        assertEquals(agent.getAgentName(), insertedAgent.getAgentName());
+    }
 
     private Project createProject()
     {
+        Domain domain = new Domain();
+        domainDAO.save(domain);
         Project project = new Project();
+        project.setDomain(domain);
         project.setProjectName("test-project");
         return project;
     }
