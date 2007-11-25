@@ -138,15 +138,6 @@ public class AgentProcessingComponent implements IAgentProcessingComponent
     }
 
     /**
-     * Set the value of _componentId field.
-     * @param _componentId The _componentId to set
-     */
-    public void setComponentId(Long componentId)
-    {
-        _componentId = componentId;
-    }
-
-    /**
      * Set the value of _componentName field.
      * @param _componentName The _componentName to set
      */
@@ -171,5 +162,15 @@ public class AgentProcessingComponent implements IAgentProcessingComponent
     public void setTasks(Task[] tasks)
     {
         _tasks = Arrays.asList(tasks);
+    }
+
+    /**
+     * Set the value of _componentId field.
+     * @param _componentId The _componentId to set
+     */
+    @SuppressWarnings("unused")
+    private void setComponentId(Long componentId)
+    {
+        _componentId = componentId;
     }
 }

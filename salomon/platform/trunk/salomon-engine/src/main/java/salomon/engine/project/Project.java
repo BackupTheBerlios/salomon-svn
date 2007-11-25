@@ -136,7 +136,7 @@ public final class Project implements IProject
      * Returns the projectId.
      * @return The projectId
      */
-    public final Long getProjectId()
+    public Long getProjectId()
     {
         return _projectId;
     }
@@ -151,7 +151,7 @@ public final class Project implements IProject
      * Returns the projectName.
      * @return The projectName
      */
-    public final String getProjectName()
+    public String getProjectName()
     {
         return _projectName;
     }
@@ -182,19 +182,10 @@ public final class Project implements IProject
     }
 
     /**
-     * Set the value of projectId field.
-     * @param projectId The projectId to set
-     */
-    public final void setProjectId(Long projectId)
-    {
-        _projectId = projectId;
-    }
-
-    /**
      * Set the value of projectName field.
      * @param projectName The projectName to set
      */
-    public final void setProjectName(String projectName)
+    public void setProjectName(String projectName)
     {
         _projectName = projectName;
     }
@@ -209,6 +200,16 @@ public final class Project implements IProject
     public String toString()
     {
         return _projectInfo.toString();
+    }
+
+    /**
+     * Set the value of projectId field.
+     * @param projectId The projectId to set
+     */
+    @SuppressWarnings("unused")
+    private void setProjectId(Long projectId)
+    {
+        _projectId = projectId;
     }
 
 }

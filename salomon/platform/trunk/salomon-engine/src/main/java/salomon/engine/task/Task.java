@@ -47,14 +47,14 @@ public final class Task implements ITask
 
     private ISettings _settings;
 
-    private int _taskNr;
-
-    private String _taskName;
-
     private Long _taskId;
 
     // FIXME: remove it;
     private TaskInfo _taskInfo;
+
+    private String _taskName;
+
+    private int _taskNr;
 
     public Task()
     {
@@ -117,9 +117,27 @@ public final class Task implements ITask
      * Returns the taskId.
      * @return The taskId
      */
-    public final Long getTaskId()
+    public Long getTaskId()
     {
         return _taskId;
+    }
+
+    /**
+     * Returns the name.
+     * @return The name
+     */
+    public String getTaskName()
+    {
+        return _taskName;
+    }
+
+    /**
+     * Returns the taskNr.
+     * @return The taskNr
+     */
+    public int getTaskNr()
+    {
+        return _taskNr;
     }
 
     @Override
@@ -167,12 +185,21 @@ public final class Task implements ITask
     }
 
     /**
-     * Set the value of taskId field.
-     * @param taskId The taskId to set
+     * Set the value of name field.
+     * @param name The name to set
      */
-    public final void setTaskId(Long taskId)
+    public void setTaskName(String name)
     {
-        _taskId = taskId;
+        _taskName = name;
+    }
+
+    /**
+     * Set the value of taskNr field.
+     * @param taskNr The taskNr to set
+     */
+    public void setTaskNr(int taskNr)
+    {
+        _taskNr = taskNr;
     }
 
     /**
@@ -185,38 +212,11 @@ public final class Task implements ITask
     }
 
     /**
-     * Returns the taskNr.
-     * @return The taskNr
+     * Set the value of taskId field.
+     * @param taskId The taskId to set
      */
-    public final int getTaskNr()
+    private void setTaskId(Long taskId)
     {
-        return _taskNr;
-    }
-
-    /**
-     * Set the value of taskNr field.
-     * @param taskNr The taskNr to set
-     */
-    public final void setTaskNr(int taskNr)
-    {
-        _taskNr = taskNr;
-    }
-
-    /**
-     * Returns the name.
-     * @return The name
-     */
-    public final String getTaskName()
-    {
-        return _taskName;
-    }
-
-    /**
-     * Set the value of name field.
-     * @param name The name to set
-     */
-    public final void setTaskName(String name)
-    {
-        _taskName = name;
+        _taskId = taskId;
     }
 } // end Task

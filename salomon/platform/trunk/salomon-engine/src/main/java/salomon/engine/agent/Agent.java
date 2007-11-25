@@ -26,13 +26,13 @@ package salomon.engine.agent;
  */
 public class Agent implements IAgent
 {
+    private IAgentDecisionComponent _agentDecisionComponent;
+
     private Long _agentId;
 
     private String _agentName;
 
     private IAgentProcessingComponent _agentProcessingComponent;
-
-    private IAgentDecisionComponent _agentDecisionComponent;
 
     @Override
     public boolean equals(Object obj)
@@ -93,15 +93,6 @@ public class Agent implements IAgent
     }
 
     /**
-     * Set the value of agentId field.
-     * @param agentId The agentId to set
-     */
-    public void setAgentId(Long agentId)
-    {
-        _agentId = agentId;
-    }
-
-    /**
      * Set the value of agentName field.
      * @param agentName The agentName to set
      */
@@ -135,6 +126,16 @@ public class Agent implements IAgent
     {
         throw new UnsupportedOperationException(
                 "Method Agent.stop() not implemented yet!");
+    }
+
+    /**
+     * Set the value of agentId field.
+     * @param agentId The agentId to set
+     */
+    @SuppressWarnings("unused")
+    private void setAgentId(Long agentId)
+    {
+        _agentId = agentId;
     }
 
 }

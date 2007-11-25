@@ -83,15 +83,6 @@ public class AgentDecisionComponent implements IAgentDecisionComponent
     }
 
     /**
-     * Set the value of componentId field.
-     * @param componentId The componentId to set
-     */
-    public void setComponentId(Long componentId)
-    {
-        _componentId = componentId;
-    }
-
-    /**
      * Set the value of _componentName field.
      * @param _componentName The _componentName to set
      */
@@ -116,6 +107,16 @@ public class AgentDecisionComponent implements IAgentDecisionComponent
     {
         throw new UnsupportedOperationException(
                 "Method AgentDecisionComponent.stop() not implemented yet!");
+    }
+
+    /**
+     * Set the value of componentId field.
+     * @param componentId The componentId to set
+     */
+    @SuppressWarnings("unused")
+    private void setComponentId(Long componentId)
+    {
+        _componentId = componentId;
     }
 
 }
