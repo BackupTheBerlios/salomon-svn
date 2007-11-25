@@ -195,8 +195,9 @@ public final class ProjectManagerGUI
             if (projectId > 0) {
                 IProject project = _projectManager.getProject(projectId);
                 // informing listeners
-                fireProjectOpened(new ProjectEvent(
-                        (ProjectInfo) project.getInfo()));
+                //FIXME: 
+//                fireProjectOpened(new ProjectEvent(
+//                        (ProjectInfo) project.getInfo()));
                 _parent.refreshGui();
             }
         } catch (Exception e) {
@@ -241,35 +242,37 @@ public final class ProjectManagerGUI
 
     public void startProjectAgents()
     {
-        LOGGER.info("ProjectManagerGUI.startProjectAgents()");
-        final IProject project = _projectManager.getCurrentProject();
-        final IAgentConfig[] agentConfigs = project.getAgentConfigs();
-        
-        _agentsRunner = new Thread() {
-            public void run()
-            {
-                for (IAgentConfig config : agentConfigs) {
-                    config.getAgent().start();
-                }
-            }
-        };
-        _agentsRunner.start();
+// FIXME:        
+//        LOGGER.info("ProjectManagerGUI.startProjectAgents()");
+//        final IProject project = _projectManager.getCurrentProject();
+//        final IAgentConfig[] agentConfigs = project.getAgentConfigs();
+//        
+//        _agentsRunner = new Thread() {
+//            public void run()
+//            {
+//                for (IAgentConfig config : agentConfigs) {
+//                    config.getAgent().start();
+//                }
+//            }
+//        };
+//        _agentsRunner.start();
     }
 
     public void stopProjectAgents()
     {
-        LOGGER.info("ProjectManagerGUI.stopProjectAgents()");
-        if (_agentsRunner != null) {
-            final IProject project = _projectManager.getCurrentProject();
-            final IAgentConfig[] agentConfigs = project.getAgentConfigs();
-
-            for (IAgentConfig config : agentConfigs) {
-                config.getAgent().stop();
-            }
-            LOGGER.debug("Interrupting the agent processing thread");
-            _agentsRunner.interrupt();
-            _agentsRunner = null;
-        }
+//FIXME:        
+//        LOGGER.info("ProjectManagerGUI.stopProjectAgents()");
+//        if (_agentsRunner != null) {
+//            final IProject project = _projectManager.getCurrentProject();
+//            final IAgentConfig[] agentConfigs = project.getAgentConfigs();
+//
+//            for (IAgentConfig config : agentConfigs) {
+//                config.getAgent().stop();
+//            }
+//            LOGGER.debug("Interrupting the agent processing thread");
+//            _agentsRunner.interrupt();
+//            _agentsRunner = null;
+//        }
     }
 
     public void viewProjects()
@@ -336,12 +339,12 @@ public final class ProjectManagerGUI
 
         int i = 0;
         for (IProject project : projects) {
-            ProjectInfo info = (ProjectInfo) project.getInfo();
-            data[i][0] = info.getId();
-            data[i][1] = info.getName();
-            data[i][2] = info.getInfo();
-            data[i][3] = info.getCreationDate();
-            data[i][4] = info.getLastModificationDate();
+//FIXME:            ProjectInfo info = (ProjectInfo) project.getInfo();
+//            data[i][0] = info.getId();
+//            data[i][1] = info.getName();
+//            data[i][2] = info.getInfo();
+//            data[i][3] = info.getCreationDate();
+//            data[i][4] = info.getLastModificationDate();
 
             ++i;
         }

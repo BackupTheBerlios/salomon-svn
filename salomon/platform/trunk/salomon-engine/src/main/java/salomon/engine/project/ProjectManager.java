@@ -88,7 +88,7 @@ public final class ProjectManager implements IProjectManager
     public void addProject(IProject project) throws PlatformException
     {
         try {
-            project.getInfo().save();
+            //            FIXME: project.getInfo().save();
             _dbManager.commit();
         } catch (Exception e) {
             LOGGER.fatal("", e);
@@ -96,8 +96,9 @@ public final class ProjectManager implements IProjectManager
             throw new PlatformException(e.getLocalizedMessage());
         }
         _currentProject = project;
-        LOGGER.info("New project: "
-                + ((ProjectInfo) _currentProject.getInfo()).getName());
+        //FIXME:
+        //        LOGGER.info("New project: "
+        //                + ((ProjectInfo) _currentProject.getInfo()).getName());
     }
 
     /**
@@ -107,7 +108,7 @@ public final class ProjectManager implements IProjectManager
     {
         // clearing old tasks
         if (_currentProject != null) {
-            _currentProject.getTaskManager().clearTasks();
+            //FIXME: _currentProject.getTaskManager().clearTasks();
         }
         // FIXME workaround - getCurrentProject method should be removed.
         _currentProject = new Project(_managerEngine, _dbManager);
@@ -183,8 +184,8 @@ public final class ProjectManager implements IProjectManager
             resultSet = _dbManager.select(select);
             resultSet.next();
             // loading project
-            ProjectInfo projectInfo = (ProjectInfo) project.getInfo();
-            projectInfo.load(resultSet);
+            //FIXME: ProjectInfo projectInfo = (ProjectInfo) project.getInfo();
+            //FIXME: projectInfo.load(resultSet);
 
             // one row should be found, if found more, the first is got
             if (resultSet.next()) {
@@ -194,7 +195,7 @@ public final class ProjectManager implements IProjectManager
 
             // loading tasks
             _managerEngine.getTasksManager().getTasks();
-            
+
         } catch (Exception e) {
             LOGGER.fatal("", e);
             throw new DBException(e.getLocalizedMessage());
@@ -225,7 +226,7 @@ public final class ProjectManager implements IProjectManager
             resultSet = _dbManager.select(select);
             while (resultSet.next()) {
                 IProject project = this.createProject();
-                project.getInfo().load(resultSet);
+                //FIXME: project.getInfo().load(resultSet);
                 projectArrayList.add(project);
             }
         } catch (Exception e) {
@@ -263,7 +264,7 @@ public final class ProjectManager implements IProjectManager
     public boolean removeProject(IProject project) throws PlatformException
     {
         SQLDelete delete = new SQLDelete(ProjectInfo.TABLE_NAME);
-        delete.addCondition("project_id =", project.getInfo().getId());
+        //FIXME: delete.addCondition("project_id =", project.getInfo().getId());
         boolean success = false;
         try {
             _dbManager.delete(delete);
@@ -288,35 +289,36 @@ public final class ProjectManager implements IProjectManager
     public void saveProject(boolean forceNew) throws PlatformException
     {
         // saving project header
-        try {
-            // saving tasks
-            ProjectInfo projectInfo = (ProjectInfo) _currentProject.getInfo();
-
-            // forcing setting new id
-            if (forceNew) {
-                projectInfo.setProjectID(-1);
-            }
-            projectInfo.save();
-
-            if (forceNew) {
-                int projectId = projectInfo.getId();
-                // changing the project id of tasks
-                ITask[] tasks = _managerEngine.getTasksManager().getTasks();
-                for (ITask task : tasks) {
-                    TaskInfo taskInfo = (TaskInfo) task.getInfo();
-                    // forcing setting new task id
-                    taskInfo.setTaskId(-1);
-                    taskInfo.setProjectID(projectId);
-                }
-            }
-            _managerEngine.getTasksManager().saveTasks();
-            _dbManager.commit();
-
-        } catch (Exception e) {
-            _dbManager.rollback();
-            LOGGER.fatal("", e);
-            throw new PlatformException(e.getLocalizedMessage());
-        }
+        //      FIXME: 
+        //        try {
+        //            // saving tasks
+        //            ProjectInfo projectInfo = (ProjectInfo) _currentProject.getInfo();
+        //
+        //            // forcing setting new id
+        //            if (forceNew) {
+        //                projectInfo.setProjectID(-1);
+        //            }
+        //            projectInfo.save();
+        //
+        //            if (forceNew) {
+        //                int projectId = projectInfo.getId();
+        //                // changing the project id of tasks
+        //                ITask[] tasks = _managerEngine.getTasksManager().getTasks();
+        //                for (ITask task : tasks) {
+        //                    TaskInfo taskInfo = (TaskInfo) task.getInfo();
+        //                    // forcing setting new task id
+        //                    taskInfo.setTaskId(-1);
+        //                    taskInfo.setProjectID(projectId);
+        //                }
+        //            }
+        //            _managerEngine.getTasksManager().saveTasks();
+        //            _dbManager.commit();
+        //
+        //        } catch (Exception e) {
+        //            _dbManager.rollback();
+        //            LOGGER.fatal("", e);
+        //            throw new PlatformException(e.getLocalizedMessage());
+        //        }
     }
 
 }

@@ -50,7 +50,7 @@ public class ProjectValidator implements IValidator
     {
         _projectModel = model;
         _projectManager = projectManager;
-        _projectInfo = (ProjectInfo) _projectManager.getCurrentProject().getInfo();
+//FIXME:        _projectInfo = (ProjectInfo) _projectManager.getCurrentProject().getInfo();
     }
 
     /**

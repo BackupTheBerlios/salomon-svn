@@ -110,7 +110,7 @@ public final class AgentConfig implements IAgentConfig
     public final void setProject(IProject project)
     {
         _project = project;
-        _agentConfigInfo.setProjectId(_project.getInfo().getId());
+        //FIXME: _agentConfigInfo.setProjectId(_project.getInfo().getId());
     }
 
     @Override

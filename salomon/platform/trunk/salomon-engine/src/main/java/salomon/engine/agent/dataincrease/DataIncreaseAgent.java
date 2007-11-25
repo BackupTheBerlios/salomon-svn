@@ -72,29 +72,30 @@ public final class DataIncreaseAgent extends AbstractAgent
      */
     public void start(IProject project)
     {
-        LOGGER.info("DataIncreaseAgent.start()");
-        updateConfigComponent();
-        int treshold = ((IInteger) ((IStruct) _configComponent.getConfig()).getField(TRESHOLD)).getValue();
-        IDataEngine dataEngine = project.getProjectManager().getDomain().getDataEngine();
-
-        int initialRowNo = getAllRowsCount(dataEngine);
-        LOGGER.debug("Initial row no: " + initialRowNo);
-
-        _stopped = false;
-        while (!_stopped) {
-            int currentRowNo = getAllRowsCount(dataEngine);
-            LOGGER.debug("Current row no: " + currentRowNo);
-            if ((Math.abs(currentRowNo - initialRowNo)) > (treshold / 100 * initialRowNo)) {
-                LOGGER.info("Restarting project...");
-                project.start();
-                initialRowNo = currentRowNo;
-            }
-            try {
-                Thread.sleep(SLEEPTING_TIME);
-            } catch (InterruptedException e) {
-                LOGGER.info("Thread interrupted");
-            }
-        }
+//FIXME:        
+//        LOGGER.info("DataIncreaseAgent.start()");
+//        updateConfigComponent();
+//        int treshold = ((IInteger) ((IStruct) _configComponent.getConfig()).getField(TRESHOLD)).getValue();
+//        IDataEngine dataEngine = project.getProjectManager().getDomain().getDataEngine();
+//
+//        int initialRowNo = getAllRowsCount(dataEngine);
+//        LOGGER.debug("Initial row no: " + initialRowNo);
+//
+//        _stopped = false;
+//        while (!_stopped) {
+//            int currentRowNo = getAllRowsCount(dataEngine);
+//            LOGGER.debug("Current row no: " + currentRowNo);
+//            if ((Math.abs(currentRowNo - initialRowNo)) > (treshold / 100 * initialRowNo)) {
+//                LOGGER.info("Restarting project...");
+//                project.start();
+//                initialRowNo = currentRowNo;
+//            }
+//            try {
+//                Thread.sleep(SLEEPTING_TIME);
+//            } catch (InterruptedException e) {
+//                LOGGER.info("Thread interrupted");
+//            }
+//        }
     }
 
     /**

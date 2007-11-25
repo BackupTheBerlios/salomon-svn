@@ -21,59 +21,24 @@
 
 package salomon.engine.project;
 
-import salomon.engine.agentconfig.IAgentConfig;
-import salomon.engine.task.ITaskManager;
-import salomon.platform.IInfo;
-import salomon.platform.exception.PlatformException;
+import salomon.engine.agent.IAgent;
 
 /**
  * An interface for projects.
  */
 public interface IProject
 {
-    /**
-     * Adds a new agent to listen to database events.
-     * 
-     * @param agentConfig
-     */
-    void addAgentConfig(IAgentConfig agentConfig);
+    void addAgent(IAgent agent);
 
-    /**
-     * Returns all agents registered for a project or null if no agents are attached.
-     * 
-     * @return array of agents attached to given project or null if no agents are attached.
-     */
-    IAgentConfig[] getAgentConfigs();
+    void removeAgent(IAgent agent);
 
-    /**
-     * @return Returns the info.
-     */
-    IInfo getInfo() throws PlatformException;
+    IAgent[] getAgents();
 
-    /**
-     * Returns ProjectManager managing this project.
-     *
-     * @return
-     * @throws PlatformException
-     */
-    IProjectManager getProjectManager() throws PlatformException;
+    IAgent getAgent(long agentId);
 
-    /**
-     * Returns the TaskManager.
-     *
-     * @return The TaskManager
-     * @throws PlatformException
-     * @pre $none
-     * @post $result != null
-     */
-    ITaskManager getTaskManager() throws PlatformException;
+    IAgent getAgent(String agentName);
 
-    /**
-     * Removes given agent.
-     * 
-     * @param agentConfig
-     */
-    void removeAgentConfig(IAgentConfig agentConfig);
-    
+    String getProjectName();
+
     void start();
 }

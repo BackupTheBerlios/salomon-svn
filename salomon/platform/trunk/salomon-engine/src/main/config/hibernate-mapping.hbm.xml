@@ -41,19 +41,23 @@
 			<generator class="native" />
 		</id>
 		<property name="agentName" column="AGENT_NAME" />
-		
+
 		<many-to-one name="agentProcessingComponent"
 			class="salomon.engine.agent.AgentProcessingComponent"
-			cascade="save-update"
-			lazy="false"
-			column="PROCESSING_COMPONENT_ID" unique="true" />
-			
+			cascade="save-update" lazy="false" column="PROCESSING_COMPONENT_ID"
+			unique="true" />
+
 		<many-to-one name="agentDecisionComponent"
 			class="salomon.engine.agent.AgentDecisionComponent"
-			cascade="save-update"
-			lazy="false"
-			column="DECISION_COMPONENT_ID" unique="true" />
+			cascade="save-update" lazy="false" column="DECISION_COMPONENT_ID"
+			unique="true" />
 	</class>
 
+	<class name="salomon.engine.project.Project" table="PROJECTS">
+		<id name="projectId" column="PROJECT_ID">
+			<generator class="native" />
+		</id>
+		<property name="projectName" column="PROJECT_NAME" />
+	</class>
 </hibernate-mapping>
 

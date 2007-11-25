@@ -23,10 +23,9 @@ package salomon.engine.project;
 
 import org.apache.log4j.Logger;
 
-import salomon.engine.agent.AgentInfo;
+import salomon.engine.agent.IAgent;
 import salomon.engine.agent.IAgentManager;
 import salomon.engine.agentconfig.AgentConfig;
-import salomon.engine.agentconfig.AgentConfigInfo;
 import salomon.engine.agentconfig.IAgentConfig;
 import salomon.engine.agentconfig.IAgentConfigManager;
 import salomon.engine.database.DBManager;
@@ -45,6 +44,8 @@ public final class Project implements IProject
 
     private IAgentManager _agentManager;
 
+    private Long _projectId;
+
     /**
      * 
      * @uml.property name="_projectInfo"
@@ -54,12 +55,19 @@ public final class Project implements IProject
 
     private IProjectManager _projectManager;
 
+    private String _projectName;
+
     /**
      * 
      * @uml.property name="_taskManager"
      * @uml.associationEnd multiplicity="(0 1)"
      */
     private ITaskManager _taskManager;
+
+    public Project()
+    {
+        // to make DAO test running
+    }
 
     protected Project(IManagerEngine managerEngine, DBManager manager)
             throws PlatformException
@@ -71,10 +79,38 @@ public final class Project implements IProject
         _projectInfo = new ProjectInfo(manager);
     }
 
+    public void addAgent(IAgent agent)
+    {
+        throw new UnsupportedOperationException(
+                "Method Project.addAgent() not implemented yet!");
+    }
+
     public void addAgentConfig(IAgentConfig agentConfig)
     {
         ((AgentConfig) agentConfig).setProject(this);
         _agentConfigManager.addAgentConfig(agentConfig);
+    }
+
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (obj instanceof Project) {
+            Project project = (Project) obj;
+            return _projectId.equals(project.getProjectId());
+        }
+        return false;
+    }
+
+    public IAgent getAgent(long agentId)
+    {
+        throw new UnsupportedOperationException(
+                "Method Project.getAgent() not implemented yet!");
+    }
+
+    public IAgent getAgent(String agentName)
+    {
+        throw new UnsupportedOperationException(
+                "Method Project.getAgent() not implemented yet!");
     }
 
     /**
@@ -85,15 +121,39 @@ public final class Project implements IProject
         return _agentConfigManager.getAgentConfigs(this);
     }
 
+    public IAgent[] getAgents()
+    {
+        throw new UnsupportedOperationException(
+                "Method Project.getAgents() not implemented yet!");
+    }
+
     public ProjectInfo getInfo()
     {
         return _projectInfo;
+    }
+
+    /**
+     * Returns the projectId.
+     * @return The projectId
+     */
+    public final Long getProjectId()
+    {
+        return _projectId;
     }
 
     public IProjectManager getProjectManager() throws PlatformException
     {
         //FIXME: change it after implementing cascade model
         return _projectManager;
+    }
+
+    /**
+     * Returns the projectName.
+     * @return The projectName
+     */
+    public final String getProjectName()
+    {
+        return _projectName;
     }
 
     /**
@@ -104,9 +164,39 @@ public final class Project implements IProject
         return _taskManager;
     }
 
+    @Override
+    public int hashCode()
+    {
+        return _projectId.hashCode();
+    }
+
+    public void removeAgent(IAgent agent)
+    {
+        throw new UnsupportedOperationException(
+                "Method Project.removeAgent() not implemented yet!");
+    }
+
     public void removeAgentConfig(IAgentConfig agentConfig)
     {
         _agentConfigManager.removeAgentConfig(agentConfig);
+    }
+
+    /**
+     * Set the value of projectId field.
+     * @param projectId The projectId to set
+     */
+    public final void setProjectId(Long projectId)
+    {
+        _projectId = projectId;
+    }
+
+    /**
+     * Set the value of projectName field.
+     * @param projectName The projectName to set
+     */
+    public final void setProjectName(String projectName)
+    {
+        _projectName = projectName;
     }
 
     public void start()
@@ -120,4 +210,5 @@ public final class Project implements IProject
     {
         return _projectInfo.toString();
     }
+
 }

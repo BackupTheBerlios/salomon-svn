@@ -152,8 +152,9 @@ public final class TaskManager implements ITaskManager
     public ITask createTask() throws PlatformException
     {
         Task newTask = new Task(_dbManager);
-        newTask.getInfo().setProjectID(
-                _managerEngine.getProjectManager().getCurrentProject().getInfo().getId());
+//FIXME:
+        //        newTask.getInfo().setProjectID(
+//                _managerEngine.getProjectManager().getCurrentProject().getInfo().getId());
         newTask.getInfo().setTaskNr(_tasks.size() + 1);
         return newTask;
     }
@@ -225,8 +226,8 @@ public final class TaskManager implements ITaskManager
             select.addColumn("p.plugin_type");
             select.addColumn("p.plugin_info");
             select.addColumn("p.location");
-            int projectID = currProject.getInfo().getId();
-            select.addCondition("t.project_id =", projectID);
+            //FIXME: int projectID = currProject.getInfo().getId();
+            //FIXME: select.addCondition("t.project_id =", projectID);
             select.addCondition("t.plugin_id = p.plugin_id");
             // tasks are sorted by task_nr
             select.addOrderBy("t.task_nr");
@@ -317,7 +318,7 @@ public final class TaskManager implements ITaskManager
     {
         SQLDelete delete = new SQLDelete(TaskInfo.TABLE_NAME);;
         IProject currProject = _managerEngine.getProjectManager().getCurrentProject();
-        delete.addCondition("project_id =", currProject.getInfo().getId());
+        //FIXME: delete.addCondition("project_id =", currProject.getInfo().getId());
         boolean retVal = false;
         try {
             _dbManager.delete(delete);
@@ -342,7 +343,7 @@ public final class TaskManager implements ITaskManager
     {
         SQLDelete delete = new SQLDelete(TaskInfo.TABLE_NAME);
         IProject currProject = _managerEngine.getProjectManager().getCurrentProject();
-        delete.addCondition("project_id =", currProject.getInfo().getId());
+        //FIXME: delete.addCondition("project_id =", currProject.getInfo().getId());
         delete.addCondition("task_id = ", task.getInfo().getId());
         boolean retVal = false;
         int deletedRows = 0;

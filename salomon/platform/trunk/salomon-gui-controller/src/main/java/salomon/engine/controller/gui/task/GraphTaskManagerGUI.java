@@ -234,8 +234,8 @@ public final class GraphTaskManagerGUI
             plugin = task.getPlugin();
             IResultComponent resultComponent = plugin.getResultComponent();
             result = task.getResult();
-            IDataEngine dataEngine = _taskManager.getProject().getProjectManager().getDomain().getDataEngine();
-            comp = resultComponent.getComponent(result, dataEngine);
+//FIXME:            IDataEngine dataEngine = _taskManager.getProject().getProjectManager().getDomain().getDataEngine();
+//FIXME:            comp = resultComponent.getComponent(result, dataEngine);
         } catch (PlatformException e) {
             LOGGER.fatal("", e);
             Utils.showErrorMessage(Messages.getString("ERR_CANNOT_SHOW_TASK_RESULT"));
@@ -282,7 +282,7 @@ public final class GraphTaskManagerGUI
         IDataEngine dataEngine = null;
         Component taskSettingsComponent = null;
         try {
-            dataEngine = _taskManager.getProject().getProjectManager().getDomain().getDataEngine();
+            //FIXME: dataEngine = _taskManager.getProject().getProjectManager().getDomain().getDataEngine();
             taskSettingsComponent = settingComponent.getComponent(
                     inputSettings, dataEngine);
         } catch (PlatformException e) {

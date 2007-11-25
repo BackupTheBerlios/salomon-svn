@@ -130,7 +130,7 @@ public class AgentConfigManager implements IAgentConfigManager
         select.addTable(AgentConfigInfo.TABLE_NAME);
 
         if (project != null) {
-            select.addCondition("project_id =", project.getInfo().getId());
+            //FIXME: select.addCondition("project_id =", project.getInfo().getId());
         }
         if (configId > 0) {
             select.addCondition(AgentConfigInfo.PRIMARY_KEY + " =", configId);
