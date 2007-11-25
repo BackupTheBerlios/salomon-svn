@@ -21,10 +21,11 @@
 
 package salomon.engine.domain;
 
+import junit.framework.TestCase;
 import salomon.engine.DAOContext;
+import salomon.engine.DAOTestHelper;
 import salomon.engine.project.IProject;
 import salomon.engine.project.Project;
-import junit.framework.TestCase;
 
 /**
  * 
@@ -38,8 +39,7 @@ public class DomainDAOTest extends TestCase
      */
     public void testGetDomainString()
     {
-        Domain domain = createDomain();
-        domainDAO.save(domain);
+        Domain domain = DAOTestHelper.createTestDomain(false);
 
         IDomain inserted = domainDAO.getDomain(domain.getDomainName());
         assertNotNull(inserted);
@@ -51,8 +51,8 @@ public class DomainDAOTest extends TestCase
      */
     public void testGetDomains()
     {
-        Domain domain = createDomain();
-        domainDAO.save(domain);
+        // make sure at least one domain exists
+        DAOTestHelper.createTestDomain(false);
 
         IDomain[] domains = domainDAO.getDomains();
         assertNotNull(domains);
@@ -64,7 +64,7 @@ public class DomainDAOTest extends TestCase
      */
     public void testRemove()
     {
-        Domain domain = createDomain();
+        Domain domain = DAOTestHelper.createTestDomain(true);
         domain.setDomainName("domain-to-remove");
         domainDAO.save(domain);
 
@@ -81,7 +81,7 @@ public class DomainDAOTest extends TestCase
      */
     public void testSave()
     {
-        Domain domain = createDomain();
+        Domain domain = DAOTestHelper.createTestDomain(true);
         domainDAO.save(domain);
 
         IDomain inserted = domainDAO.getDomain(domain.getDomainId());
@@ -91,7 +91,7 @@ public class DomainDAOTest extends TestCase
 
     public void testSaveWithProjects()
     {
-        Domain domain = createDomain();
+        Domain domain = DAOTestHelper.createTestDomain(true);
         domain.setDomainName("test-save-with-projects");
         Project project = new Project();
         project.setProjectName("test-project-for-domain");
@@ -116,12 +116,4 @@ public class DomainDAOTest extends TestCase
         assertNotNull(insertedProject);
         assertEquals(project.getProjectName(), insertedProject.getProjectName());
     }
-
-    private Domain createDomain()
-    {
-        Domain domain = new Domain();
-        domain.setDomainName("test-domain");
-        return domain;
-    }
-
 }

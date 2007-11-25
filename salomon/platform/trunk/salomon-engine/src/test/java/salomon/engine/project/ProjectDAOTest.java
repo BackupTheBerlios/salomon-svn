@@ -23,10 +23,9 @@ package salomon.engine.project;
 
 import junit.framework.TestCase;
 import salomon.engine.DAOContext;
+import salomon.engine.DAOTestHelper;
 import salomon.engine.agent.Agent;
 import salomon.engine.agent.IAgent;
-import salomon.engine.domain.Domain;
-import salomon.engine.domain.IDomainDAO;
 
 /**
  * 
@@ -34,16 +33,13 @@ import salomon.engine.domain.IDomainDAO;
 public class ProjectDAOTest extends TestCase
 {
     private IProjectDAO projectDAO = (IProjectDAO) DAOContext.getBean("projectDAO");
-    
-    private IDomainDAO domainDAO = (IDomainDAO) DAOContext.getBean("domainDAO");
 
     /**
      * Test method for {@link salomon.engine.project.ProjectDAO#getProject(java.lang.String)}.
      */
     public void testGetProjectString()
     {
-        Project project = createProject();
-        projectDAO.save(project);
+        Project project = DAOTestHelper.createTestProject(false);
 
         IProject inserted = projectDAO.getProject(project.getProjectName());
         assertNotNull(inserted);
@@ -55,8 +51,8 @@ public class ProjectDAOTest extends TestCase
      */
     public void testGetProjects()
     {
-        Project project = createProject();
-        projectDAO.save(project);
+        // make sure at least one domain exists
+        DAOTestHelper.createTestProject(false);
 
         IProject[] projects = projectDAO.getProjects();
         assertNotNull(projects);
@@ -68,7 +64,8 @@ public class ProjectDAOTest extends TestCase
      */
     public void testRemove()
     {
-        Project project = createProject();
+        Project project = DAOTestHelper.createTestProject(true);
+        project.setProjectName("project-to-remove");
         projectDAO.save(project);
 
         IProject removed = projectDAO.getProject(project.getProjectId());
@@ -84,17 +81,17 @@ public class ProjectDAOTest extends TestCase
      */
     public void testSave()
     {
-        Project project = createProject();
+        Project project = DAOTestHelper.createTestProject(true);
         projectDAO.save(project);
 
         IProject inserted = projectDAO.getProject(project.getProjectId());
         assertNotNull(inserted);
         assertEquals(project.getProjectName(), inserted.getProjectName());
     }
-    
+
     public void testSaveWithAgents()
     {
-        Project project = createProject();
+        Project project = DAOTestHelper.createTestProject(true);
         project.setProjectName("test-save-with-agents");
         Agent agent = new Agent();
         agent.setAgentName("test-agent-for-project");
@@ -118,16 +115,6 @@ public class ProjectDAOTest extends TestCase
         insertedAgent = inserted.getAgent(agent.getAgentName());
         assertNotNull(insertedAgent);
         assertEquals(agent.getAgentName(), insertedAgent.getAgentName());
-    }
-
-    private Project createProject()
-    {
-        Domain domain = new Domain();
-        domainDAO.save(domain);
-        Project project = new Project();
-        project.setDomain(domain);
-        project.setProjectName("test-project");
-        return project;
     }
 
 }

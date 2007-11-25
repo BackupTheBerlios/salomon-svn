@@ -25,6 +25,7 @@ import java.util.Arrays;
 
 import junit.framework.TestCase;
 import salomon.engine.DAOContext;
+import salomon.engine.DAOTestHelper;
 import salomon.engine.task.ITask;
 import salomon.engine.task.Task;
 
@@ -33,15 +34,15 @@ import salomon.engine.task.Task;
  */
 public class AgentProcessingComponentDAOTest extends TestCase
 {
-    IAgentProcessingComponentDAO componentDAO = (IAgentProcessingComponentDAO) DAOContext.getBean("agentProcessingComponentDAO");
+    private IAgentProcessingComponentDAO componentDAO = (IAgentProcessingComponentDAO) DAOContext.getBean("agentProcessingComponentDAO");
 
     /**
      * Test method for {@link salomon.engine.agent.AgentProcessingComponentDAO#getAgentProcessingComponents()}.
      */
     public void testGetAgentProcessingComponents()
     {
-        AgentProcessingComponent comp = createComponent();
-        componentDAO.save(comp);
+        // make sure at least one comp exists
+        DAOTestHelper.createTestAgentProcessingComponent(false);
 
         IAgentProcessingComponent[] components = componentDAO.getAgentProcessingComponents();
         assertNotNull(components);
@@ -53,8 +54,7 @@ public class AgentProcessingComponentDAOTest extends TestCase
      */
     public void testGetAgentProcessingComponentString()
     {
-        AgentProcessingComponent comp = createComponent();
-        componentDAO.save(comp);
+        AgentProcessingComponent comp = DAOTestHelper.createTestAgentProcessingComponent(false);
 
         AgentProcessingComponent inserted = (AgentProcessingComponent) componentDAO.getAgentProcessingComponent(comp.getComponentName());
         assertEquals(comp.getComponentName(), inserted.getComponentName());
@@ -66,7 +66,7 @@ public class AgentProcessingComponentDAOTest extends TestCase
      */
     public void testRemove()
     {
-        AgentProcessingComponent comp = createComponent();
+        AgentProcessingComponent comp = DAOTestHelper.createTestAgentProcessingComponent(true);
         comp.setComponentName("component-to-remove");
 
         componentDAO.save(comp);
@@ -83,7 +83,7 @@ public class AgentProcessingComponentDAOTest extends TestCase
      */
     public void testSave()
     {
-        AgentProcessingComponent comp = createComponent();
+        AgentProcessingComponent comp = DAOTestHelper.createTestAgentProcessingComponent(true);
         componentDAO.save(comp);
 
         AgentProcessingComponent inserted = (AgentProcessingComponent) componentDAO.getAgentProcessingComponent(comp.getComponentId());
@@ -92,8 +92,9 @@ public class AgentProcessingComponentDAOTest extends TestCase
 
     public void testSaveWithAgents()
     {
-        AgentProcessingComponent comp = new AgentProcessingComponent();
-        comp.setComponentName("Test-name");
+        AgentProcessingComponent comp = DAOTestHelper.createTestAgentProcessingComponent(true);
+        comp.setComponentName("test-comp-with-tasks");
+        componentDAO.save(comp);
 
         // add tasks to Agent
         Task task1 = new Task();
@@ -135,14 +136,4 @@ public class AgentProcessingComponentDAOTest extends TestCase
         assertEquals(task1.getTaskName(), insertedTask.getTaskName());
     }
 
-    private AgentProcessingComponent createComponent()
-    {
-        AgentProcessingComponent comp = new AgentProcessingComponent();
-        comp.setComponentName("test-component");
-        Task task = new Task(null);
-        task.setTaskNr(1);
-        task.setTaskName("task");
-        comp.addTask(task);
-        return comp;
-    }
 }

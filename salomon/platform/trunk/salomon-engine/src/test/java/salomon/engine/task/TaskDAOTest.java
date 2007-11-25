@@ -21,30 +21,32 @@
 
 package salomon.engine.task;
 
-import salomon.engine.DAOContext;
 import junit.framework.TestCase;
+import salomon.engine.DAOContext;
+import salomon.engine.DAOTestHelper;
 
 public class TaskDAOTest extends TestCase
 {
-    ITaskDAO taskDAO = (ITaskDAO) DAOContext.getBean("taskDAO");
+    private ITaskDAO taskDAO = (ITaskDAO) DAOContext.getBean("taskDAO");
 
     public void testSave()
     {
-        Task task = new Task(null);
+        Task task = DAOTestHelper.createTestTask(true);
         taskDAO.save(task);
-        
+
         ITask inserted = taskDAO.getTask(task.getTaskId());
         assertNotNull(inserted);
     }
 
     public void testRemove()
     {
-        Task task = new Task(null);
-        task.setTaskNr(1);
+        Task task = DAOTestHelper.createTestTask(true);
+        task.setTaskName("task-to-remove");
         taskDAO.save(task);
+
         Task removedTask = (Task) taskDAO.getTask(task.getTaskId());
         assertNotNull(removedTask);
-        
+
         taskDAO.remove(removedTask);
         removedTask = (Task) taskDAO.getTask(task.getTaskId());
         assertNull(removedTask);
@@ -52,18 +54,21 @@ public class TaskDAOTest extends TestCase
 
     public void testGetTasks()
     {
+        // make sure at least one task exists
+        DAOTestHelper.createTestTask(false);
+
         Task[] tasks = (Task[]) taskDAO.getTasks();
         assertNotNull(tasks);
         assertTrue(tasks.length >= 1);
     }
-    
+
     public void testGetTaskString()
     {
-        Task task = new Task(null);
-        task.setTaskName("test-task");
-        taskDAO.save(task);
-        Task newTask = (Task) taskDAO.getTask(task.getTaskName());
-        assertNotNull(newTask);
-        assertEquals("test-task", newTask.getTaskName());        
+        Task task = DAOTestHelper.createTestTask(false);
+
+        Task inserted = (Task) taskDAO.getTask(task.getTaskName());
+        assertNotNull(inserted);
+        assertEquals(task.getTaskName(), inserted.getTaskName());
     }
+
 }

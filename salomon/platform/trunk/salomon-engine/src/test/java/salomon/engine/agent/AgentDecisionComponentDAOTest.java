@@ -21,24 +21,23 @@
 
 package salomon.engine.agent;
 
-import salomon.engine.DAOContext;
 import junit.framework.TestCase;
+import salomon.engine.DAOContext;
+import salomon.engine.DAOTestHelper;
 
 /**
  * 
  */
 public class AgentDecisionComponentDAOTest extends TestCase
 {
-    IAgentDecisionComponentDAO componentDAO = (IAgentDecisionComponentDAO) DAOContext.getBean("agentDecisionComponentDAO");
+    private IAgentDecisionComponentDAO componentDAO = (IAgentDecisionComponentDAO) DAOContext.getBean("agentDecisionComponentDAO");
 
     /**
      * Test method for {@link salomon.engine.agent.AgentDecisionComponentDAO#getAgentDecisionComponent(java.lang.String)}.
      */
     public void testGetAgentDecisionComponentString()
     {
-        AgentDecisionComponent comp = new AgentDecisionComponent();
-        comp.setComponentName("org.salomon.agent.DecisionComponent");
-        componentDAO.save(comp);
+        AgentDecisionComponent comp = DAOTestHelper.createTestAgentDecisionComponent(false);
 
         AgentDecisionComponent inserted = (AgentDecisionComponent) componentDAO.getAgentDecisionComponent(comp.getComponentName());
         assertNotNull(inserted);
@@ -50,11 +49,12 @@ public class AgentDecisionComponentDAOTest extends TestCase
      */
     public void testGetAgentDecisionComponents()
     {
+        // make sure at least one component exists
+        DAOTestHelper.createTestAgentDecisionComponent(false);
+
         IAgentDecisionComponent[] comps = componentDAO.getAgentDecisionComponents();
         assertNotNull(comps);
-        for (IAgentDecisionComponent component : comps) {
-            System.out.println(component);
-        }
+        assertTrue(comps.length >= 1);
     }
 
     /**
@@ -62,8 +62,8 @@ public class AgentDecisionComponentDAOTest extends TestCase
      */
     public void testRemove()
     {
-        AgentDecisionComponent comp = new AgentDecisionComponent();
-        comp.setComponentName("org.salomon.agent.DecisionComponent-to-remove");
+        AgentDecisionComponent comp = DAOTestHelper.createTestAgentDecisionComponent(true);
+        comp.setComponentName("component-to-remove");
         componentDAO.save(comp);
 
         IAgentDecisionComponent removed = componentDAO.getAgentDecisionComponent(comp.getComponentId());
@@ -79,8 +79,7 @@ public class AgentDecisionComponentDAOTest extends TestCase
      */
     public void testSave()
     {
-        AgentDecisionComponent comp = new AgentDecisionComponent();
-        comp.setComponentName("org.salomon.agent.DecisionComponent");
+        AgentDecisionComponent comp = DAOTestHelper.createTestAgentDecisionComponent(true);
         componentDAO.save(comp);
 
         AgentDecisionComponent inserted = (AgentDecisionComponent) componentDAO.getAgentDecisionComponent(comp.getComponentId());

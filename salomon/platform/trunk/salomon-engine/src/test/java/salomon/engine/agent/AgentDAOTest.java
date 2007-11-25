@@ -21,16 +21,15 @@
 
 package salomon.engine.agent;
 
-import salomon.engine.DAOContext;
 import junit.framework.TestCase;
+import salomon.engine.DAOContext;
+import salomon.engine.DAOTestHelper;
 
 /**
  * 
  */
 public class AgentDAOTest extends TestCase
 {
-    private static final String AGENT_NAME = "sampleAgent";
-
     private IAgentDAO agentDAO = (IAgentDAO) DAOContext.getBean("agentDAO");
 
     /**
@@ -38,12 +37,11 @@ public class AgentDAOTest extends TestCase
      */
     public void testGetAgentString()
     {
-        Agent agent = createAgent();
-        agentDAO.save(agent);
+        Agent agent = DAOTestHelper.createTestAgent(false);
 
-        IAgent inserted = agentDAO.getAgent(AGENT_NAME);
+        IAgent inserted = agentDAO.getAgent(agent.getAgentName());
         assertNotNull(inserted);
-        assertEquals(AGENT_NAME, inserted.getAgentName());
+        assertEquals(agent.getAgentName(), inserted.getAgentName());
     }
 
     /**
@@ -51,8 +49,8 @@ public class AgentDAOTest extends TestCase
      */
     public void testGetAgents()
     {
-        Agent agent = createAgent();
-        agentDAO.save(agent);
+        // make sure at least one agent exists
+        DAOTestHelper.createTestAgent(false);
 
         IAgent[] agents = agentDAO.getAgents();
         assertNotNull(agents);
@@ -64,7 +62,8 @@ public class AgentDAOTest extends TestCase
      */
     public void testRemove()
     {
-        Agent agent = createAgent();
+        Agent agent = DAOTestHelper.createTestAgent(true);
+        agent.setAgentName("agent-to-remove");
         agentDAO.save(agent);
 
         IAgent removed = agentDAO.getAgent(agent.getAgentId());
@@ -81,7 +80,7 @@ public class AgentDAOTest extends TestCase
      */
     public void testSave()
     {
-        Agent agent = createAgent();
+        Agent agent = DAOTestHelper.createTestAgent(true);
         AgentProcessingComponent procComp = (AgentProcessingComponent) agent.getAgentProcessingComponent();
         AgentDecisionComponent decComp = (AgentDecisionComponent) agent.getAgentDecisionComponent();
 
@@ -117,20 +116,4 @@ public class AgentDAOTest extends TestCase
                 "sampleDecisionComponent2",
                 ((AgentDecisionComponent) inserted2.getAgentDecisionComponent()).getComponentName());
     }
-
-    private Agent createAgent()
-    {
-        Agent agent = new Agent();
-        agent.setAgentName(AGENT_NAME);
-        AgentProcessingComponent procComp = new AgentProcessingComponent();
-        procComp.setComponentName("sampleProcessingComponent");
-        AgentDecisionComponent decComp = new AgentDecisionComponent();
-        decComp.setComponentName("sampleDecisionComponent");
-
-        agent.setAgentProcessingComponent(procComp);
-        agent.setAgentDecisionComponent(decComp);
-
-        return agent;
-    }
-
 }

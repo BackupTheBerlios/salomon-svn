@@ -44,7 +44,7 @@ public class AgentProcessingComponent implements IAgentProcessingComponent
 
     private List<Task> _taskList;
 
-    protected AgentProcessingComponent()
+    public AgentProcessingComponent()
     {
         _taskList = new ArrayList<Task>();
         _taskComparator = new TaskComparator();
