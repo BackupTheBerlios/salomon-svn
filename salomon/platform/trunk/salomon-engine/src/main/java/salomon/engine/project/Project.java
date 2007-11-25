@@ -29,6 +29,7 @@ import salomon.engine.agentconfig.AgentConfig;
 import salomon.engine.agentconfig.IAgentConfig;
 import salomon.engine.agentconfig.IAgentConfigManager;
 import salomon.engine.database.DBManager;
+import salomon.engine.domain.Domain;
 import salomon.engine.platform.IManagerEngine;
 import salomon.engine.task.ITaskManager;
 import salomon.platform.exception.PlatformException;
@@ -45,6 +46,8 @@ public final class Project implements IProject
     private IAgentManager _agentManager;
 
     private Long _projectId;
+
+    private Domain _domain;
 
     /**
      * 
@@ -167,7 +170,7 @@ public final class Project implements IProject
     @Override
     public int hashCode()
     {
-        return _projectId.hashCode();
+        return _projectId == null ? 0 : _projectId.hashCode();
     }
 
     public void removeAgent(IAgent agent)
@@ -210,6 +213,24 @@ public final class Project implements IProject
     private void setProjectId(Long projectId)
     {
         _projectId = projectId;
+    }
+
+    /**
+     * Returns the domain.
+     * @return The domain
+     */
+    public Domain getDomain()
+    {
+        return _domain;
+    }
+
+    /**
+     * Set the value of domain field.
+     * @param domain The domain to set
+     */
+    public void setDomain(Domain domain)
+    {
+        _domain = domain;
     }
 
 }

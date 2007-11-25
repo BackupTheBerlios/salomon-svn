@@ -22,6 +22,8 @@
 package salomon.engine.domain;
 
 import salomon.engine.DAOContext;
+import salomon.engine.project.IProject;
+import salomon.engine.project.Project;
 import junit.framework.TestCase;
 
 /**
@@ -85,6 +87,34 @@ public class DomainDAOTest extends TestCase
         IDomain inserted = domainDAO.getDomain(domain.getDomainId());
         assertNotNull(inserted);
         assertEquals(domain.getDomainName(), inserted.getDomainName());
+    }
+
+    public void testSaveWithProjects()
+    {
+        Domain domain = createDomain();
+        domain.setDomainName("test-save-with-projects");
+        Project project = new Project();
+        project.setProjectName("test-project-for-domain");
+        domain.addProject(project);
+        domainDAO.save(domain);
+
+        IDomain inserted = domainDAO.getDomain(domain.getDomainId());
+        assertNotNull(inserted);
+        assertEquals(domain.getDomainName(), inserted.getDomainName());
+        // test getting all projects
+        assertNotNull(inserted.getProjects());
+        assertTrue(inserted.getProjects().length >= 1);
+        assertEquals(project.getProjectName(),
+                inserted.getProjects()[0].getProjectName());
+
+        // test getting particular project (by id)
+        IProject insertedProject = inserted.getProject(project.getProjectId());
+        assertNotNull(insertedProject);
+        assertEquals(project.getProjectName(), insertedProject.getProjectName());
+        // test getting particular project (by name)
+        insertedProject = inserted.getProject(project.getProjectName());
+        assertNotNull(insertedProject);
+        assertEquals(project.getProjectName(), insertedProject.getProjectName());
     }
 
     private Domain createDomain()

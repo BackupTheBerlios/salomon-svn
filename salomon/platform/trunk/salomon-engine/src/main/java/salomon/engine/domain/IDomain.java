@@ -21,7 +21,10 @@
 
 package salomon.engine.domain;
 
+import java.util.Set;
+
 import salomon.engine.project.IProject;
+import salomon.engine.project.Project;
 import salomon.platform.IDataEngine;
 import salomon.platform.exception.PlatformException;
 

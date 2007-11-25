@@ -21,7 +21,11 @@
 
 package salomon.engine.domain;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import salomon.engine.project.IProject;
+import salomon.engine.project.Project;
 import salomon.platform.IDataEngine;
 import salomon.platform.exception.PlatformException;
 
@@ -31,10 +35,17 @@ public class Domain implements IDomain
 
     private String _domainName;
 
-    public void addProject(IProject agent)
+    private Set<Project> _projectSet;
+
+    public Domain()
     {
-        throw new UnsupportedOperationException(
-                "Method Domain.addProject() not implemented yet!");
+        _projectSet = new HashSet<Project>();
+    }
+
+    public void addProject(IProject project)
+    {
+        ((Project) project).setDomain(this);
+        _projectSet.add((Project) project);
     }
 
     @Override
@@ -69,20 +80,33 @@ public class Domain implements IDomain
 
     public IProject getProject(long projectId)
     {
-        throw new UnsupportedOperationException(
-                "Method Domain.getProject() not implemented yet!");
+        // TODO: optimize the search
+        IProject project = null;
+        for (Project p : _projectSet) {
+            if (projectId == p.getProjectId()) {
+                project = p;
+                break;
+            }
+        }
+        return project;
     }
 
     public IProject getProject(String projectName)
     {
-        throw new UnsupportedOperationException(
-                "Method Domain.getProject() not implemented yet!");
+        // TODO: optimize the search
+        IProject project = null;
+        for (Project p : _projectSet) {
+            if (projectName.equals(p.getProjectName())) {
+                project = p;
+                break;
+            }
+        }
+        return project;
     }
 
     public IProject[] getProjects()
     {
-        throw new UnsupportedOperationException(
-                "Method Domain.getProjects() not implemented yet!");
+        return _projectSet.toArray(new Project[_projectSet.size()]);
     }
 
     @Override
@@ -91,10 +115,12 @@ public class Domain implements IDomain
         return _domainId.hashCode();
     }
 
+    /**
+     * @see salomon.engine.domain.IDomain#removeProject(salomon.engine.project.IProject)
+     */
     public void removeProject(IProject project)
     {
-        throw new UnsupportedOperationException(
-                "Method Domain.removeProject() not implemented yet!");
+        _projectSet.remove(project);
     }
 
     /**
@@ -107,6 +133,17 @@ public class Domain implements IDomain
     }
 
     /**
+     * TODO: add comment.
+     * @return
+     */
+    // used by Hibernate only
+    @SuppressWarnings("unused")
+    private Set<Project> getProjectSet()
+    {
+        return _projectSet;
+    }
+
+    /**
      * Set the value of domainId field.
      * @param domainId The domainId to set
      */
@@ -115,5 +152,16 @@ public class Domain implements IDomain
     private void setDomainId(Long domainId)
     {
         _domainId = domainId;
+    }
+
+    /**
+     * Set the value of projects field.
+     * @param projects The projects to set
+     */
+    // used by Hibernate only
+    @SuppressWarnings("unused")
+    private void setProjectSet(Set<Project> projects)
+    {
+        _projectSet = projects;
     }
 }

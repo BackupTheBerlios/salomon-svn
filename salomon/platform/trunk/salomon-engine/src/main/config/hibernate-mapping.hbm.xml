@@ -57,14 +57,26 @@
 		<id name="projectId" column="PROJECT_ID">
 			<generator class="native" />
 		</id>
+		<many-to-one name="domain" class="salomon.engine.domain.Domain" column="DOMAIN_ID" not-null="true" />
 		<property name="projectName" column="PROJECT_NAME" />
 	</class>
-	
+
 	<class name="salomon.engine.domain.Domain" table="DOMAINS">
 		<id name="domainId" column="DOMAIN_ID">
 			<generator class="native" />
 		</id>
+
+		<!--set name="projects" inverse="true">
+			<key column="DOMAIN_ID" />
+			<one-to-many class="salomon.engine.project.Project" />
+		</set-->
+		<set name="projectSet" inverse="true" table="PROJECTS" lazy="false" cascade="all">
+    		<key column="DOMAIN_ID"/>
+    		<one-to-many class="salomon.engine.project.Project"/>
+		</set>
+		
+
 		<property name="domainName" column="DOMAIN_NAME" />
-	</class>	
+	</class>
 </hibernate-mapping>
 
