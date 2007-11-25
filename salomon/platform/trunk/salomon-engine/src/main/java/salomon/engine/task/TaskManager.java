@@ -398,7 +398,7 @@ public final class TaskManager implements ITaskManager
     IDataEngine getDataEngine() throws PlatformException
     {
         if (_dataEngine == null) {
-            _dataEngine = _managerEngine.getSolutionManager().getCurrentSolution().getDataEngine();
+//FIXME:            _dataEngine = _managerEngine.getSolutionManager().getCurrentSolution().getDataEngine();
         }
         return _dataEngine;
     }

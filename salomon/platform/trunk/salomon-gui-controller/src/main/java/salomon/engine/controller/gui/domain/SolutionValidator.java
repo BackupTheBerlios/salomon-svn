@@ -53,7 +53,7 @@ public class SolutionValidator implements IValidator
     {
         _solutionModel = model;
         _domainManager = domainManager;
-        _solutionInfo = (SolutionInfo) _domainManager.getCurrentSolution().getInfo();
+//FIXME:        _solutionInfo = (SolutionInfo) _domainManager.getCurrentSolution().getInfo();
     }
 
     public Model getModel()

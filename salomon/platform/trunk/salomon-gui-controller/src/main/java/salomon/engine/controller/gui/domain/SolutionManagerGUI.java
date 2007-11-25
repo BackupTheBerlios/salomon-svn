@@ -165,12 +165,13 @@ public final class SolutionManagerGUI
     {
         IDomain solution = null;
         try {
-            solution = _domainManager.getCurrentSolution();
+//FIXME:            solution = _domainManager.getCurrentSolution();
             setSolutionProperties(solution);
 
             // informing listeners
-            fireSolutionModified(new SolutionEvent(
-                    (SolutionInfo) solution.getInfo()));
+//FIXME:            
+//            fireSolutionModified(new SolutionEvent(
+//                    (SolutionInfo) solution.getInfo()));
         } catch (PlatformException e) {
             LOGGER.fatal("", e);
             Utils.showErrorMessage(Messages.getString("ERR_CANNOT_EDIT_SOLUTION"));
@@ -290,25 +291,26 @@ public final class SolutionManagerGUI
 
     public void newSolution()
     {
-        try {
-            IDomain solution = _domainManager.createSolution();
-            if (setSolutionProperties(solution)) {
-                _domainManager.addSolution(solution);
-                _solutions = (Solution[]) ((DomainManager) _domainManager).getSolutions();
-                _comboSolutionList.addItem(solution);
-                _comboSolutionList.setSelectedItem(solution);
-                _comboSolutionList.repaint();
-
-                // informing listeners
-                fireSolutionCreated(new SolutionEvent(
-                        (SolutionInfo) solution.getInfo()));
-                // forcing panel to be rebuilt
-                _pnlSolutionProperties = null;
-            }
-        } catch (PlatformException e) {
-            LOGGER.fatal("", e);
-            Utils.showErrorMessage(Messages.getString("ERR_CANNOT_CREATE_SOLUTION"));
-        }
+//FIXME:        
+//        try {
+//            IDomain solution = _domainManager.createSolution();
+//            if (setSolutionProperties(solution)) {
+//                _domainManager.addSolution(solution);
+//                _solutions = (Solution[]) ((DomainManager) _domainManager).getSolutions();
+//                _comboSolutionList.addItem(solution);
+//                _comboSolutionList.setSelectedItem(solution);
+//                _comboSolutionList.repaint();
+//
+//                // informing listeners
+//                fireSolutionCreated(new SolutionEvent(
+//                        (SolutionInfo) solution.getInfo()));
+//                // forcing panel to be rebuilt
+//                _pnlSolutionProperties = null;
+//            }
+//        } catch (PlatformException e) {
+//            LOGGER.fatal("", e);
+//            Utils.showErrorMessage(Messages.getString("ERR_CANNOT_CREATE_SOLUTION"));
+//        }
     }
 
     public void openSolution()
@@ -336,7 +338,7 @@ public final class SolutionManagerGUI
             // FIXME - do it in better way
             Solution solution = null;
             try {
-                solution = (Solution) _domainManager.getSolution(solutionID);
+//FIXME:                solution = (Solution) _domainManager.getSolution(solutionID);
                 // forcing connecting to external database
                 try {
                     solution.getDataEngine();
@@ -372,20 +374,21 @@ public final class SolutionManagerGUI
 
     public void saveSolution()
     {
-        try {
-            Solution solution = (Solution) _domainManager.getCurrentSolution();
-            // setting solution name if neccessary
-            // TODO: remove this checking, make user to enter solution name
-            // while
-            // creating it
-            if (solution.getInfo().getName() == null) {
-                setSolutionProperties(solution);
-            }
-
-        } catch (PlatformException e) {
-            LOGGER.fatal("", e);
-            Utils.showErrorMessage(Messages.getString("ERR_CANNOT_SAVE_SOLUTION"));
-        }
+//FIXME:        
+//        try {
+//            Solution solution = (Solution) _domainManager.getCurrentSolution();
+//            // setting solution name if neccessary
+//            // TODO: remove this checking, make user to enter solution name
+//            // while
+//            // creating it
+//            if (solution.getInfo().getName() == null) {
+//                setSolutionProperties(solution);
+//            }
+//
+//        } catch (PlatformException e) {
+//            LOGGER.fatal("", e);
+//            Utils.showErrorMessage(Messages.getString("ERR_CANNOT_SAVE_SOLUTION"));
+//        }
     }
 
     public void setActionManager(ActionManager actionManager)
@@ -487,7 +490,7 @@ public final class SolutionManagerGUI
     {
         if (_comboSolutionList == null) {
             try {
-                _solutions = (Solution[]) ((DomainManager) _domainManager).getSolutions();
+//FIXME:                _solutions = (Solution[]) ((DomainManager) _domainManager).getSolutions();
                 _comboSolutionList = new JComboBox(_solutions);
             } catch (Exception e) {
                 LOGGER.fatal("", e);
@@ -550,7 +553,7 @@ public final class SolutionManagerGUI
             throws PlatformException
     {
         boolean approved = false;
-        Solution solution = (Solution) iSolution;
+        Solution solution = null;//FIXME:(Solution) iSolution;
         if (_pnlSolutionProperties == null) {
             // validation        
             SolutionModel solutionModel = new SolutionModel();
@@ -613,7 +616,7 @@ public final class SolutionManagerGUI
             solution.getInfo().setPath(_txtDBPath.getText());
             solution.getInfo().setUser(_txtUsername.getText());
             solution.getInfo().setPasswd(_txtPasswd.getText());
-            _domainManager.addSolution(iSolution);
+//FIXME:            _domainManager.addSolution(iSolution);
             approved = true;
         }
         return approved;
