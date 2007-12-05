@@ -33,9 +33,6 @@ import salomon.engine.task.ITask;
  */
 public final class ActionManager
 {
-
-    private AddAgentConfigAction _addAgentConfigAction;
-
     /**
      * 
      * @uml.property name="_addPluginAction"
@@ -44,8 +41,6 @@ public final class ActionManager
     private AddPluginAction _addPluginAction;
 
     private ChoosePluginFileAction _choosePluginFileAction;
-
-    private ConfigureAgentAction _configureAgentAction;
 
     /**
      * @uml.property name="_editProjectAction"
@@ -115,8 +110,6 @@ public final class ActionManager
      * @uml.associationEnd multiplicity="(0 1)"
      */
     private ProjectManagerGUI _projectManagerGUI;
-
-    private RemoveAgentConfigAction _removeAgentConfigAction;
 
     private RemoveAllTasksAction _removeAllTasksAction;
 
@@ -252,7 +245,7 @@ public final class ActionManager
         return _choosePluginFileAction;
     }
 
-     /**
+    /**
      * Returns the editProjectAction.
      * @return The editProjectAction
      */
