@@ -22,14 +22,11 @@
 package salomon.engine.platform;
 
 import salomon.engine.agent.IAgentManager;
-import salomon.engine.agentconfig.IAgentConfigManager;
 import salomon.engine.domain.IDomainManager;
 import salomon.engine.plugin.IPluginManager;
 import salomon.engine.project.IProjectManager;
 import salomon.engine.task.ITaskManager;
-
 import salomon.platform.exception.PlatformException;
-
 import salomon.plugin.IPlatformUtil;
 
 /**
@@ -88,10 +85,4 @@ public interface IManagerEngine
      */
     IAgentManager getAgentManager();
     
-    /**
-     * Returns the AgentConfigManager.
-     * 
-     * @return
-     */
-    IAgentConfigManager getAgentConfigManager();
 }

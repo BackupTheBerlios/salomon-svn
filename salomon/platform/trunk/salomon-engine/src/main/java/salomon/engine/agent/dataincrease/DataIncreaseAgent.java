@@ -25,18 +25,16 @@ import java.io.ByteArrayInputStream;
 
 import org.apache.log4j.Logger;
 
+import salomon.agent.IAgentDecisionComponent;
+import salomon.agent.IAgentProcessingComponent;
+import salomon.agent.IConfigComponent;
 import salomon.engine.agent.AbstractAgent;
 import salomon.engine.agent.AgentInfo;
-import salomon.engine.agent.IAgentDecisionComponent;
-import salomon.engine.agent.IAgentProcessingComponent;
-import salomon.engine.agent.IConfigComponent;
-import salomon.engine.agentconfig.AgentConfigInfo;
 import salomon.engine.platform.data.DBMetaData;
 import salomon.engine.platform.serialization.XMLSerializer;
 import salomon.engine.project.IProject;
 import salomon.platform.IDataEngine;
 import salomon.platform.data.ITable;
-import salomon.platform.serialization.IInteger;
 import salomon.platform.serialization.IStruct;
 
 /**
@@ -68,7 +66,7 @@ public final class DataIncreaseAgent extends AbstractAgent
     }
 
     /**
-     * @see salomon.engine.agent.IAgent#start(IProject)
+     * @see salomon.agent.IAgent#start(IProject)
      */
     public void start(IProject project)
     {
@@ -99,7 +97,7 @@ public final class DataIncreaseAgent extends AbstractAgent
     }
 
     /**
-     * @see salomon.engine.agent.IAgent#stop()
+     * @see salomon.agent.IAgent#stop()
      */
     public void stop()
     {
@@ -122,13 +120,14 @@ public final class DataIncreaseAgent extends AbstractAgent
     // FIXME: redesign the way of confiugring agents
     private void updateConfigComponent()
     {
-        String strConfig = ((AgentConfigInfo) _agentConfig.getInfo()).getConfiguration();
-        if (strConfig != null && strConfig.trim().length() > 0) {
-            ByteArrayInputStream bis = new ByteArrayInputStream(
-                    strConfig.getBytes());
-            IStruct struct = XMLSerializer.deserialize(bis);
-            _configComponent.update(struct);
-        }
+//FIXME:        
+//        String strConfig = ((AgentConfigInfo) _agentConfig.getInfo()).getConfiguration();
+//        if (strConfig != null && strConfig.trim().length() > 0) {
+//            ByteArrayInputStream bis = new ByteArrayInputStream(
+//                    strConfig.getBytes());
+//            IStruct struct = XMLSerializer.deserialize(bis);
+//            _configComponent.update(struct);
+//        }
     }
 
     public IAgentDecisionComponent getAgentDecisionComponent()

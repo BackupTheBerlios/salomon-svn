@@ -39,9 +39,7 @@ import javax.swing.JTextField;
 import org.apache.log4j.Logger;
 
 import salomon.engine.Messages;
-import salomon.engine.agentconfig.IAgentConfig;
 import salomon.engine.controller.gui.ControllerFrame;
-import salomon.engine.controller.gui.agentconfig.AgentConfigManagerGUI;
 import salomon.engine.controller.gui.common.action.ActionManager;
 import salomon.engine.controller.gui.task.SettingsDialog;
 import salomon.engine.plugin.PlatformUtil;
@@ -52,7 +50,6 @@ import salomon.engine.project.ProjectInfo;
 import salomon.engine.project.ProjectManager;
 import salomon.engine.project.event.ProjectEvent;
 import salomon.engine.project.event.ProjectListener;
-import salomon.platform.IDataEngine;
 import salomon.platform.exception.PlatformException;
 import salomon.util.gui.DBDataTable;
 import salomon.util.gui.Utils;
@@ -127,19 +124,7 @@ public final class ProjectManagerGUI
     {
         _projectListeners.add(listener);
     }
-
-    public void configureProjectAgents(
-            AgentConfigManagerGUI agentConfigManagerGUI)
-    {
-        LOGGER.info("ProjectManagerGUI.configureAgents()");
-        agentConfigManagerGUI.setProject(_projectManager.getCurrentProject());
-        _agentSettingDialog.setSettingsComponent(agentConfigManagerGUI.getAgentListPanel());
-
-        if (_agentSettingDialog.showSettingsDialog()) {
-            agentConfigManagerGUI.saveAgents();
-        }
-    }
-
+ 
     public void editProject()
     {
         try {
@@ -389,8 +374,6 @@ public final class ProjectManagerGUI
         _agentSettingDialog = new SettingsDialog(_parent, "Configure agents");
         _agentSettingDialog.setSeparator("Agent configuration");
 
-        _btnConfigureAgents = new JButton(
-                _actionManager.getConfigureProjectAgentsAction());
         _btnConfigureAgents.setText("Configure agents");
         _btnConfigureAgents.setToolTipText("Save project before configuring agents");
 

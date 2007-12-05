@@ -27,6 +27,7 @@ import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
 
+import salomon.agent.IAgent;
 import salomon.engine.database.DBManager;
 import salomon.engine.database.queries.SQLSelect;
 import salomon.platform.IInfo;
@@ -68,7 +69,7 @@ public final class AgentManager implements IAgentManager
     }
 
     /**
-     * @see salomon.engine.agent.IAgentManager#getAgent(int)
+     * @see salomon.agent.IAgentManager#getAgent(int)
      */
     public IAgent getAgent(int agentId)
     {
@@ -78,7 +79,7 @@ public final class AgentManager implements IAgentManager
     }
 
     /**
-     * @see salomon.engine.agent.IAgentManager#getAgents()
+     * @see salomon.agent.IAgentManager#getAgents()
      */
     public IAgent[] getAgents()
     {

@@ -27,16 +27,11 @@ import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
 
-import salomon.engine.agentconfig.IAgentConfig;
 import salomon.engine.database.DBManager;
 import salomon.engine.database.queries.SQLDelete;
 import salomon.engine.database.queries.SQLSelect;
 import salomon.engine.domain.IDomain;
-import salomon.engine.domain.Solution;
-
 import salomon.engine.platform.IManagerEngine;
-import salomon.engine.task.ITask;
-import salomon.engine.task.TaskInfo;
 import salomon.platform.exception.DBException;
 import salomon.platform.exception.PlatformException;
 import salomon.plugin.IPlatformUtil;

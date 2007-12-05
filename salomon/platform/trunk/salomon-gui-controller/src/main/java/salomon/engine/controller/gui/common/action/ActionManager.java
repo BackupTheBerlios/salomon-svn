@@ -21,7 +21,6 @@
 
 package salomon.engine.controller.gui.common.action;
 
-import salomon.engine.controller.gui.agentconfig.AgentConfigManagerGUI;
 import salomon.engine.controller.gui.domain.SolutionManagerGUI;
 import salomon.engine.controller.gui.plugin.PluginManagerGUI;
 import salomon.engine.controller.gui.project.ProjectManagerGUI;
@@ -44,13 +43,9 @@ public final class ActionManager
      */
     private AddPluginAction _addPluginAction;
 
-    private AgentConfigManagerGUI _agentConfigManagerGUI;
-
     private ChoosePluginFileAction _choosePluginFileAction;
 
     private ConfigureAgentAction _configureAgentAction;
-
-    private ConfigureProjectAgentsAction _configureProjectAgentsAction;
 
     /**
      * @uml.property name="_editProjectAction"
@@ -219,10 +214,11 @@ public final class ActionManager
 
     /**
      * Sets object used to create actions.
-     * @param solutionManagerGUI
-     * @param projectManagerGUI
+     * @param solutionManagerGUI 
+     * 
      * @param taskManagerGUI
-     * @param pluginMangerGUI
+     * @param projectManagerGUI
+     * @param configManagerGUI 
      */
     public ActionManager(SolutionManagerGUI solutionManagerGUI,
             ProjectManagerGUI projectManagerGUI,
@@ -232,40 +228,6 @@ public final class ActionManager
         _projectManagerGUI = projectManagerGUI;
         _taskManagerGUI = taskManagerGUI;
         _pluginManagerGUI = pluginMangerGUI;
-    }
-
-    /**
-     * Sets object used to create actions.
-     * @param solutionManagerGUI 
-     * 
-     * @param taskManagerGUI
-     * @param projectManagerGUI
-     * @param configManagerGUI 
-     */
-    public ActionManager(SolutionManagerGUI solutionManagerGUI,
-            ProjectManagerGUI projectManagerGUI,
-            GraphTaskManagerGUI taskManagerGUI,
-            PluginManagerGUI pluginMangerGUI,
-            AgentConfigManagerGUI agentConfigManagerGUI)
-    {
-        _solutionManagerGUI = solutionManagerGUI;
-        _projectManagerGUI = projectManagerGUI;
-        _taskManagerGUI = taskManagerGUI;
-        _pluginManagerGUI = pluginMangerGUI;
-        _agentConfigManagerGUI = agentConfigManagerGUI;
-    }
-
-    /**
-     * Returns the addAgentConfigAction.
-     * @return The addAgentConfigAction
-     */
-    public final AddAgentConfigAction getAddAgentConfigAction()
-    {
-        if (_addAgentConfigAction == null) {
-            _addAgentConfigAction = new AddAgentConfigAction(
-                    _agentConfigManagerGUI);
-        }
-        return _addAgentConfigAction;
     }
 
     /**
@@ -290,33 +252,7 @@ public final class ActionManager
         return _choosePluginFileAction;
     }
 
-    /**
-     * Returns the configureAgentAction.
-     * @return The configureAgentAction
-     */
-    public final ConfigureAgentAction getConfigureAgentAction()
-    {
-        if (_configureAgentAction == null) {
-            _configureAgentAction = new ConfigureAgentAction(
-                    _agentConfigManagerGUI);
-        }
-        return _configureAgentAction;
-    }
-
-    /**
-     * Returns the configureProjectAgentsAction.
-     * @return The configureProjectAgentsAction
-     */
-    public final ConfigureProjectAgentsAction getConfigureProjectAgentsAction()
-    {
-        if (_configureProjectAgentsAction == null) {
-            _configureProjectAgentsAction = new ConfigureProjectAgentsAction(
-                    _projectManagerGUI, _agentConfigManagerGUI);
-        }
-        return _configureProjectAgentsAction;
-    }
-
-    /**
+     /**
      * Returns the editProjectAction.
      * @return The editProjectAction
      */
@@ -412,19 +348,6 @@ public final class ActionManager
             _openSolutionAction = new OpenSolutionAction(_solutionManagerGUI);
         }
         return _openSolutionAction;
-    }
-
-    /**
-     * Returns the removeAgentConfigAction.
-     * @return The removeAgentConfigAction
-     */
-    public final RemoveAgentConfigAction getRemoveAgentConfigAction()
-    {
-        if (_removeAgentConfigAction == null) {
-            _removeAgentConfigAction = new RemoveAgentConfigAction(
-                    _agentConfigManagerGUI);
-        }
-        return _removeAgentConfigAction;
     }
 
     public RemoveAllTasksAction getRemoveAllTasksAction()

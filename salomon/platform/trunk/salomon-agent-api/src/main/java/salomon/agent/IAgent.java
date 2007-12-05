@@ -20,8 +20,7 @@
  *
  */
 
-package salomon.engine.agent;
-
+package salomon.agent;
 
 public interface IAgent extends IRunnable
 {    

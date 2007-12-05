@@ -21,6 +21,10 @@
 
 package salomon.engine.agent;
 
+import salomon.agent.IAgentDecisionComponent;
+import salomon.agent.IAgentProcessingComponent;
+import salomon.agent.IConfigComponent;
+
 /**
  * 
  */
@@ -50,7 +54,7 @@ public class AgentDecisionComponent implements IAgentDecisionComponent
     }
 
     /**
-     * @see salomon.engine.agent.IAgentDecisionComponent#getComponentName()
+     * @see salomon.agent.IAgentDecisionComponent#getComponentName()
      */
     public String getComponentName()
     {
@@ -58,7 +62,7 @@ public class AgentDecisionComponent implements IAgentDecisionComponent
     }
 
     /**
-     * @see salomon.engine.agent.IAgentDecisionComponent#getConfigurationComponent()
+     * @see salomon.agent.IAgentDecisionComponent#getConfigurationComponent()
      */
     public IConfigComponent getConfigurationComponent()
     {
@@ -73,7 +77,7 @@ public class AgentDecisionComponent implements IAgentDecisionComponent
     }
 
     /**
-     * @see salomon.engine.agent.IAgentDecisionComponent#setAgentProcessingComponent(salomon.engine.agent.IAgentProcessingComponent)
+     * @see salomon.agent.IAgentDecisionComponent#setAgentProcessingComponent(salomon.agent.IAgentProcessingComponent)
      */
     public void setAgentProcessingComponent(
             IAgentProcessingComponent agentProcessingComponent)
@@ -92,7 +96,7 @@ public class AgentDecisionComponent implements IAgentDecisionComponent
     }
 
     /**
-     * @see salomon.engine.agent.IRunnable#start()
+     * @see salomon.agent.IRunnable#start()
      */
     public void start()
     {
@@ -101,7 +105,7 @@ public class AgentDecisionComponent implements IAgentDecisionComponent
     }
 
     /**
-     * @see salomon.engine.agent.IRunnable#stop()
+     * @see salomon.agent.IRunnable#stop()
      */
     public void stop()
     {

@@ -21,6 +21,8 @@
 
 package salomon.engine.agent;
 
+import salomon.agent.IAgentProcessingComponent;
+
 /**
  * 
  */

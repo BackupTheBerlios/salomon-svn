@@ -47,7 +47,6 @@ import salomon.engine.SQLConsole;
 import salomon.engine.controller.gui.ControllerFrame;
 import salomon.engine.controller.gui.ControllerPanel;
 import salomon.engine.controller.gui.IControllerPanel;
-import salomon.engine.controller.gui.agentconfig.AgentConfigManagerGUI;
 import salomon.engine.controller.gui.common.AboutPanel;
 import salomon.engine.controller.gui.common.SplashScreen;
 import salomon.engine.controller.gui.common.action.ActionManager;
@@ -108,8 +107,6 @@ public final class LocalController implements IController
      * @uml.associationEnd multiplicity="(0 1)"
      */
     private PluginManagerGUI _pluginMangerGUI;
-
-    private AgentConfigManagerGUI _agentConfigManagerGUI;
 
     /**
      * 
@@ -245,9 +242,6 @@ public final class LocalController implements IController
                     _managerEngine.getPluginManager());
             _pluginMangerGUI = new PluginManagerGUI(
                     _managerEngine.getPluginManager());
-            _agentConfigManagerGUI = new AgentConfigManagerGUI(
-                    _managerEngine.getAgentManager(),
-                    _managerEngine.getAgentConfigManager());
 
         } catch (PlatformException e) {
             LOGGER.fatal("", e); //$NON-NLS-1$
@@ -256,8 +250,7 @@ public final class LocalController implements IController
         }
 
         _actionManager = new ActionManager(_solutionManagerGUI,
-                _projectManagerGUI, _taskManagerGUI, _pluginMangerGUI,
-                _agentConfigManagerGUI);
+                _projectManagerGUI, _taskManagerGUI, _pluginMangerGUI);
 
         _guiMenu = new LocalGUIMenu(_actionManager);
         ControllerFrame frame = new ControllerFrame();
@@ -265,13 +258,11 @@ public final class LocalController implements IController
         _projectManagerGUI.setParent(frame);
         _pluginMangerGUI.setParent(frame);
         _taskManagerGUI.setParent(frame);
-        _agentConfigManagerGUI.setParent(frame);
 
         _solutionManagerGUI.setActionManager(_actionManager);
         _projectManagerGUI.setActionManager(_actionManager);
         _pluginMangerGUI.setActionManager(_actionManager);
         _taskManagerGUI.setActionManager(_actionManager);
-        _agentConfigManagerGUI.setActionManager(_actionManager);
 
         frame.setContentPane(getJContentPane());
         frame.setJMenuBar(getJMenuBar());

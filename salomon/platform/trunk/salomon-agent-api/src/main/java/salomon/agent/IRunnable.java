@@ -19,7 +19,7 @@
  * 
  */
 
-package salomon.engine.agent;
+package salomon.agent;
 
 /**
  * 

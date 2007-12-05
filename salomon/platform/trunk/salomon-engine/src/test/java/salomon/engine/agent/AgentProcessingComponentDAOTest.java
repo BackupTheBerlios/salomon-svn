@@ -24,6 +24,7 @@ package salomon.engine.agent;
 import java.util.Arrays;
 
 import junit.framework.TestCase;
+import salomon.agent.IAgentProcessingComponent;
 import salomon.engine.DAOContext;
 import salomon.engine.DAOTestHelper;
 import salomon.engine.task.ITask;

@@ -22,10 +22,10 @@
 package salomon.engine.project;
 
 import junit.framework.TestCase;
+import salomon.agent.IAgent;
 import salomon.engine.DAOContext;
 import salomon.engine.DAOTestHelper;
 import salomon.engine.agent.Agent;
-import salomon.engine.agent.IAgent;
 
 /**
  * 

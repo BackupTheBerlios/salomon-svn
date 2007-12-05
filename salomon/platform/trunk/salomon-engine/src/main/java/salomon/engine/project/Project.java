@@ -26,12 +26,9 @@ import java.util.Set;
 
 import org.apache.log4j.Logger;
 
+import salomon.agent.IAgent;
 import salomon.engine.agent.Agent;
-import salomon.engine.agent.IAgent;
 import salomon.engine.agent.IAgentManager;
-import salomon.engine.agentconfig.AgentConfig;
-import salomon.engine.agentconfig.IAgentConfig;
-import salomon.engine.agentconfig.IAgentConfigManager;
 import salomon.engine.database.DBManager;
 import salomon.engine.domain.Domain;
 import salomon.engine.platform.IManagerEngine;
@@ -44,8 +41,6 @@ import salomon.platform.exception.PlatformException;
 public final class Project implements IProject
 {
     private static final Logger LOGGER = Logger.getLogger(Project.class);
-
-    private IAgentConfigManager _agentConfigManager;
 
     private IAgentManager _agentManager;
 
@@ -83,24 +78,17 @@ public final class Project implements IProject
     {
         _taskManager = managerEngine.getTasksManager();
         _projectManager = managerEngine.getProjectManager();
-        _agentConfigManager = managerEngine.getAgentConfigManager();
         _agentManager = managerEngine.getAgentManager();
         _projectInfo = new ProjectInfo(manager);
     }
 
     /**
-     * @see salomon.engine.project.IProject#addAgent(salomon.engine.agent.IAgent)
+     * @see salomon.engine.project.IProject#addAgent(salomon.agent.IAgent)
      */
     public void addAgent(IAgent agent)
     {
         ((Agent) agent).setProject(this);
         _agentSet.add((Agent) agent);
-    }
-
-    public void addAgentConfig(IAgentConfig agentConfig)
-    {
-        ((AgentConfig) agentConfig).setProject(this);
-        _agentConfigManager.addAgentConfig(agentConfig);
     }
 
     /**
@@ -144,14 +132,6 @@ public final class Project implements IProject
             }
         }
         return agent;
-    }
-
-    /**
-     * @see salomon.engine.project.IProject#getAgents()
-     */
-    public IAgentConfig[] getAgentConfigs()
-    {
-        return _agentConfigManager.getAgentConfigs(this);
     }
 
     /**
@@ -217,11 +197,6 @@ public final class Project implements IProject
     public void removeAgent(IAgent agent)
     {
         _agentSet.remove(agent);
-    }
-
-    public void removeAgentConfig(IAgentConfig agentConfig)
-    {
-        _agentConfigManager.removeAgentConfig(agentConfig);
     }
 
     /**

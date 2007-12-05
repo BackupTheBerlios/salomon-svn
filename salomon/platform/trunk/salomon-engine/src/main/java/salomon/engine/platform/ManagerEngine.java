@@ -25,11 +25,9 @@ import org.apache.log4j.Logger;
 
 import salomon.engine.agent.AgentManager;
 import salomon.engine.agent.IAgentManager;
-import salomon.engine.agentconfig.AgentConfigManager;
-import salomon.engine.agentconfig.IAgentConfigManager;
 import salomon.engine.database.DBManager;
-import salomon.engine.domain.IDomainManager;
 import salomon.engine.domain.DomainManager;
+import salomon.engine.domain.IDomainManager;
 import salomon.engine.plugin.IPluginManager;
 import salomon.engine.plugin.PlatformUtil;
 import salomon.engine.plugin.PluginManager;
@@ -37,9 +35,7 @@ import salomon.engine.project.IProjectManager;
 import salomon.engine.project.ProjectManager;
 import salomon.engine.task.ITaskManager;
 import salomon.engine.task.TaskManager;
-
 import salomon.platform.exception.PlatformException;
-
 import salomon.plugin.IPlatformUtil;
 
 /**
@@ -49,8 +45,6 @@ import salomon.plugin.IPlatformUtil;
 public final class ManagerEngine implements IManagerEngine
 {
     private static final Logger LOGGER = Logger.getLogger(ManagerEngine.class);
-
-    private IAgentConfigManager _agentConfigManager;
 
     private IAgentManager _agentManager;
 
@@ -105,14 +99,7 @@ public final class ManagerEngine implements IManagerEngine
         _projectManager = new ProjectManager(this, _dbManager);
         _taskManager = new TaskManager(this, _dbManager);
         _pluginManager = new PluginManager(_dbManager);
-        _agentManager = new AgentManager(_dbManager);
-        _agentConfigManager = new AgentConfigManager(_dbManager, _agentManager);
-        
-    }
-
-    public IAgentConfigManager getAgentConfigManager()
-    {
-        return _agentConfigManager;
+        _agentManager = new AgentManager(_dbManager);        
     }
 
     /**

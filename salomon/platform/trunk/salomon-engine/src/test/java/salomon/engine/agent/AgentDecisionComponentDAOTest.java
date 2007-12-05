@@ -22,6 +22,7 @@
 package salomon.engine.agent;
 
 import junit.framework.TestCase;
+import salomon.agent.IAgentDecisionComponent;
 import salomon.engine.DAOContext;
 import salomon.engine.DAOTestHelper;
 
@@ -58,7 +59,7 @@ public class AgentDecisionComponentDAOTest extends TestCase
     }
 
     /**
-     * Test method for {@link salomon.engine.agent.AgentDecisionComponentDAO#remove(salomon.engine.agent.IAgentDecisionComponent)}.
+     * Test method for {@link salomon.engine.agent.AgentDecisionComponentDAO#remove(salomon.agent.IAgentDecisionComponent)}.
      */
     public void testRemove()
     {
@@ -75,7 +76,7 @@ public class AgentDecisionComponentDAOTest extends TestCase
     }
 
     /**
-     * Test method for {@link salomon.engine.agent.AgentDecisionComponentDAO#save(salomon.engine.agent.IAgentDecisionComponent)}.
+     * Test method for {@link salomon.engine.agent.AgentDecisionComponentDAO#save(salomon.agent.IAgentDecisionComponent)}.
      */
     public void testSave()
     {

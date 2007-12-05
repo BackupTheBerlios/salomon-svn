@@ -21,6 +21,9 @@
 
 package salomon.engine.agent;
 
+import salomon.agent.IAgent;
+import salomon.agent.IAgentDecisionComponent;
+import salomon.agent.IAgentProcessingComponent;
 import salomon.engine.project.Project;
 
 /**
@@ -49,7 +52,7 @@ public class Agent implements IAgent
     }
 
     /**
-     * @see salomon.engine.agent.IAgent#getAgentDecisionComponent()
+     * @see salomon.agent.IAgent#getAgentDecisionComponent()
      */
     public IAgentDecisionComponent getAgentDecisionComponent()
     {
@@ -66,7 +69,7 @@ public class Agent implements IAgent
     }
 
     /**
-     * @see salomon.engine.agent.IAgent#getAgentName()
+     * @see salomon.agent.IAgent#getAgentName()
      */
     public String getAgentName()
     {
@@ -74,7 +77,7 @@ public class Agent implements IAgent
     }
 
     /**
-     * @see salomon.engine.agent.IAgent#getAgentProcessingComponent()
+     * @see salomon.agent.IAgent#getAgentProcessingComponent()
      */
     public IAgentProcessingComponent getAgentProcessingComponent()
     {
@@ -97,7 +100,7 @@ public class Agent implements IAgent
     }
 
     /**
-     * @see salomon.engine.agent.IAgent#setAgentDecisionComponent(salomon.engine.agent.IAgentDecisionComponent)
+     * @see salomon.agent.IAgent#setAgentDecisionComponent(salomon.agent.IAgentDecisionComponent)
      */
     public void setAgentDecisionComponent(
             IAgentDecisionComponent agentDecisionComponent)
@@ -115,7 +118,7 @@ public class Agent implements IAgent
     }
 
     /**
-     * @see salomon.engine.agent.IAgent#setAgentProcessingComponent(salomon.engine.agent.IAgentProcessingComponent)
+     * @see salomon.agent.IAgent#setAgentProcessingComponent(salomon.agent.IAgentProcessingComponent)
      */
     public void setAgentProcessingComponent(
             IAgentProcessingComponent agentProcessingComponent)
@@ -133,7 +136,7 @@ public class Agent implements IAgent
     }
 
     /**
-     * @see salomon.engine.agent.IRunnable#start()
+     * @see salomon.agent.IRunnable#start()
      */
     public void start()
     {
@@ -142,7 +145,7 @@ public class Agent implements IAgent
     }
 
     /**
-     * @see salomon.engine.agent.IRunnable#stop()
+     * @see salomon.agent.IRunnable#stop()
      */
     public void stop()
     {

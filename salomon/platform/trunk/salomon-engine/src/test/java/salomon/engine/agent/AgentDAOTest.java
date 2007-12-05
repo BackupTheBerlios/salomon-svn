@@ -22,6 +22,7 @@
 package salomon.engine.agent;
 
 import junit.framework.TestCase;
+import salomon.agent.IAgent;
 import salomon.engine.DAOContext;
 import salomon.engine.DAOTestHelper;
 
@@ -58,7 +59,7 @@ public class AgentDAOTest extends TestCase
     }
 
     /**
-     * Test method for {@link salomon.engine.agent.AgentDAO#remove(salomon.engine.agent.IAgent)}.
+     * Test method for {@link salomon.engine.agent.AgentDAO#remove(salomon.agent.IAgent)}.
      */
     public void testRemove()
     {
@@ -76,7 +77,7 @@ public class AgentDAOTest extends TestCase
     }
 
     /**
-     * Test method for {@link salomon.engine.agent.AgentDAO#save(salomon.engine.agent.IAgent)}.
+     * Test method for {@link salomon.engine.agent.AgentDAO#save(salomon.agent.IAgent)}.
      */
     public void testSave()
     {

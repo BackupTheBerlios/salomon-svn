@@ -19,9 +19,13 @@
  * 
  */
 
-package salomon.engine.communication;
+package salomon.agent;
 
-public interface ICommunicationEvent
+public interface IAgentDecisionComponent extends IRunnable
 {
-
+    IConfigComponent getConfigurationComponent();
+    
+    void setAgentProcessingComponent(IAgentProcessingComponent agentProcessingComponent);
+    
+    String getComponentName();
 }

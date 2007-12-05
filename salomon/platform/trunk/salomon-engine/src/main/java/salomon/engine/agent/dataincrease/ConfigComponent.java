@@ -28,7 +28,7 @@ import javax.swing.JTextField;
 
 import org.apache.log4j.Logger;
 
-import salomon.engine.agent.IConfigComponent;
+import salomon.agent.IConfigComponent;
 import salomon.platform.serialization.IInteger;
 import salomon.platform.serialization.IObject;
 import salomon.platform.serialization.IStruct;
@@ -56,7 +56,7 @@ public class ConfigComponent implements IConfigComponent
     }
 
     /**
-     * @see salomon.engine.agent.IConfigComponent#getComponent()
+     * @see salomon.agent.IConfigComponent#getComponent()
      */
     public Component getComponent()
     {
@@ -64,7 +64,7 @@ public class ConfigComponent implements IConfigComponent
     }
 
     /**
-     * @see salomon.engine.agent.IConfigComponent#getConfig()
+     * @see salomon.agent.IConfigComponent#getConfig()
      */
     public IObject getConfig()
     {

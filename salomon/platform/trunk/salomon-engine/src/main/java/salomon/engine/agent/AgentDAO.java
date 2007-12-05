@@ -25,6 +25,8 @@ import java.util.List;
 
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
+import salomon.agent.IAgent;
+
 /**
  * 
  */
@@ -62,7 +64,7 @@ public class AgentDAO extends HibernateDaoSupport implements IAgentDAO
     }
 
     /**
-     * @see salomon.engine.agent.IAgentDAO#remove(salomon.engine.agent.IAgent)
+     * @see salomon.engine.agent.IAgentDAO#remove(salomon.agent.IAgent)
      */
     public void remove(IAgent agent)
     {
@@ -70,7 +72,7 @@ public class AgentDAO extends HibernateDaoSupport implements IAgentDAO
     }
 
     /**
-     * @see salomon.engine.agent.IAgentDAO#save(salomon.engine.agent.IAgent)
+     * @see salomon.engine.agent.IAgentDAO#save(salomon.agent.IAgent)
      */
     public void save(IAgent agent)
     {

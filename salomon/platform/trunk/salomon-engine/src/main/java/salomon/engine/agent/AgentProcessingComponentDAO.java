@@ -25,6 +25,8 @@ import java.util.List;
 
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
+import salomon.agent.IAgentProcessingComponent;
+
 /**
  * 
  */
@@ -70,7 +72,7 @@ public class AgentProcessingComponentDAO extends HibernateDaoSupport
     }
 
     /**
-     * @see salomon.engine.agent.IAgentProcessingComponentDAO#remove(salomon.engine.agent.IAgentProcessingComponent)
+     * @see salomon.engine.agent.IAgentProcessingComponentDAO#remove(salomon.agent.IAgentProcessingComponent)
      */
     public void remove(IAgentProcessingComponent component)
     {
@@ -78,7 +80,7 @@ public class AgentProcessingComponentDAO extends HibernateDaoSupport
     }
 
     /**
-     * @see salomon.engine.agent.IAgentProcessingComponentDAO#save(salomon.engine.agent.IAgentProcessingComponent)
+     * @see salomon.engine.agent.IAgentProcessingComponentDAO#save(salomon.agent.IAgentProcessingComponent)
      */
     public void save(IAgentProcessingComponent component)
     {

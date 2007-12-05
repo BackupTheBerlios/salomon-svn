@@ -26,6 +26,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import salomon.agent.IAgentProcessingComponent;
 import salomon.engine.task.ITask;
 import salomon.engine.task.ITaskManager;
 import salomon.engine.task.ITaskRunner;
@@ -51,7 +52,7 @@ public class AgentProcessingComponent implements IAgentProcessingComponent
     }
 
     /**
-     * @see salomon.engine.agent.IAgentProcessingComponent#addTask(salomon.engine.task.ITask)
+     * @see salomon.agent.IAgentProcessingComponent#addTask(salomon.engine.task.ITask)
      */
     public void addTask(ITask task)
     {
@@ -94,7 +95,7 @@ public class AgentProcessingComponent implements IAgentProcessingComponent
     }
 
     /**
-     * @see salomon.engine.agent.IAgentProcessingComponent#getTask(long)
+     * @see salomon.agent.IAgentProcessingComponent#getTask(long)
      */
     public ITask getTask(long taskId)
     {
@@ -109,7 +110,7 @@ public class AgentProcessingComponent implements IAgentProcessingComponent
     }
 
     /**
-     * @see salomon.engine.agent.IAgentProcessingComponent#getTask(java.lang.String)
+     * @see salomon.agent.IAgentProcessingComponent#getTask(java.lang.String)
      */
     public ITask getTask(String taskName)
     {
@@ -124,7 +125,7 @@ public class AgentProcessingComponent implements IAgentProcessingComponent
     }
 
     /**
-     * @see salomon.engine.agent.IAgentProcessingComponent#getTaskManager()
+     * @see salomon.agent.IAgentProcessingComponent#getTaskManager()
      */
     public ITaskManager getTaskManager()
     {
@@ -133,7 +134,7 @@ public class AgentProcessingComponent implements IAgentProcessingComponent
     }
 
     /**
-     * @see salomon.engine.agent.IAgentProcessingComponent#getTasks()
+     * @see salomon.agent.IAgentProcessingComponent#getTasks()
      */
     public Task[] getTasks()
     {
@@ -149,7 +150,7 @@ public class AgentProcessingComponent implements IAgentProcessingComponent
     }
 
     /**
-     * @see salomon.engine.agent.IAgentProcessingComponent#removeTask(salomon.engine.task.ITask)
+     * @see salomon.agent.IAgentProcessingComponent#removeTask(salomon.engine.task.ITask)
      */
     public void removeTask(ITask task)
     {
@@ -166,7 +167,7 @@ public class AgentProcessingComponent implements IAgentProcessingComponent
     }
 
     /**
-     * @see salomon.engine.agent.IAgentProcessingComponent#setTaskManager(salomon.engine.task.ITaskManager)
+     * @see salomon.agent.IAgentProcessingComponent#setTaskManager(salomon.engine.task.ITaskManager)
      */
     public void setTaskManager(ITaskManager taskManager)
     {
@@ -220,5 +221,15 @@ public class AgentProcessingComponent implements IAgentProcessingComponent
             int task2Nr = task2.getTaskNr();
             return (task1Nr < task2Nr ? -1 : (task1Nr == task2Nr ? 0 : 1));
         }
+    }
+
+    public void start()
+    {
+        throw new UnsupportedOperationException("Method AgentProcessingComponent.start() not implemented yet!");
+    }
+
+    public void stop()
+    {
+        throw new UnsupportedOperationException("Method AgentProcessingComponent.stop() not implemented yet!");
     }
 }

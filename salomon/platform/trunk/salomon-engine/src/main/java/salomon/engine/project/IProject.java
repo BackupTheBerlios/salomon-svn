@@ -21,7 +21,7 @@
 
 package salomon.engine.project;
 
-import salomon.engine.agent.IAgent;
+import salomon.agent.IAgent;
 
 /**
  * An interface for projects.

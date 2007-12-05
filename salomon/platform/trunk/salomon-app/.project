@@ -1,19 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-  <name>salomon-app</name>
-  <comment>Salomon Application</comment>
-  <projects>
-    <project>salomon-gui-controller</project>
-    <project>salomon-engine</project>
-    <project>salomon-plugin-api</project>
-    <project>salomon-util</project>
-    <project>salomon-platform</project>
-  </projects>
-  <buildSpec>
-    <buildCommand>
-      <name>org.eclipse.jdt.core.javabuilder</name>
-    </buildCommand>
-  </buildSpec>
-  <natures>
-    <nature>org.eclipse.jdt.core.javanature</nature>
-  </natures>
+	<name>salomon-app</name>
+	<comment>Salomon Application</comment>
+	<projects>
+		<project>salomon-gui-controller</project>
+		<project>salomon-engine</project>
+		<project>salomon-plugin-api</project>
+		<project>salomon-util</project>
+		<project>salomon-platform</project>
+	</projects>
+	<buildSpec>
+		<buildCommand>
+			<name>org.eclipse.jdt.core.javabuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+		<buildCommand>
+			<name>org.springframework.ide.eclipse.core.springbuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>org.springframework.ide.eclipse.core.springnature</nature>
+		<nature>org.eclipse.jdt.core.javanature</nature>
+	</natures>
 </projectDescription>

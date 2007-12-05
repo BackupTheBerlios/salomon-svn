@@ -25,6 +25,8 @@ import java.util.List;
 
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
+import salomon.agent.IAgentDecisionComponent;
+
 /**
  * 
  */
@@ -66,7 +68,7 @@ public class AgentDecisionComponentDAO extends HibernateDaoSupport
     }
 
     /**
-     * @see salomon.engine.agent.IAgentDecisionComponentDAO#remove(salomon.engine.agent.IAgentDecisionComponent)
+     * @see salomon.engine.agent.IAgentDecisionComponentDAO#remove(salomon.agent.IAgentDecisionComponent)
      */
     public void remove(IAgentDecisionComponent component)
     {
@@ -74,7 +76,7 @@ public class AgentDecisionComponentDAO extends HibernateDaoSupport
     }
 
     /**
-     * @see salomon.engine.agent.IAgentDecisionComponentDAO#save(salomon.engine.agent.IAgentDecisionComponent)
+     * @see salomon.engine.agent.IAgentDecisionComponentDAO#save(salomon.agent.IAgentDecisionComponent)
      */
     public void save(IAgentDecisionComponent component)
     {
