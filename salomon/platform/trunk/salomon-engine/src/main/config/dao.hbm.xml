@@ -1,0 +1,95 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+
+	<class name="salomon.engine.task.Task" table="TASKS">
+		<id name="taskId" column="TASK_ID">
+			<generator class="native" />
+		</id>
+
+		<many-to-one name="agentProcessingComponent"
+			column="COMPONENT_ID" not-null="true" insert="true" update="true" />
+
+		<property name="taskNr" column="TASK_NR" />
+		<property name="taskName" column="TASK_NAME" />
+	</class>
+
+	<class name="salomon.engine.agent.AgentProcessingComponent"
+		table="PROCESSING_COMPONENTS">
+		<id name="componentId" column="COMPONENT_ID">
+			<generator class="native" />
+		</id>
+		
+		<list name="taskList" table="TASKS" lazy="false"
+			cascade="save-update">
+			<key column="COMPONENT_ID" />
+			<list-index column="TASK_NR" />
+			<one-to-many class="salomon.engine.task.Task" />
+		</list>
+
+		<property name="componentName" column="COMPONENT_NAME" />
+	</class>
+
+	<class name="salomon.engine.agent.AgentDecisionComponent"
+		table="DECISION_COMPONENTS">
+		<id name="componentId" column="COMPONENT_ID">
+			<generator class="native" />
+		</id>
+		<property name="componentName" column="COMPONENT_NAME" />
+	</class>
+
+	<class name="salomon.engine.agent.Agent" table="AGENTS">
+		<id name="agentId" column="AGENT_ID">
+			<generator class="native" />
+		</id>
+		<property name="agentName" column="AGENT_NAME" />
+
+		<many-to-one name="project"
+			class="salomon.engine.project.Project" column="PROJECT_ID"
+			not-null="true" />
+
+		<many-to-one name="agentProcessingComponent"
+			class="salomon.engine.agent.AgentProcessingComponent"
+			cascade="save-update" lazy="false" column="PROCESSING_COMPONENT_ID"
+			unique="true" />
+
+		<many-to-one name="agentDecisionComponent"
+			class="salomon.engine.agent.AgentDecisionComponent"
+			cascade="save-update" lazy="false" column="DECISION_COMPONENT_ID"
+			unique="true" />
+	</class>
+
+	<class name="salomon.engine.project.Project" table="PROJECTS">
+		<id name="projectId" column="PROJECT_ID">
+			<generator class="native" />
+		</id>
+		<many-to-one name="domain" class="salomon.engine.domain.Domain"
+			column="DOMAIN_ID" not-null="true" />
+
+		<set name="agentSet" inverse="true" table="AGENTS" lazy="false"
+			cascade="all">
+			<key column="PROJECT_ID" />
+			<one-to-many class="salomon.engine.agent.Agent" />
+		</set>
+
+		<property name="projectName" column="PROJECT_NAME" />
+	</class>
+
+	<class name="salomon.engine.domain.Domain" table="DOMAINS">
+		<id name="domainId" column="DOMAIN_ID">
+			<generator class="native" />
+		</id>
+
+		<set name="projectSet" inverse="true" table="PROJECTS"
+			lazy="false" cascade="all">
+			<key column="DOMAIN_ID" />
+			<one-to-many class="salomon.engine.project.Project" />
+		</set>
+
+		<property name="domainName" column="DOMAIN_NAME" />
+	</class>
+</hibernate-mapping>
+
