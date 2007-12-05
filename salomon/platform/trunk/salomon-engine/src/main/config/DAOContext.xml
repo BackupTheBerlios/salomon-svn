@@ -175,7 +175,7 @@
 		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
 		<property name="mappingResources">
 			<list>
-				<value>hibernate-mapping.hbm.xml</value>
+				<value>dao.hbm.xml</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">
