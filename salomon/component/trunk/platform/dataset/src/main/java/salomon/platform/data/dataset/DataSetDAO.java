@@ -31,7 +31,7 @@ public class DataSetDAO extends HibernateDaoSupport implements IDataSetDAO
     /**
      * @see salomon.platform.data.dataset.IDataSetDAO#getDataSet(java.lang.Long)
      */
-    public IDataSet getDataSet(Long id)
+    public IDataSet getDataSet(long id)
     {
         throw new UnsupportedOperationException(
                 "Method DataSetDAO.getDataSet() not implemented yet!");

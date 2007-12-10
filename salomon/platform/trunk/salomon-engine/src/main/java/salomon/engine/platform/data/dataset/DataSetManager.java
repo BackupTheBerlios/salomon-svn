@@ -176,7 +176,7 @@ public final class DataSetManager implements IDataSetManager
      * Returns DataSet object basing on given id.
      * 
      */
-    public IDataSet getDataSet(int id) throws PlatformException
+    public IDataSet getDataSet(long id) throws PlatformException
     {
         IDataSet dataSet = this.getMainDataSet();
         // selecting DataSet header

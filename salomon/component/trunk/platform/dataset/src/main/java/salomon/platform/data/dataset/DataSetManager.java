@@ -110,7 +110,7 @@ public class DataSetManager implements IDataSetManager
     /**
      * @see salomon.platform.data.dataset.IDataSetManager#getDataSet(int)
      */
-    public IDataSet getDataSet(int arg0) throws PlatformException
+    public IDataSet getDataSet(long arg0) throws PlatformException
     {
         throw new UnsupportedOperationException(
                 "Method DataSetManager.getDataSet() not implemented yet!");

@@ -179,7 +179,7 @@ public final class AttributeManager implements IAttributeManager
     /* (non-Javadoc)
      * @see salomon.platform.data.attribute.IAttributeManager#getAttributeSet(salomon.platform.IUniqueId)
      */
-    public IAttributeSet getAttributeSet(int id) throws PlatformException
+    public IAttributeSet getAttributeSet(long id) throws PlatformException
     {
         IAttributeSet[] attributeSets = getAttributeSets(id);
         IAttributeSet attributeSet = attributeSets.length > 0
@@ -243,7 +243,7 @@ public final class AttributeManager implements IAttributeManager
         }
     }
 
-    private IAttributeSet[] getAttributeSets(int attributeSetID)
+    private IAttributeSet[] getAttributeSets(long attributeSetID)
             throws PlatformException
     {
         List<IAttributeSet> attributeSets = new LinkedList<IAttributeSet>();

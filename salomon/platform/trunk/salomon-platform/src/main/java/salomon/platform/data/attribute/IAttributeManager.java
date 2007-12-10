@@ -119,7 +119,7 @@ public interface IAttributeManager
      * @param id attribute set id
      * @return wanted attribute set
      */
-    IAttributeSet getAttributeSet(int id) throws PlatformException;
+    IAttributeSet getAttributeSet(long id) throws PlatformException;
 
     /**
      * Gets a attribute set with the given name.

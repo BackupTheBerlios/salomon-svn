@@ -38,7 +38,6 @@ import salomon.engine.database.DBManager;
 import salomon.engine.database.ExternalDBManager;
 import salomon.engine.database.queries.SQLSelect;
 import salomon.engine.domain.ShortSolutionInfo;
-
 import salomon.engine.platform.data.attribute.AttributeDescription;
 import salomon.engine.platform.data.attribute.AttributeManager;
 import salomon.engine.platform.data.attribute.AttributeSet;
@@ -102,7 +101,7 @@ public final class TreeManager implements ITreeManager
         return getTrees(-1);
     }
 
-    public ITree getTree(int treeId) throws PlatformException
+    public ITree getTree(long treeId) throws PlatformException
     {
         ITree[] trees = getTrees(treeId);
         ITree tree = trees.length > 0 ? trees[0] : null;
@@ -228,7 +227,7 @@ public final class TreeManager implements ITreeManager
         }
     }
 
-    private ITree[] getTrees(int treeID) throws PlatformException
+    private ITree[] getTrees(long treeID) throws PlatformException
     {
         List<ITree> trees = new LinkedList<ITree>();
 

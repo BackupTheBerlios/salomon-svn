@@ -24,7 +24,7 @@ package salomon.platform.data.dataset;
 
 public interface IDataSetDAO
 {
-    IDataSet getDataSet(Long id);
+    IDataSet getDataSet(long id);
 
     IDataSet getDataSet(String dataSetName);
 

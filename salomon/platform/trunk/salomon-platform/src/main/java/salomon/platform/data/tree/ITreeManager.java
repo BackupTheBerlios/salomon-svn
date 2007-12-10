@@ -49,7 +49,7 @@ public interface ITreeManager
     /**
      * Zwraca drzewo zwiazane z obecnym solutionem i posiadajace podane id. W przeciwnym razie rzuca PlatformException
      */
-    ITree getTree(int treeId) throws PlatformException;
+    ITree getTree(long treeId) throws PlatformException;
 
     /**
      * Zwraca drzewo zwiazane z obecnym solutionem i posiadajace podane id. W przeciwnym razie rzuca PlatformException

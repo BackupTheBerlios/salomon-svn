@@ -71,7 +71,7 @@ public interface IDataSetManager
      * @param id data set id
      * @return wanted data set or null, if dataSet doesn't exist
      */
-    IDataSet getDataSet(int id) throws PlatformException;
+    IDataSet getDataSet(long id) throws PlatformException;
 
     IDataSet getDataSet(String name) throws PlatformException;
 
