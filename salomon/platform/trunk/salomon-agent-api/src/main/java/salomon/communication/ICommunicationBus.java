@@ -23,5 +23,9 @@ package salomon.communication;
 
 public interface ICommunicationBus
 {
+    void addCommunicationListener(ICommunicationListener listener);
     
+    void removeCommunicationListener(ICommunicationListener listener);
+    
+    void fireCommunicationEvent(ICommunicationEvent event);
 }

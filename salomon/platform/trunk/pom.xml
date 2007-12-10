@@ -118,7 +118,7 @@
 	<module>salomon-app</module>	
 	<module>salomon-gui-controller</module>	
  	<!-- TODO: Remove from main build -->
-	<module>salomon-fitnesse</module>	
+	<!--module>salomon-fitnesse</module-->	
   </modules> 
   
   <build>

@@ -140,8 +140,9 @@ public class Agent implements IAgent
      */
     public void start()
     {
-        throw new UnsupportedOperationException(
-                "Method Agent.start() not implemented yet!");
+        if (!_agentDecisionComponent.isStarted()) {
+            _agentDecisionComponent.start();
+        }        
     }
 
     /**
@@ -161,6 +162,12 @@ public class Agent implements IAgent
     private void setAgentId(Long agentId)
     {
         _agentId = agentId;
+    }
+
+    public boolean isStarted()
+    {
+        throw new UnsupportedOperationException(
+                "Method Agent.isStarted() not implemented yet!");
     }
 
 }

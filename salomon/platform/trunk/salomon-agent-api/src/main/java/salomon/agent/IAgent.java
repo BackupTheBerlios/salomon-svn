@@ -22,6 +22,7 @@
 
 package salomon.agent;
 
+
 public interface IAgent extends IRunnable
 {    
     void setAgentDecisionComponent(IAgentDecisionComponent agentDecisionComponent);
@@ -31,6 +32,6 @@ public interface IAgent extends IRunnable
     void setAgentProcessingComponent(IAgentProcessingComponent agentProcessingComponent);
     
     IAgentProcessingComponent getAgentProcessingComponent();
-    
+        
     String getAgentName();
 }

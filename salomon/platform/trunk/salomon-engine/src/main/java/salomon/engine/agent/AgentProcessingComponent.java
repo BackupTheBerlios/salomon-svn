@@ -27,28 +27,37 @@ import java.util.Comparator;
 import java.util.List;
 
 import salomon.agent.IAgentProcessingComponent;
+import salomon.communication.ICommunicationBus;
+import salomon.engine.platform.Environment;
 import salomon.engine.task.ITask;
 import salomon.engine.task.ITaskManager;
-import salomon.engine.task.ITaskRunner;
 import salomon.engine.task.Task;
+import salomon.platform.IEnvironment;
 
 /**
  * 
  */
 public class AgentProcessingComponent implements IAgentProcessingComponent
 {
+    private ICommunicationBus _communicationBus;
+
     private Long _componentId;
 
     private String _componentName;
 
     private TaskComparator _taskComparator;
-
+    
     private List<Task> _taskList;
+    
+    private IEnvironment _environment;
+    
+    private transient boolean _started;
 
     public AgentProcessingComponent()
     {
         _taskList = new ArrayList<Task>();
         _taskComparator = new TaskComparator();
+        _environment = new Environment();
     }
 
     /**
@@ -71,6 +80,15 @@ public class AgentProcessingComponent implements IAgentProcessingComponent
     }
 
     /**
+     * Returns the communicationBus.
+     * @return The communicationBus
+     */
+    public final ICommunicationBus getCommunicationBus()
+    {
+        return _communicationBus;
+    }
+
+    /**
      * Returns the _componentId.
      * @return The _componentId
      */
@@ -88,10 +106,9 @@ public class AgentProcessingComponent implements IAgentProcessingComponent
         return _componentName;
     }
 
-    public ITaskRunner getRunner()
+    public IEnvironment getEnvironment()
     {
-        throw new UnsupportedOperationException(
-                "Method AgentProcessingComponent.getRunner() not implemented yet!");
+        return _environment;
     }
 
     /**
@@ -125,15 +142,6 @@ public class AgentProcessingComponent implements IAgentProcessingComponent
     }
 
     /**
-     * @see salomon.agent.IAgentProcessingComponent#getTaskManager()
-     */
-    public ITaskManager getTaskManager()
-    {
-        throw new UnsupportedOperationException(
-                "Method AgentProcessingComponent.getTaskManager() not implemented yet!");
-    }
-
-    /**
      * @see salomon.agent.IAgentProcessingComponent#getTasks()
      */
     public Task[] getTasks()
@@ -149,12 +157,26 @@ public class AgentProcessingComponent implements IAgentProcessingComponent
         return _componentId.hashCode();
     }
 
+    public synchronized boolean isStarted()
+    {
+        return _started;
+    }
+
     /**
      * @see salomon.agent.IAgentProcessingComponent#removeTask(salomon.engine.task.ITask)
      */
     public void removeTask(ITask task)
     {
         _taskList.remove(task);
+    }
+
+    /**
+     * Set the value of communicationBus field.
+     * @param communicationBus The communicationBus to set
+     */
+    public final void setCommunicationBus(ICommunicationBus communicationBus)
+    {
+        _communicationBus = communicationBus;
     }
 
     /**
@@ -173,6 +195,17 @@ public class AgentProcessingComponent implements IAgentProcessingComponent
     {
         throw new UnsupportedOperationException(
                 "Method AgentProcessingComponent.setTaskManager() not implemented yet!");
+    }
+
+    public synchronized void start()
+    {
+        _started = true;
+        // FIXME: add tasks processing        
+    }
+
+    public synchronized void stop()
+    {
+        _started = false;
     }
 
     /**
@@ -210,6 +243,8 @@ public class AgentProcessingComponent implements IAgentProcessingComponent
         _taskList = tasks;
     }
 
+   
+
     /**
      * Comparator used to mantain the order of tasks in the collection.
      */
@@ -221,15 +256,5 @@ public class AgentProcessingComponent implements IAgentProcessingComponent
             int task2Nr = task2.getTaskNr();
             return (task1Nr < task2Nr ? -1 : (task1Nr == task2Nr ? 0 : 1));
         }
-    }
-
-    public void start()
-    {
-        throw new UnsupportedOperationException("Method AgentProcessingComponent.start() not implemented yet!");
-    }
-
-    public void stop()
-    {
-        throw new UnsupportedOperationException("Method AgentProcessingComponent.stop() not implemented yet!");
     }
 }

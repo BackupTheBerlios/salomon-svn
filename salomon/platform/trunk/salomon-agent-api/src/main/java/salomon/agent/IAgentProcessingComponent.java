@@ -21,22 +21,28 @@
 
 package salomon.agent;
 
+import salomon.communication.ICommunicationBus;
+import salomon.platform.IEnvironment;
 
 /**
  * 
  */
 public interface IAgentProcessingComponent extends IRunnable
 {
+    IEnvironment getEnvironment();
+    
+    ICommunicationBus getCommunicationBus();
+
     // extract these methods to the separate interface in the platform
-//    void addTask(ITask task);
-//
-//    void removeTask(ITask task);
-//
-//    ITask[] getTasks();
-//
-//    ITask getTask(long taskId);
-//
-//    ITask getTask(String taskName);
-//    
-//    ITaskRunner getRunner();
+    //    void addTask(ITask task);
+    //
+    //    void removeTask(ITask task);
+    //
+    //    ITask[] getTasks();
+    //
+    //    ITask getTask(long taskId);
+    //
+    //    ITask getTask(String taskName);
+    //    
+    //    ITaskRunner getRunner();
 }

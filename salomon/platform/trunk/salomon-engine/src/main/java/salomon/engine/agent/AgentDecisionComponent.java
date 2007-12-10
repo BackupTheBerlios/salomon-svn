@@ -123,4 +123,9 @@ public class AgentDecisionComponent implements IAgentDecisionComponent
         _componentId = componentId;
     }
 
+    public boolean isStarted()
+    {
+        throw new UnsupportedOperationException("Method AgentDecisionComponent.isStarted() not implemented yet!");
+    }
+
 }

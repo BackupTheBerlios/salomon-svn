@@ -26,15 +26,12 @@ package salomon.platform.serialization;
  * 
  */
 /**
- * 
- * TODO: add comment.
- * @author kuba
- * 
+ *  
  */
 public interface IObject
 {
     enum Types {
-        STRUCT, STRING, INT, ARRAY
+        STRUCT, STRING, INT, LONG, ARRAY
     };
 
     /**

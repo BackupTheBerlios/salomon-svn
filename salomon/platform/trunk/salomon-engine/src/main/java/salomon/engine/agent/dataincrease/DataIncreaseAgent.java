@@ -21,26 +21,22 @@
 
 package salomon.engine.agent.dataincrease;
 
-import java.io.ByteArrayInputStream;
-
 import org.apache.log4j.Logger;
 
 import salomon.agent.IAgentDecisionComponent;
 import salomon.agent.IAgentProcessingComponent;
 import salomon.agent.IConfigComponent;
-import salomon.engine.agent.AbstractAgent;
+import salomon.engine.agent.Agent;
 import salomon.engine.agent.AgentInfo;
 import salomon.engine.platform.data.DBMetaData;
-import salomon.engine.platform.serialization.XMLSerializer;
 import salomon.engine.project.IProject;
 import salomon.platform.IDataEngine;
 import salomon.platform.data.ITable;
-import salomon.platform.serialization.IStruct;
 
 /**
  * 
  */
-public final class DataIncreaseAgent extends AbstractAgent
+public final class DataIncreaseAgent extends Agent
 {
     static final String TRESHOLD = "treshold";
 
@@ -52,9 +48,9 @@ public final class DataIncreaseAgent extends AbstractAgent
 
     private boolean _stopped;
 
+    // FIXME:
     public DataIncreaseAgent(AgentInfo agentInfo)
-    {
-        super(agentInfo);
+    {        
         _configComponent = new ConfigComponent();
         _stopped = false;
     }

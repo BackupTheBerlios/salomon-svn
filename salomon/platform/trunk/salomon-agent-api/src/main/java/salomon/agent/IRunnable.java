@@ -29,4 +29,6 @@ public interface IRunnable
     void start();
 
     void stop();
+    
+    boolean isStarted();
 }
