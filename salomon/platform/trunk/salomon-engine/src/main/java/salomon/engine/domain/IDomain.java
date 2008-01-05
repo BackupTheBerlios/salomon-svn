@@ -35,4 +35,6 @@ public interface IDomain
     IProjectManager getProjectManager();
     
     String getDomainName();
+    
+    void setDomainName(String domainName);
 }

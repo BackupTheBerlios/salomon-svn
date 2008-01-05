@@ -264,9 +264,10 @@ public final class ProjectManagerGUI
     {
         if (_projectViewerFrame == null) {
             _projectViewerFrame = new JFrame(Messages.getString("TIT_PROJECTS"));
+            // FIXME:
             _projectViewerFrame.getContentPane().add(
                     new ProjectSpread(
-                            ((ProjectManager) _projectManager).getDbManager()));
+                            null));
             _projectViewerFrame.pack();
         }
         _projectViewerFrame.setLocation(Utils.getCenterLocation(_projectViewerFrame));

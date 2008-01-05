@@ -21,245 +21,165 @@
 
 package salomon.engine.project;
 
-import java.util.HashSet;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
 
 import salomon.agent.IAgent;
 import salomon.engine.agent.Agent;
-import salomon.engine.agent.IAgentManager;
+import salomon.engine.agent.AgentManager;
 import salomon.engine.database.DBManager;
 import salomon.engine.domain.Domain;
 import salomon.engine.platform.IManagerEngine;
-import salomon.engine.task.ITaskManager;
 import salomon.platform.exception.PlatformException;
 
 /**
  * Represents a project, it is an implementation of IProject interface.
  */
-public final class Project implements IProject
-{
-    private static final Logger LOGGER = Logger.getLogger(Project.class);
+public final class Project implements IProject {
+	private static final Logger LOGGER = Logger.getLogger(Project.class);
 
-    private IAgentManager _agentManager;
+	private AgentManager _agentManager;
 
-    private Set<Agent> _agentSet;
+	private Domain _domain;
 
-    private Domain _domain;
+	private Long _projectId;
 
-    private Long _projectId;
+	private String _projectName;
 
-    /**
-     * 
-     * @uml.property name="_projectInfo"
-     * @uml.associationEnd multiplicity="(0 1)"
-     */
-    private ProjectInfo _projectInfo;
+	public Project() {
+		_agentManager = new AgentManager(this);
+	}
 
-    private IProjectManager _projectManager;
+	@Deprecated
+	protected Project(IManagerEngine managerEngine, DBManager manager)
+			throws PlatformException {
+	}
 
-    private String _projectName;
+	/**
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof Project) {
+			Project project = (Project) obj;
+			return _projectId.equals(project.getProjectId());
+		}
+		return false;
+	}
 
-    /**
-     * 
-     * @uml.property name="_taskManager"
-     * @uml.associationEnd multiplicity="(0 1)"
-     */
-    private ITaskManager _taskManager;
+	public AgentManager getAgentManager() {
+		return _agentManager;
+	}
 
-    public Project()
-    {
-        _agentSet = new HashSet<Agent>();
-    }
+	/**
+	 * Returns the domain.
+	 * 
+	 * @return The domain
+	 */
+	public Domain getDomain() {
+		return _domain;
+	}
 
-    protected Project(IManagerEngine managerEngine, DBManager manager)
-            throws PlatformException
-    {
-        _taskManager = managerEngine.getTasksManager();
-        _projectManager = managerEngine.getProjectManager();
-        _agentManager = managerEngine.getAgentManager();
-        _projectInfo = new ProjectInfo(manager);
-    }
+	@Deprecated
+	// FIXME:
+	public ProjectInfo getInfo() {
+		throw new UnsupportedOperationException(
+				"Method Project.getInfo() is deprecated!");
+	}
 
-    /**
-     * @see salomon.engine.project.IProject#addAgent(salomon.agent.IAgent)
-     */
-    public void addAgent(IAgent agent)
-    {
-        ((Agent) agent).setProject(this);
-        _agentSet.add((Agent) agent);
-    }
+	/**
+	 * Returns the projectId.
+	 * 
+	 * @return The projectId
+	 */
+	public Long getProjectId() {
+		return _projectId;
+	}
 
-    /**
-     * @see java.lang.Object#equals(java.lang.Object)
-     */
-    @Override
-    public boolean equals(Object obj)
-    {
-        if (obj instanceof Project) {
-            Project project = (Project) obj;
-            return _projectId.equals(project.getProjectId());
-        }
-        return false;
-    }
+	@Deprecated
+	public IProjectManager getProjectManager() throws PlatformException {
+		// FIXME:
+		throw new UnsupportedOperationException(
+				"Method Project.getProjectManager() is deprecated!");
+	}
 
-    /**
-     * @see salomon.engine.project.IProject#getAgent(long)
-     */
-    public IAgent getAgent(long agentId)
-    {
-        IAgent agent = null;
-        for (Agent a : _agentSet) {
-            if (agentId == a.getAgentId()) {
-                agent = a;
-                break;
-            }
-        }
-        return agent;
-    }
+	/**
+	 * Returns the projectName.
+	 * 
+	 * @return The projectName
+	 */
+	public String getProjectName() {
+		return _projectName;
+	}
 
-    /**
-     * @see salomon.engine.project.IProject#getAgent(java.lang.String)
-     */
-    public IAgent getAgent(String agentName)
-    {
-        IAgent agent = null;
-        for (Agent a : _agentSet) {
-            if (agentName.equals(a.getAgentName())) {
-                agent = a;
-                break;
-            }
-        }
-        return agent;
-    }
+	@Override
+	public int hashCode() {
+		return _projectId == null ? 0 : _projectId.hashCode();
+	}
 
-    /**
-     * @see salomon.engine.project.IProject#getAgents()
-     */
-    public IAgent[] getAgents()
-    {
-        return _agentSet.toArray(new Agent[_agentSet.size()]);
-    }
+	public void removeAgent(IAgent agent) {
+		_agentManager.removeAgent(agent);
+	}
 
-    /**
-     * Returns the domain.
-     * @return The domain
-     */
-    public Domain getDomain()
-    {
-        return _domain;
-    }
+	/**
+	 * Set the value of domain field.
+	 * 
+	 * @param domain
+	 *            The domain to set
+	 */
+	public void setDomain(Domain domain) {
+		_domain = domain;
+	}
 
-    public ProjectInfo getInfo()
-    {
-        return _projectInfo;
-    }
+	/**
+	 * Set the value of projectName field.
+	 * 
+	 * @param projectName
+	 *            The projectName to set
+	 */
+	public void setProjectName(String projectName) {
+		_projectName = projectName;
+	}
 
-    /**
-     * Returns the projectId.
-     * @return The projectId
-     */
-    public Long getProjectId()
-    {
-        return _projectId;
-    }
+	public void start() {
+		throw new UnsupportedOperationException(
+				"Method Project.start() is not implemented yet!");
+	}
 
-    public IProjectManager getProjectManager() throws PlatformException
-    {
-        //FIXME: change it after implementing cascade model
-        return _projectManager;
-    }
+	/**
+	 * Returns the agentSet.
+	 * 
+	 * @return The agentSet
+	 */
+	// used by Hibernate only
+	@SuppressWarnings("unused")
+	private Set<Agent> getAgentSet() {
+		return _agentManager.getAgentSet();
+	}
 
-    /**
-     * Returns the projectName.
-     * @return The projectName
-     */
-    public String getProjectName()
-    {
-        return _projectName;
-    }
+	/**
+	 * Set the value of agentSet field.
+	 * 
+	 * @param agentSet
+	 *            The agentSet to set
+	 */
+	// used by Hibernate only
+	@SuppressWarnings("unused")
+	private void setAgentSet(Set<Agent> agentSet) {
+		_agentManager.setAgentSet(agentSet);
+	}
 
-    /**
-     * @see salomon.engine.project.IProject#getTaskManager()
-     */
-    public ITaskManager getTaskManager() throws PlatformException
-    {
-        return _taskManager;
-    }
-
-    @Override
-    public int hashCode()
-    {
-        return _projectId == null ? 0 : _projectId.hashCode();
-    }
-
-    public void removeAgent(IAgent agent)
-    {
-        _agentSet.remove(agent);
-    }
-
-    /**
-     * Set the value of domain field.
-     * @param domain The domain to set
-     */
-    public void setDomain(Domain domain)
-    {
-        _domain = domain;
-    }
-
-    /**
-     * Set the value of projectName field.
-     * @param projectName The projectName to set
-     */
-    public void setProjectName(String projectName)
-    {
-        _projectName = projectName;
-    }
-
-    public void start()
-    {
-        LOGGER.info("Project.start()");
-        _taskManager.getRunner().start();
-    }
-
-    @Override
-    public String toString()
-    {
-        return _projectInfo.toString();
-    }
-
-    /**
-     * Returns the agentSet.
-     * @return The agentSet
-     */
-    // used by Hibernate only
-    @SuppressWarnings("unused")
-    private Set<Agent> getAgentSet()
-    {
-        return _agentSet;
-    }
-
-    /**
-     * Set the value of agentSet field.
-     * @param agentSet The agentSet to set
-     */
-    //  used by Hibernate only
-    @SuppressWarnings("unused")
-    private void setAgentSet(Set<Agent> agentSet)
-    {
-        _agentSet = agentSet;
-    }
-
-    /**
-     * Set the value of projectId field.
-     * @param projectId The projectId to set
-     */
-    //  used by Hibernate only
-    @SuppressWarnings("unused")
-    private void setProjectId(Long projectId)
-    {
-        _projectId = projectId;
-    }
+	/**
+	 * Set the value of projectId field.
+	 * 
+	 * @param projectId
+	 *            The projectId to set
+	 */
+	// used by Hibernate only
+	@SuppressWarnings("unused")
+	private void setProjectId(Long projectId) {
+		_projectId = projectId;
+	}
 
 }

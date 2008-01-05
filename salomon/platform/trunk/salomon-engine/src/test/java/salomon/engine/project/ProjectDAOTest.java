@@ -95,24 +95,24 @@ public class ProjectDAOTest extends TestCase
         project.setProjectName("test-save-with-agents");
         Agent agent = new Agent();
         agent.setAgentName("test-agent-for-project");
-        project.addAgent(agent);
+        project.getAgentManager().addAgent(agent);
         projectDAO.save(project);
 
         IProject inserted = projectDAO.getProject(project.getProjectId());
         assertNotNull(inserted);
         assertEquals(project.getProjectName(), inserted.getProjectName());
         // test getting all agents
-        assertNotNull(inserted.getAgents());
-        assertTrue(inserted.getAgents().length >= 1);
+        assertNotNull(inserted.getAgentManager().getAgents());
+        assertTrue(inserted.getAgentManager().getAgents().length >= 1);
         assertEquals(agent.getAgentName(),
-                inserted.getAgents()[0].getAgentName());
+                inserted.getAgentManager().getAgents()[0].getAgentName());
 
         // test getting particular agent (by id)
-        IAgent insertedAgent = inserted.getAgent(agent.getAgentId());
+        IAgent insertedAgent = inserted.getAgentManager().getAgent(agent.getAgentId());
         assertNotNull(insertedAgent);
         assertEquals(agent.getAgentName(), insertedAgent.getAgentName());
         // test getting particular agent (by name)
-        insertedAgent = inserted.getAgent(agent.getAgentName());
+        insertedAgent = inserted.getAgentManager().getAgent(agent.getAgentName());
         assertNotNull(insertedAgent);
         assertEquals(agent.getAgentName(), insertedAgent.getAgentName());
     }

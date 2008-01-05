@@ -21,24 +21,18 @@
 
 package salomon.engine.project;
 
-import salomon.agent.IAgent;
+import salomon.engine.agent.IAgentManager;
 
 /**
  * An interface for projects.
  */
-public interface IProject
-{
-    void addAgent(IAgent agent);
+public interface IProject {
+	
+	IAgentManager getAgentManager();
 
-    void removeAgent(IAgent agent);
+	String getProjectName();
 
-    IAgent[] getAgents();
+	void setProjectName(String projectName);
 
-    IAgent getAgent(long agentId);
-
-    IAgent getAgent(String agentName);
-
-    String getProjectName();
-
-    void start();
+	void start();
 }

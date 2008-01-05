@@ -23,7 +23,6 @@ package salomon.engine.domain;
 
 import java.util.Set;
 
-import salomon.engine.project.IProject;
 import salomon.engine.project.IProjectManager;
 import salomon.engine.project.Project;
 import salomon.engine.project.ProjectManager;

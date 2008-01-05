@@ -18,30 +18,35 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * 
  */
-package salomon.engine.domain;
+/**
+ * 
+ */
+package salomon.engine.project;
 
-import salomon.engine.DAOTestHelper;
 import junit.framework.TestCase;
+import salomon.engine.DAOTestHelper;
+import salomon.engine.domain.Domain;
 
 /**
  * @author Nikodem.Jura
- * 
+ *
  */
-public class DomainManagerTest extends TestCase {
-
-	private DomainManager _domainManager = new DomainManager();
+public class ProjectManagerTest extends TestCase {
 
 	/**
-	 * Test method for
-	 * {@link salomon.engine.domain.DomainManager#addDomain(salomon.engine.domain.IDomain)}.
+	 * Test method for {@link salomon.engine.project.ProjectManager#addProject(salomon.engine.project.IProject)}.
 	 */
-	public void testAddDomain() {
-		Domain domain = DAOTestHelper.createTestDomain(true);
-		_domainManager.addDomain(domain);
-
-		IDomain inserted = _domainManager.getDomain(domain.getDomainName());
+	public void testAddProject() {
+		Domain domain = DAOTestHelper.createTestDomain(false);
+		IProjectManager projectManager = domain.getProjectManager();
+		
+		IProject project = (Project) projectManager.createProject();
+		project.setProjectName("test-project-name");
+		projectManager.addProject(project);
+		
+		IProject inserted = projectManager.getProject(project.getProjectName());
 		assertNotNull(inserted);
-		assertEquals(domain.getDomainName(), inserted.getDomainName());
+		assertEquals(project.getProjectName(), inserted.getProjectName());
 	}
 
 }

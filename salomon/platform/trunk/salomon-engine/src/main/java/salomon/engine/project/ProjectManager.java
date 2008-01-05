@@ -21,21 +21,17 @@
 
 package salomon.engine.project;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
 
+import salomon.engine.DAOContext;
 import salomon.engine.database.DBManager;
-import salomon.engine.database.queries.SQLDelete;
-import salomon.engine.database.queries.SQLSelect;
 import salomon.engine.domain.Domain;
 import salomon.engine.domain.IDomain;
 import salomon.engine.platform.IManagerEngine;
-import salomon.platform.exception.DBException;
 import salomon.platform.exception.PlatformException;
 import salomon.plugin.IPlatformUtil;
 
@@ -55,14 +51,6 @@ public final class ProjectManager implements IProjectManager {
 	// FIXME: change it afeter implementing cascade model
 	IManagerEngine _managerEngine = null;
 
-	/**
-	 * 
-	 * @uml.property name="_dbManager"
-	 * @uml.associationEnd multiplicity="(0 1)"
-	 */
-	// FIXME: remove
-	private DBManager _dbManager;
-
 	private Domain _domain;
 
 	private Set<Project> _projectSet;
@@ -74,8 +62,8 @@ public final class ProjectManager implements IProjectManager {
 
 	@Deprecated
 	public ProjectManager(IManagerEngine managerEngine, DBManager manager) {
-		_managerEngine = managerEngine;
-		_dbManager = manager;
+		throw new UnsupportedOperationException(
+				"Method ProjectManager.ProjectManager() is deprecated!");
 	}
 
 	/**
@@ -123,14 +111,15 @@ public final class ProjectManager implements IProjectManager {
 	 */
 	public boolean exists(String projectName) throws PlatformException {
 		boolean exists = false;
-		SQLSelect select = new SQLSelect();
-		select.addTable(ProjectInfo.TABLE_NAME);
-		select.addCondition("project_name =", projectName);
-		try {
-			exists = _dbManager.existsSelect(select);
-		} catch (SQLException e) {
-			throw new PlatformException(e.getLocalizedMessage());
-		}
+		//FIXME: reimplement using Hibernate
+//		SQLSelect select = new SQLSelect();
+//		select.addTable(ProjectInfo.TABLE_NAME);
+//		select.addCondition("project_name =", projectName);
+//		try {
+//			exists = _dbManager.existsSelect(select);
+//		} catch (SQLException e) {
+//			throw new PlatformException(e.getLocalizedMessage());
+//		}
 		return exists;
 	}
 
@@ -141,10 +130,6 @@ public final class ProjectManager implements IProjectManager {
 	public IProject getCurrentProject() {
 		throw new UnsupportedOperationException(
 				"ProjectManager.getCurrentProject() method should not be used");
-	}
-
-	public DBManager getDbManager() {
-		return _dbManager;
 	}
 
 	public IPlatformUtil getPlaftormUtil() {

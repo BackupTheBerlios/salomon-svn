@@ -22,20 +22,25 @@
 package salomon.engine.agent;
 
 import salomon.agent.IAgent;
-import salomon.platform.IInfo;
 
 public interface IAgentManager
 {
-    IAgent getAgent(int agentId);
+    void addAgent(IAgent agent);
+
+    void removeAgent(IAgent agent);
 
     IAgent[] getAgents();
 
+    IAgent getAgent(long agentId);
+
+    IAgent getAgent(String agentName);
+
     /**
-     * Creates agent basing on given agent info.
+     * Creates empty agent
      * 
      * @param agentInfo
      * @return
      * @throws Exception
      */
-    public IAgent createAgent(IInfo agentInfo);
+    public IAgent createAgent();
 }

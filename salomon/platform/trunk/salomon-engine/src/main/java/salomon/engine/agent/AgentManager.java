@@ -21,98 +21,122 @@
 
 package salomon.engine.agent;
 
-import java.lang.reflect.Constructor;
-import java.sql.ResultSet;
-import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.apache.log4j.Logger;
 
 import salomon.agent.IAgent;
-import salomon.engine.database.DBManager;
-import salomon.engine.database.queries.SQLSelect;
-import salomon.platform.IInfo;
-import salomon.platform.exception.PlatformException;
+import salomon.engine.project.Project;
 
 /**
  * 
  */
-public final class AgentManager implements IAgentManager
-{
-    static final Logger LOGGER = Logger.getLogger(AgentManager.class);
+public final class AgentManager implements IAgentManager {
+	static final Logger LOGGER = Logger.getLogger(AgentManager.class);
 
-    private DBManager _dbManager;
+	private Set<Agent> _agentSet;
 
-    public AgentManager(DBManager dbManager)
-    {
-        _dbManager = dbManager;
-    }
+	private Project _project;
 
-    /**
-     * Creates agent basing on given agent info.
-     * 
-     * @param agentInfo
-     * @return
-     * @throws Exception
-     */
-    public IAgent createAgent(IInfo agentInfo)
-    {
-        IAgent agent = null;
-        try {
-            Class agentClass = Class.forName(((AgentInfo) agentInfo).getAgentClass());
-            Constructor constructor = agentClass.getConstructor(new Class[]{AgentInfo.class});
-            agent = (IAgent) constructor.newInstance(agentInfo);
-        } catch (Exception e) {
-            LOGGER.fatal("", e);
-            throw new PlatformException(e.getLocalizedMessage());
-        }
-        return agent;
-    }
+	public AgentManager(Project project) {
+		_project = project;
+		_agentSet = new HashSet<Agent>();
+	}
 
-    /**
-     * @see salomon.agent.IAgentManager#getAgent(int)
-     */
-    public IAgent getAgent(int agentId)
-    {
-        IAgent[] agents = getAgents(agentId);
-        IAgent agent = agents.length > 0 ? agents[0] : null;
-        return agent;
-    }
+	/**
+	 * Creates an agent.
+	 * 
+	 * @param agentInfo
+	 * @return
+	 * @throws Exception
+	 */
+	public IAgent createAgent() {
+		// IAgent agent = null;
+		// try {
+		// Class agentClass = Class.forName(((AgentInfo)
+		// agentInfo).getAgentClass());
+		// Constructor constructor = agentClass.getConstructor(new
+		// Class[]{AgentInfo.class});
+		// agent = (IAgent) constructor.newInstance(agentInfo);
+		// } catch (Exception e) {
+		// LOGGER.fatal("", e);
+		// throw new PlatformException(e.getLocalizedMessage());
+		// }
+		// return agent;
+		// TODO:
+		Agent agent = new Agent();
+		agent.setProject(_project);
+		return agent;
+	}
 
-    /**
-     * @see salomon.agent.IAgentManager#getAgents()
-     */
-    public IAgent[] getAgents()
-    {
-        return getAgents(-1);
-    }
+	/**
+	 * @see salomon.engine.project.IProject#getAgent(long)
+	 */
+	public IAgent getAgent(long agentId) {
+		IAgent agent = null;
+		for (Agent a : _agentSet) {
+			if (agentId == a.getAgentId()) {
+				agent = a;
+				break;
+			}
+		}
+		return agent;
+	}
 
-    private IAgent[] getAgents(int agentId)
-    {
-        SQLSelect select = new SQLSelect();
-        select.addTable(AgentInfo.TABLE_NAME);
-        if (agentId > 0) {
-            select.addCondition(AgentInfo.PRIMARY_KEY + " =", agentId);
-        }
+	/**
+	 * @see salomon.engine.project.IProject#addAgent(salomon.agent.IAgent)
+	 */
+	public void addAgent(IAgent agent) {
+		// TODO:
+		// this statement is redundant, project should be set by calling
+		// AgentManager.createAgent()
+		((Agent) agent).setProject(_project);
+		_agentSet.add((Agent) agent);
+	}
 
-        ResultSet resultSet = null;
-        ArrayList<IAgent> agentArrayList = new ArrayList<IAgent>();
+	/**
+	 * @see salomon.engine.project.IProject#getAgent(java.lang.String)
+	 */
+	public IAgent getAgent(String agentName) {
+		IAgent agent = null;
+		for (Agent a : _agentSet) {
+			if (agentName.equals(a.getAgentName())) {
+				agent = a;
+				break;
+			}
+		}
+		return agent;
+	}
 
-        try {
-            resultSet = _dbManager.select(select);
-            while (resultSet.next()) {
-                AgentInfo agentInfo = new AgentInfo();
-                agentInfo.load(resultSet);
-                IAgent agent = createAgent(agentInfo);
-                agentArrayList.add(agent);
-            }
-        } catch (Exception e) {
-            LOGGER.fatal("", e);
-            throw new PlatformException(e.getLocalizedMessage());
-        }
+	/**
+	 * @see salomon.engine.project.IProject#getAgents()
+	 */
+	public IAgent[] getAgents() {
+		return _agentSet.toArray(new Agent[_agentSet.size()]);
+	}
 
-        IAgent[] agentArray = new IAgent[agentArrayList.size()];
-        agentArray = agentArrayList.toArray(agentArray);
+	/**
+	 * Set the value of agentSet field.
+	 * 
+	 * @param agentSet
+	 *            The agentSet to set
+	 */
+	public void setAgentSet(Set<Agent> agentSet) {
+		_agentSet = agentSet;
+	}
 
-        return agentArray;
-    }
+	/**
+	 * Returns the agentSet.
+	 * 
+	 * @return The agentSet
+	 */
+	public Set<Agent> getAgentSet() {
+		return _agentSet;
+	}
+
+	public void removeAgent(IAgent agent) {
+		_agentSet.remove(agent);
+	}
+
 }
