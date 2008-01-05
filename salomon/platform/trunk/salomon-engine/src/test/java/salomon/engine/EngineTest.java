@@ -33,6 +33,8 @@ import salomon.engine.domain.IDomain;
 import salomon.engine.domain.IDomainManager;
 import salomon.engine.project.IProject;
 import salomon.engine.project.IProjectManager;
+import salomon.engine.task.ITask;
+import salomon.engine.task.ITaskManager;
 
 /**
  * @author Nikodem.Jura
@@ -65,7 +67,7 @@ public class EngineTest extends TestCase {
 		// load project and add agent to it
 		addAgent();
 		
-		// load agent
+		// load agent and add a task to it
 		loadAgent();
 		
 		// TODO:
@@ -76,13 +78,28 @@ public class EngineTest extends TestCase {
 	}
 
 	private void loadAgent() {
-		IProject project = getProject(getDomain());
+		IDomain domain = getDomain();
+		IProject project = getProject(domain);
 		IAgent agent = project.getAgentManager().getAgent(TEST_AGENT_NAME);
 		assertNotNull(agent);
 		assertNotNull(agent.getAgentDecisionComponent());
+		
 		// load agent decisioning component
 		agent.load();
 		assertEquals(DUMMY_AGENT_DECISIONING_COMP, agent.getAgentDecisionComponent().getClass().getName());
+		
+		// add task
+		ITaskManager taskManager = ((AgentProcessingComponent)agent.getAgentProcessingComponent()).getTaskManager();
+		ITask task1 = taskManager.createTask();
+		task1.setTaskName("test-task1");
+		ITask task2 = taskManager.createTask();
+		task2.setTaskName("test-task2");
+		
+		taskManager.addTask(task1);
+		taskManager.addTask(task2);
+		
+		// FIXME:
+		_domainManager.addDomain(domain);
 	}
 
 	private void addAgent() {

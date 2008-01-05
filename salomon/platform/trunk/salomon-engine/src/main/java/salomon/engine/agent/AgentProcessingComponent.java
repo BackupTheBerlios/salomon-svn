@@ -47,6 +47,9 @@ public class AgentProcessingComponent implements IAgentProcessingComponent {
 
 	private TaskManager _taskManager;
 
+	// this method is not a part of an interface, because salomon-agent-api
+	// cannot depend on salomon-engine, where ITaskManager is defined
+	// it leads to cyclic dependency between projects
 	public TaskManager getTaskManager() {
 		return _taskManager;
 	}
