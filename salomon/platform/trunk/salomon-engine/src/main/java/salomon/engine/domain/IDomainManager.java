@@ -28,48 +28,64 @@ import salomon.platform.exception.PlatformException;
  * 
  * @see salomon.engine.domain.IDomain
  */
-public interface IDomainManager
-{
-    /**
-     * Stores the domain in the database.
-     * @see #createDomain()
-     * 
-     * @param domain The domain
-     * @throws PlatformException
-     */
-    void addDomain(IDomain domain) throws PlatformException;
+public interface IDomainManager {
+	/**
+	 * Stores the domain in the database.
+	 * 
+	 * @see #createDomain()
+	 * 
+	 * @param domain
+	 *            The domain
+	 * @throws PlatformException
+	 */
+	void addDomain(IDomain domain) throws PlatformException;
 
-    /**
-     * Creates an empty domain, but doesn't add it to database.
-     * Use <code>addDomain</code> method to store this domain in the database. 
-     * @see #addDomain(IDomain)
-     * @return The empty domain
-     * @throws PlatformException
-     */
-    IDomain createDomain() throws PlatformException;
+	/**
+	 * Creates an empty domain, but doesn't add it to database. Use
+	 * <code>addDomain</code> method to store this domain in the database.
+	 * 
+	 * @see #addDomain(IDomain)
+	 * @return The empty domain
+	 * @throws PlatformException
+	 */
+	IDomain createDomain();
 
-    /**
-     * Returns current domain.
-     * 
-     * @return
-     * @throws PlatformException
-     */
-    IDomain getCurrentDomain() throws PlatformException;
+	/**
+	 * Returns current domain.
+	 * 
+	 * @return
+	 * @throws PlatformException
+	 */
+	@Deprecated
+	IDomain getCurrentDomain();
 
-    /**
-     * Returns domain with given identifier.
-     * 
-     * @param id identifier of domain
-     * @return The domain
-     * @throws PlatformException
-     */
-    IDomain getDomain(int id) throws PlatformException;
+	/**
+	 * Returns domain with given identifier.
+	 * 
+	 * @param id
+	 *            identifier of domain
+	 * @return The domain
+	 * @throws PlatformException
+	 */
+	IDomain getDomain(long id) throws PlatformException;
 
-    /**
-     * Returns all domains.
-     * 
-     * @return The array of all domains
-     * @throws PlatformException
-     */
-    IDomain[] getDomains() throws PlatformException;
+	/**
+	 * Returns domain with given name.
+	 * 
+	 * @param domainName
+	 *            name of domain
+	 * @return The domain
+	 * @throws PlatformException
+	 */
+	IDomain getDomain(String domainName) throws PlatformException;
+
+	/**
+	 * Returns all domains.
+	 * 
+	 * @return The array of all domains
+	 * @throws PlatformException
+	 */
+	IDomain[] getDomains() throws PlatformException;
+	
+    void remove(IDomain domain);
 }

@@ -419,9 +419,9 @@ public final class SolutionManagerGUI
         if (_solutionViewerFrame == null) {
             _solutionViewerFrame = new JFrame(
                     Messages.getString("TIT_SOLUTIONS"));
+            // FIXME:
             _solutionViewerFrame.getContentPane().add(
-                    new SolutionSpread(
-                            ((DomainManager) _domainManager).getDBManager()));
+                    new SolutionSpread(null));
             _solutionViewerFrame.pack();
         }
         _solutionViewerFrame.setLocation(Utils.getCenterLocation(_solutionViewerFrame));

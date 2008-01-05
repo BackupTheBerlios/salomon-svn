@@ -95,7 +95,7 @@ public final class ManagerEngine implements IManagerEngine
             throw new PlatformException(e.getLocalizedMessage());
         }
         _platformUtil = new PlatformUtil();
-        _solutionManager = new DomainManager(this, _dbManager);
+        _solutionManager = new DomainManager(this);
         _projectManager = new ProjectManager(this, _dbManager);
         _taskManager = new TaskManager(this, _dbManager);
         _pluginManager = new PluginManager(_dbManager);

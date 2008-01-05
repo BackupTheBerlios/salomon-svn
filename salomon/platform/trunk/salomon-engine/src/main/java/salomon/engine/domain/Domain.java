@@ -21,147 +21,108 @@
 
 package salomon.engine.domain;
 
-import java.util.HashSet;
 import java.util.Set;
 
 import salomon.engine.project.IProject;
+import salomon.engine.project.IProjectManager;
 import salomon.engine.project.Project;
+import salomon.engine.project.ProjectManager;
 import salomon.platform.IDataEngine;
 import salomon.platform.exception.PlatformException;
 
-public class Domain implements IDomain
-{
-    private Long _domainId;
+public class Domain implements IDomain {
+	private Long _domainId;
 
-    private String _domainName;
+	private String _domainName;
 
-    private Set<Project> _projectSet;
+	private ProjectManager _projectManager;
 
-    public Domain()
-    {
-        _projectSet = new HashSet<Project>();
-    }
+	/**
+	 * Constructor should be used only in DomainManager.createDomain() method.
+	 */
+	Domain() {
+		// TODO: use Spring
+		_projectManager = new ProjectManager(this);
+	}
 
-    public void addProject(IProject project)
-    {
-        ((Project) project).setDomain(this);
-        _projectSet.add((Project) project);
-    }
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof Domain) {
+			Domain domain = (Domain) obj;
+			return _domainId.equals(domain.getDomainId());
+		}
+		return false;
+	}
 
-    @Override
-    public boolean equals(Object obj)
-    {
-        if (obj instanceof Domain) {
-            Domain domain = (Domain) obj;
-            return _domainId.equals(domain.getDomainId());
-        }
-        return false;
-    }
+	public IDataEngine getDataEngine() throws PlatformException {
+		throw new UnsupportedOperationException(
+				"Method Domain.getDataEngine() not implemented yet!");
+	}
 
-    public IDataEngine getDataEngine() throws PlatformException
-    {
-        throw new UnsupportedOperationException(
-                "Method Domain.getDataEngine() not implemented yet!");
-    }
+	/**
+	 * Returns the domainId.
+	 * 
+	 * @return The domainId
+	 */
+	public Long getDomainId() {
+		return _domainId;
+	}
 
-    /**
-     * Returns the domainId.
-     * @return The domainId
-     */
-    public Long getDomainId()
-    {
-        return _domainId;
-    }
+	public String getDomainName() {
+		return _domainName;
+	}
 
-    public String getDomainName()
-    {
-        return _domainName;
-    }
+	public IProjectManager getProjectManager() {
+		return _projectManager;
+	}
 
-    public IProject getProject(long projectId)
-    {
-        // TODO: optimize the search
-        IProject project = null;
-        for (Project p : _projectSet) {
-            if (projectId == p.getProjectId()) {
-                project = p;
-                break;
-            }
-        }
-        return project;
-    }
+	/**
+	 * TODO: add comment.
+	 * 
+	 * @return
+	 */
+	// used by Hibernate only
+	@SuppressWarnings("unused")
+	private Set<Project> getProjectSet() {
+		return _projectManager.getProjectSet();
+	}
 
-    public IProject getProject(String projectName)
-    {
-        // TODO: optimize the search
-        IProject project = null;
-        for (Project p : _projectSet) {
-            if (projectName.equals(p.getProjectName())) {
-                project = p;
-                break;
-            }
-        }
-        return project;
-    }
+	@Override
+	public int hashCode() {
+		return _domainId.hashCode();
+	}
 
-    public IProject[] getProjects()
-    {
-        return _projectSet.toArray(new Project[_projectSet.size()]);
-    }
+	/**
+	 * Set the value of domainId field.
+	 * 
+	 * @param domainId
+	 *            The domainId to set
+	 */
+	// used by Hibernate to generate id
+	@SuppressWarnings("unused")
+	private void setDomainId(Long domainId) {
+		_domainId = domainId;
+	}
 
-    @Override
-    public int hashCode()
-    {
-        return _domainId.hashCode();
-    }
+	/**
+	 * Set the value of domainName field.
+	 * 
+	 * @param domainName
+	 *            The domainName to set
+	 */
+	public void setDomainName(String domainName) {
+		_domainName = domainName;
+	}
 
-    /**
-     * @see salomon.engine.domain.IDomain#removeProject(salomon.engine.project.IProject)
-     */
-    public void removeProject(IProject project)
-    {
-        _projectSet.remove(project);
-    }
-
-    /**
-     * Set the value of domainName field.
-     * @param domainName The domainName to set
-     */
-    public void setDomainName(String domainName)
-    {
-        _domainName = domainName;
-    }
-
-    /**
-     * TODO: add comment.
-     * @return
-     */
-    // used by Hibernate only
-    @SuppressWarnings("unused")
-    private Set<Project> getProjectSet()
-    {
-        return _projectSet;
-    }
-
-    /**
-     * Set the value of domainId field.
-     * @param domainId The domainId to set
-     */
-    // used by Hibernate to generate id
-    @SuppressWarnings("unused")
-    private void setDomainId(Long domainId)
-    {
-        _domainId = domainId;
-    }
-
-    /**
-     * Set the value of projects field.
-     * @param projects The projects to set
-     */
-    // used by Hibernate only
-    @SuppressWarnings("unused")
-    private void setProjectSet(Set<Project> projects)
-    {
-        _projectSet = projects;
-    }
+	/**
+	 * Set the value of projects field.
+	 * 
+	 * @param projects
+	 *            The projects to set
+	 */
+	// used by Hibernate only
+	@SuppressWarnings("unused")
+	private void setProjectSet(Set<Project> projects) {
+		_projectManager.setProjectSet(projects);
+	}
 }

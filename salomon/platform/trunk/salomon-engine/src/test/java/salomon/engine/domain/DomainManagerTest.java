@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004 Salomon Team
+ * Copyright (C) 2008 Salomon Team
  *
  * This file is part of Salomon.
  *
@@ -18,21 +18,30 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * 
  */
-
 package salomon.engine.domain;
 
-import salomon.engine.project.IProjectManager;
-import salomon.platform.IDataEngine;
+import salomon.engine.DAOTestHelper;
+import junit.framework.TestCase;
 
 /**
- * Represents a domain.
- * @see salomon.engine.domain.IDomainManager
+ * @author Nikodem.Jura
+ * 
  */
-public interface IDomain
-{
-    IDataEngine getDataEngine();
+public class DomainManagerTest extends TestCase {
 
-    IProjectManager getProjectManager();
-    
-    String getDomainName();
+	private DomainManager _domainManager = new DomainManager();
+
+	/**
+	 * Test method for
+	 * {@link salomon.engine.domain.DomainManager#addDomain(salomon.engine.domain.IDomain)}.
+	 */
+	public void testAddDomain() {
+		Domain domain = DAOTestHelper.createTestDomain(true);
+		_domainManager.addDomain(domain);
+
+		IDomain inserted = _domainManager.getDomain(domain.getDomainId());
+		assertNotNull(inserted);
+		assertEquals(domain.getDomainName(), inserted.getDomainName());
+	}
+
 }

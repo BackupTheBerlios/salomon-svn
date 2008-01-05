@@ -31,19 +31,20 @@ import salomon.platform.exception.PlatformException;
 public interface IProjectManager
 {
     /**
-     * Adds the project to the Solution. 
+     * Adds the project to the Domain. 
      * @param project The project which should be added
      * @throws PlatformException
      */
-    void addProject(IProject project) throws PlatformException;
+    void addProject(IProject project);
 
     /**
      * Creates new, empty project
      */
-    IProject createProject() throws PlatformException;
+    IProject createProject();
 
-    //TODO: it should not be used 
-    IProject getCurrentProject() throws PlatformException;
+    //TODO: it should not be used
+    @Deprecated
+    IProject getCurrentProject();
 
     /**
      * Method loads project from data base.
@@ -51,8 +52,9 @@ public interface IProjectManager
      * @param projectID
      * @throws PlatformException
      */
-    IProject getProject(int projectID) throws PlatformException;
-
+    IProject getProject(long projectID) throws PlatformException;
+    
+    IProject getProject(String projectName) throws PlatformException;
     /**
      * Returns collection of available projects.
      * 
@@ -65,11 +67,11 @@ public interface IProjectManager
      */
     IProject[] getProjects() throws PlatformException;
 
-    IDomain getDomain() throws PlatformException;
+    IDomain getDomain();
 
-    boolean removeAll() throws PlatformException;
+    void removeAll() throws PlatformException;
 
-    boolean removeProject(IProject project) throws PlatformException;
+    void removeProject(IProject project) throws PlatformException;
 
     /**
      * Method saves project in data base - project header, plugins and tasks are

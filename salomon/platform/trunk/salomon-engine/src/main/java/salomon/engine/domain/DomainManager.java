@@ -21,184 +21,110 @@
 
 package salomon.engine.domain;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-
 import org.apache.log4j.Logger;
 
-import salomon.engine.database.DBManager;
-import salomon.engine.database.queries.SQLSelect;
+import salomon.engine.DAOContext;
 import salomon.engine.platform.IManagerEngine;
-import salomon.engine.platform.ManagerEngine;
-import salomon.platform.exception.DBException;
 import salomon.platform.exception.PlatformException;
 import salomon.plugin.IPlatformUtil;
 
-public final class DomainManager implements IDomainManager
-{
+public final class DomainManager implements IDomainManager {
 
-    private static final Logger LOGGER = Logger.getLogger(DomainManager.class);
+	private static final Logger LOGGER = Logger.getLogger(DomainManager.class);
 
-    /**
-     * 
-     * @uml.property name="_currentSolution"
-     * @uml.associationEnd multiplicity="(0 1)"
-     */
-    private IDomain _currentDomain;
+	private IDomainDAO _domainDAO = (IDomainDAO) DAOContext
+			.getBean("domainDAO");
+	/**
+	 * 
+	 * @uml.property name="_managerEngine"
+	 * @uml.associationEnd multiplicity="(0 1)"
+	 */
+	private IManagerEngine _managerEngine;
 
-    /**
-     * 
-     * @uml.property name="_dbManager"
-     * @uml.associationEnd multiplicity="(0 1)"
-     */
-    private DBManager _dbManager;
+	public DomainManager() {
+		// empty body
+	}
 
-    /**
-     * 
-     * @uml.property name="_managerEngine"
-     * @uml.associationEnd multiplicity="(0 1)"
-     */
-    private IManagerEngine _managerEngine;
+	@Deprecated
+	public DomainManager(IManagerEngine managerEngine) {
+		_managerEngine = managerEngine;
+	}
 
-    public DomainManager(IManagerEngine managerEngine, DBManager manager)
-    {
-        _managerEngine = managerEngine;
-        _dbManager = manager;
-    }
+	/**
+	 * @throws PlatformException
+	 * @see salomon.engine.domain.IDomainManager#addDomain(salomon.platform.domain.IDomain)
+	 */
+	public void addDomain(IDomain domain) throws PlatformException {
+		_domainDAO.save(domain);
+	}
 
-    /**
-     * @throws PlatformException 
-     * @see salomon.engine.domain.IDomainManager#addDomain(salomon.platform.domain.IDomain)
-     */
-    public void addDomain(IDomain domain) throws PlatformException
-    {
-        try {
-            //FIXME:
-//            DomainInfo domainInfo = (DomainInfo) domain.getInfo();
-//
-//            // saving domain
-//            domainInfo.save();
-//            _dbManager.commit();
+	/**
+	 * @see salomon.engine.domain.IDomainManager#createDomain()
+	 */
+	public IDomain createDomain() throws PlatformException {
+		// IDomain result = new Domain((ManagerEngine) _managerEngine,
+		// _dbManager);
+		// _currentDomain = result;
+		// return result;
+		// FIXME;
+		return new Domain();
+	}
 
-        } catch (Exception e) {
-            _dbManager.rollback();
-            LOGGER.fatal("", e);
-            throw new PlatformException(e.getLocalizedMessage());
-        }
-        _currentDomain = domain;
-    }
+	public boolean exists(String domainName) {
+		// FIXME: implement using Hibernate
+		boolean exists = false;
+		// SQLSelect select = new SQLSelect();
+		// //FIXME: select.addTable(DomainInfo.TABLE_NAME);
+		// select.addCondition("domain_name =", domainName);
+		// try {
+		// exists = _dbManager.existsSelect(select);
+		// } catch (SQLException e) {
+		// throw new PlatformException(e.getLocalizedMessage());
+		// }
+		return exists;
+	}
 
-    /**
-     * @see salomon.engine.domain.IDomainManager#createDomain()
-     */
-    public IDomain createDomain() throws PlatformException
-    {
-//        IDomain result = new Domain((ManagerEngine) _managerEngine,
-//                _dbManager);
-//        _currentDomain = result;
-//        return result;
-        //FIXME;
-        throw new UnsupportedOperationException(
-                "Method DomainManager.createDomain() not implemented yet!");
-    }
+	public IDomain getCurrentDomain() throws PlatformException {
+		throw new UnsupportedOperationException(
+				"Method DomainManager.getCurrentDomain() is not implemented yet!");
+	}
 
-    public boolean exists(String domainName)
-    {
-        boolean exists = false;
-        SQLSelect select = new SQLSelect();
-//FIXME:        select.addTable(DomainInfo.TABLE_NAME);
-        select.addCondition("domain_name =", domainName);
-        try {
-            exists = _dbManager.existsSelect(select);
-        } catch (SQLException e) {
-            throw new PlatformException(e.getLocalizedMessage());
-        }
-        return exists;
-    }
+	public IPlatformUtil getPlaftormUtil() {
+		return _managerEngine.getPlatformUtil();
+	}
 
-    public IDomain getCurrentDomain() throws PlatformException
-    {
-        return _currentDomain;
-    }
+	/**
+	 * @throws PlatformException
+	 * @see salomon.engine.domain.IDomainManager#getDomain(java.lang.String)
+	 */
+	public IDomain getDomain(long id) throws PlatformException {
+		IDomain domain = _domainDAO.getDomain(id);
 
-    public DBManager getDBManager()
-    {
-        return _dbManager;
-    }
+		LOGGER.debug("domain: " + domain);
+		LOGGER.info("Domain successfully loaded.");
 
-    public IPlatformUtil getPlaftormUtil()
-    {
-        return _managerEngine.getPlatformUtil();
-    }
+		return domain;
+	}
 
-    /**
-     * @throws PlatformException 
-     * @see salomon.engine.domain.IDomainManager#getDomain(java.lang.String)
-     */
-    public IDomain getDomain(int id) throws PlatformException
-    {
-        IDomain domain = this.createDomain();
-        // loading plugin information
-        // building query
-        SQLSelect select = new SQLSelect();
-//FIXME:        select.addTable(DomainInfo.TABLE_NAME);
-        select.addCondition("domain_id =", id);
-        ResultSet resultSet = null;
-        try {
-            resultSet = _dbManager.select(select);
-            resultSet.next();
-            // loading domain
-            //FIXME:((Domain) domain).getInfo().load(resultSet);
+	/**
+	 * @throws PlatformException
+	 * @see salomon.engine.domain.IDomainManager#getDomains()
+	 */
+	public IDomain[] getDomains() throws PlatformException {
+		return _domainDAO.getDomains();
+	}
 
-            // one row should be found, if found more, the first is got
-            if (resultSet.next()) {
-                LOGGER.warn("TOO MANY ROWS");
-            }
-            _dbManager.closeResultSet(resultSet);
-        } catch (Exception e) {
-            LOGGER.fatal("", e);
-            throw new DBException(e.getLocalizedMessage());
-        }
+	public IDomain getDomain(String domainName) throws PlatformException {
+		IDomain domain = _domainDAO.getDomain(domainName);
 
-        LOGGER.debug("domain: " + domain);
-        LOGGER.info("Domain successfully loaded.");
+		LOGGER.debug("domain: " + domain);
+		LOGGER.info("Domain successfully loaded.");
 
-        // setting current domain
-        _currentDomain = domain;
-        return _currentDomain;
-    }
+		return domain;
+	}
 
-    /**
-     * @throws PlatformException 
-     * @see salomon.engine.domain.IDomainManager#getDomains()
-     */
-    public IDomain[] getDomains() throws PlatformException
-    {
-
-        SQLSelect select = new SQLSelect();
-        //FIXME: select.addTable(DomainInfo.TABLE_NAME);
-        // executing query
-        ResultSet resultSet = null;
-
-        ArrayList<IDomain> domainsArrayList = new ArrayList<IDomain>();
-
-        try {
-            resultSet = _dbManager.select(select);
-            while (resultSet.next()) {
-                IDomain domain = this.createDomain();
-                //FIXME: domain.getInfo().load(resultSet);
-                domainsArrayList.add(domain);
-            }
-        } catch (Exception e) {
-            LOGGER.fatal("", e);
-            throw new DBException(e.getLocalizedMessage());
-        }
-
-        Domain[] domainsArray = new Domain[domainsArrayList.size()];
-
-        domainsArray = domainsArrayList.toArray(domainsArray);
-        return domainsArray;
-    }
+	public void remove(IDomain domain) {
+		_domainDAO.remove(domain);
+	}
 
 }

@@ -1,20 +1,20 @@
 /*
- * Copyright (C) 2007 salomon-engine Team
+ * Copyright (C) 2007 Salomon Team
  *
- * This file is part of salomon-engine.
+ * This file is part of Salomon.
  *
- * salomon-engine is free software; you can redistribute it and/or
+ * Salomon is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
  * version 2.1 of the License, or (at your option) any later version.
  *
- * salomon-engine is distributed in the hope that it will be useful,
+ * Salomon is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public
- * License along with salomon-engine; if not, write to the Free Software
+ * License along with Salomon; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * 
  */
@@ -28,6 +28,7 @@ import salomon.engine.agent.IAgentDAO;
 import salomon.engine.agent.IAgentDecisionComponentDAO;
 import salomon.engine.agent.IAgentProcessingComponentDAO;
 import salomon.engine.domain.Domain;
+import salomon.engine.domain.DomainManager;
 import salomon.engine.domain.IDomainDAO;
 import salomon.engine.project.IProjectDAO;
 import salomon.engine.project.Project;
@@ -128,7 +129,8 @@ public class DAOTestHelper
             domain = (Domain) domainDAO.getDomain(TEST_DOMAIN_NAME);
         }
         if (forceNew || domain == null) {
-            domain = new Domain();
+        	// FIXME:
+            domain = (Domain) new DomainManager(null).createDomain();
             domain.setDomainName(TEST_DOMAIN_NAME);
             domainDAO.save(domain);
         }

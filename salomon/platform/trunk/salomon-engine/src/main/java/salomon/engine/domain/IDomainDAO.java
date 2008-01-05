@@ -32,7 +32,7 @@ public interface IDomainDAO
 
     IDomain[] getDomains();
 
-    void remove(IDomain project);
+    void remove(IDomain domain);
 
     void save(IDomain domain);
 }
