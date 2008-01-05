@@ -21,12 +21,11 @@
 
 package salomon.engine.agent;
 
-import java.io.File;
-
 import junit.framework.TestCase;
 import salomon.agent.IAgentDecisionComponent;
 import salomon.communication.IMessageEvent;
 import salomon.engine.ComponentLoader;
+import salomon.engine.SalomonEngineContext;
 import salomon.engine.communication.CommunicationBus;
 import salomon.platform.IVariable;
 import salomon.platform.message.IMessageMetadata;
@@ -39,13 +38,9 @@ public class AgentTest extends TestCase
 {
     public void testAgentRun() throws Exception
     {
-        // TODO: refactor
-        File dir = new File("plugins");
-        System.out.println("plugin dir: " + dir.getAbsolutePath());
-        ComponentLoader loader = new ComponentLoader(dir);
+    	ComponentLoader loader = (ComponentLoader) SalomonEngineContext.getBean("componentLoader");
         IAgentDecisionComponent decComp = (IAgentDecisionComponent) loader.loadComponent(
-                "salomon.agent.DummyDecisionComponent",
-                IAgentDecisionComponent.class);
+                "salomon.agent.DummyDecisionComponent");
         assertNotNull(decComp);
 
         // TODO: load the agent via AgentManager

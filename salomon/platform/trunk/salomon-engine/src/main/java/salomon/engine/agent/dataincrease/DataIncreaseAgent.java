@@ -49,7 +49,7 @@ public final class DataIncreaseAgent extends Agent
     private boolean _stopped;
 
     // FIXME:
-    public DataIncreaseAgent(AgentInfo agentInfo)
+    public DataIncreaseAgent()
     {        
         _configComponent = new ConfigComponent();
         _stopped = false;

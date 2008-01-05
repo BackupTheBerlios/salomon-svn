@@ -34,4 +34,8 @@ public interface IAgent extends IRunnable
     IAgentProcessingComponent getAgentProcessingComponent();
         
     String getAgentName();
+    
+    void setAgentName(String agentName);
+    
+    void load();
 }

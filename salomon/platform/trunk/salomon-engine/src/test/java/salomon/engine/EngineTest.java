@@ -24,6 +24,10 @@
 package salomon.engine;
 
 import junit.framework.TestCase;
+import salomon.agent.IAgent;
+import salomon.engine.agent.AgentDecisionComponent;
+import salomon.engine.agent.AgentProcessingComponent;
+import salomon.engine.agent.IAgentManager;
 import salomon.engine.domain.DomainManager;
 import salomon.engine.domain.IDomain;
 import salomon.engine.domain.IDomainManager;
@@ -36,11 +40,18 @@ import salomon.engine.project.IProjectManager;
  */
 public class EngineTest extends TestCase {
 
+	private static final long TEST_SUFFIX = System.currentTimeMillis();
+
 	private static final String TEST_DOMAIN_NAME = "test-domain-name-"
-			+ System.currentTimeMillis();
+			+ TEST_SUFFIX;
 
 	private static final String TEST_PROJECT_NAME = "test-project-name"
-			+ System.currentTimeMillis();
+			+ TEST_SUFFIX;
+
+	private static final String DUMMY_AGENT_DECISIONING_COMP = "salomon.agent.DummyDecisionComponent";
+
+	private static final String TEST_AGENT_NAME = "test-agent-name"
+			+ TEST_SUFFIX;
 
 	private IDomainManager _domainManager = new DomainManager();
 
@@ -53,15 +64,47 @@ public class EngineTest extends TestCase {
 
 		// load project and add agent to it
 		addAgent();
+		
+		// load agent
+		loadAgent();
+	}
+
+	private void loadAgent() {
+		IProject project = getProject(getDomain());
+		IAgent agent = project.getAgentManager().getAgent(TEST_AGENT_NAME);
+		assertNotNull(agent);
+		assertNotNull(agent.getAgentDecisionComponent());
+		// load agent decisioning component
+		agent.load();
+		assertEquals(DUMMY_AGENT_DECISIONING_COMP, agent.getAgentDecisionComponent().getClass().getName());
 	}
 
 	private void addAgent() {
 		IDomain domain = getDomain();
 
+		IProject project = getProject(domain);
+
+		IAgentManager agentManager = project.getAgentManager();
+		IAgent agent = agentManager.createAgent();
+		agent.setAgentName(TEST_AGENT_NAME);
+
+		AgentDecisionComponent decisionComponent = new AgentDecisionComponent();
+		decisionComponent.setComponentName(DUMMY_AGENT_DECISIONING_COMP);
+		agent.setAgentDecisionComponent(decisionComponent);
+		agent.setAgentProcessingComponent(new AgentProcessingComponent());
+
+		agentManager.addAgent(agent);
+		
+		// FIXME:
+		_domainManager.addDomain(domain);
+	}
+
+	private IProject getProject(IDomain domain) {
 		IProject project = domain.getProjectManager().getProject(
 				TEST_PROJECT_NAME);
 		assertNotNull(project);
 		assertEquals(TEST_PROJECT_NAME, project.getProjectName());
+		return project;
 	}
 
 	private void addDomain() {
@@ -76,11 +119,12 @@ public class EngineTest extends TestCase {
 		// create project
 		IProjectManager projectManager = domain.getProjectManager();
 		IProject project = projectManager.createProject();
-		project.setProjectName(TEST_PROJECT_NAME);		
+		project.setProjectName(TEST_PROJECT_NAME);
 		projectManager.addProject(project);
-		
+
 		// FIXME: whole domain is saved, only the project should be saved
-		// it must be reimplemented -- the whole object tree cannot be saved after any change
+		// it must be reimplemented -- the whole object tree cannot be saved
+		// after any change
 		_domainManager.addDomain(domain);
 	}
 

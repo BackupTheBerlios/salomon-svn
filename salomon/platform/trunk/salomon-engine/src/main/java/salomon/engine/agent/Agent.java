@@ -24,7 +24,10 @@ package salomon.engine.agent;
 import salomon.agent.IAgent;
 import salomon.agent.IAgentDecisionComponent;
 import salomon.agent.IAgentProcessingComponent;
+import salomon.engine.ComponentLoader;
+import salomon.engine.SalomonEngineContext;
 import salomon.engine.project.Project;
+import salomon.platform.exception.PlatformException;
 
 /**
  * 
@@ -40,6 +43,8 @@ public class Agent implements IAgent
     private IAgentProcessingComponent _agentProcessingComponent;
 
     private Project _project;
+    
+    private ComponentLoader _componentLoader = (ComponentLoader) SalomonEngineContext.getBean("componentLoader");
 
     @Override
     public boolean equals(Object obj)
@@ -170,4 +175,11 @@ public class Agent implements IAgent
                 "Method Agent.isStarted() not implemented yet!");
     }
 
+	public void load() {
+		try {
+			_agentDecisionComponent = (IAgentDecisionComponent) _componentLoader.loadComponent(_agentDecisionComponent.getComponentName());
+		} catch (Exception e) {
+			throw new PlatformException("Cannot load agent", e);
+		}		
+	}
 }
