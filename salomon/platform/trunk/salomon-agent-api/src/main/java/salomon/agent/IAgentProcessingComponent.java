@@ -32,7 +32,7 @@ public interface IAgentProcessingComponent extends IRunnable
     IEnvironment getEnvironment();
     
     ICommunicationBus getCommunicationBus();
-
+    
     // extract these methods to the separate interface in the platform
     //    void addTask(ITask task);
     //

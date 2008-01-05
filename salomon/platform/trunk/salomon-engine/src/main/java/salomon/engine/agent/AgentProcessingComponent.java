@@ -21,240 +21,159 @@
 
 package salomon.engine.agent;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import salomon.agent.IAgentProcessingComponent;
 import salomon.communication.ICommunicationBus;
 import salomon.engine.platform.Environment;
-import salomon.engine.task.ITask;
 import salomon.engine.task.ITaskManager;
 import salomon.engine.task.Task;
+import salomon.engine.task.TaskManager;
 import salomon.platform.IEnvironment;
 
 /**
  * 
  */
-public class AgentProcessingComponent implements IAgentProcessingComponent
-{
-    private ICommunicationBus _communicationBus;
+public class AgentProcessingComponent implements IAgentProcessingComponent {
+	private ICommunicationBus _communicationBus;
 
-    private Long _componentId;
+	private Long _componentId;
 
-    private String _componentName;
+	private String _componentName;
 
-    private TaskComparator _taskComparator;
-    
-    private List<Task> _taskList;
-    
-    private IEnvironment _environment;
-    
-    private transient boolean _started;
+	private IEnvironment _environment;
 
-    public AgentProcessingComponent()
-    {
-        _taskList = new ArrayList<Task>();
-        _taskComparator = new TaskComparator();
-        _environment = new Environment();
-    }
+	private transient boolean _started;
 
-    /**
-     * @see salomon.agent.IAgentProcessingComponent#addTask(salomon.engine.task.ITask)
-     */
-    public void addTask(ITask task)
-    {
-        ((Task) task).setAgentProcessingComponent(this);
-        _taskList.add((Task) task);
-    }
+	private TaskManager _taskManager;
 
-    @Override
-    public boolean equals(Object obj)
-    {
-        if (obj instanceof AgentProcessingComponent) {
-            AgentProcessingComponent comp = (AgentProcessingComponent) obj;
-            return _componentId.equals(comp.getComponentId());
-        }
-        return false;
-    }
+	public TaskManager getTaskManager() {
+		return _taskManager;
+	}
 
-    /**
-     * Returns the communicationBus.
-     * @return The communicationBus
-     */
-    public final ICommunicationBus getCommunicationBus()
-    {
-        return _communicationBus;
-    }
+	public AgentProcessingComponent() {
+		_taskManager = new TaskManager(this);
+		_environment = new Environment();
+	}
 
-    /**
-     * Returns the _componentId.
-     * @return The _componentId
-     */
-    public Long getComponentId()
-    {
-        return _componentId;
-    }
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof AgentProcessingComponent) {
+			AgentProcessingComponent comp = (AgentProcessingComponent) obj;
+			return _componentId.equals(comp.getComponentId());
+		}
+		return false;
+	}
 
-    /**
-     * Returns the _componentName.
-     * @return The _componentName
-     */
-    public String getComponentName()
-    {
-        return _componentName;
-    }
+	/**
+	 * Returns the communicationBus.
+	 * 
+	 * @return The communicationBus
+	 */
+	public final ICommunicationBus getCommunicationBus() {
+		return _communicationBus;
+	}
 
-    public IEnvironment getEnvironment()
-    {
-        return _environment;
-    }
+	/**
+	 * Returns the _componentId.
+	 * 
+	 * @return The _componentId
+	 */
+	public Long getComponentId() {
+		return _componentId;
+	}
 
-    /**
-     * @see salomon.agent.IAgentProcessingComponent#getTask(long)
-     */
-    public ITask getTask(long taskId)
-    {
-        ITask task = null;
-        for (Task t : _taskList) {
-            if (taskId == t.getTaskId()) {
-                task = t;
-                break;
-            }
-        }
-        return task;
-    }
+	/**
+	 * Returns the _componentName.
+	 * 
+	 * @return The _componentName
+	 */
+	public String getComponentName() {
+		return _componentName;
+	}
 
-    /**
-     * @see salomon.agent.IAgentProcessingComponent#getTask(java.lang.String)
-     */
-    public ITask getTask(String taskName)
-    {
-        ITask task = null;
-        for (Task t : _taskList) {
-            if (taskName.equals(t.getTaskName())) {
-                task = t;
-                break;
-            }
-        }
-        return task;
-    }
+	public IEnvironment getEnvironment() {
+		return _environment;
+	}
 
-    /**
-     * @see salomon.agent.IAgentProcessingComponent#getTasks()
-     */
-    public Task[] getTasks()
-    {
-        // make sure the list of tasks is sorted
-        Collections.sort(_taskList, _taskComparator);
-        return _taskList.toArray(new Task[_taskList.size()]);
-    }
+	@Override
+	public int hashCode() {
+		return _componentId.hashCode();
+	}
 
-    @Override
-    public int hashCode()
-    {
-        return _componentId.hashCode();
-    }
+	public synchronized boolean isStarted() {
+		return _started;
+	}
 
-    public synchronized boolean isStarted()
-    {
-        return _started;
-    }
+	/**
+	 * Set the value of communicationBus field.
+	 * 
+	 * @param communicationBus
+	 *            The communicationBus to set
+	 */
+	public final void setCommunicationBus(ICommunicationBus communicationBus) {
+		_communicationBus = communicationBus;
+	}
 
-    /**
-     * @see salomon.agent.IAgentProcessingComponent#removeTask(salomon.engine.task.ITask)
-     */
-    public void removeTask(ITask task)
-    {
-        _taskList.remove(task);
-    }
+	/**
+	 * Set the value of _componentName field.
+	 * 
+	 * @param _componentName
+	 *            The _componentName to set
+	 */
+	public void setComponentName(String componentName) {
+		_componentName = componentName;
+	}
 
-    /**
-     * Set the value of communicationBus field.
-     * @param communicationBus The communicationBus to set
-     */
-    public final void setCommunicationBus(ICommunicationBus communicationBus)
-    {
-        _communicationBus = communicationBus;
-    }
+	/**
+	 * @see salomon.agent.IAgentProcessingComponent#setTaskManager(salomon.engine.task.ITaskManager)
+	 */
+	public void setTaskManager(ITaskManager taskManager) {
+		throw new UnsupportedOperationException(
+				"Method AgentProcessingComponent.setTaskManager() not implemented yet!");
+	}
 
-    /**
-     * Set the value of _componentName field.
-     * @param _componentName The _componentName to set
-     */
-    public void setComponentName(String componentName)
-    {
-        _componentName = componentName;
-    }
+	public synchronized void start() {
+		_started = true;
+		// FIXME: add tasks processing
+	}
 
-    /**
-     * @see salomon.agent.IAgentProcessingComponent#setTaskManager(salomon.engine.task.ITaskManager)
-     */
-    public void setTaskManager(ITaskManager taskManager)
-    {
-        throw new UnsupportedOperationException(
-                "Method AgentProcessingComponent.setTaskManager() not implemented yet!");
-    }
+	public synchronized void stop() {
+		_started = false;
+	}
 
-    public synchronized void start()
-    {
-        _started = true;
-        // FIXME: add tasks processing        
-    }
+	/**
+	 * Returns the taskList.
+	 * 
+	 * @return The taskList
+	 */
+	// used by Hibernate only
+	@SuppressWarnings("unused")
+	private List<Task> getTaskList() {
+		return _taskManager.getTaskList();
+	}
 
-    public synchronized void stop()
-    {
-        _started = false;
-    }
+	/**
+	 * Set the value of _componentId field.
+	 * 
+	 * @param _componentId
+	 *            The _componentId to set
+	 */
+	// used by Hibernate only
+	@SuppressWarnings("unused")
+	private void setComponentId(Long componentId) {
+		_componentId = componentId;
+	}
 
-    /**
-     * Returns the taskList.
-     * @return The taskList
-     */
-    // used by Hibernate only
-    @SuppressWarnings("unused")
-    private List<Task> getTaskList()
-    {
-        // make sure the list of tasks is sorted
-        Collections.sort(_taskList, _taskComparator);
-        return _taskList;
-    }
-
-    /**
-     * Set the value of _componentId field.
-     * @param _componentId The _componentId to set
-     */
-    //  used by Hibernate only
-    @SuppressWarnings("unused")
-    private void setComponentId(Long componentId)
-    {
-        _componentId = componentId;
-    }
-
-    /**
-     * Set the value of tasks field.
-     * @param tasks The tasks to set
-     */
-    // used by Hibernate only
-    @SuppressWarnings("unused")
-    private void setTaskList(List<Task> tasks)
-    {
-        _taskList = tasks;
-    }
-
-   
-
-    /**
-     * Comparator used to mantain the order of tasks in the collection.
-     */
-    private class TaskComparator implements Comparator<Task>
-    {
-        public int compare(Task task1, Task task2)
-        {
-            int task1Nr = task1.getTaskNr();
-            int task2Nr = task2.getTaskNr();
-            return (task1Nr < task2Nr ? -1 : (task1Nr == task2Nr ? 0 : 1));
-        }
-    }
+	/**
+	 * Set the value of tasks field.
+	 * 
+	 * @param tasks
+	 *            The tasks to set
+	 */
+	// used by Hibernate only
+	@SuppressWarnings("unused")
+	private void setTaskList(List<Task> tasks) {
+		_taskManager.setTaskList(tasks);
+	}
 }

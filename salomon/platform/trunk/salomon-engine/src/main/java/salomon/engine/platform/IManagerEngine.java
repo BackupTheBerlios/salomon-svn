@@ -76,6 +76,7 @@ public interface IManagerEngine
     @Deprecated
     ITaskManager getTasksManager() throws PlatformException;
 
+    //FIXME: move to spring context
     IPlatformUtil getPlatformUtil();
 
     /**

@@ -67,6 +67,12 @@ public class EngineTest extends TestCase {
 		
 		// load agent
 		loadAgent();
+		
+		// TODO:
+		// add tasks to agent processing part (load appropriate plugins)
+		// start agent (processing part)
+		// simulate generating a message
+		
 	}
 
 	private void loadAgent() {

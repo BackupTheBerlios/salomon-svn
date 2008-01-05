@@ -83,4 +83,6 @@ public interface ITask
     void setSettings(ISettings settings) throws PlatformException;
     
     String getTaskName();
+    
+    void setTaskName(String taskName);
 }

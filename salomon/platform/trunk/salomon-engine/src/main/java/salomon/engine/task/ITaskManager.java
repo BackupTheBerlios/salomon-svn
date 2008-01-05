@@ -21,7 +21,7 @@
 
 package salomon.engine.task;
 
-import salomon.engine.project.IProject;
+import salomon.agent.IAgentProcessingComponent;
 import salomon.platform.exception.PlatformException;
 
 /**
@@ -32,29 +32,23 @@ public interface ITaskManager
     void addTask(ITask task) throws PlatformException;
 
     /**
-     * Clear list of created tasks.
-     * It is used to refresh GUI after change of current project. 
-     */
-    void clearTasks() throws PlatformException;
-
-    /**
      * Creates new task.
      * 
      * @return new task
      */
-    ITask createTask() throws PlatformException;
+    ITask createTask();
 
     /**
      * Returns current task.
      * 
      * @return current task
      */
-    ITask getCurrentTask() throws PlatformException;
+    ITask getCurrentTask();
 
     /**
-     * 
+     * Returns the TaskRunner instance.
      */
-    ITaskRunner getRunner() throws PlatformException;
+    ITaskRunner getRunner();
 
     /**
      * Returns all tasks.
@@ -70,29 +64,11 @@ public interface ITaskManager
      * @return
      * @throws PlatformException
      */
-    boolean removeTask(ITask task) throws PlatformException;
+    void removeTask(ITask task) throws PlatformException;
 
-    /**
-     * Removes all tasks.
-     * 
-     * @return
-     * @throws PlatformException
-     */
-    boolean removeAll() throws PlatformException;
-
-    /**
-     * Saves tasks list in data base.
-     * 
-     * @throws PlatformException
-     */
-    void saveTasks() throws PlatformException;
-
-    /**
-     * Returns project holding TaskManager instance.
-     * 
-     * @return
-     * @throws PlatformException
-     */
-    IProject getProject() throws PlatformException;
-
+    ITask getTask(long taskId) throws PlatformException;
+    
+    ITask getTask(String taskName) throws PlatformException;
+    
+    IAgentProcessingComponent getAgentProcessingComponent();
 }

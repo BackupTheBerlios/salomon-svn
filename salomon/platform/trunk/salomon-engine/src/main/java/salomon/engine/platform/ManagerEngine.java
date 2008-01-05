@@ -23,7 +23,6 @@ package salomon.engine.platform;
 
 import org.apache.log4j.Logger;
 
-import salomon.engine.agent.AgentManager;
 import salomon.engine.agent.IAgentManager;
 import salomon.engine.database.DBManager;
 import salomon.engine.domain.DomainManager;
@@ -34,7 +33,6 @@ import salomon.engine.plugin.PluginManager;
 import salomon.engine.project.IProjectManager;
 import salomon.engine.project.ProjectManager;
 import salomon.engine.task.ITaskManager;
-import salomon.engine.task.TaskManager;
 import salomon.platform.exception.PlatformException;
 import salomon.plugin.IPlatformUtil;
 
@@ -42,6 +40,8 @@ import salomon.plugin.IPlatformUtil;
  * Class creates and holds all managers used by plugins. They are created only
  * in this class to avoid multiple instances.
  */
+// FIXME: this class should not be used anymore since cascade model is implemented
+@Deprecated
 public final class ManagerEngine implements IManagerEngine
 {
     private static final Logger LOGGER = Logger.getLogger(ManagerEngine.class);
@@ -97,7 +97,7 @@ public final class ManagerEngine implements IManagerEngine
         _platformUtil = new PlatformUtil();
         _solutionManager = new DomainManager(this);
         _projectManager = new ProjectManager(this, _dbManager);
-        _taskManager = new TaskManager(this, _dbManager);
+//        _taskManager = new TaskManager(this, _dbManager);
         _pluginManager = new PluginManager(_dbManager);
 //        _agentManager = new AgentManager(_dbManager);        
     }

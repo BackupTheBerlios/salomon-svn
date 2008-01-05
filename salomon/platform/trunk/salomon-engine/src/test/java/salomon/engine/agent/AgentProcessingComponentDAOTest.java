@@ -59,7 +59,7 @@ public class AgentProcessingComponentDAOTest extends TestCase
 
         AgentProcessingComponent inserted = (AgentProcessingComponent) componentDAO.getAgentProcessingComponent(comp.getComponentName());
         assertEquals(comp.getComponentName(), inserted.getComponentName());
-        Arrays.equals(comp.getTasks(), inserted.getTasks());
+        Arrays.equals(comp.getTaskManager().getTasks(), inserted.getTaskManager().getTasks());
     }
 
     /**
@@ -100,25 +100,27 @@ public class AgentProcessingComponentDAOTest extends TestCase
         // add tasks to Agent
         Task task1 = new Task();
         task1.setTaskName("task1");
-        task1.setTaskNr(2);
 
         Task task2 = new Task();
         task2.setTaskName("task2");
-        task2.setTaskNr(1);
 
         Task task3 = new Task();
         task3.setTaskName("task3");
-        task3.setTaskNr(0);
 
-        comp.addTask(task1);
-        comp.addTask(task2);
-        comp.addTask(task3);
+        comp.getTaskManager().addTask(task1);
+        comp.getTaskManager().addTask(task2);
+        comp.getTaskManager().addTask(task3);
+
+        // let's reorder the tasks
+        task1.setTaskNr(2);
+        task2.setTaskNr(1);
+        task3.setTaskNr(0);
 
         componentDAO.save(comp);
 
         AgentProcessingComponent inserted = (AgentProcessingComponent) componentDAO.getAgentProcessingComponent(comp.getComponentId());
         assertEquals(comp.getComponentName(), inserted.getComponentName());
-        Task[] tasks = inserted.getTasks();
+        Task[] tasks = inserted.getTaskManager().getTasks();
         assertNotNull(tasks);
         assertEquals(3, tasks.length);
         // check the order of tasks
@@ -127,12 +129,12 @@ public class AgentProcessingComponentDAOTest extends TestCase
         assertEquals("task1", tasks[2].getTaskName());
 
         // test getting tasks by id
-        ITask insertedTask = inserted.getTask(task1.getTaskId());
+        ITask insertedTask = inserted.getTaskManager().getTask(task1.getTaskId());
         assertNotNull(insertedTask);
         assertEquals(task1.getTaskName(), insertedTask.getTaskName());
 
         // test getting tasks by id
-        insertedTask = inserted.getTask(task1.getTaskName());
+        insertedTask = inserted.getTaskManager().getTask(task1.getTaskName());
         assertNotNull(insertedTask);
         assertEquals(task1.getTaskName(), insertedTask.getTaskName());
     }

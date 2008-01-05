@@ -38,207 +38,202 @@ import salomon.util.serialization.SimpleStruct;
  * Represents task that may be executed. It is an implementation of ITask
  * interface.
  */
-public final class Task implements ITask
-{
-    private static final Logger LOGGER = Logger.getLogger(Task.class);
+public final class Task implements ITask {
+	private static final Logger LOGGER = Logger.getLogger(Task.class);
 
-    private AgentProcessingComponent _agentProcessingComponent;
+	private AgentProcessingComponent _agentProcessingComponent;
 
-    private ILocalPlugin _plugin;
+	private ILocalPlugin _plugin;
 
-    private IResult _result;
+	private IResult _result;
 
-    private ISettings _settings;
+	private ISettings _settings;
 
-    private Long _taskId;
+	private Long _taskId;
 
-    // FIXME: remove it;
-    private TaskInfo _taskInfo;
+	// FIXME: remove it;
+	private TaskInfo _taskInfo;
 
-    private String _taskName;
+	private String _taskName;
 
-    private int _taskNr;
+	private int _taskNr;
 
-    public Task()
-    {
+	public Task() {
 
-    }
+	}
 
-    // FIXME: make it protected,
-    // it should be accessed via TaskManager
-    public Task(DBManager manager)
-    {
-        _taskInfo = new TaskInfo(manager);
-        _taskInfo.setStatus(TaskInfo.ACTIVE);
-    }
+	// FIXME: make it protected,
+	// it should be accessed via TaskManager
+	public Task(DBManager manager) {
+		_taskInfo = new TaskInfo(manager);
+		_taskInfo.setStatus(TaskInfo.ACTIVE);
+	}
 
-    @Override
-    public boolean equals(Object obj)
-    {
-        if (obj instanceof Task) {
-            Task task = (Task) obj;
-            return _taskId.equals(task.getTaskId());
-        } else {
-            return false;
-        }
-    }
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof Task) {
+			Task task = (Task) obj;
+			return _taskId.equals(task.getTaskId());
+		} else {
+			return false;
+		}
+	}
 
-    /**
-     * Returns the agentProcessingComponent.
-     * @return The agentProcessingComponent
-     */
-    public AgentProcessingComponent getAgentProcessingComponent()
-    {
-        return _agentProcessingComponent;
-    }
+	/**
+	 * Returns the agentProcessingComponent.
+	 * 
+	 * @return The agentProcessingComponent
+	 */
+	public AgentProcessingComponent getAgentProcessingComponent() {
+		return _agentProcessingComponent;
+	}
 
-    public TaskInfo getInfo() throws PlatformException
-    {
-        return _taskInfo;
-    }
+	public TaskInfo getInfo() throws PlatformException {
+		return _taskInfo;
+	}
 
-    /**
-     * @return Returns the _plugin.
-     */
-    public ILocalPlugin getPlugin() throws PlatformException
-    {
-        return _plugin;
-    }
+	/**
+	 * @return Returns the _plugin.
+	 */
+	public ILocalPlugin getPlugin() throws PlatformException {
+		return _plugin;
+	}
 
-    /**
-     * @return Returns the _result.
-     */
-    public IResult getResult() throws PlatformException
-    {
-        IResult result = _result;
-        if (_result == null) {
-            result = _plugin.getResultComponent().getDefaultResult();
-        }
-        return result;
-    }
+	/**
+	 * @return Returns the _result.
+	 */
+	public IResult getResult() throws PlatformException {
+		IResult result = _result;
+		if (_result == null) {
+			result = _plugin.getResultComponent().getDefaultResult();
+		}
+		return result;
+	}
 
-    /**
-     * @return Returns the _settings.
-     */
-    public ISettings getSettings() throws PlatformException
-    {
-        return _settings;
-    }
+	/**
+	 * @return Returns the _settings.
+	 */
+	public ISettings getSettings() throws PlatformException {
+		return _settings;
+	}
 
-    /**
-     * Returns the taskId.
-     * @return The taskId
-     */
-    public Long getTaskId()
-    {
-        return _taskId;
-    }
+	/**
+	 * Returns the taskId.
+	 * 
+	 * @return The taskId
+	 */
+	public Long getTaskId() {
+		return _taskId;
+	}
 
-    /**
-     * Returns the name.
-     * @return The name
-     */
-    public String getTaskName()
-    {
-        return _taskName;
-    }
+	/**
+	 * Returns the name.
+	 * 
+	 * @return The name
+	 */
+	public String getTaskName() {
+		return _taskName;
+	}
 
-    /**
-     * Returns the taskNr.
-     * @return The taskNr
-     */
-    public int getTaskNr()
-    {
-        return _taskNr;
-    }
+	/**
+	 * Returns the taskNr.
+	 * 
+	 * @return The taskNr
+	 */
+	public int getTaskNr() {
+		return _taskNr;
+	}
 
-    @Override
-    public int hashCode()
-    {
-        return _taskId.hashCode();
-    }
+	@Override
+	public int hashCode() {
+		return _taskId.hashCode();
+	}
 
-    /**
-     * Set the value of agentProcessingComponent field.
-     * @param agentProcessingComponent The agentProcessingComponent to set
-     */
-    public void setAgentProcessingComponent(
-            AgentProcessingComponent agentProcessingComponent)
-    {
-        _agentProcessingComponent = agentProcessingComponent;
-    }
+	/**
+	 * Set the value of agentProcessingComponent field.
+	 * 
+	 * @param agentProcessingComponent
+	 *            The agentProcessingComponent to set
+	 */
+	public void setAgentProcessingComponent(
+			AgentProcessingComponent agentProcessingComponent) {
+		_agentProcessingComponent = agentProcessingComponent;
+	}
 
-    /**
-     * @param plugin The plugin to set.
-     */
-    public void setPlugin(ILocalPlugin plugin) throws PlatformException
-    {
-        _plugin = plugin;
-        _taskInfo.setPluginID(plugin.getInfo().getId());
-    }
+	/**
+	 * @param plugin
+	 *            The plugin to set.
+	 */
+	public void setPlugin(ILocalPlugin plugin) throws PlatformException {
+		_plugin = plugin;
+		_taskInfo.setPluginID(plugin.getInfo().getId());
+	}
 
-    /**
-     * @param result The result to set.
-     * @pre result != null
-     */
-    public void setResult(IResult result) throws PlatformException
-    {
-        _result = result;
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        XMLSerializer.serialize((SimpleStruct) _result, bos);
-        _taskInfo.setResult(bos.toString());
-        if (_result.isSuccessful()) {
-            _taskInfo.setStatus(TaskInfo.FINISHED);
-        } else {
-            _taskInfo.setStatus(TaskInfo.ERROR);
-        }
-    }
+	/**
+	 * @param result
+	 *            The result to set.
+	 * @pre result != null
+	 */
+	public void setResult(IResult result) throws PlatformException {
+		_result = result;
+		ByteArrayOutputStream bos = new ByteArrayOutputStream();
+		XMLSerializer.serialize((SimpleStruct) _result, bos);
+		_taskInfo.setResult(bos.toString());
+		if (_result.isSuccessful()) {
+			_taskInfo.setStatus(TaskInfo.FINISHED);
+		} else {
+			_taskInfo.setStatus(TaskInfo.ERROR);
+		}
+	}
 
-    /**
-     * @param settings The settings to set.
-     * @pre settings != null
-     */
-    public void setSettings(ISettings settings) throws PlatformException
-    {
-        _settings = settings;
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        XMLSerializer.serialize((SimpleStruct) _settings, bos);
-        _taskInfo.setSettings(bos.toString());
-    }
+	/**
+	 * @param settings
+	 *            The settings to set.
+	 * @pre settings != null
+	 */
+	public void setSettings(ISettings settings) throws PlatformException {
+		_settings = settings;
+		ByteArrayOutputStream bos = new ByteArrayOutputStream();
+		XMLSerializer.serialize((SimpleStruct) _settings, bos);
+		_taskInfo.setSettings(bos.toString());
+	}
 
-    /**
-     * Set the value of name field.
-     * @param name The name to set
-     */
-    public void setTaskName(String name)
-    {
-        _taskName = name;
-    }
+	/**
+	 * Set the value of name field.
+	 * 
+	 * @param name
+	 *            The name to set
+	 */
+	public void setTaskName(String name) {
+		_taskName = name;
+	}
 
-    /**
-     * Set the value of taskNr field.
-     * @param taskNr The taskNr to set
-     */
-    public void setTaskNr(int taskNr)
-    {
-        _taskNr = taskNr;
-    }
+	/**
+	 * Set the value of taskNr field.
+	 * 
+	 * @param taskNr
+	 *            The taskNr to set
+	 */
+	public void setTaskNr(int taskNr) {
+		_taskNr = taskNr;
+	}
 
-    /**
-     * @see java.lang.Object#toString()
-     */
-    @Override
-    public String toString()
-    {
-        return " [" + _plugin + "," + _settings + "," + _result + "]";
-    }
+	/**
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return _taskName == null ? "" : _taskName + " (" + _plugin + ","
+				+ _settings + "," + _result + ")";
+	}
 
-    /**
-     * Set the value of taskId field.
-     * @param taskId The taskId to set
-     */
-    private void setTaskId(Long taskId)
-    {
-        _taskId = taskId;
-    }
+	/**
+	 * Set the value of taskId field.
+	 * 
+	 * @param taskId
+	 *            The taskId to set
+	 */
+	private void setTaskId(Long taskId) {
+		_taskId = taskId;
+	}
 } // end Task
