@@ -21,33 +21,28 @@
 
 package salomon.engine.task;
 
-import java.io.ByteArrayOutputStream;
-
 import org.apache.log4j.Logger;
 
 import salomon.engine.agent.AgentProcessingComponent;
 import salomon.engine.database.DBManager;
-import salomon.engine.platform.serialization.XMLSerializer;
-import salomon.engine.plugin.ILocalPlugin;
+import salomon.engine.plugin.IPluginInfo;
+import salomon.engine.plugin.PluginInfo;
 import salomon.platform.exception.PlatformException;
-import salomon.plugin.IResult;
-import salomon.plugin.ISettings;
-import salomon.util.serialization.SimpleStruct;
 
 /**
  * Represents task that may be executed. It is an implementation of ITask
  * interface.
  */
-public final class Task implements ITask {
+public class Task implements ITask {
 	private static final Logger LOGGER = Logger.getLogger(Task.class);
 
 	private AgentProcessingComponent _agentProcessingComponent;
 
-	private ILocalPlugin _plugin;
+	private PluginInfo _pluginInfo;
 
-	private IResult _result;
+	private String _result;
 
-	private ISettings _settings;
+	private String _settings;
 
 	private Long _taskId;
 
@@ -64,6 +59,7 @@ public final class Task implements ITask {
 
 	// FIXME: make it protected,
 	// it should be accessed via TaskManager
+	@Deprecated
 	public Task(DBManager manager) {
 		_taskInfo = new TaskInfo(manager);
 		_taskInfo.setStatus(TaskInfo.ACTIVE);
@@ -92,28 +88,22 @@ public final class Task implements ITask {
 		return _taskInfo;
 	}
 
-	/**
-	 * @return Returns the _plugin.
-	 */
-	public ILocalPlugin getPlugin() throws PlatformException {
-		return _plugin;
-	}
 
 	/**
 	 * @return Returns the _result.
 	 */
-	public IResult getResult() throws PlatformException {
-		IResult result = _result;
-		if (_result == null) {
-			result = _plugin.getResultComponent().getDefaultResult();
-		}
-		return result;
+	public String getResult() throws PlatformException {
+		// FIXME:
+		// if (_result == null) {
+		// _result = _plugin.getResultComponent().getDefaultResult();
+		// }
+		return _result;
 	}
 
 	/**
 	 * @return Returns the _settings.
 	 */
-	public ISettings getSettings() throws PlatformException {
+	public String getSettings() throws PlatformException {
 		return _settings;
 	}
 
@@ -161,41 +151,17 @@ public final class Task implements ITask {
 	}
 
 	/**
-	 * @param plugin
-	 *            The plugin to set.
-	 */
-	public void setPlugin(ILocalPlugin plugin) throws PlatformException {
-		_plugin = plugin;
-		_taskInfo.setPluginID(plugin.getInfo().getId());
-	}
-
-	/**
 	 * @param result
 	 *            The result to set.
 	 * @pre result != null
 	 */
-	public void setResult(IResult result) throws PlatformException {
+	// FIXME: set status of task execution
+	public void setResult(String result) throws PlatformException {
 		_result = result;
-		ByteArrayOutputStream bos = new ByteArrayOutputStream();
-		XMLSerializer.serialize((SimpleStruct) _result, bos);
-		_taskInfo.setResult(bos.toString());
-		if (_result.isSuccessful()) {
-			_taskInfo.setStatus(TaskInfo.FINISHED);
-		} else {
-			_taskInfo.setStatus(TaskInfo.ERROR);
-		}
 	}
 
-	/**
-	 * @param settings
-	 *            The settings to set.
-	 * @pre settings != null
-	 */
-	public void setSettings(ISettings settings) throws PlatformException {
+	public void setSettings(String settings) {
 		_settings = settings;
-		ByteArrayOutputStream bos = new ByteArrayOutputStream();
-		XMLSerializer.serialize((SimpleStruct) _settings, bos);
-		_taskInfo.setSettings(bos.toString());
 	}
 
 	/**
@@ -223,7 +189,7 @@ public final class Task implements ITask {
 	 */
 	@Override
 	public String toString() {
-		return _taskName == null ? "" : _taskName + " (" + _plugin + ","
+		return _taskName == null ? "" : _taskName + " (" + _pluginInfo + ","
 				+ _settings + "," + _result + ")";
 	}
 
@@ -233,7 +199,17 @@ public final class Task implements ITask {
 	 * @param taskId
 	 *            The taskId to set
 	 */
+	// used by Hibernate only
+	@SuppressWarnings("unused")
 	private void setTaskId(Long taskId) {
 		_taskId = taskId;
+	}
+
+	public IPluginInfo getPluginInfo() {
+		return _pluginInfo;
+	}
+
+	public void setPluginInfo(IPluginInfo pluginInfo) {
+		_pluginInfo = (PluginInfo) pluginInfo;
 	}
 } // end Task

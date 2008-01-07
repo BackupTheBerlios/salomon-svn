@@ -21,22 +21,28 @@
 
 package salomon.engine.task;
 
+import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.LinkedList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
 
 import salomon.agent.IAgentProcessingComponent;
+import salomon.engine.ComponentLoader;
+import salomon.engine.SalomonEngineContext;
 import salomon.engine.agent.AgentProcessingComponent;
 import salomon.engine.platform.IManagerEngine;
+import salomon.engine.platform.serialization.XMLSerializer;
 import salomon.engine.task.event.ITaskListener;
 import salomon.engine.task.event.TaskEvent;
 import salomon.platform.IDataEngine;
 import salomon.platform.exception.PlatformException;
+import salomon.platform.serialization.IStruct;
 import salomon.plugin.IPlatformUtil;
+import salomon.plugin.IPlugin;
+import salomon.plugin.ISettings;
 
 /**
  * An implemetation of ITaskManager interface. Class manages with tasks editing
@@ -60,26 +66,13 @@ public final class TaskManager implements ITaskManager {
 
 	private List<Task> _taskList;
 
+	private static ComponentLoader _pluginLoader = (ComponentLoader) SalomonEngineContext
+			.getBean("pluginLoader");
+
 	public TaskManager(AgentProcessingComponent processinComponent) {
 		_processingComponent = processinComponent;
 		_taskList = new ArrayList<Task>();
 		_taskComparator = new TaskComparator();
-	}
-
-	@Deprecated
-	public TaskManager(IManagerEngine managerEngine) {
-		_managerEngine = managerEngine;
-		_taskRunner = new TaskRunner();
-		_taskListeners = new LinkedList<ITaskListener>();
-		// TODO: temporary
-//		IVariable variable;
-//		try {
-//			variable = _environment.createEmpty("CURRENT_DATA_SET");
-//			variable.setValue(new SimpleString("all_data"));
-//			_environment.add(variable);
-//		} catch (PlatformException e) {
-//			LOGGER.fatal("Exception was thrown!", e);
-//		}
 	}
 
 	public void addTask(ITask task) throws PlatformException {
@@ -89,17 +82,15 @@ public final class TaskManager implements ITaskManager {
 		_taskList.add(t);
 	}
 
-	
 	public void addTaskListener(ITaskListener listener) {
 		_taskListeners.add(listener);
 	}
-	
-    public ITask createTask() throws PlatformException {
+
+	public ITask createTask() throws PlatformException {
 		Task task = new Task();
 		return task;
 	}
 
-	
 	/**
 	 * @see salomon.engine.task.ITaskManager#getAgentProcessingComponent()
 	 */
@@ -156,12 +147,11 @@ public final class TaskManager implements ITaskManager {
 		return task;
 	}
 
-	public List<Task> getTaskList()
-    {
-        // make sure the list of tasks is sorted
-        Collections.sort(_taskList, _taskComparator);
-        return _taskList;
-    }
+	public List<Task> getTaskList() {
+		// make sure the list of tasks is sorted
+		Collections.sort(_taskList, _taskComparator);
+		return _taskList;
+	}
 
 	/**
 	 * Returns tasks associated with current project. They are returned sorted
@@ -205,10 +195,10 @@ public final class TaskManager implements ITaskManager {
 		new TaskEngine().run();
 	}
 
-	public void setTaskList(List<Task> tasks)
-    {
-        _taskList = tasks;
-    }
+	public void setTaskList(List<Task> tasks) {
+		_taskList = tasks;
+		// attemp to load all task definitions
+	}
 
 	/**
 	 * Method used only in this package.
@@ -281,15 +271,44 @@ public final class TaskManager implements ITaskManager {
 		}
 	}
 
-	private final class TaskEngine extends Thread {
-		private ITask _currentTask = null;
+	protected class TaskEngine extends Thread {
+		private IRunnableTask _currentTask;
+
+		private List<IRunnableTask> _runnableTasks;
 
 		private boolean _paused = false;
+
+		// FIXME: create more specific exception
+		public void initializeTasks() throws Exception {
+			_runnableTasks = new ArrayList<IRunnableTask>(_taskList.size());
+			for (Task task : _taskList) {
+				RunnableTask runnableTask = new RunnableTask(task);
+				_runnableTasks.add(runnableTask);
+				// try to load the plugin
+				IPlugin plugin = (IPlugin) _pluginLoader.loadComponent(task
+						.getPluginInfo().getPluginName());
+				// initialize settings
+				// FIXME: ugly, reimplement
+				ISettings settingObject = plugin.getSettingComponent(null)
+						.getDefaultSettings();
+				String strSettings = task.getSettings();
+				if (strSettings != null && strSettings.length() > 0) {
+					IStruct struct = XMLSerializer
+							.deserialize(new ByteArrayInputStream(task
+									.getSettings().getBytes()));
+					settingObject.init(struct);
+				}
+				runnableTask.setSettingObject(settingObject);
+				// TODO: initialize result if necessary
+			}
+		}
 
 		public void pauseTasks() {
 			_paused = true;
 			try {
-				fireTaskPaused(new TaskEvent((TaskInfo) _currentTask.getInfo()));
+				// FIXME:
+				// fireTaskPaused(new TaskEvent((TaskInfo)
+				// _currentTask.getInfo()));
 			} catch (PlatformException e) {
 				LOGGER.fatal("", e);
 			}
@@ -299,7 +318,9 @@ public final class TaskManager implements ITaskManager {
 			_paused = false;
 			notify();
 			try {
-				fireTaskResumed(new TaskEvent((TaskInfo) _currentTask.getInfo()));
+				// FIXME:
+				// fireTaskResumed(new TaskEvent((TaskInfo)
+				// _currentTask.getInfo()));
 			} catch (PlatformException e) {
 				LOGGER.fatal("", e);
 			}
@@ -308,7 +329,7 @@ public final class TaskManager implements ITaskManager {
 		@Override
 		public void run() {
 			LOGGER.info("Running tasks");
-			for (ITask task : _taskList) {
+			for (IRunnableTask task : _runnableTasks) {
 				_currentTask = task;
 				// running task
 				startTask(task);
@@ -324,10 +345,12 @@ public final class TaskManager implements ITaskManager {
 				}
 			}
 			// informing listeners about finishing task execution
-			fireTasksProcessed();
+			// FIXME:
+			// fireTasksProcessed();
 		}
 
-		private void startTask(ITask task) {
+		private void startTask(IRunnableTask task) {
+			LOGGER.info("Staring task: " + task);
 			// FIXME:
 			// TaskInfo taskInfo = null;
 			// TaskEvent taskEvent = null;
@@ -409,7 +432,7 @@ public final class TaskManager implements ITaskManager {
 		}
 	}
 
-	private final class TaskRunner implements ITaskRunner {
+	protected class TaskRunner implements ITaskRunner {
 		private TaskEngine _taskEngine;
 
 		public void pause() throws PlatformException {

@@ -24,8 +24,12 @@
 package salomon.engine.task;
 
 import junit.framework.TestCase;
+import salomon.agent.IAgentProcessingComponent;
 import salomon.engine.DAOTestHelper;
 import salomon.engine.agent.AgentProcessingComponent;
+import salomon.engine.plugin.PluginInfo;
+import salomon.engine.task.TaskManager.TaskEngine;
+import salomon.platform.exception.PlatformException;
 
 /**
  * @author Nikodem.Jura
@@ -48,5 +52,75 @@ public class TaskManagerTest extends TestCase {
 		ITask inserted = taskManager.getTask(task.getTaskName());
 		assertNotNull(inserted);
 		assertEquals(task.getTaskName(), inserted.getTaskName());		
+	}
+	
+	public void testRunTasks() throws Exception
+	{
+		AgentProcessingComponent procComp = DAOTestHelper.createTestAgentProcessingComponent(true);
+		ITaskManager taskManager = procComp.getTaskManager();
+		assertNotNull(taskManager);
+		TestTaskManager testTaskManager = new TestTaskManager((TaskManager) taskManager);
+		// null the unused reference
+		taskManager = null;
+		
+		ITask task = testTaskManager.createTask();
+		task.setTaskName("test-task-name");
+		task.setPluginInfo(new PluginInfo("pl.edu.agh.iisg.salomon.plugin.datasetcreator.DataSetCreatorPlugin"));
+		task.setSettings("<struct><string name=\"dataSetName\" value=\"sample\"/><array name=\"conditions\"/></struct>");
+		
+		testTaskManager.addTask(task);
+		testTaskManager.startTasks();
+	}
+	
+	private class TestTaskManager implements ITaskManager {
+
+		private TaskManager _taskManager;
+		
+		public TestTaskManager(TaskManager taskManager) {
+			_taskManager = taskManager;
+		}
+		
+		public void addTask(ITask task) throws PlatformException {
+			_taskManager.addTask(task);
+		}
+
+		public ITask createTask() {
+			return _taskManager.createTask();
+		}
+
+		public IAgentProcessingComponent getAgentProcessingComponent() {			
+			return _taskManager.getAgentProcessingComponent();
+		}
+
+		public ITask getCurrentTask() {
+			return _taskManager.getCurrentTask();
+		}
+
+		public ITaskRunner getRunner() {
+			return _taskManager.getRunner();
+		}
+
+		public ITask getTask(long taskId) throws PlatformException {
+			return _taskManager.getTask(taskId);
+		}
+
+		public ITask getTask(String taskName) throws PlatformException {
+			return _taskManager.getTask(taskName);
+		}
+
+		public ITask[] getTasks() throws PlatformException {
+			return _taskManager.getTasks();
+		}
+
+		public void removeTask(ITask task) throws PlatformException {
+			_taskManager.removeTask(task);
+		}
+		// for test purpose only
+		public void startTasks() throws Exception {
+			TaskEngine engine = _taskManager.new TaskEngine();
+			engine.initializeTasks();
+			engine.run();
+		}
+		
 	}
 }

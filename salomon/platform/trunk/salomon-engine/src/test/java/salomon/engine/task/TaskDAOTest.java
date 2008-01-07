@@ -24,51 +24,68 @@ package salomon.engine.task;
 import junit.framework.TestCase;
 import salomon.engine.DAOContext;
 import salomon.engine.DAOTestHelper;
+import salomon.engine.plugin.PluginInfo;
 
-public class TaskDAOTest extends TestCase
-{
-    private ITaskDAO taskDAO = (ITaskDAO) DAOContext.getBean("taskDAO");
+public class TaskDAOTest extends TestCase {
+	private ITaskDAO taskDAO = (ITaskDAO) DAOContext.getBean("taskDAO");
 
-    public void testSave()
-    {
-        Task task = DAOTestHelper.createTestTask(true);
-        taskDAO.save(task);
+	public void testSave() {
+		Task task = DAOTestHelper.createTestTask(true);
+		task.setSettings("test-settings");
+		task.setResult("test-result");
+		taskDAO.save(task);
 
-        ITask inserted = taskDAO.getTask(task.getTaskId());
-        assertNotNull(inserted);
-    }
+		ITask inserted = taskDAO.getTask(task.getTaskId());
+		assertNotNull(inserted);
+		assertEquals(task.getTaskName(), inserted.getTaskName());
+		assertEquals(task.getSettings(), inserted.getSettings());
+		assertEquals(task.getResult(), inserted.getResult());
+	}
 
-    public void testRemove()
-    {
-        Task task = DAOTestHelper.createTestTask(true);
-        task.setTaskName("task-to-remove");
-        taskDAO.save(task);
+	public void testSaveWithPlugin() {
+		Task task = DAOTestHelper.createTestTask(true);
+		task.setSettings("test-settings");
+		task.setResult("test-result");
+		PluginInfo pluginInfo = new PluginInfo("pl.edu.agh.iisg.salomon.plugin.datasetcreator.DataSetCreatorPlugin");
+		task.setPluginInfo(pluginInfo);
 
-        Task removedTask = (Task) taskDAO.getTask(task.getTaskId());
-        assertNotNull(removedTask);
+		taskDAO.save(task);
 
-        taskDAO.remove(removedTask);
-        removedTask = (Task) taskDAO.getTask(task.getTaskId());
-        assertNull(removedTask);
-    }
+		ITask inserted = taskDAO.getTask(task.getTaskId());
+		assertNotNull(inserted);
+		assertEquals(task.getTaskName(), inserted.getTaskName());
+		assertEquals(task.getSettings(), inserted.getSettings());
+		assertEquals(task.getResult(), inserted.getResult());
+		assertEquals(task.getPluginInfo().getPluginName(), inserted.getPluginInfo().getPluginName());
+	}	
+	
+	public void testRemove() {
+		Task task = DAOTestHelper.createTestTask(true);
+		task.setTaskName("task-to-remove");
+		taskDAO.save(task);
 
-    public void testGetTasks()
-    {
-        // make sure at least one task exists
-        DAOTestHelper.createTestTask(false);
+		Task removedTask = (Task) taskDAO.getTask(task.getTaskId());
+		assertNotNull(removedTask);
 
-        Task[] tasks = (Task[]) taskDAO.getTasks();
-        assertNotNull(tasks);
-        assertTrue(tasks.length >= 1);
-    }
+		taskDAO.remove(removedTask);
+		removedTask = (Task) taskDAO.getTask(task.getTaskId());
+		assertNull(removedTask);
+	}
 
-    public void testGetTaskString()
-    {
-        Task task = DAOTestHelper.createTestTask(false);
+	public void testGetTasks() {
+		// make sure at least one task exists
+		DAOTestHelper.createTestTask(false);
 
-        Task inserted = (Task) taskDAO.getTask(task.getTaskName());
-        assertNotNull(inserted);
-        assertEquals(task.getTaskName(), inserted.getTaskName());
-    }
+		Task[] tasks = (Task[]) taskDAO.getTasks();
+		assertNotNull(tasks);
+		assertTrue(tasks.length >= 1);
+	}
 
+	public void testGetTaskString() {
+		Task task = DAOTestHelper.createTestTask(false);
+
+		Task inserted = (Task) taskDAO.getTask(task.getTaskName());
+		assertNotNull(inserted);
+		assertEquals(task.getTaskName(), inserted.getTaskName());
+	}
 }

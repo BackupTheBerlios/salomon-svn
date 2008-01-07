@@ -27,7 +27,6 @@ import java.util.LinkedList;
 import org.apache.log4j.Logger;
 
 import salomon.engine.database.DBManager;
-import salomon.engine.database.queries.SQLDelete;
 import salomon.engine.database.queries.SQLSelect;
 
 import salomon.platform.exception.PlatformException;
@@ -35,6 +34,7 @@ import salomon.platform.exception.PlatformException;
 /**
  * Class manager available plugins.
  */
+@Deprecated
 public final class PluginManager implements IPluginManager
 {
     /**
@@ -112,10 +112,11 @@ public final class PluginManager implements IPluginManager
         // if plugin exists in collection, then it is returned
         for (ILocalPlugin plugin : _plugins){
             PluginInfo pluginInfo = (PluginInfo) plugin.getInfo();
-            if (pluginInfo.getName().equals(name)) {
-                localPlugin = (LocalPlugin) plugin;
-                break;
-            }
+            // FIXME:
+//            if (pluginInfo.getName().equals(name)) {
+//                localPlugin = (LocalPlugin) plugin;
+//                break;
+//            }
         }
 
         return localPlugin;
@@ -159,24 +160,25 @@ public final class PluginManager implements IPluginManager
     public boolean removePlugin(ILocalPlugin plugin)
     {
         boolean result = false;
-        try {
-            // removing all related tasks
-            PluginInfo pluginInfo = ((LocalPlugin) plugin).getInfo();
-            // TODO: change to Task.TABLE_NAME
-            SQLDelete delete = new SQLDelete("tasks");
-            delete.addCondition("plugin_id =", pluginInfo.getPluginID());
-
-            _dbManager.delete(delete);
-            // removing plugin
-            pluginInfo.delete();
-            _plugins.remove(plugin);
-            result = true;
-            _dbManager.commit();
-            LOGGER.info("Plugin successfully deleted.");
-        } catch (Exception e) {
-            _dbManager.rollback();
-            LOGGER.fatal("", e);
-        }
+        // FIXME:
+//        try {
+//            // removing all related tasks
+//            PluginInfo pluginInfo = ((LocalPlugin) plugin).getInfo();
+//            // TODO: change to Task.TABLE_NAME
+//            SQLDelete delete = new SQLDelete("tasks");
+//            delete.addCondition("plugin_id =", pluginInfo.getPluginID());
+//
+//            _dbManager.delete(delete);
+//            // removing plugin
+//            pluginInfo.delete();
+//            _plugins.remove(plugin);
+//            result = true;
+//            _dbManager.commit();
+//            LOGGER.info("Plugin successfully deleted.");
+//        } catch (Exception e) {
+//            _dbManager.rollback();
+//            LOGGER.fatal("", e);
+//        }
         return result;
     }
 

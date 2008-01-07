@@ -30,6 +30,7 @@ import salomon.engine.agent.IAgentProcessingComponentDAO;
 import salomon.engine.domain.Domain;
 import salomon.engine.domain.DomainManager;
 import salomon.engine.domain.IDomainDAO;
+import salomon.engine.plugin.PluginInfo;
 import salomon.engine.project.IProjectDAO;
 import salomon.engine.project.Project;
 import salomon.engine.task.ITaskDAO;
@@ -165,6 +166,7 @@ public class DAOTestHelper
             task = new Task();
             task.setTaskName(TEST_PROJECT_NAME);
             task.setAgentProcessingComponent(createTestAgentProcessingComponent(forceNew));
+            task.setPluginInfo(new PluginInfo(""));
             taskDAO.save(task);
         }
 

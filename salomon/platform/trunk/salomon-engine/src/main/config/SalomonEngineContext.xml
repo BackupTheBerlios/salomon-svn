@@ -6,4 +6,9 @@
 		class="salomon.engine.ComponentLoader" init-method="initialize">
 		<property name="componentDirName" value="plugins"/>	
 	</bean>
+	
+	<bean name="pluginLoader"
+		class="salomon.engine.ComponentLoader" init-method="initialize">
+		<property name="componentDirName" value="plugins"/>	
+	</bean>
 </beans>

@@ -5,6 +5,13 @@
 
 <hibernate-mapping>
 
+	<class name="salomon.engine.plugin.PluginInfo" table="PLUGINS">	
+		<id name="pluginId" column="PLUGIN_ID">
+			<generator class="native" />
+		</id>
+		<property name="pluginName" column="PLUGIN_NAME" />
+	</class>
+		
 	<class name="salomon.engine.task.Task" table="TASKS">
 		<id name="taskId" column="TASK_ID">
 			<generator class="native" />
@@ -13,8 +20,15 @@
 		<many-to-one name="agentProcessingComponent"
 			column="COMPONENT_ID" not-null="true" insert="true" update="true" />
 
+		<many-to-one name="pluginInfo"
+			class="salomon.engine.plugin.PluginInfo"
+			cascade="save-update" lazy="false" column="PLUGIN_ID"
+			unique="true" />
+
 		<property name="taskNr" column="TASK_NR" />
 		<property name="taskName" column="TASK_NAME" />
+		<property name="settings" column="SETTINGS" />
+		<property name="result" column="RESULT" />
 	</class>
 
 	<class name="salomon.engine.agent.AgentProcessingComponent"
