@@ -290,7 +290,7 @@ public final class TaskGraphEditor extends JPanel
                 TaskVertex taskVertex = (TaskVertex) v;
                 ITask task = taskVertex.getTask();
                 try {
-                    TaskInfo taskInfo = (TaskInfo) task.getInfo();
+                    TaskInfo taskInfo = null; //FIXME:(TaskInfo) task.getInfo();
                     String status = taskInfo.getStatus();
                     if (TaskInfo.FINISHED.equals(status)) {
                         return Color.GREEN;

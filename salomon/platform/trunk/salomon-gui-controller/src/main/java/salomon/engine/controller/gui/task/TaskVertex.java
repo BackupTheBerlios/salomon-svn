@@ -56,11 +56,12 @@ public final class TaskVertex extends SparseVertex
         }
         // plugin cannot be NULL!
         String plugin = "ERROR";
-        try {
-            plugin = _task.getPlugin().toString();
-        } catch (PlatformException e) {
-            LOGGER.fatal("", e);
-        }
+        //FIXME:
+//        try {
+//            plugin = _task.getPlugin().toString();
+//        } catch (PlatformException e) {
+//            LOGGER.fatal("", e);
+//        }
         return (name != null ? name : "") + " [" + plugin + "]";
     }
 

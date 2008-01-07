@@ -174,8 +174,9 @@ public final class PluginManagerGUI
             }
             boolean wasOk = false;
             try {
-                PluginInfo desc = plugin.getInfo();
-                desc.setName(_txtPluginName.getText());
+            	//FIXME:
+                PluginInfo desc = null; plugin.getInfo();
+//                desc.setName(_txtPluginName.getText());
                 desc.setLocation(location);
                 desc.setInfo(_txtPluginInfo.getText());
                 if (isUrl) {
@@ -276,7 +277,8 @@ public final class PluginManagerGUI
         LocalPlugin plugin = (LocalPlugin) _pluginListModel.get(_selectedItem);
         PluginInfo pluginInfo = null;
         try {
-            pluginInfo = plugin.getInfo();
+        	// FIXME:
+            pluginInfo = null; //plugin.getInfo();
         } catch (PlatformException e) {
             LOGGER.fatal("", e);
             Utils.showErrorMessage(Messages.getString("ERR_CANNOT_SAVE_PLUGIN"));
@@ -284,7 +286,8 @@ public final class PluginManagerGUI
         }
         // to initialize components
         getEditPluginPanel();
-        _txtPluginName.setText(pluginInfo.getName());
+        //FIXME:
+        //_txtPluginName.setText(pluginInfo.getName());
         _txtPluginLocation.setText(pluginInfo.getLocation().toString());
         _txtPluginInfo.setText(pluginInfo.getInfo());
         int retVal = JOptionPane.showConfirmDialog(_parent,
@@ -306,7 +309,8 @@ public final class PluginManagerGUI
             }
             boolean wasOk = false;
             try {
-                pluginInfo.setName(_txtPluginName.getText());
+            	// FIXME:
+                //pluginInfo.setName(_txtPluginName.getText());
                 pluginInfo.setInfo(_txtPluginInfo.getText());
                 if (isUrl) {
                     pluginInfo.setPluginType(PluginType.REMOTE);

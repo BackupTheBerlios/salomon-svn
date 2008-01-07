@@ -219,9 +219,11 @@ public final class GraphTaskManagerGUI {
 		IResult result = null;
 		Component comp = null;
 		try {
-			plugin = task.getPlugin();
+			//FIXME:
+			//plugin = task.getPlugin();
 			IResultComponent resultComponent = plugin.getResultComponent();
-			result = task.getResult();
+			//FIXME:
+//			result = task.getResult();
 			// FIXME: IDataEngine dataEngine =
 			// _taskManager.getProject().getProjectManager().getDomain().getDataEngine();
 			// FIXME: comp = resultComponent.getComponent(result, dataEngine);
@@ -253,9 +255,11 @@ public final class GraphTaskManagerGUI {
 		ISettingComponent settingComponent = null;
 		ISettings inputSettings = null;
 		try {
-			plugin = task.getPlugin();
+			//FIXME:
+			plugin = null; //task.getPlugin();
 			settingComponent = plugin.getSettingComponent(_platformUtil);
-			inputSettings = task.getSettings();
+			//FIXME:
+//			inputSettings = task.getSettings();
 		} catch (PlatformException e1) {
 			LOGGER.fatal("", e1);
 			Utils.showErrorMessage(Messages
@@ -300,14 +304,15 @@ public final class GraphTaskManagerGUI {
 
 			ISettings settings = settingComponent.getSettings();
 			LOGGER.info("settings: " + settings); //$NON-NLS-1$
-			try {
-				task.setSettings(settings);
-				task.getInfo().save();
-			} catch (Exception e) {
-				LOGGER.fatal("", e);
-				Utils.showErrorMessage(Messages
-						.getString("ERR_CANNOT_SET_TASK_SETTINGS"));
-			}
+			//FIXME:
+//			try {
+//				task.setSettings(settings);
+//				task.getInfo().save();
+//			} catch (Exception e) {
+//				LOGGER.fatal("", e);
+//				Utils.showErrorMessage(Messages
+//						.getString("ERR_CANNOT_SET_TASK_SETTINGS"));
+//			}
 		}
 	}
 
@@ -323,7 +328,8 @@ public final class GraphTaskManagerGUI {
 				int i = 1;
 				for (ITask task : executionPlan) {
 					// setting task order
-					((TaskInfo) task.getInfo()).setTaskNr(i);
+					//FIXME:
+//					((TaskInfo) task.getInfo()).setTaskNr(i);
 					++i;
 				}
 				// FIXME: tasks should be saved before?
@@ -454,7 +460,8 @@ public final class GraphTaskManagerGUI {
 				localPlugin.load();
 				// adding copy of plugin !!!
 				LocalPlugin pluginCopy = (LocalPlugin) localPlugin.clone();
-				task.setPlugin(pluginCopy);
+				//FIXME:
+				//task.setPlugin(pluginCopy);
 				task.getInfo().setName(_txtTaskName.getText());
 				task.getInfo().setInfo(_txtTaskInfo.getText());
 				// FIXME: tasks should be saved before?
