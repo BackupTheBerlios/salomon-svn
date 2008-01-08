@@ -23,7 +23,6 @@
  */
 package salomon.engine.task;
 
-import salomon.engine.plugin.IPluginInfo;
 import salomon.plugin.IPlugin;
 import salomon.plugin.IResult;
 import salomon.plugin.ISettings;
@@ -48,55 +47,31 @@ public class RunnableTask implements IRunnableTask {
 		_task = task;
 	}
 
-	public IPlugin getPlugin() {
-		return _plugin;
-	}
-
-	public IPluginInfo getPluginInfo() {
-		return _task.getPluginInfo();
-	}
-
-	public String getResult() {
-		return _task.getResult();
-	}
-
-	public IResult getResultObject() {
-		return _resultObject;
-	}
-
 	public ISettings getSettingObject() {
 		return _settingObject;
-	}
-
-	public String getSettings() {
-		return _task.getSettings();
-	}
-
-	public String getTaskName() {
-		return _task.getTaskName();
-	}
-
-	public void setPluginInfo(IPluginInfo pluginInfo) {
-		_task.setPluginInfo(pluginInfo);
-	}
-
-	public void setResult(String result) {
-		_task.setResult(result);
-	}
-
-	public void setResultObject(IResult resultObject) {
-		_resultObject = resultObject;
 	}
 
 	public void setSettingObject(ISettings settingObject) {
 		_settingObject = settingObject;
 	}
 
-	public void setSettings(String settings) {
-		_task.setSettings(settings);
+	public IResult getResultObject() {
+		return _resultObject;
 	}
 
-	public void setTaskName(String taskName) {
-		_task.setTaskName(taskName);
+	public void setResultObject(IResult resultObject) {
+		_resultObject = resultObject;
+	}
+
+	public IPlugin getPlugin() {
+		return _plugin;
+	}
+
+	public void setPlugin(IPlugin plugin) {
+		_plugin = plugin;
+	}
+
+	public ITask getTask() {
+		return _task;
 	}
 }

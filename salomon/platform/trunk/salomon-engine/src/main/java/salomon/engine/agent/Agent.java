@@ -22,164 +22,122 @@
 package salomon.engine.agent;
 
 import salomon.agent.IAgent;
-import salomon.agent.IAgentDecisionComponent;
+import salomon.agent.IAgentDecisionComponentInfo;
 import salomon.agent.IAgentProcessingComponent;
-import salomon.engine.ComponentLoader;
-import salomon.engine.SalomonEngineContext;
 import salomon.engine.project.Project;
-import salomon.platform.exception.PlatformException;
 
 /**
  * 
  */
-public class Agent implements IAgent
-{
-    private IAgentDecisionComponent _agentDecisionComponent;
+public class Agent implements IAgent {
+	private IAgentDecisionComponentInfo _agentDecisionComponentInfo;
 
-    private Long _agentId;
+	private Long _agentId;
 
-    private String _agentName;
+	private String _agentName;
 
-    private IAgentProcessingComponent _agentProcessingComponent;
+	private IAgentProcessingComponent _agentProcessingComponent;
 
-    private Project _project;
-    
-    private ComponentLoader _componentLoader = (ComponentLoader) SalomonEngineContext.getBean("componentLoader");
+	private Project _project;
 
-    @Override
-    public boolean equals(Object obj)
-    {
-        if (obj instanceof Agent) {
-            Agent agent = (Agent) obj;
-            return _agentId.equals(agent.getAgentId());
-        }
-        return false;
-    }
-
-    /**
-     * @see salomon.agent.IAgent#getAgentDecisionComponent()
-     */
-    public IAgentDecisionComponent getAgentDecisionComponent()
-    {
-        return _agentDecisionComponent;
-    }
-
-    /**
-     * Returns the agentId.
-     * @return The agentId
-     */
-    public Long getAgentId()
-    {
-        return _agentId;
-    }
-
-    /**
-     * @see salomon.agent.IAgent#getAgentName()
-     */
-    public String getAgentName()
-    {
-        return _agentName;
-    }
-
-    /**
-     * @see salomon.agent.IAgent#getAgentProcessingComponent()
-     */
-    public IAgentProcessingComponent getAgentProcessingComponent()
-    {
-        return _agentProcessingComponent;
-    }
-
-    /**
-     * Returns the project.
-     * @return The project
-     */
-    public Project getProject()
-    {
-        return _project;
-    }
-
-    @Override
-    public int hashCode()
-    {
-        return _agentId == null ? 0 : _agentId.hashCode();
-    }
-
-    /**
-     * @see salomon.agent.IAgent#setAgentDecisionComponent(salomon.agent.IAgentDecisionComponent)
-     */
-    public void setAgentDecisionComponent(
-            IAgentDecisionComponent agentDecisionComponent)
-    {
-        _agentDecisionComponent = agentDecisionComponent;
-    }
-
-    /**
-     * Set the value of agentName field.
-     * @param agentName The agentName to set
-     */
-    public void setAgentName(String agentName)
-    {
-        _agentName = agentName;
-    }
-
-    /**
-     * @see salomon.agent.IAgent#setAgentProcessingComponent(salomon.agent.IAgentProcessingComponent)
-     */
-    public void setAgentProcessingComponent(
-            IAgentProcessingComponent agentProcessingComponent)
-    {
-        _agentProcessingComponent = agentProcessingComponent;
-    }
-
-    /**
-     * Set the value of project field.
-     * @param project The project to set
-     */
-    public void setProject(Project project)
-    {
-        _project = project;
-    }
-
-    /**
-     * @see salomon.agent.IRunnable#start()
-     */
-    public void start()
-    {
-        if (!_agentDecisionComponent.isStarted()) {
-            _agentDecisionComponent.start();
-        }        
-    }
-
-    /**
-     * @see salomon.agent.IRunnable#stop()
-     */
-    public void stop()
-    {
-        throw new UnsupportedOperationException(
-                "Method Agent.stop() not implemented yet!");
-    }
-
-    /**
-     * Set the value of agentId field.
-     * @param agentId The agentId to set
-     */
-    @SuppressWarnings("unused")
-    private void setAgentId(Long agentId)
-    {
-        _agentId = agentId;
-    }
-
-    public boolean isStarted()
-    {
-        throw new UnsupportedOperationException(
-                "Method Agent.isStarted() not implemented yet!");
-    }
-
-	public void load() {
-		try {
-			_agentDecisionComponent = (IAgentDecisionComponent) _componentLoader.loadComponent(_agentDecisionComponent.getComponentName());
-		} catch (Exception e) {
-			throw new PlatformException("Cannot load agent", e);
-		}		
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof Agent) {
+			Agent agent = (Agent) obj;
+			return _agentId.equals(agent.getAgentId());
+		}
+		return false;
 	}
+
+	/**
+	 * @see salomon.agent.IAgent#getAgentDecisionComponent()
+	 */
+	public IAgentDecisionComponentInfo getAgentDecisionComponentInfo() {
+		return _agentDecisionComponentInfo;
+	}
+
+	/**
+	 * Returns the agentId.
+	 * 
+	 * @return The agentId
+	 */
+	public Long getAgentId() {
+		return _agentId;
+	}
+
+	/**
+	 * @see salomon.agent.IAgent#getAgentName()
+	 */
+	public String getAgentName() {
+		return _agentName;
+	}
+
+	/**
+	 * @see salomon.agent.IAgent#getAgentProcessingComponent()
+	 */
+	public IAgentProcessingComponent getAgentProcessingComponent() {
+		return _agentProcessingComponent;
+	}
+
+	/**
+	 * Returns the project.
+	 * 
+	 * @return The project
+	 */
+	public Project getProject() {
+		return _project;
+	}
+
+	@Override
+	public int hashCode() {
+		return _agentId == null ? 0 : _agentId.hashCode();
+	}
+
+	/**
+	 * @see salomon.agent.IAgent#setAgentDecisionComponent(salomon.agent.IAgentDecisionComponent)
+	 */
+	public void setAgentDecisionComponentInfo(
+			IAgentDecisionComponentInfo agentDecisionComponentInfo) {
+		_agentDecisionComponentInfo = agentDecisionComponentInfo;
+	}
+
+	/**
+	 * Set the value of agentName field.
+	 * 
+	 * @param agentName
+	 *            The agentName to set
+	 */
+	public void setAgentName(String agentName) {
+		_agentName = agentName;
+	}
+
+	/**
+	 * @see salomon.agent.IAgent#setAgentProcessingComponent(salomon.agent.IAgentProcessingComponent)
+	 */
+	public void setAgentProcessingComponent(
+			IAgentProcessingComponent agentProcessingComponent) {
+		_agentProcessingComponent = agentProcessingComponent;
+	}
+
+	/**
+	 * Set the value of project field.
+	 * 
+	 * @param project
+	 *            The project to set
+	 */
+	public void setProject(Project project) {
+		_project = project;
+	}
+
+	/**
+	 * Set the value of agentId field.
+	 * 
+	 * @param agentId
+	 *            The agentId to set
+	 */
+	@SuppressWarnings("unused")
+	private void setAgentId(Long agentId) {
+		_agentId = agentId;
+	}
+
 }

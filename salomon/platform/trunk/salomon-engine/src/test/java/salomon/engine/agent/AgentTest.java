@@ -38,7 +38,7 @@ public class AgentTest extends TestCase
 {
     public void testAgentRun() throws Exception
     {
-    	ComponentLoader loader = (ComponentLoader) SalomonEngineContext.getBean("componentLoader");
+    	ComponentLoader loader = (ComponentLoader) SalomonEngineContext.getBean("agentLoader");
         IAgentDecisionComponent decComp = (IAgentDecisionComponent) loader.loadComponent(
                 "salomon.agent.DummyDecisionComponent");
         assertNotNull(decComp);
@@ -50,12 +50,11 @@ public class AgentTest extends TestCase
         Agent agent = new Agent();
         // FIXME: ugly assignments
         decComp.setAgentProcessingComponent(procComp);
-        agent.setAgentDecisionComponent(decComp);
         agent.setAgentProcessingComponent(procComp);
         
 
         // start the agent
-        agent.start();
+//        agent.start();
 
         //TODO: fire the message event
         IMessageEvent messageEvent = new IMessageEvent() {

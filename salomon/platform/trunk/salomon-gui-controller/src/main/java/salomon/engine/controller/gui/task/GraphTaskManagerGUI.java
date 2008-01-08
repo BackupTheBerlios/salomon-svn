@@ -21,18 +21,22 @@
 
 package salomon.engine.controller.gui.task;
 
-import java.awt.*;
+import java.awt.Component;
+import java.awt.Dimension;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.List;
 
-import javax.swing.*;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 import org.apache.log4j.Logger;
-
-import com.jgoodies.forms.builder.DefaultFormBuilder;
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.validation.ValidationResultModel;
 
 import salomon.engine.Messages;
 import salomon.engine.controller.gui.ControllerFrame;
@@ -41,15 +45,23 @@ import salomon.engine.plugin.IPluginManager;
 import salomon.engine.plugin.LocalPlugin;
 import salomon.engine.plugin.PlatformUtil;
 import salomon.engine.plugin.PluginManager;
-import salomon.engine.task.*;
+import salomon.engine.task.ITask;
+import salomon.engine.task.ITaskManager;
+import salomon.engine.task.Task;
+import salomon.engine.task.TaskManager;
 import salomon.engine.task.event.ITaskListener;
-
-import salomon.util.gui.Utils;
-
 import salomon.platform.IDataEngine;
 import salomon.platform.exception.PlatformException;
+import salomon.plugin.IPlugin;
+import salomon.plugin.IResult;
+import salomon.plugin.IResultComponent;
+import salomon.plugin.ISettingComponent;
+import salomon.plugin.ISettings;
+import salomon.util.gui.Utils;
 
-import salomon.plugin.*;
+import com.jgoodies.forms.builder.DefaultFormBuilder;
+import com.jgoodies.forms.layout.FormLayout;
+import com.jgoodies.validation.ValidationResultModel;
 
 public final class GraphTaskManagerGUI {
 	private static final Logger LOGGER = Logger

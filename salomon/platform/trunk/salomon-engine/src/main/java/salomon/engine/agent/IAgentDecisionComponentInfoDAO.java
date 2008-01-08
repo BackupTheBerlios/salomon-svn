@@ -21,20 +21,20 @@
 
 package salomon.engine.agent;
 
-import salomon.agent.IAgentDecisionComponent;
+import salomon.agent.IAgentDecisionComponentInfo;
 
 /**
  * 
  */
-public interface IAgentDecisionComponentDAO
+public interface IAgentDecisionComponentInfoDAO
 {
-    void save(IAgentDecisionComponent component);
+    void save(IAgentDecisionComponentInfo component);
 
-    void remove(IAgentDecisionComponent component);
+    void remove(IAgentDecisionComponentInfo component);
 
-    IAgentDecisionComponent[] getAgentDecisionComponents();
+    IAgentDecisionComponentInfo[] getAgentDecisionComponentInfos();
 
-    IAgentDecisionComponent getAgentDecisionComponent(Long id);
+    IAgentDecisionComponentInfo getAgentDecisionComponentInfo(Long id);
 
-    IAgentDecisionComponent getAgentDecisionComponent(String componentName);
+    IAgentDecisionComponentInfo getAgentDecisionComponentInfo(String componentName);
 }

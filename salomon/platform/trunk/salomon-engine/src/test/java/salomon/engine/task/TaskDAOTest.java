@@ -46,8 +46,8 @@ public class TaskDAOTest extends TestCase {
 		Task task = DAOTestHelper.createTestTask(true);
 		task.setSettings("test-settings");
 		task.setResult("test-result");
-		PluginInfo pluginInfo = new PluginInfo("pl.edu.agh.iisg.salomon.plugin.datasetcreator.DataSetCreatorPlugin");
-		task.setPluginInfo(pluginInfo);
+//		PluginInfo pluginInfo = new PluginInfo("pl.edu.agh.iisg.salomon.plugin.datasetcreator.DataSetCreatorPlugin");
+//		task.setPluginInfo(pluginInfo);
 
 		taskDAO.save(task);
 

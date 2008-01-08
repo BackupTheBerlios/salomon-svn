@@ -27,5 +27,4 @@ public interface IAgentDecisionComponent extends IRunnable
     
     void setAgentProcessingComponent(IAgentProcessingComponent agentProcessingComponent);
     
-    String getComponentName();
 }

@@ -25,9 +25,11 @@ package salomon.engine;
 
 import junit.framework.TestCase;
 import salomon.agent.IAgent;
-import salomon.engine.agent.AgentDecisionComponent;
+import salomon.engine.agent.AgentDecisionComponentInfo;
 import salomon.engine.agent.AgentProcessingComponent;
 import salomon.engine.agent.IAgentManager;
+import salomon.engine.agent.IAgentRunner;
+import salomon.engine.agent.IRunnableAgent;
 import salomon.engine.domain.DomainManager;
 import salomon.engine.domain.IDomain;
 import salomon.engine.domain.IDomainManager;
@@ -82,11 +84,17 @@ public class EngineTest extends TestCase {
 		IProject project = getProject(domain);
 		IAgent agent = project.getAgentManager().getAgent(TEST_AGENT_NAME);
 		assertNotNull(agent);
-		assertNotNull(agent.getAgentDecisionComponent());
+		assertNotNull(agent.getAgentDecisionComponentInfo());
+		assertEquals(DUMMY_AGENT_DECISIONING_COMP, agent.getAgentDecisionComponentInfo().getComponentName());
 		
-		// load agent decisioning component
-		agent.load();
-		assertEquals(DUMMY_AGENT_DECISIONING_COMP, agent.getAgentDecisionComponent().getClass().getName());
+		// load agent decision component
+		// FIXME: load via agentManager and RunnableAgent
+		IAgentRunner runner = project.getAgentManager().getAgentRunner();
+		IRunnableAgent runnableAgent = runner.getAgent(TEST_AGENT_NAME);
+		assertNotNull(runnableAgent);
+		assertNotNull(runnableAgent.getAgentDecisionComponent());
+		assertEquals(DUMMY_AGENT_DECISIONING_COMP, runnableAgent.getAgentDecisionComponent().getClass().getName());
+		
 		
 		// add task
 		ITaskManager taskManager = ((AgentProcessingComponent)agent.getAgentProcessingComponent()).getTaskManager();
@@ -111,9 +119,9 @@ public class EngineTest extends TestCase {
 		IAgent agent = agentManager.createAgent();
 		agent.setAgentName(TEST_AGENT_NAME);
 
-		AgentDecisionComponent decisionComponent = new AgentDecisionComponent();
-		decisionComponent.setComponentName(DUMMY_AGENT_DECISIONING_COMP);
-		agent.setAgentDecisionComponent(decisionComponent);
+		AgentDecisionComponentInfo dci = new AgentDecisionComponentInfo();
+		dci.setComponentName(DUMMY_AGENT_DECISIONING_COMP);
+		agent.setAgentDecisionComponentInfo(dci);
 		agent.setAgentProcessingComponent(new AgentProcessingComponent());
 
 		agentManager.addAgent(agent);

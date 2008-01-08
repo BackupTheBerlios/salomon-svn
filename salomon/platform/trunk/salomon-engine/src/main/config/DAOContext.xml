@@ -26,7 +26,7 @@
 		</property>
 	</bean>
 
-	<bean id="agentDecisionComponentDAOTarget" class="salomon.engine.agent.AgentDecisionComponentDAO">
+	<bean id="agentDecisionComponentInfoDAOTarget" class="salomon.engine.agent.AgentDecisionComponentInfoDAO">
 		<property name="sessionFactory">
 			<ref bean="sessionFactory" />
 		</property>
@@ -83,13 +83,13 @@
 		</property>
 	</bean>
 
-	<bean id="agentDecisionComponentDAO" parent="daoTemplate">
+	<bean id="agentDecisionComponentInfoDAO" parent="daoTemplate">
 		<property name="target">
-			<ref local="agentDecisionComponentDAOTarget" />
+			<ref local="agentDecisionComponentInfoDAOTarget" />
 		</property>
 		<property name="proxyInterfaces">
 			<list>
-				<value>salomon.engine.agent.IAgentDecisionComponentDAO</value>
+				<value>salomon.engine.agent.IAgentDecisionComponentInfoDAO</value>
 			</list>
 		</property>
 	</bean>

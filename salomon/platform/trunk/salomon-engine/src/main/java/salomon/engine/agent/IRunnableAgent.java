@@ -21,24 +21,21 @@
 /**
  * 
  */
-package salomon.engine.task;
+package salomon.engine.agent;
 
-import salomon.plugin.IResult;
-import salomon.plugin.ISettings;
+import salomon.agent.IAgent;
+import salomon.agent.IAgentDecisionComponent;
+import salomon.agent.IRunnable;
 
 /**
  * @author Nikodem.Jura
- * 
+ *
  */
-public interface IRunnableTask {
+public interface IRunnableAgent extends IRunnable {
 	
-	ISettings getSettingObject();
-
-	void setSettingObject(ISettings settings);
-
-	IResult getResultObject();
-
-	void setResultObject(IResult result);
+	void setAgentDecisionComponent(IAgentDecisionComponent component);
 	
-	ITask getTask();
+	IAgentDecisionComponent getAgentDecisionComponent();
+	
+	IAgent getAgent();
 }

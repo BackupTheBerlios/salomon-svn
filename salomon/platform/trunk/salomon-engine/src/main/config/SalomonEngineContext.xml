@@ -2,7 +2,7 @@
 <!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
 
 <beans>
-	<bean name="componentLoader"
+	<bean name="agentLoader"
 		class="salomon.engine.ComponentLoader" init-method="initialize">
 		<property name="componentDirName" value="plugins"/>	
 	</bean>

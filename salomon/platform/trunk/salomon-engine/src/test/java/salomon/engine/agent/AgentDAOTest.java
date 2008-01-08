@@ -83,7 +83,7 @@ public class AgentDAOTest extends TestCase
     {
         Agent agent = DAOTestHelper.createTestAgent(true);
         AgentProcessingComponent procComp = (AgentProcessingComponent) agent.getAgentProcessingComponent();
-        AgentDecisionComponent decComp = (AgentDecisionComponent) agent.getAgentDecisionComponent();
+        AgentDecisionComponentInfo decComp = (AgentDecisionComponentInfo) agent.getAgentDecisionComponentInfo();
 
         agentDAO.save(agent);
 
@@ -95,7 +95,7 @@ public class AgentDAOTest extends TestCase
                 ((AgentProcessingComponent) inserted.getAgentProcessingComponent()).getComponentName());
         assertEquals(
                 decComp.getComponentName(),
-                ((AgentDecisionComponent) inserted.getAgentDecisionComponent()).getComponentName());
+                ((AgentDecisionComponentInfo) inserted.getAgentDecisionComponentInfo()).getComponentName());
 
         // modify the name of the components (but they should be still the same components, with the same id)
         procComp.setComponentName("sampleProcessingComponent2");
@@ -106,8 +106,8 @@ public class AgentDAOTest extends TestCase
         assertNotNull(inserted2);
         assertEquals("sampleAgent2", inserted2.getAgentName());
         assertEquals(inserted.getAgentId(), inserted2.getAgentId());
-        assertEquals(inserted.getAgentDecisionComponent(),
-                inserted2.getAgentDecisionComponent());
+        assertEquals(inserted.getAgentDecisionComponentInfo(),
+                inserted2.getAgentDecisionComponentInfo());
         assertEquals(inserted.getAgentProcessingComponent(),
                 inserted2.getAgentProcessingComponent());
         assertEquals(
@@ -115,6 +115,6 @@ public class AgentDAOTest extends TestCase
                 ((AgentProcessingComponent) inserted2.getAgentProcessingComponent()).getComponentName());
         assertEquals(
                 "sampleDecisionComponent2",
-                ((AgentDecisionComponent) inserted2.getAgentDecisionComponent()).getComponentName());
+                ((AgentDecisionComponentInfo) inserted2.getAgentDecisionComponentInfo()).getComponentName());
     }
 }

@@ -47,7 +47,7 @@
 		<property name="componentName" column="COMPONENT_NAME" />
 	</class>
 
-	<class name="salomon.engine.agent.AgentDecisionComponent"
+	<class name="salomon.engine.agent.AgentDecisionComponentInfo"
 		table="DECISION_COMPONENTS">
 		<id name="componentId" column="COMPONENT_ID">
 			<generator class="native" />
@@ -70,8 +70,8 @@
 			cascade="save-update" lazy="false" column="PROCESSING_COMPONENT_ID"
 			unique="true" />
 
-		<many-to-one name="agentDecisionComponent"
-			class="salomon.engine.agent.AgentDecisionComponent"
+		<many-to-one name="agentDecisionComponentInfo"
+			class="salomon.engine.agent.AgentDecisionComponentInfo"
 			cascade="save-update" lazy="false" column="DECISION_COMPONENT_ID"
 			unique="true" />
 	</class>

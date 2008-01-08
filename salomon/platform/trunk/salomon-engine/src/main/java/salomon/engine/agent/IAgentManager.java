@@ -42,5 +42,7 @@ public interface IAgentManager
      * @return
      * @throws Exception
      */
-    public IAgent createAgent();
+    IAgent createAgent();
+    
+    IAgentRunner getAgentRunner();
 }

@@ -23,67 +23,68 @@ package salomon.engine.agent;
 
 import junit.framework.TestCase;
 import salomon.agent.IAgentDecisionComponent;
+import salomon.agent.IAgentDecisionComponentInfo;
 import salomon.engine.DAOContext;
 import salomon.engine.DAOTestHelper;
 
 /**
  * 
  */
-public class AgentDecisionComponentDAOTest extends TestCase
+public class AgentDecisionComponentInfoDAOTest extends TestCase
 {
-    private IAgentDecisionComponentDAO componentDAO = (IAgentDecisionComponentDAO) DAOContext.getBean("agentDecisionComponentDAO");
+    private IAgentDecisionComponentInfoDAO componentDAO = (IAgentDecisionComponentInfoDAO) DAOContext.getBean("agentDecisionComponentInfoDAO");
 
     /**
-     * Test method for {@link salomon.engine.agent.AgentDecisionComponentDAO#getAgentDecisionComponent(java.lang.String)}.
+     * Test method for {@link salomon.engine.agent.AgentDecisionComponentInfoDAO#getAgentDecisionComponent(java.lang.String)}.
      */
     public void testGetAgentDecisionComponentString()
     {
-        AgentDecisionComponent comp = DAOTestHelper.createTestAgentDecisionComponent(false);
+        AgentDecisionComponentInfo comp = DAOTestHelper.createTestAgentDecisionComponentInfo(false);
 
-        AgentDecisionComponent inserted = (AgentDecisionComponent) componentDAO.getAgentDecisionComponent(comp.getComponentName());
+        AgentDecisionComponentInfo inserted = (AgentDecisionComponentInfo) componentDAO.getAgentDecisionComponentInfo(comp.getComponentName());
         assertNotNull(inserted);
         assertEquals(comp.getComponentName(), inserted.getComponentName());
     }
 
     /**
-     * Test method for {@link salomon.engine.agent.AgentDecisionComponentDAO#getAgentDecisionComponents()}.
+     * Test method for {@link salomon.engine.agent.AgentDecisionComponentInfoDAO#getAgentDecisionComponents()}.
      */
     public void testGetAgentDecisionComponents()
     {
         // make sure at least one component exists
-        DAOTestHelper.createTestAgentDecisionComponent(false);
+        DAOTestHelper.createTestAgentDecisionComponentInfo(false);
 
-        IAgentDecisionComponent[] comps = componentDAO.getAgentDecisionComponents();
+        IAgentDecisionComponentInfo[] comps = componentDAO.getAgentDecisionComponentInfos();
         assertNotNull(comps);
         assertTrue(comps.length >= 1);
     }
 
     /**
-     * Test method for {@link salomon.engine.agent.AgentDecisionComponentDAO#remove(salomon.agent.IAgentDecisionComponent)}.
+     * Test method for {@link salomon.engine.agent.AgentDecisionComponentInfoDAO#remove(salomon.agent.IAgentDecisionComponent)}.
      */
     public void testRemove()
     {
-        AgentDecisionComponent comp = DAOTestHelper.createTestAgentDecisionComponent(true);
+        AgentDecisionComponentInfo comp = DAOTestHelper.createTestAgentDecisionComponentInfo(true);
         comp.setComponentName("component-to-remove");
         componentDAO.save(comp);
 
-        IAgentDecisionComponent removed = componentDAO.getAgentDecisionComponent(comp.getComponentId());
+        IAgentDecisionComponentInfo removed = componentDAO.getAgentDecisionComponentInfo(comp.getComponentId());
         assertNotNull(removed);
 
         componentDAO.remove(removed);
-        removed = componentDAO.getAgentDecisionComponent(comp.getComponentId());
+        removed = componentDAO.getAgentDecisionComponentInfo(comp.getComponentId());
         assertNull(removed);
     }
 
     /**
-     * Test method for {@link salomon.engine.agent.AgentDecisionComponentDAO#save(salomon.agent.IAgentDecisionComponent)}.
+     * Test method for {@link salomon.engine.agent.AgentDecisionComponentInfoDAO#save(salomon.agent.IAgentDecisionComponent)}.
      */
     public void testSave()
     {
-        AgentDecisionComponent comp = DAOTestHelper.createTestAgentDecisionComponent(true);
+        AgentDecisionComponentInfo comp = DAOTestHelper.createTestAgentDecisionComponentInfo(true);
         componentDAO.save(comp);
 
-        AgentDecisionComponent inserted = (AgentDecisionComponent) componentDAO.getAgentDecisionComponent(comp.getComponentId());
+        AgentDecisionComponentInfo inserted = (AgentDecisionComponentInfo) componentDAO.getAgentDecisionComponentInfo(comp.getComponentId());
         assertNotNull(inserted);
         assertEquals(comp.getComponentName(), inserted.getComponentName());
     }

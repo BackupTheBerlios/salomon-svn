@@ -52,19 +52,6 @@ public final class AgentManager implements IAgentManager {
 	 * @throws Exception
 	 */
 	public IAgent createAgent() {
-		// IAgent agent = null;
-		// try {
-		// Class agentClass = Class.forName(((AgentInfo)
-		// agentInfo).getAgentClass());
-		// Constructor constructor = agentClass.getConstructor(new
-		// Class[]{AgentInfo.class});
-		// agent = (IAgent) constructor.newInstance(agentInfo);
-		// } catch (Exception e) {
-		// LOGGER.fatal("", e);
-		// throw new PlatformException(e.getLocalizedMessage());
-		// }
-		// return agent;
-		// TODO:
 		Agent agent = new Agent();
 		agent.setProject(_project);
 		return agent;
@@ -137,6 +124,12 @@ public final class AgentManager implements IAgentManager {
 
 	public void removeAgent(IAgent agent) {
 		_agentSet.remove(agent);
+	}
+
+	public IAgentRunner getAgentRunner() {
+		// TODO: optimize:
+		AgentRunner runner = new AgentRunner(_agentSet);
+		return runner;
 	}
 
 }
