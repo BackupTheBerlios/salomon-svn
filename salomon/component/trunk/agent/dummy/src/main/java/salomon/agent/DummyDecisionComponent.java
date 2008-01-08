@@ -24,14 +24,13 @@ package salomon.agent;
 import salomon.communication.ICommunicationEvent;
 import salomon.communication.ICommunicationListener;
 import salomon.communication.IMessageEvent;
-import salomon.engine.agent.AgentDecisionComponent;
 import salomon.platform.IVariable;
 import salomon.util.serialization.SimpleLong;
 
 /**
  * 
  */
-public class DummyDecisionComponent extends AgentDecisionComponent
+public class DummyDecisionComponent implements IAgentDecisionComponent
 {
     private IConfigComponent _configComponent;
 
