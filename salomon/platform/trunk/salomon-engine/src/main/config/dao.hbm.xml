@@ -92,11 +92,25 @@
 		<property name="projectName" column="PROJECT_NAME" />
 	</class>
 
+	<class name="salomon.engine.domain.DomainDataSource" table="DOMAIN_DATA_SOURCE">	
+		<id name="dataSourceId" column="DDS_ID">
+			<generator class="native" />
+		</id>
+		<property name="url" column="URL" />
+		<property name="userName" column="USERNAME" />
+		<property name="password" column="PASSWD" />
+	</class>
+
 	<class name="salomon.engine.domain.Domain" table="DOMAINS">
 		<id name="domainId" column="DOMAIN_ID">
 			<generator class="native" />
 		</id>
 
+		<many-to-one name="domainDataSource"
+			class="salomon.engine.domain.DomainDataSource"
+			cascade="save-update" lazy="false" column="DDS_ID"
+			unique="true" />
+			
 		<set name="projectSet" inverse="true" table="PROJECTS"
 			lazy="false" cascade="all">
 			<key column="DOMAIN_ID" />

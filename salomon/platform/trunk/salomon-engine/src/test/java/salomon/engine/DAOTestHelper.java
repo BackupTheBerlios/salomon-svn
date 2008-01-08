@@ -28,6 +28,7 @@ import salomon.engine.agent.IAgentDAO;
 import salomon.engine.agent.IAgentDecisionComponentInfoDAO;
 import salomon.engine.agent.IAgentProcessingComponentDAO;
 import salomon.engine.domain.Domain;
+import salomon.engine.domain.DomainDataSource;
 import salomon.engine.domain.DomainManager;
 import salomon.engine.domain.IDomainDAO;
 import salomon.engine.plugin.PluginInfo;
@@ -137,6 +138,11 @@ public class DAOTestHelper {
 			// FIXME:
 			domain = (Domain) new DomainManager(null).createDomain();
 			domain.setDomainName(TEST_DOMAIN_NAME);
+			DomainDataSource dds = new DomainDataSource();
+			dds.setUrl("file://test/url");
+			dds.setUserName("test-user");
+			dds.setPassword("test-password");
+			domain.setDomainDataSource(dds);
 			domainDAO.save(domain);
 		}
 

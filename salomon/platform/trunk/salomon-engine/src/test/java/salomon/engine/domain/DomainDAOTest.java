@@ -87,6 +87,11 @@ public class DomainDAOTest extends TestCase
         IDomain inserted = domainDAO.getDomain(domain.getDomainId());
         assertNotNull(inserted);
         assertEquals(domain.getDomainName(), inserted.getDomainName());
+        IDomainDataSource dds = inserted.getDomainDataSource();
+        assertNotNull(dds);        
+        assertEquals(domain.getDomainDataSource().getUrl(), dds.getUrl());
+        assertEquals(domain.getDomainDataSource().getUserName(), dds.getUserName());
+        assertEquals(domain.getDomainDataSource().getPassword(), dds.getPassword());
     }
 
     public void testSaveWithProjects()

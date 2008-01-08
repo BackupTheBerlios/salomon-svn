@@ -36,6 +36,8 @@ public class Domain implements IDomain {
 
 	private ProjectManager _projectManager;
 
+	private DomainDataSource _domainDataSource;
+
 	/**
 	 * Constructor should be used only in DomainManager.createDomain() method.
 	 */
@@ -59,6 +61,13 @@ public class Domain implements IDomain {
 	}
 
 	/**
+	 * @return the domainDataSource
+	 */
+	public DomainDataSource getDomainDataSource() {
+		return _domainDataSource;
+	}
+
+	/**
 	 * Returns the domainId.
 	 * 
 	 * @return The domainId
@@ -75,6 +84,29 @@ public class Domain implements IDomain {
 		return _projectManager;
 	}
 
+	@Override
+	public int hashCode() {
+		return _domainId.hashCode();
+	}
+
+	/**
+	 * @param domainDataSource
+	 *            the domainDataSource to set
+	 */
+	public void setDomainDataSource(DomainDataSource domainDataSource) {
+		_domainDataSource = domainDataSource;
+	}
+
+	/**
+	 * Set the value of domainName field.
+	 * 
+	 * @param domainName
+	 *            The domainName to set
+	 */
+	public void setDomainName(String domainName) {
+		_domainName = domainName;
+	}
+
 	/**
 	 * TODO: add comment.
 	 * 
@@ -84,11 +116,6 @@ public class Domain implements IDomain {
 	@SuppressWarnings("unused")
 	private Set<Project> getProjectSet() {
 		return _projectManager.getProjectSet();
-	}
-
-	@Override
-	public int hashCode() {
-		return _domainId.hashCode();
 	}
 
 	/**
@@ -101,16 +128,6 @@ public class Domain implements IDomain {
 	@SuppressWarnings("unused")
 	private void setDomainId(Long domainId) {
 		_domainId = domainId;
-	}
-
-	/**
-	 * Set the value of domainName field.
-	 * 
-	 * @param domainName
-	 *            The domainName to set
-	 */
-	public void setDomainName(String domainName) {
-		_domainName = domainName;
 	}
 
 	/**

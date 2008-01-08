@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004 Salomon Team
+ * Copyright (C) 2008 Salomon Team
  *
  * This file is part of Salomon.
  *
@@ -18,25 +18,26 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * 
  */
-
+/**
+ * 
+ */
 package salomon.engine.domain;
 
-import salomon.engine.project.IProjectManager;
-import salomon.platform.IDataEngine;
-
 /**
- * Represents a domain.
- * @see salomon.engine.domain.IDomainManager
+ * @author Nikodem.Jura
+ * 
  */
-public interface IDomain
-{
-    IDataEngine getDataEngine();
+public interface IDomainDataSource {
+	String getPassword();
 
-    IProjectManager getProjectManager();
-    
-    String getDomainName();
-    
-    void setDomainName(String domainName);
-    
-    IDomainDataSource getDomainDataSource();
+	String getUrl();
+
+	String getUserName();
+
+	void setPassword(String password);
+
+	void setUrl(String url);
+
+	void setUserName(String userName);
+
 }

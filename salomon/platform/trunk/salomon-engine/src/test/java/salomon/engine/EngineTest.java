@@ -88,13 +88,11 @@ public class EngineTest extends TestCase {
 		assertEquals(DUMMY_AGENT_DECISIONING_COMP, agent.getAgentDecisionComponentInfo().getComponentName());
 		
 		// load agent decision component
-		// FIXME: load via agentManager and RunnableAgent
 		IAgentRunner runner = project.getAgentManager().getAgentRunner();
 		IRunnableAgent runnableAgent = runner.getAgent(TEST_AGENT_NAME);
 		assertNotNull(runnableAgent);
 		assertNotNull(runnableAgent.getAgentDecisionComponent());
-		assertEquals(DUMMY_AGENT_DECISIONING_COMP, runnableAgent.getAgentDecisionComponent().getClass().getName());
-		
+		assertEquals(DUMMY_AGENT_DECISIONING_COMP, runnableAgent.getAgentDecisionComponent().getClass().getName());		
 		
 		// add task
 		ITaskManager taskManager = ((AgentProcessingComponent)agent.getAgentProcessingComponent()).getTaskManager();
