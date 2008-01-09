@@ -120,7 +120,6 @@ public class EngineTest extends TestCase {
 		AgentDecisionComponentInfo dci = new AgentDecisionComponentInfo();
 		dci.setComponentName(DUMMY_AGENT_DECISIONING_COMP);
 		agent.setAgentDecisionComponentInfo(dci);
-		agent.setAgentProcessingComponent(new AgentProcessingComponent());
 
 		agentManager.addAgent(agent);
 		

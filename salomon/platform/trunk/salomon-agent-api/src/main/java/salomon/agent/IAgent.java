@@ -29,8 +29,6 @@ public interface IAgent
     
     IAgentDecisionComponentInfo getAgentDecisionComponentInfo();
     
-    void setAgentProcessingComponent(IAgentProcessingComponent agentProcessingComponent);
-    
     IAgentProcessingComponent getAgentProcessingComponent();
         
     String getAgentName();

@@ -54,9 +54,7 @@ public class RunnableAgent implements IRunnableAgent {
 	}
 
 	public void start() {
-		throw new UnsupportedOperationException(
-				"Method RunnableAgent.start() is not implemented yet!");
-
+		_agentDecisionComponent.start();
 	}
 
 	public void stop() {

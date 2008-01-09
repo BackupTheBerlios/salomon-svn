@@ -25,6 +25,7 @@ import java.util.List;
 
 import salomon.agent.IAgentProcessingComponent;
 import salomon.communication.ICommunicationBus;
+import salomon.engine.SalomonEngineContext;
 import salomon.engine.platform.Environment;
 import salomon.engine.task.ITaskManager;
 import salomon.engine.task.Task;
@@ -35,7 +36,8 @@ import salomon.platform.IEnvironment;
  * 
  */
 public class AgentProcessingComponent implements IAgentProcessingComponent {
-	private ICommunicationBus _communicationBus;
+	private static ICommunicationBus _communicationBus = (ICommunicationBus) SalomonEngineContext
+			.getBean("communicationBus");
 
 	private Long _componentId;
 

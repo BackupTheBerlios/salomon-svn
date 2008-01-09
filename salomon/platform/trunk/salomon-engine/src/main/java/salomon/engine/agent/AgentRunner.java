@@ -67,6 +67,7 @@ public class AgentRunner implements IAgentRunner {
 							.getComponentName());
 			RunnableAgent ra = new RunnableAgent(agent);
 			ra.setAgentDecisionComponent(dc);
+			dc.setAgentProcessingComponent(agent.getAgentProcessingComponent());
 			_agentMap.put(agent.getAgentName(), ra);
 		}
 	}
@@ -86,15 +87,15 @@ public class AgentRunner implements IAgentRunner {
 				new RunnableAgent[_agentMap.values().size()]);
 	}
 
-	/*
-	 * (non-Javadoc)
+	/**
+	 * TODO: every agent should be run in a separate thread
 	 * 
 	 * @see salomon.engine.agent.IAgentRunner#start()
 	 */
 	public void start() {
-		// FIXME:
-		throw new UnsupportedOperationException(
-				"Method AgentRunner.start() is not implemented yet!");
+		for (RunnableAgent runnableAgent : _agentMap.values()) {
+			runnableAgent.start();
+		}
 	}
 
 	/*

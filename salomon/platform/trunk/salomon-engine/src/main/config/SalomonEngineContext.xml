@@ -11,4 +11,7 @@
 		class="salomon.engine.ComponentLoader" init-method="initialize">
 		<property name="componentDirName" value="plugins"/>	
 	</bean>
+	
+	<!-- communication bus instance -->	
+	<bean name="communicationBus" class="salomon.engine.communication.CommunicationBus"/>
 </beans>

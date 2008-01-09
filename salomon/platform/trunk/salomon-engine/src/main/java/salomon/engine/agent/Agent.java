@@ -40,6 +40,12 @@ public class Agent implements IAgent {
 
 	private Project _project;
 
+	public Agent() {
+		// TODO: this component is created 2 if it's loaded from the DB
+		// in that case it's set by Hibernate
+		_agentProcessingComponent = new AgentProcessingComponent();
+	}
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (obj instanceof Agent) {
@@ -111,9 +117,7 @@ public class Agent implements IAgent {
 		_agentName = agentName;
 	}
 
-	/**
-	 * @see salomon.agent.IAgent#setAgentProcessingComponent(salomon.agent.IAgentProcessingComponent)
-	 */
+	// TODO: make setting this component in single place
 	public void setAgentProcessingComponent(
 			IAgentProcessingComponent agentProcessingComponent) {
 		_agentProcessingComponent = agentProcessingComponent;
@@ -128,7 +132,7 @@ public class Agent implements IAgent {
 	public void setProject(Project project) {
 		_project = project;
 	}
-
+	
 	/**
 	 * Set the value of agentId field.
 	 * 

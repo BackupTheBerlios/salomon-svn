@@ -22,11 +22,10 @@
 package salomon.engine.agent;
 
 import junit.framework.TestCase;
-import salomon.agent.IAgentDecisionComponent;
+import salomon.communication.ICommunicationBus;
 import salomon.communication.IMessageEvent;
-import salomon.engine.ComponentLoader;
 import salomon.engine.SalomonEngineContext;
-import salomon.engine.communication.CommunicationBus;
+import salomon.engine.project.Project;
 import salomon.platform.IVariable;
 import salomon.platform.message.IMessageMetadata;
 import salomon.platform.serialization.ILong;
@@ -34,51 +33,49 @@ import salomon.platform.serialization.ILong;
 /**
  * 
  */
-public class AgentTest extends TestCase
-{
-    public void testAgentRun() throws Exception
-    {
-    	ComponentLoader loader = (ComponentLoader) SalomonEngineContext.getBean("agentLoader");
-        IAgentDecisionComponent decComp = (IAgentDecisionComponent) loader.loadComponent(
-                "salomon.agent.DummyDecisionComponent");
-        assertNotNull(decComp);
+public class AgentTest extends TestCase {
+	
+	private static ICommunicationBus _communicationBus = (ICommunicationBus) SalomonEngineContext.getBean("communicationBus");
+	
+	public void testAgentRun() throws Exception {
+		// FIXME: use Spring
+		// the project should be obtained from ProjectManager, but in this case
+		// it's irrelevant
+		AgentManager agentManager = new AgentManager(new Project());
+		Agent agent = (Agent) agentManager.createAgent();
+		AgentDecisionComponentInfo dci = new AgentDecisionComponentInfo();
+		dci.setComponentName("salomon.agent.DummyDecisionComponent");
+		agent.setAgentDecisionComponentInfo(dci);
+		agent.setAgentName("test-agent");
+		agentManager.addAgent(agent);
 
-        // TODO: load the agent via AgentManager
-        AgentProcessingComponent procComp = new AgentProcessingComponent();
-        // TODO: use single instance loaded via Spring
-        procComp.setCommunicationBus(new CommunicationBus());
-        Agent agent = new Agent();
-        // FIXME: ugly assignments
-        decComp.setAgentProcessingComponent(procComp);
-        agent.setAgentProcessingComponent(procComp);
-        
+		// start agents
+		agentManager.getAgentRunner().start();
 
-        // start the agent
-//        agent.start();
+		// fire the message event to make the DummyDecisionComponent start
+		// processing
+		IMessageEvent messageEvent = new IMessageEvent() {
+			public IMessageMetadata getMessageMetadata() {
+				return new IMessageMetadata() {
+					public long getMessageId() {
+						return 911L;
+					}
+				};
+			}
+		};
 
-        //TODO: fire the message event
-        IMessageEvent messageEvent = new IMessageEvent() {
-            public IMessageMetadata getMessageMetadata()
-            {
-                return new IMessageMetadata() {
-                    public long getMessageId()
-                    {
-                        return 911L;
-                    }
-                };
-            }
-        };
+		// fire the event
+		_communicationBus.fireCommunicationEvent(messageEvent);
 
-        // get the Bus from Spring Context
-        agent.getAgentProcessingComponent().getCommunicationBus().fireCommunicationEvent(messageEvent);
-        
-        // wait a while until the event is processed
-        Thread.sleep(1000);
-        
-        //TODO: check if the message-id was added to the environment (simple check if decisionComponent added the variable)
-        IVariable variable = agent.getAgentProcessingComponent().getEnvironment().getVariable("dummy-message-id");
-        assertNotNull(variable);
-        assertTrue(variable.getValue() instanceof ILong);
-        assertEquals(911L, ((ILong)variable.getValue()).getValue());
-    }
+		// wait a while until the event is processed by a component
+		Thread.sleep(1000);
+
+		// check if the message-id was added to the environment (simple
+		// check if decisionComponent added the variable)
+		IVariable variable = agent.getAgentProcessingComponent()
+				.getEnvironment().getVariable("dummy-message-id");
+		assertNotNull(variable);
+		assertTrue(variable.getValue() instanceof ILong);
+		assertEquals(911L, ((ILong) variable.getValue()).getValue());
+	}
 }
