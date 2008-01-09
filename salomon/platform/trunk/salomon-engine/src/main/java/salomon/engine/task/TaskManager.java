@@ -25,6 +25,7 @@ import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -71,8 +72,10 @@ public final class TaskManager implements ITaskManager {
 
 	public TaskManager(AgentProcessingComponent processinComponent) {
 		_processingComponent = processinComponent;
-		_taskList = new ArrayList<Task>();
+		_taskList = new LinkedList<Task>();
+		_taskListeners = new LinkedList<ITaskListener>();
 		_taskComparator = new TaskComparator();
+		_taskRunner = new TaskRunner();
 	}
 
 	public void addTask(ITask task) throws PlatformException {
@@ -279,27 +282,33 @@ public final class TaskManager implements ITaskManager {
 		private boolean _paused = false;
 
 		// FIXME: create more specific exception
-		public void initializeTasks() throws Exception {
+		public void initializeTasks() {
 			_runnableTasks = new ArrayList<IRunnableTask>(_taskList.size());
-			for (Task task : _taskList) {
-				RunnableTask runnableTask = new RunnableTask(task);
-				_runnableTasks.add(runnableTask);
-				// try to load the plugin
-				IPlugin plugin = (IPlugin) _pluginLoader.loadComponent(task
-						.getPluginInfo().getPluginName());
-				// initialize settings
-				// FIXME: ugly, reimplement
-				ISettings settingObject = plugin.getSettingComponent(null)
-						.getDefaultSettings();
-				String strSettings = task.getSettings();
-				if (strSettings != null && strSettings.length() > 0) {
-					IStruct struct = XMLSerializer
-							.deserialize(new ByteArrayInputStream(task
-									.getSettings().getBytes()));
-					settingObject.init(struct);
+			try {
+				for (Task task : _taskList) {
+					RunnableTask runnableTask = new RunnableTask(task);
+					_runnableTasks.add(runnableTask);
+					// try to load the plugin
+					IPlugin plugin = (IPlugin) _pluginLoader.loadComponent(task
+							.getPluginInfo().getPluginName());
+					runnableTask.setPlugin(plugin);
+					// initialize settings
+					// FIXME: ugly, reimplement
+					ISettings settingObject = plugin.getSettingComponent(null)
+							.getDefaultSettings();
+					String strSettings = task.getSettings();
+					if (strSettings != null && strSettings.length() > 0) {
+						IStruct struct = XMLSerializer
+								.deserialize(new ByteArrayInputStream(task
+										.getSettings().getBytes()));
+						settingObject.init(struct);
+					}
+					runnableTask.setSettingObject(settingObject);
+					// TODO: initialize result if necessary }
 				}
-				runnableTask.setSettingObject(settingObject);
-				// TODO: initialize result if necessary
+			} catch (Exception e) {
+				LOGGER.error("Could not initialize tasks", e);
+				throw new PlatformException("Could not initialize tasks", e);
 			}
 		}
 
@@ -351,6 +360,8 @@ public final class TaskManager implements ITaskManager {
 
 		private void startTask(IRunnableTask task) {
 			LOGGER.info("Staring task: " + task);
+			LOGGER.debug("settings: " + task.getSettingObject());
+			task.getPlugin().doJob(null, _processingComponent.getEnvironment(), task.getSettingObject());
 			// FIXME:
 			// TaskInfo taskInfo = null;
 			// TaskEvent taskEvent = null;
@@ -453,8 +464,10 @@ public final class TaskManager implements ITaskManager {
 			LOGGER.info("TaskRunner.start()");
 			// new thread is created before each tasks execution
 			_taskEngine = new TaskEngine();
+			_taskEngine.initializeTasks();
 			fireTasksInitialized(_taskList.size());
-			_taskEngine.start();
+			// FIXME: !!! intentionally called run() because of some synchronization issues
+			_taskEngine.run();
 		}
 
 		public void stop() throws PlatformException {

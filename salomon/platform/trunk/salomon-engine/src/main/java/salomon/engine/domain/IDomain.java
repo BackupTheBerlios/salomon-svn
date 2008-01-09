@@ -39,4 +39,6 @@ public interface IDomain
     void setDomainName(String domainName);
     
     IDomainDataSource getDomainDataSource();
+    
+    void setDomainDataSource(IDomainDataSource dds);
 }

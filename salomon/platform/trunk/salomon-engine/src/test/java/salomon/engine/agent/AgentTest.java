@@ -76,6 +76,6 @@ public class AgentTest extends TestCase {
 				.getEnvironment().getVariable("dummy-message-id");
 		assertNotNull(variable);
 		assertTrue(variable.getValue() instanceof ILong);
-		assertEquals(911L, ((ILong) variable.getValue()).getValue());
+		assertEquals(911L, variable.getValue().getValue());
 	}
 }

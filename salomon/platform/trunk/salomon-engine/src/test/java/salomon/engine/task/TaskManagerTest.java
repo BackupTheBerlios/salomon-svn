@@ -65,8 +65,8 @@ public class TaskManagerTest extends TestCase {
 		
 		ITask task = testTaskManager.createTask();
 		task.setTaskName("test-task-name");
-		task.setPluginInfo(new PluginInfo("pl.edu.agh.iisg.salomon.plugin.datasetcreator.DataSetCreatorPlugin"));
-		task.setSettings("<struct><string name=\"dataSetName\" value=\"sample\"/><array name=\"conditions\"/></struct>");
+		task.setPluginInfo(new PluginInfo("salomon.plugin.DummyPlugin"));
+		task.setSettings("<struct><string name=\"word\" value=\"sample\"/></struct>");
 		
 		testTaskManager.addTask(task);
 		testTaskManager.startTasks();

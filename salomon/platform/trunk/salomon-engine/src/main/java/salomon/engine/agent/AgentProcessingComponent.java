@@ -26,8 +26,6 @@ import java.util.List;
 import salomon.agent.IAgentProcessingComponent;
 import salomon.communication.ICommunicationBus;
 import salomon.engine.SalomonEngineContext;
-import salomon.engine.platform.Environment;
-import salomon.engine.task.ITaskManager;
 import salomon.engine.task.Task;
 import salomon.engine.task.TaskManager;
 import salomon.platform.IEnvironment;
@@ -58,7 +56,6 @@ public class AgentProcessingComponent implements IAgentProcessingComponent {
 
 	public AgentProcessingComponent() {
 		_taskManager = new TaskManager(this);
-		_environment = new Environment();
 	}
 
 	@Override
@@ -130,17 +127,9 @@ public class AgentProcessingComponent implements IAgentProcessingComponent {
 		_componentName = componentName;
 	}
 
-	/**
-	 * @see salomon.agent.IAgentProcessingComponent#setTaskManager(salomon.engine.task.ITaskManager)
-	 */
-	public void setTaskManager(ITaskManager taskManager) {
-		throw new UnsupportedOperationException(
-				"Method AgentProcessingComponent.setTaskManager() not implemented yet!");
-	}
-
 	public synchronized void start() {
 		_started = true;
-		// FIXME: add tasks processing
+		_taskManager.getRunner().start();
 	}
 
 	public synchronized void stop() {
@@ -180,5 +169,15 @@ public class AgentProcessingComponent implements IAgentProcessingComponent {
 	@SuppressWarnings("unused")
 	private void setTaskList(List<Task> tasks) {
 		_taskManager.setTaskList(tasks);
+	}
+
+	/**
+	 * This method should be called only from the Agent.
+	 * 
+	 * @param environment
+	 *            the environment to set
+	 */
+	final void setEnvironment(IEnvironment environment) {
+		_environment = environment;
 	}
 }

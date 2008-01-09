@@ -54,6 +54,9 @@ public final class AgentManager implements IAgentManager {
 	public IAgent createAgent() {
 		Agent agent = new Agent();
 		agent.setProject(_project);
+		// set a new AgentProcessingComponent
+		// is is necessary only if a new agent is created
+		agent.setAgentProcessingComponent(new AgentProcessingComponent());
 		return agent;
 	}
 

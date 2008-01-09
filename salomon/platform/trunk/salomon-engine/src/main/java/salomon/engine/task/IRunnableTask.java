@@ -23,6 +23,7 @@
  */
 package salomon.engine.task;
 
+import salomon.plugin.IPlugin;
 import salomon.plugin.IResult;
 import salomon.plugin.ISettings;
 
@@ -41,4 +42,6 @@ public interface IRunnableTask {
 	void setResultObject(IResult result);
 	
 	ITask getTask();
+	
+	IPlugin getPlugin();
 }

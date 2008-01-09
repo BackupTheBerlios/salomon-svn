@@ -24,7 +24,9 @@ package salomon.engine.agent;
 import salomon.agent.IAgent;
 import salomon.agent.IAgentDecisionComponentInfo;
 import salomon.agent.IAgentProcessingComponent;
+import salomon.engine.platform.Environment;
 import salomon.engine.project.Project;
+import salomon.platform.IEnvironment;
 
 /**
  * 
@@ -40,12 +42,12 @@ public class Agent implements IAgent {
 
 	private Project _project;
 
+	private IEnvironment _environment;
+
 	public Agent() {
-		// TODO: this component is created 2 if it's loaded from the DB
-		// in that case it's set by Hibernate
-		_agentProcessingComponent = new AgentProcessingComponent();
+		_environment = new Environment();
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (obj instanceof Agent) {
@@ -121,6 +123,9 @@ public class Agent implements IAgent {
 	public void setAgentProcessingComponent(
 			IAgentProcessingComponent agentProcessingComponent) {
 		_agentProcessingComponent = agentProcessingComponent;
+		// assign the environment instance
+		((AgentProcessingComponent) _agentProcessingComponent)
+				.setEnvironment(_environment);
 	}
 
 	/**
@@ -132,7 +137,7 @@ public class Agent implements IAgent {
 	public void setProject(Project project) {
 		_project = project;
 	}
-	
+
 	/**
 	 * Set the value of agentId field.
 	 * 

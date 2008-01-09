@@ -93,8 +93,8 @@ public class Domain implements IDomain {
 	 * @param domainDataSource
 	 *            the domainDataSource to set
 	 */
-	public void setDomainDataSource(DomainDataSource domainDataSource) {
-		_domainDataSource = domainDataSource;
+	public void setDomainDataSource(IDomainDataSource domainDataSource) {
+		_domainDataSource = (DomainDataSource) domainDataSource;
 	}
 
 	/**
