@@ -50,7 +50,7 @@ public class SimpleLong implements ILong
     /**
      * @see salomon.platform.serialization.IInteger#getValue()
      */
-    public long getValue()
+    public Long getValue()
     {
         return _value;
     }

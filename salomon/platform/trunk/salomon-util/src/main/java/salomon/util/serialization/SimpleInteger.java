@@ -50,7 +50,7 @@ public class SimpleInteger implements IInteger
     /**
      * @see salomon.platform.serialization.IInteger#getValue()
      */
-    public int getValue()
+    public Integer getValue()
     {
         return _value;
     }

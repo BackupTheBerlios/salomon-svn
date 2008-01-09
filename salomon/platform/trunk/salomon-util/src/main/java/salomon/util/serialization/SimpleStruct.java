@@ -129,4 +129,9 @@ public class SimpleStruct implements IStruct
     {
         setField(name, new SimpleInteger(value));
     }
+
+	public Object getValue() {
+		throw new UnsupportedOperationException(
+				"Method SimpleStruct.getValue() is not implemented yet!");
+	}
 }
