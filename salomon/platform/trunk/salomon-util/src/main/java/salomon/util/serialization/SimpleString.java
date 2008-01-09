@@ -89,4 +89,8 @@ public class SimpleString implements IString
         return result;
     }
 
+    @Override
+    public String toString() {
+    	return _value;
+    }
 }

@@ -82,4 +82,9 @@ public class SimpleLong implements ILong
         }
         return result;
     }
+    
+    @Override
+    public String toString() {
+    	return Long.toString(_value);
+    }
 }

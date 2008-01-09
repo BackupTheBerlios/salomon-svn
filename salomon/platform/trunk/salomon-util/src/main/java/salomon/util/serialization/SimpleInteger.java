@@ -82,4 +82,9 @@ public class SimpleInteger implements IInteger
         }
         return result;
     }
+    
+    @Override
+    public String toString() {
+    	return Integer.toBinaryString(_value);
+    }
 }
