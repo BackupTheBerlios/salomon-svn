@@ -30,7 +30,7 @@ public interface ILong extends IObject
      * 
      * @uml.property name="value"
      */
-    long getValue();
+    Long getValue();
 
     /**
      * 

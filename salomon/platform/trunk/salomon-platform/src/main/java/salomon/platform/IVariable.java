@@ -24,7 +24,7 @@ package salomon.platform;
 import salomon.platform.serialization.IObject;
 
 /**
- * Represents enviroment variable.
+ * Represents an environment variable.
  * Variable is a pair: value and name.
  *
  */

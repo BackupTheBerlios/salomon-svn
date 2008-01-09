@@ -28,7 +28,7 @@ public interface IInteger extends IObject
      * 
      * @uml.property name="value"
      */
-    int getValue();
+    Integer getValue();
 
     /**
      * 

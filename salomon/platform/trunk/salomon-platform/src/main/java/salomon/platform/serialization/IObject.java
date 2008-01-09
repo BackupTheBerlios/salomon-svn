@@ -46,4 +46,6 @@ public interface IObject
      * @return TRUE of objects are equal
      */
     boolean equals(IObject object);
+    
+    Object getValue();
 }
