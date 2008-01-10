@@ -55,7 +55,7 @@ public class DummyPlugin implements IPlugin {
 	public IResult doJob(IDataEngine dataEngine, IEnvironment env,
 			ISettings settings) {		
 		LOGGER.info("DummyPlugin.doJob()");
-
+		LOGGER.debug("environment: " + env);
 		DummySettings ds = (DummySettings) settings;
 		String word = ds.getWord();
 		// TODO define the constant identifying the current message
@@ -66,7 +66,7 @@ public class DummyPlugin implements IPlugin {
 		IVariable textVar = env.getVariable("message");
 		String text = (String) textVar.getValue().getValue();
 		
-		LOGGER.debug("Searching for " + word + " in:");
+		LOGGER.debug("Searching for \"" + word + "\" in:");
 		LOGGER.debug(text);
 		// TODO:
 		return null;

@@ -21,110 +21,110 @@
 
 package salomon.agent;
 
+import org.apache.log4j.Logger;
+
 import salomon.communication.ICommunicationEvent;
 import salomon.communication.ICommunicationListener;
 import salomon.communication.IMessageEvent;
 import salomon.platform.IVariable;
 import salomon.util.serialization.SimpleLong;
+import salomon.util.serialization.SimpleString;
 
 /**
  * 
  */
-public class DummyDecisionComponent implements IAgentDecisionComponent
-{
-    private IConfigComponent _configComponent;
+public class DummyDecisionComponent implements IAgentDecisionComponent {
+	private static final Logger LOGGER = Logger
+			.getLogger(DummyDecisionComponent.class);
 
-    private IAgentProcessingComponent _processinComponent;
+	private IConfigComponent _configComponent;
 
-    private boolean _started;
+	private IAgentProcessingComponent _processinComponent;
 
-    public DummyDecisionComponent()
-    {
-        _configComponent = new DummyConfigComponent();
-    }
+	private boolean _started;
 
-    /**
-     * @see salomon.agent.IAgentDecisionComponent#getComponentName()
-     */
-    public String getComponentName()
-    {
-        return DummyDecisionComponent.class.getName();
-    }
+	public DummyDecisionComponent() {
+		_configComponent = new DummyConfigComponent();
+	}
 
-    /**
-     * @see salomon.agent.IAgentDecisionComponent#getConfigurationComponent()
-     */
-    public IConfigComponent getConfigurationComponent()
-    {
-        return _configComponent;
-    }
+	/**
+	 * @see salomon.agent.IAgentDecisionComponent#getComponentName()
+	 */
+	public String getComponentName() {
+		return DummyDecisionComponent.class.getName();
+	}
 
-    /**
-     * @see salomon.agent.IAgentDecisionComponent#setAgentProcessingComponent(salomon.agent.IAgentProcessingComponent)
-     */
-    public void setAgentProcessingComponent(
-            IAgentProcessingComponent processinComponent)
-    {
-        _processinComponent = processinComponent;
-    }
+	/**
+	 * @see salomon.agent.IAgentDecisionComponent#getConfigurationComponent()
+	 */
+	public IConfigComponent getConfigurationComponent() {
+		return _configComponent;
+	}
 
-    /**
-     * @see salomon.agent.IRunnable#start()
-     */
-    public synchronized void start()
-    {
-        if (!_started) {
-            // the agent listens to the events
-            _processinComponent.getCommunicationBus().addCommunicationListener(
-                    new DummyEventListener());
-            _started = true;
-        }
+	/**
+	 * @see salomon.agent.IAgentDecisionComponent#setAgentProcessingComponent(salomon.agent.IAgentProcessingComponent)
+	 */
+	public void setAgentProcessingComponent(
+			IAgentProcessingComponent processinComponent) {
+		_processinComponent = processinComponent;
+	}
 
-    }
+	/**
+	 * @see salomon.agent.IRunnable#start()
+	 */
+	public synchronized void start() {
+		LOGGER.info("DummyDecisionComponent.start()");
+		if (!_started) {
+			// the agent listens to the events
+			_processinComponent.getCommunicationBus().addCommunicationListener(
+					new DummyEventListener());
+			_started = true;
+		}
 
-    private class DummyEventListener implements ICommunicationListener
-    {
+	}
 
-        public void onCommunicationEvent(ICommunicationEvent event)
-        {
-            // if any message event was caught, start processing it
-            // the logic here should be more complex,
-            // in this case simply pass all messages down to processing part
-            if (event instanceof IMessageEvent) {
-                // start processing component
-                _processinComponent.start();
-                // wait until the processing part starts
-                // TODO: do not use active waiting
-                while (!_processinComponent.isStarted()) {
-                    try {
-                        System.out.println("waiting for processing comp to start");
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-                // pass the information about the message to the processing component
-                IVariable variable = _processinComponent.getEnvironment().createEmpty(
-                        "dummy-message-id");
-                SimpleLong messageId = new SimpleLong(
-                        ((IMessageEvent) event).getMessageMetadata().getMessageId());
-                variable.setValue(messageId);
-                _processinComponent.getEnvironment().add(variable);
-            }
-        }
-    }
+	private class DummyEventListener implements ICommunicationListener {
 
-    /**
-     * @see salomon.agent.IRunnable#stop()
-     */
-    public void stop()
-    {
-        _started = false;
-    }
+		public void onCommunicationEvent(ICommunicationEvent event) {
+			LOGGER.info("DummyEventListener.onCommunicationEvent()");
+			LOGGER.debug("environment: " + _processinComponent.getEnvironment());
+			// if any message event was caught, start processing it
+			// the logic here should be more complex,
+			// in this case simply pass all messages down to processing part
+			if (event instanceof IMessageEvent) {
+				// pass the information about the message to the processing
+				// component
+				IVariable variable = _processinComponent.getEnvironment()
+						.createEmpty("dummy-message-id");
+				SimpleLong messageId = new SimpleLong(((IMessageEvent) event)
+						.getMessageMetadata().getMessageId());
+				variable.setValue(messageId);
+				_processinComponent.getEnvironment().add(variable);
 
-    public boolean isStarted()
-    {
-        return _started;
-    }
+				// add the content of the message to the environment
+				IVariable msgVar = _processinComponent.getEnvironment()
+						.createEmpty("message");
+				SimpleString msgStr = new SimpleString("Some text message");
+				msgVar.setValue(msgStr);
+				_processinComponent.getEnvironment().add(msgVar);				
+				LOGGER.info("Variables added");
+				LOGGER.debug("environment: " + _processinComponent.getEnvironment());
+
+				// start processing component
+				_processinComponent.start();
+			}
+		}
+	}
+
+	/**
+	 * @see salomon.agent.IRunnable#stop()
+	 */
+	public void stop() {
+		_started = false;
+	}
+
+	public boolean isStarted() {
+		return _started;
+	}
 
 }

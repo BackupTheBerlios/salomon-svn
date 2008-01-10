@@ -62,5 +62,9 @@ public class DummySettings extends SimpleStruct implements ISettings {
 		_word = word;
 		setField(WORD, _word);
 	}
-
+	
+	@Override
+	public String toString() {
+		return WORD + "=" + _word;
+	}
 }

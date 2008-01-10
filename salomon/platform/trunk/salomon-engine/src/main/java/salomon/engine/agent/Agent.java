@@ -24,9 +24,7 @@ package salomon.engine.agent;
 import salomon.agent.IAgent;
 import salomon.agent.IAgentDecisionComponentInfo;
 import salomon.agent.IAgentProcessingComponent;
-import salomon.engine.platform.Environment;
 import salomon.engine.project.Project;
-import salomon.platform.IEnvironment;
 
 /**
  * 
@@ -42,10 +40,8 @@ public class Agent implements IAgent {
 
 	private Project _project;
 
-	private IEnvironment _environment;
-
 	public Agent() {
-		_environment = new Environment();
+		// empty body
 	}
 
 	@Override
@@ -123,9 +119,6 @@ public class Agent implements IAgent {
 	public void setAgentProcessingComponent(
 			IAgentProcessingComponent agentProcessingComponent) {
 		_agentProcessingComponent = agentProcessingComponent;
-		// assign the environment instance
-		((AgentProcessingComponent) _agentProcessingComponent)
-				.setEnvironment(_environment);
 	}
 
 	/**

@@ -26,6 +26,7 @@ import java.util.List;
 import salomon.agent.IAgentProcessingComponent;
 import salomon.communication.ICommunicationBus;
 import salomon.engine.SalomonEngineContext;
+import salomon.engine.platform.Environment;
 import salomon.engine.task.Task;
 import salomon.engine.task.TaskManager;
 import salomon.platform.IEnvironment;
@@ -47,15 +48,9 @@ public class AgentProcessingComponent implements IAgentProcessingComponent {
 
 	private TaskManager _taskManager;
 
-	// this method is not a part of an interface, because salomon-agent-api
-	// cannot depend on salomon-engine, where ITaskManager is defined
-	// it leads to cyclic dependency between projects
-	public TaskManager getTaskManager() {
-		return _taskManager;
-	}
-
 	public AgentProcessingComponent() {
 		_taskManager = new TaskManager(this);
+		_environment = new Environment();
 	}
 
 	@Override
@@ -96,6 +91,13 @@ public class AgentProcessingComponent implements IAgentProcessingComponent {
 
 	public IEnvironment getEnvironment() {
 		return _environment;
+	}
+
+	// this method is not a part of an interface, because salomon-agent-api
+	// cannot depend on salomon-engine, where ITaskManager is defined
+	// it leads to cyclic dependency between projects
+	public TaskManager getTaskManager() {
+		return _taskManager;
 	}
 
 	@Override
@@ -169,15 +171,5 @@ public class AgentProcessingComponent implements IAgentProcessingComponent {
 	@SuppressWarnings("unused")
 	private void setTaskList(List<Task> tasks) {
 		_taskManager.setTaskList(tasks);
-	}
-
-	/**
-	 * This method should be called only from the Agent.
-	 * 
-	 * @param environment
-	 *            the environment to set
-	 */
-	final void setEnvironment(IEnvironment environment) {
-		_environment = environment;
 	}
 }

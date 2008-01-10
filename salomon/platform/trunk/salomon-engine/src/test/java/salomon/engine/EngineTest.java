@@ -107,8 +107,7 @@ public class EngineTest extends TestCase {
 		assertEquals(1, runner.getAgents().length);
 
 		runner.start();
-		// send message to make DummyDecisionComponent start
-
+		// TODO: check the status of task execution
 	}
 
 	private void addTasks() {
@@ -135,6 +134,7 @@ public class EngineTest extends TestCase {
 		ITask task1 = taskManager.createTask();
 		task1.setTaskName("test-task1");
 		task1.setPluginInfo(new PluginInfo(DUMMY_PLUGIN));
+		task1.setSettings("<struct><string name=\"word\" value=\"sample\"/></struct>");
 		ITask task2 = taskManager.createTask();
 		task2.setPluginInfo(new PluginInfo(DUMMY_PLUGIN));
 		task2.setTaskName("test-task2");

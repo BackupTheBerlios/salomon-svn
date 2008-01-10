@@ -29,7 +29,9 @@ import salomon.engine.DAOTestHelper;
 import salomon.engine.agent.AgentProcessingComponent;
 import salomon.engine.plugin.PluginInfo;
 import salomon.engine.task.TaskManager.TaskEngine;
+import salomon.platform.IVariable;
 import salomon.platform.exception.PlatformException;
+import salomon.util.serialization.SimpleString;
 
 /**
  * @author Nikodem.Jura
@@ -57,6 +59,11 @@ public class TaskManagerTest extends TestCase {
 	public void testRunTasks() throws Exception
 	{
 		AgentProcessingComponent procComp = DAOTestHelper.createTestAgentProcessingComponent(true);
+		// test plugin needs this variable to run
+		IVariable var = procComp.getEnvironment().createEmpty("message");
+		var.setValue(new SimpleString("Some message"));
+		procComp.getEnvironment().add(var);
+		
 		ITaskManager taskManager = procComp.getTaskManager();
 		assertNotNull(taskManager);
 		TestTaskManager testTaskManager = new TestTaskManager((TaskManager) taskManager);
